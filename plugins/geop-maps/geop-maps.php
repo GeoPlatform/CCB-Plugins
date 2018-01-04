@@ -81,23 +81,33 @@ function run_geop_maps() {
 }
 run_geop_maps();
 
-// Example 1 : WP Shortcode to display form on any page or post.
-function form_creation(){
+function shortcode_creation($atts){
+  $a = shortcode_atts(array(
+    'id' => '62c29fe8103c713904d23b8354ba41c8',
+    'name' => '',
+    'url' => '',
+  ), $atts);
+  ob_start();
 ?>
 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <div class="gp-ui-card gp-ui-card--minimal">
-                        <div class="media">
-
-                                                    <a class="embed-responsive embed-responsive-16by9" title="Fir Trees in the Continental U.S." href=" https://sit-viewer.geoplatform.us/?id=2e969783ac99a8b104aca8c482d5fbe7" target="_blank">
-
-                        string(70) "https://sit-viewer.geoplatform.us/?id=2e969783ac99a8b104aca8c482d5fbe7"
-                        <img class="embed-responsive-item" src="https://ual.geoplatform.gov/api/maps/2e969783ac99a8b104aca8c482d5fbe7/thumbnail" alt=""></a>
-                        </div> <!--media-->
-                          <div class="gp-ui-card__body" style="height:55px;">
-                              <h4 class="text--primary">Fir Trees in the Continental U.S.</h4>
-                          </div>
-                    </div> <!--gp-ui-card gp-ui-card-minimal-->
-                </div>
+  <div class="gp-ui-card gp-ui-card--minimal">
+      <div class="media">
+      <a class="embed-responsive embed-responsive-16by9" title="Fir Trees in the Continental U.S." href=" https://sit-viewer.geoplatform.us/?id=<?php echo $a['id']; ?>" target="_blank">
+      <img class="embed-responsive-item" src="https://ual.geoplatform.gov/api/maps/<?php echo $a['id']; ?>/thumbnail" alt=""></a>
+      </div> <!--media-->
+        <div class="gp-ui-card__body" style="height:55px;">
+            <h4 class="text--primary"><?php echo $a['name']; ?></h4>
+        </div>
+  </div> <!--gp-ui-card gp-ui-card-minimal-->
+</div>
 <?php
+return ob_get_clean();
 }
-add_shortcode('testicleees', 'form_creation');
+
+
+function wporg_shortcodes_init()
+{
+    add_shortcode('geopmap', 'shortcode_creation');
+}
+
+add_action('init', 'wporg_shortcodes_init');

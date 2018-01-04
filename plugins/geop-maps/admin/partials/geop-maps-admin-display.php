@@ -19,6 +19,8 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
 
+  <?php global $wpdb; ?>
+
     <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
 
     <form method="post" name="map_options" action="options.php">
@@ -26,9 +28,10 @@
       <?php
        //Grab all options
        $options = get_option($this->plugin_name);
-
+       var_dump($options);
        // Cleanup
        $ual_map_id = $options['ual_map_id'];
+//       $ual_map_id = "62c29fe8103c713904d23b8354ba41c8";
        $map_env = $options['map_env'];
        $map_env_select = isset($options['map_env_select']) ? $options['map_env_select'] : "";
        //$map_env_select = $options['map_env_select'];
@@ -44,8 +47,13 @@
             <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
             <input type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-ual_map_id" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
         </fieldset>
+
+        <!-- Add Map button, basically a copied and pasted clone of the Save All
+        Changes button at form's bottom. -->
+        <button onclick="add_map()">Add Map</button>
+
         <!-- Map Environment Choice Radio-->
-        <fieldset>
+        <!-- <fieldset>
         	<legend class="screen-reader-text"><span>Map Environment</span></legend>
           	<label title='Systems Integrations Testing'>
           		<input type="radio" name="<?php echo $this->plugin_name; ?>[map_env]" value="sit" <?php checked('sit', $map_env, true); ?> />
@@ -59,7 +67,7 @@
         		<input type="radio" name="<?php echo $this->plugin_name; ?>[map_env]" value="prod" <?php checked('prod', $map_env, true); ?>/>
         		<span><?php esc_attr_e( 'PROD - Map ID is from https://maps.geoplatform.gov', 'geop-maps' ); ?></span>
         	</label>
-        </fieldset>
+        </fieldset> -->
         <!-- Map Environment Choice dropdown-->
         <!-- <fieldset>
           <legend class="screen-reader-text"><span><?php _e('Map Environment', $this->plugin_name);?></span></legend>
@@ -100,15 +108,31 @@
           $map_id = $ual_map_id;
           $map_name = $result['label'];
           $map_description = $result['description'];
+          $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "']";
           $map_url = 'https://sit-viewer.geoplatform.us/' . '/?id=' . $map_id;
           $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
+
+
+          // Temp addition code, to be moved elsewhere.
+          $table_name = $wpdb->prefix . 'newsmap_db';
+          $input = !empty($ual_map_id) ? $ual_map_id : "";
+
+          $wpdb->insert($table_name,
+            array(
+              'map_id' => $map_id,
+              'map_name' => $map_name,
+              'map_description' => $map_description,
+              'map_shortcode' => '$map_shortcode',
+              'map_url' => $map_url,
+              'map_thumbnail' => $map_thumbnail,
+            )
+          );
+
           //build shortcode from data
         }
         else{
           echo"Please provide a Map ID";
         }
-
-
 
       ?>
 
@@ -137,11 +161,31 @@
             <td><?php esc_attr_e( '$map_url', 'geop-maps' ); ?></td>
             <td><?php esc_attr_e( '$map_thumbnail', 'geop-maps' ); ?></td>
         	</tr>
+          <?php
+
+          /* Pulls the entries from the database and cycles through them, giving
+           * output from them in proper formatting.
+          */
+          $table_name = $wpdb->prefix . "newsmap_db";
+          $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
+
+          foreach ($retrieved_data as $entry){?>
+            <tr>
+          		<td class="row-title"><label for="tablecell"><?php echo $entry->map_id; ?></label></td>
+          		<td><?php echo $entry->map_name; ?></td>
+              <td><?php echo $entry->map_description; ?></td>
+              <?php $temp_short = $entry->map_shortcode;?>
+              <td><code><?php esc_attr_e( '$temp_short', 'geop-maps' ); ?></code></td>
+              <td><a href="<?php echo $entry->map_url; ?>" target="_blank">View in Map Viewer</a></td>
+              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt=""></a></td>
+          	</tr><?php
+          }?>
+
           <tr>
         		<td class="row-title"><label for="tablecell"><?php echo $map_id; ?></label></td>
         		<td><?php echo $map_name; ?></td>
             <td><?php echo $map_description; ?></td>
-            <td><code><?php esc_attr_e( '$map_shortcode', 'geop-maps' ); ?></code></td>
+            <td><code><?php echo $map_shortcode ?></code></td>
             <td><a href="<?php echo $map_url; ?>" target="_blank">View in Map Viewer</a></td>
             <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $map_thumbnail; ?>" alt=""></a></td>
         	</tr>
@@ -164,24 +208,21 @@
 
 </div>
 <?php
-// Example 1 : WP Shortcode to display form on any page or post.
-function shorcode_creation(){
-?>
-<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                    <div class="gp-ui-card gp-ui-card--minimal">
-                        <div class="media">
 
-                                                    <a class="embed-responsive embed-responsive-16by9" title="Fir Trees in the Continental U.S." href=" https://sit-viewer.geoplatform.us/?id=2e969783ac99a8b104aca8c482d5fbe7" target="_blank">
+function add_map(){
+  global $wpdb;
+  $table_name = $wpdb->prefix . 'newsmap_db';
 
-                        string(70) "https://sit-viewer.geoplatform.us/?id=2e969783ac99a8b104aca8c482d5fbe7"
-                        <img class="embed-responsive-item" src="https://ual.geoplatform.gov/api/maps/2e969783ac99a8b104aca8c482d5fbe7/thumbnail" alt=""></a>
-                        </div> <!--media-->
-                          <div class="gp-ui-card__body" style="height:55px;">
-                              <h4 class="text--primary">Fir Trees in the Continental U.S.</h4>
-                          </div>
-                    </div> <!--gp-ui-card gp-ui-card-minimal-->
-                </div>
-<?php
-}
-add_shortcode('geopmap', 'shortcode_creation');
-?>
+  $input = !empty($ual_map_id) ? $ual_map_id : "";
+
+  $wpdb->insert($table_name,
+    array(
+      'map_id' => $map_id,
+      'map_name' => $map_name,
+      'map_description' => $map_description,
+      'map_shortcode' => '$map_shortcode',
+      'map_url' => $map_url,
+      'map_thumbnail' => $map_thumbnail,
+    )
+  );
+}?>
