@@ -51,7 +51,7 @@
         <!-- Add Map button, basically a copied and pasted clone of the Save All
         Changes button at form's bottom. -->
         <!-- <button onclick="add_map()">Add Map</button> -->
-        <input type="button" onclick="add_map()" value="Add Map" name="add_map">
+        <input type="submit" name="geop_add_action" value="Add Map">
 
         <!-- Map Environment Choice Radio-->
         <!-- <fieldset>

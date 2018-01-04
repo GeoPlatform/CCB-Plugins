@@ -29,10 +29,26 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-
-
-
-
-
-
 })( jQuery );
+
+
+jQuery(document).ready( function($){
+
+	jQuery(document).on('click', '#add_map_button', function (e) {
+			e.preventDefault();				// prevent page reload and form submission.
+       var member = jQuery('#add_map_text').val();
+       $.ajax({
+           type: "GET",
+           url: "http://localhost/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php",
+           data: {
+               param: member,
+           },
+           dataType: "json",
+					 asynch: false,
+           success: function(r){
+              location.reload();
+           },
+       });
+
+   });
+ });
