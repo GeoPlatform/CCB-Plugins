@@ -28,12 +28,12 @@
       <?php
        //Grab all options
        $options = get_option($this->plugin_name);
-       var_dump($options);
+//       var_dump($options);
        // Cleanup
        $ual_map_id = $options['ual_map_id'];
 //       $ual_map_id = "62c29fe8103c713904d23b8354ba41c8";
-       $map_env = $options['map_env'];
-       $map_env_select = isset($options['map_env_select']) ? $options['map_env_select'] : "";
+//       $map_env = $options['map_env'];
+//       $map_env_select = isset($options['map_env_select']) ? $options['map_env_select'] : "";
        //$map_env_select = $options['map_env_select'];
    ?>
 
@@ -50,7 +50,8 @@
 
         <!-- Add Map button, basically a copied and pasted clone of the Save All
         Changes button at form's bottom. -->
-        <button onclick="add_map()">Add Map</button>
+        <!-- <button onclick="add_map()">Add Map</button> -->
+        <input type="button" onclick="add_map()" value="Add Map" name="add_map">
 
         <!-- Map Environment Choice Radio-->
         <!-- <fieldset>
@@ -92,7 +93,6 @@
         if (isset($ual_map_id)) {
           //build UAL call
           $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
-          var_dump($ual_url);
           $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
           $response = wp_remote_retrieve_body( $link_scrub );
           //call UAL
@@ -105,28 +105,29 @@
 
           //var_dump($result);
           //build variables from UAL Call data
-          $map_id = $ual_map_id;
-          $map_name = $result['label'];
-          $map_description = $result['description'];
-          $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "']";
-          $map_url = 'https://sit-viewer.geoplatform.us/' . '/?id=' . $map_id;
-          $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
+          // $map_id = $ual_map_id;
+          // $map_name = $result['label'];
+          // $map_description = $result['description'];
+          // $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "']";
+          // $map_url = 'https://sit-viewer.geoplatform.us/' . '/?id=' . $map_id;
+          // $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
 
+         add_map($ual_map_id, $result);
 
           // Temp addition code, to be moved elsewhere.
-          $table_name = $wpdb->prefix . 'newsmap_db';
-          $input = !empty($ual_map_id) ? $ual_map_id : "";
-
-          $wpdb->insert($table_name,
-            array(
-              'map_id' => $map_id,
-              'map_name' => $map_name,
-              'map_description' => $map_description,
-              'map_shortcode' => '$map_shortcode',
-              'map_url' => $map_url,
-              'map_thumbnail' => $map_thumbnail,
-            )
-          );
+          // $table_name = $wpdb->prefix . 'newsmap_db';
+          // $input = !empty($ual_map_id) ? $ual_map_id : "";
+          //
+          // $wpdb->insert($table_name,
+          //   array(
+          //     'map_id' => $map_id,
+          //     'map_name' => $map_name,
+          //     'map_description' => $map_description,
+          //     'map_shortcode' => $map_shortcode,
+          //     'map_url' => $map_url,
+          //     'map_thumbnail' => $map_thumbnail,
+          //   )
+          // );
 
           //build shortcode from data
         }
@@ -147,11 +148,12 @@
             <th><?php esc_attr_e( 'Description', 'geop-maps' ); ?></th>
             <th><?php esc_attr_e( 'Shortcode', 'geop-maps' ); ?></th>
             <th><?php esc_attr_e( 'URL', 'geop-maps' ); ?></th>
+            <th>Remove from List</th>
             <th><?php esc_attr_e( 'Thumbnail', 'geop-maps' ); ?></th>
         	</tr>
         	</thead>
         	<tbody>
-        	<tr>
+        	<!-- <tr>
         		<td class="row-title"><label for="tablecell"><?php esc_attr_e(
         					'$map_ID', 'geop-maps'
         				); ?></label></td>
@@ -160,7 +162,7 @@
             <td><code><?php esc_attr_e( '$map_shortcode', 'geop-maps' ); ?></code></td>
             <td><?php esc_attr_e( '$map_url', 'geop-maps' ); ?></td>
             <td><?php esc_attr_e( '$map_thumbnail', 'geop-maps' ); ?></td>
-        	</tr>
+        	</tr> -->
           <?php
 
           /* Pulls the entries from the database and cycles through them, giving
@@ -168,6 +170,7 @@
           */
           $table_name = $wpdb->prefix . "newsmap_db";
           $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
+          $iter = 0;
 
           foreach ($retrieved_data as $entry){?>
             <tr>
@@ -175,13 +178,16 @@
           		<td><?php echo $entry->map_name; ?></td>
               <td><?php echo $entry->map_description; ?></td>
               <?php $temp_short = $entry->map_shortcode;?>
-              <td><code><?php esc_attr_e( '$temp_short', 'geop-maps' ); ?></code></td>
-              <td><a href="<?php echo $entry->map_url; ?>" target="_blank">View in Map Viewer</a></td>
+              <td><code><?php echo $entry->map_shortcode; ?></code></td>
+              <td><a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>"><?php esc_attr_e( 'View in Map Viewer' ); ?></a></td>
+              <td><input type="submit" name="geop_remove_action" value="Remove Map"></td>
               <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt=""></a></td>
+              <input type="hidden" name="geop_remove_id" value="geop_remove_row_<?php echo $iter; ?>"/>
+              <?php $iter++; ?>
           	</tr><?php
           }?>
 
-          <tr>
+          <!-- <tr>
         		<td class="row-title"><label for="tablecell"><?php echo $map_id; ?></label></td>
         		<td><?php echo $map_name; ?></td>
             <td><?php echo $map_description; ?></td>
@@ -199,7 +205,7 @@
             <th><?php esc_attr_e( 'URL', 'geop-maps' ); ?></th>
             <th><?php esc_attr_e( 'Thumbnail', 'geop-maps' ); ?></th>
         	</tr>
-        	</tfoot>
+        	</tfoot> -->
         </table>
 
         <?php submit_button('Save all changes', 'primary','submit', TRUE); ?>
@@ -209,20 +215,32 @@
 </div>
 <?php
 
-function add_map(){
+function add_map($param_id, $param_result){
   global $wpdb;
   $table_name = $wpdb->prefix . 'newsmap_db';
 
-  $input = !empty($ual_map_id) ? $ual_map_id : "";
+  $input = !empty($param_id) ? $param_id : "Empty";
+  $map_id = $input;
+  $map_name = $param_result['label'];
+  $map_description = $param_result['description'];
+  $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "']";
+  $map_url = 'https://sit-viewer.geoplatform.us/' . '/?id=' . $map_id;
+  $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
 
   $wpdb->insert($table_name,
     array(
       'map_id' => $map_id,
       'map_name' => $map_name,
       'map_description' => $map_description,
-      'map_shortcode' => '$map_shortcode',
+      'map_shortcode' => $map_shortcode,
       'map_url' => $map_url,
       'map_thumbnail' => $map_thumbnail,
     )
   );
+}
+
+
+
+function remove_map($param_id, $param_result){
+
 }?>
