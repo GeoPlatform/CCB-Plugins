@@ -46,10 +46,50 @@
           data: map_data,
           success:function(data){
               console.log("success",data); //this will log the response from the server to the developer console
+              location.reload();
               // run whatever jquery you want for a successful action here
           },
           error:function(data){
               console.log("error",data);
+              location.reload();
+              // run whatever jquery you want for an unsuccessful action here
+          }
+      });
+  }
+
+
+  jQuery(document).ready(function() {
+    console.log("loaded");
+      jQuery("#geop_remove_action").click(function(e){   //Replace #btnSubmit with whatever your selector is. Jquery lets you select based off css classes & IDs (plus many other combinations, but this should be enough for now)
+        console.log("made it here");
+          var map_id = jQuery("#map_id_in").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+          remove_map_ajax(map_id);
+
+          e.preventDefault();
+      });
+  });
+
+  function remove_map_ajax(map_id){
+      // This is setting up the data you're sending to the PHP function.
+      // In the PHP, you'll be able to access $_POST['mapID'] which will contain the value of map_id
+      var map_data = {
+          mapID: map_id
+      };
+
+      //This sends the ajax call to the server
+      jQuery.ajax({
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
+          type:"POST",
+          dataType:"json",
+          data: map_data,
+          success:function(data){
+              console.log("success",data); //this will log the response from the server to the developer console
+              location.reload();
+              // run whatever jquery you want for a successful action here
+          },
+          error:function(data){
+              console.log("error",data);
+              location.reload();
               // run whatever jquery you want for an unsuccessful action here
           }
       });
@@ -72,16 +112,9 @@
       <?php
        //Grab all options
        $options = get_option($this->plugin_name);
-//       var_dump($options);
        // Cleanup
        $ual_map_id = $options['ual_map_id'];
-//       $ual_map_id = "62c29fe8103c713904d23b8354ba41c8";
-//       $map_env = $options['map_env'];
-//       $map_env_select = isset($options['map_env_select']) ? $options['map_env_select'] : "";
-       //$map_env_select = $options['map_env_select'];
-   ?>
 
-   <?php
        settings_fields($this->plugin_name);
        do_settings_sections($this->plugin_name);
    ?>
@@ -96,8 +129,8 @@
 
         <!-- Add Map button, basically a copied and pasted clone of the Save All
         Changes button at form's bottom. -->
-        <!-- <button onclick="add_map()">Add Map</button> -->
         <input type="button" id="geop_add_action" value="Add Map"></input>
+        <input type="button" id="geop_remove_action" value="Remove Map"></input>
 
         <!-- Map Environment Choice Radio-->
         <!-- <fieldset>
@@ -150,33 +183,7 @@
             $result = "This Gallery has no recent activity. Try adding some maps!";
           }
 
-          //var_dump($result);
-          //build variables from UAL Call data
-          // $map_id = $ual_map_id;
-          // $map_name = $result['label'];
-          // $map_description = $result['description'];
-          // $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "']";
-          // $map_url = 'https://sit-viewer.geoplatform.us/' . '/?id=' . $map_id;
-          // $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
 
-          // add_map($ual_map_id);
-
-          // Temp addition code, to be moved elsewhere.
-          // $table_name = $wpdb->prefix . 'newsmap_db';
-          // $input = !empty($ual_map_id) ? $ual_map_id : "";
-          //
-          // $wpdb->insert($table_name,
-          //   array(
-          //     'map_id' => $map_id,
-          //     'map_name' => $map_name,
-          //     'map_description' => $map_description,
-          //     'map_shortcode' => $map_shortcode,
-          //     'map_url' => $map_url,
-          //     'map_thumbnail' => $map_thumbnail,
-          //   )
-          // );
-
-          //build shortcode from data
         }
         else{
           echo"Please provide a Map ID";
@@ -227,7 +234,7 @@
               <?php $temp_short = $entry->map_shortcode;?>
               <td><code><?php echo $entry->map_shortcode; ?></code></td>
               <td><a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>"><?php esc_attr_e( 'View in Map Viewer' ); ?></a></td>
-              <td><input type="submit" name="geop_remove_action_<?php echo $entry->map_rand_id ?>" value="Remove Map" onclick="remove_map_js(this.name)"></td>
+              <td><input type="button" id="final_remove_button" value="Remove Map"></td>
               <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt=""></a></td>
               <?php $iter++; ?>
           	</tr><?php

@@ -5,6 +5,7 @@ $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require( $parse_uri[0] . 'wp-load.php' );
 global $wpdb;
 $ual_map_id = $_POST["mapID"];
+echo $ual_map_id;
 
 $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
 $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
@@ -40,4 +41,6 @@ $wpdb->insert($table_name,
     'map_thumbnail' => $map_thumbnail,
     'map_rand_id' => $map_rand_id
   )
-);?>
+);
+
+?>
