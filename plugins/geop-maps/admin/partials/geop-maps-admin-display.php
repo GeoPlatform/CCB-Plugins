@@ -15,6 +15,50 @@
  *
  */
 ?>
+<!-- "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/gethint.php?q=" + str -->
+
+<html>
+<body>
+<script>
+  jQuery(document).ready(function() {
+    console.log("loaded");
+      jQuery("#geop_add_action").click(function(e){   //Replace #btnSubmit with whatever your selector is. Jquery lets you select based off css classes & IDs (plus many other combinations, but this should be enough for now)
+        console.log("made it here");
+          var map_id = jQuery("#map_id_in").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+          add_map_ajax(map_id);
+
+          e.preventDefault();
+      });
+  });
+
+  function add_map_ajax(map_id){
+      // This is setting up the data you're sending to the PHP function.
+      // In the PHP, you'll be able to access $_POST['mapID'] which will contain the value of map_id
+      var map_data = {
+          mapID: map_id
+      };
+
+      //This sends the ajax call to the server
+      jQuery.ajax({
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
+          type:"POST",
+          dataType:"json",
+          data: map_data,
+          success:function(data){
+              console.log("success",data); //this will log the response from the server to the developer console
+              // run whatever jquery you want for a successful action here
+          },
+          error:function(data){
+              console.log("error",data);
+              // run whatever jquery you want for an unsuccessful action here
+          }
+      });
+  }
+
+
+</script>
+
+
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
@@ -45,13 +89,15 @@
         <fieldset>
             <p>Please Provide the ID of the map you created from <a href="https://maps.geoplatform.gov">Maps.GeoPlatform.gov</a> to be embedded into your Wordpress site.</p>
             <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
-            <input type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-ual_map_id" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
+            <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
+            <!-- <input type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-ual_map_id" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/> -->
         </fieldset>
+
 
         <!-- Add Map button, basically a copied and pasted clone of the Save All
         Changes button at form's bottom. -->
         <!-- <button onclick="add_map()">Add Map</button> -->
-        <input type="submit" name="geop_add_action" value="Add Map">
+        <input type="button" id="geop_add_action" value="Add Map"></input>
 
         <!-- Map Environment Choice Radio-->
         <!-- <fieldset>
@@ -79,6 +125,7 @@
                   <option value="prod" <?php selected($map_env_select, 'prod', true);?>>Prod(https://maps.geoplatform.gov)</option>
               </select>
         </fieldset> -->
+
 
 
       <?php
@@ -112,7 +159,7 @@
           // $map_url = 'https://sit-viewer.geoplatform.us/' . '/?id=' . $map_id;
           // $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
 
-         add_map($ual_map_id, $result);
+          // add_map($ual_map_id);
 
           // Temp addition code, to be moved elsewhere.
           // $table_name = $wpdb->prefix . 'newsmap_db';
@@ -180,9 +227,8 @@
               <?php $temp_short = $entry->map_shortcode;?>
               <td><code><?php echo $entry->map_shortcode; ?></code></td>
               <td><a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>"><?php esc_attr_e( 'View in Map Viewer' ); ?></a></td>
-              <td><input type="submit" name="geop_remove_action" value="Remove Map"></td>
+              <td><input type="submit" name="geop_remove_action_<?php echo $entry->map_rand_id ?>" value="Remove Map" onclick="remove_map_js(this.name)"></td>
               <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt=""></a></td>
-              <input type="hidden" name="geop_remove_id" value="geop_remove_row_<?php echo $iter; ?>"/>
               <?php $iter++; ?>
           	</tr><?php
           }?>
@@ -215,17 +261,39 @@
 </div>
 <?php
 
-function add_map($param_id, $param_result){
+
+
+
+
+
+
+
+function add_map($ual_map_id){
   global $wpdb;
+
+  $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
+  $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+  $response = wp_remote_retrieve_body( $link_scrub );
+
+
+  if(!empty($response)){
+    $result = json_decode($response, true);
+  }else{
+    $result = "This Gallery has no recent activity. Try adding some maps!";
+  }
+
   $table_name = $wpdb->prefix . 'newsmap_db';
 
-  $input = !empty($param_id) ? $param_id : "Empty";
+  $input = !empty($ual_map_id) ? $ual_map_id : "Empty";
   $map_id = $input;
-  $map_name = $param_result['label'];
-  $map_description = $param_result['description'];
+  $map_name = $result['label'];
+  $map_description = $result['description'];
   $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "']";
   $map_url = 'https://sit-viewer.geoplatform.us/' . '/?id=' . $map_id;
   $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
+  $map_rand_id = rand();
+
+  echo var_dump($table_name);
 
   $wpdb->insert($table_name,
     array(
@@ -235,12 +303,13 @@ function add_map($param_id, $param_result){
       'map_shortcode' => $map_shortcode,
       'map_url' => $map_url,
       'map_thumbnail' => $map_thumbnail,
+      'map_rand_id' => $map_rand_id
     )
   );
 }
 
 
 
-function remove_map($param_id, $param_result){
+function remove_map($ual_map_id, $result){
 
-}?>
+}
