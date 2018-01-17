@@ -82,18 +82,23 @@ function run_geop_maps() {
 run_geop_maps();
 
 function shortcode_creation($atts){
+
+	global $ual_url;
+	global $viewer_url;
+
+
   $a = shortcode_atts(array(
     'id' => '62c29fe8103c713904d23b8354ba41c8',
     'name' => '',
     'url' => '',
   ), $atts);
-  ob_start();
+  ob_start(); // This method currently does not exist in the geop-maps plugin folder. Where is it? What does it do?
 ?>
 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
   <div class="gp-ui-card gp-ui-card--minimal">
       <div class="media">
-      <a class="embed-responsive embed-responsive-16by9" title="Fir Trees in the Continental U.S." href=" https://sit-viewer.geoplatform.us/?id=<?php echo $a['id']; ?>" target="_blank">
-      <img class="embed-responsive-item" src="https://ual.geoplatform.gov/api/maps/<?php echo $a['id']; ?>/thumbnail" alt=""></a>
+      <a class="embed-responsive embed-responsive-16by9" title="Random Default Mouse-over title" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank">
+      <img class="embed-responsive-item" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id'] ?>/thumbnail" alt=""></a>
       </div> <!--media-->
         <div class="gp-ui-card__body" style="height:55px;">
             <h4 class="text--primary"><?php echo $a['name']; ?></h4>
