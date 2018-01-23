@@ -91,17 +91,40 @@ function shortcode_creation($atts){
     'id' => '62c29fe8103c713904d23b8354ba41c8',
     'name' => '',
     'url' => '',
+		'width' => '270',
+		'height' => '180'
   ), $atts);
   ob_start(); // This method currently does not exist in the geop-maps plugin folder. Where is it? What does it do?
 ?>
 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-  <div class="gp-ui-card gp-ui-card--minimal">
+  <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
       <div class="media">
-      <a class="embed-responsive embed-responsive-16by9" title="Random Default Mouse-over title" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank">
-      <img class="embed-responsive-item" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id'] ?>/thumbnail" alt=""></a>
+			<!-- <iframe src="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" width=<?php echo $a['width'] ?> height=<?php echo $a['height'] ?>></iframe> -->
+      <!-- <a class="embed-responsive embed-responsive-16by9" title="Random Default Mouse-over title" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank"> -->
+
+
+			<div id="<?php echo $a['id']; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
+
+			<script>
+				var lat = 38.8282;
+				var lng = -98.5795;
+				var zoom = 4;
+
+				// L is pulled in from another dependency.
+				// newsMap must match the newsMap id in newsmap.html
+				var map = L.map('<?php echo $a['id']; ?>').setView([lat, lng], zoom);
+
+	      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+	        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+	      }).addTo(map);
+
+			</script>
+
+
+			<!-- <img class="embed-responsive-item" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id'] ?>/thumbnail" alt=""></a> -->
       </div> <!--media-->
         <div class="gp-ui-card__body" style="height:55px;">
-            <h4 class="text--primary"><?php echo $a['name']; ?></h4>
+            <a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>"><h4 class="text--primary"><?php echo $a['name']; ?></h4></a>
         </div>
   </div> <!--gp-ui-card gp-ui-card-minimal-->
 </div>

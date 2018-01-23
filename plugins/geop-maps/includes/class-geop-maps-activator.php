@@ -43,6 +43,7 @@ class Geop_Maps_Activator {
 				map_shortcode varchar(255) NOT NULL,
 				map_url varchar(255) NOT NULL,
 				map_thumbnail varchar(255) NOT NULL,
+				map_rand_id varchar(255) NOT NULL,
 	      PRIMARY KEY  (id)
 	    ) $charset_collate;";
 
@@ -50,6 +51,9 @@ class Geop_Maps_Activator {
 	    dbDelta($sql);
 	  }
 	}
+  //
+	// private static function gpf_leaflet_gen() {
+	// }
 
 	/**
 	 * Short Description. (use period)

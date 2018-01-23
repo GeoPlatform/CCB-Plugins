@@ -22,6 +22,7 @@
      their respective executing classes.-->
 <html>
 <body>
+
 <script>
   /* This is the AJAX detector for the Add Map button. It contains the press detection,
    * variable collection, and function execution. It also contains a refresh
@@ -32,7 +33,9 @@
       jQuery("#geop_add_action").click(function(e){   //Replace #btnSubmit with whatever your selector is. Jquery lets you select based off css classes & IDs (plus many other combinations, but this should be enough for now)
         console.log("made it here");
           var map_id = jQuery("#map_id_in").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
-          add_map_ajax(map_id);
+          var map_height = jQuery("#map_height").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+          var map_width = jQuery("#map_width").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+          add_map_ajax(map_id, map_height, map_width);
 
           e.preventDefault();
       });
@@ -42,9 +45,11 @@
    * then, within a jQuery.ajax() call, passes the necessary parameters along with
    * console error reporting actions and a force page reload.
   */
-  function add_map_ajax(map_id){
+  function add_map_ajax(map_id, map_height, map_width){
       var map_data = {
-          mapID: map_id
+          mapID: map_id,
+          mapHeight: map_height,
+          mapWidth: map_width
       };
 
       jQuery.ajax({
@@ -124,12 +129,18 @@
       do_settings_sections($this->plugin_name);
     ?>
 
-<!-- Label and text field for map ID input. -->
+<!-- Label and text field for map ID, height, and width input. -->
     <fieldset>
       <p>Please Provide the ID of the map you created from <a href="https://maps.geoplatform.gov">Maps.GeoPlatform.gov</a> to be embedded into your Wordpress site.</p>
       <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
-      <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
+      <p>Please input a map ID:
+        <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
+        &nbsp&nbsp&nbsp&nbspDesired height:
+      <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" value="180" style="width:5em;"/>
+        &nbsp&nbsp&nbsp&nbspDesired width:
+      <input type="text" class="regular-text" id="map_width" name="<?php echo $this->plugin_name; ?>[ual_width]" value="270" style="width:5em;"/>
             <!-- <input type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-ual_map_id" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/> -->
+      </p>
     </fieldset>
 
 
