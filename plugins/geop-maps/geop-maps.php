@@ -94,43 +94,60 @@ function shortcode_creation($atts){
 		'width' => '270',
 		'height' => '180'
   ), $atts);
-  ob_start(); // This method currently does not exist in the geop-maps plugin folder. Where is it? What does it do?
+  ob_start();
 ?>
-<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+<!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12"> -->
   <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
       <div class="media">
-			<!-- <iframe src="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" width=<?php echo $a['width'] ?> height=<?php echo $a['height'] ?>></iframe> -->
-      <!-- <a class="embed-responsive embed-responsive-16by9" title="Random Default Mouse-over title" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank"> -->
+				<div id="<?php echo $a['id']; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
+
+				<script>
+					var lat = 38.8282;
+					var lng = -98.5795;
+					var zoom = 3;
+
+					// Reactive zoom levels based upon input map zoom, current algorithm functional, needs tweaking.
+					var widthRatio = <?php echo $a['width'] ?> / window.innerWidth;
+					var heightRatio = <?php echo $a['height'] ?> / window.innerHeight;
+					var zoomFlex = (widthRatio < heightRatio ? widthRatio : heightRatio);
+					var zoomFinal = zoom * (1 + zoomFlex);
+
+					// Document write-out. Unsecure, will be removed before release.
+					document.write(widthRatio + " " + heightRatio + " " + zoomFlex + " " + zoomFinal);
+
+					// L is pulled in from another dependency.
+					// newsMap must match the newsMap id in newsmap.html
+					var map = L.map('<?php echo $a['id']; ?>').setView([lat, lng], zoomFinal);
 
 
-			<div id="<?php echo $a['id']; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
 
-			<script>
-				var lat = 38.8282;
-				var lng = -98.5795;
-				var zoom = 4;
 
-				// L is pulled in from another dependency.
-				// newsMap must match the newsMap id in newsmap.html
-				var map = L.map('<?php echo $a['id']; ?>').setView([lat, lng], zoom);
+					// Functioning, usable default map.
+	      	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	        	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+	      	}).addTo(map);
 
-	      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-	        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
-	      }).addTo(map);
+					/* Sets up a layergroup and adds it to the map. This is followed by the
+					 * function call that adds the elements to the group.
+					*/
+					markers = L.layerGroup([]).addTo(map);
+					addPoints();
 
-			</script>
+				</script>
 
 
 			<!-- <img class="embed-responsive-item" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id'] ?>/thumbnail" alt=""></a> -->
       </div> <!--media-->
-        <div class="gp-ui-card__body" style="height:55px;">
+        <div class="gp-ui-card__body" style="height:45px;">
             <a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>"><h4 class="text--primary"><?php echo $a['name']; ?></h4></a>
         </div>
   </div> <!--gp-ui-card gp-ui-card-minimal-->
-</div>
+<!-- </div> -->
 <?php
 return ob_get_clean();
 }
+
+
 
 
 function wporg_shortcodes_init()
@@ -139,3 +156,57 @@ function wporg_shortcodes_init()
 }
 
 add_action('init', 'wporg_shortcodes_init');
+?>
+
+
+<!-- Marker addition script. Currently hard-coded, will be modular later with
+ 		input from the geoplatform site before it goes live. -->
+<script>
+function addPoints(){
+
+	// Simple marker with popup-information functionality.
+	var popupString = "<b>Hello, good viewer.</b><br>This is a pop-up, which uses HTML notation for its output content.";
+	var marker = L.marker([lat + 5, lng - 20]);
+	marker.bindPopup(popupString);
+	marker.addTo(markers);
+
+	// Four circles of different colors.
+	var circle = L.circle([34, -85], {
+	    color: 'red',
+	    fillColor: '#f00',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
+	var circle = L.circle([34, -81.25], {
+	    color: 'yellow',
+	    fillColor: '#ff0',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
+	var circle = L.circle([37.25, -85], {
+	    color: 'blue',
+	    fillColor: '#00f',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
+	var circle = L.circle([37.25, -81.25], {
+	    color: 'green',
+	    fillColor: '#0f0',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
+
+	// A polygon, triangle to be exact.
+	var polygon = L.polygon([
+		[40, -107],
+		[40, -111],
+		[38, -109]
+	])
+	polygon.addTo(markers);
+
+}
+</script>
