@@ -43,7 +43,7 @@ class Geop_Maps_Activator {
 				map_shortcode varchar(255) NOT NULL,
 				map_url varchar(255) NOT NULL,
 				map_thumbnail varchar(255) NOT NULL,
-				map_rand_id varchar(255) NOT NULL,
+				map_agol varchar(255) NOT NULL,
 	      PRIMARY KEY  (id)
 	    ) $charset_collate;";
 

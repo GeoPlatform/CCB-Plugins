@@ -93,61 +93,99 @@ function shortcode_creation($atts){
     'url' => '',
 		'width' => '270',
 		'height' => '180',
-		'divnum' => '12345'
+		'agol' => 'N'
   ), $atts);
   ob_start();
-?>
-<!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12"> -->
-  <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
-    <div class="media">
-			<div id="container_<?php echo $a['divnum']; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
 
-			<script>
-				var lat = 38.8282;
-				var lng = -98.5795;
-				var zoom = 3;
-				var mapCode = "<?php echo $a['id']; ?>";
+	if ($a['agol'] == 'N')
+		geop_map_gen($a);
+	else
+		agol_map_gen($a);
 
-				// Reactive zoom levels based upon input map zoom, current algorithm functional, needs tweaking.
-				var widthRatio = <?php echo $a['width'] ?> / window.innerWidth;
-				var heightRatio = <?php echo $a['height'] ?> / window.innerHeight;
-				var zoomFlex = (widthRatio < heightRatio ? widthRatio : heightRatio);
-				var zoomFinal = zoom * (1 + zoomFlex);
-
-				// Document write-out. Unsecure, will be removed before release.
-				document.write(widthRatio + " " + heightRatio + " " + zoomFlex + " " + zoomFinal + " " + mapCode);
-
-
-
-				var leafBase = L.map("container_<?php echo $a['divnum'];?>");
-	      var mapInstance = GeoPlatform.MapFactory.get();
-	      mapInstance.setMap(leafBase);
-	      mapInstance.setView(51.505, -0.09, 13);
-
-
-
-	      mapInstance.loadMap(mapCode).then( mapObj => {
-					let blObj = mapInstance.getBaseLayer();
-	        let layerStates = mapInstance.getLayers();
-	      });
-
-
-
-
-
-
-			</script>
-
-			<!-- <img class="embed-responsive-item" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id'] ?>/thumbnail" alt=""></a> -->
-    </div> <!--media-->
-    <div class="gp-ui-card__body" style="height:45px;">
-      <a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>"><h4 class="text--primary"><?php echo $a['name']; ?></h4></a>
-    </div>
-  </div> <!--gp-ui-card gp-ui-card-minimal-->
-<!-- </div> -->
-	<?php
 	return ob_get_clean();
 }
+
+
+
+function agol_map_gen($a){
+	?>
+	<div style="margin:1em;clear:both;padding:1em;">
+	  <div class="gp-ui-card gp-ui-card--minimal" style="width:200px;">
+			<a title="Visit full map of <?php echo $a['name']; ?>" href="https://geoplatform.maps.arcgis.com/home/webmap/viewer.html?webmap=<?php echo $a['id']; ?>">
+	    	<div class="media">
+					<img class="embed-responsive-item" href="https://geoplatform.maps.arcgis.com/home/webmap/viewer.html?webmap=<?php echo $a['id']; ?>" src="https://geoplatform.maps.arcgis.com/sharing/rest/content/items/<?php echo $a['id'] ?>/info/thumbnail/ago_downloaded.png" alt="Thumbnail failed to load">
+				</div> <!--media-->
+	    	<div>
+					<h4 class="text--primary"><?php echo $a['name']; ?></h4>
+	    	</div>
+			</a>
+	  </div>
+	</div>
+
+
+<?php
+}
+
+
+
+
+function geop_map_gen($a){
+	?>
+
+	<div style="margin:1em;clear:both;padding:1em;">
+	  <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
+	    <div class="media">
+				<?php $divrand = rand(0, 99999); ?>
+				<div id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
+
+				<script>
+					var lat = 38.8282;
+					var lng = -98.5795;
+					var zoom = 3;
+					var mapCode = "<?php echo $a['id']; ?>";
+
+					// Reactive zoom levels based upon input map zoom, current algorithm functional, needs tweaking.
+					var widthRatio = <?php echo $a['width'] ?> / window.innerWidth;
+					var heightRatio = <?php echo $a['height'] ?> / window.innerHeight;
+					var zoomFlex = (widthRatio < heightRatio ? widthRatio : heightRatio);
+					var zoomFinal = zoom * (1 + zoomFlex);
+
+
+
+
+
+					var leafBase = L.map("container_<?php echo $divrand;?>");
+		      var mapInstance = GeoPlatform.MapFactory.get();
+		      mapInstance.setMap(leafBase);
+		      mapInstance.setView(51.505, -0.09, 13);
+
+
+
+		      mapInstance.loadMap(mapCode).then( mapObj => {
+						let blObj = mapInstance.getBaseLayer();
+		        let layerStates = mapInstance.getLayers();
+		      });
+
+
+
+
+
+
+				</script>
+
+				<!-- <img class="embed-responsive-item" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id'] ?>/thumbnail" alt=""></a> -->
+	    </div> <!--media-->
+	    <div>
+	      <a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>"><h4 class="text--primary"><?php echo $a['name']; ?></h4></a>
+	    </div>
+	  </div>
+	</div>
+		<?php
+}
+
+
+
+
 
 
 
@@ -184,9 +222,6 @@ add_action('init', 'wporg_shortcodes_init');
 
 	 //timeout max for requests
 	 "timeout" : "5000",
-
-	 //name of custom Leaflet pane to append layers to
-	 // "leafletPane" : "gpmvPane",
 
 	 //identifier of GP Layer to use as default base layer
 	 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",

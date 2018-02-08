@@ -19,9 +19,17 @@ global $wpdb;
 $ual_map_id = $_POST["mapID"];
 $ual_map_height = $_POST["mapHeight"];
 $ual_map_width = $_POST["mapWidth"];
-$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
+$ual_map_agol = $_POST["mapAgol"];
+
+$ual_url = '';
+if ($ual_map_agol == 'N')
+  $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
+else
+  $ual_url = 'https://geoplatform.maps.arcgis.com/home/item.html?id=' . $ual_map_id;
+
 $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 $response = wp_remote_retrieve_body( $link_scrub );
+
 
 // Invalid submission detection.
 if(!empty($response)){
@@ -29,6 +37,8 @@ if(!empty($response)){
 }else{
   $result = "This Gallery has no recent activity. Try adding some maps!";
 }
+
+console.log("You got here.");
 
 // Our custom table is pulled from $wpdb.
 $table_name = $wpdb->prefix . 'newsmap_db';
@@ -55,9 +65,18 @@ if (!$duplicate){
   $map_name = $result['label'];
   $map_description = $result['description'];
   $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "'";
-  $map_url = 'https://sit-viewer.geoplatform.us/' . '?id=' . $map_id;
-  $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
-  $map_rand_id = rand();
+  $map_agol = $ual_map_agol;
+  $map_url = "";
+  $map_thumbnail = "";
+
+  if ($map_agol == 'N'){
+    $map_url = 'https://sit-viewer.geoplatform.us/' . '?id=' . $map_id;
+    $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
+  }
+  else {
+    $map_url = 'https://geoplatform.maps.arcgis.com/home/webmap/viewer.html?webmap=' . $map_id;
+    $map_thumbnail = 'https://geoplatform.maps.arcgis.com/sharing/rest/content/items/'. $map_id . "/info/thumbnail/ago_downloaded.png";
+  }
 
   /* The values of ual_map_height and _width are checked if numeric. If so, they
    * are concatenated into the shortcode. If not, the output will use default
@@ -67,6 +86,7 @@ if (!$duplicate){
     $map_shortcode .= " height='" . $ual_map_height . "'";
   if (is_numeric($ual_map_width))
     $map_shortcode .= " width='" . $ual_map_width . "'";
+  $map_shortcode .= " agol='" . $map_agol . "'";
   $map_shortcode .= "]";
 
   // Finally, the variables are added to the table in key/value pairs.
@@ -78,7 +98,7 @@ if (!$duplicate){
       'map_shortcode' => $map_shortcode,
       'map_url' => $map_url,
       'map_thumbnail' => $map_thumbnail,
-      'map_rand_id' => $map_rand_id
+      'map_agol' => $map_agol
     )
   );
 }

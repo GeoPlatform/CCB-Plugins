@@ -24,32 +24,41 @@
 <body>
 
 <script>
-  /* This is the AJAX detector for the Add Map button. It contains the press detection,
-   * variable collection, and function execution. It also contains a refresh
-   * suppressor that is likely unnecessary.
+  /* This is the document ready jQuery block, which contains the button press
+   * detectors for the add and remove map buttons. With either press, it collects
+   * the necessary information from the input boxes and calls the appropriate
+   * AJAX handling method. It also contains a refresh suppressor that is likely
+   * unnecessary.
   */
   jQuery(document).ready(function() {
-    console.log("loaded");
-      jQuery("#geop_add_action").click(function(e){   //Replace #btnSubmit with whatever your selector is. Jquery lets you select based off css classes & IDs (plus many other combinations, but this should be enough for now)
-        console.log("made it here");
-          var map_id = jQuery("#map_id_in").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
-          var map_height = jQuery("#map_height").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
-          var map_width = jQuery("#map_width").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
-          add_map_ajax(map_id, map_height, map_width);
+    jQuery("#geop_add_action").click(function(e){   //Replace #btnSubmit with whatever your selector is. Jquery lets you select based off css classes & IDs (plus many other combinations, but this should be enough for now)
+      var map_id = jQuery("#map_id_in").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+      var map_height = jQuery("#map_height").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+      var map_width = jQuery("#map_width").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+      var map_agol = jQuery("#map_agol").val();
+      add_map_ajax(map_id, map_height, map_width, map_agol);
 
-          e.preventDefault();
-      });
+      e.preventDefault();
+    });
+
+    jQuery("#geop_remove_action").click(function(e){   //Replace #btnSubmit with whatever your selector is. Jquery lets you select based off css classes & IDs (plus many other combinations, but this should be enough for now)
+      var map_id = jQuery("#map_id_in").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
+      remove_map_ajax(map_id);
+
+      e.preventDefault();
+    });
   });
 
   /* This is the actual AJAX call. It gathers the data for passing to the function,
    * then, within a jQuery.ajax() call, passes the necessary parameters along with
    * console error reporting actions and a force page reload.
   */
-  function add_map_ajax(map_id, map_height, map_width){
+  function add_map_ajax(map_id, map_height, map_width, map_agol){
       var map_data = {
           mapID: map_id,
           mapHeight: map_height,
-          mapWidth: map_width
+          mapWidth: map_width,
+          mapAgol: map_agol
       };
 
       jQuery.ajax({
@@ -67,20 +76,6 @@
           }
       });
   }
-
-  /* This is the AJAX detector works exactly like the detector block above, but
-   * listens for and acts in reaction to the Remove Map button.
-  */
-  jQuery(document).ready(function() {
-    console.log("loaded");
-      jQuery("#geop_remove_action").click(function(e){   //Replace #btnSubmit with whatever your selector is. Jquery lets you select based off css classes & IDs (plus many other combinations, but this should be enough for now)
-        console.log("made it here");
-          var map_id = jQuery("#map_id_in").val();  // You'll need to get the map ID somehow. I'm not sure how the web page is setup so it's hard to answer this one for you. This line would get the value out of an input field with the ID "map_id" (which could presumably be a hidden input anywhere on the page)
-          remove_map_ajax(map_id);
-
-          e.preventDefault();
-      });
-  });
 
   /* This is the AJAX call for the Remove button. It works exactly like the Add
    * Button's but with a different file evocation.
@@ -132,14 +127,19 @@
 <!-- Label and text field for map ID, height, and width input. -->
     <fieldset>
       <p>Please Provide the ID of the map you created from <a href="https://maps.geoplatform.gov">Maps.GeoPlatform.gov</a> to be embedded into your Wordpress site.</p>
-      <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
-      <p>Please input a map ID:
-        <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
-        &nbsp&nbsp&nbsp&nbspDesired height:
-      <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" value="180" style="width:5em;"/>
-        &nbsp&nbsp&nbsp&nbspDesired width:
-      <input type="text" class="regular-text" id="map_width" name="<?php echo $this->plugin_name; ?>[ual_width]" value="270" style="width:5em;"/>
-            <!-- <input type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-ual_map_id" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/> -->
+        <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
+        <p>Please input a map ID:
+          <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
+          <select name="agolBool" id="map_agol">
+            <option value="N">GeoPlatform</option>
+            <option value="Y">AGOL Web</option>
+          </select>
+          &nbsp&nbsp&nbsp&nbspDesired height:
+          <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" style="width:5em;"/>
+          &nbsp&nbsp&nbsp&nbspDesired width:
+          <input type="text" class="regular-text" id="map_width" name="<?php echo $this->plugin_name; ?>[ual_width]" style="width:5em;"/>
+        </p>
+        <!-- <input type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-ual_map_id" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/> -->
       </p>
     </fieldset>
 
@@ -147,6 +147,19 @@
 <!-- Add and Remove Map Buttons -->
     <input type="button" id="geop_add_action" value="Add Map"></input>
     <input type="button" id="geop_remove_action" value="Remove Map"></input>
+    <!-- <div id='empty'><?php
+      // global $wpdb;
+      // $stringout = "";
+      // $table_name = $wpdb->prefix . 'newsmap_db';
+      // $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
+      // $iter = 0;
+      // foreach ($retrieved_data as $entry){
+      //   $iter++;
+      // }
+      // echo $iter;?>
+    </div> -->
+
+
 
 <!-- The below options are currently commented out for future implimentation -->
 <!-- Map Environment Choice Radio-->
@@ -211,6 +224,7 @@
         	<thead>
         	<tr>
         		<th class="row-title"><?php esc_attr_e( 'Map ID', 'geop-maps' ); ?></th>
+            <th><?php esc_attr_e( 'Map Format', 'geop-maps' ); ?></th>
         		<th><?php esc_attr_e( 'Map Name', 'geop-maps' ); ?></th>
             <th><?php esc_attr_e( 'Description', 'geop-maps' ); ?></th>
             <th><?php esc_attr_e( 'Shortcode', 'geop-maps' ); ?></th>
@@ -246,9 +260,14 @@
           $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
           $iter = 0;
 
-          foreach ($retrieved_data as $entry){?>
+          foreach ($retrieved_data as $entry){
+            $agolOut = "GeoPlatform Map";
+            if ($entry->map_agol == "Y")
+              $agolOut = "AGOL Web Map";
+            ?>
             <tr>
           		<td class="row-title"><label for="tablecell"><?php echo $entry->map_id; ?></label></td>
+              <td><?php echo $agolOut; ?></td>
           		<td><?php echo $entry->map_name; ?></td>
               <td><?php echo $entry->map_description; ?></td>
               <?php $temp_short = $entry->map_shortcode;?>
@@ -288,4 +307,5 @@
 
     </form>
 </div>
+
 <?php
