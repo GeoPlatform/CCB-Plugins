@@ -92,61 +92,63 @@ function shortcode_creation($atts){
     'name' => '',
     'url' => '',
 		'width' => '270',
-		'height' => '180',
-		'divnum' => '12345'
+		'height' => '180'
   ), $atts);
   ob_start();
 ?>
 <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12"> -->
   <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
-    <div class="media">
-			<div id="container_<?php echo $a['divnum']; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
+      <div class="media">
+				<div id="<?php echo $a['id']; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
 
-			<script>
-				var lat = 38.8282;
-				var lng = -98.5795;
-				var zoom = 3;
-				var mapCode = "<?php echo $a['id']; ?>";
+				<script>
+					var lat = 38.8282;
+					var lng = -98.5795;
+					var zoom = 3;
 
-				// Reactive zoom levels based upon input map zoom, current algorithm functional, needs tweaking.
-				var widthRatio = <?php echo $a['width'] ?> / window.innerWidth;
-				var heightRatio = <?php echo $a['height'] ?> / window.innerHeight;
-				var zoomFlex = (widthRatio < heightRatio ? widthRatio : heightRatio);
-				var zoomFinal = zoom * (1 + zoomFlex);
+					// Reactive zoom levels based upon input map zoom, current algorithm functional, needs tweaking.
+					var widthRatio = <?php echo $a['width'] ?> / window.innerWidth;
+					var heightRatio = <?php echo $a['height'] ?> / window.innerHeight;
+					var zoomFlex = (widthRatio < heightRatio ? widthRatio : heightRatio);
+					var zoomFinal = zoom * (1 + zoomFlex);
 
-				// Document write-out. Unsecure, will be removed before release.
-				document.write(widthRatio + " " + heightRatio + " " + zoomFlex + " " + zoomFinal + " " + mapCode);
+					// Document write-out. Unsecure, will be removed before release.
+					document.write(widthRatio + " " + heightRatio + " " + zoomFlex + " " + zoomFinal);
 
-
-
-				var leafBase = L.map("container_<?php echo $a['divnum'];?>");
-	      var mapInstance = GeoPlatform.MapFactory.get();
-	      mapInstance.setMap(leafBase);
-	      mapInstance.setView(51.505, -0.09, 13);
-
-
-
-	      mapInstance.loadMap(mapCode).then( mapObj => {
-					let blObj = mapInstance.getBaseLayer();
-	        let layerStates = mapInstance.getLayers();
-	      });
+					// L is pulled in from another dependency.
+					// newsMap must match the newsMap id in newsmap.html
+					var map = L.map('<?php echo $a['id']; ?>').setView([lat, lng], zoomFinal);
 
 
 
 
+					// Functioning, usable default map.
+	      	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	        	attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+	      	}).addTo(map);
+
+					/* Sets up a layergroup and adds it to the map. This is followed by the
+					 * function call that adds the elements to the group.
+					*/
+					markers = L.layerGroup([]).addTo(map);
+					addPoints();
 
 
-			</script>
+
+				</script>
+
+
+
 
 			<!-- <img class="embed-responsive-item" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id'] ?>/thumbnail" alt=""></a> -->
-    </div> <!--media-->
-    <div class="gp-ui-card__body" style="height:45px;">
-      <a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>"><h4 class="text--primary"><?php echo $a['name']; ?></h4></a>
-    </div>
+      </div> <!--media-->
+        <div class="gp-ui-card__body" style="height:45px;">
+            <a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>"><h4 class="text--primary"><?php echo $a['name']; ?></h4></a>
+        </div>
   </div> <!--gp-ui-card gp-ui-card-minimal-->
 <!-- </div> -->
-	<?php
-	return ob_get_clean();
+<?php
+return ob_get_clean();
 }
 
 
@@ -161,42 +163,54 @@ add_action('init', 'wporg_shortcodes_init');
 ?>
 
 
-
-
-<!-- Utilize wp_enqueue_script() to load these dependenceis in order before final product -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
+<!-- Marker addition script. Currently hard-coded, will be modular later with
+ 		input from the geoplatform site before it goes live. -->
 <script>
- GeoPlatform = {
+function addPoints(){
 
-	 //REQUIRED: environment the application is deployed within
-	 // one of "development", "sit", "stg", "prd", or "production"
-	 "env" : "development",
+	// Simple marker with popup-information functionality.
+	var popupString = "<b>Hello, good viewer.</b><br>This is a pop-up, which uses HTML notation for its output content.";
+	var marker = L.marker([lat + 5, lng - 20]);
+	marker.bindPopup(popupString);
+	marker.addTo(markers);
 
-	 //REQUIRED: URL to GeoPlatform UAL for API usage
-	 "ualUrl" : "https://sit-ual.geoplatform.us",
+	// Four circles of different colors.
+	var circle = L.circle([34, -85], {
+	    color: 'red',
+	    fillColor: '#f00',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
+	var circle = L.circle([34, -81.25], {
+	    color: 'yellow',
+	    fillColor: '#ff0',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
+	var circle = L.circle([37.25, -85], {
+	    color: 'blue',
+	    fillColor: '#00f',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
+	var circle = L.circle([37.25, -81.25], {
+	    color: 'green',
+	    fillColor: '#0f0',
+	    fillOpacity: 0.5,
+	    radius: 250000
+	})
+	circle.addTo(markers);
 
-	 //timeout max for requests
-	 "timeout" : "5000",
+	// A polygon, triangle to be exact.
+	var polygon = L.polygon([
+		[40, -107],
+		[40, -111],
+		[38, -109]
+	])
+	polygon.addTo(markers);
 
-	 //name of custom Leaflet pane to append layers to
-	 // "leafletPane" : "gpmvPane",
-
-	 //identifier of GP Layer to use as default base layer
-	 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
-
-	 //{env}-{id} of application deployed
-	 "appId" : "development-mv"
- };
-</script>
-<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.client.js"></script>
-<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.mapcore.js"></script>
-<script>
-	console.log(GeoPlatform)
+}
 </script>
