@@ -147,17 +147,17 @@
 <!-- Add and Remove Map Buttons -->
     <input type="button" id="geop_add_action" value="Add Map"></input>
     <input type="button" id="geop_remove_action" value="Remove Map"></input>
-    <!-- <div id='empty'><?php
-      // global $wpdb;
-      // $stringout = "";
-      // $table_name = $wpdb->prefix . 'newsmap_db';
-      // $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
-      // $iter = 0;
-      // foreach ($retrieved_data as $entry){
-      //   $iter++;
-      // }
-      // echo $iter;?>
-    </div> -->
+    <div id='empty'><?php
+      global $wpdb;
+      $stringout = "";
+      $table_name = $wpdb->prefix . 'newsmap_db';
+      $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
+      $iter = 0;
+      foreach ($retrieved_data as $entry){
+        $iter++;
+      }
+      echo $iter;?>
+    </div>
 
 
 
@@ -274,7 +274,7 @@
               <td><code><?php echo $entry->map_shortcode; ?></code></td>
               <td><a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>"><?php esc_attr_e( 'View in Map Viewer' ); ?></a></td>
               <!-- <td><input type="button" id="final_remove_button" value="Remove Map"></td> -->
-              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt=""></a></td>
+              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt="Invalid Map"></a></td>
               <?php $iter++; ?>
           	</tr><?php
           }?>
