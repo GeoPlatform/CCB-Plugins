@@ -194,17 +194,25 @@ add_action('init', 'wporg_shortcodes_init');
 
 // Utilize wp_enqueue_script() to load these dependenceis in order before final product
 // function geop_enqueue_scripts(){
-// 	wp_enqueue_script('geop_jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js');
-// 	wp_enqueue_script('geop_q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js');
-// 	wp_enqueue_script('geop_leaflet_js', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js');
-// 	wp_enqueue_script('geop_leaflet_css', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css');
-// 	wp_enqueue_script('geop_esri', 'https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js');
-// 	wp_enqueue_script('geop_markercluster', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js');
-// 	wp_enqueue_script('geop_timedim', 'https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js');
-// 	wp_enqueue_script('geop_jdonno', 'https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js');
+// 	wp_regester_script('geop_jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js');
+// 	wp_enqueue_script('geop_jquery');
+// 	wp_regester_script('geop_q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js');
+// 	wp_enqueue_script('geop_q');
+// 	wp_regester_script('geop_leaflet_js', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js');
+// 	wp_enqueue_script('geop_leaflet_js');
+// 	wp_regester_script('geop_leaflet_css', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css');
+// 	wp_enqueue_script('geop_leaflet_css');
+// 	wp_regester_script('geop_esri', 'https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js');
+// 	wp_enqueue_script('geop_esri');
+// 	wp_regester_script('geop_markercluster', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js');
+// 	wp_enqueue_script('geop_markercluster');
+// 	wp_regester_script('geop_timedim', 'https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js');
+// 	wp_enqueue_script('geop_timedim');
+// 	wp_regester_script('geop_jdonno', 'https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js');
+// 	wp_enqueue_script('geop_jdonno');
 // }
-//
-// add_action('geop_map_enqueue_scripts', 'geop_enqueue_scripts');
+// geop_enqueue_scripts();
+// add_action('init', 'geop_enqueue_scripts');
 
 
 // Linking of dependenceis into the document.

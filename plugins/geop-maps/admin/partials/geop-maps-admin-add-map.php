@@ -24,31 +24,21 @@ $ual_url = '';
 $link_scrub = '';
 $response = '';
 $result = '';
+$invalid_bool = false;
 
 
-// Agol-based field assignment. If agol is false, the map's url is set up,
-// verified, and json decoded so that it may be used down the line. If any part
-// of the process fails, an invalid result is generated. If agol is true, the
-// process is similar, using the arcgis base url.
-if ($ual_map_agol == 'N'){
-  $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
-  $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
-  $response = wp_remote_retrieve_body( $link_scrub );
-  if(!empty($response)){
-    $result = json_decode($response, true);
-  }else{
-    $result = "This Gallery has no recent activity. Try adding some maps!";
-  }
-}
-else{
-  $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
-  $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
-  $response = wp_remote_retrieve_body( $link_scrub );
-  if(!empty($response)){
-    $result = json_decode($response, true);
-  }else{
-    $result = "This Gallery has no recent activity. Try adding some maps!";
-  }
+// Field assignment. The map's url is set up, verified, and json decoded so that
+// it may be used down the line. If any part of the process fails, invalid_bool
+// is set to true and the process carries on. However, most of the remaining
+// operations here require a false $invalid_bool.
+$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
+$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+$response = wp_remote_retrieve_body( $link_scrub );
+if(!empty($response)){
+  $result = json_decode($response, true);
+}else{
+  $result = "This Gallery has no recent activity. Try adding some maps!";
+  $invalid_bool = true;
 }
 
 
@@ -57,27 +47,30 @@ $table_name = $wpdb->prefix . 'newsmap_db';
 $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 
 
-/* Validity and duplication check. Denies duplicate map additions and agol maps
- * with invalid map ids, denying the addition of either.
+/* Validity and duplication check. Checks for Geoplatform maps with an AGOl-only
+ * attribute, AGOL maps without that attribute, and duplicates. It will deny all
+ * of these.
 */
-$duplicate = false;
-foreach ($retrieved_data as $entry){
-  if ($entry->map_id == $ual_map_id){
-    $duplicate = true;
-    break;
+if (!$invalid_bool){
+  if ($ual_map_agol == 'Y' && !$result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
+    $invalid_bool = true;
+  if ($ual_map_agol == 'N' && $result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
+    $invalid_bool = true;
+
+  // DUPLICATE CHECK, CURRENTLY OUT FOR TESTING. ABSENSE MAY CAUSE ERRORS.
+  foreach ($retrieved_data as $entry){
+    if ($entry->map_id == $ual_map_id){
+      $invalid_bool = true;
+      break;
+    }
   }
-  // $temp_thumb = "https://geoplatform.maps.arcgis.com/sharing/rest/content/items/". $ual_map_id . "/info/thumbnail/ago_downloaded.png";
-  // if ($ual_map_agol == 'Y' && !is_array(getimagesize($temp_thumb))){
-  //   $duplicate = true;
-  //   break;
-  // }
 }
 
 
-/* If the map is valid and not a duplicate, final values of the entry are set up
+/* If the map is valid and not a duplicate final values of the entry are set up
  * and entered into the database table.
 */
-if (!$duplicate){
+if (!$invalid_bool){
 
   // Basic information setup and blank field instantiation for conditional filling.
   $input = !empty($ual_map_id) ? $ual_map_id : "Empty";
@@ -105,8 +98,11 @@ if (!$duplicate){
         $map_name = "An AGOL map.";
     }
     $map_description = $result['description'];
-    if (empty($map_description))
-      $map_description = "This map does not have a description.";
+    if (empty($map_description)){
+      $map_description = $result['title'];
+      if (empty($map_description))
+        $map_description = "This map does not have a description.";
+    }
     $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
   }
 
@@ -115,9 +111,9 @@ if (!$duplicate){
    * side values. Agol's value is also added to the shortcode string.
   */
   $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "'";
-  if (is_numeric($ual_map_height))
+  if (is_numeric($ual_map_height) && $map_agol == 'N')
     $map_shortcode .= " height='" . $ual_map_height . "'";
-  if (is_numeric($ual_map_width))
+  if (is_numeric($ual_map_width) && $map_agol == 'N')
     $map_shortcode .= " width='" . $ual_map_width . "'";
   $map_shortcode .= " agol='" . $map_agol . "'";
   $map_shortcode .= "]";
