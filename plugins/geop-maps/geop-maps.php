@@ -138,6 +138,36 @@ function agol_map_gen($a){
 // and dynamic reference. More details within.
 function geop_map_gen($a){
 	?>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
+	<script>
+	 GeoPlatform = {
+
+		 //REQUIRED: environment the application is deployed within
+		 // one of "development", "sit", "stg", "prd", or "production"
+		 "env" : "development",
+
+		 //REQUIRED: URL to GeoPlatform UAL for API usage
+		 "ualUrl" : "https://sit-ual.geoplatform.us",
+
+		 //timeout max for requests
+		 "timeout" : "5000",
+
+		 //identifier of GP Layer to use as default base layer
+		 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
+
+		 //{env}-{id} of application deployed
+		 "appId" : "development-mv"
+	 };
+	</script>
+	<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.client.js"></script>
+	<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.mapcore.js"></script>
 	<div style="margin:1em;clear:both;padding:1em;">
 	  <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
 	    <div class="media">
@@ -193,33 +223,3 @@ add_action('init', 'wporg_shortcodes_init');
 
 // Linking of dependenceis into the document.
 ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
-<script>
- GeoPlatform = {
-
-	 //REQUIRED: environment the application is deployed within
-	 // one of "development", "sit", "stg", "prd", or "production"
-	 "env" : "development",
-
-	 //REQUIRED: URL to GeoPlatform UAL for API usage
-	 "ualUrl" : "https://sit-ual.geoplatform.us",
-
-	 //timeout max for requests
-	 "timeout" : "5000",
-
-	 //identifier of GP Layer to use as default base layer
-	 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
-
-	 //{env}-{id} of application deployed
-	 "appId" : "development-mv"
- };
-</script>
-<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.client.js"></script>
-<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.mapcore.js"></script>
