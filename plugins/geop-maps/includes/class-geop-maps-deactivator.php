@@ -26,13 +26,12 @@ class Geop_Maps_Deactivator {
 	 * Destroys the table. Here for testing, should be moved to uninstall later.
 	*/
 	private static function gpf_database_remove() {
-	     global $wpdb;
-	     $table_name = $wpdb->prefix . 'newsmap_db';
-	     $sql = "DROP TABLE IF EXISTS $table_name;";
-	     $wpdb->query($sql);
-	     delete_option("my_plugin_db_version");
+	     // global $wpdb;
+	     // $table_name = $wpdb->prefix . 'newsmap_db';
+	     // $sql = "DROP TABLE IF EXISTS $table_name;";
+	     // $wpdb->query($sql);
+	     // delete_option("my_plugin_db_version");
 	}
-
 
 
 	/**
