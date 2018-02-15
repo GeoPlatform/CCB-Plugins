@@ -56,8 +56,6 @@ if (!$invalid_bool){
     $invalid_bool = true;
   if ($ual_map_agol == 'N' && $result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
     $invalid_bool = true;
-
-  // DUPLICATE CHECK, CURRENTLY OUT FOR TESTING. ABSENSE MAY CAUSE ERRORS.
   foreach ($retrieved_data as $entry){
     if ($entry->map_id == $ual_map_id){
       $invalid_bool = true;

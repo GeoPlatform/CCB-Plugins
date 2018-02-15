@@ -148,18 +148,13 @@
     </fieldset>
 
 
-<!-- Add and Remove Map Buttons -->
+<!-- Add Map Button -->
     <input type="button" id="geop_add_action" value="Add Map"></input>
     <div id='empty'><?php
       global $wpdb;
       $stringout = "";
       $table_name = $wpdb->prefix . 'newsmap_db';
-      $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
-      $iter = 0;
-      foreach ($retrieved_data as $entry){
-        $iter++;
-      }
-      echo $iter;?>
+      $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );?>
     </div>
 
 
@@ -182,7 +177,7 @@
 
           <?php
           /* The actual table construction. The data is pulled from the database
-           * and translated into a usable table of information. The table is then
+           * and translated into usable table information. The table is then
            * looped through. Each loop pulls information from a specific table
            * row and uses it to construct a page row.
           */
@@ -205,14 +200,10 @@
                 <a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
                 <button class="geop_indiv_remove_action button-secondary" value="<?php echo $entry->map_id; ?>">Remove Map</button>
               </td>
-              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt="Invalid Map"></a></td>
+              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt="The thumbnail for this map failed to load."></a></td>
           	</tr><?php
           }?>
         </table>
-
-      <!-- Save All button, probibly has no further use. -->
-      <!-- <?php submit_button('Save all changes', 'primary','submit', TRUE); ?> -->
-
     </form>
 </div>
 

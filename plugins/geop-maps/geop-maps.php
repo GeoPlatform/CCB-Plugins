@@ -138,6 +138,7 @@ function agol_map_gen($a){
 // and dynamic reference. More details within.
 function geop_map_gen($a){
 	?>
+<!-- Imports all of the resources needed to generate a map. -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
@@ -168,6 +169,8 @@ function geop_map_gen($a){
 	</script>
 	<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.client.js"></script>
 	<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.mapcore.js"></script>
+
+<!-- The actual shortcode-generated map segment. -->
 	<div style="margin:1em;clear:both;padding:1em;">
 	  <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
 	    <div class="media">
@@ -183,14 +186,6 @@ function geop_map_gen($a){
 					var lng = -98.5795;
 					var zoom = 3;
 					var mapCode = "<?php echo $a['id']; ?>";
-
-					// Reactive zoom levels based upon input map zoom, current algorithm
-					// functional, but depricated.
-					// var widthRatio = <?php echo $a['width'] ?> / window.innerWidth;
-					// var heightRatio = <?php echo $a['height'] ?> / window.innerHeight;
-					// var zoomFlex = (widthRatio < heightRatio ? widthRatio : heightRatio);
-					// var zoomFinal = zoom * (1 + zoomFlex);
-					// document.write(geop_test_function());
 
 					var leafBase = L.map("container_<?php echo $divrand;?>");
 		      var mapInstance = GeoPlatform.MapFactory.get();

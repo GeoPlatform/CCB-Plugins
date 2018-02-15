@@ -51,9 +51,6 @@ class Geop_Maps_Activator {
 	    dbDelta($sql);
 	  }
 	}
-  //
-	// private static function gpf_leaflet_gen() {
-	// }
 
 	/**
 	 * Short Description. (use period)
@@ -66,8 +63,4 @@ class Geop_Maps_Activator {
 		global $wpdb;
 		self::gpf_database_gen();
 	}
-
-
-
-
 }
