@@ -16,6 +16,7 @@ global $wpdb;
 /* Assigns the variable stored in $_POST to $ual_map_id, which will guide this
  * process. $ual_map_id is then scrubbed and prepped for use.
 */
+$invalid_bool = false;
 $ual_map_id = $_POST["mapID"];
 $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
 $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
@@ -25,7 +26,8 @@ $response = wp_remote_retrieve_body( $link_scrub );
 if(!empty($response)){
   $result = json_decode($response, true);
 }else{
-  $result = "This Gallery has no recent activity. Try adding some maps!";
+  echo '{"status" : "Removal failed. Invalid map ID."}';
+  $invalid_bool = true;
 }
 
 /* Our custom table is pulled from $wpdb and set up for iteration. A for loop
@@ -35,7 +37,9 @@ if(!empty($response)){
 $table_name = $wpdb->prefix . 'newsmap_db';
 $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 
-foreach ($retrieved_data as $entry){
+if (!$invalid_bool){
+  foreach ($retrieved_data as $entry)
     $wpdb->delete($table_name, array('map_id' => $ual_map_id));
+  echo '{"status" : "Removal successful."}';
 }
 ?>

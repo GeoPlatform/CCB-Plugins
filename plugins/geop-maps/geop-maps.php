@@ -84,28 +84,39 @@ run_geop_maps();
 // Hook backbone for shortcode interpretation.
 function shortcode_creation($atts){
 
-	// Grabs the working environment URI format globals.
-	global $ual_url;
-	global $viewer_url;
-
 	// Establishes a base array with default values required for shortcode creation
 	// and overwrites them with values from $atts.
   $a = shortcode_atts(array(
     'id' => '62c29fe8103c713904d23b8354ba41c8',
     'name' => '',
     'url' => '',
-		'width' => '270',
-		'height' => '180',
-		'agol' => ''
+		'width' => '0',
+		'height' => '0'
   ), $atts);
   ob_start();
 
+
+	$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $a['id'];
+	$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+	$response = wp_remote_retrieve_body( $link_scrub );
+	if(!empty($response)){
+	  $result = json_decode($response, true);
+	}else{
+	  $result = "This Gallery has no recent activity. Try adding some maps!";
+	}
+
+	if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
+		agol_map_gen($a);
+	else
+		geop_map_gen($a);
+
+
 	// Checks the agol value of the array and calls the appropriate method for
 	// creating the map object. Calls nothing if the agol value is not acceptable.
-	if ($a['agol'] == 'N')
-		geop_map_gen($a);
-	else if($a['agol'] == 'Y')
-		agol_map_gen($a);
+	// if ($a['agol'] == 'N')
+	// 	geop_map_gen($a);
+	// else if($a['agol'] == 'Y')
+	// 	agol_map_gen($a);
 
 	return ob_get_clean();
 }
@@ -115,16 +126,31 @@ function shortcode_creation($atts){
 // constant size. It pulls the thumbnail and some name info from the custom wpdb
 // table to form a URL link and name (name is currently a constant).
 function agol_map_gen($a){
-	?>
-	<div style="margin:1em;clear:both;padding:1em;">
-	  <div class="gp-ui-card gp-ui-card--minimal" style="width:200px;">
+	$divrand = rand(0, 99999); ?>
+	<link rel="stylesheet" type="text/css" href="/wp-content/plugins/geop-maps/public/css/geop-maps-public.css">
+	<div id="master_<?php echo $divrand; ?>" style="clear:both;">
+		<script>
+			var widthGrab = jQuery('#master_<?php echo $divrand ?>').width();
+		</script>
+	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px, height:<?php echo $a['height']; ?>px;">
 			<a title="Visit full map of <?php echo $a['name']; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank">
+				<script>
+				if (<?php echo $a['width']; ?> == 0){
+					jQuery('#middle_<?php echo $divrand; ?>').width(widthGrab);
+					if (<?php echo $a['height']; ?> == 0){
+						jQuery('#container_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+					}
+				}
+				</script>
+
+				<div>
+					<h4 class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></h4>
+					<span class="glyphicon glyphicon-menu-hamburger"></span>
+					<span class="glyphicon glyphicon-info-sign"></span>
+	    	</div>
 	    	<div class="media">
 					<img class="embed-responsive-item" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load">
-				</div> <!--media-->
-	    	<div>
-					<h4 class="text--primary"><?php echo $a['name']; ?></h4>
-	    	</div>
+				</div>
 			</a>
 	  </div>
 	</div>
@@ -137,6 +163,8 @@ function agol_map_gen($a){
 // generates a local random number to ID the containing div to permit duplicates
 // and dynamic reference. More details within.
 function geop_map_gen($a){
+	// Grabs the working environment URI format globals.
+	global $viewer_url;
 	?>
 <!-- Imports all of the resources needed to generate a map. -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -171,17 +199,38 @@ function geop_map_gen($a){
 	<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.mapcore.js"></script>
 
 <!-- The actual shortcode-generated map segment. -->
-	<div style="margin:1em;clear:both;padding:1em;">
-	  <div class="gp-ui-card gp-ui-card--minimal" style="width:<?php echo $a['width']; ?>px;">
-	    <div class="media">
-
+	<?php $divrand = rand(0, 99999); ?>
+	<div id="master_<?php echo $divrand; ?>" style="clear:both;">
+		<script>
+			var widthGrab = jQuery('#master_<?php echo $divrand ?>').width();
+		</script>
+	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
+			<!-- Name and link card. -->
+			<div>
+				<h4>
+					<a class="text--primary:visited text-white" title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a>
+					<span class="glyphicon glyphicon-menu-hamburger righted"></span>
+					<span class="glyphicon glyphicon-info-sign righted"></span>
+				</h4>
+ 	    </div>
+	    <!-- <div class="media"> -->
 	 <!-- Random number generation and the div it affects. -->
-				<?php $divrand = rand(0, 99999); ?>
 				<div id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
 
 	 <!-- Javascript block that create the leaflet map container, wraps it in a
   		  GeoPlatform instance, and sets it up for display.-->
 				<script>
+
+					if (<?php echo $a['width']; ?> == 0){
+						jQuery('#middle_<?php echo $divrand; ?>').width(widthGrab);
+						if (<?php echo $a['height']; ?> == 0){
+							jQuery('#container_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+						}
+					}
+
+					alert(widthGrab + " " + <?php echo $a['width']; ?> + "<BR>" + jQuery('#middle_<?php echo $divrand; ?>').width() + " " + jQuery('#container_<?php echo $divrand; ?>').height());
+
+
 					var lat = 38.8282;
 					var lng = -98.5795;
 					var zoom = 3;
@@ -197,11 +246,7 @@ function geop_map_gen($a){
 		        let layerStates = mapInstance.getLayers();
 		      });
 				</script>
-	    </div> <!--media-->
- <!-- Name and link card. -->
-	    <div>
-	      <a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank"><h4 class="text--primary"><?php echo $a['name']; ?></h4></a>
-	    </div>
+	    <!-- </div> -->
 	  </div>
 	</div>
 		<?php

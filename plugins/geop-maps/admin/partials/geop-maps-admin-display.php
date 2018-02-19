@@ -35,8 +35,7 @@
       var map_id = jQuery("#map_id_in").val();
       var map_height = jQuery("#map_height").val();
       var map_width = jQuery("#map_width").val();
-      var map_agol = jQuery("#map_agol").val();
-      add_map_ajax(map_id, map_height, map_width, map_agol);
+      add_map_ajax(map_id, map_height, map_width);
 
       e.preventDefault();
     });
@@ -57,12 +56,13 @@
    * then, within a jQuery.ajax() call, passes the necessary parameters along with
    * console error reporting actions and a force page reload.
   */
-  function add_map_ajax(map_id, map_height, map_width, map_agol){
+
+  // Use "http://" for localhost use, "https://" for deploy.
+  function add_map_ajax(map_id, map_height, map_width){
       var map_data = {
           mapID: map_id,
           mapHeight: map_height,
-          mapWidth: map_width,
-          mapAgol: map_agol
+          mapWidth: map_width
       };
 
       jQuery.ajax({
@@ -70,12 +70,12 @@
           type:"POST",
           dataType:"json",
           data: map_data,
-          success:function(data){
-              console.log("success",data);
+          success:function(return_data){
+              alert(return_data.status);
               location.reload();
           },
-          error:function(data){
-              console.log("error",data);
+          error:function(return_data){
+              alert(return_data.status);
               location.reload();
           }
       });
@@ -94,12 +94,12 @@
           type:"POST",
           dataType:"json",
           data: map_data,
-          success:function(data){
-              console.log("success",data);
+          success:function(return_data){
+              alert(return_data.status);
               location.reload();
           },
-          error:function(data){
-              console.log("error",data);
+          error:function(return_data){
+              alert(return_data.status);
               location.reload();
           }
       });
@@ -134,10 +134,6 @@
         <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
         <p>Please input a map ID:
           <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
-          <select name="agolBool" id="map_agol">
-            <option value="N">GeoPlatform</option>
-            <option value="Y">AGOL Web</option>
-          </select>
           &nbsp&nbsp&nbsp&nbspDesired height:
           <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" style="width:5em;"/>
           &nbsp&nbsp&nbsp&nbspDesired width:
@@ -150,6 +146,7 @@
 
 <!-- Add Map Button -->
     <input type="button" id="geop_add_action" value="Add Map"></input>
+    <div id="error_div"></div>
     <div id='empty'><?php
       global $wpdb;
       $stringout = "";
@@ -186,7 +183,7 @@
 
           foreach ($retrieved_data as $entry){
             $agolOut = "GeoPlatform Map";
-            if ($entry->map_agol == "Y")
+            if ($entry->map_agol == "1")
               $agolOut = "AGOL Web Map";
             ?>
             <tr>

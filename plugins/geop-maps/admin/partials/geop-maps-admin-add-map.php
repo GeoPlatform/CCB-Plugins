@@ -19,11 +19,11 @@ global $wpdb;
 $ual_map_id = $_POST["mapID"];
 $ual_map_height = $_POST["mapHeight"];
 $ual_map_width = $_POST["mapWidth"];
-$ual_map_agol = $_POST["mapAgol"];
 $ual_url = '';
 $link_scrub = '';
 $response = '';
 $result = '';
+$map_agol = '0';
 $invalid_bool = false;
 
 
@@ -34,13 +34,16 @@ $invalid_bool = false;
 $ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
 $link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 $response = wp_remote_retrieve_body( $link_scrub );
-if(!empty($response)){
+if(!empty($response))
   $result = json_decode($response, true);
-}else{
-  $result = "This Gallery has no recent activity. Try adding some maps!";
+else
   $invalid_bool = true;
-}
 
+
+if ($result['statusCode'] == "404"){
+  $invalid_bool = true;
+  echo '{"status" : "Addition failed. Invalid map ID."}';
+}
 
 // Our custom table is pulled from $wpdb and prepped for iteration.
 $table_name = $wpdb->prefix . 'newsmap_db';
@@ -52,12 +55,11 @@ $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
  * of these.
 */
 if (!$invalid_bool){
-  if ($ual_map_agol == 'Y' && !$result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
-    $invalid_bool = true;
-  if ($ual_map_agol == 'N' && $result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
-    $invalid_bool = true;
+  if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
+    $map_agol = '1';
   foreach ($retrieved_data as $entry){
     if ($entry->map_id == $ual_map_id){
+      echo '{"status" : "Addition failed. Duplicate map detected."}';
       $invalid_bool = true;
       break;
     }
@@ -73,12 +75,11 @@ if (!$invalid_bool){
   // Basic information setup and blank field instantiation for conditional filling.
   $input = !empty($ual_map_id) ? $ual_map_id : "Empty";
   $map_id = $input;
-  $map_agol = $ual_map_agol;
   $map_url = "";
   $map_thumbnail = "";
 
   // Geomap block, featuring basic data setting from passed array.
-  if ($map_agol == 'N'){
+  if ($map_agol == '0'){
     $map_url = 'https://sit-viewer.geoplatform.us/' . '?id=' . $map_id;
     $map_name = $result['label'];
     $map_description = $result['description'];
@@ -109,11 +110,10 @@ if (!$invalid_bool){
    * side values. Agol's value is also added to the shortcode string.
   */
   $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "'";
-  if (is_numeric($ual_map_height) && $map_agol == 'N')
+  if (is_numeric($ual_map_height))
     $map_shortcode .= " height='" . $ual_map_height . "'";
-  if (is_numeric($ual_map_width) && $map_agol == 'N')
+  if (is_numeric($ual_map_width))
     $map_shortcode .= " width='" . $ual_map_width . "'";
-  $map_shortcode .= " agol='" . $map_agol . "'";
   $map_shortcode .= "]";
 
   // Finally, the variables are added to the table in key/value pairs.
@@ -128,6 +128,7 @@ if (!$invalid_bool){
       'map_agol' => $map_agol
     )
   );
+  echo '{"status" : "Map addition successful."}';
 }
 
 ?>
