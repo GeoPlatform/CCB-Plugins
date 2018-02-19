@@ -40,6 +40,5 @@ $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 if (!$invalid_bool){
   foreach ($retrieved_data as $entry)
     $wpdb->delete($table_name, array('map_id' => $ual_map_id));
-  echo '{"status" : "Removal successful."}';
 }
 ?>

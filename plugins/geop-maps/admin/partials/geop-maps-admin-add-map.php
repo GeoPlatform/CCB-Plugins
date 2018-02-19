@@ -40,19 +40,24 @@ else
   $invalid_bool = true;
 
 
+// Invalid map ID check. A faulty map ID will return a generic JSON dataset from
+// GeoPlatform with a statusCode entry containing the "404" code. This will
+// trigger invalid_bool and cause an echo back for user error reporting.
 if ($result['statusCode'] == "404"){
   $invalid_bool = true;
   echo '{"status" : "Addition failed. Invalid map ID."}';
 }
+
 
 // Our custom table is pulled from $wpdb and prepped for iteration.
 $table_name = $wpdb->prefix . 'newsmap_db';
 $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 
 
-/* Validity and duplication check. Checks for Geoplatform maps with an AGOl-only
- * attribute, AGOL maps without that attribute, and duplicates. It will deny all
- * of these.
+/* Validity and duplication check. Checks for Geoplatform maps for an AGOl-only
+ * attribute and flip the $map_agol variable to 1/true if found. It will also
+ * check for duplicate map IDs, echoing a failure message if found and flipping
+ * $invalid_bool to true.
 */
 if (!$invalid_bool){
   if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
@@ -107,7 +112,7 @@ if (!$invalid_bool){
 
   /* The values of ual_map_height and _width are checked if numeric. If so, they
    * are concatenated into the shortcode. If not, the output will use default
-   * side values. Agol's value is also added to the shortcode string.
+   * side values.
   */
   $map_shortcode = "[geopmap id='" . $map_id . "' name='" . $map_name . "'";
   if (is_numeric($ual_map_height))
@@ -128,7 +133,6 @@ if (!$invalid_bool){
       'map_agol' => $map_agol
     )
   );
-  echo '{"status" : "Map addition successful."}';
 }
 
 ?>

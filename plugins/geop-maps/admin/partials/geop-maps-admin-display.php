@@ -54,10 +54,11 @@
 
   /* This is the actual AJAX call. It gathers the data for passing to the function,
    * then, within a jQuery.ajax() call, passes the necessary parameters along with
-   * console error reporting actions and a force page reload.
+   * console error reporting actions and a force page reload. It also checks for
+   * any data echoed back from the add file, indicating an error, and sends it
+   * out as an alert to the user.
   */
-
-  // Use "http://" for localhost use, "https://" for deploy.
+  // Use "http://" for localhost use, "https://" for outside of localhost.
   function add_map_ajax(map_id, map_height, map_width){
       var map_data = {
           mapID: map_id,
@@ -71,12 +72,14 @@
           dataType:"json",
           data: map_data,
           success:function(return_data){
+            if (return_data)
               alert(return_data.status);
-              location.reload();
+            location.reload();
           },
           error:function(return_data){
+            if (return_data)
               alert(return_data.status);
-              location.reload();
+            location.reload();
           }
       });
   }
@@ -95,12 +98,14 @@
           dataType:"json",
           data: map_data,
           success:function(return_data){
+            if (return_data)
               alert(return_data.status);
-              location.reload();
+            location.reload();
           },
           error:function(return_data){
+            if (return_data)
               alert(return_data.status);
-              location.reload();
+            location.reload();
           }
       });
   }
@@ -113,9 +118,8 @@
 
 <!-- global $wpdb for database access. It is followed by page formatting-->
   <?php global $wpdb; ?>
-
-    <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
-    <form method="post" name="map_options" action="options.php">
+  <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
+  <form method="post" name="map_options" action="options.php">
 
 <!-- options collection from plugin and data cleanup -->
     <?php
@@ -146,17 +150,10 @@
 
 <!-- Add Map Button -->
     <input type="button" id="geop_add_action" value="Add Map"></input>
-    <div id="error_div"></div>
-    <div id='empty'><?php
-      global $wpdb;
-      $stringout = "";
-      $table_name = $wpdb->prefix . 'newsmap_db';
-      $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );?>
-    </div>
 
 
  <!-- Procedural table creation block.  Here the map collection output is set. It
-      begins with the header of the tabel.-->
+      begins with the header of the table.-->
       <p><strong>Map details table</strong></p>
         <table class="widefat">
         	<thead>

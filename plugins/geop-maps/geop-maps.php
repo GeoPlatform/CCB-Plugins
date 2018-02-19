@@ -95,7 +95,8 @@ function shortcode_creation($atts){
   ), $atts);
   ob_start();
 
-
+  // Uses the map ID provided to grab the map data from the GeoPlatform site and
+	// decode it into usable JSON info.
 	$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $a['id'];
 	$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 	$response = wp_remote_retrieve_body( $link_scrub );
@@ -105,50 +106,59 @@ function shortcode_creation($atts){
 	  $result = "This Gallery has no recent activity. Try adding some maps!";
 	}
 
+	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
+	// is found, output is generated using the agol method. Otherwise, the geop
+	// method is called.
 	if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
 		agol_map_gen($a);
 	else
 		geop_map_gen($a);
 
-
-	// Checks the agol value of the array and calls the appropriate method for
-	// creating the map object. Calls nothing if the agol value is not acceptable.
-	// if ($a['agol'] == 'N')
-	// 	geop_map_gen($a);
-	// else if($a['agol'] == 'Y')
-	// 	agol_map_gen($a);
-
 	return ob_get_clean();
 }
 
 
-// Method for agol map display. A simple process that creates a page object of
-// constant size. It pulls the thumbnail and some name info from the custom wpdb
-// table to form a URL link and name (name is currently a constant).
+// Method for agol map display.
 function agol_map_gen($a){
+
+	// Random number generation to give this instance of objects unique element IDs.
 	$divrand = rand(0, 99999); ?>
-	<link rel="stylesheet" type="text/css" href="/wp-content/plugins/geop-maps/public/css/geop-maps-public.css">
+
+<!-- Main div block that will contain this entry. It has a constant width as
+ 	   determined by the page layout on load, so its width is set to the widthGrab
+	 	 variable. -->
 	<div id="master_<?php echo $divrand; ?>" style="clear:both;">
 		<script>
 			var widthGrab = jQuery('#master_<?php echo $divrand ?>').width();
 		</script>
-	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px, height:<?php echo $a['height']; ?>px;">
+
+<!-- This is the div block that defines the output proper. It defines the width
+ 		 and height of the visible map and title card, and contains those elements.
+	 	 Its values are set initially to those of height and width as passed by array.-->
+	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px; height:<?php echo $a['height']; ?>px;">
+
+ <!-- The contents of this entire div act as a hyperlink, set here. -->
 			<a title="Visit full map of <?php echo $a['name']; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank">
+
+	 <!-- Scaling code. If this page element does not have custom-set width or
+	 			height. If the user did not specify a width or set a width too wide for
+				its container, this check sets the width instead to 100% of the master
+				div. Height is also checked for no entry, and set to 75% of the master
+				div's width. -->
 				<script>
-				if (<?php echo $a['width']; ?> == 0){
-					jQuery('#middle_<?php echo $divrand; ?>').width(widthGrab);
-					if (<?php echo $a['height']; ?> == 0){
-						jQuery('#container_<?php echo $divrand; ?>').height(widthGrab * 0.75);
-					}
-				}
+				if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab)
+					jQuery('#middle_<?php echo $divrand; ?>').width('100%');
+				if (<?php echo $a['height']; ?> == 0)
+					jQuery('#middle_<?php echo $divrand; ?>').height(widthGrab * 0.75);
 				</script>
 
-				<div>
-					<h4 class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></h4>
-					<span class="glyphicon glyphicon-menu-hamburger"></span>
-					<span class="glyphicon glyphicon-info-sign"></span>
-	    	</div>
-	    	<div class="media">
+
+	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
+				<h4 class="text-white u-pd--lg u-mg--xs">
+					<span class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></span>
+					<span class="alignright glyphicon glyphicon-info-sign"></span>
+				</h4>
+	    	<div class="media u-mg--xs">
 					<img class="embed-responsive-item" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load">
 				</div>
 			</a>
@@ -159,10 +169,8 @@ function agol_map_gen($a){
 
 
 // Method for geop map display. Much more dynamic than the agol map generator.
-// Pulls in height and width values from the shortcode to scale the object, and
-// generates a local random number to ID the containing div to permit duplicates
-// and dynamic reference. More details within.
 function geop_map_gen($a){
+
 	// Grabs the working environment URI format globals.
 	global $viewer_url;
 	?>
@@ -198,58 +206,65 @@ function geop_map_gen($a){
 	<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.client.js"></script>
 	<script src="/wp-content/plugins/geop-maps/public/js/geoplatform.mapcore.js"></script>
 
-<!-- The actual shortcode-generated map segment. -->
+<!-- Random number generation to give this instance of objects unique element IDs. -->
 	<?php $divrand = rand(0, 99999); ?>
+
+<!-- Main div block that will contain this entry. It has a constant width as
+ 	   determined by the page layout on load, so its width is set to the widthGrab
+	 	 variable. -->
 	<div id="master_<?php echo $divrand; ?>" style="clear:both;">
 		<script>
 			var widthGrab = jQuery('#master_<?php echo $divrand ?>').width();
 		</script>
+
+<!-- This is the div block that defines the output proper. It defines the width
+ 		 of the visible map and title card, and contains those elements. Its values
+		 are set initially to those of the width as passed by array.-->
 	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
-			<!-- Name and link card. -->
-			<div>
-				<h4>
-					<a class="text--primary:visited text-white" title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a>
-					<span class="glyphicon glyphicon-menu-hamburger righted"></span>
-					<span class="glyphicon glyphicon-info-sign righted"></span>
-				</h4>
- 	    </div>
-	    <!-- <div class="media"> -->
-	 <!-- Random number generation and the div it affects. -->
-				<div id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
 
-	 <!-- Javascript block that create the leaflet map container, wraps it in a
-  		  GeoPlatform instance, and sets it up for display.-->
-				<script>
+ <!-- Name and link card. -->
+			<h4 class="text-white u-pd--lg u-mg--xs">
+				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
+				<span class="alignright">
+					<!-- <span class="glyphicon glyphicon-menu-hamburger"></span> -->
+					<a title="Visit full map of <?php echo $a['name']; ?>" style="color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a>
+				</span>
+			</h4>
 
-					if (<?php echo $a['width']; ?> == 0){
-						jQuery('#middle_<?php echo $divrand; ?>').width(widthGrab);
-						if (<?php echo $a['height']; ?> == 0){
-							jQuery('#container_<?php echo $divrand; ?>').height(widthGrab * 0.75);
-						}
-					}
+ <!-- The container that will hold the leaflet map. Also defines entree height. -->
+			<div id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
 
-					alert(widthGrab + " " + <?php echo $a['width']; ?> + "<BR>" + jQuery('#middle_<?php echo $divrand; ?>').width() + " " + jQuery('#container_<?php echo $divrand; ?>').height());
+			<script>
 
+			  // Scaling code. If this page element does not have custom-set width or
+	 	 		// height. If the user did not specify a width or set a width too wide
+	 			// for its container, this check sets the width instead to 100% of the
+	 			// master div. Height is also checked for no entry, and set to 75% of
+	 			// the master div's width.
+				if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab)
+					jQuery('#middle_<?php echo $divrand; ?>').width('100%');
+				if (<?php echo $a['height']; ?> == 0)
+					jQuery('#container_<?php echo $divrand; ?>').height(widthGrab * 0.75);
 
-					var lat = 38.8282;
-					var lng = -98.5795;
-					var zoom = 3;
-					var mapCode = "<?php echo $a['id']; ?>";
+				// Javascript block that creates the leaflet map container, wraps it in
+		    // a GeoPlatform instance, and sets it up for display.
+				var lat = 38.8282;
+				var lng = -98.5795;
+				var zoom = 3;
+				var mapCode = "<?php echo $a['id']; ?>";
+				var leafBase = L.map("container_<?php echo $divrand;?>");
+	      var mapInstance = GeoPlatform.MapFactory.get();
+	      mapInstance.setMap(leafBase);
+	      mapInstance.setView(51.505, -0.09, 13);
 
-					var leafBase = L.map("container_<?php echo $divrand;?>");
-		      var mapInstance = GeoPlatform.MapFactory.get();
-		      mapInstance.setMap(leafBase);
-		      mapInstance.setView(51.505, -0.09, 13);
-
-		      mapInstance.loadMap(mapCode).then( mapObj => {
-						let blObj = mapInstance.getBaseLayer();
-		        let layerStates = mapInstance.getLayers();
-		      });
-				</script>
-	    <!-- </div> -->
-	  </div>
+	      mapInstance.loadMap(mapCode).then( mapObj => {
+					let blObj = mapInstance.getBaseLayer();
+	        let layerStates = mapInstance.getLayers();
+	      });
+			</script>
+  	</div>
 	</div>
-		<?php
+<?php
 }
 
 
