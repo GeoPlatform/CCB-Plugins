@@ -2,3 +2,6 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+div.geop-layer-box-item {
+  border: 1px solid #bbb;
+}

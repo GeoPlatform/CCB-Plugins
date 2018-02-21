@@ -81,6 +81,7 @@ function run_geop_maps() {
 }
 run_geop_maps();
 
+
 // Hook backbone for shortcode interpretation.
 function shortcode_creation($atts){
 
@@ -95,8 +96,12 @@ function shortcode_creation($atts){
   ), $atts);
   ob_start();
 
+	// Empty error text output string.
+	$error_text = '';
+
   // Uses the map ID provided to grab the map data from the GeoPlatform site and
-	// decode it into usable JSON info.
+	// decode it into usable JSON info. Produces a bum result and error text if
+	// it fails.
 	$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $a['id'];
 	$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 	$response = wp_remote_retrieve_body( $link_scrub );
@@ -104,22 +109,30 @@ function shortcode_creation($atts){
 	  $result = json_decode($response, true);
 	}else{
 	  $result = "This Gallery has no recent activity. Try adding some maps!";
+		$error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>";
+	}
+
+	// Invalid map ID check. A faulty map ID will return a generic JSON dataset from
+	// GeoPlatform with a statusCode entry containing the "404" code. This will
+	// trigger invalid_bool and cause an echo back for user error reporting.
+	if ($result['statusCode'] == "404"){
+	  $error_text .= "Your map ID could not be found on the GeoPlatform server. Please check your map ID and try again.<BR>";
 	}
 
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, output is generated using the agol method. Otherwise, the geop
 	// method is called.
 	if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
-		agol_map_gen($a);
+		agol_map_gen($a, $error_text);
 	else
-		geop_map_gen($a);
+		geop_map_gen($a, $error_text);
 
 	return ob_get_clean();
 }
 
 
 // Method for agol map display.
-function agol_map_gen($a){
+function agol_map_gen($a, $error_text){
 
 	// Random number generation to give this instance of objects unique element IDs.
 	$divrand = rand(0, 99999); ?>
@@ -138,38 +151,73 @@ function agol_map_gen($a){
 	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px; height:<?php echo $a['height']; ?>px;">
 
  <!-- The contents of this entire div act as a hyperlink, set here. -->
-			<a title="Visit full map of <?php echo $a['name']; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank">
-
-	 <!-- Scaling code. If this page element does not have custom-set width or
-	 			height. If the user did not specify a width or set a width too wide for
-				its container, this check sets the width instead to 100% of the master
-				div. Height is also checked for no entry, and set to 75% of the master
-				div's width. -->
-				<script>
-				if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab)
-					jQuery('#middle_<?php echo $divrand; ?>').width('100%');
-				if (<?php echo $a['height']; ?> == 0)
-					jQuery('#middle_<?php echo $divrand; ?>').height(widthGrab * 0.75);
-				</script>
-
+			<a title="Visit full map of <?php echo $a['name']; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" style="z-index:1;">
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
 				<h4 class="text-white u-pd--lg u-mg--xs">
 					<span class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></span>
 					<span class="alignright glyphicon glyphicon-info-sign"></span>
 				</h4>
-	    	<div class="media u-mg--xs">
+	    	<div class="media u-mg--xs" id="image_<?php echo $divrand; ?>">
 					<img class="embed-responsive-item" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load">
 				</div>
 			</a>
+
+ <!-- Error report container with heading, an empty output region, and a button
+	 		to close it disguised as text. -->
+			<div class="t-bg--danger pd-lg" id="errorbox_<?php echo $divrand; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; width:<?php echo $a['width']; ?>px; z-index:3; position:absolute; left:0; bottom:0;">
+				<p class="text-white media-heading" style="font-weight:900;">An Error Has Occurred</p>
+		 		<p class="u-pd-right--lg text-white comment-content" id="errorout_<?php echo $divrand; ?>"></p>
+		 		<button class="text-white mg-xxlg--right" id="errorclose_<?php echo $divrand; ?>" style="background:none; border:none; float:right;">Dismiss</button>
+		 	</div>
 	  </div>
+		<script>
+
+		// Error report string grabbing data from the
+		var error_report = "<?php echo $error_text ?>";
+
+		// Verifies if the thumbnail exists and adds to the error report if not.
+		jQuery.get("https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>").fail(function(){
+			error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
+		})
+
+		// Scaling code. If this page element does not have custom-set width or
+		// height. If the user did not specify a width or set a width too wide for
+		// its container, this check sets the width instead to 100% of the master
+		// div. Height is also checked for no entry, and set to 75% of the master
+		// div's width.
+		if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab){
+			jQuery('#middle_<?php echo $divrand; ?>').width('100%');
+			jQuery('#errorbox_<?php echo $divrand; ?>').width('100%');
+		}
+		if (<?php echo $a['height']; ?> == 0)
+			jQuery('#middle_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+
+		// Error report handler. If there is content in error_report, that string
+		// is set to the error output in the error div. Otherwise, that div is
+		// hidden.
+		if (error_report){
+			jQuery('#errorout_<?php echo $divrand; ?>').html(error_report);
+		}
+		else {
+			jQuery('#errorbox_<?php echo $divrand; ?>').hide();
+		}
+
+		// Hiding control for the error div, sliding it down when the user clicks
+		// the dismiss button/text.
+		jQuery('#errorclose_<?php echo $divrand; ?>').click(function(){
+			jQuery('#errorbox_<?php echo $divrand; ?>').slideToggle();
+		});
+		</script>
 	</div>
 <?php
 }
 
 
+
+
 // Method for geop map display. Much more dynamic than the agol map generator.
-function geop_map_gen($a){
+function geop_map_gen($a, $error_text){
 
 	// Grabs the working environment URI format globals.
 	global $viewer_url;
@@ -180,7 +228,9 @@ function geop_map_gen($a){
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.3.0/leaflet.markercluster.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css">
+	<script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
 	<script>
@@ -222,45 +272,116 @@ function geop_map_gen($a){
 		 are set initially to those of the width as passed by array.-->
 	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
 
- <!-- Name and link card. -->
-			<h4 class="text-white u-pd--lg u-mg--xs">
+ <!-- Name and link card. The layer menu button is commented out until its
+ 			functionality has been established. -->
+			<h4 class="text-white u-pd--lg u-mg--xs" id="title_<?php echo $divrand; ?>">
 				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
 				<span class="alignright">
-					<!-- <span class="glyphicon glyphicon-menu-hamburger"></span> -->
+					<!-- <button class="glyphicon glyphicon-menu-hamburger" id="layerbutton_<?php echo $divrand; ?>" style="background:none; border:none;"></button> -->
 					<a title="Visit full map of <?php echo $a['name']; ?>" style="color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a>
 				</span>
 			</h4>
 
  <!-- The container that will hold the leaflet map. Also defines entree height. -->
-			<div id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
+			<div id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px; position:relative; z-index:1"></div>
 
+
+ <!-- Layer control container  -->
+			<div class="" id="layerbox_<?php echo $divrand; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; width:40%; height:<?php echo $a['height']; ?>px; background-color: #fff; z-index:2; position:absolute; bottom:0; right:0;">
+				<div class="geop-layer-box-item" style="background-color:#888;">Text</div>
+
+
+			</div>
+
+
+
+ <!-- Error report container with heading, an empty output region, and a button
+ 			to close it disguised as text. -->
+			<div class="t-bg--danger pd-lg" id="errorbox_<?php echo $divrand; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; width:<?php echo $a['width']; ?>px; z-index:3; position:absolute; left:0; bottom:0;">
+				<p class="text-white media-heading" style="font-weight:900;">An Error Has Occurred</p>
+				<p class="u-pd-right--lg text-white comment-content" id="errorout_<?php echo $divrand; ?>"></p>
+				<button class="text-white mg-xxlg--right" id="errorclose_<?php echo $divrand; ?>" style="background:none; border:none; float:right;">Dismiss</button>
+			</div>
 			<script>
+
+
+				// Error report string, which will be filled for display if necessary.
+				var error_report = "<?php echo $error_text ?>";
 
 			  // Scaling code. If this page element does not have custom-set width or
 	 	 		// height. If the user did not specify a width or set a width too wide
 	 			// for its container, this check sets the width instead to 100% of the
 	 			// master div. Height is also checked for no entry, and set to 75% of
 	 			// the master div's width.
-				if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab)
+				if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab){
 					jQuery('#middle_<?php echo $divrand; ?>').width('100%');
-				if (<?php echo $a['height']; ?> == 0)
+					jQuery('#errorbox_<?php echo $divrand; ?>').width('100%');
+				}
+				if (<?php echo $a['height']; ?> == 0){
 					jQuery('#container_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+					jQuery('#layerbox_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+				}
+				if (jQuery('#middle_<?php echo $divrand; ?>').width() <= 400){
+					jQuery('#layerbutton_<?php echo $divrand; ?>').hide();
+				}
 
 				// Javascript block that creates the leaflet map container, wraps it in
-		    // a GeoPlatform instance, and sets it up for display.
-				var lat = 38.8282;
-				var lng = -98.5795;
-				var zoom = 3;
-				var mapCode = "<?php echo $a['id']; ?>";
-				var leafBase = L.map("container_<?php echo $divrand;?>");
-	      var mapInstance = GeoPlatform.MapFactory.get();
-	      mapInstance.setMap(leafBase);
-	      mapInstance.setView(51.505, -0.09, 13);
+		    // a GeoPlatform instance, and sets it up for display. If it fails, the
+				// error is written to the error report string.
+				try {
+					var lat = 38.8282;
+					var lng = -98.5795;
+					var zoom = 3;
+					var mapCode = "<?php echo $a['id']; ?>";
+					var leafBase = L.map("container_<?php echo $divrand;?>");
+	      	var mapInstance = GeoPlatform.MapFactory.get();
+	      	mapInstance.setMap(leafBase);
+	      	mapInstance.setView(51.505, -0.09, 13);
 
-	      mapInstance.loadMap(mapCode).then( mapObj => {
-					let blObj = mapInstance.getBaseLayer();
-	        let layerStates = mapInstance.getLayers();
-	      });
+	      	mapInstance.loadMap(mapCode).then( mapObj => {
+						let blObj = mapInstance.getBaseLayer();
+	        	let layerStates = mapInstance.getLayers();
+	      	});
+				}
+				catch(err){
+					error_report += err + "<BR>";
+				}
+
+
+
+
+
+				// Initial hiding of the layer control div.
+				jQuery('#layerbox_<?php echo $divrand; ?>').hide();
+
+
+				// Show/hide toggle control for the layer div, sliding it up or hiding
+				// when the user presses the layer view button.
+				jQuery('#layerbutton_<?php echo $divrand; ?>').click(function(){
+					jQuery('#layerbox_<?php echo $divrand; ?>').slideToggle();
+				});
+
+
+
+
+
+
+				// Error report handler. If there is content in error_report, that string
+				// is set to the error output in the error div. Otherwise, that div is
+				// hidden.
+				if (error_report){
+					jQuery('#errorout_<?php echo $divrand; ?>').html(error_report);
+				}
+				else {
+					jQuery('#errorbox_<?php echo $divrand; ?>').hide();
+				}
+
+				// Hiding control for the error div, sliding it down when the user clicks
+				// the dismiss button/text.
+				jQuery('#errorclose_<?php echo $divrand; ?>').click(function(){
+					jQuery('#errorbox_<?php echo $divrand; ?>').slideToggle();
+				});
+
 			</script>
   	</div>
 	</div>
