@@ -148,7 +148,7 @@ function agol_map_gen($a, $error_text){
 <!-- This is the div block that defines the output proper. It defines the width
  		 and height of the visible map and title card, and contains those elements.
 	 	 Its values are set initially to those of height and width as passed by array.-->
-	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px; height:<?php echo $a['height']; ?>px;">
+	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
 
  <!-- The contents of this entire div act as a hyperlink, set here. -->
 			<a title="Visit full map of <?php echo $a['name']; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" style="z-index:1;">
@@ -158,8 +158,8 @@ function agol_map_gen($a, $error_text){
 					<span class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></span>
 					<span class="alignright glyphicon glyphicon-info-sign"></span>
 				</h4>
-	    	<div class="media u-mg--xs" id="image_<?php echo $divrand; ?>">
-					<img class="embed-responsive-item" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load">
+	    	<div class="media u-mg--xs" id="image_div_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;">
+					<img class="embed-responsive-item" id="image_div_<?php echo $divrand; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:<?php echo $a['width']; ?>px; height:<?php echo $a['height']; ?>px;">
 				</div>
 			</a>
 
@@ -189,10 +189,12 @@ function agol_map_gen($a, $error_text){
 		if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab){
 			jQuery('#middle_<?php echo $divrand; ?>').width('100%');
 			jQuery('#errorbox_<?php echo $divrand; ?>').width('100%');
+			jQuery('#image_<?php echo $divrand; ?>').width('100%');
 		}
-		if (<?php echo $a['height']; ?> == 0)
-			jQuery('#middle_<?php echo $divrand; ?>').height(widthGrab * 0.75);
-
+		if (<?php echo $a['height']; ?> == 0){
+			jQuery('#image_div_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+			jQuery('#image_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+		}
 		// Error report handler. If there is content in error_report, that string
 		// is set to the error output in the error div. Otherwise, that div is
 		// hidden.
@@ -225,14 +227,14 @@ function geop_map_gen($a, $error_text){
 <!-- Imports all of the resources needed to generate a map. -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
 	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css">
 	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css">
-	<script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
 	<script>
 	 GeoPlatform = {
 
@@ -277,21 +279,68 @@ function geop_map_gen($a, $error_text){
 			<h4 class="text-white u-pd--lg u-mg--xs" id="title_<?php echo $divrand; ?>">
 				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
 				<span class="alignright">
-					<!-- <button class="glyphicon glyphicon-menu-hamburger" id="layerbutton_<?php echo $divrand; ?>" style="background:none; border:none;"></button> -->
-					<a title="Visit full map of <?php echo $a['name']; ?>" style="color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span></a>
+					<button class="glyphicon glyphicon-menu-hamburger" id="layer_menu_button_<?php echo $divrand; ?>" style="background:none; border:none;"></button>
+					<a class="glyphicon glyphicon-info-sign" title="Visit full map of <?php echo $a['name']; ?>" style="color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"></a>
 				</span>
 			</h4>
 
  <!-- The container that will hold the leaflet map. Also defines entree height. -->
 			<div id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px; position:relative; z-index:1"></div>
 
+			<style>
+				.geop-layer-menu {
+					font-family: Lato,Helvetica,Arial,sans-serif;
+					border: 1px solid #ddd;
+					width: 50%;
+					background-color: #fff;
+					z-index: 2;
+					position: absolute;
+					bottom: 0;
+					right: 0;
+					overflow: auto;
+				}
+
+				.geop-layer-box {
+					border: 1px solid #ddd;
+					background-color: #fff;
+					color: black;
+					padding: 8px;
+					display: in-line;
+				}
+
+				.geop-text-button {
+					background: none;
+					border: none;
+				}
+			</style>
+
+
+
 
  <!-- Layer control container  -->
-			<div class="" id="layerbox_<?php echo $divrand; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; width:40%; height:<?php echo $a['height']; ?>px; background-color: #fff; z-index:2; position:absolute; bottom:0; right:0;">
-				<div class="geop-layer-box-item" style="background-color:#888;">Text</div>
+			<div class="geop-layer-menu" id="layerbox_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;">
+				<div class="geop-layer-box wp-caption-text" id="layer_header_<?php echo $divrand; ?>" style="width:100%"><h4>Layer menu</h4></div>
 
+
+
+				<!-- <div class="geop-layer-box">
+					<table style="width:100%">
+						<tr>
+							<td>
+								<button class="glyphicon glyphicon-unchecked geop-text-button" id="layer_button_id_<?php echo $divrand; ?>" style='width:auto;'></button>
+							</td>
+							<td id="layer_content_id_<?php echo $divrand; ?>" style="padding:8px;"></td>
+							<td class="pd-md--right">
+								<a class="glyphicon glyphicon-info-sign" title="View this layer of <?php echo $a['name']; ?>" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" style="color:black; float:right;"></a>
+							</td>
+						</tr>
+					</table>
+				</div> -->
 
 			</div>
+
+
+
 
 
 
@@ -300,9 +349,12 @@ function geop_map_gen($a, $error_text){
 			<div class="t-bg--danger pd-lg" id="errorbox_<?php echo $divrand; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; width:<?php echo $a['width']; ?>px; z-index:3; position:absolute; left:0; bottom:0;">
 				<p class="text-white media-heading" style="font-weight:900;">An Error Has Occurred</p>
 				<p class="u-pd-right--lg text-white comment-content" id="errorout_<?php echo $divrand; ?>"></p>
-				<button class="text-white mg-xxlg--right" id="errorclose_<?php echo $divrand; ?>" style="background:none; border:none; float:right;">Dismiss</button>
+				<button class="text-white mg-xxlg--right geop-text-button" id="errorclose_<?php echo $divrand; ?>" style="float:right;">Dismiss</button>
 			</div>
 			<script>
+				jQuery('document').ready(function(){
+
+
 
 
 				// Error report string, which will be filled for display if necessary.
@@ -322,30 +374,99 @@ function geop_map_gen($a, $error_text){
 					jQuery('#layerbox_<?php echo $divrand; ?>').height(widthGrab * 0.75);
 				}
 				if (jQuery('#middle_<?php echo $divrand; ?>').width() <= 400){
-					jQuery('#layerbutton_<?php echo $divrand; ?>').hide();
+					jQuery('#layer_menu_button_<?php echo $divrand; ?>').hide();
 				}
 
 				// Javascript block that creates the leaflet map container, wraps it in
 		    // a GeoPlatform instance, and sets it up for display. If it fails, the
 				// error is written to the error report string.
+				var mapInstance;
 				try {
 					var lat = 38.8282;
 					var lng = -98.5795;
 					var zoom = 3;
 					var mapCode = "<?php echo $a['id']; ?>";
-					var leafBase = L.map("container_<?php echo $divrand;?>");
-	      	var mapInstance = GeoPlatform.MapFactory.get();
+					var leafBase = L.map("container_<?php echo $divrand;?>", {
+						minZoom: 2,
+						maxZoom: 21
+					});
+
+	      	mapInstance = GeoPlatform.MapFactory.get();
 	      	mapInstance.setMap(leafBase);
 	      	mapInstance.setView(51.505, -0.09, 13);
 
-	      	mapInstance.loadMap(mapCode).then( mapObj => {
-						let blObj = mapInstance.getBaseLayer();
-	        	let layerStates = mapInstance.getLayers();
-	      	});
+
+					var layerStates;
+					mapInstance.loadMap(mapCode).then( function(){
+						var baseLayer = mapInstance.getBaseLayer();
+        		layerStates = mapInstance.getLayers();
+						layerGrab(mapInstance, layerStates);
+					}).catch( function(error){
+						console.log("Error: " + error);
+					})
 				}
 				catch(err){
-					error_report += err + "<BR>";
+					console.log(error_report += err + "<BR>");
 				}
+
+
+				function layerGrab(mapInstance, layersIn){
+					if (layerStates.length > 0){
+						for (var i = 0; i < layerStates.length; i++){
+							var main_box = createEl({type: 'div', class: 'geop-layer-box'});
+							var main_table = createEl({type: 'table', style: 'width:100%'});
+							var table_row = createEl({type: 'tr'});
+							var first_td = createEl({type: 'td'});
+							var check_button = createEl({type: 'button', class: 'glyphicon glyphicon-check geop-text-button layer_button_class_<?php echo $divrand; ?>', id: 'layer_button_id_<?php echo $divrand; ?>', style: 'width:auto', text: layerStates[i].layer_id});
+							var second_td = createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?>', id: 'layer_content_id_<?php echo $divrand; ?>', style: 'padding:8px', html: layerStates[i].layer.label});
+							var third_td = createEl({type: 'td', class: 'pd-md--right'});
+							var info_link = createEl({type: 'a', class: 'glyphicon glyphicon-info-sign', title: 'View this layer of <?php echo $a['name']; ?>', href: 'https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>', target: "_blank", style: 'color:black; float:right;'})
+
+							first_td.appendChild(check_button);
+							third_td.appendChild(info_link);
+							table_row.appendChild(first_td);
+							table_row.appendChild(second_td);
+							table_row.appendChild(third_td);
+							main_table.appendChild(table_row);
+							main_box.appendChild(main_table);
+							document.getElementById('layerbox_<?php echo $divrand; ?>').appendChild(main_box);
+
+						}
+						jQuery('.layer_button_class_<?php echo $divrand; ?>').click(function(){
+							jQuery(this).toggleClass('glyphicon-check glyphicon-unchecked');
+							mapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
+						});
+					}
+					else{
+						jQuery('#layer_header_<?php echo $divrand; ?>').html('<h4>This map has no layers.</h4>');
+					}
+				}
+
+
+				function createEl(atts){
+					atts = atts || {};
+					var new_el = document.createElement(atts.type);
+					if(atts.html)
+						new_el.innerHTML = atts.html;
+					if(atts.text)
+						new_el.setAttribute('text', atts.text);
+					if(atts.class)
+						new_el.setAttribute('class', atts.class);
+					if(atts.style)
+						new_el.setAttribute('style', atts.style);
+					if(atts.id)
+						new_el.setAttribute('id', atts.id);
+					if(atts.title)
+						new_el.setAttribute('title', atts.title);
+					if(atts.href)
+						new_el.setAttribute('href', atts.href);
+					if(atts.target)
+						new_el.setAttribute('target', atts.target);
+					return new_el;
+				}
+
+
+
 
 
 
@@ -357,11 +478,9 @@ function geop_map_gen($a, $error_text){
 
 				// Show/hide toggle control for the layer div, sliding it up or hiding
 				// when the user presses the layer view button.
-				jQuery('#layerbutton_<?php echo $divrand; ?>').click(function(){
+				jQuery('#layer_menu_button_<?php echo $divrand; ?>').click(function(){
 					jQuery('#layerbox_<?php echo $divrand; ?>').slideToggle();
 				});
-
-
 
 
 
@@ -381,6 +500,7 @@ function geop_map_gen($a, $error_text){
 				jQuery('#errorclose_<?php echo $divrand; ?>').click(function(){
 					jQuery('#errorbox_<?php echo $divrand; ?>').slideToggle();
 				});
+			})
 
 			</script>
   	</div>

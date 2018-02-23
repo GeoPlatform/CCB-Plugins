@@ -141,6 +141,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var props = Object.keys(feature.properties);
 
         var pFn = function pFn(list, names) {
+            if (!list || !list.find) return null;
             var match = list.find(function (name) {
                 var lc = name.toLowerCase();
                 return names.indexOf(lc) >= 0;
@@ -2058,7 +2059,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             //non-clustered features
             if (this._layers) {
                 for (var _id2 in this._layers) {
-                    this._layers[_id2].setVisibility(bool);
+                    var _layer = this._layers[_id2];
+                    if (_layer.setVisibility) _layer.setVisibility(bool);else if (_layer.setStyle) _layer.setStyle({ display: bool ? '' : 'none' });
                 }
             }
         },
@@ -2078,8 +2080,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             //non-clustered features
             if (this._layers) {
                 for (var _id3 in this._layers) {
-                    var _layer = this._layers[_id3];
-                    if (_layer.setOpacity) _layer.setOpacity(opacity);
+                    var _layer2 = this._layers[_id3];
+                    if (_layer2.setOpacity) _layer2.setOpacity(opacity);
                 }
             }
         },
@@ -2644,15 +2646,20 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }, {
             key: "getLayerStateIndex",
             value: function getLayerStateIndex(layerId) {
-                return this._layerStates.indexOfObj(layerId, function (id, state) {
-                    return state.layer.id === id;
-                });
+                if (!layerId) return -1;
+                for (var i = 0; i < this._layerStates.length; ++i) {
+                    if (this._layerStates[i].layer && layerId === this._layerStates[i].layer.id) {
+                        return i;
+                    }
+                }
+                return -1;
+                // return this._layerStates.indexOfObj(layerId, (id, state) => state.layer.id === id );
             }
         }, {
             key: "getLayerState",
             value: function getLayerState(layerId) {
                 var index = this.getLayerStateIndex(layerId);
-                return index >= 0 ? _layerStates[index] : null;
+                return index >= 0 ? this._layerStates[index] : null;
             }
             //-----------------
 
@@ -3551,15 +3558,13 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 var _this12 = this;
 
                 var metadata = md || {};
-                metadata.resourceTypes = metadata.resourceTypes || [];
 
                 //add GeoPlatformMap resource type if not already present
                 var gpMapType = 'http://www.geoplatform.gov/ont/openmap/GeoplatformMap';
+                metadata.resourceTypes = metadata.resourceTypes || [];
                 if (metadata.resourceTypes.indexOf(gpMapType) < 0) metadata.resourceTypes.push(gpMapType);
 
                 var content = this.getMapResourceContent(metadata);
-
-                var d = Q.defer();
 
                 //ensure the two name properties line up
                 if (content.title && content.title !== content.label) {
@@ -3569,7 +3574,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 }
 
                 // console.log("Updating: " + JSON.stringify(map));
-                this.getService(ItemTypes.MAP).save(content).then(function (result) {
+                return this.getService(ItemTypes.MAP).save(content).then(function (result) {
 
                     //track new map's info so we can update it with next save
                     if (!_this12._mapId) _this12._mapId = result.id;
@@ -3577,12 +3582,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                     _this12._mapDef = result;
                     _this12._defaultExtent = result.extent;
                     _this12.clean();
-                    d.resolve(result);
-                }).catch(function (error) {
-                    d.reject(error);
+                    return result;
+                }).catch(function (err) {
+                    var e = new Error("MapInstance.saveMap() - " + "The requested map could not be saved because: " + err.message);
+                    return Q.reject(e);
                 });
-
-                return d.promise;
             }
 
             /**
@@ -3597,7 +3601,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 //Having to send cache busting parameter to avoid CORS header cache
                 // not sending correct Origin value
                 return this.getService(ItemTypes.MAP).get(mapId);
-                // return this.mapService.get(mapId);
             }
 
             /**
