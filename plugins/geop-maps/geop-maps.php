@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Geoplatform Maps Plugin
  * Plugin URI:        www.geoplatform.gov
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Manage your own personal GeoPlatform maps and use shortcode to insert them into your posts.
  * Version:           1.0.0
  * Author:            Kevin Schmidt & Lee Heazel
  * Author URI:        www.geoplatform.gov
@@ -144,6 +144,12 @@ function agol_map_gen($a, $error_text){
 		<script>
 			var widthGrab = jQuery('#master_<?php echo $divrand ?>').width();
 		</script>
+		<style>
+		.geop-agol-image {
+			width: <?php echo $a['width']; ?>px;
+			height: <?php echo $a['height']; ?>px;
+		}
+		</style>
 
 <!-- This is the div block that defines the output proper. It defines the width
  		 and height of the visible map and title card, and contains those elements.
@@ -158,9 +164,7 @@ function agol_map_gen($a, $error_text){
 					<span class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></span>
 					<span class="alignright glyphicon glyphicon-info-sign"></span>
 				</h4>
-	    	<div class="media u-mg--xs" id="image_div_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;">
-					<img class="embed-responsive-item" id="image_div_<?php echo $divrand; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:<?php echo $a['width']; ?>px; height:<?php echo $a['height']; ?>px;">
-				</div>
+				<img class="embed-responsive-item geop-agol-image" id="image_<?php echo $divrand; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:100%; height:100%;">
 			</a>
 
  <!-- Error report container with heading, an empty output region, and a button
@@ -192,7 +196,6 @@ function agol_map_gen($a, $error_text){
 			jQuery('#image_<?php echo $divrand; ?>').width('100%');
 		}
 		if (<?php echo $a['height']; ?> == 0){
-			jQuery('#image_div_<?php echo $divrand; ?>').height(widthGrab * 0.75);
 			jQuery('#image_<?php echo $divrand; ?>').height(widthGrab * 0.75);
 		}
 		// Error report handler. If there is content in error_report, that string
@@ -245,6 +248,9 @@ function geop_map_gen($a, $error_text){
 		 //REQUIRED: URL to GeoPlatform UAL for API usage
 		 "ualUrl" : "https://sit-ual.geoplatform.us",
 
+		 //Object Editor URL.
+		 "oeUrl" : "https://sit-oe.geoplatform.us",
+
 		 //timeout max for requests
 		 "timeout" : "5000",
 
@@ -280,7 +286,7 @@ function geop_map_gen($a, $error_text){
 				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
 				<span class="alignright">
 					<button class="glyphicon glyphicon-menu-hamburger" id="layer_menu_button_<?php echo $divrand; ?>" style="background:none; border:none;"></button>
-					<a class="glyphicon glyphicon-info-sign" title="Visit full map of <?php echo $a['name']; ?>" style="color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"></a>
+					<a class="glyphicon glyphicon-info-sign" title="Visit full map of <?php echo $a['name']; ?> in the Object Editor." style="color:white;" href="https://sit-oe.geoplatform.us/view/<?php echo $a['id']; ?>" target="_blank"></a>
 				</span>
 			</h4>
 
@@ -298,6 +304,7 @@ function geop_map_gen($a, $error_text){
 					bottom: 0;
 					right: 0;
 					overflow: auto;
+					display: none;
 				}
 
 				.geop-layer-box {
@@ -312,6 +319,19 @@ function geop_map_gen($a, $error_text){
 					background: none;
 					border: none;
 				}
+
+				.geop-layer-text-style {
+					padding: 8px;
+					word-wrap: break-word;
+				}
+
+				.geop-error-text-style {
+					font-family: Lato,Helvetica,Arial,sans-serif;
+					z-index: 3;
+					position: absolute;
+					left: 0;
+					bottom: 0;
+				}
 			</style>
 
 
@@ -319,24 +339,7 @@ function geop_map_gen($a, $error_text){
 
  <!-- Layer control container  -->
 			<div class="geop-layer-menu" id="layerbox_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;">
-				<div class="geop-layer-box wp-caption-text" id="layer_header_<?php echo $divrand; ?>" style="width:100%"><h4>Layer menu</h4></div>
-
-
-
-				<!-- <div class="geop-layer-box">
-					<table style="width:100%">
-						<tr>
-							<td>
-								<button class="glyphicon glyphicon-unchecked geop-text-button" id="layer_button_id_<?php echo $divrand; ?>" style='width:auto;'></button>
-							</td>
-							<td id="layer_content_id_<?php echo $divrand; ?>" style="padding:8px;"></td>
-							<td class="pd-md--right">
-								<a class="glyphicon glyphicon-info-sign" title="View this layer of <?php echo $a['name']; ?>" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" style="color:black; float:right;"></a>
-							</td>
-						</tr>
-					</table>
-				</div> -->
-
+				<div class="geop-layer-box wp-caption-text" id="layer_header_<?php echo $divrand; ?>" style="width:100%"><h4>Layer Menu</h4></div>
 			</div>
 
 
@@ -346,11 +349,12 @@ function geop_map_gen($a, $error_text){
 
  <!-- Error report container with heading, an empty output region, and a button
  			to close it disguised as text. -->
-			<div class="t-bg--danger pd-lg" id="errorbox_<?php echo $divrand; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; width:<?php echo $a['width']; ?>px; z-index:3; position:absolute; left:0; bottom:0;">
+			<div class="t-bg--danger pd-lg geop-error-text-style" id="errorbox_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
 				<p class="text-white media-heading" style="font-weight:900;">An Error Has Occurred</p>
 				<p class="u-pd-right--lg text-white comment-content" id="errorout_<?php echo $divrand; ?>"></p>
 				<button class="text-white mg-xxlg--right geop-text-button" id="errorclose_<?php echo $divrand; ?>" style="float:right;">Dismiss</button>
 			</div>
+
 			<script>
 				jQuery('document').ready(function(){
 
@@ -401,6 +405,7 @@ function geop_map_gen($a, $error_text){
 						var baseLayer = mapInstance.getBaseLayer();
         		layerStates = mapInstance.getLayers();
 						layerGrab(mapInstance, layerStates);
+
 					}).catch( function(error){
 						console.log("Error: " + error);
 					})
@@ -418,9 +423,9 @@ function geop_map_gen($a, $error_text){
 							var table_row = createEl({type: 'tr'});
 							var first_td = createEl({type: 'td'});
 							var check_button = createEl({type: 'button', class: 'glyphicon glyphicon-check geop-text-button layer_button_class_<?php echo $divrand; ?>', id: 'layer_button_id_<?php echo $divrand; ?>', style: 'width:auto', text: layerStates[i].layer_id});
-							var second_td = createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?>', id: 'layer_content_id_<?php echo $divrand; ?>', style: 'padding:8px', html: layerStates[i].layer.label});
+							var second_td = createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', html: layerStates[i].layer.label});
 							var third_td = createEl({type: 'td', class: 'pd-md--right'});
-							var info_link = createEl({type: 'a', class: 'glyphicon glyphicon-info-sign', title: 'View this layer of <?php echo $a['name']; ?>', href: 'https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>', target: "_blank", style: 'color:black; float:right;'})
+							var info_link = createEl({type: 'a', class: 'glyphicon glyphicon-info-sign', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', href: GeoPlatform.oeUrl + '/view/' + layerStates[i].layer_id, target: "_blank", style: 'color:black; float:right;'})
 
 							first_td.appendChild(check_button);
 							third_td.appendChild(info_link);
@@ -436,6 +441,8 @@ function geop_map_gen($a, $error_text){
 							jQuery(this).toggleClass('glyphicon-check glyphicon-unchecked');
 							mapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
 						});
+
+
 					}
 					else{
 						jQuery('#layer_header_<?php echo $divrand; ?>').html('<h4>This map has no layers.</h4>');
@@ -472,14 +479,10 @@ function geop_map_gen($a, $error_text){
 
 
 
-				// Initial hiding of the layer control div.
-				jQuery('#layerbox_<?php echo $divrand; ?>').hide();
-
-
 				// Show/hide toggle control for the layer div, sliding it up or hiding
 				// when the user presses the layer view button.
 				jQuery('#layer_menu_button_<?php echo $divrand; ?>').click(function(){
-					jQuery('#layerbox_<?php echo $divrand; ?>').slideToggle();
+					jQuery('#layerbox_<?php echo $divrand; ?>').animate({ width: "toggle" });
 				});
 
 
