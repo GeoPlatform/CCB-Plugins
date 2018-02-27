@@ -85,7 +85,7 @@ if (!$invalid_bool){
 
   // Geomap block, featuring basic data setting from passed array.
   if ($map_agol == '0'){
-    $map_url = 'https://sit-viewer.geoplatform.us/' . '?id=' . $map_id;
+    $map_url = 'http://sit-viewer.geoplatform.us/' . '?id=' . $map_id;
     $map_name = $result['label'];
     $map_description = $result['description'];
     $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
@@ -107,7 +107,7 @@ if (!$invalid_bool){
       if (empty($map_description))
         $map_description = "This map does not have a description.";
     }
-    $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
+    $map_thumbnail = 'http://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
   }
 
   /* The values of ual_map_height and _width are checked if numeric. If so, they

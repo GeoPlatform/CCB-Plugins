@@ -66,7 +66,7 @@
       };
 
       jQuery.ajax({
-          url: "https://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -92,7 +92,7 @@
       };
 
       jQuery.ajax({
-          url: "https://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -193,11 +193,22 @@
                 <a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
                 <button class="geop_indiv_remove_action button-secondary" value="<?php echo $entry->map_id; ?>">Remove Map</button>
               </td>
-              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt="The thumbnail for this map failed to load."></a></td>
+              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt="The thumbnail for this map failed to load." onerror="geop_thumb_error(this);"/></a></td>
           	</tr><?php
           }?>
         </table>
     </form>
 </div>
+
+<script>
+  // If the map is valid but for some reason does not possess a thumbnail, this
+  // method is called and will supply a local default borrowed from the sit Map
+  // Viewer site.
+  function geop_thumb_error(geop_image_in){
+    geop_image_in.onerror = "";
+    geop_image_in.src = "/wp-content/plugins/geop-maps/includes/img-404.png";
+    return true;
+  }
+</script>
 
 <?php
