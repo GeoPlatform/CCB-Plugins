@@ -420,7 +420,8 @@ function geop_map_gen($a, $error_text){
 		// found, it creates a series of HTML elements using the geop_createEl()
 		// method and appends them into a DOM heirarchy before adding them to the
 		// layerbox div.
-		function geop_layer_control_gen(mapInstance, layersIn){
+		function geop_layer_control_gen(mapInstance, layerStates){
+
 			if (layerStates.length > 0){
 				for (var i = 0; i < layerStates.length; i++){
 					var main_box = geop_createEl({type: 'div', class: 'geop-layer-box'});
@@ -463,7 +464,7 @@ function geop_map_gen($a, $error_text){
 		// functional element before returning it.
 		function geop_createEl(atts){
 			atts = atts || {};
-			var new_el = document.geop_createElement(atts.type);
+			var new_el = document.createElement(atts.type);
 			if(atts.html)
 				new_el.innerHTML = atts.html;
 			if(atts.text)
