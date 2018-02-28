@@ -157,7 +157,7 @@ function agol_map_gen($a, $error_text){
 					<span class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></span>
 					<span class="alignright glyphicon glyphicon-info-sign"></span>
 				</h4>
-				<img class="embed-responsive-item" id="image_<?php echo $divrand; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:100%; height:100%;" onerror="geop_thumb_error(this);"/>
+				<img class="embed-responsive-item" id="image_<?php echo $divrand; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:100%; height:<?php echo $a['height']; ?>px;" onerror="geop_thumb_error(this);"/>
 			</a>
 
  <!-- Error report container with heading, an empty output region, and a button
