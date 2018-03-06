@@ -95,20 +95,22 @@ function shortcode_creation($atts){
   ), $atts);
   ob_start();
 
+	global $ual_url;
+
 	// Empty error text output string.
 	$error_text = '';
 
   // Uses the map ID provided to grab the map data from the GeoPlatform site and
 	// decode it into usable JSON info. Produces a bum result and error text if
 	// it fails.
-	$ual_url = $ual_url . '/api/maps/' . $a['id'];
-	$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+	$ual_url_in = $ual_url . '/api/maps/' . $a['id'];
+	$link_scrub = wp_remote_get( ''.$ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 	$response = wp_remote_retrieve_body( $link_scrub );
 	if(!empty($response))
 	  $result = json_decode($response, true);
 	else{
 	  $result = "This Gallery has no recent activity. Try adding some maps!";
-		// $error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>";
+		$error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>" . $ual_url;
 	}
 
 	// Invalid map ID check. A faulty map ID will return a generic JSON dataset
@@ -134,6 +136,8 @@ function shortcode_creation($atts){
 // Method for agol map display.
 function agol_map_gen($a, $error_text){
 
+	global $ual_url;
+	global $maps_url;
 	// Random number generation to give this instance of objects unique element IDs.
 	$divrand = rand(0, 99999); ?>
 
@@ -230,6 +234,9 @@ function geop_map_gen($a, $error_text){
 	// Grabs the working environment URI format globals. Also generates the random
 	// number used for unique element referencing.
 	global $viewer_url;
+	$oe_url = "https://sit-oe.geoplatform.us";
+
+
 	$divrand = rand(0, 99999);
 
 	?>
@@ -332,7 +339,7 @@ function geop_map_gen($a, $error_text){
 				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="<?php echo $viewer_url ?>/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
 				<span class="alignright">
 					<button class="glyphicon glyphicon-menu-hamburger geop-text-button" id="layer_menu_button_<?php echo $divrand; ?>"></button>
-					<a class="glyphicon glyphicon-info-sign" title="Visit full map of <?php echo $a['name']; ?> in the Object Editor." style="color:white;" href="https://sit-oe.geoplatform.us/view/<?php echo $a['id']; ?>" target="_blank"></a>
+					<a class="glyphicon glyphicon-info-sign" title="Visit full map of <?php echo $a['name']; ?> in the Object Editor." style="color:white;" href="<?php echo $oe_url; ?>/view/<?php echo $a['id']; ?>" target="_blank"></a>
 				</span>
 			</h4>
 
@@ -431,7 +438,7 @@ function geop_map_gen($a, $error_text){
 					var check_button = geop_createEl({type: 'button', class: 'glyphicon glyphicon-check geop-text-button layer_button_class_<?php echo $divrand; ?>', id: 'layer_button_id_<?php echo $divrand; ?>', style: 'width:auto', text: layerStates[i].layer_id});
 					var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', html: layerStates[i].layer.label});
 					var third_td = geop_createEl({type: 'td', class: 'pd-md--right'});
-					var info_link = geop_createEl({type: 'a', class: 'glyphicon glyphicon-info-sign', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', href: GeoPlatform.oeUrl + '/view/' + layerStates[i].layer_id, target: "_blank", style: 'color:black; float:right;'})
+					var info_link = geop_createEl({type: 'a', class: 'glyphicon glyphicon-info-sign', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', href: '<?php echo $oe_url; ?>/view/' + layerStates[i].layer_id, target: "_blank", style: 'color:black; float:right;'})
 
 					first_td.appendChild(check_button);
 					third_td.appendChild(info_link);

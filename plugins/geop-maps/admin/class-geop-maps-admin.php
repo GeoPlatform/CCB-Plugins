@@ -116,7 +116,7 @@ class Geop_Maps_Admin {
 	     *        Administration Menus: http://codex.wordpress.org/Administration_Menus
 	     *
 	     */
-	    add_options_page( 'GeoPlatform Map Settings Page', 'GP Maps', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page')
+	    add_options_page( 'GeoPlatform Open Maps Plugin Settings Page', 'GP Maps', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page')
 	    );
 	}
 

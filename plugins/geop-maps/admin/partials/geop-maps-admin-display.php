@@ -133,9 +133,12 @@
 
 <!-- Label and text field for map ID, height, and width input. -->
     <fieldset>
-      <div style="width:60%;">
+      <div style="width:70%;">
         <p>Please enter the ID of the map you want to add into your WordPress Community Space. To find the map ID, use the GeoPlatform Map Manager (<a href="https://maps.geoplatform.gov">maps.geoplatform.gov</a>)
-        to search and select the map. Height and width inputs will control the map's dimensions in shortcode form; if left blank, the generated maps will scale to fill the page.</p>
+        to search and select the map. Map IDs can be found as part of the URL in the displayed area shown when "Show Embed" is selected. GeoPlatform Open Map IDs can also be taken from the address bar of maps in
+        the GeoPlatform Map Viewer, but this will not work with other map formats.<BR><BR>
+        Height and width inputs will control the map's dimensions in shortcode form; if left blank, the generated maps will scale to fill the page.
+        </p>
       </div>
       <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
       <p>Please input a map ID:
