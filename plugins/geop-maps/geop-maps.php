@@ -13,11 +13,11 @@
  * @package           Geop_Maps
  *
  * @wordpress-plugin
- * Plugin Name:       Geoplatform Maps Plugin
+ * Plugin Name:       GeoPlatform Maps Plugin
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal GeoPlatform maps and use shortcode to insert them into your posts.
  * Version:           1.0.0
- * Author:            Kevin Schmidt & Lee Heazel
+ * Author:            Image Matters LLC
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
@@ -193,7 +193,7 @@ function agol_map_gen($a, $error_text){
 			jQuery('#image_<?php echo $divrand; ?>').width('100%');
 		}
 		if (<?php echo $a['height']; ?> == 0)
-			jQuery('#image_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+			jQuery('#image_<?php echo $divrand; ?>').height(jQuery('#image_<?php echo $divrand; ?>').width() * 0.56);
 
 		// Error report handler. If there is content in error_report, that string
 		// is set to the error output in the error div. Otherwise, that div is
