@@ -133,16 +133,17 @@
 
 <!-- Label and text field for map ID, height, and width input. -->
     <fieldset>
-      <p>Please Provide the ID of the map you created from <a href="https://maps.geoplatform.gov">Maps.GeoPlatform.gov</a> to be embedded into your Wordpress site.</p>
-        <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
-        <p>Please input a map ID:
-          <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
-          &nbsp&nbsp&nbsp&nbspDesired height:
-          <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" style="width:5em;"/>
-          &nbsp&nbsp&nbsp&nbspDesired width:
-          <input type="text" class="regular-text" id="map_width" name="<?php echo $this->plugin_name; ?>[ual_width]" style="width:5em;"/>
-        </p>
-        <!-- <input type="text" class="regular-text" id="<?php echo $this->plugin_name; ?>-ual_map_id" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/> -->
+      <div style="width:60%;">
+        <p>Please enter the ID of the map you want to add into your WordPress Community Space. To find the map ID, use the GeoPlatform Map Manager (<a href="https://maps.geoplatform.gov">maps.geoplatform.gov</a>)
+        to search and select the map. Height and width inputs will control the map's dimensions in shortcode form; if left blank, the generated maps will scale to fill the page.</p>
+      </div>
+      <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
+      <p>Please input a map ID:
+        <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
+        &nbsp&nbsp&nbsp&nbspDesired height:
+        <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" style="width:5em;"/>
+        &nbsp&nbsp&nbsp&nbspDesired width:
+        <input type="text" class="regular-text" id="map_width" name="<?php echo $this->plugin_name; ?>[ual_width]" style="width:5em;"/>
       </p>
     </fieldset>
 
