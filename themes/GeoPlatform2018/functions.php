@@ -17,6 +17,7 @@ $ckan_mp_url = "https://sit-ckan.geoplatform.us/?progress=planned&h=Marketplace"
 $ckan_url = "https://sit-ckan.geoplatform.us/";
 $cms_url = "https://sit-cms.geoplatform.us/resources";
 $idp_url = "https://sitidp.geoplatform.us";
+$oe_url = "https://sit-oe.geoplatform.us";
 $sd_url = "servicedesk@geoplatform.us";
 }
 elseif($stg == $env) {
@@ -30,6 +31,7 @@ $ckan_mp_url = "https://stg-ckan.geoplatform.gov/?progress=planned&h=Marketplace
 $ckan_url = "https://stg-ckan.geoplatform.gov/";
 $cms_url = "https://stg-cms.geoplatform.gov/resources";
 $idp_url = "https://stg-idp.geoplatform.us";
+$oe_url = "https://stg-oe.geoplatform.gov";
 $sd_url = "servicedesk@geoplatform.gov";
 }
 else {
@@ -43,6 +45,7 @@ $ckan_mp_url = "https://ckan.geoplatform.gov/?progress=planned&h=Marketplace";
 $ckan_url = "https://ckan.geoplatform.gov/";
 $cms_url = "https://cms.geoplatform.gov/resources";
 $idp_url = "https://idp.geoplatform.gov";
+$oe_url = "https://oe.geoplatform.gov";
 $sd_url = "servicedesk@geoplatform.gov";
 }
 
@@ -758,4 +761,17 @@ add_theme_support( 'automatic-feed-links' );
 // 		return 'stg-';
 // 	}
 //
+// }
+
+// if ( is_admin() )
+// {
+// 		add_action( 'admin_menu', 'add_plugin_for_editors' );
+// }
+//
+// function add_plugin_for_editors()
+// {
+// 		if (!current_user_can( 'manage_options' ))
+// 		{
+// 				add_menu_page('GeoPlatform Map Settings Page', 'GP Maps', 'edit_others_posts', 'geop-maps', 'partials/geop-maps-admin-display.php');
+// 		}
 // }
