@@ -18,8 +18,8 @@ global $wpdb;
 */
 $invalid_bool = false;
 $ual_map_id = $_POST["mapID"];
-$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
-$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+$ual_url_in = $ual_url . '/api/maps/' . $ual_map_id;
+$link_scrub = wp_remote_get( ''.$ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 $response = wp_remote_retrieve_body( $link_scrub );
 
 // Invalid submission detection.

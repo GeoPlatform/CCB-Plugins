@@ -19,7 +19,7 @@ global $wpdb;
 $ual_map_id = $_POST["mapID"];
 $ual_map_height = $_POST["mapHeight"];
 $ual_map_width = $_POST["mapWidth"];
-$ual_url = '';
+$ual_url_in = '';
 $link_scrub = '';
 $response = '';
 $result = '';
@@ -31,8 +31,8 @@ $invalid_bool = false;
 // it may be used down the line. If any part of the process fails, invalid_bool
 // is set to true and the process carries on. However, most of the remaining
 // operations here require a false $invalid_bool.
-$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $ual_map_id;
-$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+$ual_url_in = $ual_url . '/api/maps/' . $ual_map_id;
+$link_scrub = wp_remote_get( ''.$ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 $response = wp_remote_retrieve_body( $link_scrub );
 if(!empty($response))
   $result = json_decode($response, true);
@@ -85,10 +85,10 @@ if (!$invalid_bool){
 
   // Geomap block, featuring basic data setting from passed array.
   if ($map_agol == '0'){
-    $map_url = 'http://sit-viewer.geoplatform.us/' . '?id=' . $map_id;
+    $map_url = $viewer_url . '/?id=' . $map_id;
     $map_name = $result['label'];
     $map_description = $result['description'];
-    $map_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
+    $map_thumbnail = $ual_url . '/api/maps/'. $map_id . "/thumbnail";
   }
   else {
     // Agol block, pulling different values. Not all Agol maps have a description,
@@ -107,7 +107,7 @@ if (!$invalid_bool){
       if (empty($map_description))
         $map_description = "This map does not have a description.";
     }
-    $map_thumbnail = 'http://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
+    $map_thumbnail = $ual_url . '/api/maps/'. $map_id . "/thumbnail";
   }
 
   /* The values of ual_map_height and _width are checked if numeric. If so, they
