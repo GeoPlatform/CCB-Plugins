@@ -101,14 +101,14 @@ function shortcode_creation($atts){
   // Uses the map ID provided to grab the map data from the GeoPlatform site and
 	// decode it into usable JSON info. Produces a bum result and error text if
 	// it fails.
-	$ual_url = 'https://sit-ual.geoplatform.us/api/maps/' . $a['id'];
+	$ual_url = $ual_url . '/api/maps/' . $a['id'];
 	$link_scrub = wp_remote_get( ''.$ual_url.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 	$response = wp_remote_retrieve_body( $link_scrub );
 	if(!empty($response))
 	  $result = json_decode($response, true);
 	else{
 	  $result = "This Gallery has no recent activity. Try adding some maps!";
-		$error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>";
+		// $error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>";
 	}
 
 	// Invalid map ID check. A faulty map ID will return a generic JSON dataset
@@ -150,14 +150,14 @@ function agol_map_gen($a, $error_text){
 		 are set initially to those of width as passed by array. The contents of the
 	 	 entire div also act as a hyperlink, set here-->
 	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
-			<a title="Visit full map of <?php echo $a['name']; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" style="z-index:1;">
+			<a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $maps_url ?>/map.html?id=<?php echo $a['id']; ?>" target="_blank" style="z-index:1;">
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
 				<h4 class="text-white u-pd--lg u-mg--xs">
 					<span class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></span>
 					<span class="alignright glyphicon glyphicon-info-sign"></span>
 				</h4>
-				<img class="embed-responsive-item" id="image_<?php echo $divrand; ?>" href="https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="https://sit-ual.geoplatform.us/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:100%; height:<?php echo $a['height']; ?>px;" onerror="geop_thumb_error(this);"/>
+				<img class="embed-responsive-item" id="image_<?php echo $divrand; ?>" href="<?php echo $maps_url ?>/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:100%; height:<?php echo $a['height']; ?>px;" onerror="geop_thumb_error(this);"/>
 			</a>
 
  <!-- Error report container with heading, an empty output region, and a button
@@ -178,7 +178,7 @@ function agol_map_gen($a, $error_text){
 		var error_report = "<?php echo $error_text ?>";
 
 		// Verifies if the thumbnail exists and adds to the error report if not.
-		jQuery.get("https://sit-maps.geoplatform.us/map.html?id=<?php echo $a['id']; ?>").fail(function(){
+		jQuery.get("<?php echo $maps_url ?>/map.html?id=<?php echo $a['id']; ?>").fail(function(){
 			error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
 		})
 
@@ -329,7 +329,7 @@ function geop_map_gen($a, $error_text){
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
 			<h4 class="text-white u-pd--lg u-mg--xs" id="title_<?php echo $divrand; ?>">
-				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="https://sit-viewer.geoplatform.us/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
+				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="<?php echo $viewer_url ?>/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
 				<span class="alignright">
 					<button class="glyphicon glyphicon-menu-hamburger geop-text-button" id="layer_menu_button_<?php echo $divrand; ?>"></button>
 					<a class="glyphicon glyphicon-info-sign" title="Visit full map of <?php echo $a['name']; ?> in the Object Editor." style="color:white;" href="https://sit-oe.geoplatform.us/view/<?php echo $a['id']; ?>" target="_blank"></a>
