@@ -234,9 +234,7 @@ function geop_map_gen($a, $error_text){
 	// Grabs the working environment URI format globals. Also generates the random
 	// number used for unique element referencing.
 	global $viewer_url;
-	$oe_url = "https://sit-oe.geoplatform.us";
-
-
+	global $oe_url;
 	$divrand = rand(0, 99999);
 
 	?>
