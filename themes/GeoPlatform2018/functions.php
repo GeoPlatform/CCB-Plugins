@@ -10,43 +10,43 @@ if($dev == $env) {
 $maps_url = "https://sit-maps.geoplatform.us";
 $viewer_url = "https://sit-viewer.geoplatform.us";
 $marketplace_url = "https://sit-marketplace.geoplatform.us";
-$dashboard_url = "https://sit-dashboard.geoplatform.us/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
+$dashboard_url = "https://sit-dashboard.geoplatform.us/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
 $wpp_url = "https://sit.geoplatform.us";
 $ual_url = "https://sit-ual.geoplatform.us";
-$ckan_mp_url = "https://sit-ckan.geoplatform.us/?progress=planned&h=Marketplace";
+$ckan_mp_url = "https://sit-ckan.geoplatform.us/#/?progress=planned&h=Marketplace";
 $ckan_url = "https://sit-ckan.geoplatform.us/";
 $cms_url = "https://sit-cms.geoplatform.us/resources";
 $idp_url = "https://sitidp.geoplatform.us";
 $oe_url = "https://sit-oe.geoplatform.us";
-$sd_url = "servicedesk@geoplatform.us";
+//$sd_url = "servicedesk@geoplatform.us";
 }
 elseif($stg == $env) {
 $maps_url = "https://stg-maps.geoplatform.gov";
 $viewer_url = "https://stg-viewer.geoplatform.gov";
 $marketplace_url = "https://stg-marketplace.geoplatform.gov";
-$dashboard_url = "https://stg-dashboard.geoplatform.gov/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
+$dashboard_url = "https://stg-dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
 $wpp_url = "https://stg.geoplatform.gov";
 $ual_url = "https://stg-ual.geoplatform.gov";
-$ckan_mp_url = "https://stg-ckan.geoplatform.gov/?progress=planned&h=Marketplace";
+$ckan_mp_url = "https://stg-ckan.geoplatform.gov/#/?progress=planned&h=Marketplace";
 $ckan_url = "https://stg-ckan.geoplatform.gov/";
 $cms_url = "https://stg-cms.geoplatform.gov/resources";
 $idp_url = "https://stg-idp.geoplatform.us";
 $oe_url = "https://stg-oe.geoplatform.gov";
-$sd_url = "servicedesk@geoplatform.gov";
+//$sd_url = "servicedesk@geoplatform.gov";
 }
 else {
 $maps_url = "https://maps.geoplatform.gov";
 $viewer_url = "https://viewer.geoplatform.gov";
 $marketplace_url = "https://marketplace.geoplatform.gov";
-$dashboard_url = "https://dashboard.geoplatform.gov/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
+$dashboard_url = "https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
 $wpp_url = "https://geoplatform.gov";
 $ual_url = "https://ual.geoplatform.gov";
-$ckan_mp_url = "https://ckan.geoplatform.gov/?progress=planned&h=Marketplace";
+$ckan_mp_url = "https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace";
 $ckan_url = "https://ckan.geoplatform.gov/";
 $cms_url = "https://cms.geoplatform.gov/resources";
 $idp_url = "https://idp.geoplatform.gov";
 $oe_url = "https://oe.geoplatform.gov";
-$sd_url = "servicedesk@geoplatform.gov";
+//$sd_url = "servicedesk@geoplatform.gov";
 }
 
 //-------------------------------
@@ -118,6 +118,13 @@ add_theme_support( 'post-thumbnails' );
 remove_filter( 'the_content', 'wpautop' );
 remove_filter( 'the_excerpt', 'wpautop' );
 
+/********************************************************/
+// Adding Dashicons in WordPress Front-end
+/********************************************************/
+add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
+function load_dashicons_front_end() {
+  wp_enqueue_style( 'dashicons' );
+}
 
 //-------------------------------
 //Localizing our script for AJAX calls
@@ -707,7 +714,7 @@ function geoplatform_sidebar() {
     register_sidebar(
         array(
             'id' => 'geoplatform-widgetized-area',
-            'name' => __( 'Sidebar Widget', 'geoplatform-2017-theme' ),
+            'name' => __( 'Sidebar Widgets', 'geoplatform-2017-theme' ),
             'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-2017-theme' ),
                         'class' => 'widget-class',
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
@@ -761,17 +768,4 @@ add_theme_support( 'automatic-feed-links' );
 // 		return 'stg-';
 // 	}
 //
-// }
-
-// if ( is_admin() )
-// {
-// 		add_action( 'admin_menu', 'add_plugin_for_editors' );
-// }
-//
-// function add_plugin_for_editors()
-// {
-// 		if (!current_user_can( 'manage_options' ))
-// 		{
-// 				add_menu_page('GeoPlatform Map Settings Page', 'GP Maps', 'edit_others_posts', 'geop-maps', 'partials/geop-maps-admin-display.php');
-// 		}
 // }

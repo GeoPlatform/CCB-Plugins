@@ -13,7 +13,7 @@ class Text_Editor_Custom_Control extends WP_Customize_Control
        {
             ?>
                 <label>
-                  <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
+                  <span class="customize-text_editor"><?php echo esc_html( $this->label ); ?></span>
                   <input type="hidden" <?php $this->link(); ?> value="<?php echo esc_textarea( $this->value() ); ?>">
                   <?php
                     $settings = array(

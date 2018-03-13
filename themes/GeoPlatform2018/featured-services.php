@@ -1,6 +1,6 @@
 <div class="card">
 
-    <h4 class="card-title"><span class="glyphicon glyphicon-star"></span> Community Topic News </h4>
+    <h4 class="card-title"><span class="glyphicon glyphicon-star"></span> Community Related Information</h4>
 <?php
  $cat_id = get_query_var('cat');
   //then i get the data from the database
@@ -88,7 +88,6 @@
 
 
     <div id='news-topics'>
-      <h4>News topics</h4>
     	<h5><a href="<?php echo $url1 ?>" target="_blank"
     	  title="<?php echo $topic1 ?>">
     		<?php echo $topic1 ?>
@@ -122,7 +121,7 @@
     	</a></h4>
     <?php }?>
 
-  </div><!-- /news-topics -->
+  </div><!-- /Community Related Information -->
 
 
     <div>

@@ -1,4 +1,3 @@
-
 <footer>
     <div class="container-fluid top-link-row">
         <div class="row">
@@ -17,7 +16,7 @@
                         <span class="icon-gp"></span>
                         GeoPlatform
                     </a>
-                    <a href="<?php echo get_site_url();?>" title="Go to the <?php echo get_bloginfo( 'name' ); ?> Home Page">
+                    <a href="/" title="Go to the <?php echo get_bloginfo( 'name' ); ?> Home Page">
                     <?php echo get_bloginfo( 'name' ); ?>
                   </a>
                 </h3>
@@ -77,7 +76,6 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutL' ) ); ?>
 
-
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutR' ) ); ?>
@@ -113,3 +111,12 @@
 <?php wp_footer();?>
 </body>
 </html>
+
+<!-- code for authentication
+
+<% if(NODE_ENV === "dev") { %>
+<script src="//localhost:35729/livereload.js"></script>
+<% } %>
+
+<% if(error && error.message && error.message.indexOf("expire")>0) { %>
+    <!--<script>alert("Your session has expired. Please sign in again.");</script>-->
