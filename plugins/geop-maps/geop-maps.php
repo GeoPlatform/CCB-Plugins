@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.0
+ * @since             0.9.1
  * @package           Geop_Maps
  *
  * @wordpress-plugin
