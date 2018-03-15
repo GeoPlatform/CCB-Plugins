@@ -123,8 +123,13 @@ function shortcode_creation($atts){
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, the process proceeds with agol map generation. Otherwise, the
 	// geop method is called.
-	if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
-		agol_map_gen($a, $error_text);
+	if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap"){
+		$landing_page = '';
+		if (isset($result['landingPage'])){
+			$landing_page = $result['landingPage'];
+		}
+		agol_map_gen($a, $error_text, $landing_page);
+	}
 	else
 		geop_map_gen($a, $error_text);
 
@@ -134,12 +139,16 @@ function shortcode_creation($atts){
 
 
 // Method for agol map display.
-function agol_map_gen($a, $error_text){
+function agol_map_gen($a, $error_text, $landing_page){
 
 	global $ual_url;
 	global $maps_url;
 	// Random number generation to give this instance of objects unique element IDs.
-	$divrand = rand(0, 99999); ?>
+	$divrand = rand(0, 99999);
+
+	if (empty($landing_page))
+		$landing_page = $maps_url . '/map.html?id=' . $a['id'];
+	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
@@ -154,14 +163,14 @@ function agol_map_gen($a, $error_text){
 		 are set initially to those of width as passed by array. The contents of the
 	 	 entire div also act as a hyperlink, set here-->
 	  <div class="gp-ui-card t-bg--primary" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
-			<a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $maps_url ?>/map.html?id=<?php echo $a['id']; ?>" target="_blank" style="z-index:1;">
+			<a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $landing_page ?>" target="_blank" style="z-index:1;">
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
 				<h4 class="text-white u-pd--lg u-mg--xs">
 					<span class="text--primary:visited text-white" style="font-family:Lato,Helvetica,Arial,sans-serif;"><?php echo $a['name']; ?></span>
 					<span class="alignright glyphicon glyphicon-info-sign"></span>
 				</h4>
-				<img class="embed-responsive-item" id="image_<?php echo $divrand; ?>" href="<?php echo $maps_url ?>/map.html?id=<?php echo $a['id']; ?>" target="_blank" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:100%; height:<?php echo $a['height']; ?>px;" onerror="geop_thumb_error(this);"/>
+				<img class="embed-responsive-item" id="image_<?php echo $divrand; ?>" href="<?php echo $landing_page ?>" target="_blank" src="<?php echo $ual_url ?>/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="width:100%; height:<?php echo $a['height']; ?>px;" onerror="geop_thumb_error(this);"/>
 			</a>
 
  <!-- Error report container with heading, an empty output region, and a button
