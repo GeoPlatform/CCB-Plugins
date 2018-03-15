@@ -334,7 +334,7 @@ function geop_map_gen($a, $error_text){
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
 			<h4 class="text-white u-pd--lg u-mg--xs" id="title_<?php echo $divrand; ?>">
-				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="<?php echo $viewer_url ?>/map.html?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
+				<span><a title="Visit full map of <?php echo $a['name']; ?>" style="font-family:Lato,Helvetica,Arial,sans-serif; color:white;" href="<?php echo $viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank"><?php echo $a['name']; ?></a></span>
 				<span class="alignright">
 					<button class="glyphicon glyphicon-menu-hamburger geop-text-button" id="layer_menu_button_<?php echo $divrand; ?>"></button>
 					<a class="glyphicon glyphicon-info-sign" title="Visit full map of <?php echo $a['name']; ?> in the Object Editor." style="color:white;" href="<?php echo $oe_url; ?>/view/<?php echo $a['id']; ?>" target="_blank"></a>
