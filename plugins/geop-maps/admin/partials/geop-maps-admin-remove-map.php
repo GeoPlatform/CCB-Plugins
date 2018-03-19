@@ -13,12 +13,22 @@ $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require( $parse_uri[0] . 'wp-load.php' );
 global $wpdb;
 
+// URL variable for resource collection, defaults to production environment.
+$geop_ual_url = "https://ual.geoplatform.gov";
+
+// Checks the active theme and, if confirmed to be a GeoPlatform theme, sets
+// the desired field declared in functions.php to the field above.
+if (substr(get_template(), 0, 11) == "GeoPlatform"){
+  global $ual_url;
+  $geop_ual_url = $ual_url;
+}
+
 /* Assigns the variable stored in $_POST to $ual_map_id, which will guide this
  * process. $ual_map_id is then scrubbed and prepped for use.
 */
 $invalid_bool = false;
 $ual_map_id = $_POST["mapID"];
-$ual_url_in = $ual_url . '/api/maps/' . $ual_map_id;
+$ual_url_in = $geop_ual_url . '/api/maps/' . $ual_map_id;
 $link_scrub = wp_remote_get( ''.$ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 $response = wp_remote_retrieve_body( $link_scrub );
 

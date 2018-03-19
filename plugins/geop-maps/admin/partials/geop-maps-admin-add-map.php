@@ -26,12 +26,24 @@ $result = '';
 $map_agol = '0';
 $invalid_bool = false;
 
+// URL variables for resource collection, defaults to production environment.
+$geop_ual_url = "https://ual.geoplatform.gov";
+$geop_viewer_url = "https://viewer.geoplatform.gov";
+
+// Checks the active theme and, if confirmed to be a GeoPlatform theme, sets
+// the desired fields declared in functions.php to the fields above.
+if (substr(get_template(), 0, 11) == "GeoPlatform"){
+  global $ual_url;
+  global $viewer_url;
+  $geop_ual_url = $ual_url;
+  $geop_viewer_url = $viewer_url;
+}
 
 // Field assignment. The map's url is set up, verified, and json decoded so that
 // it may be used down the line. If any part of the process fails, invalid_bool
 // is set to true and the process carries on. However, most of the remaining
 // operations here require a false $invalid_bool.
-$ual_url_in = $ual_url . '/api/maps/' . $ual_map_id;
+$ual_url_in = $geop_ual_url . '/api/maps/' . $ual_map_id;
 $link_scrub = wp_remote_get( ''.$ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 $response = wp_remote_retrieve_body( $link_scrub );
 if(!empty($response))
@@ -85,10 +97,10 @@ if (!$invalid_bool){
 
   // Geomap block, featuring basic data setting from passed array.
   if ($map_agol == '0'){
-    $map_url = $viewer_url . '/?id=' . $map_id;
+    $map_url = $geop_viewer_url . '/?id=' . $map_id;
     $map_name = $result['label'];
     $map_description = $result['description'];
-    $map_thumbnail = $ual_url . '/api/maps/'. $map_id . "/thumbnail";
+    $map_thumbnail = $geop_ual_url . '/api/maps/'. $map_id . "/thumbnail";
   }
   else {
     // Agol block, pulling different values. Not all Agol maps have a description,
@@ -107,7 +119,7 @@ if (!$invalid_bool){
       if (empty($map_description))
         $map_description = "This map does not have a description.";
     }
-    $map_thumbnail = $ual_url . '/api/maps/'. $map_id . "/thumbnail";
+    $map_thumbnail = $geop_ual_url . '/api/maps/'. $map_id . "/thumbnail";
   }
 
   /* The values of ual_map_height and _width are checked if numeric. If so, they

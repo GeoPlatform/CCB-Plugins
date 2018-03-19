@@ -66,7 +66,7 @@
       };
 
       jQuery.ajax({
-          url: "https://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -92,7 +92,7 @@
       };
 
       jQuery.ajax({
-          url: "https://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -141,7 +141,7 @@
         </p>
       </div>
       <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
-      <p>Please input a map ID:
+      <p>Please input a map ID:&nbsp
         <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
         &nbsp&nbsp&nbsp&nbspDesired height:
         <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" style="width:5em;"/>
