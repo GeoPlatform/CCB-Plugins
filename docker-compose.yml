@@ -1,0 +1,30 @@
+version: '2'
+services:
+
+# Wordpress
+  ccb:
+    build: .
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
+    ports:
+      - "80:80"
+      - "81:80"
+    volumes:
+      - ./plugins:/var/www/html/wp-content/plugins:rw
+      - ./themes:/var/www/html/wp-content/themes:rw
+    environment:
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: imroot:012!
+
+  mysql:
+    image: mysql:5.6
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_ROOT_PASSWORD: imroot:012!
+    volumes:
+       - /var/lib/mysql
