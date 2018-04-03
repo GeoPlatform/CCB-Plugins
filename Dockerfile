@@ -11,8 +11,8 @@ RUN apt-get update
 RUN apt-get install unzip
 
 # Remove the default plugins themes
-# RUN rm -rf /usr/src/wordpress/wp-content/plugins/*
-# RUN rm -rf /usr/src/wordpress/wp-content/themes/*
+RUN rm -rf /usr/src/wordpress/wp-content/plugins/hello.php
+RUN rm -rf /usr/src/wordpress/wp-content/themes/*
 
 ######## Download and install dependencies ###########
 # categories-images:
