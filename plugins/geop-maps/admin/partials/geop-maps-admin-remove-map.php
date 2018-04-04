@@ -13,15 +13,25 @@ $parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require( $parse_uri[0] . 'wp-load.php' );
 global $wpdb;
 
-// URL variable for resource collection, defaults to production environment.
-$geop_ual_url = "https://ual.geoplatform.gov";
+// Grabs the file that handles environmental variables.
+require_once('../../includes/class-geop-maps-urlbank.php');
 
-// Checks the active theme and, if confirmed to be a GeoPlatform theme, sets
-// the desired field declared in functions.php to the field above.
+// URL variables for pinging the url bank for environment URLs. Checks for a
+// GeoPlatform theme, pulling the global env variable and checking it as well
+// for a valid value. If either check fails, geop_env defaults to 'prd', which
+// will produce production-state URLs from the url bank.
+$geop_env = 'prd';
 if (substr(get_template(), 0, 11) == "GeoPlatform"){
-  global $ual_url;
-  $geop_ual_url = $ual_url;
+  global $env;
+  if ($env == 'dev' || $env == 'stg')
+    $geop_env = $env;
 }
+
+// Instantiates the URL bank for environment variable grabbing.
+$Geop_url_class = new Geop_url_bank;
+
+// URL variables for resource collection, defaults to production environment.
+$geop_ual_url = $Geop_url_class->geop_maps_get_ual_url($geop_env);
 
 /* Assigns the variable stored in $_POST to $ual_map_id, which will guide this
  * process. $ual_map_id is then scrubbed and prepped for use.
