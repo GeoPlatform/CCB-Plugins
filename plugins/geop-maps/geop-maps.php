@@ -345,8 +345,8 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 		 "appId" : "development-mv"
 	 };
 	</script>
-	<script src="http://dyk46gk69472z.cloudfront.net/geoplatform.client/0.0.1/js/geoplatform.client.js"></script>
-	<script src="http://dyk46gk69472z.cloudfront.net/gp.mapcore/0.0.1/js/geoplatform.mapcore.min.js"></script>
+	<script src="https://dyk46gk69472z.cloudfront.net/geoplatform.client/0.0.1/js/geoplatform.client.js"></script>
+	<script src="https://dyk46gk69472z.cloudfront.net/gp.mapcore/0.0.1/js/geoplatform.mapcore.min.js"></script>
 	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 
 
