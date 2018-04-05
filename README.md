@@ -39,7 +39,7 @@ RUN curl -L -o /usr/src/plugin.zip [URL to plugin download]; \
 
 Tagged versions of this repo should be pushed to the GeoPlatform CDN via the `pushToCDN.sh` script.
 
-> Get argument deatils by running
+> Get argument deatails by running
 >`./pushToCDN.sh --help`
 
 Example:
