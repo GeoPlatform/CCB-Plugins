@@ -146,7 +146,7 @@ function shortcode_creation($atts){
 		agol_map_gen($a, $error_text, $Geop_url_class->geop_maps_get_ual_url($geop_env), $Geop_url_class->geop_maps_get_maps_url($geop_env), $landing_page, $geop_theme);
 	}
 	else
-		geop_map_gen($a, $error_text, $Geop_url_class->geop_maps_get_viewer_url($geop_env), $Geop_url_class->geop_maps_get_oe_url($geop_env), $geop_theme);
+		geop_map_gen($a, $error_text, $Geop_url_class->geop_maps_get_ual_url($geop_env), $Geop_url_class->geop_maps_get_viewer_url($geop_env), $Geop_url_class->geop_maps_get_oe_url($geop_env), $geop_theme);
 	return ob_get_clean();
 }
 
@@ -233,7 +233,7 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 		var error_report = "<?php echo $error_text ?>";
 
 		// Verifies if the thumbnail exists and adds to the error report if not.
-		jQuery.get("<?php echo $geop_maps_url ?>/map.html?id=<?php echo $a['id']; ?>").fail(function(){
+		jQuery.get("<?php echo $geop_maps_url ?>/map.html?id=<?php echo $a['id']; ?>").fail(function(err){
 			error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
 		})
 
@@ -287,7 +287,7 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 *  #param $geop_maps_url: url to the expected object editor server.
 *  #param $geop_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
 */
-function geop_map_gen($a, $error_text, $geop_viewer_url, $geop_oe_url, $geop_theme){
+function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe_url, $geop_theme){
 
 	// Generates the random number used for unique element referencing.
 	$divrand = rand(0, 99999);
@@ -330,10 +330,10 @@ function geop_map_gen($a, $error_text, $geop_viewer_url, $geop_oe_url, $geop_the
 		 "env" : "development",
 
 		 //REQUIRED: URL to GeoPlatform UAL for API usage
-		 "ualUrl" : "https://sit-ual.geoplatform.us",
+		 "ualUrl" : "<?php echo $geop_ual_url ?>",
 
 		 //Object Editor URL.
-		 "oeUrl" : "https://sit-oe.geoplatform.us",
+		 "oeUrl" : "<?php echo $geop_oe_url ?>",
 
 		 //timeout max for requests
 		 "timeout" : "5000",
