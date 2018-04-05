@@ -1,6 +1,6 @@
 <?php
 //Set the proper environment
-$env = 'dev';
+$env = 'prd';
 $dev = 'dev';
 $stg = 'stg';
 
