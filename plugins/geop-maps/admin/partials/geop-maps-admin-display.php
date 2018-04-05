@@ -197,7 +197,7 @@
                 <a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
                 <button class="geop_indiv_remove_action button-secondary" value="<?php echo $entry->map_id; ?>">Remove Map</button>
               </td>
-              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" alt="The thumbnail for this map failed to load." onerror="geop_thumb_error(this);"/></a></td>
+              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" width="200px" height="112px" alt="The thumbnail for this map failed to load." onerror="geop_thumb_error(this);"/></a></td>
           	</tr><?php
           }?>
         </table>

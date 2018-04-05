@@ -2,6 +2,201 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
-div.geop-layer-box-item {
-  border: 1px solid #bbb;
-}
+ /*---------Start GeoMain styling from Drupal cutover------------  */
+
+
+
+
+ /*--------------------------------------------------------------
+ # Widgets
+ --------------------------------------------------------------*/
+
+ /*#calendar*/
+ #wp-calendar{
+     width: -webkit-fill-available;
+ }
+
+ .geop-display-main {
+   position: relative;
+   margin: 0 0 1em;
+   overflow: hidden;
+   border: 1px solid #bbb;
+   border-radius: 4px;
+   box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+   font-size: 1rem;
+   background: #fff;
+   color: inherit
+   display: block;
+   border-bottom: 1px solid #ddd;
+   background-color: #112158;
+ }
+
+ .geop-display-header {
+   position: relative;
+   padding: .75em;
+   margin: .125em;
+   font-weight: 700!important;
+   font-size: 1.75em;
+   text-transform: none;
+   font-family: Lato,Helvetica,Arial,sans-serif;
+ }
+
+ .geop-no-transform {
+   text-transform: none;
+   text-decoration: none;
+   margin: auto;
+ }
+
+ .geop-hidden-link a, .geop-hidden-link:link a, .geop-hidden-link:hover a, .geop-hidden-link:visited a, .geop-hidden-link:active a {
+   text-transform: none;
+   text-decoration: none !important;
+   margin: auto;
+ }
+
+ .geop-white-item {
+   color: #fff;
+ }
+
+ .geop-header-controls {
+ 	 float: right;
+ 	 margin-left: 1.5em;
+ }
+
+ .geop-header-table-layout {
+   width: 100%;
+   table-layout: auto;
+ }
+
+ .geop-container-controls {
+   position: relative;
+   width: 100%;
+   z-index: 1;
+ }
+
+ .geop-layer-menu {
+   font-family: Lato,Helvetica,Arial,sans-serif;
+   border: 1px solid #ddd;
+   width: 50%;
+   background-color: #fff;
+   z-index: 2;
+   position: absolute;
+   bottom: 0;
+   right: 0;
+   overflow: auto;
+   display: none;
+ }
+
+ .geop-layer-box {
+   table-layout: auto;
+   padding: 0px;
+   margin: 0px;
+   border: 1px solid #ddd;
+   background-color: #fff;
+   color: black;
+   display: in-line;
+   font-size: 16px;
+ }
+
+ .geop-no-border {
+   border: none;
+ }
+
+ .geop-no-cushion {
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+  }
+
+ .geop-table-pad {
+   padding: 16px 8px 16px 8px;
+ }
+
+
+ .geop-text-button, .geop-text-button:hover, .geop-text-button:focus, .geop-text-button:active {
+   background: none;
+   border: none;
+   margin: 0;
+   padding: 0 8px 0 8px;
+ }
+
+ .geop-layer-text-style {
+   padding: 16px 0 16px 0;
+   word-wrap: break-word;
+   border: none;
+ }
+
+ .geop-error-text-style {
+   font-family: Lato,Helvetica,Arial,sans-serif;
+   z-index: 3;
+   position: absolute;
+   left: 0;
+   bottom: 0;
+ }
+
+ .geop-caption-text {
+   font-family: Lato,Helvetica,Arial,sans-serif;
+   margin: 0.5em 0;
+   text-align: center;
+   font-weight: 700!important;
+   font-size: 1.125em;
+ }
+
+ .geop-error-box {
+   font-family: Lato,Helvetica,Arial,sans-serif;
+   z-index: 3;
+   position: absolute;
+   width: 100%;
+   left: 0;
+   bottom: 0;
+   background-color: #d9534f;
+   padding: 12px;
+ }
+
+ .geop-heavy-text {
+   font-weight: 900;
+ }
+
+ .geop-error-report {
+   padding-right: .75em;
+   word-wrap: break-word;
+ }
+
+ .geop-right-marg-float {
+   float: right;
+ }
+
+ .geop-layer-black-float {
+   color: black;
+   float: right;
+ }
+
+ .geop-layer-right-sixteen-pad {
+   padding-right: 16px;
+ }
+
+ .geop-error-bottom-eight-marg {
+   margin-bottom: 8px;
+ }
+
+ .geop-error-bottom-twelve-marg {
+   margin-bottom: 12px;
+ }
+
+ .geop-sixteen-text {
+   font-family: Lato,Helvetica,Arial,sans-serif;
+   font-size: 16px;
+ }
+
+
+
+ /*--------------------------------------------------------------
+ # Content Width
+ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
+ --------------------------------------------------------------*/
+ .size-auto,
+ .size-full,
+ .size-large,
+ .size-medium,
+ .size-thumbnail {
+ 	max-width: 100%;
+ 	height: auto;
+ }
