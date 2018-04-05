@@ -1,0 +1,9 @@
+# Ignore default and dependency plugin files...
+plugins/hello.php
+plugins/index.php
+plugins/akismet
+plugins/categories-images
+
+# Ignore default thems files
+themes/index.php
+themes/twenty*
