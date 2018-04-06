@@ -17,13 +17,21 @@ RUN rm -rf /usr/src/wordpress/wp-content/themes/*
 ######## Download and install dependencies ###########
 # categories-images:
 RUN curl -L -o /usr/src/categories-images.zip \
-					https://downloads.wordpress.org/plugin/categories-images.2.5.4.zip
-RUN unzip -d /usr/src/wordpress/wp-content/plugins/ \
-					/usr/src/categories-images.zip
-RUN rm /usr/src/categories-images.zip
+					https://downloads.wordpress.org/plugin/categories-images.2.5.4.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/categories-images.zip; \
+		rm /usr/src/categories-images.zip
 ######################################################
 
-# The /usr/src/wordpress/ dir in the container is copied to /var/www/html in the docker-entrypoint.sh for Wordpress
-ADD ./plugins /usr/src/wordpress/wp-content/plugins/
-ADD ./themes /usr/src/wordpress/wp-content/themes/
+# Pull the conig into the final hosted directory
+ADD ./config  /var/www/html/
 
+# The /usr/src/wordpress/ dir in the container is copied to /var/www/html
+# in the docker-entrypoint.sh for Wordpress
+ADD ./plugins /usr/src/wordpress/wp-content/plugins/
+ADD ./themes  /usr/src/wordpress/wp-content/themes/
+
+# Run out custom entrypoint first
+COPY docker-pre-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-pre-entrypoint.sh
+ENTRYPOINT [ "docker-pre-entrypoint.sh" ]

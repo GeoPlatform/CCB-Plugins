@@ -8,6 +8,13 @@ To run the CCB container simply run
 
 This will create and run a new CCB install inside a docker container.
 
+<br>
+
+**Optional variables**
+| Name | Type | Description |
+|---|---|---|
+| sitename | string | The name of the site (needed for deploying side by side on a host)
+
 <hr>
 
 ## Structure
