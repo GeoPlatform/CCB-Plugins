@@ -386,7 +386,7 @@ function geo_customize_register( $wp_customize )
 				 $wp_customize->remove_section( 'colors' );
 
 				 //Remove default Menus and Static Front page sections as this theme doesn't utilize them at this time
-				 $wp_customize->remove_panel( 'nav_menus');
+				 //$wp_customize->remove_panel( 'nav_menus');
 				 $wp_customize->remove_section( 'static_front_page' );
 
 				 //remove site tagline and checkbox for showing site title and tagline from Site Identity section
@@ -452,7 +452,10 @@ function header_image_method() {
 		'custom-style',
 		get_template_directory_uri() . '/css/Geomain_style.css'
 	);
-        $headerImage = get_header_image();
+			$headerImage = get_header_image();
+			if (! $headerImage) {
+				$headerImage = get_template_directory_uri() . "/img/placeholder-banner.png";
+			}
         $custom_css = "
                 .banner{
                         background-image: url({$headerImage});
