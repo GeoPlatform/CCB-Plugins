@@ -17,7 +17,8 @@ The `docker-pre-entrypoint.sh` script is an intermediary script that runs before
 
 Environmen variable can be defined in the `environment:` section under the `ccb` container in the `docker-compose.yml` file.
 <br><br>
-**Environment variables:**<br>
+**Environment variables:**
+
 | Name | Type | Description | Required |
 |---|---|---|---|
 | sitename | string | The name of the site (needed for deploying side by side on a host) | False |
