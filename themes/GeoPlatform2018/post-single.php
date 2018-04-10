@@ -1,13 +1,6 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<br />
 
-<?php $name = get_post_meta($post->ID, 'featured_img_ExternalUrl', true);
-if( $name ) { ?>
-<a href="<?php echo $name; ?>" target="blank"><?php the_post_thumbnail('post-thumbnail', ['class' => 'img-responsive responsive--full', 'title'=>'Go to Map']); ?></a>
-<?php } else {
-the_post_thumbnail('post-thumbnail', ['class' => 'img-responsive responsive--full']);
-} ?>
-
 
 <div class="entry-content">
 	<br />

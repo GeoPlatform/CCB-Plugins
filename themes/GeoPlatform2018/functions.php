@@ -1,6 +1,6 @@
 <?php
 //Set the proper environment
-$env = 'prd';
+$env = 'dev';
 $dev = 'dev';
 $stg = 'stg';
 
@@ -18,7 +18,7 @@ $ckan_url = "https://sit-ckan.geoplatform.us/";
 $cms_url = "https://sit-cms.geoplatform.us/resources";
 $idp_url = "https://sitidp.geoplatform.us";
 $oe_url = "https://sit-oe.geoplatform.us";
-//$sd_url = "servicedesk@geoplatform.us";
+$sd_url = "servicedesk@geoplatform.us";
 }
 elseif($stg == $env) {
 $maps_url = "https://stg-maps.geoplatform.gov";
@@ -30,9 +30,9 @@ $ual_url = "https://stg-ual.geoplatform.gov";
 $ckan_mp_url = "https://stg-ckan.geoplatform.gov/#/?progress=planned&h=Marketplace";
 $ckan_url = "https://stg-ckan.geoplatform.gov/";
 $cms_url = "https://stg-cms.geoplatform.gov/resources";
-$idp_url = "https://stg-idp.geoplatform.us";
+$idp_url = "https://stg-idp.geoplatform.gov";
 $oe_url = "https://stg-oe.geoplatform.gov";
-//$sd_url = "servicedesk@geoplatform.gov";
+$sd_url = "servicedesk@geoplatform.gov";
 }
 else {
 $maps_url = "https://maps.geoplatform.gov";
@@ -46,7 +46,7 @@ $ckan_url = "https://ckan.geoplatform.gov/";
 $cms_url = "https://cms.geoplatform.gov/resources";
 $idp_url = "https://idp.geoplatform.gov";
 $oe_url = "https://oe.geoplatform.gov";
-//$sd_url = "servicedesk@geoplatform.gov";
+$sd_url = "servicedesk@geoplatform.gov";
 }
 
 //-------------------------------
@@ -741,31 +741,87 @@ if ( ! isset( $content_width ) ) {
 //-------------------------------
 add_theme_support( 'automatic-feed-links' );
 
+
 //-------------------------------
-//Global link variables
+// Theme specific enabled capabilities
+//https://codex.wordpress.org/Function_Reference/add_cap
+//https://codex.wordpress.org/Roles_and_Capabilities
 //-------------------------------
+function add_theme_caps(){
+  global $pagenow;
 
-//self prefix - www, stg, uat, sit
-//envPrefix - www., stg-, uat-, sit-
-//baseEnvUrl = geoplatform.gov or geoplatform.us
+  // gets the author role
+	$subRole = get_role('subscriber');
+	$contribRole = get_role('contributor');
+  $authRole = get_role( 'author' );
+	$editorRole = get_role('editor');
 
-//example www.geoplatform.gov -> self_pre (www.) + geo_base (geoplatform.gov)
-//example uat-ccb.geoplatform.us -> CCB: $url = 'https://' . $envPrefix . 'ccb.' . $baseEnvUrl . $params
+  if ( 'themes.php' == $pagenow && isset( $_GET['activated'] ) ){ // Test if theme is activated
+    // Theme is activated
+    // This only works, because it accesses the class instance.
 
+		//Allows these roles to read private pages
+		$contribRole->add_cap('read_private_pages');
+		$authRole->add_cap('read_private_pages');
 
-// function get_baseEnvUrl(){
-// 	//baseEnvUrl = geoplatform.gov or geoplatform.us
-// 	return 'geoplatform.gov';
-// }
-//
-// function get_envPrefix(){
-// 	$prod = true;
-// 	if ($prod){
-// 		return "";
-// 	}
-// 	else{
-// 		//set envPrefix - www., stg-, uat-, sit-
-// 		return 'stg-';
-// 	}
-//
-// }
+		//Allows these roles to read private posts
+		$contribRole->add_cap('read_private_posts');
+		$authRole->add_cap('read_private_posts');
+
+ 		//Allows these roles to use Customizer
+		$editorRole->add_cap('customize');
+
+		//Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”
+		$editorRole->add_cap('edit_theme_options');
+
+		//Allows these roles to edit WP Dashboard layout
+		$editorRole->add_cap('edit_dashboard');
+
+		//Allows these roles to see list of users on site
+		$editorRole->add_cap('list_users');
+
+		//Allows these roles to manage options on the site
+		$editorRole->add_cap('manage_options');
+  }
+  else {
+    // Theme is deactivated
+    // Remove the capability when theme is deactivated
+		$contribRole->remove_cap('read_private_pages');
+		$authRole->remove_cap('read_private_pages');
+		$subRole->remove_cap('read_private_pages');
+
+		//Disallows these roles to read private posts
+		$contribRole->remove_cap('read_private_posts');
+		$authRole->remove_cap('read_private_posts');
+		$subRole->remove_cap('read_private_posts');
+
+ 		//Disallows these roles to use Customizer
+		$editorRole->remove_cap('customize');
+
+		//Disallow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”
+		$editorRole->remove_cap('edit_theme_options');
+
+		//Disallows these roles to edit WP Dashboard layout
+		$editorRole->remove_cap('edit_dashboard');
+
+		//Disallows these roles to see list of users on site
+		$editorRole->remove_cap('list_users');
+
+		//Disallows these roles to manage options on the site
+		$editorRole->remove_cap('manage_options');
+  }
+}
+add_action( 'load-themes.php', 'add_theme_caps' );
+
+//private pages and posts show up in search for correct roles
+//https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
+function filter_Search($query){
+    if( is_admin() || ! $query->is_main_query() ) return;
+    if ($query->is_search) {
+        if( current_user_can('read_private_posts') && current_user_can('read_private_pages') ) {
+            $query->set('post_status',array('private','publish'));
+						$query->set('post_type',array('post','page'));
+        }
+    }
+}
+add_action('pre_get_posts','filter_search');
