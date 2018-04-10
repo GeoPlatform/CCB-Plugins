@@ -21,9 +21,31 @@ RUN curl -L -o /usr/src/categories-images.zip \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/categories-images.zip; \
 		rm /usr/src/categories-images.zip
+##Developer Dependencies below here ################
+# theme check:
+RUN curl -L -o /usr/src/theme-check.zip \
+					https://downloads.wordpress.org/plugin/theme-check.20160523.1.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/theme-check.zip; \
+		rm /usr/src/theme-check.zip
+
+# theme sniffer:
+RUN curl -L -o /usr/src/theme-sniffer.zip \
+					https://github.com/WPTRT/theme-sniffer/releases/download/0.1.5/theme-sniffer.0.1.5.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/theme-sniffer.zip; \
+		rm /usr/src/theme-sniffer.zip; \
+		rm -rf /usr/src/wordpress/wp-content/plugins/__MACOSX/;
+
+# Open ID Connect - OAUTH :
+RUN curl -L -o /usr/src/open-id-generic-master.zip \
+					https://github.com/daggerhart/openid-connect-generic/archive/master.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/open-id-generic-master.zip; \
+		rm /usr/src/open-id-generic-master.zip;
 ######################################################
 
-# Pull the conig into the final hosted directory
+# Pull the config into the final hosted directory
 ADD ./config  /var/www/html/
 
 # The /usr/src/wordpress/ dir in the container is copied to /var/www/html
