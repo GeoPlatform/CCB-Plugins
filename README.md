@@ -1,5 +1,5 @@
 # CCB-Plugins
-This repo holds the work of CCB plugins.
+This repo holds the work of CCB themes and plugins.
 
 ### Getting Started
 
@@ -10,14 +10,22 @@ This will create and run a new CCB install inside a docker container.
 
 <br>
 
-**Optional variables**
-| Name | Type | Description |
-|---|---|---|
-| sitename | string | The name of the site (needed for deploying side by side on a host)
+## Configuration
+The base container for this project can be found here: https://hub.docker.com/_/wordpress/.<br>
+The `docker-pre-entrypoint.sh` script is an intermediary script that runs before the default `docker-entrypoint.sh` script and any post-build initalization for the container should be placed there.
 
-<hr>
+
+Environmen variable can be defined in the `environment:` section under the `ccb` container in the `docker-compose.yml` file.
+<br><br>
+**Environment variables:**<br>
+| Name | Type | Description | Required |
+|---|---|---|---|
+| sitename | string | The name of the site (needed for deploying side by side on a host) | False |
+
+<br><br>
 
 ## Structure
+
 ### **plugins/**
 
 Each file in this directory is a single WordPress plugin.
@@ -28,7 +36,7 @@ Each file in this directory is a single WordPress plugin.
 Each file in this directory is a single WordPress theme.
 
 
-<hr>
+<br><br>
 
 ## Dependencies
 
@@ -42,12 +50,35 @@ RUN curl -L -o /usr/src/plugin.zip [URL to plugin download]; \
     rm /usr/src/plugin.zip
 ```
 
-## Publishing
+> **Note:** <br>
+> Please update the `.gitignore` with any additional plugin dependencies added to the `Dockerfile` to keep revision history clean and prevent confusion.
+
+<br><br>
+
+## Authentication
+
+The CCB-Plugins repository uses `gpoauth` for authentication. The folllowing containers are used for providing the oauth service locally:
+- gpoauth
+- gpidm
+- mongo
+
+This is a private GeoPlatform repository and protected container and can only be pulled by persons
+with proper access rights.
+
+To pull and run the authentication containers locally
+please follow the instructions found here: <br>
+https://github.com/GeoPlatform/gpoauth/wiki/Running-GP-OAUTH2.0-on-a-local-machine
+
+<br><br>
+
+## Publishing Themes and Plugins
 
 Tagged versions of this repo should be pushed to the GeoPlatform CDN via the `pushToCDN.sh` script.
 
-> Get argument deatails by running
->`./pushToCDN.sh --help`
+Get argument deatails by running `./pushToCDN.sh --help`
+
+> **Note:** <br>
+> Only users with AWC CLI and appropriate permissions are able to publish to the CDN
 
 Example:
 ```shell
