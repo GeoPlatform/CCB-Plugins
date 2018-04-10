@@ -1,0 +1,10 @@
+# This is an appspec.yml template file for use with AWS CodeDeploy.
+version: 0.0
+os: linux 
+
+hooks:
+  #Deploy new docker image
+  AfterInstall:
+    - location: scripts/deploy.sh
+      timeout: 800
+      runas: root
