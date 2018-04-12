@@ -16,7 +16,7 @@
  * Plugin Name:       GeoPlatform Maps Plugin
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal GeoPlatform maps and use shortcode to insert them into your posts.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            Image Matters LLC
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
@@ -202,7 +202,7 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
 				<div class="geop-display-header" style="font-size:<?php echo $geop_heading_title_size ?>;">
 					<table class="geop-no-border geop-no-cushion geop-header-table-layout">
-						<tr>
+						<tr class="geop-no-border">
 							<th class="geop-no-border geop-no-cushion">
 								<span class="geop-white-item geop-display-header-text geop-no-transform"><?php echo $a['name']; ?></span>
 							</th>
@@ -311,44 +311,11 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 	}
 	?>
 
-<!-- Imports all of the resources needed to generate a map. Why doesn't enquque work? -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js"></script>
-	<script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
-	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css">
-	<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css">
-	<script src="https://cdn.jsdelivr.net/npm/leaflet-timedimension@1.1.0/dist/leaflet.timedimension.src.js"></script>
-	<script>
-	 GeoPlatform = {
 
-		 //REQUIRED: environment the application is deployed within
-		 // one of "development", "sit", "stg", "prd", or "production"
-		 "env" : "development",
-
-		 //REQUIRED: URL to GeoPlatform UAL for API usage
-		 "ualUrl" : "<?php echo $geop_ual_url ?>",
-
-		 //Object Editor URL.
-		 "oeUrl" : "<?php echo $geop_oe_url ?>",
-
-		 //timeout max for requests
-		 "timeout" : "5000",
-
-		 //identifier of GP Layer to use as default base layer
-		 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
-
-		 //{env}-{id} of application deployed
-		 "appId" : "development-mv"
-	 };
-	</script>
+<!-- Wordpress can only enqueue so much. These assets have to be included here the
+ 		 traditional way, as enqueueing them causes an overflow in memory allocation.-->
 	<script src="https://dyk46gk69472z.cloudfront.net/geoplatform.client/0.0.1/js/geoplatform.client.js"></script>
 	<script src="https://dyk46gk69472z.cloudfront.net/gp.mapcore/0.0.1/js/geoplatform.mapcore.min.js"></script>
-	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
-
 
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -369,7 +336,7 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 			button disguised as an image that toggles layer control sidebar visibility. -->
 			<div class="geop-display-header" id="title_<?php echo $divrand; ?>" style="font-size:<?php echo $geop_heading_title_size ?>;">
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
-					<tr>
+					<tr class="geop-no-border">
 						<th class="geop-no-border geop-no-cushion">
 							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $geop_viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank">
 								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo $a['name']; ?></span>
@@ -490,7 +457,7 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 			if (layerStates.length > 0){
 				for (var i = 0; i < layerStates.length; i++){
 					var main_table = geop_createEl({type: 'table', class: 'geop-layer-box', style: 'width:100%'});
-					var table_row = geop_createEl({type: 'tr'});
+					var table_row = geop_createEl({type: 'tr', class: 'geop-no-border'});
 					if (geop_theme == 'T'){
 						var first_td = geop_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
 						var check_button = geop_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $divrand; ?>', id: 'layer_button_id_<?php echo $divrand; ?>', style: 'width:auto', text: layerStates[i].layer_id});
