@@ -99,7 +99,6 @@ class Geop_Maps_Public {
 		 * class.
 		 */
 
-
 		wp_enqueue_script( 'geop_jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_leaflet_js', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js', array(), $this->version, false );
@@ -110,7 +109,5 @@ class Geop_Maps_Public {
 		wp_enqueue_script( 'geop_timedimension_js', 'https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.min.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geop-maps-public.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_font_awesome', 'https://use.fontawesome.com/releases/v5.0.8/js/all.js', array(), $this->version, false );
-		wp_enqueue_script( 'geop_inst_fw', plugin_dir_url( __FILE__ ) . 'js/geop-maps-gpfw.js', array(), $this->version, false );
 	}
-
 }
