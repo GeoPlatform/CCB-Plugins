@@ -10,18 +10,24 @@ MAINTAINER ImageMatters admin@imagemattersllc.com
 RUN apt-get update
 RUN apt-get install unzip
 
-# Remove the default plugins themes
+# Pull the config into the final hosted directory
+ADD ./config/apache2.conf /etc/apache2/
+ADD ./config/.htaccess  /var/www/html/
+ADD ./config/wp-config.php /var/www/html/
+
+# Remove the default plugins and themes
 RUN rm -rf /usr/src/wordpress/wp-content/plugins/hello.php
 RUN rm -rf /usr/src/wordpress/wp-content/themes/*
 
-######## Download and install dependencies ###########
+########### Install common dependencies ################
 # categories-images:
 RUN curl -L -o /usr/src/categories-images.zip \
 					https://downloads.wordpress.org/plugin/categories-images.2.5.4.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/categories-images.zip; \
 		rm /usr/src/categories-images.zip
-##Developer Dependencies below here ################
+
+########### Install Developer Dependencies #############
 # theme check:
 RUN curl -L -o /usr/src/theme-check.zip \
 					https://downloads.wordpress.org/plugin/theme-check.20160523.1.zip; \
@@ -43,10 +49,7 @@ RUN curl -L -o /usr/src/open-id-generic-master.zip \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/open-id-generic-master.zip; \
 		rm /usr/src/open-id-generic-master.zip;
-######################################################
-
-# Pull the config into the final hosted directory
-ADD ./config  /var/www/html/
+#########################################################
 
 # The /usr/src/wordpress/ dir in the container is copied to /var/www/html
 # in the docker-entrypoint.sh for Wordpress
