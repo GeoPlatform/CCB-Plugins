@@ -467,7 +467,7 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 					else
 						var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', style: 'padding-left:16px;', html: layerStates[i].layer.label});
 					var third_td = geop_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geop_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-no-transform', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', style: "color:black;", href: '<?php echo $geop_oe_url; ?>/view/' + layerStates[i].layer_id, target: "_blank"})
+					var info_link = geop_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', style: "color:black;", href: '<?php echo $geop_oe_url; ?>/view/' + layerStates[i].layer_id, target: "_blank"})
 					var info_icon = geop_createEl({type: 'span', class: '<?php echo $geop_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
