@@ -16,7 +16,6 @@
  */
 ?>
 
-
 <html>
 <body>
 
@@ -157,7 +156,7 @@
 
  <!-- Procedural table creation block.  Here the map collection output is set. It
       begins with the header of the table.-->
-      <p><strong>Map details table</strong></p>
+      <p><strong>Map Details Table</strong></p>
         <table class="widefat">
         	<thead>
         	<tr>
@@ -178,7 +177,7 @@
            * looped through. Each loop pulls information from a specific table
            * row and uses it to construct a page row.
           */
-          $table_name = $wpdb->prefix . "newsmap_db";
+          $table_name = $wpdb->prefix . "geop_maps_db";
           $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 
           foreach ($retrieved_data as $entry){

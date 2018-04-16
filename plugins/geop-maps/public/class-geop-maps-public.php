@@ -98,8 +98,7 @@ class Geop_Maps_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
-		wp_enqueue_script( 'geop_jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js', array(), $this->version, false );
+		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'geop_leaflet_js', 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_iso8601', 'https://cdn.jsdelivr.net/npm/iso8601-js-period@0.2.1/iso8601.min.js', array(), $this->version, false );

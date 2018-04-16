@@ -16,7 +16,7 @@
  * Plugin Name:       GeoPlatform Maps Plugin
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal GeoPlatform maps and use shortcode to insert them into your posts.
- * Version:           1.2.0
+ * Version:           1.0.2
  * Author:            Image Matters LLC
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
