@@ -40,7 +40,7 @@
 		 		 "ualUrl" : "https://ual.geoplatform.gov",
 
 		 		 //Object Editor URL.
-		 		 "oeUrl" : "https://stg-oe.geoplatform.gov",
+		 		 "oeUrl" : "https://oe.geoplatform.gov",
 
 		 		 //timeout max for requests
 		 		 "timeout" : "5000",

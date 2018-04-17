@@ -63,7 +63,7 @@ else
 // Invalid map ID check. A faulty map ID will return a generic JSON dataset from
 // GeoPlatform with a statusCode entry containing the "404" code. This will
 // trigger invalid_bool and cause an echo back for user error reporting.
-if ($result['statusCode'] == "404"){
+if (array_key_exists('statusCode', $result) && $result['statusCode'] == "404"){
   $invalid_bool = true;
   echo '{"status" : "Addition failed. Invalid map ID."}';
 }
@@ -80,7 +80,7 @@ $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
  * $invalid_bool to true.
 */
 if (!$invalid_bool){
-  if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
+  if (array_key_exists('resourceTypes', $result) && $result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
     $map_agol = '1';
   foreach ($retrieved_data as $entry){
     if ($entry->map_id == $ual_map_id){

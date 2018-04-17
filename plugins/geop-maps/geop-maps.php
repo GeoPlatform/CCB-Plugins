@@ -133,15 +133,15 @@ function shortcode_creation($atts){
 	// Invalid map ID check. A faulty map ID will return a generic JSON dataset
 	// from GeoPlatform with a statusCode entry containing "404" code. This will
 	// add text to $error_text, which will be used for error reporting later.
-	if ($result['statusCode'] == "404")
+	if (array_key_exists('statusCode', $result) && $result['statusCode'] == "404")
 	  $error_text .= "Your map ID could not be found on the GeoPlatform server. Please check your map ID and try again.<BR>";
 
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, the landing page value is pulled from the JSON and the process
 	// proceeds with agol map generation. Otherwise, the geop method is called.
-	if ($result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap"){
+	if (array_key_exists('resourceTypes', $result) && $result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap"){
 		$landing_page = '';
-		if (isset($result['landingPage']))
+		if (array_key_exists('landingPage', $result) && isset($result['landingPage']))
 			$landing_page = $result['landingPage'];
 		agol_map_gen($a, $error_text, $Geop_url_class->geop_maps_get_ual_url($geop_env), $Geop_url_class->geop_maps_get_maps_url($geop_env), $landing_page, $geop_theme);
 	}
@@ -180,9 +180,6 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 	if (empty($landing_page))
 		$landing_page = $geop_maps_url . '/map.html?id=' . $a['id'];
 	?>
-
-<!-- Fontawesome assets are included in case Glyphicons aren't available. -->
-	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
@@ -483,10 +480,8 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 				// Layer toggle detector and executor. Must be put placed here as the
 				// elements involved cannot be manipulated outside of the promise stack.
 				jQuery('.layer_button_class_<?php echo $divrand; ?>').click(function(){
-					// debugger;
 					jQuery(this).attr('opac', 1 - jQuery(this).attr('opac'));
 					mapInstance.updateLayerOpacity(jQuery(this).attr('text'), jQuery(this).attr('opac'));
-					// mapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
 					jQuery(this).children().toggleClass('<?php echo $geop_check_icon . " " . $geop_uncheck_icon ?>');
 				});
 			}
