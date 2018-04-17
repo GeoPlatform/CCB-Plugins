@@ -3,6 +3,7 @@ php_value max_input_vars 3000
 
 # BEGIN WordPress
 RewriteEngine On
+# Not sure the RewriteBase is needed
 RewriteBase /%%sitename%%/
-RewriteRule (.*)%%sitename%%(.*) $1/$2 [L]
+RewriteRule (.*)%%sitename%%\/?(.*) $1/$2 [L]
 # END WordPress
