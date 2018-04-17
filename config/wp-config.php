@@ -72,7 +72,23 @@ $table_prefix = 'wp_';
  */
 define( 'WP_DEBUG', true );
 define( 'WP_DEBUG_LOG', true );
-define( 'DISALLOW_FILE_EDIT', true );
+
+/**
+ * For preventing users from editing existing plugins:
+ */
+// define( 'DISALLOW_FILE_EDIT', true );
+
+/**
+ * Site settings
+ *
+ * These settings need to be present when the configuration is set so that
+ * multiple WordPress instances running on the same host will keep traffic
+ * in the expected stovepipe.
+ */
+if($_ENV['sitename']){
+	$ROOT = "/" . $_ENV['sitename'] . "/";
+	define('WP_SITEURL', $ROOT);
+}
 
 // If we're behind a proxy server and using HTTPS, we need to alert Wordpress of that fact
 // see also http://codex.wordpress.org/Administration_Over_SSL#Using_a_Reverse_Proxy
