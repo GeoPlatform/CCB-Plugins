@@ -21,7 +21,8 @@ Environmen variable can be defined in the `environment:` section under the `ccb`
 
 | Name | Type | Description | Required |
 |---|---|---|---|
-| sitename | string | The name of the site (needed for deploying side by side on a host) | False |
+| root_url | string | The root/base url where the site with be hosted.<br> Prod URL: https://communities.org/myCommunity <br> Would use:  `root_url: https://communities.org` | Yes |
+| sitename | string | The name of the site (needed for deploying side by side on a host). <br> Prod URL: https://communities.org/myCommunity <br> Would use: `sitename: myCommunity` | No |
 
 <br><br>
 
