@@ -70,7 +70,7 @@ if ($result['statusCode'] == "404"){
 
 
 // Our custom table is pulled from $wpdb and prepped for iteration.
-$table_name = $wpdb->prefix . 'newsmap_db';
+$table_name = $wpdb->prefix . 'geop_maps_db';
 $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 
 

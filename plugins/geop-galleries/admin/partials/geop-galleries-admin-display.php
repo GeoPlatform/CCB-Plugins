@@ -8,13 +8,13 @@
  * @link       www.geoplatform.gov
  * @since      1.0.0
  *
- * @package    Geop_Maps
- * @subpackage Geop_Maps/admin/partials
+ * @package    Geop_Galleries
+ * @subpackage Geop_Galleries/admin/partials
  *
  *Documentation: https://scotch.io/tutorials/how-to-build-a-wordpress-plugin-part-1#adding-custom-input-fields
  *
  */
-?>
+?>+
 
 <html>
 <body>
@@ -177,7 +177,7 @@
            * looped through. Each loop pulls information from a specific table
            * row and uses it to construct a page row.
           */
-          $table_name = $wpdb->prefix . "geop_maps_db";
+          $table_name = $wpdb->prefix . "newsmap_db";
           $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 
           foreach ($retrieved_data as $entry){

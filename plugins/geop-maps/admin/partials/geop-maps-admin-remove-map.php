@@ -54,7 +54,7 @@ if(!empty($response)){
  * then cycles through the table, seeking rows with map_ids matching $ual_map_id,
  * removing them when found.
 */
-$table_name = $wpdb->prefix . 'newsmap_db';
+$table_name = $wpdb->prefix . 'geop_maps_db';
 $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
 
 if (!$invalid_bool){

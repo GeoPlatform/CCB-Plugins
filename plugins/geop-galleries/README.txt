@@ -1,24 +1,16 @@
-=== GeoPlatform Maps Plugin ===
+=== Plugin Name ===
 Contributors: (this should be a list of wordpress.org userid's)
-Donate link:
-Tags: map, maps, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, ngpi
-Requires at least: 4.6.4
-Tested up to: 4.9.5
-Stable tag: 1.2.0
-Plugin URI: https://www.geoplatform.gov/
+Donate link: www.geoplatform.gov
+Tags: comments, spam
+Requires at least: 3.0.1
+Tested up to: 3.4
+Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
+Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
 
 == Description ==
-
-The GeoPlatform Maps Plugin is a tool for your Wordpress site that facilitates the integration of GeoPlatform maps with your blog. It provides you with the ability to easily compile and manage a database of maps pulled from the GeoPlatform database. This database also generates shortcodes, which can be use to easily integrate rich, layered, interactive maps into your Wordpress posts. It is suggested to use this plugin in conjunction with the [2018 GeoPlatform Wordpress Theme](https://geoplatform-theme-in-wordpress.com) to unlock additional functionality.
-
-
-
-
-
 
 This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
 
@@ -44,6 +36,16 @@ that lacks those changes -- as long as the trunk's `readme.txt` points to the co
 
     If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
 you put the stable version, in order to eliminate any doubt.
+
+== Installation ==
+
+This section describes how to install the plugin and get it working.
+
+e.g.
+
+1. Upload `geop-galleries.php` to the `/wp-content/plugins/` directory
+1. Activate the plugin through the 'Plugins' menu in WordPress
+1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
 
 == Frequently Asked Questions ==
 

@@ -15,8 +15,8 @@
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps Plugin
  * Plugin URI:        www.geoplatform.gov
- * Description:       Manage your own personal GeoPlatform maps and use shortcode to insert them into your posts.
- * Version:           1.2.0
+ * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
+ * Version:           1.0.2
  * Author:            Image Matters LLC
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
@@ -315,7 +315,7 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 <!-- Wordpress can only enqueue so much. These assets have to be included here the
  		 traditional way, as enqueueing them causes an overflow in memory allocation.-->
 	<script src="https://dyk46gk69472z.cloudfront.net/geoplatform.client/0.0.1/js/geoplatform.client.js"></script>
-	<script src="https://dyk46gk69472z.cloudfront.net/gp.mapcore/0.0.1/js/geoplatform.mapcore.min.js"></script>
+	<script src="https://dyk46gk69472z.cloudfront.net/gp.mapcore/0.0.1/js/geoplatform.mapcore.js"></script>
 
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -458,25 +458,20 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 				for (var i = 0; i < layerStates.length; i++){
 					var main_table = geop_createEl({type: 'table', class: 'geop-layer-box', style: 'width:100%'});
 					var table_row = geop_createEl({type: 'tr', class: 'geop-no-border'});
-					if (geop_theme == 'T'){
-						var first_td = geop_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
-						var check_button = geop_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $divrand; ?>', id: 'layer_button_id_<?php echo $divrand; ?>', style: 'width:auto', text: layerStates[i].layer_id});
-						var check_icon = geop_createEl({type: 'span', class: 'layer_button_icon_<?php echo $divrand; ?> <?php echo $geop_base_icon . " " . $geop_check_icon ?>', style: 'color:black;'});
-						var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', html: layerStates[i].layer.label});
-					}
-					else
-						var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', style: 'padding-left:16px;', html: layerStates[i].layer.label});
+					var first_td = geop_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
+					var check_button = geop_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $divrand; ?>', id: 'layer_button_id_<?php echo $divrand; ?>', style: 'width:auto', opac: '1.0', text: layerStates[i].layer_id});
+					var check_icon = geop_createEl({type: 'span', class: 'layer_button_icon_<?php echo $divrand; ?> <?php echo $geop_base_icon . " " . $geop_check_icon ?>', style: 'color:black;'});
+					var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', html: layerStates[i].layer.label});
+					var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', style: 'padding-left:16px;', html: layerStates[i].layer.label});
 					var third_td = geop_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geop_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-no-transform', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', style: "color:black;", href: '<?php echo $geop_oe_url; ?>/view/' + layerStates[i].layer_id, target: "_blank"})
+					var info_link = geop_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', style: "color:black;", href: '<?php echo $geop_oe_url; ?>/view/' + layerStates[i].layer_id, target: "_blank"})
 					var info_icon = geop_createEl({type: 'span', class: '<?php echo $geop_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
 					// desired order before attachement to the layer menu.
-					if (geop_theme == 'T'){
-						check_button.appendChild(check_icon);
-						first_td.appendChild(check_button);
-						table_row.appendChild(first_td);
-					}
+					check_button.appendChild(check_icon);
+					first_td.appendChild(check_button);
+					table_row.appendChild(first_td);
 					info_link.appendChild(info_icon);
 					third_td.appendChild(info_link);
 					table_row.appendChild(second_td);
@@ -488,7 +483,10 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 				// Layer toggle detector and executor. Must be put placed here as the
 				// elements involved cannot be manipulated outside of the promise stack.
 				jQuery('.layer_button_class_<?php echo $divrand; ?>').click(function(){
-					mapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
+					// debugger;
+					jQuery(this).attr('opac', 1 - jQuery(this).attr('opac'));
+					mapInstance.updateLayerOpacity(jQuery(this).attr('text'), jQuery(this).attr('opac'));
+					// mapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
 					jQuery(this).children().toggleClass('<?php echo $geop_check_icon . " " . $geop_uncheck_icon ?>');
 				});
 			}
@@ -525,6 +523,8 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 				new_el.setAttribute('target', atts.target);
 			if(atts.span)
 				new_el.setAttribute('span', atts.span);
+			if(atts.opac)
+				new_el.setAttribute('opac', atts.opac);
 			return new_el;
 		}
 

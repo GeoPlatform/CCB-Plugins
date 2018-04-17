@@ -29,7 +29,7 @@ class Geop_Maps_Activator {
 	private static function gpf_database_gen() {
 	  global $wpdb;
 
-	  $table_name = $wpdb->prefix . "newsmap_db";
+	  $table_name = $wpdb->prefix . 'geop_maps_db';
 	  $charset_collate = $wpdb->get_charset_collate();
 
 	  // This creation segment only executes if the database does not already exist.
