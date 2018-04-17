@@ -1,16 +1,24 @@
-=== Plugin Name ===
+=== GeoPlatform Maps Plugin ===
 Contributors: (this should be a list of wordpress.org userid's)
-Donate link: 
-Tags: comments, spam
+Donate link:
+Tags: map, maps, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, ngpi
 Requires at least: 4.6.4
 Tested up to: 4.9.5
 Stable tag: 1.2.0
+Plugin URI: https://www.geoplatform.gov/
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
 
 == Description ==
+
+The GeoPlatform Maps Plugin is a tool for your Wordpress site that facilitates the integration of GeoPlatform maps with your blog. It provides you with the ability to easily compile and manage a database of maps pulled from the GeoPlatform database. This database also generates shortcodes, which can be use to easily integrate rich, layered, interactive maps into your Wordpress posts. It is suggested to use this plugin in conjunction with the [2018 GeoPlatform Wordpress Theme](https://geoplatform-theme-in-wordpress.com) to unlock additional functionality.
+
+
+
+
+
 
 This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
 
