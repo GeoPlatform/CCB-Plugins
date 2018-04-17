@@ -181,9 +181,6 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 		$landing_page = $geop_maps_url . '/map.html?id=' . $a['id'];
 	?>
 
-<!-- Fontawesome assets are included in case Glyphicons aren't available. -->
-	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
-
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
 	 	 variable. -->
@@ -483,10 +480,8 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 				// Layer toggle detector and executor. Must be put placed here as the
 				// elements involved cannot be manipulated outside of the promise stack.
 				jQuery('.layer_button_class_<?php echo $divrand; ?>').click(function(){
-					// debugger;
 					jQuery(this).attr('opac', 1 - jQuery(this).attr('opac'));
 					mapInstance.updateLayerOpacity(jQuery(this).attr('text'), jQuery(this).attr('opac'));
-					// mapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
 					jQuery(this).children().toggleClass('<?php echo $geop_check_icon . " " . $geop_uncheck_icon ?>');
 				});
 			}
