@@ -67,18 +67,85 @@ add_theme_support( 'custom-header' );
 function register_my_menus() {
   register_nav_menus(
     array(
-      'headfoot-featured' => 'HF - Featured',
-      'headfoot-getInvolved' => 'HF - Get Involved',
-      'headfoot-appservices' => 'HF - Apps and Services',
-      'headfoot-aboutL' => 'HF - About Left',
-      'headfoot-aboutR' => 'HF - About Right',
-      'headfoot-help' => 'HF - Help',
-      'headfoot-themes' => 'HF - Themes',
-			'community-links' => 'Community Links'
+			'community-links' => 'Community Links',
+			'header-left' => 'Header Menu - Left Column',
+      'header-center' => 'Header Menu - Center Column',
+      'header-right-col1' => 'Header Menu - Right Column 1',
+			'header-right-col2' => 'Header Menu - Right Column 2',
+			'footer-left' => 'Footer Menu - Left Column',
+      'footer-center' => 'Footer Menu - Center Column',
+      'footer-right-col1' => 'Footer Menu - Right Column 1',
+			'footer-right-col2' => 'Footer Menu - Right Column 2'
     )
   );
 }
 add_action( 'init', 'register_my_menus' );
+
+
+function gp_create_services_menu(){
+//pre-filling menu items
+//https://codex.wordpress.org/Function_Reference/wp_create_nav_menu
+// Check if the menu exists
+$menu_name = 'Apps & Services';
+$menu_exists = wp_get_nav_menu_object( $menu_name );
+
+// If it doesn't exist, let's create it.
+if( !$menu_exists){
+		$menu_id = wp_create_nav_menu($menu_name);
+
+	// Set up default menu items
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Map Viewer <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-url' => $GLOBALS['viewer_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Map Manager <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-url' => $GLOBALS['maps_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Marketplace Preview <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-url' => $GLOBALS['marketplace_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Performance Dashboard <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-url' => $GLOBALS['dashboard_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Search Catalog <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-url' => $GLOBALS['ckan_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-url' => $GLOBALS['ckan_mp_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+
+		//Get theme locations and set this menu to those locations
+		//https://rochcass.wordpress.com/2016/01/14/wordpress-create-menu-locations-and-assigning-menus-programmatically/
+		$locations = get_theme_mod('nav_menu_locations');
+		$locations['footer-center'] = $menu_id;
+		$locations['header-center'] = $menu_id;
+		set_theme_mod('nav_menu_locations', $locations);
+	}
+}
+add_action('admin_init', 'gp_create_services_menu');
 
 //-------------------------------
 // Support Featured Images

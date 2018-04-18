@@ -27,69 +27,31 @@
 
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5>Featured</h5>
-                        <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
-
-
+                      <h5><?php echo wp_get_nav_menu_name('header-left');?></h5>
+                        <?php wp_nav_menu( array( 'theme_location' => 'header-left' ) ); ?>
 
                     <br class="hidden-xs">
-                    <!-- <h5>Get Involved</h5>
-                    <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?> -->
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                  <h5><?php echo wp_get_nav_menu_name('header-center');?></h5>
+                  <?php wp_nav_menu( array( 'theme_location' => 'header-center' ) ); ?>
 
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5>Apps &amp; Services</h5>
-                    <ul>
-                        <li><a href="<?php echo $GLOBALS['viewer_url']; ?>" target="_blank">Map Viewer
-                          <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                          </a>
-                        </li>
-                        <li><a href="<?php echo $GLOBALS['maps_url']; ?>" target="_blank">Map Manager
-                          <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                          </a>
-                        </li>
-                        <li><a href="<?php echo $GLOBALS['marketplace_url']; ?>" target="_blank">Marketplace Preview
-                          <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                          </a>
-                        </li>
-                        <li><a href="<?php echo $GLOBALS['dashboard_url']; ?>" target="_blank">Performance Dashboard
-                          <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                          </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $GLOBALS['ckan_url']; ?>" target="_blank">
-                                Search Catalog
-                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $GLOBALS['ckan_mp_url']; ?>" target="_blank">Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
-                    </ul>
+                    <h5><?php echo wp_get_nav_menu_name('header-right-col1');?></h5>
 
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5>About</h5>
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12">
-                          <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutL' ) ); ?>
+                          <?php wp_nav_menu( array( 'theme_location' => 'header-right-col1' ) ); ?>
+                        </div><!-- #col-md-6 col-sm-12 col-xs-12-->
 
-
-
-                        </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
-                          <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutR' ) ); ?>
-
-                        </div>
-                    </div>
+                          <?php wp_nav_menu( array( 'theme_location' => 'header-right-col2' ) ); ?>
+                        </div><!-- #col-md-6 col-sm-12 col-xs-12-->
+                    </div><!-- #row -->
                     <br class="hidden-xs">
-                    <!-- <h5>Themes</h5>
-			<?php wp_nav_menu( array( 'theme_location' => 'headfoot-themes','fallback_cb' => '') ); ?> -->
-
-                </div>
-
-            </div>
-
+                </div><!-- #col-md-4 col-sm-4 col-xs-12 -->
+          </div><!-- #row -->
       </div>  <!-- #mega-menu__body -->
-
     </div><!--#mega-menu-content container-->
 </nav><!--/nav-->
