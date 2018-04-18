@@ -26,7 +26,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
               <!--Featured location-->
-                <h4 style="color:white"><?php echo wp_get_nav_menu_name('footer-left');?></h4>
+                <h4 style="color:white"><?php echo wp_get_nav_menu_name('footer-left') ? wp_get_nav_menu_name('footer-left') : 'Example Menu Title';?></h4>
                     <?php wp_nav_menu( array( 'theme_location' => 'footer-left' ) ); ?>
             </div><!--#col-md-4 col-sm-4 col-xs-12-->
             <div class="col-md-4 col-sm-4 col-xs-12">
@@ -34,7 +34,7 @@
               <?php wp_nav_menu( array( 'theme_location' => 'footer-center' ) ); ?>
             </div><!--#col-md-4 col-sm-4 col-xs-12-->
             <div class="col-md-4 col-sm-4 col-xs-12">
-                <h4 style="color:white"><?php echo wp_get_nav_menu_name('footer-right-col1');?></h4>
+                <h4 style="color:white"><?php echo wp_get_nav_menu_name('footer-right-col1') ? wp_get_nav_menu_name('footer-right-col1') : 'Example Menu Title';?></h4>
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) ); ?>
