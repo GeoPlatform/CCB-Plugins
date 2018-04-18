@@ -166,47 +166,6 @@ function load_dashicons_front_end() {
   wp_enqueue_style( 'dashicons' );
 }
 
-//-------------------------------
-//Localizing our script for AJAX calls
-//via https://premium.wpmudev.org/blog/load-posts-ajax/?utm_expid=3606929-101._J2UGKNuQ6e7Of8gblmOTA.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
-//-------------------------------
-// wp_localize_script( 'ajax-pagination', 'ajaxpagination', array(
-// 	'ajaxurl' => admin_url( 'admin-ajax.php' )
-// ));
-
-//-------------------------------
-//adding actions for AJAX pagination for logged in and non logged in users
-//via https://premium.wpmudev.org/blog/load-posts-ajax/?utm_expid=3606929-101._J2UGKNuQ6e7Of8gblmOTA.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
-//-------------------------------
-// add_action( 'wp_ajax_nopriv_ajax_pagination', 'my_ajax_pagination' );
-// add_action( 'wp_ajax_ajax_pagination', 'my_ajax_pagination' );
-//
-// function my_ajax_pagination() {
-//     echo get_bloginfo( 'version' );
-//
-//     die();
-// }
-//OR
-//similar solution https://code.tutsplus.com/articles/getting-started-with-ajax-wordpress-pagination--wp-23099
-// function MyAjaxFunction(){
-//   //get the data from ajax() call
-//    $GreetingAll = $_POST['GreetingAll '];
-//    $results = "<h2>".$GreetingAll."</h2>";
-//   // Return the String
-//    die($results);
-//   }
-//   // creating Ajax call for WordPress
-//    add_action( 'wp_ajax_nopriv_ MyAjaxFunction', 'MyAjaxFunction' );
-//    add_action( 'wp_ajax_ MyAjaxFunction', 'MyAjaxFunction' );
-
-
-//-------------------------------
-// Custom settings page in wp-admin
-//-------------------------------
-//https://www.sitepoint.com/create-a-wordpress-theme-settings-page-with-the-settings-api/
-//Wordpress used to do this before adding the Customizer. Could be useful for custom requests/functionality
-//for power users, otherwise keeping things in the Customizer would probably be easier for a lay user
-//https://make.wordpress.org/themes/handbook/review/required/#options-and-settings for reference on current conventions/if we ever want to submit this publicly
 
 
 //---------------------------------------
