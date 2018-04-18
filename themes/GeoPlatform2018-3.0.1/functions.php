@@ -1,53 +1,26 @@
 <?php
 //Set the proper environment
-$env = 'dev';
+$env = 'prd';
 $dev = 'dev';
 $stg = 'stg';
 
-//Adding Global Variables for URL endpoints in each environment
-if($dev == $env) {
 //Begin development Block
-$maps_url = "https://sit-maps.geoplatform.us";
-$viewer_url = "https://sit-viewer.geoplatform.us";
-$marketplace_url = "https://sit-marketplace.geoplatform.us";
-$dashboard_url = "https://sit-dashboard.geoplatform.us/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
-$wpp_url = "https://sit.geoplatform.us";
-$ual_url = "https://sit-ual.geoplatform.us";
-$ckan_mp_url = "https://sit-ckan.geoplatform.us/#/?progress=planned&h=Marketplace";
-$ckan_url = "https://sit-ckan.geoplatform.us/";
-$cms_url = "https://sit-cms.geoplatform.us/resources";
-$idp_url = "https://sitidp.geoplatform.us";
-$oe_url = "https://sit-oe.geoplatform.us";
-$sd_url = "servicedesk@geoplatform.us";
+function gp_getEnv($name, $def){
+    return $_ENV[$name] ? $_ENV[$name] : $def;
 }
-elseif($stg == $env) {
-$maps_url = "https://stg-maps.geoplatform.gov";
-$viewer_url = "https://stg-viewer.geoplatform.gov";
-$marketplace_url = "https://stg-marketplace.geoplatform.gov";
-$dashboard_url = "https://stg-dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
-$wpp_url = "https://stg.geoplatform.gov";
-$ual_url = "https://stg-ual.geoplatform.gov";
-$ckan_mp_url = "https://stg-ckan.geoplatform.gov/#/?progress=planned&h=Marketplace";
-$ckan_url = "https://stg-ckan.geoplatform.gov/";
-$cms_url = "https://stg-cms.geoplatform.gov/resources";
-$idp_url = "https://stg-idp.geoplatform.gov";
-$oe_url = "https://stg-oe.geoplatform.gov";
-$sd_url = "servicedesk@geoplatform.gov";
-}
-else {
-$maps_url = "https://maps.geoplatform.gov";
-$viewer_url = "https://viewer.geoplatform.gov";
-$marketplace_url = "https://marketplace.geoplatform.gov";
-$dashboard_url = "https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
-$wpp_url = "https://geoplatform.gov";
-$ual_url = "https://ual.geoplatform.gov";
-$ckan_mp_url = "https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace";
-$ckan_url = "https://ckan.geoplatform.gov/";
-$cms_url = "https://cms.geoplatform.gov/resources";
-$idp_url = "https://idp.geoplatform.gov";
-$oe_url = "https://oe.geoplatform.gov";
-$sd_url = "servicedesk@geoplatform.gov";
-}
+$maps_url = gp_getEnv('maps_url', 'https://maps.geoplatform.gov');
+$viewer_url = gp_getEnv('viewer_url', 'https://viewer.geoplatform.gov');
+$marketplace_url = gp_getEnv('marketplace_url',"https://marketplace.geoplatform.gov");
+$dashboard_url = gp_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
+$wpp_url = gp_getEnv('wpp_url',"https://geoplatform.gov");
+$ual_url = gp_getEnv('ual_url',"https://ual.geoplatform.gov");
+$ckan_mp_url = gp_getEnv('ckan_mp_url',"https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace");
+$ckan_url = gp_getEnv('ckan_url',"https://ckan.geoplatform.gov/");
+$cms_url = gp_getEnv('cms_url',"https://cms.geoplatform.gov/resources");
+$idp_url = gp_getEnv('idp_url',"https://idp.geoplatform.gov");
+$oe_url = gp_getEnv('oe_url',"https://oe.geoplatform.gov");
+$sd_url = gp_getEnv('sd_url',"servicedesk@geoplatform.gov");
+
 
 //-------------------------------
 // Add scripts and stylesheets
