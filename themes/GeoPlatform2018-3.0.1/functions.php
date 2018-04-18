@@ -290,8 +290,6 @@ function geo_customize_register( $wp_customize )
 				'priority' => 50
 			) );
 
-
-
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
@@ -329,6 +327,9 @@ function geo_customize_register( $wp_customize )
 					 'label' =>__( 'Button Text', 'ngda-2017' ),
 					 'type' => 'text',
 					 'priority' => 30,
+					 'input_attrs' => array(
+						'placeholder' 		=> __( 'Place your text for the button here...', 'textdomain' ),
+					),
 				 ) );
 
 				 $wp_customize->add_setting('call2action_url', array(
@@ -341,6 +342,9 @@ function geo_customize_register( $wp_customize )
 					'label' =>__( 'Button URL', 'ngda-2017' ),
 					'type' => 'URL',
 					'priority' => 40,
+					'input_attrs' => array(
+					 'placeholder' 		=> __( 'Place your url for the button here...', 'textdomain' ),
+				 ),
 				) );
 
 				//Map Gallery Custom link section, settings, and controls
