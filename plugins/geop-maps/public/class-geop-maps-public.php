@@ -77,6 +77,7 @@ class Geop_Maps_Public {
 		wp_enqueue_style( 'geop_marker_cluster_css', 'https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_marker_default_css', 'https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_timedimension_css', 'https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.control.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'geop_font_awesome', 'https://use.fontawesome.com/releases/v5.0.10/css/all.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geop-maps-public.css', array(), $this->version, 'all' );
 	}
 
@@ -107,6 +108,5 @@ class Geop_Maps_Public {
 		wp_enqueue_script( 'geop_esri', 'https://cdnjs.cloudflare.com/ajax/libs/esri-leaflet/2.1.2/esri-leaflet.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_timedimension_js', 'https://cdn.rawgit.com/socib/Leaflet.TimeDimension/master/dist/leaflet.timedimension.min.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geop-maps-public.js', array(), $this->version, false );
-		wp_enqueue_script( 'geop_font_awesome', 'https://use.fontawesome.com/releases/v5.0.8/js/all.js', array(), $this->version, false );
 	}
 }
