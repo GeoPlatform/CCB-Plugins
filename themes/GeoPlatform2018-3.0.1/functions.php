@@ -20,6 +20,7 @@ $cms_url = gp_getEnv('cms_url',"https://cms.geoplatform.gov/resources");
 $idp_url = gp_getEnv('idp_url',"https://idp.geoplatform.gov");
 $oe_url = gp_getEnv('oe_url',"https://oe.geoplatform.gov");
 $sd_url = gp_getEnv('sd_url',"servicedesk@geoplatform.gov");
+$ga_code = gp_getEnv('ga_code','UA-00000000-0');
 
 
 //-------------------------------
@@ -37,9 +38,29 @@ function startwordpress_scripts() {
 	wp_enqueue_script( 'fixedScroll', get_template_directory_uri() . '/scripts/fixed_scroll.js');
 	wp_enqueue_script( 'ajax-pagination',  get_template_directory_uri() . '/js/ajax-pagination.js', array( 'jquery' ), '1.0', true );
 	//Google Analytics tracking
-	wp_enqueue_script( 'google-analytics', get_template_directory_uri() . '/js/google_analytics.js');
+	//wp_enqueue_script( 'google-analytics', get_template_directory_uri() . '/js/google_analytics.js');
 }
 add_action( 'wp_enqueue_scripts', 'startwordpress_scripts' );
+
+//-------------------------------
+// Add Google Analytics
+//http://www.wpbeginner.com/beginners-guide/how-to-install-google-analytics-in-wordpress/
+//-------------------------------
+function gp_add_googleanalytics(){ ?>
+	<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+	var php_ga_code = "<?php echo $GLOBALS['ga_code']; ?>"
+
+	ga('create', php_ga_code , 'auto');
+	ga('send', 'pageview');
+	</script>
+<?php
+}
+add_action('wp_head','gp_add_googleanalytics');
 
 //-------------------------------
 // Add Google Lato Fonts

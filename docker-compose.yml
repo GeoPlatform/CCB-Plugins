@@ -29,6 +29,7 @@ services:
       idp_url: https://sit-idp.geoplatform.us
       oe_url: https://sit-oe.geoplatform.us
       sd_url: servicedesk@geoplatform.us
+      ga_code: UA-42040723-1
 
       # Datebase
       WORDPRESS_DB_NAME: wordpress
