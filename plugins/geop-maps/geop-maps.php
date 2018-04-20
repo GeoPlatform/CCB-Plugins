@@ -308,35 +308,6 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 	}
 	?>
 
-	<script>
-	 GeoPlatform = {
-
-		 //REQUIRED: environment the application is deployed within
-		 // one of "development", "sit", "stg", "prd", or "production"
-		 "env" : "development",
-
-		 //REQUIRED: URL to GeoPlatform UAL for API usage
-		 "ualUrl" : "<?php echo $geop_ual_url ?>",
-
-		 //Object Editor URL.
-		 "oeUrl" : "<?php echo $geop_oe_url ?>",
-
-		 //timeout max for requests
-		 "timeout" : "5000",
-
-		 //identifier of GP Layer to use as default base layer
-		 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
-
-		 //{env}-{id} of application deployed
-		 "appId" : "development-mv"
-	 };
-	</script>
-<!-- Wordpress can only enqueue so much. These assets have to be included here the
- 		 traditional way, as enqueueing them causes an overflow in memory allocation.-->
-	<script src="https://dyk46gk69472z.cloudfront.net/geoplatform.client/0.0.1/js/geoplatform.client.js"></script>
-	<script src="https://dyk46gk69472z.cloudfront.net/gp.mapcore/0.0.1/js/geoplatform.mapcore.js"></script>
-	<!-- <script src="public/assets/geoplatform.mapcore.js"></script> -->
-
 
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
