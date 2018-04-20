@@ -335,6 +335,7 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
  		 traditional way, as enqueueing them causes an overflow in memory allocation.-->
 	<script src="https://dyk46gk69472z.cloudfront.net/geoplatform.client/0.0.1/js/geoplatform.client.js"></script>
 	<script src="https://dyk46gk69472z.cloudfront.net/gp.mapcore/0.0.1/js/geoplatform.mapcore.js"></script>
+	<!-- <script src="public/assets/geoplatform.mapcore.js"></script> -->
 
 
 <!-- Main div block that will contain this entry. It has a constant width as
