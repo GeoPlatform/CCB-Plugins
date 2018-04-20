@@ -435,7 +435,8 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 			var mapCode = "<?php echo $a['id']; ?>";
 			var leafBase = L.map("container_<?php echo $divrand;?>", {
 				minZoom: 2,
-				maxZoom: 21
+				maxZoom: 21,
+				attributionControl: false
 			});
 
 			mapInstance = GeoPlatform.MapFactory.get();
