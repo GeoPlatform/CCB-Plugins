@@ -21,7 +21,7 @@ get_template_part( 'single-banner', get_post_format() );
 
 				<h1 class="page-title"><?php
 					/* translators: %s: search query. */
-					printf( esc_html__( 'Search Results for: %s', 'geoplatform-2017-theme' ), '<span>' . get_search_query() . '</span>' );
+					printf( esc_html__( 'Search Results for: %s', 'geoplatform-ccb' ), '<span>' . get_search_query() . '</span>' );
 				?></h1>
 
 			<?php

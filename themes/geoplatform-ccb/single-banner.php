@@ -28,7 +28,7 @@
 
                               } elseif (is_404()) { ?>
                                 <h2 class="page-title">
-                                  <?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'geoplatform-2017-theme' ); ?>
+                                  <?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'geoplatform-ccb' ); ?>
                                 </h2>
 
                               <?php } else {

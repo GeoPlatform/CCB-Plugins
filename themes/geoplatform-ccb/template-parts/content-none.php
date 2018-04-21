@@ -11,7 +11,7 @@
 
 <section class="no-results not-found">
 
-		<h1 class="page-title"><?php esc_html_e( 'Nothing Found', 'geoplatform-2017-theme' ); ?></h1>
+		<h1 class="page-title"><?php esc_html_e( 'Nothing Found', 'geoplatform-ccb' ); ?></h1>
 
 
 	<div class="page-content">
@@ -22,7 +22,7 @@
 				printf(
 					wp_kses(
 						/* translators: 1: link to WP admin new post page. */
-						__( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'geoplatform-2017-theme' ),
+						__( 'Ready to publish your first post? <a href="%1$s">Get started here</a>.', 'geoplatform-ccb' ),
 						array(
 							'a' => array(
 								'href' => array(),
@@ -35,13 +35,13 @@
 
 		<?php elseif ( is_search() ) : ?>
 
-			<h5><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'geoplatform-2017-theme' ); ?></h5>
+			<h5><?php esc_html_e( 'Sorry, but nothing matched your search terms. Please try again with some different keywords.', 'geoplatform-ccb' ); ?></h5>
 			<?php
 				get_search_form();
 
 		else : ?>
 
-			<h5><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'geoplatform-2017-theme' ); ?></h5>
+			<h5><?php esc_html_e( 'It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help.', 'geoplatform-ccb' ); ?></h5>
 			<?php
 				get_search_form();
 

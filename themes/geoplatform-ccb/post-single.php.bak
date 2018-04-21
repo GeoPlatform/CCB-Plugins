@@ -5,7 +5,7 @@
 		https://www.taniarascia.com/wordpress-from-scratch-part-two/
     <a href="<?php comments_link(); ?>">
 	<?php
-	printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'geoplatform-2017-theme' ), number_format_i18n( 						get_comments_number() ) ); ?>
+	printf( _nx( 'One Comment', '%1$s Comments', get_comments_number(), 'comments title', 'geoplatform-ccb' ), number_format_i18n( 						get_comments_number() ) ); ?>
 </a>-->
 
 <?php $name = get_post_meta($post->ID, 'featured_img_ExternalUrl', true);

@@ -197,7 +197,7 @@ function geo_customize_register( $wp_customize )
 {
 		//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
-        'title'    => __( 'Header Color Section', 'geoplatform-2017-theme' ),
+        'title'    => __( 'Header Color Section', 'geoplatform-ccb' ),
         'priority' => 30
     ) );
 
@@ -209,7 +209,7 @@ function geo_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color', array(
-				'label'    => __( 'Header1 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header1 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header_color_setting',
 		) ) );
@@ -222,7 +222,7 @@ function geo_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color', array(
-				'label'    => __( 'Header 2 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 2 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header2_color_setting',
 		) ) );
@@ -235,7 +235,7 @@ function geo_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h3_link_color', array(
-				'label'    => __( 'Header 3 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 3 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header3_color_setting',
 		) ) );
@@ -248,7 +248,7 @@ function geo_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h4_link_color', array(
-				'label'    => __( 'Header 4 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 4 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header4_color_setting',
 		) ) );
@@ -261,7 +261,7 @@ function geo_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'a_link_color', array(
-				'label'    => __( 'Link Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Link Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'link_color_setting',
 		) ) );
@@ -274,7 +274,7 @@ function geo_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'brand_color', array(
-				'label'    => __( 'Brand Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Brand Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'brand_color_setting',
 		) ) );
@@ -284,7 +284,7 @@ function geo_customize_register( $wp_customize )
 		//Fonts section, settings, and controls
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Section', 'geoplatform-2017-theme' ),
+				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
 				'priority' => 50
 			) );
 
@@ -298,8 +298,8 @@ function geo_customize_register( $wp_customize )
         'label' => 'Fonts',
         'section' => 'font_section',
         'choices' => array(
-            'lato' => __('Lato', 'geoplatform-2017-theme'),
-            'slabo' => __('Slabo',  'geoplatform-2017-theme')
+            'lato' => __('Lato', 'geoplatform-ccb'),
+            'slabo' => __('Slabo',  'geoplatform-ccb')
 						),
 				));
 
@@ -307,7 +307,7 @@ function geo_customize_register( $wp_customize )
 		// pulled from https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
 		//fixed some issues with linking up through https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
 		$wp_customize->add_section( 'banner_text_section' , array(
-				'title'    => __( 'Banner Area', 'geoplatform-2017-theme' ),
+				'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
 				'priority' => 50
 			) );
 
@@ -370,7 +370,7 @@ function geo_customize_register( $wp_customize )
 
 				//Map Gallery Custom link section, settings, and controls
 			$wp_customize->add_section( 'custom_links_section' , array(
-				'title'    => __( 'Custom Links Section', 'geoplatform-2017-theme' ),
+				'title'    => __( 'Custom Links Section', 'geoplatform-ccb' ),
 				'priority' => 60
 			) );
 			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
@@ -500,8 +500,8 @@ add_action('admin_init', 'wysiwyg_register_custom_meta_box');
 
 function wysiwyg_register_custom_meta_box()
  {
- add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-2017-theme') , 'custom_wysiwyg', 'post');
- add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-2017-theme') , 'custom_wysiwyg', 'page');
+ add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'custom_wysiwyg', 'post');
+ add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'custom_wysiwyg', 'page');
  }
 
 function custom_wysiwyg($post)
@@ -741,8 +741,8 @@ function geoplatform_sidebar() {
     register_sidebar(
         array(
             'id' => 'geoplatform-widgetized-area',
-            'name' => __( 'Sidebar Widgets', 'geoplatform-2017-theme' ),
-            'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-2017-theme' ),
+            'name' => __( 'Sidebar Widgets', 'geoplatform-ccb' ),
+            'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-ccb' ),
                         'class' => 'widget-class',
             'before_widget' => '<div id="%1$s" class="widget %2$s">',
 						'after_widget'  => '</div>',

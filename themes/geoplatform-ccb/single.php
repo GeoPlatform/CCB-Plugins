@@ -24,7 +24,7 @@ get_template_part( 'single-banner', get_post_format() );
       <?php
       //Paginate posts if the <!--nextpage--> <!--tag is added to the content
       wp_link_pages( array(
-        'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'geoplatform-2017-theme' ) . '</span>',
+        'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'geoplatform-ccb' ) . '</span>',
         'after'       => '</div>',
         'link_before' => '<span>',
         'link_after'  => '</span>',

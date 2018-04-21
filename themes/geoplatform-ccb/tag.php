@@ -21,7 +21,7 @@ get_template_part( 'mega-menu', get_post_format() );
 
 
                 <div class="svc-card__body" style="flex-basis:102%;">
-                    <div class="svc-card__title"><?php the_title(); ?> <?php printf( __( '( %s )', 'geoplatform-2017-theme' ), get_post_type( get_the_ID() ) ); ?></div>
+                    <div class="svc-card__title"><?php the_title(); ?> <?php printf( __( '( %s )', 'geoplatform-ccb' ), get_post_type( get_the_ID() ) ); ?></div>
 
                     <p>
                         <?php the_excerpt('',TRUE);?>
