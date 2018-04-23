@@ -309,6 +309,36 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 	?>
 
 
+<!-- Do to limitations when enqueueing files, maps will not load if done so
+ 	in SIT or STG. In those environments, this code must be used. Otherwise,
+ 	enqueueing works perfectly fine. -->
+	<script>
+	 GeoPlatform = {
+
+		 //REQUIRED: environment the application is deployed within
+		 // one of "development", "sit", "stg", "prd", or "production"
+		 "env" : "development",
+
+		 //REQUIRED: URL to GeoPlatform UAL for API usage
+		 "ualUrl" : "<?php echo $geop_ual_url ?>",
+
+		 //Object Editor URL.
+		 "oeUrl" : "<?php echo $geop_oe_url ?>",
+
+		 //timeout max for requests
+		 "timeout" : "5000",
+
+		 //identifier of GP Layer to use as default base layer
+		 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
+
+		 //{env}-{id} of application deployed
+		 "appId" : "development-mv"
+	 };
+	</script>
+	<script src="<?php echo plugin_dir_url(__FILE__) ?>public/assets/geoplatform.client.js" type="text/javascript"></script>
+	<script src="<?php echo plugin_dir_url(__FILE__) ?>public/assets/geoplatform.mapcore.js" type="text/javascript"></script>
+
+
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
 	 	 variable. -->
