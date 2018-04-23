@@ -775,17 +775,11 @@ add_theme_support( 'automatic-feed-links' );
 //https://codex.wordpress.org/Roles_and_Capabilities
 //-------------------------------
 function gp_add_theme_caps(){
-  $theme = wp_get_theme();
-
 	// gets the roles
 	$subRole = get_role('subscriber');
 	$contribRole = get_role('contributor');
 	$authRole = get_role( 'author' );
 	$editorRole = get_role('editor');
-
-	// Theme is activated
-	// This only works, because it accesses the class instance.
-  if ( 'Geoplatform 2018 Theme' == $theme->name || 'Geoplatform 2018 Theme' == $theme->parent_theme ){ // Test if theme is activated
 
 		//Allows these roles to read private pages
 		$contribRole->add_cap('read_private_pages');
@@ -830,7 +824,6 @@ function gp_add_theme_caps(){
 
     //Allows these roles to upload files on the site
 		$contribRole->add_cap('upload_files');
-  }
 }
 add_action( 'admin_init', 'gp_add_theme_caps' );
 
