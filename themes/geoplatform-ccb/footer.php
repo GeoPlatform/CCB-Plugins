@@ -12,12 +12,12 @@
             <div class="col-md-6">
                 <h3>
                     <!--<img src="/img/GeoPlatform_logo_sm.png" alt="GeoPlatform Logo" style="height: 1.5rem; vertical-align: bottom;">-->
-                    <a href="<?php echo $GLOBALS['wpp_url']; ?>" title="Go to the Geoplatform Home Page">
+                    <a href="<?php echo esc_url($GLOBALS['wpp_url']); ?>" title="Go to the Geoplatform Home Page">
                         <span class="icon-gp"></span>
                         GeoPlatform
                     </a>
-                    <a href="<?php echo get_site_url();?>" title="Go to the <?php echo get_bloginfo( 'name' ); ?> Home Page">
-                    <?php echo get_bloginfo( 'name' ); ?>
+                    <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
+                    <?php echo esc_html(get_bloginfo( 'name' )); ?>
                   </a>
                 </h3>
             </div><!--#col-md-6-->
@@ -26,15 +26,15 @@
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
               <!--Featured location-->
-                <h4 style="color:white"><?php echo wp_get_nav_menu_name('footer-left') ? wp_get_nav_menu_name('footer-left') : 'Example Menu Title';?></h4>
+                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : 'Example Menu Title';?></h4>
                     <?php wp_nav_menu( array( 'theme_location' => 'footer-left' ) ); ?>
             </div><!--#col-md-4 col-sm-4 col-xs-12-->
             <div class="col-md-4 col-sm-4 col-xs-12">
-              <h4 style="color:white"><?php echo wp_get_nav_menu_name('footer-center');?></h4>
+              <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : 'Example Menu Title';?></h4>
               <?php wp_nav_menu( array( 'theme_location' => 'footer-center' ) ); ?>
             </div><!--#col-md-4 col-sm-4 col-xs-12-->
             <div class="col-md-4 col-sm-4 col-xs-12">
-                <h4 style="color:white"><?php echo wp_get_nav_menu_name('footer-right-col1') ? wp_get_nav_menu_name('footer-right-col1') : 'Example Menu Title';?></h4>
+                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : 'Example Menu Title';?></h4>
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) ); ?>

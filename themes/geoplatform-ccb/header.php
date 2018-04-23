@@ -8,17 +8,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Bootstrap core CSS
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <!--http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons-->
-    <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
     <?php
     $font_choice = get_theme_mod( 'font_choice' );
     if( $font_choice != '' ) {
@@ -72,7 +63,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
                         <div class="btn-account btn-group">
 
-                            <!-- <% if(!authenticated) { %> -->
+                            <!--if(!authenticated) -->
                             <?php if (!is_user_logged_in()){?>
                               <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>">
                                   <button style="color:white;" type="button" class="btn btn-link" onclick="login">Sign In</button>
