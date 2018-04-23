@@ -5,7 +5,7 @@ html, body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 700!important
+    font-weight: 700
 }
 
 h1 {
@@ -922,7 +922,7 @@ table.shadowed-left, table.shadowed-right, table.shadowed-bottom, table.shadowed
 }
 
 body .btn {
-    font-size: 1rem
+    font-size: 1em
 }
 
 body .btn.btn-lg {
@@ -5745,4 +5745,56 @@ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
 .size-thumbnail {
 	max-width: 100%;
 	height: auto;
+}
+
+/*--------------------------------------------------------------
+# Customizations
+--------------------------------------------------------------*/
+
+#module {
+  background-repeat: round;
+  background-size: cover;;
+  width: 100%;
+  height: 100%;
+  margin: 0 0 0 0;
+  position: relative;
+  float: left;
+}
+#mid  {
+  font-weight: 900;
+  color: white!important;
+  margin: 0;
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+  width: inherit;
+}
+
+.gp-ui-card {
+    box-shadow: 9px 9px 10px 0px rgba(0, 0, 0, .25)!important;
+
+}
+.gp-ui-card .text--primary {
+  font-size: 1em!important;
+}
+
+.gp-ui-card__body:last-child{
+  height: 55px;
+}
+
+.svc-card__img {
+    -ms-flex-preferred-size: 54%;
+    flex-basis: 80%;
+    padding: 0.5em;
+    z-index: 2;
+    background: #112158;
+    box-shadow: 5px 5px 7px rgba(0, 0, 0, .3);
+    border-radius: 2px;
+    height: 22em;
+}
+.svc-card__img img {
+    width: 100%;
+    height: 100%;
 }
