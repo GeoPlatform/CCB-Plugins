@@ -827,6 +827,9 @@ function gp_add_theme_caps(){
 
 		//Allows these roles to edit themes on the site
 		$editorRole->add_cap('edit_theme');
+
+    //Allows these roles to upload files on the site
+		$contribRole->add_cap('upload_files');
   }
 }
 add_action( 'admin_init', 'gp_add_theme_caps' );
@@ -886,6 +889,9 @@ function gp_remove_theme_caps() {
 
 	//Disallows these roles to edit themes on the site
 	$editorRole->remove_cap('edit_theme');
+
+  //Allows these roles to upload files on the site
+  $contribRole->remove_cap('upload_files');
 }
 add_action('switch_theme', 'gp_remove_theme_caps');
 
