@@ -166,7 +166,7 @@ if( !$menu_exists){
 		set_theme_mod('nav_menu_locations', $locations);
 	}
 }
-add_action('admin_init', 'gp_create_services_menu');
+add_action('init', 'gp_create_services_menu');
 
 //-------------------------------
 // Support Featured Images
