@@ -299,9 +299,9 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 	$geop_heading_title_size = '1.125em';
 
 	if ($geop_theme == 'F'){
-		$geop_list_icon = 'fas fa-bars';
-		$geop_info_icon = 'fas fa-info-circle';
-		$geop_base_icon = 'fas';
+		$geop_list_icon = 'fa fa-bars';
+		$geop_info_icon = 'fa fa-info-circle';
+		$geop_base_icon = 'fa';
 		$geop_check_icon = 'fa-check-square';
 		$geop_uncheck_icon = 'fa-square';
 		$geop_heading_title_size = '1em';
