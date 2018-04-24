@@ -1,3 +1,5 @@
+// Image Matters LLC first-party GeoPlatform tool.
+
 (function () {
   if (window.GeoPlatform === undefined) {
     window.GeoPlatform = {

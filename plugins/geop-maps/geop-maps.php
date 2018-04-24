@@ -18,7 +18,7 @@
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
  * Version:           1.0.3
  * Author:            Image Matters LLC
- * Author URI:        www.geoplatform.gov
+ * Author URI:        www.imagemattersllc.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       geop-maps
@@ -309,7 +309,7 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 	?>
 
 
-<!-- Do to limitations when enqueueing files, maps will not load if done so
+<!-- Due to limitations when enqueueing files, maps will not load if done so
  	in SIT or STG. In those environments, this code must be used. Otherwise,
  	enqueueing works perfectly fine. -->
 	<script>
