@@ -25,12 +25,15 @@
  * @package    Geop_Maps
  */
 
-// If uninstall not called from WordPress, then exit.
-if ( defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+// If uninstall not called from WordPress, then exit. Otherwise, delete the wpdb
+// table created for use with the GeoPlatform Maps plugin.
+if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit;
+}
+else {
 	global $wpdb;
 	$geopmap_table_name = $wpdb->prefix . 'geop_maps_db';
 	$geopmap_sql = "DROP TABLE IF EXISTS $geopmap_table_name;";
 	$wpdb->query($geopmap_sql);
 	delete_option("geop_maps_db_version");
-	exit;
 }
