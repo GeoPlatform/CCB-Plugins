@@ -255,7 +255,7 @@ function geo_customize_register( $wp_customize )
 
     //link (<a>) color and control
 		$wp_customize->add_setting( 'link_color_setting' , array(
-				'default'   => '#000000',
+				'default'   => '#428bca',
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -268,7 +268,7 @@ function geo_customize_register( $wp_customize )
 
 		//.brand color and control
 		$wp_customize->add_setting( 'brand_color_setting' , array(
-				'default'   => '#000000',
+				'default'   => '#fff',
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -455,12 +455,12 @@ function header_customize_css()
 {
     ?>
          <style type="text/css">
-             h1 { color: <?php echo get_theme_mod('header_color_setting', '000000'); ?>; }
-						 h2 { color: <?php echo get_theme_mod('header2_color_setting', '000000'); ?>!important; }
-						 h3 { color: <?php echo get_theme_mod('header3_color_setting', '000000'); ?>; }
-						 h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', '000000'); ?>; }
-						 .text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', '000000'); ?>; }
-						 header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', '000000'); ?>; }
+             h1 { color: <?php echo get_theme_mod('header_color_setting', '#000000'); ?>; }
+						 h2 { color: <?php echo get_theme_mod('header2_color_setting', '#000000'); ?>!important; }
+						 h3 { color: <?php echo get_theme_mod('header3_color_setting', '#000000'); ?>; }
+						 h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', '#000000'); ?>; }
+						 .text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', '#428bca'); ?>; }
+						 header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', '#fff'); ?>; }
 
          </style>
     <?php
