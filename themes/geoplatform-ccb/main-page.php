@@ -52,7 +52,7 @@
                   );?>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
                   <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
-                    <?php echo sprintf( esc_html__( '%s', 'geoplatform-ccb' ), $category_link ); ?>
+                    <?php echo wp_sprintf( esc_html__( ' %s', 'geoplatform-ccb' ), $category_link ); ?>
                      <br style="clear: both;">
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
