@@ -327,13 +327,14 @@ function geo_customize_register( $wp_customize )
 
 				 //Call to action button (formerly "Learn More" button)
 				 $wp_customize->add_setting('call2action_button', array(
-					 'default' => false,
+					 'default' => '',
 					 'transport' => 'refresh',
+           'sanitize_callback' => 'geop_sanitize_checkbox'
 				 ) );
 
 				 $wp_customize->add_control('call2action_button', array(
 					 'section' => 'banner_text_section',
-					 'label' =>__( 'Show Call to Action button?', 'ngda-2017' ),
+					 'label' =>__( 'Show Call to Action button?', 'geoplatform-ccb' ),
 					 'type' => 'checkbox',
 					 'priority' => 20,
 				 ) );
@@ -435,6 +436,11 @@ function geop_sanitize_mapchoice( $value ) {
     if ( ! in_array( $value, array( 'match', 'sit', 'stg', 'prod' ) ) )
         $value = 'match';
     return $value;
+}
+
+function geop_sanitize_checkbox( $checked ){
+    //returns true if checkbox is checked
+    return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
 
 //-------------------------------
