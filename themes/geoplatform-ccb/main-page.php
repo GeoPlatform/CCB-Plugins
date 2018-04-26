@@ -15,12 +15,11 @@
               $placeholder_text_template = 'The category photo above is a placeholder. If you would like to edit your category card photos,
               please <a href="https://wordpress.org/plugins/categories-images/">Download</a> or Activate the Categories Images plugin. Then
               navigate to Posts(or Pages)->Categories to edit and set your specfic category image';
-              
+
               //https://developer.wordpress.org/reference/functions/get_categories/
               $categories = get_categories( array(
                   'orderby' => 'name',
                   'order'   => 'ASC',
-                  'exclude' => '24'
               ) );
               //var_dump($categories);
               foreach( $categories as $category ) {

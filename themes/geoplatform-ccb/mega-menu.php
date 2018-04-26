@@ -8,21 +8,19 @@
         <div class="mega-menu__body">
 
             <div class="account-details visible-xs">
-                <!-- <% if(!authenticated) { %> -->
                     <div class="media">
                         <div class="media-left">
                             <div class="media-object">
                                 <span class="glyphicon glyphicon-user glyphicon-xlg"></span>
-                            </div>
-                        </div>
+                            </div><!--#media-object-->
+                        </div><!--#media-left-->
                         <div class="media-body">
                             <p><em>Create a new account or log in using an existing account.</em></p>
                             <a class="" href="<?php echo esc_url($GLOBALS['idp_url'] . "/modifyuser.html"); ?>" target="_blank">Register</a> a new account<br/>
                             <a class="" onClick="login()">Sign In</a> to an existing account
-                        </div>
-                    </div>
-
-            </div>
+                        </div><!--#media-body-->
+                    </div><!--#media-->
+            </div><!--#account-details visible-xs-->
 
 
             <div class="row">

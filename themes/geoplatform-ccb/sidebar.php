@@ -1,6 +1,6 @@
 <div class="sidebar-module sidebar-module-inset">
 
-  <!--<% include featured-services %>-->
+  <!--include featured-services-->
   <?php get_template_part( 'featured-services', get_post_format() ); ?>
 
 
