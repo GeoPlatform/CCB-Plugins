@@ -116,42 +116,42 @@ if( !$menu_exists){
 
 	// Set up default menu items
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Map Viewer <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-title' =>  __('Map Viewer <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
 			'menu-item-url' => $GLOBALS['viewer_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Map Manager <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-title' =>  __('Map Manager <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
 			'menu-item-url' => $GLOBALS['maps_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Marketplace Preview <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-title' =>  __('Marketplace Preview <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
 			'menu-item-url' => $GLOBALS['marketplace_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Performance Dashboard <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-title' =>  __('Performance Dashboard <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
 			'menu-item-url' => $GLOBALS['dashboard_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Search Catalog <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-title' =>  __('Search Catalog <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
 			'menu-item-url' => $GLOBALS['ckan_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>'),
+			'menu-item-title' =>  __('Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
 			'menu-item-url' => $GLOBALS['ckan_mp_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
@@ -345,11 +345,11 @@ function geo_customize_register( $wp_customize )
 				 ));
 				 $wp_customize->add_control('call2action_text', array(
 					 'section' => 'banner_text_section',
-					 'label' =>__( 'Button Text', 'ngda-2017' ),
+					 'label' =>__( 'Button Text', 'geoplatform-ccb' ),
 					 'type' => 'text',
 					 'priority' => 30,
 					 'input_attrs' => array(
-						'placeholder' 		=> __( 'Place your text for the button here...', 'textdomain' ),
+						'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ccb' ),
 					),
 				 ) );
 
@@ -360,11 +360,11 @@ function geo_customize_register( $wp_customize )
 				));
 				$wp_customize->add_control('call2action_url', array(
 					'section' => 'banner_text_section',
-					'label' =>__( 'Button URL', 'ngda-2017' ),
+					'label' =>__( 'Button URL', 'geoplatform-ccb' ),
 					'type' => 'URL',
 					'priority' => 40,
 					'input_attrs' => array(
-					 'placeholder' 		=> __( 'Place your url for the button here...', 'textdomain' ),
+					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
 				 ),
 				) );
 
