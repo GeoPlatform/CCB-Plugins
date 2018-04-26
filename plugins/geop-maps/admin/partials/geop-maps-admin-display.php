@@ -29,11 +29,11 @@
    * method below.
   */
   jQuery(document).ready(function() {
-    jQuery("#geop_add_action").click(function(e){
+    jQuery("#geopmap_add_action").click(function(e){
       var map_id = jQuery("#map_id_in").val();
       var map_height = jQuery("#map_height").val();
       var map_width = jQuery("#map_width").val();
-      add_map_ajax(map_id, map_height, map_width);
+      geopmap_add_map_ajax(map_id, map_height, map_width);
 
       e.preventDefault();
     });
@@ -42,9 +42,9 @@
      * nature of the remove buttons being evoked. Grabs the value of the pressed
      * button, which is the map ID, and passes it to the remove AJAX method.
     */
-    jQuery(".geop_indiv_remove_action").click(function(e){
+    jQuery(".geopmap_indiv_remove_action").click(function(e){
       var map_id = jQuery(this).val();
-      remove_map_ajax(map_id);
+      geopmap_remove_map_ajax(map_id);
 
       e.preventDefault();
     });
@@ -57,7 +57,7 @@
    * out as an alert to the user.
   */
   // Use "http://" for localhost use, "https://" for outside of localhost.
-  function add_map_ajax(map_id, map_height, map_width){
+  function geopmap_add_map_ajax(map_id, map_height, map_width){
       var map_data = {
           mapID: map_id,
           mapHeight: map_height,
@@ -65,7 +65,7 @@
       };
 
       jQuery.ajax({
-          url: "https://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -85,13 +85,13 @@
   /* This is the AJAX call for the Remove button. It works exactly like the Add
    * Button's but with a different file evocation and only one argument.
   */
-  function remove_map_ajax(map_id){
+  function geopmap_remove_map_ajax(map_id){
       var map_data = {
           mapID: map_id
       };
 
       jQuery.ajax({
-          url: "https://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
+          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -117,14 +117,14 @@
 <!-- global $wpdb for database access. It is followed by page formatting-->
   <?php global $wpdb; ?>
   <h2><?php echo esc_html(get_admin_page_title()); ?></h2>
-  <form method="post" name="map_options" action="options.php">
+  <form method="post" name="geopmap_options" action="options.php">
 
 <!-- options collection from plugin and data cleanup -->
     <?php
       //Grab all options
-      $options = get_option($this->plugin_name);
+      $geopmap_options = get_option($this->plugin_name);
       // Cleanup
-      $ual_map_id = $options['ual_map_id'];
+      $ual_map_id = $geopmap_options['ual_map_id'];
 
       settings_fields($this->plugin_name);
       do_settings_sections($this->plugin_name);
@@ -151,7 +151,7 @@
 
 
 <!-- Add Map Button -->
-    <input type="button" id="geop_add_action" value="Add Map"></input>
+    <input type="button" id="geopmap_add_action" value="Add Map"></input>
 
 
  <!-- Procedural table creation block.  Here the map collection output is set. It
@@ -177,26 +177,25 @@
            * looped through. Each loop pulls information from a specific table
            * row and uses it to construct a page row.
           */
-          $table_name = $wpdb->prefix . "geop_maps_db";
-          $retrieved_data = $wpdb->get_results( "SELECT * FROM $table_name" );
+          $geopmap_table_name = $wpdb->prefix . "geop_maps_db";
+          $geopmap_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopmap_table_name" );
 
-          foreach ($retrieved_data as $entry){
-            $agolOut = "GeoPlatform Map";
-            if ($entry->map_agol == "1")
-              $agolOut = "AGOL Web Map";
+          foreach ($geopmap_retrieved_data as $geopmap_entry){
+            $geopmap_agolOut = "GeoPlatform Map";
+            if ($geopmap_entry->map_agol == "1")
+              $geopmap_agolOut = "AGOL Web Map";
             ?>
             <tr>
-          		<td class="row-title"><label for="tablecell"><?php echo $entry->map_id; ?></label></td>
-              <td><?php echo $agolOut; ?></td>
-          		<td><?php echo $entry->map_name; ?></td>
-              <td><?php echo $entry->map_description; ?></td>
-              <?php $temp_short = $entry->map_shortcode;?>
-              <td><code><?php echo $entry->map_shortcode; ?></code></td>
+          		<td class="row-title"><label for="tablecell"><?php echo $geopmap_entry->map_id; ?></label></td>
+              <td><?php echo $geopmap_agolOut; ?></td>
+          		<td><?php echo $geopmap_entry->map_name; ?></td>
+              <td><?php echo $geopmap_entry->map_description; ?></td>
+              <td><code><?php echo $geopmap_entry->map_shortcode; ?></code></td>
               <td>
-                <a class="button-secondary" href="<?php echo $entry->map_url ?>" title="<?php echo $entry->map_url?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
-                <button class="geop_indiv_remove_action button-secondary" value="<?php echo $entry->map_id; ?>">Remove Map</button>
+                <a class="button-secondary" href="<?php echo $geopmap_entry->map_url ?>" title="<?php echo $geopmap_entry->map_url?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
+                <button class="geopmap_indiv_remove_action button-secondary" value="<?php echo $geopmap_entry->map_id; ?>">Remove Map</button>
               </td>
-              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $entry->map_thumbnail; ?>" width="200px" height="112px" alt="The thumbnail for this map failed to load." onerror="geop_thumb_error(this);"/></a></td>
+              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $geopmap_entry->map_thumbnail; ?>" width="200px" height="112px" alt="The thumbnail for this map failed to load." onerror="geopmap_thumb_error(this);"/></a></td>
           	</tr><?php
           }?>
         </table>
@@ -207,7 +206,7 @@
   // If the map is valid but for some reason does not possess a thumbnail, this
   // method is called and will supply a local default borrowed from the sit Map
   // Viewer site.
-  function geop_thumb_error(geop_image_in){
+  function geopmap_thumb_error(geop_image_in){
     geop_image_in.onerror = "";
     geop_image_in.src = "/wp-content/plugins/geop-maps/includes/img-404.png";
     return true;

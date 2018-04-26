@@ -106,7 +106,7 @@ class Geop_Maps_Admin {
 	 * @since    1.0.0
 	 */
 
-	public function add_plugin_admin_menu() {
+	public function geopmap_add_plugin_admin_menu() {
 
 	    /*
 	     * Add a settings page for this plugin to the Settings menu.
