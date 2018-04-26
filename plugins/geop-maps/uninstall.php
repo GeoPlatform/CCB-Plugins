@@ -26,7 +26,7 @@
  */
 
 // If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+if ( defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'geop_maps_db';
 	$sql = "DROP TABLE IF EXISTS $table_name;";
