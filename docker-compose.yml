@@ -18,6 +18,20 @@ services:
       # Site specifics
       root_url: http://localhost
       sitename: my-test-site
+      # URLs
+      maps_url: https://sit-maps.geoplatform.us
+      viewer_url: https://sit-viewer.geoplatform.us
+      marketplace_url: https://sit-marketplace.geoplatform.us
+      dashboard_url: https://sit-dashboard.geoplatform.us/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green
+      wpp_url: https://sit.geoplatform.us
+      ual_url: https://sit-ual.geoplatform.us
+      ckan_mp_url: https://sit-ckan.geoplatform.us/#/?progress=planned&h=Marketplace
+      ckan_url: https://sit-ckan.geoplatform.us/
+      cms_url: https://sit-cms.geoplatform.us/resources
+      idp_url: https://sit-idp.geoplatform.us
+      oe_url: https://sit-oe.geoplatform.us
+      sd_url: servicedesk@geoplatform.us
+      ga_code: UA-42040723-1
       # Datebase
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: root
@@ -32,3 +46,15 @@ services:
       MYSQL_ROOT_PASSWORD: imroot:012!
     volumes:
        - /var/lib/mysql
+
+  phpadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    links:
+      - mysql:db
+    ports:
+      - "8888:80"
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: imroot:012!

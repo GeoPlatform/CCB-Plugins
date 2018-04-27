@@ -57,6 +57,15 @@ RUN curl -L -o /usr/src/plugin.zip [URL to plugin download]; \
 
 <br><br>
 
+## Development
+There are currently 2 plugin dependencies built in to verify if the theme you have or want to use is working properly. They are [Theme Check](https://wordpress.org/plugins/theme-check/) and [Theme Sniffer](https://github.com/WPTRT/theme-sniffer).
+ - Theme Check is an older standard, and has not been updated for the latest version of wordpress, but will work for checking older themes with older versions of Wordpress, or to double check Theme Sniffer
+ - Theme Sniffer checks any theme installed against the [Wordpress Coding Standards](https://github.com/WPTRT/WordPress-Coding-Standards) for theme development.
+
+To use either of these, navigate to the __Plugins->Installed Plugins__ area of the Wordpress Dashboard, and simply click the __Activate__ button under the plugin you want to use.
+
+When activated, run and manage them from the __Appearance->Theme Check__ or __Appearance->Theme Sniffer__ areas of the Dashboard.
+
 ## Authentication
 
 The CCB-Plugins repository uses `gpoauth` for authentication. The folllowing containers are used for providing the oauth service locally:
