@@ -95,11 +95,13 @@ function geopmap_shortcode_creation($geopmap_atts){
   ), $geopmap_atts);
   ob_start();
 
-  // GeoPlatform theme detection. Checks whether the active theme is a GeoPlatform
-	// theme and if so sets to true. Only real use is to trade Font Awesome icons
-	// for glyphicons and adjust some text sizes.
+  // GeoPlatform theme detection. Checks whether or not the active theme is a
+	// GeoPlatform theme and if so sets to true. It does this by getting the name
+	// of the current theme and searching for it to contain 'geoplatform'. Right
+	// it's only to switch from Font Awesome icons to glyphicons and adjust some
+	// text sizes. More functionality may be included in the future.
 	$geopmap_theme = 'F';
-	if (substr(get_template(), 0, 11) == "GeoPlatform")
+	if (strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false)
 		$geopmap_theme = 'T';
 
 	// Empty error text output string.
@@ -157,7 +159,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	// Variables that vary among themes. They are set to default values for work
 	// in the GeoPlatform themes, then changed if one such theme is absent.
 	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
-	$geopmap_heading_title_size = '1.125em';
+	$geopmap_heading_title_size = '1.6975em';
 
 	if ($geopmap_theme == 'F'){
 		$geopmap_info_icon = 'fas fa-info-circle';
@@ -285,7 +287,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	$geopmap_base_icon = 'glyphicon';
 	$geopmap_check_icon = 'glyphicon-check';
 	$geopmap_uncheck_icon = 'glyphicon-unchecked';
-	$geopmap_heading_title_size = '1.125em';
+	$geopmap_heading_title_size = '1.6975em';
 
 	if ($geopmap_theme == 'F'){
 		$geopmap_list_icon = 'fa fa-bars';
