@@ -22,7 +22,7 @@
    overflow: hidden;
    border: 1px solid #bbb;
    border-radius: 4px;
-   box-shadow: 9px 9px 10px 0px rgba(0, 0, 0, .25)!important;
+   box-shadow: 9px 9px 10px 0px rgba(0, 0, 0, .25);
    font-size: 1rem;
    background: #fff;
    color: inherit
@@ -35,7 +35,7 @@
    position: relative;
    padding: .75em;
    margin: .125em;
-   font-weight: 700!important;
+   font-weight: 700;
    font-size: 1.75em;
    text-transform: none;
    font-family: Lato,Helvetica,Arial,sans-serif;
@@ -49,7 +49,8 @@
 
  .geop-hidden-link a, .geop-hidden-link:link a, .geop-hidden-link:hover a, .geop-hidden-link:visited a, .geop-hidden-link:active a {
    text-transform: none;
-   text-decoration: none !important;
+   text-decoration: none;
+   box-shadow: none;
    margin: auto;
  }
 

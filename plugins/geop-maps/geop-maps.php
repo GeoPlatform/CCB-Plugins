@@ -365,7 +365,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 					<tr class="geop-no-border">
 						<th class="geop-no-border geop-no-cushion">
-							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geop_viewer_url ?>/?id=<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank">
+							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geop_viewer_url ?>/?id=<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
 								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo $geopmap_shortcode_array['name']; ?></span>
 							</a>
 						</th>
@@ -374,7 +374,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 								<button class="geop-text-button" id="layer_menu_button_<?php echo $geopmap_divrand; ?>">
 									<span class="<?php echo $geopmap_list_icon ?> geop-white-item"></span>
 								</button>
-								<a class="geop-hidden-link" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Editor." href="<?php echo $geop_oe_url; ?>/view/<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank">
+								<a class="geop-hidden-link" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Editor." href="<?php echo $geop_oe_url; ?>/view/<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
 									<span class="<?php echo $geopmap_info_icon ?> geop-white-item"></span>
 								</a>
 							</span>
@@ -492,7 +492,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', html: geopmap_layerStates[i].layer.label});
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Viewer.', style: "color:black;", href: '<?php echo $geop_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Viewer.', style: "color:black; box-shadow:none;", href: '<?php echo $geop_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
 					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the

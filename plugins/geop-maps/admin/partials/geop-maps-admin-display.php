@@ -56,7 +56,6 @@
    * any data echoed back from the add file, indicating an error, and sends it
    * out as an alert to the user.
   */
-  // Use "http://" for localhost use, "https://" for outside of localhost.
   function geopmap_add_map_ajax(map_id, map_height, map_width){
       var map_data = {
           mapID: map_id,
@@ -65,7 +64,7 @@
       };
 
       jQuery.ajax({
-          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
+          url: "//" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -91,7 +90,7 @@
       };
 
       jQuery.ajax({
-          url: "http://" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
+          url: "//" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
