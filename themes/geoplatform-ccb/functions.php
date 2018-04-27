@@ -1,9 +1,4 @@
 <?php
-//Set the proper environment
-$env = 'prd';
-$dev = 'dev';
-$stg = 'stg';
-
 //Begin development Block
 function gp_getEnv($name, $def){
     return $_ENV[$name] ? $_ENV[$name] : $def;
@@ -319,7 +314,7 @@ function geo_customize_register( $wp_customize )
 						 'sanitize_callback' => 'wp_kses_post'
          ) );
          $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'text_editor_setting', array(
-             'label'   => 'Banner Text Editor',
+             'label'   => __( 'Banner Text Editor', 'geoplatform-ccb' ),
              'section' => 'banner_text_section',
              'settings'   => 'text_editor_setting',
              'priority' => 10

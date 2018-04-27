@@ -1,4 +1,3 @@
-<!--Uncomment below to add file to theme. Make sure to comment back out once it's created-->
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -36,10 +35,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
   </head>
 <body <?php body_class(); ?>>
-
-    <!-- code from partials/header.ejs -->
-    <header class="t-transparent">
-
+  <header class="t-transparent">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -89,9 +85,6 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                   <?php echo esc_html(get_bloginfo( 'name' )); ?>
                 </a>
                 </h4>
-
-            </div>
-        </div>
-
-
+            </div><!--#col-md-12-->
+        </div><!--#row-->
 </header>
