@@ -28,7 +28,7 @@
 
                               } elseif (is_404()) { ?>
                                 <h2 class="page-title">
-                                  <?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'ngda-2017' ); ?>
+                                  <?php esc_html_e( 'Oops! That page can&rsquo;t be found.', 'geoplatform-ngda' ); ?>
                                 </h2>
 
                               <?php } else {

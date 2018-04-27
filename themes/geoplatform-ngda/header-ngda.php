@@ -1,6 +1,6 @@
 <!--Uncomment below to add file to theme. Make sure to comment back out once it's created-->
 <!DOCTYPE html>
-<html>
+<html <?php language_attributes(); ?>>
 <head>
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,17 +8,9 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- Bootstrap core CSS
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
     <!--http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons-->
-    <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
+    <!-- <link rel="stylesheet" type="text/css" media="all" href="<?php //bloginfo( 'stylesheet_url' ); ?>" /> -->
     <?php
     $font_choice = get_theme_mod( 'font_choice' );
     if( $font_choice != '' ) {
@@ -37,14 +29,15 @@
         }
     }
 ?>
+<?php
+//enabling enhanced comment display
+//per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
+if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
     <?php wp_head();?>
 
   </head>
 <body>
-
-    <!-- code from partials/header.ejs -->
-    <header class="t-transparent">
-
+  <header class="t-transparent">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
@@ -65,36 +58,31 @@
                     <!-- Disable for now, re-enable for authentication -->
                     <li class="hidden-xs">
                         <div class="btn-group">
-                          <h4 class="brand">
+                          <h5 class="brand">
                             <!-- <% if(!authenticated) { %> -->
                             <?php if (!is_user_logged_in()){?>
-                              <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>">
+                              <a href="<?php echo esc_url(wp_login_url( get_option('siteurl') ) ); ?>">
                                   <button style="color:white;" type="button" class="btn btn-link" onclick="login">Sign In</button>
                                 </a>
                           <?php  } else {?>
-                            <a href="<?php echo wp_logout_url( home_url() ); ?>">
+                            <a href="<?php echo esc_url(wp_logout_url( home_url() ) ); ?>">
                                 <button style="color:white;" type="button" class="btn btn-link">Sign out</button>
                               </a>
                             <?php } ?>
-                            </h4>
+                          </h5>
                         </div><!--btn-account btn-group-->
-
                     </li><!--hidden-xs-->
-
                 </ul><!--role="menu" class="header__menu"-->
                 <h4 class="brand">
-                  <a href="<?php echo $GLOBALS['wpp_url']; ?>" title="Go to the Geoplatform Home Page">
+                  <a href="<?php echo esc_url($GLOBALS['wpp_url']); ?>" title="Go to the Geoplatform Home Page">
                       <span class="icon-gp"></span>
                       GeoPlatform
                   </a>
                   <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
-                  <a href="<?php echo get_site_url();?>" title="Go to the <?php echo get_bloginfo( 'name' ); ?> Home Page">
-                  <?php echo get_bloginfo( 'name' ); ?>
+                  <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
+                  <?php echo esc_html(get_bloginfo( 'name' )); ?>
                 </a>
                 </h4>
-
-            </div>
-        </div>
-
-
+          </div><!--#col-md-12-->
+      </div><!--#row-->
 </header>
