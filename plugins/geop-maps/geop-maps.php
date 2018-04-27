@@ -16,7 +16,7 @@
  * Plugin Name:       GeoPlatform Maps Plugin
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.0.3
+ * Version:           1.0.5
  * Author:            Image Matters LLC
  * Author URI:        www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NAME_VERSION', '1.0.0' );
+define( 'GEOPMAP_PLUGIN', '1.0.5' );
 
 /**
  * The code that runs during plugin activation.
@@ -82,142 +82,130 @@ run_geop_maps();
 
 
 // Hook backbone for shortcode interpretation.
-function shortcode_creation($atts){
-
-	// Grabs the file that handles environmental variables.
-	require_once('includes/class-geop-maps-urlbank.php');
+function geopmap_shortcode_creation($geopmap_atts){
 
 	// Establishes a base array with default values required for shortcode creation
-	// and overwrites them with values from $atts.
-  $a = shortcode_atts(array(
+	// and overwrites them with values from $geopmap_atts.
+  $geopmap_shortcode_array = shortcode_atts(array(
     'id' => '62c29fe8103c713904d23b8354ba41c8',
     'name' => '',
     'url' => '',
 		'width' => '0',
 		'height' => '0'
-  ), $atts);
+  ), $geopmap_atts);
   ob_start();
 
-  // URL variables for pinging the url bank for environment URLs. Checks for a
-	// GeoPlatform theme, pulling the global env variable and checking it as well
-	// for a valid value. If either check fails, geop_env defaults to 'prd', which
-	// will produce production-state URLs from the url bank.
-	$geop_env = 'prd';
-	$geop_theme = 'F';
-	if (substr(get_template(), 0, 11) == "GeoPlatform"){
-	 	global $env;
-		$geop_theme = 'T';
-		if ($env == 'dev' || $env == 'stg')
-			$geop_env = $env;
-	}
-
-	// Instantiates the URL bank for environment variable grabbing.
-	$Geop_url_class = new Geop_url_bank;
+  // GeoPlatform theme detection. Checks whether the active theme is a GeoPlatform
+	// theme and if so sets to true. Only real use is to trade Font Awesome icons
+	// for glyphicons and adjust some text sizes.
+	$geopmap_theme = 'F';
+	if (substr(get_template(), 0, 11) == "GeoPlatform")
+		$geopmap_theme = 'T';
 
 	// Empty error text output string.
-	$error_text = '';
+	$geopmap_error_text = '';
 
   // Uses the map ID provided to grab the map data from the GeoPlatform site and
 	// decode it into usable JSON info. Produces a bum result and error text if
 	// it fails.
-	$ual_url_in = $Geop_url_class->geop_maps_get_ual_url($geop_env) . '/api/maps/' . $a['id'];
-	$link_scrub = wp_remote_get( ''.$ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
-	$response = wp_remote_retrieve_body( $link_scrub );
-	if(!empty($response))
-	  $result = json_decode($response, true);
+	$geopmap_ual_url_in = 'https://ual.geoplatform.gov/api/maps/' . $geopmap_shortcode_array['id'];
+	$geopmap_link_scrub = wp_remote_get( ''.$geopmap_ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+	$geopmap_response = wp_remote_retrieve_body( $geopmap_link_scrub );
+	if(!empty($geopmap_response))
+	  $geopmap_result = json_decode($geopmap_response, true);
 	else{
-	  $result = "This Gallery has no recent activity. Try adding some maps!";
-		$error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>" . $Geop_url_class->geop_maps_get_ual_url($geop_env);
+	  $geopmap_result = "This Gallery has no recent activity. Try adding some maps!";
+		$geopmap_error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>";
 	}
 
 	// Invalid map ID check. A faulty map ID will return a generic JSON dataset
 	// from GeoPlatform with a statusCode entry containing "404" code. This will
-	// add text to $error_text, which will be used for error reporting later.
-	if (array_key_exists('statusCode', $result) && $result['statusCode'] == "404")
-	  $error_text .= "Your map ID could not be found on the GeoPlatform server. Please check your map ID and try again.<BR>";
+	// add text to $geopmap_error_text, which will be used for error reporting later.
+	if (array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] == "404")
+	  $geopmap_error_text .= "Your map ID could not be found on the GeoPlatform server. Please check your map ID and try again.<BR>";
 
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, the landing page value is pulled from the JSON and the process
 	// proceeds with agol map generation. Otherwise, the geop method is called.
-	if (array_key_exists('resourceTypes', $result) && $result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap"){
-		$landing_page = '';
-		if (array_key_exists('landingPage', $result) && isset($result['landingPage']))
-			$landing_page = $result['landingPage'];
-		agol_map_gen($a, $error_text, $Geop_url_class->geop_maps_get_ual_url($geop_env), $Geop_url_class->geop_maps_get_maps_url($geop_env), $landing_page, $geop_theme);
+	if (array_key_exists('resourceTypes', $geopmap_result) && $geopmap_result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap"){
+		$geopmap_landing_page = '';
+		if (array_key_exists('landingPage', $geopmap_result) && isset($geopmap_result['landingPage']))
+			$geopmap_landing_page = $geopmap_result['landingPage'];
+		geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_landing_page, $geopmap_theme);
 	}
 	else
-		geop_map_gen($a, $error_text, $Geop_url_class->geop_maps_get_ual_url($geop_env), $Geop_url_class->geop_maps_get_viewer_url($geop_env), $Geop_url_class->geop_maps_get_oe_url($geop_env), $geop_theme);
+		geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_theme);
 	return ob_get_clean();
 }
 
 
-
 /** Method for agol map display in a GeoPlatform theme environment.
  *
- *  #param $a: array of information captured from the shortcode string.
- *  #param $error_text: string of error text passed in, preferably empty.
- *  #param $geop_ual_url: url to the expected ual server.
- *  #param $geop_maps_url: url to the expected maps server.
- *  #param $landing_page: url that the map links to on the GeoPlatform maps page.
- *  #param $geop_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
+ *  #param $geopmap_shortcode_array: array of information captured from the shortcode string.
+ *  #param $geopmap_error_text: string of error text passed in, preferably empty.
+ *  #param $geopmap_landing_page: url that the map links to on the GeoPlatform maps page.
+ *  #param $geopmap_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
 */
-function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_page, $geop_theme){
+function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_landing_page, $geopmap_theme){
 
 	// Random number generation to give this instance of objects unique element IDs.
-	$divrand = rand(0, 99999);
+	// Also declares GeoPlatform url fields.
+	$geopmap_divrand = rand(0, 99999);
+	$geopmap_ual_url = 'https://ual.geoplatform.gov';
+	$geopmap_maps_url = 'https://maps.geoplatform.gov';
 
-	// Variables that vary among themes. They are set to default values for work in
-	// the GeoPlatform themes, then changed if one such theme is absent.
-	$geop_info_icon = 'glyphicon glyphicon-info-sign';
-	$geop_heading_title_size = '1.125em';
+	// Variables that vary among themes. They are set to default values for work
+	// in the GeoPlatform themes, then changed if one such theme is absent.
+	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
+	$geopmap_heading_title_size = '1.125em';
 
-	if ($geop_theme == 'F'){
-		$geop_info_icon = 'fas fa-info-circle';
-		$geop_heading_title_size = '1em';
+	if ($geopmap_theme == 'F'){
+		$geopmap_info_icon = 'fas fa-info-circle';
+		$geopmap_heading_title_size = '1em';
 	}
 
 	// Landing page check. If no landing page was passed, a default is generated.
-	if (empty($landing_page))
-		$landing_page = $geop_maps_url . '/map.html?id=' . $a['id'];
+	if (empty($geopmap_landing_page))
+		$geopmap_landing_page = $geopmap_maps_url . '/map.html?id=' . $geopmap_shortcode_array['id'];
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
 	 	 variable. -->
-	<div id="master_<?php echo $divrand; ?>" style="clear:both;">
+	<div id="master_<?php echo $geopmap_divrand; ?>" style="clear:both;">
 		<script>
-			var widthGrab = jQuery('#master_<?php echo $divrand ?>').width();
+			var widthGrab = jQuery('#master_<?php echo $geopmap_divrand ?>').width();
 		</script>
 
 <!-- This is the div block that defines the output proper. It defines the width
  		 of the visible map and title card, and contains those elements. Its values
 		 are set initially to those of width as passed by array. The contents of the
 	 	 entire div also act as a hyperlink, set here-->
-	  <div class="geop-display-main" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
-			<a title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $landing_page ?>" target="_blank" style="z-index:1;">
+	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
+			<a title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geopmap_landing_page ?>" target="_blank" style="z-index:1;">
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
-				<div class="geop-display-header" style="font-size:<?php echo $geop_heading_title_size ?>;">
+				<div class="geop-display-header" style="font-size:<?php echo $geopmap_heading_title_size ?>;">
 					<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 						<tr class="geop-no-border">
 							<th class="geop-no-border geop-no-cushion">
-								<span class="geop-white-item geop-display-header-text geop-no-transform"><?php echo $a['name']; ?></span>
+								<span class="geop-white-item geop-display-header-text geop-no-transform"><?php echo $geopmap_shortcode_array['name']; ?></span>
 							</th>
 							<th class="geop-no-border geop-no-cushion">
-								<span class="<?php echo $geop_info_icon ?> geop-white-item geop-header-controls"></span>
+								<span class="<?php echo $geopmap_info_icon ?> geop-white-item geop-header-controls"></span>
 							</th>
 						</tr>
 					</table>
 				</div>
-				<img class="geop-container-controls" id="image_<?php echo $divrand; ?>" href="<?php echo $landing_page ?>" target="_blank" src="<?php echo $geop_ual_url ?>/api/maps/<?php echo $a['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo $a['height']; ?>px;" onerror="geop_thumb_error(this);"/>
+				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo $geopmap_landing_page ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo $geopmap_shortcode_array['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;" onerror="geopmap_thumb_error(this);"/>
 			</a>
 
  <!-- Error report container with heading, an empty output region, and a button
 	 		to close it disguised as text. -->
-			<div class="geop-error-box" id="errorbox_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
+			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
 				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
-		 		<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $divrand; ?>"></p>
-		 		<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $divrand; ?>">Dismiss</button>
+		 		<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
+		 		<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
 		 	</div>
 	  </div>
 	</div>
@@ -226,12 +214,12 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 	<script>
 	jQuery('document').ready(function(){
 
-		// Error report string grabbing data from the $error_text argument.
-		var error_report = "<?php echo $error_text ?>";
+		// Error report string grabbing data from the $geopmap_error_text argument.
+		var geopmap_error_report = "<?php echo $geopmap_error_text ?>";
 
 		// Verifies if the thumbnail exists and adds to the error report if not.
-		jQuery.get("<?php echo $geop_maps_url ?>/map.html?id=<?php echo $a['id']; ?>").fail(function(err){
-			error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
+		jQuery.get("<?php echo $geopmap_maps_url ?>/map.html?id=<?php echo $geopmap_shortcode_array['id']; ?>").fail(function(err){
+			geopmap_error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
 		})
 
 		// Scaling code. If this page element does not have custom-set width or
@@ -239,35 +227,35 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 		// its container, this check sets the width instead to 100% of the master
 		// div. Height is also checked for no entry, and set to 56% of the master
 		// div's width.
-		if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab){
-			jQuery('#middle_<?php echo $divrand; ?>').width('100%');
-			jQuery('#errorbox_<?php echo $divrand; ?>').width('100%');
-			jQuery('#image_<?php echo $divrand; ?>').width('100%');
+		if (<?php echo $geopmap_shortcode_array['width']; ?> == 0 || <?php echo $geopmap_shortcode_array['width']; ?> > widthGrab){
+			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('100%');
+			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').width('100%');
+			jQuery('#image_<?php echo $geopmap_divrand; ?>').width('100%');
 		}
-		if (<?php echo $a['height']; ?> == 0)
-			jQuery('#image_<?php echo $divrand; ?>').height(jQuery('#image_<?php echo $divrand; ?>').width() * 0.56);
+		if (<?php echo $geopmap_shortcode_array['height']; ?> == 0)
+			jQuery('#image_<?php echo $geopmap_divrand; ?>').height(jQuery('#image_<?php echo $geopmap_divrand; ?>').width() * 0.56);
 
 		// Error report handler. If there is content in error_report, that string
 		// is set to the error output in the error div. Otherwise, that div is
 		// hidden.
-		if (error_report)
-			jQuery('#errorout_<?php echo $divrand; ?>').html(error_report);
+		if (geopmap_error_report)
+			jQuery('#errorout_<?php echo $geopmap_divrand; ?>').html(geopmap_error_report);
 		else
-			jQuery('#errorbox_<?php echo $divrand; ?>').hide();
+			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').hide();
 
 		// Hiding control for the error div, sliding it down when the user clicks
 		// the dismiss button/text.
-		jQuery('#errorclose_<?php echo $divrand; ?>').click(function(){
-			jQuery('#errorbox_<?php echo $divrand; ?>').slideToggle();
+		jQuery('#errorclose_<?php echo $geopmap_divrand; ?>').click(function(){
+			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').slideToggle();
 		});
 
 		// If the map is valid but for some reason does not possess a thumbnail, this
 	  // method is called and will supply a local default borrowed from the sit Map
 	  // Viewer site.
-	  function geop_thumb_error(geop_image_in){
-	    geop_image_in.onerror = "";
-	    geop_image_in.src = "/wp-content/plugins/geop-maps/includes/img-404.png";
-			error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
+	  function geopmap_thumb_error(geopmap_image_in){
+	    geopmap_image_in.onerror = "";
+	    geopmap_image_in.src = "/wp-content/plugins/geop-maps/includes/img-404.png";
+			geopmap_error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
 	    return true;
 	  }
 	})
@@ -278,98 +266,68 @@ function agol_map_gen($a, $error_text, $geop_ual_url, $geop_maps_url, $landing_p
 
 /** Method for geop map display. Much more dynamic than the agol map generator.
 *
-*  #param $a: array of information captured from the shortcode string.
-*  #param $error_text: string of error text passed in, preferably empty.
-*  #param $geop_viewer_url: url to the expected viewer server.
-*  #param $geop_maps_url: url to the expected object editor server.
-*  #param $geop_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
+*  #param $geopmap_shortcode_array: array of information captured from the shortcode string.
+*  #param $geopmap_error_text: string of error text passed in, preferably empty.
+*  #param $geopmap_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
 */
-function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe_url, $geop_theme){
+function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_theme){
 
-	// Generates the random number used for unique element referencing.
-	$divrand = rand(0, 99999);
+	// Generates the random number used for unique element referencing. Also sets
+	// up the URL fields.
+	$geopmap_divrand = rand(0, 99999);
+	$geopmap_viewer_url = 'https://viewer.geoplatform.gov';
+	$geopmap_oe_url = 'https://oe.geoplatform.gov';
 
-	// Variables that vary among themes. They are set to default values for work in
-	// the GeoPlatform themes, then changed if one such theme is absent.
-	$geop_list_icon = 'glyphicon glyphicon-menu-hamburger';
-	$geop_info_icon = 'glyphicon glyphicon-info-sign';
-	$geop_base_icon = 'glyphicon';
-	$geop_check_icon = 'glyphicon-check';
-	$geop_uncheck_icon = 'glyphicon-unchecked';
-	$geop_heading_title_size = '1.125em';
+	// Variables that vary among themes. They are set to default values for work
+	// in the GeoPlatform themes, then changed if one such theme is absent.
+	$geopmap_list_icon = 'glyphicon glyphicon-menu-hamburger';
+	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
+	$geopmap_base_icon = 'glyphicon';
+	$geopmap_check_icon = 'glyphicon-check';
+	$geopmap_uncheck_icon = 'glyphicon-unchecked';
+	$geopmap_heading_title_size = '1.125em';
 
-	if ($geop_theme == 'F'){
-		$geop_list_icon = 'fa fa-bars';
-		$geop_info_icon = 'fa fa-info-circle';
-		$geop_base_icon = 'fa';
-		$geop_check_icon = 'fa-check-square';
-		$geop_uncheck_icon = 'fa-square';
-		$geop_heading_title_size = '1em';
+	if ($geopmap_theme == 'F'){
+		$geopmap_list_icon = 'fa fa-bars';
+		$geopmap_info_icon = 'fa fa-info-circle';
+		$geopmap_base_icon = 'fa';
+		$geopmap_check_icon = 'fa-check-square';
+		$geopmap_uncheck_icon = 'fa-square';
+		$geopmap_heading_title_size = '1em';
 	}
 	?>
-
-
-<!-- Due to limitations when enqueueing files, maps will not load if done so
- 	in SIT or STG. In those environments, this code must be used. Otherwise,
- 	enqueueing works perfectly fine. -->
-	<script>
-	 GeoPlatform = {
-
-		 //REQUIRED: environment the application is deployed within
-		 // one of "development", "sit", "stg", "prd", or "production"
-		 "env" : "development",
-
-		 //REQUIRED: URL to GeoPlatform UAL for API usage
-		 "ualUrl" : "<?php echo $geop_ual_url ?>",
-
-		 //Object Editor URL.
-		 "oeUrl" : "<?php echo $geop_oe_url ?>",
-
-		 //timeout max for requests
-		 "timeout" : "5000",
-
-		 //identifier of GP Layer to use as default base layer
-		 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
-
-		 //{env}-{id} of application deployed
-		 "appId" : "development-mv"
-	 };
-	</script>
-	<script src="<?php echo plugin_dir_url(__FILE__) ?>public/assets/geoplatform.client.js" type="text/javascript"></script>
-	<script src="<?php echo plugin_dir_url(__FILE__) ?>public/assets/geoplatform.mapcore.js" type="text/javascript"></script>
-
 
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
 	 	 variable. -->
-	<div id="master_<?php echo $divrand; ?>" style="clear:both;">
+	<div id="master_<?php echo $geopmap_divrand; ?>" style="clear:both;">
 		<script>
-			var widthGrab = jQuery('#master_<?php echo $divrand ?>').width();
+			var widthGrab = jQuery('#master_<?php echo $geopmap_divrand ?>').width();
 		</script>
 
 <!-- This is the div block that defines the output proper. It defines the width
  		 of the visible map and title card, and contains those elements. Its values
 		 are set initially to those of the width as passed by array.-->
-	  <div class="geop-display-main" id="middle_<?php echo $divrand; ?>" style="width:<?php echo $a['width']; ?>px;">
+	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
 
  <!-- Name, link, and layer control card. Provides a link to the map with the
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
-			<div class="geop-display-header" id="title_<?php echo $divrand; ?>" style="font-size:<?php echo $geop_heading_title_size ?>;">
+			<div class="geop-display-header" id="title_<?php echo $geopmap_divrand; ?>" style="font-size:<?php echo $geopmap_heading_title_size ?>;">
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 					<tr class="geop-no-border">
 						<th class="geop-no-border geop-no-cushion">
-							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $a['name']; ?>" href="<?php echo $geop_viewer_url ?>/?id=<?php echo $a['id']; ?>" target="_blank">
-								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo $a['name']; ?></span>
+							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
+								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo $geopmap_shortcode_array['name']; ?></span>
 							</a>
 						</th>
 						<th class="geop-no-border geop-no-cushion">
 							<span class="geop-header-controls">
-								<button class="geop-text-button" id="layer_menu_button_<?php echo $divrand; ?>">
-									<span class="<?php echo $geop_list_icon ?> geop-white-item"></span>
+								<button class="geop-text-button" id="layer_menu_button_<?php echo $geopmap_divrand; ?>">
+									<span class="<?php echo $geopmap_list_icon ?> geop-white-item"></span>
 								</button>
-								<a class="geop-hidden-link" title="Visit full map of <?php echo $a['name']; ?> in the Object Editor." href="<?php echo $geop_oe_url; ?>/view/<?php echo $a['id']; ?>" target="_blank">
-									<span class="<?php echo $geop_info_icon ?> geop-white-item"></span>
+								<a class="geop-hidden-link" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Editor." href="<?php echo $geopmap_oe_url; ?>/view/<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
+									<span class="<?php echo $geopmap_info_icon ?> geop-white-item"></span>
 								</a>
 							</span>
 						</th>
@@ -378,24 +336,24 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 			</div>
 
  <!-- The container that will hold the leaflet map. Also defines entree height. -->
-			<div class="geop-container-controls" id="container_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;"></div>
+			<div class="geop-container-controls" id="container_<?php echo $geopmap_divrand; ?>" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;"></div>
 
  <!-- Layer control container. Provides the base container that holds the layer
  			controls generated later, and populates it with its first box, a simple
 			informational header. -->
-			<div class="geop-layer-menu" id="layerbox_<?php echo $divrand; ?>" style="height:<?php echo $a['height']; ?>px;">
-				<div class="geop-layer-box" id="layer_header_<?php echo $divrand; ?>" style="width:100%">
-					<p class="geop-caption-text geop-no-transform" id="layer_head_text_<?php echo $divrand; ?>">Layer Menu</p>
+			<div class="geop-layer-menu" id="layerbox_<?php echo $geopmap_divrand; ?>" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;">
+				<div class="geop-layer-box" id="layer_header_<?php echo $geopmap_divrand; ?>" style="width:100%">
+					<p class="geop-caption-text geop-no-transform" id="layer_head_text_<?php echo $geopmap_divrand; ?>">Layer Menu</p>
 				</div>
 			</div>
 
  <!-- Error report container with heading, an empty output region, and a button
  			to close it disguised as text. The output region has the possibility to be
 		 	filled later if errors are found. -->
-			<div class="geop-error-box" id="errorbox_<?php echo $divrand; ?>">
+			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>">
 				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
-				<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $divrand; ?>"></p>
-				<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $divrand; ?>">Dismiss</button>
+				<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
+				<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
 			</div>
   	</div>
 	</div>
@@ -405,89 +363,89 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 	jQuery('document').ready(function(){
 
 		// Error report string, which will be filled for display if necessary.
-		var error_report = "<?php echo $error_text ?>";
+		var geopmap_error_report = "<?php echo $geopmap_error_text ?>";
 
-		// Grabs the geop_theme PHP param as a Javascript param.
-		var geop_theme = "<?php echo $geop_theme ?>";
+		// Grabs the geopmap_theme PHP param as a Javascript param.
+		var geopmap_theme = "<?php echo $geopmap_theme ?>";
 
 		// Scaling code. If this page element does not have custom-set width or
 		// height. If the user did not specify a width or set a width too wide
 		// for its container, this check sets the width instead to 100% of the
 		// master div. Height is also checked for no entry, and set to 75% of
 		// the master div's width.
-		if (<?php echo $a['width']; ?> == 0 || <?php echo $a['width']; ?> > widthGrab)
-			jQuery('#middle_<?php echo $divrand; ?>').width('100%');
-		if (<?php echo $a['height']; ?> == 0){
-			jQuery('#container_<?php echo $divrand; ?>').height(widthGrab * 0.75);
-			jQuery('#layerbox_<?php echo $divrand; ?>').height(widthGrab * 0.75);
+		if (<?php echo $geopmap_shortcode_array['width']; ?> == 0 || <?php echo $geopmap_shortcode_array['width']; ?> > widthGrab)
+			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('100%');
+		if (<?php echo $geopmap_shortcode_array['height']; ?> == 0){
+			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
+			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
 		}
-		if (jQuery('#middle_<?php echo $divrand; ?>').width() <= 400)
-			jQuery('#layer_menu_button_<?php echo $divrand; ?>').hide();
+		if (jQuery('#middle_<?php echo $geopmap_divrand; ?>').width() <= 400)
+			jQuery('#layer_menu_button_<?php echo $geopmap_divrand; ?>').hide();
 
 
-		// Javascript block that creates the leaflet map container, with mapInstance
+		// Javascript block that creates the leaflet map container, with GeopMapInstance
 		// being our GeoPlatform map. This section is wrapped in a try-catch block
 		// to catch any errors that may come. As of now, it's a pure error output
 		// concatenated to error_report.
-		var mapInstance;
+		var GeopMapInstance;
 		try {
-			var lat = 38.8282;
-			var lng = -98.5795;
-			var zoom = 3;
-			var mapCode = "<?php echo $a['id']; ?>";
-			var leafBase = L.map("container_<?php echo $divrand;?>", {
+			var geopmap_lat = 38.8282;
+			var geopmap_lng = -98.5795;
+			var geopmap_zoom = 3;
+			var geopmap_mapCode = "<?php echo $geopmap_shortcode_array['id']; ?>";
+			var geopmap_leafBase = L.map("container_<?php echo $geopmap_divrand;?>", {
 				minZoom: 2,
 				maxZoom: 21,
 				attributionControl: false
 			});
 
-			mapInstance = GeoPlatform.MapFactory.get();
-			mapInstance.setMap(leafBase);
-			mapInstance.setView(51.505, -0.09, 13);
+			GeopMapInstance = GeoPlatform.MapFactory.get();
+			GeopMapInstance.setMap(geopmap_leafBase);
+			GeopMapInstance.setView(51.505, -0.09, 13);
 
       // Actual attribute setting function including layer grab function, which
 			// cycles through the layers and populates the layer control sidebar. Also
-			// has error catching to grab and errors through the promise system.
-			var layerStates;
-			mapInstance.loadMap(mapCode).then( function(){
-				var baseLayer = mapInstance.getBaseLayer();
-				layerStates = mapInstance.getLayers();
-				geop_layer_control_gen(mapInstance, layerStates, geop_theme);
+			// has error catching to grab errors through the promise system.
+			var geopmap_layerStates;
+			GeopMapInstance.loadMap(geopmap_mapCode).then( function(){
+				var geopmap_baseLayer = GeopMapInstance.getBaseLayer();
+				geopmap_layerStates = GeopMapInstance.getLayers();
+				geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_theme);
 			}).catch( function(error){
-				error_report += (error + "<BR>");
+				geopmap_error_report += (error + "<BR>");
 			})
 		}
 		catch(err){
-			error_report += (err + "<BR>");
+			geopmap_error_report += (err + "<BR>");
 		}
 
     /** Function for generating the layer control sidebar entries. For each layer
-		*  found, it creates a series of HTML elements using the geop_createEl()
+		*  found, it creates a series of HTML elements using the geopmap_createEl()
 		*  method and appends them into a DOM heirarchy before adding them to the
 		*  layerbox div. Layer toggling outside of the GeopPlatform themes currently
 		*	 does not function, so the checkboxes have been removed and the layer name
 		*  output given left padding in such cases.
 		*
-		*  #param mapInstance: the GeoPlatform map instance being referenced.
-		*  #param layerStates: the layers from that map instance.
-		*  #param geop_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
+		*  #param GeopMapInstance: the GeoPlatform map instance being referenced.
+		*  #param geopmap_layerStates: the layers from that map instance.
+		*  #param geopmap_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
 		*/
-		function geop_layer_control_gen(mapInstance, layerStates, geop_theme){
+		function geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_theme){
 
 			// Checks to ensure that there are layers to process. If so, cycles through
 			// each layer and creates local variables in the form of html elements.
-			if (layerStates.length > 0){
-				for (var i = 0; i < layerStates.length; i++){
-					var main_table = geop_createEl({type: 'table', class: 'geop-layer-box', style: 'width:100%'});
-					var table_row = geop_createEl({type: 'tr', class: 'geop-no-border'});
-					var first_td = geop_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
-					var check_button = geop_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $divrand; ?>', id: 'layer_button_id_<?php echo $divrand; ?>', style: 'width:auto', opac: '1.0', text: layerStates[i].layer_id});
-					var check_icon = geop_createEl({type: 'span', class: 'layer_button_icon_<?php echo $divrand; ?> <?php echo $geop_base_icon . " " . $geop_check_icon ?>', style: 'color:black;'});
-					var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', html: layerStates[i].layer.label});
-					var second_td = geop_createEl({type: 'td', class: 'layer_content_class_<?php echo $divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $divrand; ?>', style: 'padding-left:16px;', html: layerStates[i].layer.label});
-					var third_td = geop_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geop_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $a['name']; ?> in the Object Viewer.', style: "color:black;", href: '<?php echo $geop_oe_url; ?>/view/' + layerStates[i].layer_id, target: "_blank"})
-					var info_icon = geop_createEl({type: 'span', class: '<?php echo $geop_info_icon ?>'});
+			if (geopmap_layerStates.length > 0){
+				for (var i = 0; i < geopmap_layerStates.length; i++){
+					var main_table = geopmap_createEl({type: 'table', class: 'geop-layer-box', style: 'width:100%'});
+					var table_row = geopmap_createEl({type: 'tr', class: 'geop-no-border'});
+					var first_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
+					var check_button = geopmap_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $geopmap_divrand; ?>', id: 'layer_button_id_<?php echo $geopmap_divrand; ?>', style: 'width:auto', opac: '1.0', text: geopmap_layerStates[i].layer_id});
+					var check_icon = geopmap_createEl({type: 'span', class: 'layer_button_icon_<?php echo $geopmap_divrand; ?> <?php echo $geopmap_base_icon . " " . $geopmap_check_icon ?>', style: 'color:black;'});
+					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', html: geopmap_layerStates[i].layer.label});
+					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
+					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Viewer.', style: "color:black; box-shadow:none;", href: '<?php echo $geopmap_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
+					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
 					// desired order before attachement to the layer menu.
@@ -499,22 +457,22 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 					table_row.appendChild(second_td);
 					table_row.appendChild(third_td);
 					main_table.appendChild(table_row);
-					document.getElementById('layerbox_<?php echo $divrand; ?>').appendChild(main_table);
+					document.getElementById('layerbox_<?php echo $geopmap_divrand; ?>').appendChild(main_table);
 				}
 
 				// Layer toggle detector and executor. Must be put placed here as the
 				// elements involved cannot be manipulated outside of the promise stack.
-				jQuery('.layer_button_class_<?php echo $divrand; ?>').click(function(){
+				jQuery('.layer_button_class_<?php echo $geopmap_divrand; ?>').click(function(){
 					jQuery(this).attr('opac', 1 - jQuery(this).attr('opac'));
-					mapInstance.updateLayerOpacity(jQuery(this).attr('text'), jQuery(this).attr('opac'));
-					jQuery(this).children().toggleClass('<?php echo $geop_check_icon . " " . $geop_uncheck_icon ?>');
+					GeopMapInstance.updateLayerOpacity(jQuery(this).attr('text'), jQuery(this).attr('opac'));
+					jQuery(this).children().toggleClass('<?php echo $geopmap_check_icon . " " . $geopmap_uncheck_icon ?>');
 				});
 			}
-			else{
+			else {
 
 				// If there are no layers to the map, the layer header div for that map
 				// is modified to express such.
-				jQuery("#layer_head_text_<?php echo $divrand; ?>").text("This map has no layers.");
+				jQuery("#layer_head_text_<?php echo $geopmap_divrand; ?>").text("This map has no layers.");
 			}
 		}
 
@@ -522,50 +480,50 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 		// Creates an HTML element and, using the arrays of string pairs passed here
 		// from geop_layer_control_gen(), adds attributes to it that make it into a
 		// functional element before returning it.
-		function geop_createEl(atts){
-			atts = atts || {};
-			var new_el = document.createElement(atts.type);
-			if(atts.html)
-				new_el.innerHTML = atts.html;
-			if(atts.text)
-				new_el.setAttribute('text', atts.text);
-			if(atts.class)
-				new_el.setAttribute('class', atts.class);
-			if(atts.style)
-				new_el.setAttribute('style', atts.style);
-			if(atts.id)
-				new_el.setAttribute('id', atts.id);
-			if(atts.title)
-				new_el.setAttribute('title', atts.title);
-			if(atts.href)
-				new_el.setAttribute('href', atts.href);
-			if(atts.target)
-				new_el.setAttribute('target', atts.target);
-			if(atts.span)
-				new_el.setAttribute('span', atts.span);
-			if(atts.opac)
-				new_el.setAttribute('opac', atts.opac);
+		function geopmap_createEl(geopmap_el_atts){
+			geopmap_el_atts = geopmap_el_atts || {};
+			var new_el = document.createElement(geopmap_el_atts.type);
+			if(geopmap_el_atts.html)
+				new_el.innerHTML = geopmap_el_atts.html;
+			if(geopmap_el_atts.text)
+				new_el.setAttribute('text', geopmap_el_atts.text);
+			if(geopmap_el_atts.class)
+				new_el.setAttribute('class', geopmap_el_atts.class);
+			if(geopmap_el_atts.style)
+				new_el.setAttribute('style', geopmap_el_atts.style);
+			if(geopmap_el_atts.id)
+				new_el.setAttribute('id', geopmap_el_atts.id);
+			if(geopmap_el_atts.title)
+				new_el.setAttribute('title', geopmap_el_atts.title);
+			if(geopmap_el_atts.href)
+				new_el.setAttribute('href', geopmap_el_atts.href);
+			if(geopmap_el_atts.target)
+				new_el.setAttribute('target', geopmap_el_atts.target);
+			if(geopmap_el_atts.span)
+				new_el.setAttribute('span', geopmap_el_atts.span);
+			if(geopmap_el_atts.opac)
+				new_el.setAttribute('opac', geopmap_el_atts.opac);
 			return new_el;
 		}
 
 		// Show/hide toggle control for the layer div, showing or hiding it when the
 		// user presses the layer view button.
-		jQuery('#layer_menu_button_<?php echo $divrand; ?>').click(function(){
-			jQuery('#layerbox_<?php echo $divrand; ?>').animate({ width: "toggle" });
+		jQuery('#layer_menu_button_<?php echo $geopmap_divrand; ?>').click(function(){
+			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').animate({ width: "toggle" });
 		});
 
 		// Error report handler. If there is content in error_report, that string
 		// is set to the error output in the error div. Otherwise, that div is
 		// hidden.
-		if (error_report)
-			jQuery('#errorout_<?php echo $divrand; ?>').html(error_report);
+		if (geopmap_error_report)
+			jQuery('#errorout_<?php echo $geopmap_divrand; ?>').html(geopmap_error_report);
 		else
-			jQuery('#errorbox_<?php echo $divrand; ?>').hide();
+			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').hide();
 
 		// Hide control for the error div, sliding it down when the user clicks the
 		// dismiss button/text.
-		jQuery('#errorclose_<?php echo $divrand; ?>').click(function(){
-			jQuery('#errorbox_<?php echo $divrand; ?>').slideToggle();
+		jQuery('#errorclose_<?php echo $geopmap_divrand; ?>').click(function(){
+			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').slideToggle();
 		});
 	})
 	</script>
@@ -574,11 +532,11 @@ function geop_map_gen($a, $error_text, $geop_ual_url, $geop_viewer_url, $geop_oe
 
 
 // Adds the shortcode hook to init.
-function wporg_shortcodes_init()
+function geopmap_shortcodes_init()
 {
-    add_shortcode('geopmap', 'shortcode_creation');
+    add_shortcode('geopmap', 'geopmap_shortcode_creation');
 }
-add_action('init', 'wporg_shortcodes_init');
+add_action('init', 'geopmap_shortcodes_init');
 
 
 // Linking of dependenceis into the document.

@@ -26,15 +26,15 @@ class Geop_Maps_Activator {
 	/**
 	 * Creates the wpdb table for storing map input information.
 	*/
-	private static function gpf_database_gen() {
+	private static function geopmap_database_gen() {
 	  global $wpdb;
 
-	  $table_name = $wpdb->prefix . 'geop_maps_db';
-	  $charset_collate = $wpdb->get_charset_collate();
+	  $geopmap_table_name = $wpdb->prefix . 'geop_maps_db';
+	  $geopmap_charset_collate = $wpdb->get_charset_collate();
 
 	  // This creation segment only executes if the database does not already exist.
-	  if($wpdb->get_var("show tables like '$table_name'") != $table_name){
-	    $sql = "CREATE TABLE $table_name (
+	  if($wpdb->get_var("show tables like '$geopmap_table_name'") != $geopmap_table_name){
+	    $geopmap_sql = "CREATE TABLE $geopmap_table_name (
 	      id mediumint(9) NOT NULL AUTO_INCREMENT,
 	      time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	      map_id varchar(255) NOT NULL,
@@ -45,10 +45,10 @@ class Geop_Maps_Activator {
 				map_thumbnail varchar(255) NOT NULL,
 				map_agol varchar(255) NOT NULL,
 	      PRIMARY KEY  (id)
-	    ) $charset_collate;";
+	    ) $geopmap_charset_collate;";
 
 	    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-	    dbDelta($sql);
+	    dbDelta($geopmap_sql);
 	  }
 	}
 
@@ -61,6 +61,6 @@ class Geop_Maps_Activator {
 	 */
 	public static function activate() {
 		global $wpdb;
-		self::gpf_database_gen();
+		self::geopmap_database_gen();
 	}
 }

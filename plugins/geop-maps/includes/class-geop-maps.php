@@ -67,8 +67,8 @@ class Geop_Maps {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'GEOPMAP_PLUGIN' ) ) {
+			$this->version = GEOPMAP_PLUGIN;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -160,7 +160,7 @@ class Geop_Maps {
 		//Documentation: https://scotch.io/tutorials/how-to-build-a-wordpress-plugin-part-1#initialize-and-add-a-setting-page
 
 		// Add menu item
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_plugin_admin_menu' );
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'geopmap_add_plugin_admin_menu' );
 
 		// Add Settings link to the plugin
 		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );

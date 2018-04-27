@@ -13,7 +13,7 @@ Manage your own personal database of GeoPlatform interactive maps and use shortc
 
 == Description ==
 
-The GeoPlatform Maps Plugin is a tool for your Wordpress site that facilitates the integration of GeoPlatform maps with your blog. It provides you with the ability to easily compile and manage a database of maps pulled from the GeoPlatform database. This database also generates shortcodes, which can be use to easily integrate rich, layered, interactive maps into your Wordpress posts. It is suggested to use this plugin in conjunction with the [2018 GeoPlatform Wordpress Theme](https://geoplatform-theme-in-wordpress.com) to unlock additional functionality.
+The GeoPlatform Maps Plugin is a tool for your Wordpress site that facilitates the integration of GeoPlatform maps with your blog. It provides you with the ability to easily compile and manage a database of maps pulled from the GeoPlatform database. This database also generates shortcodes, which can be use to easily integrate rich, layered, interactive maps into your Wordpress posts. It is suggested to use this plugin in conjunction with the [2018 GeoPlatform Wordpress Theme} to unlock additional functionality.
 
 
 
