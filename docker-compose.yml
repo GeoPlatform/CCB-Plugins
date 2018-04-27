@@ -32,3 +32,15 @@ services:
       MYSQL_ROOT_PASSWORD: imroot:012!
     volumes:
        - /var/lib/mysql
+
+  phpadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mysql
+    links:
+      - mysql:db
+    ports:
+      - "8888:80"
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: imroot:012!
