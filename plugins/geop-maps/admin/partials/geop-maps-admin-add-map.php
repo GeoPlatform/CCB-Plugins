@@ -13,9 +13,6 @@ $geopmap_parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 require( $geopmap_parse_uri[0] . 'wp-load.php' );
 global $wpdb;
 
-// Grabs the file that handles environmental variables.
-require_once('../../includes/class-geop-maps-urlbank.php');
-
 /* Assigns the variables stored in $_POST while instantiating blank variables
  * for conditional assignment.
 */
@@ -29,33 +26,15 @@ $geopmap_result = '';
 $geopmap_agol = '0';
 $geopmap_invalid_bool = false;
 
-// URL variables for pinging the url bank for environment URLs. Checks for a
-// GeoPlatform theme, pulling the global env variable and checking it as well
-// for a valid value. If either check fails, geop_env defaults to 'prd', which
-// will produce production-state URLs from the url bank.
-//
-// Disabled for Wordpress public distribution due to reliance on an as-yet
-// unreleased GeoPlatform theme.
-
-$geop_env = 'prd';
-// if (substr(get_template(), 0, 11) == "GeoPlatform"){
-//   global $env;
-//   if ($env == 'dev' || $env == 'stg')
-//     $geop_env = $env;
-// }
-
-// Instantiates the URL bank for environment variable grabbing.
-$Geop_url_class = new Geop_url_bank;
-
 // URL variables for resource collection, defaults to production environment.
-$geop_ual_url = $Geop_url_class->geop_maps_get_ual_url($geop_env);
-$geop_viewer_url = $Geop_url_class->geop_maps_get_viewer_url($geop_env);
+$geopmap_ual_url = 'https://ual.geoplatform.gov';
+$geopmap_viewer_url = 'https://viewer.geoplatform.gov';
 
 // Field assignment. The map's url is set up, verified, and json decoded so that
 // it may be used down the line. If any part of the process fails, invalid_bool
 // is set to true and the process carries on. However, most of the remaining
 // operations here require a false $geopmap_invalid_bool.
-$geopmap_ual_url_in = $geop_ual_url . '/api/maps/' . $geopmap_ual_map_id;
+$geopmap_ual_url_in = $geopmap_ual_url . '/api/maps/' . $geopmap_ual_map_id;
 $geopmap_link_scrub = wp_remote_get( ''.$geopmap_ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 $geopmap_response = wp_remote_retrieve_body( $geopmap_link_scrub );
 if(!empty($geopmap_response))
@@ -111,10 +90,10 @@ if (!$geopmap_invalid_bool){
 
   // Geomap block, featuring basic data setting from passed array.
   if ($geopmap_agol == '0'){
-    $geopmap_map_url = $geop_viewer_url . '/?id=' . $geopmap_map_id;
+    $geopmap_map_url = $geopmap_viewer_url . '/?id=' . $geopmap_map_id;
     $geopmap_map_name = $geopmap_result['label'];
     $geopmap_map_description = $geopmap_result['description'];
-    $geopmap_map_thumbnail = $geop_ual_url . '/api/maps/'. $geopmap_map_id . "/thumbnail";
+    $geopmap_map_thumbnail = $geopmap_ual_url . '/api/maps/'. $geopmap_map_id . "/thumbnail";
   }
   else {
     // Agol block, pulling different values. Not all Agol maps have a description,
@@ -133,7 +112,7 @@ if (!$geopmap_invalid_bool){
       if (empty($geopmap_map_description))
         $geopmap_map_description = "This map does not have a description.";
     }
-    $geopmap_map_thumbnail = $geop_ual_url . '/api/maps/'. $geopmap_map_id . "/thumbnail";
+    $geopmap_map_thumbnail = $geopmap_ual_url . '/api/maps/'. $geopmap_map_id . "/thumbnail";
   }
 
   /* The values of ual_map_height and _width are checked if numeric. If so, they

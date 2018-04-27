@@ -84,9 +84,6 @@ run_geop_maps();
 // Hook backbone for shortcode interpretation.
 function geopmap_shortcode_creation($geopmap_atts){
 
-	// Grabs the file that handles environmental variables.
-	require_once('includes/class-geop-maps-urlbank.php');
-
 	// Establishes a base array with default values required for shortcode creation
 	// and overwrites them with values from $geopmap_atts.
   $geopmap_shortcode_array = shortcode_atts(array(
@@ -98,27 +95,12 @@ function geopmap_shortcode_creation($geopmap_atts){
   ), $geopmap_atts);
   ob_start();
 
-  // URL variables for pinging the url bank for environment URLs. Checks for a
-	// GeoPlatform theme, pulling the global env variable and checking it as well
-	// for a valid value. If either check fails, geopmap_env defaults to 'prd',
-	// which will produce production-state URLs from the url bank.
-	//
-	// For public Wordpress distribution, this operation has been commented out.
-	// The GeoPlatform theme does not yet exist in the public Theme network and
-	// will require additional changes before it can be distributed. This includes
-	// the $env variable, which requires renaming. Eventually this operation would
-	// ideally be reenabled.
-	$geopmap_env = 'prd';
+  // GeoPlatform theme detection. Checks whether the active theme is a GeoPlatform
+	// theme and if so sets to true. Only real use is to trade Font Awesome icons
+	// for glyphicons and adjust some text sizes.
 	$geopmap_theme = 'F';
-	// if (substr(get_template(), 0, 11) == "GeoPlatform"){
-	//  	global $env;
-	// 	$geopmap_theme = 'T';
-	// 	if ($env == 'dev' || $env == 'stg')
-	// 		$geopmap_env = $env;
-	// }
-
-	// Instantiates the URL bank for environment variable grabbing.
-	$Geopmap_url_class = new Geop_url_bank;
+	if (substr(get_template(), 0, 11) == "GeoPlatform")
+		$geopmap_theme = 'T';
 
 	// Empty error text output string.
 	$geopmap_error_text = '';
@@ -126,14 +108,14 @@ function geopmap_shortcode_creation($geopmap_atts){
   // Uses the map ID provided to grab the map data from the GeoPlatform site and
 	// decode it into usable JSON info. Produces a bum result and error text if
 	// it fails.
-	$geopmap_ual_url_in = $Geopmap_url_class->geop_maps_get_ual_url($geopmap_env) . '/api/maps/' . $geopmap_shortcode_array['id'];
+	$geopmap_ual_url_in = 'https://ual.geoplatform.gov/api/maps/' . $geopmap_shortcode_array['id'];
 	$geopmap_link_scrub = wp_remote_get( ''.$geopmap_ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 	$geopmap_response = wp_remote_retrieve_body( $geopmap_link_scrub );
 	if(!empty($geopmap_response))
 	  $geopmap_result = json_decode($geopmap_response, true);
 	else{
 	  $geopmap_result = "This Gallery has no recent activity. Try adding some maps!";
-		$geopmap_error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>" . $Geopmap_url_class->geop_maps_get_ual_url($geopmap_env);
+		$geopmap_error_text .= "The GeoPlatform server could not be contacted to verify this map.<BR>";
 	}
 
 	// Invalid map ID check. A faulty map ID will return a generic JSON dataset
@@ -149,31 +131,31 @@ function geopmap_shortcode_creation($geopmap_atts){
 		$geopmap_landing_page = '';
 		if (array_key_exists('landingPage', $geopmap_result) && isset($geopmap_result['landingPage']))
 			$geopmap_landing_page = $geopmap_result['landingPage'];
-		geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $Geopmap_url_class->geop_maps_get_ual_url($geopmap_env), $Geopmap_url_class->geop_maps_get_maps_url($geopmap_env), $geopmap_landing_page, $geopmap_theme);
+		geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_landing_page, $geopmap_theme);
 	}
 	else
-		geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $Geopmap_url_class->geop_maps_get_ual_url($geopmap_env), $Geopmap_url_class->geop_maps_get_viewer_url($geopmap_env), $Geopmap_url_class->geop_maps_get_oe_url($geopmap_env), $geopmap_theme);
+		geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_theme);
 	return ob_get_clean();
 }
-
 
 
 /** Method for agol map display in a GeoPlatform theme environment.
  *
  *  #param $geopmap_shortcode_array: array of information captured from the shortcode string.
  *  #param $geopmap_error_text: string of error text passed in, preferably empty.
- *  #param $geop_ual_url: url to the expected ual server.
- *  #param $geop_maps_url: url to the expected maps server.
  *  #param $geopmap_landing_page: url that the map links to on the GeoPlatform maps page.
  *  #param $geopmap_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
 */
-function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_ual_url, $geop_maps_url, $geopmap_landing_page, $geopmap_theme){
+function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_landing_page, $geopmap_theme){
 
 	// Random number generation to give this instance of objects unique element IDs.
+	// Also declares GeoPlatform url fields.
 	$geopmap_divrand = rand(0, 99999);
+	$geopmap_ual_url = 'https://ual.geoplatform.gov';
+	$geopmap_maps_url = 'https://maps.geoplatform.gov';
 
-	// Variables that vary among themes. They are set to default values for work in
-	// the GeoPlatform themes, then changed if one such theme is absent.
+	// Variables that vary among themes. They are set to default values for work
+	// in the GeoPlatform themes, then changed if one such theme is absent.
 	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
 	$geopmap_heading_title_size = '1.125em';
 
@@ -184,7 +166,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 
 	// Landing page check. If no landing page was passed, a default is generated.
 	if (empty($geopmap_landing_page))
-		$geopmap_landing_page = $geop_maps_url . '/map.html?id=' . $geopmap_shortcode_array['id'];
+		$geopmap_landing_page = $geopmap_maps_url . '/map.html?id=' . $geopmap_shortcode_array['id'];
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -215,7 +197,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 						</tr>
 					</table>
 				</div>
-				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo $geopmap_landing_page ?>" target="_blank" src="<?php echo $geop_ual_url ?>/api/maps/<?php echo $geopmap_shortcode_array['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;" onerror="geopmap_thumb_error(this);"/>
+				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo $geopmap_landing_page ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo $geopmap_shortcode_array['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;" onerror="geopmap_thumb_error(this);"/>
 			</a>
 
  <!-- Error report container with heading, an empty output region, and a button
@@ -236,7 +218,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 		var geopmap_error_report = "<?php echo $geopmap_error_text ?>";
 
 		// Verifies if the thumbnail exists and adds to the error report if not.
-		jQuery.get("<?php echo $geop_maps_url ?>/map.html?id=<?php echo $geopmap_shortcode_array['id']; ?>").fail(function(err){
+		jQuery.get("<?php echo $geopmap_maps_url ?>/map.html?id=<?php echo $geopmap_shortcode_array['id']; ?>").fail(function(err){
 			geopmap_error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
 		})
 
@@ -286,17 +268,18 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 *
 *  #param $geopmap_shortcode_array: array of information captured from the shortcode string.
 *  #param $geopmap_error_text: string of error text passed in, preferably empty.
-*  #param $geop_viewer_url: url to the expected viewer server.
-*  #param $geop_maps_url: url to the expected object editor server.
 *  #param $geopmap_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
 */
-function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_ual_url, $geop_viewer_url, $geop_oe_url, $geopmap_theme){
+function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_theme){
 
-	// Generates the random number used for unique element referencing.
+	// Generates the random number used for unique element referencing. Also sets
+	// up the URL fields.
 	$geopmap_divrand = rand(0, 99999);
+	$geopmap_viewer_url = 'https://viewer.geoplatform.gov';
+	$geopmap_oe_url = 'https://oe.geoplatform.gov';
 
-	// Variables that vary among themes. They are set to default values for work in
-	// the GeoPlatform themes, then changed if one such theme is absent.
+	// Variables that vary among themes. They are set to default values for work
+	// in the GeoPlatform themes, then changed if one such theme is absent.
 	$geopmap_list_icon = 'glyphicon glyphicon-menu-hamburger';
 	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
 	$geopmap_base_icon = 'glyphicon';
@@ -313,37 +296,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 		$geopmap_heading_title_size = '1em';
 	}
 	?>
-
-
-<!-- Due to limitations when enqueueing files, maps will not load if done so
- 	in SIT or STG. In those environments, this code must be used. Otherwise,
- 	enqueueing works perfectly fine. -->
-	<!-- <script>
-	 GeoPlatform = {
-
-		 //REQUIRED: environment the application is deployed within
-		 // one of "development", "sit", "stg", "prd", or "production"
-		 "env" : "development",
-
-		 //REQUIRED: URL to GeoPlatform UAL for API usage
-		 "ualUrl" : "<?php echo $geop_ual_url ?>",
-
-		 //Object Editor URL.
-		 "oeUrl" : "<?php echo $geop_oe_url ?>",
-
-		 //timeout max for requests
-		 "timeout" : "5000",
-
-		 //identifier of GP Layer to use as default base layer
-		 "defaultBaseLayerId" : "209573d18298e893f21e6064b23c8638",
-
-		 //{env}-{id} of application deployed
-		 "appId" : "development-mv"
-	 };
-	</script> -->
-	<!-- <script src="<?php echo plugin_dir_url(__FILE__) ?>public/assets/geoplatform.client.js" type="text/javascript"></script>
-	<script src="<?php echo plugin_dir_url(__FILE__) ?>public/assets/geoplatform.mapcore.js" type="text/javascript"></script> -->
-
 
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
@@ -365,7 +317,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 					<tr class="geop-no-border">
 						<th class="geop-no-border geop-no-cushion">
-							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geop_viewer_url ?>/?id=<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
+							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
 								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo $geopmap_shortcode_array['name']; ?></span>
 							</a>
 						</th>
@@ -374,7 +326,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 								<button class="geop-text-button" id="layer_menu_button_<?php echo $geopmap_divrand; ?>">
 									<span class="<?php echo $geopmap_list_icon ?> geop-white-item"></span>
 								</button>
-								<a class="geop-hidden-link" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Editor." href="<?php echo $geop_oe_url; ?>/view/<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
+								<a class="geop-hidden-link" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Editor." href="<?php echo $geopmap_oe_url; ?>/view/<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
 									<span class="<?php echo $geopmap_info_icon ?> geop-white-item"></span>
 								</a>
 							</span>
@@ -453,7 +405,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 
       // Actual attribute setting function including layer grab function, which
 			// cycles through the layers and populates the layer control sidebar. Also
-			// has error catching to grab and errors through the promise system.
+			// has error catching to grab errors through the promise system.
 			var geopmap_layerStates;
 			GeopMapInstance.loadMap(geopmap_mapCode).then( function(){
 				var geopmap_baseLayer = GeopMapInstance.getBaseLayer();
@@ -492,7 +444,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geop_u
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', html: geopmap_layerStates[i].layer.label});
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Viewer.', style: "color:black; box-shadow:none;", href: '<?php echo $geop_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Viewer.', style: "color:black; box-shadow:none;", href: '<?php echo $geopmap_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
 					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
