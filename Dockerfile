@@ -27,6 +27,13 @@ RUN curl -L -o /usr/src/categories-images.zip \
 					/usr/src/categories-images.zip; \
 		rm /usr/src/categories-images.zip
 
+# saml 2.0 single sign on
+RUN curl -L -o /usr/src/saml.zip \
+					http://dyk46gk69472z.cloudfront.net/CCB/plugins/saml-20-single-sign-on_2-7-17.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/saml \
+					/usr/src/saml.zip; \
+		rm /usr/src/saml.zip
+
 ########### Install Developer Dependencies #############
 # theme check:
 RUN curl -L -o /usr/src/theme-check.zip \
