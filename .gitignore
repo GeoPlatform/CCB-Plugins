@@ -5,8 +5,7 @@ plugins/akismet
 plugins/categories-images
 plugins/theme-sniffer
 plugins/theme-check
-plugins/openid-connect-generic-master
-plugins/saml/
+plugins/openid-connect-generic-master 
 
 # Ignore default themes files
 themes/index.php
