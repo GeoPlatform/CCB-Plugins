@@ -105,42 +105,42 @@ if( !$menu_exists){
 
 	// Set up default menu items
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Map Viewer <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
+			'menu-item-title' =>  __('Map Viewer <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
 			'menu-item-url' => $GLOBALS['viewer_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Map Manager <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
+			'menu-item-title' =>  __('Map Manager <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
 			'menu-item-url' => $GLOBALS['maps_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Marketplace Preview <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
+			'menu-item-title' =>  __('Marketplace Preview <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
 			'menu-item-url' => $GLOBALS['marketplace_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Performance Dashboard <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
+			'menu-item-title' =>  __('Performance Dashboard <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
 			'menu-item-url' => $GLOBALS['dashboard_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Search Catalog <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
+			'menu-item-title' =>  __('Search Catalog <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
 			'menu-item-url' => $GLOBALS['ckan_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',
 			'menu-item-target'=> '_blank',
 			));
 		wp_update_nav_menu_item($menu_id, 0, array(
-			'menu-item-title' =>  __('Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb'),
+			'menu-item-title' =>  __('Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
 			'menu-item-url' => $GLOBALS['ckan_mp_url'],
 			'menu-item-status' => 'publish',
 			'menu-item-type' => 'custom',

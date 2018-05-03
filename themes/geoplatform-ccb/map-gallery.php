@@ -127,14 +127,12 @@
                               break;
                               }
                             ?>
-                            <a class="embed-responsive embed-responsive-16by9" title="<?php echo $label; ?>" href=" <?php echo $href;?>" target="_blank">
+                            <a class="embed-responsive embed-responsive-16by9" title="<?php echo esc_html($label); ?>" href=" <?php echo esc_url($href);?>" target="_blank">
                         <?php } ?>
-
-
-                        <img class="embed-responsive-item" src="<?php echo $thumbnail; ?>" alt=""></a>
+                        <img class="embed-responsive-item" src="<?php echo esc_url($thumbnail); ?>" alt=""></a>
                         </div> <!--media-->
                           <div class="gp-ui-card__body" style="height:55px;">
-                              <h4 class="text--primary"><?php echo $label; ?></h4>
+                              <h4 class="text--primary"><?php echo esc_html($label); ?></h4>
                           </div>
                     </div> <!--gp-ui-card gp-ui-card-minimal-->
                 </div> <!-- class="col-md-3 col-sm-3 col-xs-6" -->
