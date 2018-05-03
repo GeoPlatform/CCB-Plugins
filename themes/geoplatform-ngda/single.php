@@ -25,7 +25,7 @@ get_template_part( 'single-banner', get_post_format() );
       <?php 
       //Paginate posts if the <!--nextpage--> <!--tag is added to the content
       wp_link_pages( array(
-      	'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'ngda-2017' ) . '</span>',
+      	'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'geoplatform-ngda' ) . '</span>',
       	'after'       => '</div>',
       	'link_before' => '<span>',
       	'link_after'  => '</span>',

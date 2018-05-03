@@ -1,24 +1,16 @@
 <div class="apps-and-services section--linked">
-
-      <h4 class="heading text-centered">
-          <div class="line"></div>
-          <div class="line-arrow"></div>
-          <div class="title darkened">
-          Community Map Gallery
-          </div>
-      </h4>
-      <div class="container-fluid">
-
-
-      <div class="row">
-
-
+  <h4 class="heading text-centered">
+      <div class="line"></div>
+      <div class="line-arrow"></div>
+      <div class="title darkened">
+      Community Map Gallery
+      </div>
+  </h4>
+  <div class="container-fluid">
+    <div class="row">
       <div class="col-md-12 col-sm-12">
-
-          <div class="text-center">
-<!--                 <h2 class="card-title">US Borders Map Gallery</h2> -->
-                <div class="row">
-
+        <div class="text-center">
+          <div class="row">
         <?php
         $customizerLink = get_theme_mod( 'Map_Gallery_link_box' );
 
@@ -118,7 +110,7 @@
                         <div class="media">
 
                         <?php  if($href){ ?>
-                            <a class="embed-responsive embed-responsive-16by9" title="<?php echo $label; ?>" href=" <?php echo $href;?>" target="_blank">
+                            <a class="embed-responsive embed-responsive-16by9" title="<?php echo esc_html($label); ?>" href="<?php echo esc_url($href);?>" target="_blank">
                         <?php } else{
                           switch ($gallery_link_env) {
                             case 'sit':
@@ -135,14 +127,12 @@
                               break;
                               }
                             ?>
-                            <a class="embed-responsive embed-responsive-16by9" title="<?php echo $label; ?>" href=" <?php echo $href;?>" target="_blank">
+                            <a class="embed-responsive embed-responsive-16by9" title="<?php echo esc_html($label); ?>" href=" <?php echo esc_url($href);?>" target="_blank">
                         <?php } ?>
-
-
-                        <img class="embed-responsive-item" src="<?php echo $thumbnail; ?>" alt=""></a>
+                        <img class="embed-responsive-item" src="<?php echo esc_url($thumbnail); ?>" alt=""></a>
                         </div> <!--media-->
                           <div class="gp-ui-card__body" style="height:55px;">
-                              <h4 class="text--primary"><?php echo $label; ?></h4>
+                              <h4 class="text--primary"><?php echo esc_html($label); ?></h4>
                           </div>
                     </div> <!--gp-ui-card gp-ui-card-minimal-->
                 </div> <!-- class="col-md-3 col-sm-3 col-xs-6" -->

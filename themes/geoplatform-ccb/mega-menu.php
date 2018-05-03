@@ -25,18 +25,18 @@
 
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                      <h5><?php echo wp_get_nav_menu_name('header-left') ? wp_get_nav_menu_name('header-left') : 'Example Menu Title';?></h5>
+                      <h5><?php echo esc_html(wp_get_nav_menu_name('header-left')) ? esc_html(wp_get_nav_menu_name('header-left')) : 'Example Menu Title';?></h5>
                         <?php wp_nav_menu( array( 'theme_location' => 'header-left' ) ); ?>
 
                     <br class="hidden-xs">
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                  <h5><?php echo wp_get_nav_menu_name('header-center');?></h5>
+                  <h5><?php echo esc_html(wp_get_nav_menu_name('header-center')) ? esc_html(wp_get_nav_menu_name('header-center')) : 'Example Menu Title';?></h5>
                   <?php wp_nav_menu( array( 'theme_location' => 'header-center' ) ); ?>
 
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <h5><?php echo wp_get_nav_menu_name('header-right-col1') ? wp_get_nav_menu_name('header-right-col1') : 'Example Menu Title';?></h5>
+                    <h5><?php echo esc_html(wp_get_nav_menu_name('header-right-col1')) ? esc_html(wp_get_nav_menu_name('header-right-col1')) : 'Example Menu Title';?></h5>
 
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12">
