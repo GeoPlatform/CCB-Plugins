@@ -62,11 +62,11 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
                             <!--if(!authenticated) -->
                             <?php if (!is_user_logged_in()){?>
-                              <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>">
+                              <a href="<?php echo esc_url(wp_login_url( get_option('siteurl') ) ); ?>">
                                   <button style="color:white;" type="button" class="btn btn-link" onclick="login">Sign In</button>
                                 </a>
                           <?php  } else {?>
-                            <a href="<?php echo wp_logout_url( home_url() ); ?>">
+                            <a href="<?php echo esc_url(wp_logout_url( home_url() ) ); ?>">
                                 <button style="color:white;" type="button" class="btn btn-link">Sign out</button>
                               </a>
                             <?php } ?>
@@ -77,13 +77,13 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
                 </ul>
                 <h4 class="brand">
-                  <a href="<?php echo $GLOBALS['wpp_url']; ?>" title="Go to the Geoplatform Home Page">
+                  <a href="<?php echo esc_url($GLOBALS['wpp_url']); ?>" title="Go to the Geoplatform Home Page">
                       <span class="icon-gp"></span>
                       GeoPlatform
                   </a>
                   <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
-                  <a href="/" title="Go to the <?php echo get_bloginfo( 'name' ); ?> Home Page">
-                  <?php echo get_bloginfo( 'name' ); ?>
+                  <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
+                  <?php echo esc_html(get_bloginfo( 'name' )); ?>
                 </a>
                 </h4>
             </div><!--#col-md-12-->
