@@ -338,7 +338,7 @@ function geo_customize_register( $wp_customize )
 					 'type' => 'text',
 					 'priority' => 30,
 					 'input_attrs' => array(
-						'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ccb' ),
+						'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ngda' ),
 					),
 				 ) );
 
@@ -353,7 +353,7 @@ function geo_customize_register( $wp_customize )
 					'type' => 'URL',
 					'priority' => 40,
 					'input_attrs' => array(
-					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
+					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ngda' ),
 				 ),
 				) );
 

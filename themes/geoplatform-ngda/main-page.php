@@ -45,13 +45,13 @@
                         ),
                         url(%4$s);" href="%1$s" alt="%2$s" class="media embed-responsive embed-responsive-16by9" id="module"><h3 id="mid">%3$s</h3></a>',
                       esc_url( get_category_link( $category->term_id ) ),
-                      esc_attr( sprintf( __( 'View all posts in %s', 'geoplatform-ccb' ), $category->name ) ),
+                      esc_attr( sprintf( __( 'View all posts in %s', 'geoplatform-ngda' ), $category->name ) ),
                       esc_html( $category->name ),
                       esc_url($category_image)
                   );?>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
                   <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
-                    <?php echo wp_sprintf( esc_html__( ' %s', 'geoplatform-ccb' ), $category_link ); ?>
+                    <?php echo wp_sprintf( esc_html__( ' %s', 'geoplatform-ngda' ), $category_link ); ?>
                      <br style="clear: both;">
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
