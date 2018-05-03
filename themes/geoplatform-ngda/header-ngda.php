@@ -10,7 +10,6 @@
     <meta name="author" content="">
 
     <!--http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons-->
-    <!-- <link rel="stylesheet" type="text/css" media="all" href="<?php //bloginfo( 'stylesheet_url' ); ?>" /> -->
     <?php
     $font_choice = get_theme_mod( 'font_choice' );
     if( $font_choice != '' ) {
@@ -59,7 +58,6 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                     <li class="hidden-xs">
                         <div class="btn-group">
                           <h5 class="brand">
-                            <!-- <% if(!authenticated) { %> -->
                             <?php if (!is_user_logged_in()){?>
                               <a href="<?php echo esc_url(wp_login_url( get_option('siteurl') ) ); ?>">
                                   <button style="color:white;" type="button" class="btn btn-link" onclick="login">Sign In</button>
