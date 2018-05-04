@@ -2,8 +2,17 @@
 php_value max_input_vars 3000
 
 # BEGIN WordPress
-RewriteEngine On
-# Not sure the RewriteBase is needed
-RewriteBase /%%sitename%%/
-RewriteRule (.*)%%sitename%%\/?(.*) $1/$2 [L]
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Rewrite all base URLS coming in
+  RewriteRule (.*)%%sitename%%\/?(.*) $1/$2 [L]
+
+  RewriteBase /%%sitename%%/
+  RewriteRule ^index\.php$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /%%sitename%%/index.php [L]
+
+</IfModule>
 # END WordPress
