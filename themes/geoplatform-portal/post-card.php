@@ -2,14 +2,14 @@
 <div class="gp-ui-card gp-ui-card--md gp-ui-card">
   <?php if ( has_post_thumbnail() ) {?>
     <a class="media embed-responsive embed-responsive-16by9" href="<?php the_permalink(); ?>"
-        title="Register for the Geospatial Platform Workshop">
+        title="<?php the_title();?>">
 
-        <img class="embed-responsive-item" src="<?php the_post_thumbnail_url(); ?>" >
+        <img class="embed-responsive-item" src="<?php	the_post_thumbnail_url(); ?>" >
 
     </a>
     <div class="gp-ui-card__body">
         <div class="text--primary"><?php the_title(); ?></div>
-        <div class="text--secondary"><?php echo get_the_date(); ?></div>
+        <div class="text--secondary"></div>
         <div class="text--supporting">
             <?php the_excerpt(); ?>
         </div>
@@ -24,7 +24,7 @@
     <?php } else {?>
       <div class="gp-ui-card__body">
           <div class="text--primary"><?php the_title(); ?></div>
-          <div class="text--secondary"><?php echo get_the_date(); ?></div>
+          <div class="text--secondary"></div>
           <div class="text--supporting">
               <?php the_excerpt(); ?>
           </div>

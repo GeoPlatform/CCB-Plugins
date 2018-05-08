@@ -12,7 +12,7 @@
             <div class="col-md-6">
                 <h3>
                     <!--<img src="/img/GeoPlatform_logo_sm.png" alt="GeoPlatform Logo" style="height: 1.5rem; vertical-align: bottom;">-->
-                    <a href="<?php echo site_url(); ?>" target="_blank" title="Go to the Geoplatform Home Page">
+                    <a href="<?php echo esc_url("https://www.geoplatform.gov"); ?>" target="_blank" title="Go to the Geoplatform Home Page">
                         <span class="icon-gp"></span>
                         GeoPlatform
                     </a>
@@ -38,55 +38,63 @@
 
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
-              <!--Featured location-->
                 <h4 style="color:white">Featured</h4>
                     <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
 
-
+                    <!-- <li><a href="<?php echo esc_url("https://www.geoplatform.gov/preview"); ?>" target="_blank">Release Overview</a></li>
+                    <li><a href="<?php echo esc_url("https://www.geoplatform.gov/collaboration"); ?>" target="_blank">Map Collaboration</a></li>
+                    <li><a href="<?php echo esc_url("https://www.geoplatform.gov/esri"); ?>" target="_blank">ArcGIS Online Support</a></li>
+                    <li><a href="<?php echo esc_url("https://www.geoplatform.gov/hosting"); ?>" target="_blank">Cloud Hosting Services</a></li> -->
+                   
                 <br class="hidden-xs">
                 <h4 style="color:white">Get Involved</h4>
                 <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
                 <ul>
-
+                    <!-- <li><a href="<?php echo esc_url("https://www.geoplatform.gov/social"); ?>" target="_blank">The Social Experience</a></li>
+                    <li><a href="<?php echo esc_url("https://www.geoplatform.gov/share"); ?>" target="_blank">Share Resources</a></li> -->
+                    <li>
+                        <a href="<?php echo esc_url("https://cms.geoplatform.gov/communities-agencies"); ?>" target="_blank">
+                            Communities
+                            <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                        </a>
+                    </li>
+                    <!-- <li><a href="<?php echo esc_url("https://geoplatform.gov/data-acquisition"); ?>" target="_blank">Data Acquisition Services</a></li> -->
+                </ul>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <h4 style="color:white">Explore Data</h4>
                 <ul>
-                    <li><a href="<?php echo $GLOBALS['oe_url']; ?>" target="_blank">Object Editor
-                      <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                      </a>
-                    </li>
                     <li>
                         <a href="<?php echo esc_url("https://geoplatform.maps.arcgis.com/home/"); ?>" target="_blank">
                             GeoPlatform ArcGIS Organization<sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo $GLOBALS['ckan_url']; ?>" target="_blank">
+                        <a href="<?php echo esc_url("https://ckan.geoplatform.gov/"); ?>" target="_blank">
                             Search Catalog
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo $GLOBALS['ckan_mp_url']; ?>" target="_blank">Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
-                    <li><a href="<?php echo $GLOBALS['cms_url']; ?>" target="_blank">Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
+                        <a href="<?php echo esc_url("https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace"); ?>" target="_blank">Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
+                    <li><a href="<?php echo esc_url("https://cms.geoplatform.gov/resources"); ?>" target="_blank">Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
                 </ul>
                 <br class="hidden-xs">
                 <h4 style="color:white">Apps &amp; Services</h4>
                 <ul>
-                  <li><a href="<?php echo $GLOBALS['viewer_url']; ?>" target="_blank">Map Viewer
+                  <li><a href="<?php echo esc_url("https://viewer.geoplatform.gov/"); ?>" target="_blank">Map Viewer
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>
-                  <li><a href="<?php echo $GLOBALS['maps_url']; ?>" target="_blank">Map Manager
+                  <li><a href="<?php echo esc_url("https://maps.geoplatform.gov/#/maps"); ?>" target="_blank">Map Manager
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>
-                  <li><a href="<?php echo $GLOBALS['marketplace_url']; ?>" target="_blank">Marketplace Preview
+                  <li><a href="<?php echo esc_url("https://marketplace.geoplatform.gov/#/"); ?>" target="_blank">Marketplace Preview
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>
-                  <li><a href="<?php echo $GLOBALS['dashboard_url']; ?>" target="_blank">Performance Dashboard
+                  <li><a href="<?php echo esc_url("https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green"); ?>" target="_blank">Performance Dashboard
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>
@@ -106,14 +114,37 @@
                       <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutL' ) ); ?>
 
 
+                        <!-- <ul>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/about"); ?>" target="_blank">About GeoPlatform</a></li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/help"); ?>" target="_blank">Help</a></li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/faq"); ?>" target="_blank">FAQ </a></li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/glossary"); ?>" target="_blank">Glossary of Terms </a></li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/contact"); ?>" target="_blank">Contact Us</a></li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/style"); ?>" target="_blank">Style Guide</a></li>
+                        </ul> -->
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutR' ) ); ?>
-
+                        <!-- <ul>
+                            <li>
+                                <a href="https://www.usgs.gov/laws/policies_notices.html" target="_blank">
+                                    Policies &amp; Notices
+                                    <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                                </a>
+                            </li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/data-policy"); ?>" target="_blank">Data Policy</a></li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/privacy"); ?>" target="_blank">Privacy Policy</a></li>
+                            <li><a href="<?php echo esc_url("https://www.geoplatform.gov/accessibility"); ?>" target="_blank">Accessibility</a></li>
+                        </ul> -->
                     </div>
                 </div>
                 <br class="hidden-xs">
-
+                <!-- <h4>Current Site Pages</h4> -->
+                <!-- <ul>
+                  <li>
+                    <?php wp_list_pages( '&title_li=' ); ?>
+                  </li>
+                </ul> -->
 
             </div>
 

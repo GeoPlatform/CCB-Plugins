@@ -1,6 +1,5 @@
-<!--Uncomment below to add file to theme. Make sure to comment back out once it's created-->
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html>
 <head>
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,8 +16,9 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+	<link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
+
     <!--http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons-->
-    <link rel="stylesheet" type="text/css" media="all" href="<?php bloginfo( 'stylesheet_url' ); ?>" />
     <?php
     $font_choice = get_theme_mod( 'font_choice' );
     if( $font_choice != '' ) {
@@ -37,17 +37,18 @@
         }
     }
 ?>
-<?php
-//enabling enhanced comment display
-//per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
-if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
-    <?php wp_head();?>
 
+    <?php wp_head();?>
   </head>
-<body <?php body_class(); ?>>
+<body>
+
+  <!--  <% heading= '' %> -->
 
     <!-- code from partials/header.ejs -->
-    <header class="t-transparent">
+      <header class="t-transparent">
+    <?php if ( is_page_template('page-templates/page_style-guide.php')) { ?>
+
+      <?php } else{?>
 
     <div class="container-fluid">
         <div class="row">
@@ -73,34 +74,36 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                         <div class="btn-account btn-group">
 
                             <!-- <% if(!authenticated) { %> -->
-                            <?php if (!is_user_logged_in()){?>
+                            <!-- <?php if (!is_user_logged_in()){?>
                               <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>">
-                                  <button style="color:white;" type="button" class="btn btn-link" onclick="login">Sign In</button>
+                                  <button style="color:white;" type="button" class="btn btn-link">Sign In</button>
                                 </a>
-                          <?php  } else {?>
+                          <?php  } else {
+	                        $current_user = wp_get_current_user(); ?>
                             <a href="<?php echo wp_logout_url( home_url() ); ?>">
                                 <button style="color:white;" type="button" class="btn btn-link">Sign out</button>
                               </a>
-                            <?php } ?>
-
+                            <?php } ?> -->
+                            <a href="<?php echo esc_url($GLOBALS['accounts_url']);?>">Account</a>
                         </div>
-
                     </li>
-
                 </ul>
                 <h4 class="brand">
-                  <a href="<?php echo $GLOBALS['wpp_url']; ?>" title="Go to the Geoplatform Home Page">
+                  <a href="/" title="Go to the Geoplatform Home Page">
                       <span class="icon-gp"></span>
-                      GeoPlatform
+                      GeoPlatform <?php //if (is_user_logged_in()){ echo $current_user->display_name; }?>
+                    </li>
                   </a>
                   <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
+<!--
                   <a href="/" title="Go to the <?php echo get_bloginfo( 'name' ); ?> Home Page">
-                  <?php echo get_bloginfo( 'name' ); ?>
+                  <?php //echo get_bloginfo( 'name' ); ?>
+-->
                 </a>
                 </h4>
 
             </div>
         </div>
-
+  <?php } ?>
 
 </header>

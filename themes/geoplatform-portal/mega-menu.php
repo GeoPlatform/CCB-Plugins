@@ -17,11 +17,28 @@
                         </div>
                         <div class="media-body">
                             <p><em>Create a new account or log in using an existing account.</em></p>
-                            <a class="" href="<?php echo esc_url($GLOBALS['idp_url'] . "/modifyuser.html"); ?>" target="_blank">Register</a> a new account<br/>
-                            <a class="" onClick="login()">Sign In</a> to an existing account
+                            <a class="" href="<?php echo esc_url($GLOBALS['accounts_url'] . "/register"); ?>" target="_blank">Register</a> a new account<br/>
+                            <a class="" href="<?php echo esc_url($GLOBALS['accounts_url']. "/login");?>">Sign In</a> to an existing account
                         </div>
                     </div>
-            
+
+                <!-- <% if(authenticated) { %>
+                    <div class="media">
+                      <div class="media-left">
+                        <div class="media-object">
+                          <span class="glyphicon glyphicon-user glyphicon-xlg"></span>
+                        </div>
+                      </div>
+                      <div class="media-body">
+                        <div class="media-heading"><%= user.name %></div>
+                        <div><small><em><%= user.username %></em></small></div>
+                        <div><small><%= user.email %></small></div>
+                        <div><small><%= user.org %></small></div>
+                      </div>
+                    </div>
+                    <a class="btn btn-sm btn-accent pull-right" onClick="logout()">Sign Out</a>
+                    <a class="btn btn-sm btn-default" href="<?php echo esc_url("https://".get_envPrefix()."idp.".get_baseEnvUrl()."/modifyuser.html"); ?>" target="_blank">Edit</a>
+                <% } %> -->
             </div>
 
 
@@ -33,13 +50,17 @@
 
 
                     <br class="hidden-xs">
-                    <!-- <h5>Get Involved</h5>
-                    <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?> -->
+                    <h5>Get Involved</h5>
+                    <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
 
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <h5>Explore Data</h5>
                     <ul>
+                      <li><a href="<?php echo $GLOBALS['oe_url']; ?>" target="_blank">Object Editor
+                          <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                        </li>
                         <li>
                             <a href="<?php echo esc_url("https://geoplatform.maps.arcgis.com/home/"); ?>" target="_blank">
                                 GeoPlatform ArcGIS Organization<sup><span class="glyphicon glyphicon-new-window"></span></sup>
@@ -98,6 +119,7 @@
                         </div>
                     </div>
                     <br class="hidden-xs">
+
                     <!-- <h5>Themes</h5>
 			<?php wp_nav_menu( array( 'theme_location' => 'headfoot-themes','fallback_cb' => '') ); ?> -->
 
