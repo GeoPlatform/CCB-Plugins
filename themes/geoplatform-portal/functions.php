@@ -62,7 +62,7 @@ $accounts_url = "https://accounts.geoplatform.gov";
 //https://www.taniarascia.com/wordpress-from-scratch-part-two/
 function startwordpress_scripts() {
 
-	wp_enqueue_style( 'blog', get_template_directory_uri() . '/css/Geomain.css' );
+	wp_enqueue_style( 'blog', get_template_directory_uri() . '/css/Geomain_style.css' );
 	wp_enqueue_style( 'bootstrap-css','//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
 	wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery.min.js', array('jquery'), '2.1.4', true );
 	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '3.3.7', true );
