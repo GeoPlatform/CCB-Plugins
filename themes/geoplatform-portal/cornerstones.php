@@ -14,7 +14,7 @@
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-4 col-sm-push-4">
-                        <img alt="Communicate and Contribute" src="/wp-content/uploads/2017/01/social_md.jpeg" class="img--prominent">
+                        <img alt="Communicate and Contribute" src="<?php echo esc_url("" . get_template_directory_uri() . "/img/social_md.jpeg"); ?>" class="img--prominent">
                     </div><!--#col-xs-12 col-sm-4 col-sm-push-4-->
                     <div class="col-xs-12 col-sm-4 col-sm-pull-4">
                         <h5><a href="<?php echo esc_url($GLOBALS['comm_url']); ?>" target="_blank">GeoPlatform Communities</a></h5>
@@ -39,7 +39,7 @@
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-4 col-sm-push-4">
-                        <img alt="Search" src="/wp-content/uploads/2017/01/search_md.jpeg" class="img--prominent">
+                        <img alt="Search" src="<?php echo esc_url("" . get_template_directory_uri() . "/img/search_md.jpeg"); ?>" class="img--prominent">
                     </div><!--#col-xs-12 col-sm-4 col-sm-push-4-->
 
                     <div class="col-xs-12 col-sm-4 col-sm-pull-4">
