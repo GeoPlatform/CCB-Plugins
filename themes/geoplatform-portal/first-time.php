@@ -16,8 +16,8 @@ if($current_user->ID == 0) {
                 <h3>First Time Here?</h3>
 
                 <picture class="pull-right inline-figure">
-                    <source srcset="/wp-content/uploads/2017/03/register_sm.jpeg" media="(min-width: 768px)">
-                    <img alt="Register for a GeoPlatform Account" src="/wp-content/uploads/2017/03/register_sm.jpeg">
+                    <source srcset="<?php echo esc_url("" . get_template_directory_uri() . "/img/register_sm.jpeg"); ?>" media="(min-width: 768px)">
+                    <img alt="Register for a GeoPlatform Account" src="<?php echo esc_url("" . get_template_directory_uri() . "/img/register_sm.jpeg"); ?>">
                 </picture>
 
                 <p>Sign up to access thousands of datasets uploaded by others and contribute your own data to the world!
