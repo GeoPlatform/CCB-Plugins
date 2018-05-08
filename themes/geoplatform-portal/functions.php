@@ -1,43 +1,4 @@
 <?php
-//Set the proper environment
-$env = 'prd';
-$dev = 'dev';
-$stg = 'stg';
-
-//Adding Global Variables for URL endpoints in each environment
-if($dev == $env) {
-//Begin development Block
-$maps_url = "https://sit-maps.geoplatform.us";
-$viewer_url = "https://sit-viewer.geoplatform.us";
-$marketplace_url = "https://sit-marketplace.geoplatform.us";
-$dashboard_url = "https://sit-dashboard.geoplatform.us/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
-$wpp_url = "https://sit.geoplatform.us";
-$ual_url = "https://sit-ual.geoplatform.us";
-$ckan_mp_url = "https://sit-ckan.geoplatform.us/?progress=planned&h=Marketplace";
-$ckan_url = "https://sit-ckan.geoplatform.us/";
-$cms_url = "https://sit-cms.geoplatform.us/resources";
-$idp_url = "https://sitidp.geoplatform.us";
-$oe_url = "https://sit-oe.geoplatform.us";
-$comm_url = "https://sit-cms.geoplatform.us/communities-agencies";
-$accounts_url = "https://sit-accounts.geoplatform.us";
-
-}
-elseif($stg == $env) {
-$maps_url = "https://stg-maps.geoplatform.gov";
-$viewer_url = "https://stg-viewer.geoplatform.gov";
-$marketplace_url = "https://stg-marketplace.geoplatform.gov";
-$dashboard_url = "https://stg-dashboard.geoplatform.gov/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
-$wpp_url = "https://stg.geoplatform.gov";
-$ual_url = "https://stg-ual.geoplatform.gov";
-$ckan_mp_url = "https://stg-ckan.geoplatform.gov/?progress=planned&h=Marketplace";
-$ckan_url = "https://stg-ckan.geoplatform.gov/";
-$cms_url = "https://stg-cms.geoplatform.gov/resources";
-$idp_url = "https://stg-idp.geoplatform.gov";
-$oe_url = "https://stg-oe.geoplatform.gov";
-$comm_url = "https://stg-cms.geoplatform.gov/communities-agencies";
-$accounts_url = "https://stg-accounts.geoplatform.gov";
-}
-else {
 $maps_url = "https://maps.geoplatform.gov";
 $viewer_url = "https://viewer.geoplatform.gov";
 $marketplace_url = "https://marketplace.geoplatform.gov";
@@ -46,15 +7,15 @@ $wpp_url = "https://geoplatform.gov";
 $ual_url = "https://ual.geoplatform.gov";
 $ckan_mp_url = "https://ckan.geoplatform.gov/?progress=planned&h=Marketplace";
 $ckan_url = "https://ckan.geoplatform.gov/";
-$cms_url = "https://cms.geoplatform.gov/resources";
+$cms_url = "https://www.geoplatform.gov/geoplatform-resources/";
 $idp_url = "https://idp.geoplatform.gov";
 $oe_url = "https://oe.geoplatform.gov";
-$comm_url = "https://cms.geoplatform.gov/communities-agencies";
+$comm_url = "https://www.geoplatform.gov/communities/ ";
 $accounts_url = "https://accounts.geoplatform.gov";
-}
+
 
 //Disable admin bar (un-comment for prod sites)
-//add_filter('show_admin_bar', '__return_false');
+add_filter('show_admin_bar', '__return_false');
 
 //-------------------------------
 // Add scripts and stylesheets

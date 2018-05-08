@@ -56,7 +56,13 @@
                     <div class="col-xs-12 col-sm-4">
                         <h5><a href="<?php echo esc_url($GLOBALS['ckan_mp_url']); ?>" target="_blank">Explore the Marketplace</a></h5>
                         <p>
-                            In the Marketplace you will find a listing of elevation and bathymetric datasets that are planned for acquisition by one or more of the FGDC member agencies. You can use this listing to determine whether a potential partner is already trying to acquire data that you have an interest in.  More geospatial data types will be added in the near future.
+                          The Marketplace facilitates collaboration on the
+                          planned acquisition and production of
+                          geospatial data, such as elevation and
+                          bathymetric datasets. You can use this filtered
+                          catalog search to determine whether a potential
+                          partner is already planning to invest in data for
+                          which you have a requirement.
                         </p>
                     </div><!--#col-xs-12 col-sm-4-->
                 </div><!--#row-->
