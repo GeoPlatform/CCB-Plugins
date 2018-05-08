@@ -22,23 +22,6 @@
                         </div>
                     </div>
 
-                <!-- <% if(authenticated) { %>
-                    <div class="media">
-                      <div class="media-left">
-                        <div class="media-object">
-                          <span class="glyphicon glyphicon-user glyphicon-xlg"></span>
-                        </div>
-                      </div>
-                      <div class="media-body">
-                        <div class="media-heading"><%= user.name %></div>
-                        <div><small><em><%= user.username %></em></small></div>
-                        <div><small><%= user.email %></small></div>
-                        <div><small><%= user.org %></small></div>
-                      </div>
-                    </div>
-                    <a class="btn btn-sm btn-accent pull-right" onClick="logout()">Sign Out</a>
-                    <a class="btn btn-sm btn-default" href="<?php echo esc_url("https://".get_envPrefix()."idp.".get_baseEnvUrl()."/modifyuser.html"); ?>" target="_blank">Edit</a>
-                <% } %> -->
             </div>
 
 

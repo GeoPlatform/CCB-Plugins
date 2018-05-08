@@ -141,12 +141,3 @@
 <?php wp_footer();?>
 </body>
 </html>
-
-<!-- code for authentication
-
-<% if(NODE_ENV === "dev") { %>
-<script src="//localhost:35729/livereload.js"></script>
-<% } %>
-
-<% if(error && error.message && error.message.indexOf("expire")>0) { %>
-    <!--<script>alert("Your session has expired. Please sign in again.");</script>-->
