@@ -130,7 +130,7 @@
             </div>
             <div class="col-md-4 col-sm-5 col-xs-12">
                 <a href="<?php echo esc_url("http://www.fgdc.gov"); ?>" target="_blank">
-                    <img src="<?php echo esc_url("/wp-content/uploads/2017/01/fgdc_logo_dkbg.png"); ?>" target="_blank" alt="FGDC Logo">
+                    <img src="<?php echo esc_url("" . get_template_directory_uri() . "/img/fgdc_logo_dkbg.png"); ?>" target="_blank" alt="FGDC Logo">
                 </a>
             </div>
         </div>
