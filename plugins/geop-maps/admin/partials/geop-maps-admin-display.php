@@ -140,7 +140,7 @@
       </div>
       <legend class="screen-reader-text"><span><?php _e('Please input a map ID', $this->plugin_name); ?></span></legend>
       <p>Please input a map ID:&nbsp
-        <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty($ual_map_id)) echo $ual_map_id; ?>"/>
+        <input type="text" class="regular-text" id="map_id_in" name="<?php echo $this->plugin_name; ?>[ual_map_id]" value="<?php if(!empty(esc_attr($ual_map_id))) echo esc_attr($ual_map_id); ?>"/>
         &nbsp&nbsp&nbsp&nbspDesired height:
         <input type="text" class="regular-text" id="map_height" name="<?php echo $this->plugin_name; ?>[ual_height]" style="width:5em;"/>
         &nbsp&nbsp&nbsp&nbspDesired width:
@@ -185,13 +185,13 @@
               $geopmap_agolOut = "AGOL Web Map";
             ?>
             <tr>
-          		<td class="row-title"><label for="tablecell"><?php echo $geopmap_entry->map_id; ?></label></td>
+          		<td class="row-title"><label for="tablecell"><?php echo sanitize_text_field($geopmap_entry->map_id); ?></label></td>
               <td><?php echo $geopmap_agolOut; ?></td>
-          		<td><?php echo $geopmap_entry->map_name; ?></td>
-              <td><?php echo $geopmap_entry->map_description; ?></td>
-              <td><code><?php echo $geopmap_entry->map_shortcode; ?></code></td>
+          		<td><?php echo sanitize_text_field($geopmap_entry->map_name); ?></td>
+              <td><?php echo sanitize_text_field($geopmap_entry->map_description); ?></td>
+              <td><code><?php echo sanitize_text_field($geopmap_entry->map_shortcode); ?></code></td>
               <td>
-                <a class="button-secondary" href="<?php echo $geopmap_entry->map_url ?>" title="<?php echo $geopmap_entry->map_url?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
+                <a class="button-secondary" href="<?php echo $geopmap_entry->map_url ?>" title="<?php echo esc_url($geopmap_entry->map_url) ?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
                 <button class="geopmap_indiv_remove_action button-secondary" value="<?php echo $geopmap_entry->map_id; ?>">Remove Map</button>
               </td>
               <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $geopmap_entry->map_thumbnail; ?>" width="200px" height="112px" alt="The thumbnail for this map failed to load." onerror="geopmap_thumb_error(this);"/></a></td>
