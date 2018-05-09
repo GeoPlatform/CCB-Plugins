@@ -63,7 +63,7 @@
                     </li>
                     <li>
                         <a href="<?php echo $GLOBALS['ckan_url']; ?>" target="_blank">
-                            Search Catalog
+                            Search Data.gov
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>

@@ -45,7 +45,7 @@
                     <div class="col-xs-12 col-sm-4 col-sm-pull-4">
                         <h5>
                             <a href="<?php echo esc_url($GLOBALS['ckan_url']); ?>" target="_blank">
-                                Search the Catalog
+                                Search Data.gov
                             </a>
                         </h5>
                         <p>
