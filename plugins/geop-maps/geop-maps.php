@@ -183,15 +183,15 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  		 of the visible map and title card, and contains those elements. Its values
 		 are set initially to those of width as passed by array. The contents of the
 	 	 entire div also act as a hyperlink, set here-->
-	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
-			<a title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geopmap_landing_page ?>" target="_blank" style="z-index:1;">
+	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
+			<a title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" style="z-index:1;">
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
 				<div class="geop-display-header" style="font-size:<?php echo $geopmap_heading_title_size ?>;">
 					<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 						<tr class="geop-no-border">
 							<th class="geop-no-border geop-no-cushion">
-								<span class="geop-white-item geop-display-header-text geop-no-transform"><?php echo $geopmap_shortcode_array['name']; ?></span>
+								<span class="geop-white-item geop-display-header-text geop-no-transform"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
 							</th>
 							<th class="geop-no-border geop-no-cushion">
 								<span class="<?php echo $geopmap_info_icon ?> geop-white-item geop-header-controls"></span>
@@ -199,12 +199,12 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 						</tr>
 					</table>
 				</div>
-				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo $geopmap_landing_page ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo $geopmap_shortcode_array['id']; ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;" onerror="geopmap_thumb_error(this);"/>
+				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
 			</a>
 
  <!-- Error report container with heading, an empty output region, and a button
 	 		to close it disguised as text. -->
-			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
+			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
 				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
 		 		<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
 		 		<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
@@ -220,7 +220,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		var geopmap_error_report = "<?php echo $geopmap_error_text ?>";
 
 		// Verifies if the thumbnail exists and adds to the error report if not.
-		jQuery.get("<?php echo $geopmap_maps_url ?>/map.html?id=<?php echo $geopmap_shortcode_array['id']; ?>").fail(function(err){
+		jQuery.get("<?php echo $geopmap_maps_url ?>/map.html?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>").fail(function(err){
 			geopmap_error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
 		})
 
@@ -229,12 +229,12 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// its container, this check sets the width instead to 100% of the master
 		// div. Height is also checked for no entry, and set to 56% of the master
 		// div's width.
-		if (<?php echo $geopmap_shortcode_array['width']; ?> == 0 || <?php echo $geopmap_shortcode_array['width']; ?> > widthGrab){
+		if (<?php echo esc_attr($geopmap_shortcode_array['width']); ?> == 0 || <?php echo esc_attr($geopmap_shortcode_array['width']); ?> > widthGrab){
 			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('100%');
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').width('100%');
 			jQuery('#image_<?php echo $geopmap_divrand; ?>').width('100%');
 		}
-		if (<?php echo $geopmap_shortcode_array['height']; ?> == 0)
+		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0)
 			jQuery('#image_<?php echo $geopmap_divrand; ?>').height(jQuery('#image_<?php echo $geopmap_divrand; ?>').width() * 0.56);
 
 		// Error report handler. If there is content in error_report, that string
@@ -256,7 +256,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	  // Viewer site.
 	  function geopmap_thumb_error(geopmap_image_in){
 	    geopmap_image_in.onerror = "";
-	    geopmap_image_in.src = "/wp-content/plugins/geop-maps/includes/img-404.png";
+	    geopmap_image_in.src = "<?php echo plugin_dir_url(__FILE__) ?>includes/img-404.png";
 			geopmap_error_report += "The thumbnail image for this map failed to load or does not exist.<BR>";
 	    return true;
 	  }
@@ -319,8 +319,8 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 					<tr class="geop-no-border">
 						<th class="geop-no-border geop-no-cushion">
-							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
-								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo $geopmap_shortcode_array['name']; ?></span>
+							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo esc_attr($geopmap_shortcode_array['name']); ?>" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
+								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
 							</a>
 						</th>
 						<th class="geop-no-border geop-no-cushion">
@@ -328,7 +328,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 								<button class="geop-text-button" id="layer_menu_button_<?php echo $geopmap_divrand; ?>">
 									<span class="<?php echo $geopmap_list_icon ?> geop-white-item"></span>
 								</button>
-								<a class="geop-hidden-link" title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Editor." href="<?php echo $geopmap_oe_url; ?>/view/<?php echo $geopmap_shortcode_array['id']; ?>" target="_blank" style="box-shadow:none;">
+								<a class="geop-hidden-link" title="Visit full map of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in the Object Editor." href="<?php echo $geopmap_oe_url; ?>/view/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
 									<span class="<?php echo $geopmap_info_icon ?> geop-white-item"></span>
 								</a>
 							</span>
@@ -338,12 +338,12 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			</div>
 
  <!-- The container that will hold the leaflet map. Also defines entree height. -->
-			<div class="geop-container-controls" id="container_<?php echo $geopmap_divrand; ?>" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;"></div>
+			<div class="geop-container-controls" id="container_<?php echo $geopmap_divrand; ?>" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;"></div>
 
  <!-- Layer control container. Provides the base container that holds the layer
  			controls generated later, and populates it with its first box, a simple
 			informational header. -->
-			<div class="geop-layer-menu" id="layerbox_<?php echo $geopmap_divrand; ?>" style="height:<?php echo $geopmap_shortcode_array['height']; ?>px;">
+			<div class="geop-layer-menu" id="layerbox_<?php echo $geopmap_divrand; ?>" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;">
 				<div class="geop-layer-box" id="layer_header_<?php echo $geopmap_divrand; ?>" style="width:100%">
 					<p class="geop-caption-text geop-no-transform" id="layer_head_text_<?php echo $geopmap_divrand; ?>">Layer Menu</p>
 				</div>
@@ -375,9 +375,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// for its container, this check sets the width instead to 100% of the
 		// master div. Height is also checked for no entry, and set to 75% of
 		// the master div's width.
-		if (<?php echo $geopmap_shortcode_array['width']; ?> == 0 || <?php echo $geopmap_shortcode_array['width']; ?> > widthGrab)
+		if (<?php echo esc_attr($geopmap_shortcode_array['width']); ?> == 0 || <?php echo esc_attr($geopmap_shortcode_array['width']); ?> > widthGrab)
 			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('100%');
-		if (<?php echo $geopmap_shortcode_array['height']; ?> == 0){
+		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
 			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
 		}
@@ -394,7 +394,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			var geopmap_lat = 38.8282;
 			var geopmap_lng = -98.5795;
 			var geopmap_zoom = 3;
-			var geopmap_mapCode = "<?php echo $geopmap_shortcode_array['id']; ?>";
+			var geopmap_mapCode = "<?php echo esc_attr($geopmap_shortcode_array['id']); ?>";
 			var geopmap_leafBase = L.map("container_<?php echo $geopmap_divrand;?>", {
 				minZoom: 2,
 				maxZoom: 21,
@@ -446,7 +446,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', html: geopmap_layerStates[i].layer.label});
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo $geopmap_shortcode_array['name']; ?> in the Object Viewer.', style: "color:black; box-shadow:none;", href: '<?php echo $geopmap_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in the Object Viewer.', style: "color:black; box-shadow:none;", href: '<?php echo $geopmap_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
 					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the

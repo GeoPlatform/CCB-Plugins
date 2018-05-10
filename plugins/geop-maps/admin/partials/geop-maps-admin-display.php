@@ -57,6 +57,7 @@
    * out as an alert to the user.
   */
   function geopmap_add_map_ajax(map_id, map_height, map_width){
+
       var map_data = {
           mapID: map_id,
           mapHeight: map_height,
@@ -64,7 +65,7 @@
       };
 
       jQuery.ajax({
-          url: "//" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
+          url: "<?php echo plugin_dir_url(__FILE__); ?>geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -90,7 +91,7 @@
       };
 
       jQuery.ajax({
-          url: "//" + window.location.hostname + "/wp-content/plugins/geop-maps/admin/partials/geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
+          url: "<?php echo plugin_dir_url(__FILE__); ?>geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
           type:"POST",
           dataType:"json",
           data: map_data,
@@ -185,31 +186,19 @@
               $geopmap_agolOut = "AGOL Web Map";
             ?>
             <tr>
-          		<td class="row-title"><label for="tablecell"><?php echo sanitize_text_field($geopmap_entry->map_id); ?></label></td>
+          		<td class="row-title"><label for="tablecell"><?php echo esc_attr($geopmap_entry->map_id); ?></label></td>
               <td><?php echo $geopmap_agolOut; ?></td>
-          		<td><?php echo sanitize_text_field($geopmap_entry->map_name); ?></td>
-              <td><?php echo sanitize_text_field($geopmap_entry->map_description); ?></td>
-              <td><code><?php echo sanitize_text_field($geopmap_entry->map_shortcode); ?></code></td>
+          		<td><?php echo esc_attr($geopmap_entry->map_name); ?></td>
+              <td><?php echo esc_attr($geopmap_entry->map_description); ?></td>
+              <td><code><?php echo esc_attr($geopmap_entry->map_shortcode); ?></code></td>
               <td>
-                <a class="button-secondary" href="<?php echo $geopmap_entry->map_url ?>" title="<?php echo esc_url($geopmap_entry->map_url) ?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
+                <a class="button-secondary" href="<?php echo esc_url($geopmap_entry->map_url) ?>" title="<?php echo esc_url($geopmap_entry->map_url) ?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
                 <button class="geopmap_indiv_remove_action button-secondary" value="<?php echo $geopmap_entry->map_id; ?>">Remove Map</button>
               </td>
-              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $geopmap_entry->map_thumbnail; ?>" width="200px" height="112px" alt="The thumbnail for this map failed to load." onerror="geopmap_thumb_error(this);"/></a></td>
+              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $geopmap_entry->map_thumbnail; ?>" width="200px" height="112px" alt="The thumbnail for this map failed to load."/></a></td>
           	</tr><?php
           }?>
         </table>
     </form>
 </div>
-
-<script>
-  // If the map is valid but for some reason does not possess a thumbnail, this
-  // method is called and will supply a local default borrowed from the sit Map
-  // Viewer site.
-  function geopmap_thumb_error(geop_image_in){
-    geop_image_in.onerror = "";
-    geop_image_in.src = "/wp-content/plugins/geop-maps/includes/img-404.png";
-    return true;
-  }
-</script>
-
 <?php
