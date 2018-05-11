@@ -96,21 +96,29 @@ function geopmap_shortcode_creation($geopmap_atts){
   ob_start();
 
   // GeoPlatform theme detection. Checks whether or not the active theme is a
-	// GeoPlatform theme and if so sets to true. It does this by getting the name
-	// of the current theme and searching for it to contain 'geoplatform'. Right
-	// it's only to switch from Font Awesome icons to glyphicons and adjust some
-	// text sizes. More functionality may be included in the future.
+	// GeoPlatform theme and if so sets to true. Right now it's only used to switch
+	// from Font Awesome icons to glyphicons and adjust some text sizes. More
+	// functionality may be included in the future.
 	$geopmap_theme = 'F';
 	if (strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false)
 		$geopmap_theme = 'T';
 
-	// Empty error text output string.
+	// Creates an empty error text report string, grabs the map_id string after
+	// sanitation, and creates the ual_url string.
 	$geopmap_error_text = '';
+	$geopmap_map_id_in = sanitize_key($geopmap_shortcode_array['id']);
+	$geopmap_ual_url_in = 'https://ual.geoplatform.gov/api/maps/';
+	$geopmap_maps_url = 'https://maps.geoplatform.gov';
+
+	// Verifies validity of map_id_in and concats it to ual_url_in, forming the
+	// full ual string to the map.
+	if (!ctype_xdigit($geopmap_map_id_in) || strlen($geopmap_map_id_in) != 32){
+		$geopmap_ual_url_in .= $geopmap_map_id_in;
+	}
 
   // Uses the map ID provided to grab the map data from the GeoPlatform site and
-	// decode it into usable JSON info. Produces a bum result and error text if
-	// it fails.
-	$geopmap_ual_url_in = 'https://ual.geoplatform.gov/api/maps/' . $geopmap_shortcode_array['id'];
+	// decode it into usable JSON info. Produces a bum result and error text if it
+	// fails.
 	$geopmap_link_scrub = wp_remote_get( ''.$geopmap_ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
 	$geopmap_response = wp_remote_retrieve_body( $geopmap_link_scrub );
 	if(!empty($geopmap_response))
@@ -129,10 +137,15 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, the landing page value is pulled from the JSON and the process
 	// proceeds with agol map generation. Otherwise, the geop method is called.
+	// AGOL maps aren't typically hosted on the GeoPlatform maps server, so a
+	// landing page is needed. If the json doesn't contain a landing page, the
+	// hotlink is set to the GEOP maps server to handle the request.
 	if (array_key_exists('resourceTypes', $geopmap_result) && $geopmap_result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap"){
 		$geopmap_landing_page = '';
 		if (array_key_exists('landingPage', $geopmap_result) && isset($geopmap_result['landingPage']))
 			$geopmap_landing_page = $geopmap_result['landingPage'];
+		else
+			$geopmap_landing_page = $geopmap_maps_url . '/map.html?id=' . $geopmap_map_id_in;
 		geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopmap_landing_page, $geopmap_theme);
 	}
 	else
@@ -160,15 +173,10 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	// in the GeoPlatform themes, then changed if one such theme is absent.
 	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
 	$geopmap_heading_title_size = '1.6975em';
-
 	if ($geopmap_theme == 'F'){
 		$geopmap_info_icon = 'fas fa-info-circle';
 		$geopmap_heading_title_size = '1em';
 	}
-
-	// Landing page check. If no landing page was passed, a default is generated.
-	if (empty($geopmap_landing_page))
-		$geopmap_landing_page = $geopmap_maps_url . '/map.html?id=' . $geopmap_shortcode_array['id'];
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -384,7 +392,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		if (jQuery('#middle_<?php echo $geopmap_divrand; ?>').width() <= 400)
 			jQuery('#layer_menu_button_<?php echo $geopmap_divrand; ?>').hide();
 
-
 		// Javascript block that creates the leaflet map container, with GeopMapInstance
 		// being our GeoPlatform map. This section is wrapped in a try-catch block
 		// to catch any errors that may come. As of now, it's a pure error output
@@ -401,6 +408,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				attributionControl: false
 			});
 
+			// Instantiates GeopMapInstance, passing the leaflet map and view constants.
 			GeopMapInstance = GeoPlatform.MapFactory.get();
 			GeopMapInstance.setMap(geopmap_leafBase);
 			GeopMapInstance.setView(51.505, -0.09, 13);
@@ -478,7 +486,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			}
 		}
 
-
 		// Creates an HTML element and, using the arrays of string pairs passed here
 		// from geop_layer_control_gen(), adds attributes to it that make it into a
 		// functional element before returning it.
@@ -539,24 +546,21 @@ function geopmap_shortcodes_init()
 }
 add_action('init', 'geopmap_shortcodes_init');
 
-
-
+// AJAX handling only seems to function properly if both the hooks and PHP
+// functions are placed in this file. Instead of producing clutter, the files
+// that perform the settings interface add and remove map operations are simply
+// included here.
 function geopmap_process_addition() {
 	include 'admin/partials/geop-maps-admin-add-map.php';
 	wp_die();
 }
-
 
 function geopmap_process_removal() {
 	include 'admin/partials/geop-maps-admin-remove-map.php';
   wp_die();
 }
 
-
+// Adds ajax hooks for add and remove operations in the admin menu.
 add_action('wp_ajax_geopmap_remove_action', 'geopmap_process_removal');
 add_action('wp_ajax_geopmap_add_action', 'geopmap_process_addition');
-
-
-
-// Linking of dependenceis into the document.
 ?>

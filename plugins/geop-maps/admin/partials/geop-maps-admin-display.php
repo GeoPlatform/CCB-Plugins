@@ -18,15 +18,6 @@
 <html>
 <body>
 
-<!-- This upper area is dedicated to AJAX handling. It is here that the Add and
-     Remove buttons have their triggers detected, values pulled, and thrown at
-     their respective executing classes.-->
-<script>
-
-</script>
-
-
-
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <div class="wrap">
 
@@ -64,7 +55,6 @@
         <input type="text" class="regular-text" id="map_width" name="<?php echo $this->plugin_name; ?>[ual_width]" style="width:5em;"/>
       </p>
     </fieldset>
-
 
 <!-- Add Map Button -->
     <input type="submit" id="geopmap_add_action" value="Add Map"/>

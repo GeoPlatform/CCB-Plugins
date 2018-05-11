@@ -8,23 +8,23 @@
  *
  */
 
- // Some legs had to be pulled to get $wpbd in here. Unsure why.
+ // $wpdb is evoked.
 global $wpdb;
 
-// URL variables for resource collection, defaults to production environment.
+// All necessary variables are established, including pulling the map_id from $_POST.
 $geopmap_ual_url = 'https://ual.geoplatform.gov';
 $geopmap_invalid_bool = false;
 $geopmap_ual_map_id = sanitize_key($_POST["map_id"]);
 
+// Data validation; map IDs must be hex and 32 characters long. Failure will
+// end execution of the code in this file and an error return.
 if (!ctype_xdigit($geopmap_ual_map_id) || strlen($geopmap_ual_map_id) != 32){
   $geopmap_invalid_bool = true;
   echo "Removal failed. Invalid map ID.";
 }
 else {
 
-  /* Assigns the variable stored in $_POST to $geopmap_ual_map_id, which will guide this
-   * process. $geopmap_ual_map_id is then scrubbed and prepped for use.
-   */
+  // $geopmap_ual_map_id is scrubbed and prepped for use.
   $geopmap_ual_url_in = $geopmap_ual_url . '/api/maps/' . $geopmap_ual_map_id;
   $geopmap_link_scrub = wp_remote_get( ''.$geopmap_ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
   $geopmap_response = wp_remote_retrieve_body( $geopmap_link_scrub );

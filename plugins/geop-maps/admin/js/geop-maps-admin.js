@@ -29,9 +29,12 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	 /* This is the document ready jQuery block, which contains the button press
-    * detectors for the add and remove map buttons. With add, it collects the
-    * necessary information from the input boxes and calls the addition AJAX
-    * method below.
+    * detectors for the add and remove map buttons. In both cases, when a button
+		* is pressed, the necessary data is collected and sent to the admin-ajax.php
+		* function which passes that info off to the associated function in geop-maps.php,
+		* which IN TURN pass them off to the associated files in admin/partials. Once
+		* the operation is performed, any issues encountered will be shown in an
+		* alert window before the page reloads.
    */
   jQuery(document).ready(function() {
     jQuery("#geopmap_add_action").click(function(e){
@@ -49,10 +52,6 @@
 			return false;
     });
 
-    /* The remove button handler, which functions on class due to the procedural
-     * nature of the remove buttons being evoked. Grabs the value of the pressed
-     * button, which is the map ID, and passes it to the remove AJAX method.
-    */
     jQuery(".geopmap_indiv_remove_action").click(function(e){
 		  var data = {
 				action: "geopmap_remove_action",
@@ -65,13 +64,5 @@
 			});
 			return false;
     });
-
-   /* This is the actual AJAX call. It gathers the data for passing to the function,
-    * then, within a jQuery.ajax() call, passes the necessary parameters along with
-    * console error reporting actions and a force page reload. It also checks for
-    * any data echoed back from the add file, indicating an error, and sends it
-    * out as an alert to the user.
-   */
-
- });
+  });
 })( jQuery );

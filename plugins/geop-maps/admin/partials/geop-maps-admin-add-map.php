@@ -8,7 +8,7 @@
  *
  */
 
-// Some legs had to be pulled to get $wpbd in here. Unsure why.
+// $wpdb is evoked.
 global $wpdb;
 
 /* Assigns the variables stored in $_POST while instantiating blank variables
@@ -26,12 +26,13 @@ $geopmap_invalid_bool = false;
 $geopmap_table_name = "";
 $geopmap_retrieved_data = "";
 
-// URL variables for resource collection, defaults to production environment.
+// URL variables for resource collection.
 $geopmap_ual_url = 'https://ual.geoplatform.gov';
 $geopmap_viewer_url = 'https://viewer.geoplatform.gov';
 
 // Data validation. $geopmap_ual_map_id must be a 32-digit HEX value, while the
-// height and width inputs must be either numeric or blank.
+// height and width inputs must be either numeric or blank. Failure anywhere
+// here switches invalid_bool to true.
 if (!ctype_xdigit($geopmap_ual_map_id) || strlen($geopmap_ual_map_id) != 32){
   $geopmap_invalid_bool = true;
   echo "Addition failed. Invalid map ID.";
@@ -45,16 +46,17 @@ if (!$geopmap_invalid_bool && $geopmap_ual_map_width != "" && !is_numeric($geopm
   echo "Addition failed. Invalid map width. Only a numeric value or blank input is allowed.";
 }
 
-
-// Field assignment. The map's url is set up, verified, and json decoded so that
-// it may be used down the line. If any part of the process fails, invalid_bool
-// is set to true and the process carries on. However, most of the remaining
-// operations here require a false $geopmap_invalid_bool.
+// If any of the validation checks failed, the remainder of this file will not
+// be executed.
 if (!$geopmap_invalid_bool){
+
+  // Field assignment. The map's url is set up, verified, and json decoded so that
+  // it may be used down the line. If any part of the process fails, invalid_bool
+  // is set to true and the process carries on. However, most of the remaining
+  // operations here require a false $geopmap_invalid_bool.
   $geopmap_ual_url_in = $geopmap_ual_url . '/api/maps/' . $geopmap_ual_map_id;
   $geopmap_link_scrub = wp_remote_get( ''.$geopmap_ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
   $geopmap_response = wp_remote_retrieve_body( $geopmap_link_scrub );
-
   if (!empty($geopmap_response))
     $geopmap_result = json_decode($geopmap_response, true);
   else {
@@ -70,19 +72,20 @@ if (!$geopmap_invalid_bool){
     echo "Addition failed. Invalid map ID.";
   }
 
- /* Validity and duplication check. Checks for Geoplatform maps for an AGOl-only
-  * attribute and flip the $geopmap_agol variable to 1/true if found. It will also
-  * check for duplicate map IDs, echoing a failure message if found and flipping
-  * $geopmap_invalid_bool to true.
-  */
+  // Validity and duplication checks.
   if (!$geopmap_invalid_bool){
 
     // Our custom table is pulled from $wpdb and prepped for iteration.
     $geopmap_table_name = $wpdb->prefix . 'geop_maps_db';
     $geopmap_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopmap_table_name" );
 
+    // Checks the JSON for an AGOL map only attribute and switches the addition
+    // to AGOL mode if found.
     if (array_key_exists('resourceTypes', $geopmap_result) && $geopmap_result['resourceTypes'][0] == "http://www.geoplatform.gov/ont/openmap/AGOLMap")
       $geopmap_agol = '1';
+
+    // Duplicate check; searches for a map already in the database with the same
+    // map ID and cancels the entire addition process if found.
     foreach ($geopmap_retrieved_data as $geopmap_entry){
       if ($geopmap_entry->map_id == $geopmap_ual_map_id){
         echo "Addition failed. Duplicate map detected.";
@@ -92,9 +95,8 @@ if (!$geopmap_invalid_bool){
     }
   }
 
-
-  /* If the map is valid and not a duplicate final values of the entry are set up
-  * and entered into the database table.
+  /* If the map is valid and not a duplicate, final values of the entry are set
+   * up and entered into the database table.
   */
   if (!$geopmap_invalid_bool){
 
@@ -112,9 +114,9 @@ if (!$geopmap_invalid_bool){
       $geopmap_map_thumbnail = $geopmap_ual_url . '/api/maps/'. $geopmap_map_id . "/thumbnail";
     }
     else {
-      // Agol block, pulling different values. Not all Agol maps have a description,
-      // so such is checked for and a generic supplied if necessary. For extra
-      // insurance, the same is done for the label/title.
+      // Agol block, pulling different values. Not all Agol maps have a
+      // description, so such is checked for and a generic supplied if necessary.
+      // For extra insurance, the same is done for the label/title.
       $geopmap_map_url = $geopmap_result['landingPage'];
       $geopmap_map_name = $geopmap_result['label'];
       if (empty($geopmap_map_name)){
@@ -131,9 +133,9 @@ if (!$geopmap_invalid_bool){
       $geopmap_map_thumbnail = $geopmap_ual_url . '/api/maps/'. $geopmap_map_id . "/thumbnail";
     }
 
-    /* The values of ual_map_height and _width are checked if numeric. If so, they
-     * are concatenated into the shortcode. If not, the output will use default
-     * side values.
+    /* The values of ual_map_height and _width are checked if numeric. If so,
+     * they are concatenated into the shortcode. If not, the output will use
+     * values determined during page load.
      */
     $geopmap_shortcode = "[geopmap id='" . $geopmap_map_id . "' name='" . $geopmap_map_name . "'";
     if (is_numeric($geopmap_ual_map_height))
