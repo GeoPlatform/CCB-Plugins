@@ -112,9 +112,11 @@ function geopmap_shortcode_creation($geopmap_atts){
 
 	// Verifies validity of map_id_in and concats it to ual_url_in, forming the
 	// full ual string to the map.
-	if (!ctype_xdigit($geopmap_map_id_in) || strlen($geopmap_map_id_in) != 32){
+	if (!ctype_xdigit($geopmap_map_id_in) || strlen($geopmap_map_id_in) != 32)
+		$geopmap_error_text .= "Your map ID is in an invalid format. Please check your map ID and try again.<BR>";
+	else
 		$geopmap_ual_url_in .= $geopmap_map_id_in;
-	}
+
 
   // Uses the map ID provided to grab the map data from the GeoPlatform site and
 	// decode it into usable JSON info. Produces a bum result and error text if it
