@@ -9,18 +9,16 @@
  */
 
  // Some legs had to be pulled to get $wpbd in here. Unsure why.
-$geopmap_parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require( $geopmap_parse_uri[0] . 'wp-load.php' );
 global $wpdb;
 
 // URL variables for resource collection, defaults to production environment.
 $geopmap_ual_url = 'https://ual.geoplatform.gov';
 $geopmap_invalid_bool = false;
-$geopmap_ual_map_id = sanitize_key($_POST["mapID"]);
+$geopmap_ual_map_id = sanitize_key($_POST["map_id"]);
 
 if (!ctype_xdigit($geopmap_ual_map_id) || strlen($geopmap_ual_map_id) != 32){
   $geopmap_invalid_bool = true;
-  echo '{"status" : "Addition failed. Invalid map ID."}';
+  echo "Removal failed. Invalid map ID.";
 }
 else {
 
@@ -35,7 +33,7 @@ else {
   if(!empty($geopmap_response)){
     $geopmap_result = json_decode($geopmap_response, true);
   }else{
-    echo '{"status" : "Removal failed. Invalid map ID."}';
+    echo "Removal failed. Invalid map ID.";
     $geopmap_invalid_bool = true;
   }
 

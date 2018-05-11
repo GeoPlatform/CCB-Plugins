@@ -532,13 +532,30 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 <?php
 }
 
-
 // Adds the shortcode hook to init.
 function geopmap_shortcodes_init()
 {
     add_shortcode('geopmap', 'geopmap_shortcode_creation');
 }
 add_action('init', 'geopmap_shortcodes_init');
+
+
+
+function geopmap_process_addition() {
+	include 'admin/partials/geop-maps-admin-add-map.php';
+	wp_die();
+}
+
+
+function geopmap_process_removal() {
+	include 'admin/partials/geop-maps-admin-remove-map.php';
+  wp_die();
+}
+
+
+add_action('wp_ajax_geopmap_remove_action', 'geopmap_process_removal');
+add_action('wp_ajax_geopmap_add_action', 'geopmap_process_addition');
+
 
 
 // Linking of dependenceis into the document.

@@ -9,16 +9,14 @@
  */
 
 // Some legs had to be pulled to get $wpbd in here. Unsure why.
-$geopmap_parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-require( $geopmap_parse_uri[0] . 'wp-load.php' );
 global $wpdb;
 
 /* Assigns the variables stored in $_POST while instantiating blank variables
  * for conditional assignment.
 */
-$geopmap_ual_map_id = sanitize_key($_POST["mapID"]);
-$geopmap_ual_map_height = sanitize_key($_POST["mapHeight"]);
-$geopmap_ual_map_width = sanitize_key($_POST["mapWidth"]);
+$geopmap_ual_map_id = sanitize_key($_POST["map_id"]);
+$geopmap_ual_map_height = sanitize_key($_POST["map_height"]);
+$geopmap_ual_map_width = sanitize_key($_POST["map_width"]);
 $geopmap_ual_url_in = '';
 $geopmap_link_scrub = '';
 $geopmap_response = '';
@@ -32,20 +30,19 @@ $geopmap_retrieved_data = "";
 $geopmap_ual_url = 'https://ual.geoplatform.gov';
 $geopmap_viewer_url = 'https://viewer.geoplatform.gov';
 
-
 // Data validation. $geopmap_ual_map_id must be a 32-digit HEX value, while the
 // height and width inputs must be either numeric or blank.
 if (!ctype_xdigit($geopmap_ual_map_id) || strlen($geopmap_ual_map_id) != 32){
   $geopmap_invalid_bool = true;
-  echo '{"status" : "Addition failed. Invalid map ID."}';
+  echo "Addition failed. Invalid map ID.";
 }
 if (!$geopmap_invalid_bool && $geopmap_ual_map_height != "" && !is_numeric($geopmap_ual_map_height)){
   $geopmap_invalid_bool = true;
-  echo '{"status" : "Addition failed. Invalid map height. Only a numeric value or blank input is allowed."}';
+  echo "Addition failed. Invalid map height. Only a numeric value or blank input is allowed.";
 }
 if (!$geopmap_invalid_bool && $geopmap_ual_map_width != "" && !is_numeric($geopmap_ual_map_width)){
   $geopmap_invalid_bool = true;
-  echo '{"status" : "Addition failed. Invalid map width. Only a numeric value or blank input is allowed."}';
+  echo "Addition failed. Invalid map width. Only a numeric value or blank input is allowed.";
 }
 
 
@@ -62,7 +59,7 @@ if (!$geopmap_invalid_bool){
     $geopmap_result = json_decode($geopmap_response, true);
   else {
     $geopmap_invalid_bool = true;
-    echo '{"status" : "Addition failed. Map source could not be contacted."}';
+    echo "Addition failed. Map source could not be contacted.";
   }
 
   // Invalid map ID check. A faulty map ID will return a generic JSON dataset from
@@ -70,14 +67,10 @@ if (!$geopmap_invalid_bool){
   // trigger invalid_bool and cause an echo back for user error reporting.
   if (!$geopmap_invalid_bool && array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] == "404"){
     $geopmap_invalid_bool = true;
-    echo '{"status" : "Addition failed. Invalid map ID."}';
+    echo "Addition failed. Invalid map ID.";
   }
 
-
-
-
-
-  /* Validity and duplication check. Checks for Geoplatform maps for an AGOl-only
+ /* Validity and duplication check. Checks for Geoplatform maps for an AGOl-only
   * attribute and flip the $geopmap_agol variable to 1/true if found. It will also
   * check for duplicate map IDs, echoing a failure message if found and flipping
   * $geopmap_invalid_bool to true.
@@ -92,7 +85,7 @@ if (!$geopmap_invalid_bool){
       $geopmap_agol = '1';
     foreach ($geopmap_retrieved_data as $geopmap_entry){
       if ($geopmap_entry->map_id == $geopmap_ual_map_id){
-        echo '{"status" : "Addition failed. Duplicate map detected."}';
+        echo "Addition failed. Duplicate map detected.";
         $geopmap_invalid_bool = true;
         break;
       }

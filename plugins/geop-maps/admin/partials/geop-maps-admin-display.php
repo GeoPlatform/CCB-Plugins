@@ -15,7 +15,6 @@
  *
  */
 ?>
-
 <html>
 <body>
 
@@ -23,90 +22,7 @@
      Remove buttons have their triggers detected, values pulled, and thrown at
      their respective executing classes.-->
 <script>
-  /* This is the document ready jQuery block, which contains the button press
-   * detectors for the add and remove map buttons. With add, it collects the
-   * necessary information from the input boxes and calls the addition AJAX
-   * method below.
-  */
-  jQuery(document).ready(function() {
-    jQuery("#geopmap_add_action").click(function(e){
-      var map_id = jQuery("#map_id_in").val();
-      var map_height = jQuery("#map_height").val();
-      var map_width = jQuery("#map_width").val();
-      geopmap_add_map_ajax(map_id, map_height, map_width);
 
-      e.preventDefault();
-    });
-
-    /* The remove button handler, which functions on class due to the procedural
-     * nature of the remove buttons being evoked. Grabs the value of the pressed
-     * button, which is the map ID, and passes it to the remove AJAX method.
-    */
-    jQuery(".geopmap_indiv_remove_action").click(function(e){
-      var map_id = jQuery(this).val();
-      geopmap_remove_map_ajax(map_id);
-
-      e.preventDefault();
-    });
-  });
-
-  /* This is the actual AJAX call. It gathers the data for passing to the function,
-   * then, within a jQuery.ajax() call, passes the necessary parameters along with
-   * console error reporting actions and a force page reload. It also checks for
-   * any data echoed back from the add file, indicating an error, and sends it
-   * out as an alert to the user.
-  */
-  function geopmap_add_map_ajax(map_id, map_height, map_width){
-
-      var map_data = {
-          mapID: map_id,
-          mapHeight: map_height,
-          mapWidth: map_width
-      };
-
-      jQuery.ajax({
-          url: "<?php echo plugin_dir_url(__FILE__); ?>geop-maps-admin-add-map.php", //whatever the URL you need to access your php function
-          type:"POST",
-          dataType:"json",
-          data: map_data,
-          success:function(return_data){
-            if (return_data)
-              alert(return_data.status);
-            location.reload();
-          },
-          error:function(return_data){
-            if (return_data)
-              alert(return_data.status);
-            location.reload();
-          }
-      });
-  }
-
-  /* This is the AJAX call for the Remove button. It works exactly like the Add
-   * Button's but with a different file evocation and only one argument.
-  */
-  function geopmap_remove_map_ajax(map_id){
-      var map_data = {
-          mapID: map_id
-      };
-
-      jQuery.ajax({
-          url: "<?php echo plugin_dir_url(__FILE__); ?>geop-maps-admin-remove-map.php", //whatever the URL you need to access your php function
-          type:"POST",
-          dataType:"json",
-          data: map_data,
-          success:function(return_data){
-            if (return_data)
-              alert(return_data.status);
-            location.reload();
-          },
-          error:function(return_data){
-            if (return_data)
-              alert(return_data.status);
-            location.reload();
-          }
-      });
-  }
 </script>
 
 
@@ -151,8 +67,7 @@
 
 
 <!-- Add Map Button -->
-    <input type="button" id="geopmap_add_action" value="Add Map"></input>
-
+    <input type="submit" id="geopmap_add_action" value="Add Map"/>
 
  <!-- Procedural table creation block.  Here the map collection output is set. It
       begins with the header of the table.-->
