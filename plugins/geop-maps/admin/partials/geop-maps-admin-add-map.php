@@ -35,7 +35,7 @@ $geopmap_viewer_url = 'https://viewer.geoplatform.gov';
 // here switches invalid_bool to true.
 if (!ctype_xdigit($geopmap_ual_map_id) || strlen($geopmap_ual_map_id) != 32){
   $geopmap_invalid_bool = true;
-  echo "Addition failed. Invalid map ID.";
+  echo "Addition failed. Invalid map ID format.";
 }
 if (!$geopmap_invalid_bool && $geopmap_ual_map_height != "" && !is_numeric($geopmap_ual_map_height)){
   $geopmap_invalid_bool = true;
@@ -69,7 +69,7 @@ if (!$geopmap_invalid_bool){
   // trigger invalid_bool and cause an echo back for user error reporting.
   if (!$geopmap_invalid_bool && array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] == "404"){
     $geopmap_invalid_bool = true;
-    echo "Addition failed. Invalid map ID.";
+    echo "Addition failed. No map with this ID exists.";
   }
 
   // Validity and duplication checks.
@@ -88,7 +88,7 @@ if (!$geopmap_invalid_bool){
     // map ID and cancels the entire addition process if found.
     foreach ($geopmap_retrieved_data as $geopmap_entry){
       if ($geopmap_entry->map_id == $geopmap_ual_map_id){
-        echo "Addition failed. Duplicate map detected.";
+        echo "Addition failed. Duplicate map found.";
         $geopmap_invalid_bool = true;
         break;
       }
