@@ -1,9 +1,8 @@
 === GeoPlatform Maps Plugin ===
 Contributors: imagemattersllc
-Donate link:
 Tags: map, maps, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, ngpi
 Requires at least: 4.6.4
-Requires PHP: 
+Requires PHP: 7.2.0
 Tested up to: 4.9.5
 Stable tag: 1.0.6
 Plugin URI: https://www.geoplatform.gov/
@@ -84,3 +83,5 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 * Initial release.
 
 == Upgrade Notice ==
+
+Initial release.
