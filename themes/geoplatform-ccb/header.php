@@ -40,7 +40,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
         <div class="row">
             <div class="col-md-12">
                 <ul role="menu" class="header__menu">
-                    <!--<li><?php get_search_form(); ?></li>-->
+                    <li><?php get_search_form(); ?></li>
                     <li>
                         <!-- mega menu toggle -->
                         <div class="btn-group">
