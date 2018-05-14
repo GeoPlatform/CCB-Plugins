@@ -49,7 +49,7 @@
                             </a>
                         </h5>
                         <p>
-                            Search our massive catalog of geospatial data and tools provided by a multitude of federal agencies. Whether you are a Geographic Professional, Student, Teacher or Citizen, you can find data that will help you with your project, assignment, presentation or concern.
+                            Search the <a href="https://data.gov" target="_blank">Data.gov</a> catalog of geospatial data and tools provided by a multitude of federal agencies. Whether you are a Geographic Professional, Student, Teacher or Citizen, you can find data that will help you with your project, assignment, presentation or concern.
                         </p>
                     </div><!--#col-xs-12 col-sm-4 col-sm-pull-4-->
 
