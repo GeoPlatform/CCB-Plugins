@@ -1,8 +1,9 @@
 === GeoPlatform Maps Plugin ===
-Contributors: (this should be a list of wordpress.org userid's)
+Contributors: imagemattersllc
 Donate link:
 Tags: map, maps, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, ngpi
 Requires at least: 4.6.4
+Requires PHP: 
 Tested up to: 4.9.5
 Stable tag: 1.0.6
 Plugin URI: https://www.geoplatform.gov/
