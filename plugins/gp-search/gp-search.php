@@ -13,7 +13,7 @@
  * @package           GP_Search
  *
  * @wordpress-plugin
- * Plugin Name:       GeoPlatform Search Plugin
+ * Plugin Name:       GeoPlatform Search Plugin Old
  * Plugin URI:        www.geoplatform.gov
  * Description:       Search for geoplatform objects.
  * Version:           1.0.0
