@@ -13,10 +13,10 @@
 
         get_template_part( 'page-single', get_post_format() );
 
-        //Un-comment the code below to show comments on the posts
-        //if ( comments_open() || get_comments_number() ) :
-        //	  comments_template();
-        //	endif;
+        //Un-comment the code below to show comments
+        if ( comments_open() || get_comments_number() ) :
+        	  comments_template();
+        	endif;
       endwhile; endif;
       ?>
 

@@ -7,7 +7,7 @@
   <div class="svc-card__body">
       <div class="svc-card__title"><?php the_title(); ?></div><!--#svc-card__title-->
         <p>
-            <?php the_content('',TRUE);?>
+            <?php the_excerpt('',TRUE);?>
         </p>
       <br/>
       <a class="btn btn-info" href="<?php the_permalink();?>">More Information</a>
@@ -20,7 +20,7 @@
   <div class="svc-card__body" style="flex-basis:102%;">
       <div class="svc-card__title"><?php the_title(); ?></div><!--#svc-card__title-->
         <p>
-            <?php the_content('',TRUE);?>
+            <?php the_excerpt('',TRUE);?>
         </p>
       <br>
       <a class="btn btn-info" href="<?php the_permalink();?>">More Information</a>

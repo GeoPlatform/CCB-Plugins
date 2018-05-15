@@ -9,4 +9,4 @@
     <p>
         For questions about the federal government not related to GeoPlatform, visit <a href="<?php echo esc_url("http://www.usa.gov"); ?>" target="_blank">USA.gov</a> or call 1 (800) FED INFO (1-800-333-4636) (8am - 8 pm ET Monday - Friday).
     </p>
-</div>
+</div><!--#card-->

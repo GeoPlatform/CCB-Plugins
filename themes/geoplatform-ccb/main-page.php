@@ -55,7 +55,7 @@
                      <br style="clear: both;">
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
-            <?php } //foreach?>
+            <?php } //foreach ?>
 
             </div><!--#col-md-12-->
             <p>

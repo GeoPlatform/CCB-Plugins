@@ -11,7 +11,8 @@ function login() {
     // var current = handler + "?redirectTo=" + encodeURIComponent(target);
 
     var current = window.location.href;
-    window.location = 'https://sp.geoplatform.gov/module.php/core/as_login.php?AuthId=geosaml&ReturnTo=' + encodeURIComponent(current);
+    //window.location = 'https://sp.geoplatform.gov/module.php/core/as_login.php?AuthId=geosaml&ReturnTo=' + encodeURIComponent(current);
+    window.location = '/wp-login.php';
 }
 
 /**
@@ -28,6 +29,7 @@ function logout() {
 
     var current = window.location.href;
     window.location = 'https://sp.geoplatform.gov/module.php/core/as_logout.php?AuthId=geosaml&ReturnTo=' + encodeURIComponent(current);
+    
 }
 
 /**
@@ -88,6 +90,59 @@ function checkAuthenticated(callback) {
     });
 
 }
+
+function userDataLoad(user) {
+
+    var url = $('#userInfoSection [data-load-url]').data('load-url');
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var section = $('#userInfoSection');
+
+    var html = [];
+    $.getJSON(url)
+        .success(function(json) {
+            if(json.results.length) {
+                for(var i=0; i<json.results.length; ++i) {
+                    var map = json.results[i];
+                    var url = map.thumbnailUrl;
+
+                    var url = '<%= wmvUrl %>/#?id=' + map._id;
+                    if(map.referenceUrl) {
+                        url = map.referenceUrl;
+                    }
+                    var thumb = map.thumbnailUrl;
+                    if(!thumb) thumb = '<%= registryUrl %>/api/maps/' + map._id + '/thumbnail?format=image';
+                    else if(thumb.indexOf("http")!==0) thumb = '<%= registryUrl %>/' + thumb;
+
+                    var date = new Date(map.updated),
+                        hours = date.getHours(),
+                        ampm = hours > 12 ? 'pm' : 'am',
+                        dateStr = months[date.getMonth()] + ' ' +
+                                    date.getDate() + ', ' + date.getFullYear() + ' ' +
+                                    (hours > 12 ? hours-12:hours) + ':' + date.getMinutes() + ampm;
+
+                    html.push(
+                        '<div class="media">',
+                        '  <a href="' + url + '" class="media-left media-middle">',
+                        '    <img class="media-object bordered" src="' + thumb + '" alt="' + map.label + '" height="48">',
+                        '  </a>',
+                        '  <div class="media-body">',
+                        '    <div class="media-heading"><a href="' + url + '">' + map.label + '</a></div>',
+                        '    <small class="text-muted">' + dateStr + '</small>',
+                        '  </div>',
+                        '</div>'
+                    );
+                }
+
+            } else {
+                html.push('<em>You have no recent items. You should create some content!</em>');
+            }
+
+            section.append(html.join(' '));
+        })
+        .error(function(xhr, status, message) {
+            //do we need to do anything here?
+        });
+};
 
 
 
