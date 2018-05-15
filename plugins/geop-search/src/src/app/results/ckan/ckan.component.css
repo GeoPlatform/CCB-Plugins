@@ -1,0 +1,52 @@
+
+
+.org-type--federal      { background: #71999F; color: #fff; }
+.org-type--university   { background: #71769F; color: #fff; }
+.org-type--state        { background: #8E719F; color: #fff; }
+.org-type--county       { background: #8E719F; color: #fff; }
+.org-type--city         { background: #8E719F; color: #fff; }
+.org-type--commercial   { background: #8E719F; color: #fff; }
+.org-type--other        { background: #8E719F; color: #fff; }
+.org-type--non-profit   { background: #8E719F; color: #fff; }
+
+
+
+.distro, a.distro, a.distro:visited {
+    display:          inline-block;
+    font-size:        0.75em;
+    margin:           0.25em;
+    padding:          0.25em 0.5em;
+    border-radius:    0.25em;
+    background-color: #aaa;
+    color:            #fff;
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.5);
+}
+
+.distro:hover,
+a.distro:hover,
+a.distro:visited:hover,
+.distro:focus,
+a.distro:focus,
+a.distro:visited:focus {
+    text-decoration:  none;
+    background-color: #ddd!important;
+    color:            #333!important;
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.75);
+}
+
+/* .distro[data-format="web page"] {
+.distro[data-format="data"] {
+    background-color: #56A3D0;
+} */
+
+.distro.distro--html { background-color: #55a1ce; }
+.distro.distro--json { background-color: #ef7100; }
+.distro.distro--xml  { background-color: #ef7100; }
+.distro.distro--text { background-color: #74cbec; }
+.distro.distro--csv  { background-color: #dfb100; }
+.distro.distro--xls  { background-color: #2db55d; }
+.distro.distro--zip  { background-color: #686868; }
+.distro.distro--api  { background-color: #ec96be; }
+.distro.distro--pdf  { background-color: #e0051e; }
+.distro.distro--rdf  { background-color: #0b4498; }
+.distro.distro--wms  { background-color: #f06f64; }

@@ -1,0 +1,24 @@
+
+
+/* .c-results-item--dcat-dataset { border-color: darkblue; }
+.c-results-item--regp-service { border-color: green; }
+.c-results-item--layer        { border-color: lightblue; }
+.c-results-item--map          { border-color: red; }
+.c-results-item--gallery      { border-color: orange; }
+.c-results-item--community    { border-color: yellow; }
+.c-results-item--skos-concept { border-color: #ddd; }
+.c-results-item--skos-conceptscheme { border-color: #bbb; }
+.c-results-item--org-organization { border-color: #777; }
+.c-results-item--vcard-vcard { border-color: #333; } */
+
+
+.c-results-item--dcat-dataset .c-results-item__type:before { background: darkblue; }
+.c-results-item--regp-service .c-results-item__type:before { background: green; }
+.c-results-item--layer .c-results-item__type:before { background: lightblue; }
+.c-results-item--map .c-results-item__type:before { background: red; }
+.c-results-item--gallery .c-results-item__type:before { background: orange; }
+.c-results-item--community .c-results-item__type:before { background: yellow; }
+.c-results-item--skos-concept .c-results-item__type:before { background: #ddd; }
+.c-results-item--skos-conceptscheme .c-results-item__type:before { background: #bbb; }
+.c-results-item--org-organization .c-results-item__type:before { background: #777; }
+.c-results-item--vcard-vcard .c-results-item__type:before { background: #333; }

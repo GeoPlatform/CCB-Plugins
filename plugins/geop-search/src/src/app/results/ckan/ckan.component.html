@@ -1,0 +1,116 @@
+<div class="c-pagination">
+    <span>{{totalResults}} results</span>
+    <div>
+        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="20">20 per page</option>
+            <option value="50">50 per page</option>
+            <option value="100">100 per page</option>
+        </select>
+    </div>
+    <div>
+        <button type="button" class="btn btn-default" (click)="previousPage()">
+            <span class="fas fa-angle-double-left"></span>
+        </button>
+        <span>
+            {{query.getPage()*query.getPageSize()+1}} -
+            {{query.getPage()*query.getPageSize()+query.getPageSize()}}
+        </span>
+        <button type="button" class="btn btn-default" (click)="nextPage()">
+            <span class="fas fa-angle-double-right"></span>
+        </button>
+    </div>
+    <div class="flex-1"></div>
+    <div>
+        <select>
+            <option value="views_recent desc">Popular</option>
+            <option value="metadata_modified desc">Recently Modified</option>
+            <option value="metadata_created desc">Date Added</option>
+            <option value="name asc">Name (ascending)</option>
+            <option value="name desc">Name (descending)</option>
+            <option value="score desc">Relevance</option>
+        </select>
+    </div>
+</div>
+
+<div class="c-results">
+
+
+    <div *ngIf="loading">
+        <br>
+        <span class="fas fa-spinner fa-pulse"></span> Loading results....
+        <br>
+    </div>
+
+    <div *ngIf="!loading && !error && (!results || !results.results || !results.results.length)">
+        <br>
+        <strong><em>No results found matching the specified constraints</em></strong>
+        <br>
+    </div>
+
+    <div *ngIf="error">
+        <br>
+        <h5>An Error Occurred</h5>
+        <p>{{error.message}}</p>
+        <br>
+    </div>
+
+    <div [ngClass]="{'t-faded':loading}" *ngIf="!error">
+        <div *ngFor="let item of results?.results"
+            class="c-results-item c-results-item--{{item.type.toLowerCase().replace(':','-')}}">
+            <div class="c-results-item__body">
+                <!-- icon if necessary -->
+                <div class="c-results-item__icon" *ngIf="getItemThumbnail(item)">
+                    <img src="{{getItemThumbnail(item)}}">
+                </div>
+                <div>
+                    <div class="c-results-item__heading">
+                        <a href="{{item.landingPage}}">
+                            <span *ngIf="item.label">{{item.label}}</span>
+                            <span *ngIf="!item.label">Un-titled {{item.type}}</span>
+                        </a>
+                    </div>
+                    <!-- <div class="c-results-item__facets is-url">{{item.landingPage}}</div> -->
+                    <div class="c-results-item__facets">
+                        {{item.publishers[0].label}}
+                    </div>
+                    <div class="c-results-item__description" [innerHtml]="item.description"></div>
+                </div>
+            </div>
+
+            <div class="c-results-item__footer">
+                <div class="c-results-item__stats">
+
+                    <div class="org-type--{{getItemType(item)|lowercase}}">
+                        <strong>{{getItemType(item)}}</strong>
+                    </div>
+
+                    <div class="distributions">
+                        <a  *ngFor="let distro of (item.distributions | limitTo:5)"
+                            href="{{distro.href}}" target="_blank"
+                            class="distro distro--{{(distro.format?.label||'html')|lowercase}}"
+                            title="{{distro.description||distro.label||distro.url}}">
+                            {{distro.format?.label||'HTML'}}
+                        </a>
+                        <span *ngIf="item.distributions?.length>5">
+                            + {{item.distributions?.length-5}} more
+                        </span>
+                    </div>
+                </div>
+                <div class="c-results-item__actions">
+                    <button type="button" class="btn btn-link"
+                       title="Import into the GeoPlatform metadata registry"
+                       *ngIf="canImportItem(item)" (click)="importItem(item)">
+                       Import
+                   </button>
+
+                   <button type="button" class="btn btn-link" *ngIf="importing">
+                       <span class="far fa-loading fa-spin"></span> Importing
+                   </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

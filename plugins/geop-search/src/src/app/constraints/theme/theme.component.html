@@ -1,0 +1,35 @@
+<div class="c-constraint__editor">
+  <p>Select one or more themes from the list below and click "Apply"</p>
+  <br><br>
+
+  <label for="themesFilter">Filter themes</label>
+  <input type="text" id="themesFilter" placeholder="Specify themes..."
+    [(ngModel)]="listFilter"
+    (keyup.enter)="refreshOptions()">
+
+  <hr>
+
+  <div class="c-pagination">
+      <span>{{totalResults}} themes</span>
+      <span>{{listQuery.getPageSize()}} per page</span>
+      <div>
+          <button type="button" class="btn btn-sm" (click)="previousPage()">&lt;&lt;</button>
+          <span>
+              {{listQuery.getPage()*listQuery.getPageSize()+1}} -
+              {{listQuery.getPage()*listQuery.getPageSize()+listQuery.getPageSize()}}
+          </span>
+          <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
+      </div>
+  </div>
+  <a *ngFor="let theme of resultsObs$ | async"
+    class="list-item"
+    [ngClass]="{selected:isSelected(theme)}"
+    (click)="select(theme)">
+      {{theme.label}}
+  </a>
+
+  <br><br>
+  <div class="d-flex flex-justify-end">
+      <button type="button" class="applyBtn" (click)="apply()">Apply</button>
+  </div>
+</div>

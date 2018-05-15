@@ -1,0 +1,46 @@
+<div class="c-pagination d-flex flex-align-center">
+    <span>{{totalResults}} results</span>
+    <div>
+        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="20">20 per page</option>
+            <option value="50">50 per page</option>
+            <option value="100">100 per page</option>
+        </select>
+    </div>
+    <div>
+        <button type="button" class="btn btn-default" (click)="previousPage()">
+            <span class="fas fa-angle-double-left"></span>
+        </button>
+        <span>
+            {{query.getPage()*query.getPageSize()+1}} -
+            {{query.getPage()*query.getPageSize()+query.getPageSize()}}
+        </span>
+        <button type="button" class="btn btn-default" (click)="nextPage()">
+            <span class="fas fa-angle-double-right"></span>
+        </button>
+    </div>
+    <div class="flex-1"></div>
+    <div>
+        <select>
+            <option value="modified,desc">Most recently modified</option>
+            <option value="modified,asc">Least recently modified</option>
+            <option value="label,asc">Name (A-Z)</option>
+            <option value="label,desc">Name (Z-A)</option>
+            <option value="type,asc">Type (A-Z)</option>
+            <option value="type,desc">Type (Z-A)</option>
+        </select>
+    </div>
+</div>
+
+<div class="c-results">
+
+    <div *ngIf="!results || !results.results || !results.results.length">
+        <strong><em>No results found matching the specified constraints</em></strong>
+    </div>
+
+    <div *ngFor="let item of results?.results">
+        <div class="c-results-item"></div>
+    </div>
+</div>

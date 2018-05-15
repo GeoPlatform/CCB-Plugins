@@ -1,0 +1,49 @@
+
+
+.c-current-constraints .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.c-current-constraints .heading span {
+    flex: 1;
+}
+.c-current-constraints .c-constraints {
+    padding-left: 1.5em;
+}
+
+
+.c-current-constraints.is-collapsed .c-constraints {
+    display: none;
+}
+
+
+.c-constraint {
+    margin: 1em 0;
+}
+
+.c-constraint .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.c-constraint .heading span {
+    flex: 1;
+}
+
+
+.c-constraint__value {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 0.5em;
+    color: #777;
+    background-color: #fff;
+}
+.c-constraint__value:hover {
+    background-color: #f5f5f5;
+    font-weight: 700;
+}
+
+
+.c-constraint__q { display: none; }

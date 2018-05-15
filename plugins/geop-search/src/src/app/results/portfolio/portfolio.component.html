@@ -1,0 +1,89 @@
+<div class="c-pagination">
+    <span>{{totalResults}} results</span>
+    <div>
+        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+            <option value="5">5 per page</option>
+            <option value="10">10 per page</option>
+            <option value="20">20 per page</option>
+            <option value="50">50 per page</option>
+            <option value="100">100 per page</option>
+        </select>
+    </div>
+    <div>
+        <button type="button" class="btn btn-default" (click)="previousPage()">
+            <span class="fas fa-angle-double-left"></span>
+        </button>
+        <span>
+            {{query.getPage()*query.getPageSize()+1}} -
+            {{query.getPage()*query.getPageSize()+query.getPageSize()}}
+        </span>
+        <button type="button" class="btn btn-default" (click)="nextPage()">
+            <span class="fas fa-angle-double-right"></span>
+        </button>
+    </div>
+    <div class="flex-1"></div>
+    <div>
+        <select>
+            <option value="modified,desc">Most recently modified</option>
+            <option value="modified,asc">Least recently modified</option>
+            <option value="label,asc">Name (A-Z)</option>
+            <option value="label,desc">Name (Z-A)</option>
+            <option value="type,asc">Type (A-Z)</option>
+            <option value="type,desc">Type (Z-A)</option>
+        </select>
+    </div>
+</div>
+
+<div class="c-results">
+
+    <div *ngIf="!results || !results.results || !results.results.length">
+        <strong><em>No results found matching the specified constraints</em></strong>
+    </div>
+
+    <div *ngFor="let item of results?.results"
+        class="c-results-item c-results-item--{{item.type.toLowerCase().replace(':','-')}}">
+        <div class="c-results-item__body">
+            <!-- icon if necessary
+            <div class="c-results-item__icon" *ngIf="thumbnailUrl">
+                <img ng-src="{{thumbnailUrl}}" on-img-fail="/img/img-404.png">
+            </div>
+             -->
+            <div>
+                <div class="c-results-item__heading">
+                    <a>
+                        <span *ngIf="item.label">{{item.label}}</span>
+                        <span *ngIf="!item.label">Un-titled {{item.type}}</span>
+                    </a>
+                </div>
+                <!-- <div class="c-results-item__facets is-url">{{item.uri}}</div> -->
+                <div class="c-results-item__facets">
+                    <span class="c-results-item__type">
+                        <strong>{{item.type}}</strong> by
+                        <a *ngIf="item.createdBy" (click)="addCreatorConstraint(item.createdBy)">
+                            {{item.createdBy}}
+                        </a>
+                    </span> |
+                    <span *ngIf="item.created" title="Creation date">C: {{item.created|date}}</span> |
+                    <span *ngIf="item.modified" title="Last modified date">M: {{item.modified|date}}</span>
+                </div>
+                <div class="c-results-item__description" [innerHtml]="item.description"></div>
+            </div>
+        </div>
+
+        <div class="c-results-item__footer">
+            <!-- <div class="c-results-item__stats">
+                <div><strong>{{item.type}}</strong></div>
+                <button type="button" *ngIf="item.createdBy" class="btn btn-link"
+                    (click)="addCreatorConstraint(item.createdBy)">{{item.createdBy}}</button>
+                <div *ngIf="item.created" title="Creation date">C: {{item.created}}</div>
+                <div *ngIf="item.modified" title="Last modified date">M: {{item.modified}}</div>
+            </div> -->
+            <div class="c-results-item__actions">
+                <!-- <button type="button" class="btn btn-link">Find similar</button>
+                <button type="button" class="btn btn-link">View</button> -->
+                <a>Find similar</a>
+            </div>
+        </div>
+    </div>
+
+</div>

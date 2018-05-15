@@ -1,0 +1,18 @@
+
+
+.nav.nav-tabs {
+    /*background: #f6f6f6;*/
+    padding-top: 0.25em;
+    padding-left: 1em;
+}
+.nav-tabs.nav-tabs--gp>li.nav-item>a.nav-link.active,
+.nav-tabs.nav-tabs--gp>li.nav-item>a.nav-link.active:focus,
+.nav-tabs.nav-tabs--gp>li.nav-item>a.nav-link.active:hover {
+    border-color: transparent transparent #393 transparent;
+    border-width: 0 0 3px 0;
+    border-radius: 0;
+}
+.tab-pane {
+    width: 100%;
+    padding: 1em;
+}

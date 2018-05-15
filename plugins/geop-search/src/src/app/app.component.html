@@ -1,0 +1,25 @@
+<div class="l-body">
+    <div class="l-header">
+        <div class="input-group-slick">
+            <span class="fa fa-search"></span>
+            <input type="text" class="form-control"
+                placeholder="Search the GeoPlatform"
+                [(ngModel)]="freeText"
+                (keyup.enter)="onFreeTextChange()">
+            <span class="fa fa-times" (click)="freeText=null"></span>
+        </div>
+        &nbsp;
+        <button type="button" class="btn btn-primary" (click)="onFreeTextChange()">SEARCH</button>
+    </div>
+    <div class="l-sidebar">
+        <constraint-picker
+            [constraints]="constraints"
+            [isClosed]="pickerClosed"
+            (onClose)="onPickerClose($event)">
+        </constraint-picker>
+        <constraints-current [constraints]="constraints"></constraints-current>
+    </div>
+    <div class="l-main">
+        <search-results [constraints]="constraints"></search-results>
+    </div>
+</div>

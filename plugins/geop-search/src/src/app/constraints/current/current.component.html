@@ -1,0 +1,57 @@
+<div class="c-current-constraints" [ngClass]="{'is-collapsed':isClosed}">
+    <h4 class="heading">
+        <button type="button" class="btn btn-sm btn-link" (click)="isClosed=!isClosed">
+            <span *ngIf="isClosed" class="far fa-plus-square"></span>
+            <span *ngIf="!isClosed" class="far fa-minus-square"></span>
+        </button>
+        <span>Current Constraints</span>
+        <button type="button" class="btn btn-outline-danger btn-sm"
+            title="Remove all constraints"
+            (click)="clear()">
+            clear all
+        </button>
+    </h4>
+    <div *ngIf="isClosed" (click)="isClosed=!isClosed">
+        <em>Expand to see current constraints</em>
+    </div>
+    <div class="c-constraints">
+
+        <div *ngIf="isEmpty()">
+            <em>Add constraints using the options above</em>
+        </div>
+
+        <div *ngFor="let constraint of constraints.list()"
+            class="c-constraint c-constraint__{{constraint.name}}">
+            <h5 class="heading">
+                <span>{{constraint.label||constraint.name}}</span>
+                <button type="button" class="btn btn-outline-danger btn-sm"
+                    title="Remove all values for this constraint"
+                    *ngIf="isMultiValue(constraint) && constraint.value.length>1"
+                    (click)="remove(constraint)">
+                    clear
+                </button>
+            </h5>
+            <div *ngIf="!isMultiValue(constraint)" class="c-constraint__value">
+                <button type="button" class="btn btn-light btn-sm"
+                    title="Remove this constraint"
+                    (click)="remove(constraint)">
+                    <span class="far fa-times-circle"></span>
+                </button>
+                <span class="flex-1">
+                    {{constraint.value?.label?constraint.value.label:constraint.value}}
+                </span>
+            </div>
+            <div *ngIf="isMultiValue(constraint)">
+                <div *ngFor="let value of constraint.value"
+                    class="c-constraint__value">
+                    <button type="button" class="btn btn-light btn-sm"
+                        title="Remove this value"
+                        (click)="removeValue(constraint, value)">
+                        <span class="far fa-times-circle"></span>
+                    </button>
+                    <span>{{value?.label?value.label:value}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

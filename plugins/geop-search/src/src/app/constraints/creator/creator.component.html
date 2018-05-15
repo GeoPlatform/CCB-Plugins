@@ -1,0 +1,13 @@
+<div class="c-constraint__editor">
+  <p>Provide the following information and click "Apply"</p>
+  <br>
+
+  <label for="createdBy">Created By</label>
+  <div class="input-group-slick">
+      <input type="text" id="createdBy" placeholder="Specify creator username..." [(ngModel)]="value">
+      <span class="fa fa-times" (click)="value=null" *ngIf="value&&value.length"></span>
+  </div>
+  <br><br>
+
+  <button type="button" class="applyBtn" (click)="apply()">Apply</button>
+</div>

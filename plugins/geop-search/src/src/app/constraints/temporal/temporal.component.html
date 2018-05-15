@@ -1,0 +1,19 @@
+<div class="c-constraint__editor">
+  <p>Provide the following information and click "Apply"</p>
+  <br>
+
+  <label for="startDate">Beginning</label>
+  <div class="input-group-slick">
+      <input type="text" id="startDate" placeholder="2018-01-31" [(ngModel)]="startDate">
+      <span class="far fa-calendar-alt"></span>
+  </div>
+  <br>
+  <label for="endDate">Ending</label>
+  <div class="input-group-slick">
+      <input type="text" id="endDate" placeholder="2018-01-31" [(ngModel)]="endDate">
+      <span class="far fa-calendar-alt"></span>
+  </div>
+  <br><br>
+
+  <button type="button" class="applyBtn" (click)="apply()">Apply</button>
+</div>
