@@ -18,7 +18,7 @@
 }
 
 :host.is-collapsed .c-constraint-options,
-:host.is-collapsed .c-constraint-editor {
+:host.is-collapsed .c-constraint-container {
     display: none;
 }
 

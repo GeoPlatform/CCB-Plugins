@@ -1,16 +1,16 @@
 <div class="c-constraint__editor">
-  <p>Select one or more organizations from the list below and click "Apply"</p>
+  <p>Select one or more points of contact from the list below and click "Apply"</p>
   <br><br>
 
-  <label for="pubsFilter">Filter organizations</label>
-  <input type="text" id="pubsFilter" placeholder="Find organization by name..."
+  <label for="contactFilter">Filter contacts</label>
+  <input type="text" id="contactFilter" placeholder="Find contact by name..."
     [(ngModel)]="listFilter"
     (keyup.enter)="refreshOptions()">
 
   <hr>
 
   <div class="c-pagination">
-      <span>{{totalResults}} orgs</span>
+      <span>{{totalResults}} contacts</span>
       <span>{{listQuery.getPageSize()}} per page</span>
       <div>
           <button type="button" class="btn btn-sm" (click)="previousPage()">&lt;&lt;</button>
@@ -21,14 +21,15 @@
           <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
       </div>
   </div>
-  <a *ngFor="let organization of resultsObs$ | async"
+  <a *ngFor="let contact of resultsObs$ | async"
     class="list-item"
-    [ngClass]="{selected:isSelected(organization)}"
-    (click)="select(organization)">
-      {{organization.label}}
+    [ngClass]="{selected:isSelected(contact)}"
+    (click)="select(contact)">
+      {{contact.label}}
   </a>
 
   <footer>
       <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
   </footer>
+  
 </div>

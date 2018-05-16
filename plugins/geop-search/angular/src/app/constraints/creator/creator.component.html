@@ -7,7 +7,8 @@
       <input type="text" id="createdBy" placeholder="Specify creator username..." [(ngModel)]="value">
       <span class="fa fa-times" (click)="value=null" *ngIf="value&&value.length"></span>
   </div>
-  <br><br>
 
-  <button type="button" class="applyBtn" (click)="apply()">Apply</button>
+  <footer>
+      <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
+  </footer>
 </div>

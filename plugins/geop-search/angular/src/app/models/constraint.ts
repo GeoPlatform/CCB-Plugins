@@ -4,6 +4,7 @@ import { Codec } from './codec';
 
 
 export interface ConstraintEditor {
+    constraints: Constraints;
     getCodec() : Codec;
 }
 

@@ -1,0 +1,37 @@
+<div class="c-constraint__editor">
+    <p>
+        Find semantic, grounded concepts by searching using the box below.
+        Select one or more options from the list below and click "Apply"
+    </p>
+    <br>
+
+    <label for="semFilter">Find Concepts</label>
+    <input type="text" id="semFilter" placeholder="Enter keywords"
+      [(ngModel)]="listFilter"
+      (keyup.enter)="refreshOptions()">
+
+    <hr>
+
+    <div class="c-pagination">
+        <span>{{totalResults}} options</span>
+        <span>{{listQuery.getPageSize()}} per page</span>
+        <div>
+            <button type="button" class="btn btn-sm" (click)="previousPage()">&lt;&lt;</button>
+            <span>
+                {{listQuery.getPage()*listQuery.getPageSize()+1}} -
+                {{listQuery.getPage()*listQuery.getPageSize()+listQuery.getPageSize()}}
+            </span>
+            <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
+        </div>
+    </div>
+    <a *ngFor="let option of resultsObs$ | async"
+      class="list-item"
+      [ngClass]="{selected:isSelected(option)}"
+      (click)="select(option)">
+        {{option.label}}
+    </a>
+
+    <footer>
+        <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
+    </footer>
+</div>

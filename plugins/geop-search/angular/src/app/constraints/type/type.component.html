@@ -1,3 +1,14 @@
-<p>
-  type works!
-</p>
+<div class="c-constraint__editor">
+    <p>Select one or more types from the list below and click "Apply"</p>
+    <br>
+
+    <div *ngFor="let opt of options" class="list-item"
+        [ngClass]="{selected:isSelected(opt)}"
+        (click)="select(opt)">
+        {{opt.label}}
+    </div>
+
+    <footer>
+        <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
+    </footer>
+</div>

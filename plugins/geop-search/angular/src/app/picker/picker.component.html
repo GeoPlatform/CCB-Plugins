@@ -15,7 +15,13 @@
 
         <div class="c-constraint-options" *ngIf="inPickerMode">
 
-            <div class="c-constraint__option" (click)="activateConstraint('creator')">
+            <div *ngFor="let opt of options"
+                class="c-constraint__option"
+                (click)="activateConstraint(opt)">
+                <div>{{opt.label}}</div>
+                <span class="fas fa-arrow-alt-circle-right"></span>
+            </div>
+            <!-- <div class="c-constraint__option" (click)="activateConstraint('creator')">
                 <div>Creator</div>
                 <span class="fas fa-arrow-alt-circle-right"></span>
             </div>
@@ -25,6 +31,10 @@
             </div>
             <div class="c-constraint__option" (click)="activateConstraint('keywords')">
                 <div>Keywords</div>
+                <span class="fas fa-arrow-alt-circle-right"></span>
+            </div>
+            <div class="c-constraint__option" (click)="activateConstraint('contacts')">
+                <div>Points of Contact</div>
                 <span class="fas fa-arrow-alt-circle-right"></span>
             </div>
             <div class="c-constraint__option" (click)="activateConstraint('publishers')">
@@ -42,43 +52,16 @@
             <div class="c-constraint__option" (click)="activateConstraint('types')">
                 <div>Types</div>
                 <span class="fas fa-arrow-alt-circle-right"></span>
-            </div>
+            </div> -->
 
         </div>
 
-        <div class="c-constraint-editor" *ngIf="!inPickerMode">
-            <h5 class="heading">
-                <span>Define the constraint...</span>
-                <button type="button" class="btn btn-sm btn-outline-danger backBtn"
-                    (click)="deactivateConstraint()">
-                    cancel
-                </button>
-            </h5>
-            <div class="c-constraint__content">
-
-                <constraint-creator *ngIf="activeConstraint==='creator'"
-                    [constraints]="constraints">
-                </constraint-creator>
-                <constraint-extent *ngIf="activeConstraint==='extent'"
-                    [constraints]="constraints">
-                </constraint-extent>
-                <constraint-keywords *ngIf="activeConstraint==='keywords'"
-                    [constraints]="constraints">
-                </constraint-keywords>
-                <constraint-publishers *ngIf="activeConstraint==='publishers'"
-                    [constraints]="constraints">
-                </constraint-publishers>
-                <constraint-temporal *ngIf="activeConstraint==='temporal'"
-                    [constraints]="constraints">
-                </constraint-temporal>
-                <constraint-themes *ngIf="activeConstraint==='themes'"
-                    [constraints]="constraints">
-                </constraint-themes>
-                <constraint-types *ngIf="activeConstraint==='types'"
-                    [constraints]="constraints">
-                </constraint-types>
-
-            </div>
+        <div *ngIf="!inPickerMode">
+            <picker-editor
+                [constraints]="constraints"
+                [component]="activeConstraint?.component"
+                (onClose)="onEditorClosed($event)">
+            </picker-editor>
         </div>
 
     </div>

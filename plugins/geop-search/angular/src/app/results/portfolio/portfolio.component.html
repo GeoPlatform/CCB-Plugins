@@ -58,13 +58,13 @@
                 <!-- <div class="c-results-item__facets is-url">{{item.uri}}</div> -->
                 <div class="c-results-item__facets">
                     <span class="c-results-item__type">
-                        <strong>{{item.type}}</strong> by
-                        <a *ngIf="item.createdBy" (click)="addCreatorConstraint(item.createdBy)">
-                            {{item.createdBy}}
-                        </a>
+                        <strong>{{item.type}}</strong>
+                        <span *ngIf="item.createdBy">
+                            by <a (click)="addCreatorConstraint(item.createdBy)">{{item.createdBy}}</a>
+                        </span>
                     </span> |
-                    <span *ngIf="item.created" title="Creation date">C: {{item.created|date}}</span> |
-                    <span *ngIf="item.modified" title="Last modified date">M: {{item.modified|date}}</span>
+                    <span *ngIf="item.created" title="Creation date">created {{item.created|date}}</span> |
+                    <span *ngIf="item.modified" title="Last modified date">last modified {{item.modified|date}}</span>
                 </div>
                 <div class="c-results-item__description" [innerHtml]="item.description"></div>
             </div>

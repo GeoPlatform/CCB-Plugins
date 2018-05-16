@@ -82,9 +82,13 @@ button.btn.btn-sm {
 
 .c-constraint__editor {
     padding: 0.5em 1em;
-
-    background: #f5f5f5;
+    background: #f9f9f9;
     border: 1px solid #ddd;
+}
+.c-constraint__editor footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1em;
 }
 
 

@@ -5,7 +5,7 @@ import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
-export class PublisherCodec implements Codec {
+export class ContactCodec implements Codec {
 
     private service : ItemService;
 
@@ -15,12 +15,12 @@ export class PublisherCodec implements Codec {
 
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let constraint : Constraint = null;
-        if(params && params.publishers) {
-            let ids = params.publishers.split(',');
+        if(params && params.contacts) {
+            let ids = params.contacts.split(',');
             if(ids && ids.length) {
                 //have to get theme objects for ids provided
-                this.resolveItems(ids).then( publishers => {
-                    constraint = new MultiValueConstraint(QueryParameters.PUBLISHERS_ID, publishers, "Publishers");
+                this.resolveItems(ids.split(',')).then( contacts => {
+                    constraint = this.toConstraint(contacts);
                     if(constraints && constraint) {
                         constraints.set(constraint);
                     }
@@ -31,15 +31,15 @@ export class PublisherCodec implements Codec {
     }
 
     setParam(params: Params, constraints: Constraints) {
-        let constraint = constraints.get(QueryParameters.PUBLISHERS_ID);
+        let constraint = constraints.get(QueryParameters.CONTACTS_ID);
         if(constraint && constraint.value.length)
-            params['publishers'] = constraint.value.map(v=>v.id).join(',');
-        else delete params['publishers'];
+            params['contacts'] = constraint.value.map(v=>v.id).join(',');
+        else delete params['contacts'];
     }
 
     getValue(constraints: Constraints) : any {
         if(!constraints) return null;
-        let constraint = constraints.get(QueryParameters.PUBLISHERS_ID);
+        let constraint = constraints.get(QueryParameters.CONTACTS_ID);
         if(constraint) {
             return (constraint.value||[]).join(', ');
         }
@@ -48,8 +48,8 @@ export class PublisherCodec implements Codec {
 
     toConstraint(value : any) : Constraint {
         if(!value) return null;
-        let publishers = value as [{id:string}];
-        return new MultiValueConstraint(QueryParameters.PUBLISHERS_ID, publishers, "Publishers");
+        let contacts = value as [{id:string}];
+        return new MultiValueConstraint(QueryParameters.CONTACTS_ID, contacts, "Contacts");
     }
 
 

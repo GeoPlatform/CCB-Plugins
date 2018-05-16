@@ -30,7 +30,7 @@ export class LimitToPipe implements PipeTransform {
 
 import { Config } from 'geoplatform.client';
 Config.configure({
-    ualUrl: 'https://sit-ual.geoplatform.us'
+    ualUrl: 'http://localhost:4040'//'https://sit-ual.geoplatform.us'
 });
 
 //Leaflet does some magic rewrites to css to reference images,
@@ -49,23 +49,29 @@ L.Icon.Default.mergeOptions({
 
 import { AppComponent } from './app.component';
 import { PickerComponent } from './picker/picker.component';
+import { EditorComponent, ConstraintDirective } from './picker/editor/editor.component';
 
-import { Constraints } from './models/constraint';
+import {
+    CurrentComponent,
+    KeywordsComponent,
+    ThemeComponent,
+    ContactComponent,
+    CreatorComponent,
+    PublisherComponent,
+    ExtentComponent,
+    SemanticComponent,
+    TemporalComponent,
+    TypeComponent
+} from './constraints';
 
-import { KeywordsComponent } from './constraints/keywords/keywords.component';
-import { ThemeComponent } from './constraints/theme/theme.component';
-import { CurrentComponent } from './constraints/current/current.component';
-import { ResultsComponent } from './results/results.component';
-import { PublisherComponent } from './constraints/publisher/publisher.component';
-import { CreatorComponent } from './constraints/creator/creator.component';
-import { ExtentComponent } from './constraints/extent/extent.component';
-import { TemporalComponent } from './constraints/temporal/temporal.component';
-import { CcbComponent } from './results/ccb/ccb.component';
+import {
+    ResultsComponent,
+    PortfolioComponent,
+    CcbComponent,
+    CkanComponent
+} from './results';
 
 import { CCBService } from './shared/ccb.service';
-import { PortfolioComponent } from './results/portfolio/portfolio.component';
-import { TypeComponent } from './constraints/type/type.component';
-import { CkanComponent } from './results/ckan/ckan.component';
 
 
 
@@ -86,6 +92,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     PickerComponent,
+    ConstraintDirective,
     KeywordsComponent,
     ThemeComponent,
     CurrentComponent,
@@ -98,7 +105,10 @@ const appRoutes: Routes = [
     PortfolioComponent,
     TypeComponent,
     CkanComponent,
-    LimitToPipe
+    LimitToPipe,
+    ContactComponent,
+    SemanticComponent,
+    EditorComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { enableTracing: false } ),
@@ -108,6 +118,17 @@ const appRoutes: Routes = [
   ],
   providers: [
       CCBService
+  ],
+  entryComponents: [
+      KeywordsComponent,
+      ThemeComponent,
+      ContactComponent,
+      CreatorComponent,
+      PublisherComponent,
+      ExtentComponent,
+      SemanticComponent,
+      TemporalComponent,
+      TypeComponent
   ],
   bootstrap: [AppComponent]
 })
