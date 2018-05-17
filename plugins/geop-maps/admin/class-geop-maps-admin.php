@@ -106,7 +106,7 @@ class Geop_Maps_Admin {
 	 * @since    1.0.0
 	 */
 
-	public function add_plugin_admin_menu() {
+	public function geopmap_add_plugin_admin_menu() {
 
 	    /*
 	     * Add a settings page for this plugin to the Settings menu.
@@ -116,8 +116,7 @@ class Geop_Maps_Admin {
 	     *        Administration Menus: http://codex.wordpress.org/Administration_Menus
 	     *
 	     */
-	    add_options_page( 'GeoPlatform Open Maps Plugin Settings Page', 'GP Maps', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page')
-	    );
+	    add_options_page( 'GeoPlatform Open Maps Plugin Settings Page', 'GP Maps', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
 	}
 
 	 /**
