@@ -1,7 +1,7 @@
 .gp-search
 {
   border: 1px solid #E1E1E1;
-} 
+}
 
 
 .gp-search .header
@@ -18,11 +18,12 @@
   margin: 0;
   padding: 0;
   font-size: 16px;
-  color: white;
+  color: white !important;
+  font-weight: 700;
 }
 
 .gp-search .gp-search-paging
-{  
+{
    padding-top: 8px;
    padding-bottom: 8px;
    padding-left: 16px;
