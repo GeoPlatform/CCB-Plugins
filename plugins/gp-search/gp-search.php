@@ -24,25 +24,25 @@
  * Text Domain:       gp-search
  */
 
-define("UAL", "https://sit-ual.geoplatform.us");
+define("UAL", "https://ual.geoplatform.gov");
 define('GP_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('GP_SEARCH_URL', plugin_dir_url(__FILE__));
-define('GP_SEARCH_NAME', "GP Search");
+define('GP_SEARCH_NAME', "GeoPlatform Search");
 define('GP_SEARCH_VERSION', "1.0.0");
 
 function gpsearch_add_stylesheet() {
   wp_register_style('gpsearch', GP_SEARCH_URL . 'assets/css/gp-search-core.css', array(), false, 'all');
-  wp_enqueue_style('gpsearch'); 
+  wp_enqueue_style('gpsearch');
 }
 add_action( 'wp_print_styles', 'gpsearch_add_stylesheet' );
 
 function gpsearch_add_script() {
   wp_register_script('geoplatform', GP_SEARCH_URL . 'assets/js/geoplatform.js', array(), null);
-  wp_enqueue_script('geoplatform'); 
+  wp_enqueue_script('geoplatform');
   wp_register_script('q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js', array(), null);
-  wp_enqueue_script('q'); 
+  wp_enqueue_script('q');
   wp_register_script('clientapi', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
-  wp_enqueue_script('clientapi'); 
+  wp_enqueue_script('clientapi');
 }
 add_action( 'wp_print_scripts', 'gpsearch_add_script' );
 
@@ -54,7 +54,7 @@ function gp_search_shortcode_creation($atts){
   $uuid = str_replace("-", "", $uuid);
 
   // load the settings - add default values if none exist already
-  $options = get_option('gpsearch_settings', array( 
+  $options = get_option('gpsearch_settings', array(
     'gpsearch_select_community' => 'any',
     'gpsearch_text_title' => 'Community Items',
     'gpsearch_select_objtype' => 'any',
@@ -62,7 +62,7 @@ function gp_search_shortcode_creation($atts){
     'gpsearch_checkbox_show_search' => 1,
     'gpsearch_select_sort' => 'modified',
     'gpsearch_select_perpage' => 10));
-  
+
   // handle true/false values in shortcode.  is stored in settings api as 1 or 0
   if ($atts !=  null)
   {
@@ -109,13 +109,13 @@ add_action('init', 'gp_search_shortcodes_init');
 // need to add these scripts on the admin side too
 function gpsearch_add_admin_script() {
   wp_register_script('geoplatform', GP_SEARCH_URL . 'assets/js/geoplatform.js', array(), null);
-  wp_enqueue_script('geoplatform'); 
+  wp_enqueue_script('geoplatform');
   wp_register_script('q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js', array(), null);
-  wp_enqueue_script('q'); 
+  wp_enqueue_script('q');
   wp_register_script('clientapi', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
-  wp_enqueue_script('clientapi'); 
+  wp_enqueue_script('clientapi');
   wp_register_style('gpsearchadmin_css', GP_SEARCH_URL . 'assets/css/gp-search-admin.css', false, 'all');
-  wp_enqueue_style('gpsearchadmin_css'); 
+  wp_enqueue_style('gpsearchadmin_css');
 }
 add_action( 'admin_enqueue_scripts', 'gpsearch_add_admin_script' );
 
@@ -132,7 +132,7 @@ function gp_search_plugin_display_admin_page() {
 
 // settings api setup.  requires callbacks to handling displaying the fields.
 add_action('admin_init', 'gpsearch_settings_init');
-function gpsearch_settings_init() { 
+function gpsearch_settings_init() {
 	register_setting( 'gpsearch', 'gpsearch_settings' );
   add_settings_section('gpsearch_section', 'TESTxx', 'gpsearch_settings_section_callback', 'gpsearch' );
 	add_settings_field('gpsearch_select_community', __( 'Community:', 'wordpress' ), 'gpsearch_select_community_render', 'gpsearch', 'gpsearch_section' );
@@ -167,7 +167,7 @@ function gpsearch_select_community_render() {
 <?php
 }
 
-function gpsearch_text_title_render(  ) { 
+function gpsearch_text_title_render(  ) {
   $options = get_option( 'gpsearch_settings', array( 'gpsearch_text_title' => 'Community Items' ));
   $titleVal = $options['gpsearch_text_title'];
 	?>
@@ -175,7 +175,7 @@ function gpsearch_text_title_render(  ) {
 	<?php
 }
 
-function gpsearch_select_objtype_render(  ) { 
+function gpsearch_select_objtype_render(  ) {
   $options = get_option( 'gpsearch_settings', array( 'gpsearch_select_objtype' => 'any' ));
   $objtypeVal = $options['gpsearch_select_objtype'];
 	?>
@@ -191,7 +191,7 @@ function gpsearch_select_objtype_render(  ) {
 <?php
 }
 
-function gpsearch_checkbox_show_paging_render(  ) { 
+function gpsearch_checkbox_show_paging_render(  ) {
   $options = get_option( 'gpsearch_settings', array( 'gpsearch_checkbox_show_paging' => 1 ));
   $pagingVal =  $options['gpsearch_checkbox_show_paging']
 	?>
@@ -199,7 +199,7 @@ function gpsearch_checkbox_show_paging_render(  ) {
 	<?php
 }
 
-function gpsearch_checkbox_show_search_render(  ) { 
+function gpsearch_checkbox_show_search_render(  ) {
   $options = get_option( 'gpsearch_settings', array( 'gpsearch_checkbox_show_search' => 1 ));
   $searchVal = $options['gpsearch_checkbox_show_search'];
 
@@ -208,7 +208,7 @@ function gpsearch_checkbox_show_search_render(  ) {
 	<?php
 }
 
-function gpsearch_select_sort_render(  ) { 
+function gpsearch_select_sort_render(  ) {
   $options = get_option( 'gpsearch_settings', array( 'gpsearch_select_sort' => 'modified' ));
   $sortVal = $options['gpsearch_select_sort'];
 
@@ -220,10 +220,10 @@ function gpsearch_select_sort_render(  ) {
 <?php
 }
 
-function gpsearch_select_perpage_render(  ) { 
+function gpsearch_select_perpage_render(  ) {
   $options = get_option('gpsearch_settings', array( 'gpsearch_select_perpage' => 10 ));
   $perpageVal = $options['gpsearch_select_perpage'];
- 
+
   ?>
 	<select name='gpsearch_settings[gpsearch_select_perpage]' class='gp-form-control'>
 		<option value='5' <?php selected( $perpageVal, 5 ); ?>>5 Items</option>

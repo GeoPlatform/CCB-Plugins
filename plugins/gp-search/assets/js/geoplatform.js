@@ -5,11 +5,11 @@
       // one of "development", "sit", "stg", "prd", or "production"
       "env": "development",
 
-      "wmvUrl": "https://sit-viewer.geoplatform.us",
-      "oeUrl": "https://sit-oe.geoplatform.us", 
+      "wmvUrl": "https://viewer.geoplatform.gov",
+      "oeUrl": "https://oe.geoplatform.gov",
 
       //REQUIRED: URL to GeoPlatform UAL for API usage
-      "ualUrl": "https://sit-ual.geoplatform.us",
+      "ualUrl": "https://ual.geoplatform.gov",
 
       //timeout max for requests
       "timeout": "5000",
