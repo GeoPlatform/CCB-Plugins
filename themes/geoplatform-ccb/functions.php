@@ -1,8 +1,8 @@
 <?php
-//Begin development Block
 function gp_getEnv($name, $def){
-    return $_ENV[$name] ? $_ENV[$name] : $def;
+    return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
+
 $maps_url = gp_getEnv('maps_url', 'https://maps.geoplatform.gov');
 $viewer_url = gp_getEnv('viewer_url', 'https://viewer.geoplatform.gov');
 $marketplace_url = gp_getEnv('marketplace_url',"https://marketplace.geoplatform.gov");

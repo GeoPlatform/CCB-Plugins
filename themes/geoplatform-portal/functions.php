@@ -1,18 +1,24 @@
 <?php
-$maps_url = "https://maps.geoplatform.gov";
-$viewer_url = "https://viewer.geoplatform.gov";
-$marketplace_url = "https://marketplace.geoplatform.gov";
-$dashboard_url = "https://dashboard.geoplatform.gov/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green";
-$wpp_url = "https://geoplatform.gov";
-$ual_url = "https://ual.geoplatform.gov";
-$ckan_mp_url = "https://ckan.geoplatform.gov/?progress=planned&h=Marketplace";
-$ckan_url = "https://ckan.geoplatform.gov/";
-$cms_url = "https://www.geoplatform.gov/geoplatform-resources/";
-$idp_url = "https://idp.geoplatform.gov";
-$oe_url = "https://oe.geoplatform.gov";
-$comm_url = "https://www.geoplatform.gov/communities/ ";
-$accounts_url = "https://accounts.geoplatform.gov";
 
+function gp_getEnv($name, $def){
+	return isset($_ENV[$name]) ? $_ENV[$name] : $def;
+}
+
+$maps_url = gp_getEnv('maps_url', 'https://maps.geoplatform.gov');
+$viewer_url = gp_getEnv('viewer_url', 'https://viewer.geoplatform.gov');
+$marketplace_url = gp_getEnv('marketplace_url',"https://marketplace.geoplatform.gov");
+$dashboard_url = gp_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
+$wpp_url = gp_getEnv('wpp_url',"https://geoplatform.gov");
+$ual_url = gp_getEnv('ual_url',"https://ual.geoplatform.gov");
+$ckan_mp_url = gp_getEnv('ckan_mp_url',"https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace");
+$ckan_url = gp_getEnv('ckan_url',"https://ckan.geoplatform.gov/");
+$cms_url = gp_getEnv('cms_url',"https://cms.geoplatform.gov/resources");
+$idp_url = gp_getEnv('idp_url',"https://idp.geoplatform.gov");
+$oe_url = gp_getEnv('oe_url',"https://oe.geoplatform.gov");
+$sd_url = gp_getEnv('sd_url',"servicedesk@geoplatform.gov");
+$ga_code = gp_getEnv('ga_code','UA-00000000-0');
+$comm_url = gp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
+$accounts_url = gp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
 //Disable admin bar (un-comment for prod sites)
 add_filter('show_admin_bar', '__return_false');
