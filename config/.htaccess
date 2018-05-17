@@ -1,5 +1,9 @@
 # PHP settings
 php_value max_input_vars 3000
+php_value upload_max_filesize 100M
+php_value post_max_size 100M
+php_value max_execution_time 300
+php_value max_input_time 1000
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
