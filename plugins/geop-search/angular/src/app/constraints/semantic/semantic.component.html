@@ -1,18 +1,26 @@
 <div class="c-constraint__editor">
     <p>
-        Find semantic, grounded concepts by searching using the box below.
-        Select one or more options from the list below and click "Apply"
+        Select suggested concepts using the box and dropdown list that appears below.
+        Click "Apply" to apply all selected concepts to the current constraints.
     </p>
     <br>
 
     <label for="semFilter">Find Concepts</label>
-    <input type="text" id="semFilter" placeholder="Enter keywords"
+    <!-- <input type="text" id="semFilter" placeholder="Enter keywords"
       [(ngModel)]="listFilter"
       (keyup.enter)="refreshOptions()">
 
-    <hr>
+      <hr>
+    -->
 
-    <div class="c-pagination">
+      <ngbd-typeahead-http [service]="service"
+        [formatter]="getSuggestionLabel"
+        (resultSelected)="selectSuggestion($event)">
+      </ngbd-typeahead-http>
+
+      <a *ngFor="let option of selections" class="list-item">{{option.label}}</a>
+
+    <!-- <div class="c-pagination">
         <span>{{totalResults}} options</span>
         <span>{{listQuery.getPageSize()}} per page</span>
         <div>
@@ -29,7 +37,7 @@
       [ngClass]="{selected:isSelected(option)}"
       (click)="select(option)">
         {{option.label}}
-    </a>
+    </a> -->
 
     <footer>
         <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>

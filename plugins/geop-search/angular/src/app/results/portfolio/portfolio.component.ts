@@ -7,7 +7,9 @@ import { ISubscription } from "rxjs/Subscription";
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import {
-    Config, Query, QueryParameters, ItemService, ItemTypes
+    Config,
+    Query, QueryParameters, QueryFields,
+    ItemService, ItemTypes
 } from 'geoplatform.client';
 
 
@@ -38,11 +40,13 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         private http : HttpClient
     ) {
         this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
-        this.query = new Query().pageSize(this.pageSize);
+        this.query = new Query()
+            .pageSize(this.pageSize)
+            .fields(QueryFields.THUMBNAIL);
 
         //use a subject so we can debounce query execution events
         this.queryChange
-            .debounceTime(500) 
+            .debounceTime(500)
             .subscribe((query) => this.executeQuery() );
     }
 
@@ -70,17 +74,15 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     onConstraintChange(constraints?: Constraints) {
-        this.query = new Query().pageSize(this.pageSize);
         //apply constraints to tracked query object
         if(constraints) constraints.apply(this.query);
-        else            this.constraints.apply(this.query);
-        // this.executeQuery();                //then search
+        else this.constraints.apply(this.query);
+
         this.queryChange.next(this.query);
     }
 
     onPageSizeChange() {
         this.query.setPageSize(this.pageSize);
-        // this.executeQuery();
         this.queryChange.next(this.query);
     }
 

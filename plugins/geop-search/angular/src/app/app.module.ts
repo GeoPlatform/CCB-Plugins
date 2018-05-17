@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 /*
@@ -30,7 +30,7 @@ export class LimitToPipe implements PipeTransform {
 
 import { Config } from 'geoplatform.client';
 Config.configure({
-    ualUrl: 'http://localhost:4040'//'https://sit-ual.geoplatform.us'
+    ualUrl: 'https://sit-ual.geoplatform.us'
 });
 
 //Leaflet does some magic rewrites to css to reference images,
@@ -73,6 +73,8 @@ import {
 
 import { CCBService } from './shared/ccb.service';
 
+import { NgbdTypeaheadHttp } from './shared/typeahead';
+import { ThumbnailComponent } from './shared/thumbnail/thumbnail.component';
 
 
 //ROUTING CONFIG
@@ -108,13 +110,16 @@ const appRoutes: Routes = [
     LimitToPipe,
     ContactComponent,
     SemanticComponent,
-    EditorComponent
+    EditorComponent,
+    NgbdTypeaheadHttp,
+    ThumbnailComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { enableTracing: false } ),
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot()
   ],
   providers: [
       CCBService

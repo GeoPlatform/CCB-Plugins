@@ -44,4 +44,20 @@ export class CurrentComponent implements OnInit {
         return constraint instanceof MultiValueConstraint;
     }
 
+    getValueDisplay(value : any, constraint:Constraint) : string {
+
+        if(QueryParameters.EXTENT === constraint.name && value) {
+            let bbox = value.split(',');
+            return `<div>
+                <div>North: ${bbox[3]}</div>
+                <div>South: ${bbox[1]}</div>
+                <div>East: ${bbox[2]}</div>
+                <div>West: ${bbox[0]}</div>
+                </div>`;
+        }
+
+        if(value) return value.label ? value.label : value;
+        return '';
+    }
+
 }

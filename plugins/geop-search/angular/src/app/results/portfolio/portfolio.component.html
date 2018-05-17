@@ -43,11 +43,6 @@
     <div *ngFor="let item of results?.results"
         class="c-results-item c-results-item--{{item.type.toLowerCase().replace(':','-')}}">
         <div class="c-results-item__body">
-            <!-- icon if necessary
-            <div class="c-results-item__icon" *ngIf="thumbnailUrl">
-                <img ng-src="{{thumbnailUrl}}" on-img-fail="/img/img-404.png">
-            </div>
-             -->
             <div>
                 <div class="c-results-item__heading">
                     <a>
@@ -68,6 +63,11 @@
                 </div>
                 <div class="c-results-item__description" [innerHtml]="item.description"></div>
             </div>
+            <!-- icon if necessary -->
+            <thumbnail *ngIf="item.thumbnail" class="c-results-item__icon t--large"
+                [source]="item.thumbnail">
+            </thumbnail>
+
         </div>
 
         <div class="c-results-item__footer">

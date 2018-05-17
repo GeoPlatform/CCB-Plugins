@@ -39,7 +39,6 @@ export class ExtentCodec implements Codec {
     }
 
     toConstraint(value : any) : Constraint {
-        if(!value) return null;
         return new Constraint(QueryParameters.EXTENT, value, "Geographic Extent");
     }
 

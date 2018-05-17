@@ -159,6 +159,10 @@
   dependencies:
     tslib "^1.7.1"
 
+"@ng-bootstrap/ng-bootstrap@^1.1.1":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-1.1.2.tgz#276b1c488687ca3e53d1694b63835fd57ca552ca"
+
 "@ngtools/json-schema@1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@ngtools/json-schema/-/json-schema-1.2.0.tgz#06e5ecd29e9a37d260a447dd873ea2becd228c4f"
@@ -2869,7 +2873,7 @@ generate-object-property@^1.1.0:
 
 "geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
   version "0.1.0"
-  resolved "git+http://github.com/GeoPlatform/client-api.git#d6b8ffd412db4f932c5451b05fafbfb667f5c115"
+  resolved "git+http://github.com/GeoPlatform/client-api.git#65c5d777b111eb0d082626d673bfd3956ad83ad5"
   dependencies:
     babel-plugin-external-helpers "^6.22.0"
     babel-preset-es2015-rollup "^3.0.0"

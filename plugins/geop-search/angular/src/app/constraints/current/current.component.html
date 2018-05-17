@@ -37,9 +37,7 @@
                     (click)="remove(constraint)">
                     <span class="far fa-times-circle"></span>
                 </button>
-                <span class="flex-1">
-                    {{constraint.value?.label?constraint.value.label:constraint.value}}
-                </span>
+                <div class="flex-1" [innerHTML]="getValueDisplay(constraint.value, constraint)"></div>
             </div>
             <div *ngIf="isMultiValue(constraint)">
                 <div *ngFor="let value of constraint.value"
@@ -49,7 +47,7 @@
                         (click)="removeValue(constraint, value)">
                         <span class="far fa-times-circle"></span>
                     </button>
-                    <span>{{value?.label?value.label:value}}</span>
+                    <div class="flex-1" [innerHTML]="getValueDisplay(value, constraint)"></div>
                 </div>
             </div>
         </div>

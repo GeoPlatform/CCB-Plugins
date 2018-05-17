@@ -298,6 +298,12 @@ button.btn.btn-sm {
         max-width: 75px;
         overflow: hidden;
         max-height: 126px;
+        min-height: 42px;
+    }
+    .c-results-item .c-results-item__icon.t--large {
+        flex: 0 1 125px;
+        max-width: 125px;
+        min-height: 70px;
     }
 
     .c-results-item .c-results-item__heading { padding-top: 0; }
@@ -425,3 +431,20 @@ button.btn.btn-sm {
 
 /* indent select content over a bit more if following a button */
 .input-group-slick > .btn + select.form-control { text-indent: 2.5em; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* hide the leaflet draw control for circle marker */
+.leaflet-draw-section a.leaflet-draw-draw-circlemarker {
+    display: none!important;
+}
