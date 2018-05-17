@@ -78,7 +78,7 @@ class Geop_Maps_Public {
 		wp_enqueue_style( 'geop_marker_default_css', plugin_dir_url( __FILE__ ) . 'assets/MarkerCluster.Default_1.3.0.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_timedimension_css', plugin_dir_url( __FILE__ ) . 'assets/leaflet.timedimension.control_1.1.0.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'assets/fontawesome-all_5.0.10.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geop-maps-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-maps-public.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -100,7 +100,7 @@ class Geop_Maps_Public {
 		 * class.
 		 *
 		 * Make sure to uncomment the geoplatform enqueues and comment out their
-		 * straight evocations in geop-maps.php in production or non-GeoPlatform
+		 * straight evocations in geoplatform-maps.php in production or non-GeoPlatform
 		 * theme environments.
 		 */
 		wp_enqueue_script( 'jquery' );
@@ -113,6 +113,6 @@ class Geop_Maps_Public {
 		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.client.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_mapcore', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.mapcore.js', array(), $this->version, false );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geop-maps-public.js', array(), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-maps-public.js', array(), $this->version, false );
 	}
 }

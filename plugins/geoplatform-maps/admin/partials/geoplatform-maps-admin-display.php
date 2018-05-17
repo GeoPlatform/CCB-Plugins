@@ -65,13 +65,13 @@
         <table class="widefat">
         	<thead>
         	<tr>
-        		<th class="row-title"><?php esc_attr_e( 'Map ID', 'geop-maps' ); ?></th>
-            <th><?php esc_attr_e( 'Map Format', 'geop-maps' ); ?></th>
-        		<th><?php esc_attr_e( 'Map Name', 'geop-maps' ); ?></th>
-            <th><?php esc_attr_e( 'Description', 'geop-maps' ); ?></th>
-            <th><?php esc_attr_e( 'Shortcode', 'geop-maps' ); ?></th>
-            <th><?php esc_attr_e( 'Controls', 'geop-maps' ); ?></th>
-            <th><?php esc_attr_e( 'Thumbnail', 'geop-maps' ); ?></th>
+        		<th class="row-title"><?php esc_attr_e( 'Map ID', 'geoplatform-maps' ); ?></th>
+            <th><?php esc_attr_e( 'Map Format', 'geoplatform-maps' ); ?></th>
+        		<th><?php esc_attr_e( 'Map Name', 'geoplatform-maps' ); ?></th>
+            <th><?php esc_attr_e( 'Description', 'geoplatform-maps' ); ?></th>
+            <th><?php esc_attr_e( 'Shortcode', 'geoplatform-maps' ); ?></th>
+            <th><?php esc_attr_e( 'Controls', 'geoplatform-maps' ); ?></th>
+            <th><?php esc_attr_e( 'Thumbnail', 'geoplatform-maps' ); ?></th>
         	</tr>
         	</thead>
         	<tbody>

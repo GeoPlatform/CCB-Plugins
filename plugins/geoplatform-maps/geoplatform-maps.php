@@ -21,7 +21,7 @@
  * Author URI:        www.imagemattersllc.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       geop-maps
+ * Text Domain:       geoplatform-maps
  * Domain Path:       /languages
  */
 
@@ -39,19 +39,19 @@ define( 'GEOPMAP_PLUGIN', '1.0.5' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-geop-maps-activator.php
+ * This action is documented in includes/class-geoplatform-maps-activator.php
  */
 function activate_geop_maps() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geop-maps-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-maps-activator.php';
 	Geop_Maps_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-geop-maps-deactivator.php
+ * This action is documented in includes/class-geoplatform-maps-deactivator.php
  */
 function deactivate_geop_maps() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geop-maps-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-maps-deactivator.php';
 	Geop_Maps_Deactivator::deactivate();
 }
 
@@ -62,7 +62,7 @@ register_deactivation_hook( __FILE__, 'deactivate_geop_maps' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-geop-maps.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-maps.php';
 
 /**
  * Begins execution of the plugin.
@@ -553,12 +553,12 @@ add_action('init', 'geopmap_shortcodes_init');
 // that perform the settings interface add and remove map operations are simply
 // included here.
 function geopmap_process_addition() {
-	include 'admin/partials/geop-maps-admin-add-map.php';
+	include 'admin/partials/geoplatform-maps-admin-add-map.php';
 	wp_die();
 }
 
 function geopmap_process_removal() {
-	include 'admin/partials/geop-maps-admin-remove-map.php';
+	include 'admin/partials/geoplatform-maps-admin-remove-map.php';
   wp_die();
 }
 

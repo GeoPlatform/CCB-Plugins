@@ -73,7 +73,7 @@ class Geop_Maps_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geop-maps-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-maps-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class Geop_Maps_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geop-maps-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-maps-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -143,7 +143,7 @@ class Geop_Maps_Admin {
 	 */
 
 	public function display_plugin_setup_page() {
-	    include_once( 'partials/geop-maps-admin-display.php' );
+	    include_once( 'partials/geoplatform-maps-admin-display.php' );
 	}
 
 

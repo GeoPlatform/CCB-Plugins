@@ -35,7 +35,7 @@ class Geop_Maps_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'geop-maps',
+			'geoplatform-maps',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

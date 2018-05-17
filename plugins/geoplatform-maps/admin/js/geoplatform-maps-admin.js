@@ -31,7 +31,7 @@
 	 /* This is the document ready jQuery block, which contains the button press
     * detectors for the add and remove map buttons. In both cases, when a button
 		* is pressed, the necessary data is collected and sent to the admin-ajax.php
-		* function which passes that info off to the associated function in geop-maps.php,
+		* function which passes that info off to the associated function in geoplatform-maps.php,
 		* which IN TURN pass them off to the associated files in admin/partials. Once
 		* the operation is performed, any issues encountered will be shown in an
 		* alert window before the page reloads.
