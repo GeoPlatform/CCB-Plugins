@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.0
+ * @since             1.0.1
  * @package           GP_Search
  *
  * @wordpress-plugin
@@ -28,7 +28,7 @@ define("UAL", "https://ual.geoplatform.gov");
 define('GP_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('GP_SEARCH_URL', plugin_dir_url(__FILE__));
 define('GP_SEARCH_NAME', "GeoPlatform Search");
-define('GP_SEARCH_VERSION', "1.0.0");
+define('GP_SEARCH_VERSION', "1.0.1");
 
 function gpsearch_add_stylesheet() {
   wp_register_style('gpsearch', GP_SEARCH_URL . 'assets/css/geoplatform-search-core.css', array(), false, 'all');
