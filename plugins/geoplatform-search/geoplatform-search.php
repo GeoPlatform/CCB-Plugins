@@ -16,7 +16,7 @@
  * Plugin Name:       GeoPlatform Search Plugin
  * Plugin URI:        www.geoplatform.gov
  * Description:       Search for geoplatform objects.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Image Matters LLC
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
