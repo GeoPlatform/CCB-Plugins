@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import {
+    Component, OnInit, OnChanges,
+    Input, Output, EventEmitter, SimpleChanges 
+} from '@angular/core';
 
 import { QueryParameters } from 'geoplatform.client';
 
@@ -24,28 +27,13 @@ export class KeywordsComponent implements OnInit, ConstraintEditor {
 
     ngOnInit() {
         this.value = this.codec.getValue(this.constraints);
-        // if(this.constraints) {
-        //     let constraint = this.constraints.get(QueryParameters.KEYWORDS);
-        //     if(constraint) {
-        //         this.value = (constraint.values||[]).join(', ');
-        //     }
-        // }
     }
 
     getCodec() : Codec { return this.codec; }
 
-
     apply() {
         let constraint = this.codec.toConstraint(this.value);
-
         this.constraints.set(constraint);
-
-        // let keywords : any = this.value;
-        // if(keywords) {
-        //     keywords = keywords.split(',').map(k=>k.trim());
-        // }
-        // let constraint = new Constraint(QueryParameters.KEYWORDS, keywords, "Keywords");
-        // this.onConstraintEvent.emit(constraint);
     }
 
 }

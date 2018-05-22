@@ -2,9 +2,10 @@
     <p>Select one or more types from the list below and click "Apply"</p>
     <br>
 
-    <div *ngFor="let opt of options" class="list-item"
+    <div *ngFor="let opt of options" class="list-item {{opt.id.toLowerCase().replace(':','-')}}"
         [ngClass]="{selected:isSelected(opt)}"
         (click)="select(opt)">
+        <span [inlineSVG]="getIconPath(opt)" class="svg-icon"></span>
         {{opt.label}}
     </div>
 

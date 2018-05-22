@@ -63,7 +63,7 @@ class RecommenderTypeaheadService implements HttpTypeaheadService {
 
 
 @Component({
-  selector: 'app-semantic',
+  selector: 'constraint-semantic',
   templateUrl: './semantic.component.html',
   styleUrls: ['./semantic.component.css']
 })

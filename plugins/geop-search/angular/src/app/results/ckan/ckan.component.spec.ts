@@ -1,25 +1,43 @@
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { Constraints } from '../../models/constraint';
 import { CkanComponent } from './ckan.component';
+import { LimitToPipe } from '../../shared/pipes';
+
+@Component({
+    selector: `host-component`,
+    template: `<results-ckan [constraints]="constraints"></results-ckan>`
+})
+class TestHostComponent {
+    constraints: Constraints = new Constraints();
+}
 
 describe('CkanComponent', () => {
-  let component: CkanComponent;
-  let fixture: ComponentFixture<CkanComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ CkanComponent ]
-    })
-    .compileComponents();
-  }));
+    let component: TestHostComponent;
+    let fixture: ComponentFixture<TestHostComponent>;
+    let hostEl : HTMLElement;
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CkanComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [ FormsModule, HttpClientModule ],
+            declarations: [ CkanComponent, TestHostComponent, LimitToPipe ]
+        })
+        .compileComponents();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TestHostComponent);
+        component = fixture.componentInstance;
+        hostEl = fixture.nativeElement;
+        fixture.detectChanges();
+    });
+
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
+
 });

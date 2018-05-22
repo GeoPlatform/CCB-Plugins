@@ -1,27 +1,59 @@
-import { TestBed, async } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+// import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { InlineSVGModule } from 'ng-inline-svg';
+
 import { AppComponent } from './app.component';
+import { PickerComponent } from './picker/picker.component';
+import { EditorComponent } from './picker/editor/editor.component';
+import { CurrentComponent } from './constraints/current/current.component';
+import { ResultsComponent } from './results/results.component';
+import { PortfolioComponent } from './results/portfolio/portfolio.component';
+import { CcbComponent } from './results/ccb/ccb.component';
+import { ThumbnailComponent } from './shared/thumbnail/thumbnail.component';
+
+import { FriendlyTypePipe } from './shared/pipes';
+
+
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  }));
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
-  }));
+
+    let component: AppComponent;
+    let fixture: ComponentFixture<AppComponent>;
+    let hostEl : HTMLElement;
+
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [
+                HttpClientModule,
+                FormsModule,
+                InlineSVGModule,
+                RouterTestingModule
+            ],
+            declarations: [
+                AppComponent, PickerComponent, EditorComponent, CurrentComponent,
+                ResultsComponent, PortfolioComponent, CcbComponent,
+                ThumbnailComponent,
+                FriendlyTypePipe
+            ],
+        }).compileComponents();
+    }));
+
+    beforeEach(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+        hostEl = fixture.debugElement.nativeElement;
+    });
+
+    it('should create the app', () => {
+        expect(component).toBeTruthy();
+    });
+
+    it('should have a layout', () => {
+        expect(hostEl.querySelector('.l-body')).toBeDefined();
+
+        // expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
+    });
 });

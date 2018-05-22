@@ -85,6 +85,7 @@ button.btn.btn-sm {
     background: #f9f9f9;
     border: 1px solid #ddd;
 }
+.c-constraint__editor .list-item { margin: 0 -1em; }
 .c-constraint__editor footer {
     display: flex;
     justify-content: flex-end;
@@ -228,14 +229,14 @@ button.btn.btn-sm {
 .c-results-item__facet {
     margin-right: 2em;
 }
-.c-results-item__type:before {
+/* .c-results-item__type:before {
     content: " ";
     display: inline-block;
     background: #ddd;
     width: 0.75em;
     height: 0.75em;
     border-radius: 100%;
-}
+} */
 
 
 .c-results-item__footer {
@@ -436,6 +437,61 @@ button.btn.btn-sm {
 
 
 
+
+
+
+
+
+.svg-icon { }
+.svg-icon svg {
+    max-width: 1em;
+    max-height: 1em;
+    vertical-align: middle;
+}
+.svg-icon.svg-icon--md svg {
+    max-width: 2em;
+    max-height: 2em;
+}
+.svg-icon.svg-icon--lg svg {
+    max-width: 3em;
+    max-height: 3em;
+}
+.svg-icon.svg-icon--xlg svg {
+    max-width: 4em;
+    max-height: 4em;
+}
+.svg-icon svg path { color: #333; }
+
+.svg-icon.t-fg--accent svg path { color: #393; }
+/* .svg-icon.t-fg--active svg path { color: #393; }
+.svg-icon.t-fg--info svg path { color: #393; } */
+
+a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
+
+
+
+.c-results-item--dcat-dataset .svg-icon svg path { fill: darkblue; }
+.c-results-item--regp-service .svg-icon svg path { fill: green; }
+.c-results-item--layer .svg-icon svg path { fill: lightblue; }
+.c-results-item--map .svg-icon svg path { fill: red; }
+.c-results-item--gallery .svg-icon svg path { fill: orange; }
+.c-results-item--community .svg-icon svg path { fill: #909064; }
+.c-results-item--skos-concept .svg-icon svg path { fill: #ddd; }
+.c-results-item--skos-conceptscheme .svg-icon svg path { fill: #bbb; }
+.c-results-item--org-organization .svg-icon svg path { fill: #777; }
+.c-results-item--vcard-vcard .svg-icon svg path { fill: #333; }
+
+
+.dcat-dataset .svg-icon svg path { fill: darkblue; }
+.regp-service .svg-icon svg path { fill: green; }
+.layer .svg-icon svg path { fill: lightblue; }
+.map .svg-icon svg path { fill: red; }
+.gallery .svg-icon svg path { fill: orange; }
+.community .svg-icon svg path { fill: #909064; }
+.skos-concept .svg-icon svg path { fill: #ddd; }
+.skos-conceptscheme .svg-icon svg path { fill: #bbb; }
+.org-organization .svg-icon svg path { fill: #777; }
+.vcard-vcard .svg-icon svg path { fill: #333; }
 
 
 

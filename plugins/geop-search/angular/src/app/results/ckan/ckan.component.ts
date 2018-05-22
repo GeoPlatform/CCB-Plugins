@@ -69,7 +69,8 @@ export class CkanComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.listener.unsubscribe();
+        if(this.listener)
+            this.listener.unsubscribe();
     }
 
     onConstraintChange(constraints?: Constraints) {

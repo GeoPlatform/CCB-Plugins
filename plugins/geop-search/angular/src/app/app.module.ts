@@ -1,31 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Pipe, PipeTransform } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InlineSVGModule } from 'ng-inline-svg';
 
-
-/*
- * Raise the value exponentially
- * Takes an exponent argument that defaults to 1.
- * Usage:
- *   value | exponentialStrength:exponent
- * Example:
- *   {{ 2 | exponentialStrength:10 }}
- *   formats to: 1024
-*/
-@Pipe({name: 'limitTo'})
-export class LimitToPipe implements PipeTransform {
-    transform(value: any[], num: number): any[] {
-        if(value && value.length > num) {
-            return value.slice(0, num);
-        }
-        return value;
-    }
-}
-
+import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 
 
 import { Config } from 'geoplatform.client';
@@ -80,7 +62,7 @@ import { ThumbnailComponent } from './shared/thumbnail/thumbnail.component';
 //ROUTING CONFIG
 const appRoutes: Routes = [
 
-    { path: '',         component: AppComponent }
+    { path: '', component: AppComponent }
     // ,
     // { path: '**',     component: PageNotFoundComponent }
 ];
@@ -108,6 +90,8 @@ const appRoutes: Routes = [
     TypeComponent,
     CkanComponent,
     LimitToPipe,
+    FriendlyTypePipe,
+    FixLabelPipe,
     ContactComponent,
     SemanticComponent,
     EditorComponent,
@@ -119,7 +103,8 @@ const appRoutes: Routes = [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    InlineSVGModule
   ],
   providers: [
       CCBService

@@ -1,15 +1,17 @@
+import { HttpClientModule } from '@angular/common/http';
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CcbService } from './ccb.service';
+import { CCBService } from './ccb.service';
 
-describe('CcbService', () => {
+describe('CCBService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CcbService]
+        imports: [HttpClientModule],
+        providers: [CCBService]
     });
   });
 
-  it('should be created', inject([CcbService], (service: CcbService) => {
+  it('should be created', inject([CCBService], (service: CCBService) => {
     expect(service).toBeTruthy();
   }));
 });

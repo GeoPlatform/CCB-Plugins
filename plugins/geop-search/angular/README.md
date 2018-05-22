@@ -1,13 +1,13 @@
 # GeoPlatform Search Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.4.
 
 ## Initial Setup
-If you have not already setup your development environment to work using Angluar you will need to do the following:
+If you have not already setup your development environment to work using Angular you will need to do the following:
 
-1. Install Node 8
+1. Install Node 6.x
 > Goto and follow instructions at : https://nodejs.org/en/download/
-> Make sure to get version 8 of NodeJS.
+> Make sure to get version 6.x of NodeJS.
 
 2. Install Angular-CLI 1.7.4
 > [user ~]$ sudo npm install -g @anular/cli@1.7.4
@@ -20,7 +20,7 @@ If you have not already setup your development environment to work using Angluar
 > [user dir]$ ng serve
 
 After that you should enable to plugin in the local WordPress and begin testing/developing.
-When you update source files the project should automoaticall rebuild. Simply refresh the page
+When you update source files the project should automatically rebuild. Simply refresh the page
 to see the code changes.
 
 

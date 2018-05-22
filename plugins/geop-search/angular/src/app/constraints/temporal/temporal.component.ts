@@ -23,8 +23,10 @@ export class TemporalComponent implements OnInit {
 
     ngOnInit() {
         let value = this.codec.getValue(this.constraints);
-        this.startDate = value.startDate;
-        this.endDate = value.endDate;
+        if(value) {
+            this.startDate = value.startDate;
+            this.endDate = value.endDate;
+        }
     }
 
     getCodec() : Codec { return this.codec; }

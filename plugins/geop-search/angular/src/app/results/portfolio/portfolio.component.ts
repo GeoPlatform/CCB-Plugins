@@ -30,6 +30,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     private listener : ISubscription;
     public totalResults : number = 0;
     public pageSize : number = 10;
+    public sortField : string;
+    private defaultQuery : Query;
     public query : Query;
     public results : any;
 
@@ -40,9 +42,11 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         private http : HttpClient
     ) {
         this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
-        this.query = new Query()
-            .pageSize(this.pageSize)
-            .fields(QueryFields.THUMBNAIL);
+        this.defaultQuery = new Query().pageSize(this.pageSize);
+        this.sortField = this.defaultQuery.getSort();
+        this.defaultQuery.setFields(
+            this.defaultQuery.getFields().concat([ QueryFields.THUMBNAIL ])
+        );
 
         //use a subject so we can debounce query execution events
         this.queryChange
@@ -70,10 +74,14 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.listener.unsubscribe();
+        if(this.listener)
+            this.listener.unsubscribe();
     }
 
     onConstraintChange(constraints?: Constraints) {
+
+        this.query = this.defaultQuery.clone();
+
         //apply constraints to tracked query object
         if(constraints) constraints.apply(this.query);
         else this.constraints.apply(this.query);
@@ -86,8 +94,15 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.queryChange.next(this.query);
     }
 
+    onSortChange() {
+        this.query.sort(this.sortField);
+        this.queryChange.next(this.query);
+    }
+
     executeQuery() {
         // console.log("Issuing Portfolio Query");
+        // console.log(JSON.stringify(this.query.getQuery()));
+
         this.service.search(this.query)
         .then( response => {
             //Should not have to wrap with zone, but for some reason, the
@@ -122,6 +137,23 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     addCreatorConstraint(username) {
         let constraint = new CreatorCodec().toConstraint(username);
         this.constraints.set(constraint);
+    }
+
+    getIconPath(item) {
+        let type = "dataset";
+        switch(item.type) {
+            case ItemTypes.DATASET:         type =  'dataset'; break;
+            case ItemTypes.SERVICE:         type =  'service'; break;
+            case ItemTypes.LAYER:           type =  'layer'; break;
+            case ItemTypes.MAP:             type =  'map'; break;
+            case ItemTypes.GALLERY:         type =  'gallery'; break;
+            case ItemTypes.ORGANIZATION:    type =  'organization'; break;
+            case ItemTypes.VCARD:           type =  'vcard'; break;
+            case ItemTypes.COMMUNITY:       type =  'community'; break;
+            case ItemTypes.CONCEPT:         type =  'concept'; break;
+            case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+        }
+        return `assets/${type}.svg`;
     }
 
 }

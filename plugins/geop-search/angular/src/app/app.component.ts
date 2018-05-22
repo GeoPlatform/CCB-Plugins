@@ -25,6 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public pickerClosed = false;
     public constraints : Constraints = new Constraints();
 
+
     constructor(
         private _ngZone: NgZone,
         private http : HttpClient,
@@ -46,7 +47,8 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.listener.unsubscribe();
+        if(this.listener)
+            this.listener.unsubscribe();
     }
 
     onPickerClose(closed) {
