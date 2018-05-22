@@ -41,7 +41,7 @@ export class ContactCodec implements Codec {
         if(!constraints) return null;
         let constraint = constraints.get(QueryParameters.CONTACTS_ID);
         if(constraint) {
-            return (constraint.value||[]).join(', ');
+            return (constraint.value||[]).slice(0);
         }
         return null;
     }

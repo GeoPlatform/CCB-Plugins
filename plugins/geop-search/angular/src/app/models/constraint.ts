@@ -23,7 +23,11 @@ export class Constraint {
     }
 
     set(value: any) {
-        this.value = value;
+        if(value && value instanceof Constraint) {
+            this.update(value as Constraint);
+        } else {
+            this.value = value;
+        }
     }
 
     update(constraint: Constraint) {
@@ -45,6 +49,8 @@ export class MultiValueConstraint extends Constraint {
         super(name, value, label);
     }
     set(value: any) {
+        if(value !== null && !Array.isArray(value))
+            value = [value];
         this.value = value as [any];
     }
     remove(value : any) {

@@ -29,13 +29,18 @@ export class KeywordCodec implements Codec {
         if(!constraints) return null;
         let constraint = constraints.get(QueryParameters.KEYWORDS);
         if(constraint) {
-            return (constraint.value||[]).join(', ');
+            return (constraint.value||[]).slice(0);
         }
         return null;
     }
 
     toConstraint(value : any) : Constraint {
-        let keywords : any = value ? value.split(',').map(k=>k.trim()) : null;
+        let keywords = value;
+        if(keywords && typeof(value.split) !== 'undefined')
+            keywords = value.split(',');
+        if(keywords && !Array.isArray(keywords))
+            keywords = [keywords];
+        if(keywords) keywords = keywords.map(k=>k.trim());
         return new MultiValueConstraint(QueryParameters.KEYWORDS, keywords, "Keywords");
     }
 

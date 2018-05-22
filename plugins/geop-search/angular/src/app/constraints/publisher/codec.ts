@@ -41,7 +41,7 @@ export class PublisherCodec implements Codec {
         if(!constraints) return null;
         let constraint = constraints.get(QueryParameters.PUBLISHERS_ID);
         if(constraint) {
-            return (constraint.value||[]).join(', ');
+            return (constraint.value||[]).slice(0);
         }
         return null;
     }
