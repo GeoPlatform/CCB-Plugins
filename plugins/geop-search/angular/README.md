@@ -17,7 +17,14 @@ If you have not already setup your development environment to work using Angular
 > [user angular]$ npm install
 
 4. Build plugin from source
-> [user dir]$ ng serve
+> [user dir]$ ng build --prod
+
+5. Set environment settings
+> Create (or replace) assets/env.json and define environment variables needed for operation
+> "ualUrl" - URL of GeoPlatform API endpoint ('https://ual.geoplatform.gov' for production)
+
+6. More stuff needed to expose angular app from within WP
+> TODO
 
 After that you should enable to plugin in the local WordPress and begin testing/developing.
 When you update source files the project should automatically rebuild. Simply refresh the page

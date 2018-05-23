@@ -9,6 +9,14 @@
 
   <hr>
 
+
+  <!-- display error message if one is encountered -->
+  <div *ngIf="error" class="c-message--error">
+        <header>{{error.error}}</header>
+        <main>{{error.message}}</main>
+        <footer><a (click)="error=null">DISMISS</a></footer>
+  </div>
+
   <div class="c-pagination">
       <span>{{totalResults}} contacts</span>
       <span>{{listQuery.getPageSize()}} per page</span>
@@ -31,5 +39,5 @@
   <footer>
       <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
   </footer>
-  
+
 </div>

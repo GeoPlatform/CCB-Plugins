@@ -9,6 +9,7 @@ import { Constraints, Constraint } from './models/constraint';
 import { CodecFactory, FreeTextCodec } from './constraints/codecs';
 import { Codec } from './models/codec';
 
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',

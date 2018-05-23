@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { InlineSVGModule } from 'ng-inline-svg';
@@ -27,7 +28,8 @@ describe('TypeComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [ FormsModule, HttpClientModule, InlineSVGModule ],
-            declarations: [ TypeComponent, TestHostComponent ]
+            declarations: [ TypeComponent, TestHostComponent ],
+            providers: [{ provide: APP_BASE_HREF, use: '/' }]
         })
         .compileComponents();
     }));

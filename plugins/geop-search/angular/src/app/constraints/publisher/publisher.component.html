@@ -9,6 +9,15 @@
 
   <hr>
 
+
+  <!-- display error message if one is encountered -->
+  <div *ngIf="error" class="c-message--error">
+    <header>{{error.error}}</header>
+    <main>{{error.message}}</main>
+    <footer><a (click)="error=null">DISMISS</a></footer>
+  </div>
+
+
   <div class="c-pagination">
       <span>{{totalResults}} orgs</span>
       <span>{{listQuery.getPageSize()}} per page</span>
@@ -21,6 +30,7 @@
           <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
       </div>
   </div>
+  
   <a *ngFor="let organization of resultsObs$ | async"
     class="list-item"
     [ngClass]="{selected:isSelected(organization)}"

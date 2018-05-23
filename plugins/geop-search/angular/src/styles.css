@@ -499,6 +499,27 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 
 
 
+.c-message--error {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #fff;
+}
+.c-message--error heading {
+    font-weight: 700;
+    padding: 0.5em 1em;
+}
+.c-message--error main {
+    font-size: 0.875em;
+    padding: 0 1em;
+}
+.c-message--error footer {
+    text-align: right;
+    font-size: 0.875em;
+    padding: 0.5em 1em 0;
+}
+
+
+
 
 /* hide the leaflet draw control for circle marker */
 .leaflet-draw-section a.leaflet-draw-draw-circlemarker {

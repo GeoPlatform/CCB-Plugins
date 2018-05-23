@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
@@ -10,10 +10,10 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 
 
-import { Config } from 'geoplatform.client';
-Config.configure({
-    ualUrl: 'https://sit-ual.geoplatform.us'
-});
+// import { Config } from 'geoplatform.client';
+// Config.configure({
+//     ualUrl: 'https://sit-ual.geoplatform.us'
+// });
 
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
@@ -68,7 +68,10 @@ const appRoutes: Routes = [
 ];
 
 
-
+import { EnvironmentSettings } from './shared/env.service';
+export function initializeApp(env: EnvironmentSettings) {
+  return () => env.load();
+}
 
 
 
@@ -107,7 +110,13 @@ const appRoutes: Routes = [
     InlineSVGModule
   ],
   providers: [
-      CCBService
+      CCBService,
+      EnvironmentSettings,
+      {
+          provide: APP_INITIALIZER,
+          useFactory: initializeApp,
+          deps: [EnvironmentSettings], multi: true
+      }
   ],
   entryComponents: [
       KeywordsComponent,

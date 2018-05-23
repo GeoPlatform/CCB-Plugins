@@ -34,4 +34,7 @@
 
 <hr>
 
-{{constraints.constraints | json}}
+<div *ngIf="isDevEnv()">
+    <h5>Debug Output <small>this only appears in development</small></h5>
+    {{constraints.constraints | json}}
+</div>

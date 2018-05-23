@@ -9,6 +9,14 @@
 
   <hr>
 
+  <!-- display error message if one is encountered -->
+  <div *ngIf="error" class="c-message--error">
+      <header>{{error.error}}</header>
+      <main>{{error.message}}</main>
+      <footer><a (click)="error=null">DISMISS</a></footer>
+  </div>
+
+  <!-- paging controls for list options -->
   <div class="c-pagination">
       <span>{{totalResults}} themes</span>
       <span>{{listQuery.getPageSize()}} per page</span>
@@ -21,6 +29,8 @@
           <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
       </div>
   </div>
+
+  <!-- results of list population -->
   <a *ngFor="let theme of resultsObs$ | async"
     class="list-item"
     [ngClass]="{selected:isSelected(theme)}"
@@ -31,4 +41,5 @@
   <footer>
       <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
   </footer>
+  
 </div>

@@ -90,7 +90,7 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
         }
-        return `assets/${type}.svg`;
+        return `/assets/${type}.svg`;
     }
 
 }

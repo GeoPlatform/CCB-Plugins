@@ -1,6 +1,8 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
 import { Params } from '@angular/router';
-import { QueryParameters, ItemTypes } from "geoplatform.client";
+import { Config, QueryParameters, ItemTypes } from "geoplatform.client";
 
 import { async, inject, TestBed } from '@angular/core/testing';
 
@@ -10,9 +12,17 @@ import { Constraint, MultiValueConstraint, Constraints } from '../../models/cons
 
 describe("Contact Codec", () => {
 
+    //setup testing configuration before running the tests
+    beforeAll( () => {
+        Config.configure({
+            env: 'test',
+            ualUrl: 'https://sit-ual.geoplatform.us'
+        });
+    });
+
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientModule]
+            imports: [HttpClientModule, HttpClientTestingModule]
         });
     }));
 
@@ -29,8 +39,10 @@ describe("Contact Codec", () => {
     //     expect(constraint.value[0]).toEqual('test');
     // });
 
-    it("should set query parameters", async(
-        inject( [ HttpClient ], (http: HttpClient) => {
+    it("should set query parameters", async( inject(
+        [ HttpClient, HttpTestingController ],
+        (http: HttpClient, backend: HttpTestingController ) => {
+
             let params : Params = {};
             let codec = new ContactCodec(http);
             let constraints = new Constraints();
@@ -40,8 +52,17 @@ describe("Contact Codec", () => {
 
             codec.setParam(params, constraints);
             expect(params.contacts).toEqual('test');
-        })
-    ));
+
+            backend.match({
+                url: Config.ualUrl + '/api/items',
+                method: 'GET'
+            });
+            backend.match({
+                url: Config.ualUrl + '/api/fetch',
+                method: 'POST'
+            });
+        }
+    )));
 
 
     it("should extract constraint values", async(

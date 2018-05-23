@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Query } from 'geoplatform.client';
+import { Config, Query } from 'geoplatform.client';
 import { Constraints } from '../models/constraint';
 
 @Component({
@@ -26,4 +26,6 @@ export class ResultsComponent implements OnInit {
     isActive(id) { return this.currentTab === id; }
 
     setActive(id) { this.currentTab = id; }
+
+    isDevEnv() { return "development" === Config.env }
 }

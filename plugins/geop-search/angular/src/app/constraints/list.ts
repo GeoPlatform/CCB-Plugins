@@ -31,6 +31,7 @@ export class ItemListConstraint {
     public resultsObs$ = this.resultsSrc.asObservable();
     protected types : [string];
     protected codec : Codec;
+    public error : { label: string, message: string, code?:number } = null;
 
     constructor(
         private _ngZone: NgZone,
@@ -80,10 +81,21 @@ export class ItemListConstraint {
             //see: https://github.com/angular/angular/issues/7381
             this._ngZone.run(() => {
                 this.totalResults = response.totalResults;
-                this.resultsSrc.next(response.results.slice(0));
+                if(this.resultsSrc) {
+                    this.resultsSrc.next(response.results.slice(0));
+                }
             });
         })
-        .catch(e => { console.log("Error initializing list constraint options: " + e.message); });
+        .catch(e => {
+            console.log("Error initializing list constraint options: " + e.message);
+            this._ngZone.run(() => {
+                this.error = {
+                    label: 'Error populating list options',
+                    message: e.message,
+                    code: e.statusCode || 500
+                };
+            });
+        });
     }
 
     getIndex(item) : number {

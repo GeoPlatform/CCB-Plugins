@@ -34,6 +34,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     private defaultQuery : Query;
     public query : Query;
     public results : any;
+    public error: {label:string, message: string, code?:number} = null;
 
     private queryChange: Subject<Query> = new Subject<Query>();
 
@@ -116,6 +117,13 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
+            this._ngZone.run(() => {
+                this.error = {
+                    label:"Unable to load results",
+                    message: e.message,
+                    code: e.status || 500
+                };
+            });
         })
     }
 
@@ -153,7 +161,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
         }
-        return `assets/${type}.svg`;
+        return `/assets/${type}.svg`;
     }
 
 }
