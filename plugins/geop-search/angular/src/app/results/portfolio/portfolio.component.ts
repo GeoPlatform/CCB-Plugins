@@ -16,6 +16,7 @@ import {
 import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { Constraints, Constraint } from '../../models/constraint';
 import { CreatorCodec } from '../../constraints/creator/codec';
+import { PagingEvent } from '../../shared/paging/paging.component';
 
 @Component({
     selector: 'results-portfolio',
@@ -46,7 +47,11 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = this.defaultQuery.getSort();
         this.defaultQuery.setFields(
-            this.defaultQuery.getFields().concat([ QueryFields.THUMBNAIL ])
+            this.defaultQuery.getFields().concat([
+                QueryFields.THUMBNAIL,
+                QueryFields.RESOURCE_TYPES,
+                QueryFields.LANDING_PAGE
+            ])
         );
 
         //use a subject so we can debounce query execution events
@@ -90,15 +95,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.queryChange.next(this.query);
     }
 
-    onPageSizeChange() {
-        this.query.setPageSize(this.pageSize);
-        this.queryChange.next(this.query);
-    }
-
-    onSortChange() {
-        this.query.sort(this.sortField);
-        this.queryChange.next(this.query);
-    }
 
     executeQuery() {
         // console.log("Issuing Portfolio Query");
@@ -127,18 +123,34 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         })
     }
 
-    previousPage() {
-        let page: number = Math.max(0, this.query.getPage()-1);
-        this.query.page(page);
-        // this.executeQuery();
+    // previousPage() {
+    //     let page: number = Math.max(0, this.query.getPage()-1);
+    //     this.query.page(page);
+    //     // this.executeQuery();
+    //     this.queryChange.next(this.query);
+    // }
+    //
+    // nextPage() {
+    //     let lastPage = Math.min(this.totalResults / this.query.getPageSize());
+    //     let page:number = Math.min(this.query.getPage()+1, lastPage);
+    //     this.query.page(page);
+    //     // this.executeQuery();
+    //     this.queryChange.next(this.query);
+    // }
+    // onPageSizeChange() {
+    //     this.query.setPageSize(this.pageSize);
+    //     this.queryChange.next(this.query);
+    // }
+
+    onSortChange() {
+        this.query.sort(this.sortField);
         this.queryChange.next(this.query);
     }
 
-    nextPage() {
-        let lastPage = Math.min(this.totalResults / this.query.getPageSize());
-        let page:number = Math.min(this.query.getPage()+1, lastPage);
-        this.query.page(page);
-        // this.executeQuery();
+    onPagingEvent($event : PagingEvent) {
+        if($event.page) this.query.page($event.page);
+        if($event.size) this.query.pageSize($event.size);
+        else return;
         this.queryChange.next(this.query);
     }
 
@@ -162,6 +174,59 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
         }
         return `/assets/${type}.svg`;
+    }
+
+    getActivationUrl(item) {
+        let url = null;
+        switch(item.type) {
+
+            case ItemTypes.MAP:
+                let types = item.resourceTypes;
+                let AGOL_MAP_TYPE = 'http://www.geoplatform.gov/ont/openmap/AGOLMap';
+                if(types && types.length && ~types.indexOf(AGOL_MAP_TYPE))
+                    url = item.landingPage;
+                else
+                    url = this.getMapViewerURL() + '?id=' + item.id;
+                break;
+
+            case ItemTypes.GALLERY:
+                url = this.getGalleryURL() + '/galleries/' + item.id;
+                break;
+
+            case ItemTypes.SERVICE:
+                url = this.getDashboardURL() + '/sd/details/' + item.id;
+                break;
+
+            case ItemTypes.DATASET:
+                url = this.getDashboardURL() + '/dd/details/' + item.id;
+                break;
+
+            case ItemTypes.LAYER:
+            case ItemTypes.ORGANIZATION:
+            case ItemTypes.VCARD:
+            case ItemTypes.COMMUNITY:
+            case ItemTypes.CONCEPT:
+            case ItemTypes.CONCEPT_SCHEME:
+            default:
+                return this.getObjectEditorURL() + '/view/' + item.id;
+        }
+        return url;
+    }
+
+    getMapViewerURL () {
+        return Config.wmvUrl || Config.ualUrl.replace('ual', 'viewer');
+    }
+
+    getGalleryURL () {
+        return Config.mmUrl || Config.ualUrl.replace('ual', 'maps');
+    }
+
+    getDashboardURL() {
+        return Config.pdUrl || Config.ualUrl.replace('ual', 'dashboard');
+    }
+
+    getObjectEditorURL() {
+        return Config.pdUrl || Config.ualUrl.replace('ual', 'oe');
     }
 
 }

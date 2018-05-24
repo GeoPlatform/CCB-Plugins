@@ -3,11 +3,13 @@ import {
     Input, Output, EventEmitter, SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs/Subject';
 import { ISubscription } from "rxjs/Subscription";
-import { Config, Query, QueryParameters, ItemService, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 
 import { CCBService } from '../../shared/ccb.service';
 import { Constraints, Constraint } from '../../models/constraint';
+import { PagingEvent } from '../../shared/paging/paging.component';
 
 @Component({
   selector: 'results-ccb',
@@ -18,22 +20,76 @@ export class CcbComponent implements OnInit {
 
     @Input() constraints: Constraints;
 
-    private service : ItemService;
+    private service : CCBService;
     private listener : ISubscription;
     public totalResults : number = 0;
     public pageSize : number = 10;
     public query : Query;
+    public sortField : string;
+    private defaultQuery : Query;
     public results : any;
+    public error: {label:string, message: string, code?:number} = null;
+    private queryChange: Subject<Query> = new Subject<Query>();
 
     constructor(
         private _ngZone: NgZone,
         private http : HttpClient
     ) {
         this.service = new CCBService(http);
-        this.query = new Query().pageSize(this.pageSize);
+        this.defaultQuery = new Query().pageSize(this.pageSize);
+        this.sortField = this.defaultQuery.getSort();
+
+        //use a subject so we can debounce query execution events
+        this.queryChange
+            .debounceTime(500)
+            .subscribe((query) => this.executeQuery() );
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+
+        //TODO remove
+        this.results = {
+            results: [
+                {
+                    type: "Post",
+                    label: "One", id: '1', description: "This is a temporary result",
+                    created: new Date().getTime(), modified: new Date().getTime()
+                },
+                {
+                    type: "Post",
+                    label: "Two", id: '2', description: "This is a temporary result",
+                    created: new Date().getTime(), modified: new Date().getTime()
+                },
+                {
+                    type: "Page",
+                    label: "Three", id: '3', description: "This is a temporary result",
+                    created: new Date().getTime(), modified: new Date().getTime()
+                },
+                {
+                    type: "Page",
+                    label: "Four", id: '4', description: "This is a temporary result",
+                    created: new Date().getTime(), modified: new Date().getTime()
+                },
+                {
+                    type: "File",
+                    label: "Five", id: '5', description: "This is a temporary result",
+                    created: new Date().getTime(), modified: new Date().getTime()
+                },
+                {
+                    type: "File",
+                    label: "Six", id: '6', description: "This is a temporary result",
+                    created: new Date().getTime(), modified: new Date().getTime()
+                },
+                {
+                    type: "User",
+                    label: "Seven", id: '7', description: "This is a temporary result",
+                    created: new Date().getTime(), modified: new Date().getTime()
+                }
+            ]
+        };
+        this.totalResults = 7;
+
+    }
 
     ngOnChanges( changes : SimpleChanges) {
         if(changes.constraints) {
@@ -57,16 +113,11 @@ export class CcbComponent implements OnInit {
     }
 
     onConstraintChange(constraints?: Constraints) {
-        this.query = new Query().pageSize(this.pageSize);
+        this.query = this.defaultQuery.clone();
         //apply constraints to tracked query object
         if(constraints) constraints.apply(this.query);
-        else            this.constraints.apply(this.query);
-        this.executeQuery();                //then search
-    }
-
-    onPageSizeChange() {
-        this.query.setPageSize(this.pageSize);
-        this.executeQuery();
+        else this.constraints.apply(this.query);
+        this.queryChange.next(this.query);
     }
 
     executeQuery() {
@@ -86,17 +137,28 @@ export class CcbComponent implements OnInit {
         // })
     }
 
-    previousPage() {
-        let page: number = Math.max(0, this.query.getPage()-1);
-        this.query.page(page);
-        this.executeQuery();
-    }
+    // previousPage() {
+    //     let page: number = Math.max(0, this.query.getPage()-1);
+    //     this.query.page(page);
+    //     this.executeQuery();
+    // }
+    //
+    // nextPage() {
+    //     let lastPage = Math.min(this.totalResults / this.query.getPageSize());
+    //     let page:number = Math.min(this.query.getPage()+1, lastPage);
+    //     this.query.page(page);
+    //     this.executeQuery();
+    // }
+    //
+    // onPageSizeChange() {
+    //     this.query.setPageSize(this.pageSize);
+    //     this.executeQuery();
+    // }
 
-    nextPage() {
-        let lastPage = Math.min(this.totalResults / this.query.getPageSize());
-        let page:number = Math.min(this.query.getPage()+1, lastPage);
-        this.query.page(page);
-        this.executeQuery();
+    onPagingEvent($event : PagingEvent) {
+        if($event.page) this.query.page($event.page);
+        if($event.size) this.query.pageSize($event.size);
+        else return;
+        this.queryChange.next(this.query);
     }
-
 }

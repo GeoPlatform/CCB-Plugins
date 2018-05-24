@@ -1,28 +1,21 @@
-<div class="c-pagination">
-    <span>{{totalResults}} results</span>
-    <div>
-        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
-            <option value="5">5 per page</option>
-            <option value="10">10 per page</option>
-            <option value="20">20 per page</option>
-            <option value="50">50 per page</option>
-            <option value="100">100 per page</option>
-        </select>
-    </div>
-    <div>
-        <button type="button" class="btn btn-default" (click)="previousPage()">
-            <span class="fas fa-angle-double-left"></span>
-        </button>
-        <span>
-            {{query.getPage()*query.getPageSize()+1}} -
-            {{query.getPage()*query.getPageSize()+query.getPageSize()}}
-        </span>
-        <button type="button" class="btn btn-default" (click)="nextPage()">
-            <span class="fas fa-angle-double-right"></span>
-        </button>
-    </div>
+
+<!-- display error message if one is encountered -->
+<div *ngIf="error" class="c-message--error">
+    <header>{{error.error}}</header>
+    <main>{{error.message}}</main>
+    <footer><a (click)="error=null">DISMISS</a></footer>
+</div>
+
+
+<!-- paging controls for results -->
+<div class="c-toolbar">
+    <gp-pagination
+        [query]="query"
+        [totalResults]="totalResults"
+        (onEvent)="onPagingEvent($event)">
+    </gp-pagination>
     <div class="flex-1"></div>
-    <div>
+    <div class="c-sort">
         <select>
             <option value="views_recent desc">Popular</option>
             <option value="metadata_modified desc">Recently Modified</option>
@@ -34,8 +27,8 @@
     </div>
 </div>
 
-<div class="c-results">
 
+<div class="c-results">
 
     <div *ngIf="loading">
         <br>
@@ -46,13 +39,6 @@
     <div *ngIf="!loading && !error && (!results || !results.results || !results.results.length)">
         <br>
         <strong><em>No results found matching the specified constraints</em></strong>
-        <br>
-    </div>
-
-    <div *ngIf="error">
-        <br>
-        <h5>An Error Occurred</h5>
-        <p>{{error.message}}</p>
         <br>
     </div>
 

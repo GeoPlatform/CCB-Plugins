@@ -73,9 +73,6 @@ export class PickerComponent implements OnInit, OnDestroy {
         this.listener = this.constraints.on((constraint:Constraint) => {
             this.deactivateConstraint();
         });
-
-
-
     }
 
     ngOnDestroy() {

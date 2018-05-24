@@ -94,18 +94,67 @@ button.btn.btn-sm {
 
 
 
+.c-toolbar {
+
+}
 
 .c-pagination {
-    display:         flex;
+    display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items:     center;
-    border-bottom:   1px solid #ddd;
-    padding:         0.5em 0;
-    display:         flex;
-    justify-content: space-between;
-    align-items:     center;
     flex-wrap:       wrap;
+    margin-bottom: 1em;
 }
+.c-pagination__total { }
+.c-pagination__pagesize {
+    flex: 1;
+    margin: 0 1em;
+}
+.c-pagination__actions { }
+
+@media(min-width:992px) {
+    .c-toolbar {
+        display:         flex;
+        justify-content: space-between;
+        align-items:     center;
+        border-bottom:   1px solid #ddd;
+        padding:         0.5em 0;
+    }
+
+    .c-pagination {
+        margin: 0;
+        flex: 1 0 50%;
+    }
+}
+@media(min-width:1200px) {
+    .c-toolbar {
+        display:         flex;
+        justify-content: space-between;
+        align-items:     center;
+        border-bottom:   1px solid #ddd;
+        padding:         0.5em 0;
+    }
+
+    .c-pagination {
+        margin: 0;
+        flex: 1 0 40%;
+    }
+}
+
+.c-sort {
+
+}
+
+@media(min-width:992px) {
+    .c-sort { flex: 1 0 33%; }
+}
+@media(min-width:1200px) {
+    .c-sort { flex: 1 0 20%; }
+}
+
+
+
+
 
 
 
@@ -165,6 +214,7 @@ button.btn.btn-sm {
 .c-results-item {
     overflow: hidden;
     margin-bottom: 1em;
+    margin-top: 1em;
     background: #fff;
     clear: both;
 

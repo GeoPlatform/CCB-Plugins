@@ -2873,7 +2873,7 @@ generate-object-property@^1.1.0:
 
 "geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
   version "0.1.0"
-  resolved "git+http://github.com/GeoPlatform/client-api.git#65c5d777b111eb0d082626d673bfd3956ad83ad5"
+  resolved "git+http://github.com/GeoPlatform/client-api.git#c6f06a3dcbee1cf2ab08db0dc61b0de4156a6ca2"
   dependencies:
     babel-plugin-external-helpers "^6.22.0"
     babel-preset-es2015-rollup "^3.0.0"
@@ -5845,8 +5845,8 @@ request@2.81.0:
     uuid "^3.0.0"
 
 request@^2.75.0:
-  version "2.86.0"
-  resolved "https://registry.yarnpkg.com/request/-/request-2.86.0.tgz#2b9497f449b0a32654c081a5cf426bbfb5bf5b69"
+  version "2.87.0"
+  resolved "https://registry.yarnpkg.com/request/-/request-2.87.0.tgz#32f00235cd08d482b4d0d68db93a829c0ed5756e"
   dependencies:
     aws-sign2 "~0.7.0"
     aws4 "^1.6.0"
@@ -5856,7 +5856,6 @@ request@^2.75.0:
     forever-agent "~0.6.1"
     form-data "~2.3.1"
     har-validator "~5.0.3"
-    hawk "~6.0.2"
     http-signature "~1.2.0"
     is-typedarray "~1.0.0"
     isstream "~0.1.2"
@@ -6007,8 +6006,8 @@ rollup-pluginutils@^1.5.0:
     minimatch "^3.0.2"
 
 rollup-pluginutils@^2.0.1:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.2.0.tgz#64ba3f29988b84322bafa188a9f99ca731c95354"
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.3.0.tgz#478ace04bd7f6da2e724356ca798214884738fc4"
   dependencies:
     estree-walker "^0.5.2"
     micromatch "^2.3.11"

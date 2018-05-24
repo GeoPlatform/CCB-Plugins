@@ -90,8 +90,6 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
 
 
     constructor(private _ngZone: NgZone, private http: HttpClient) {
-        // let client = new NG2HttpClient(http);
-        // this.service = new KGService(Config.ualUrl, client);
         this.service = new RecommenderTypeaheadService(http);
     }
 
@@ -125,8 +123,6 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
         }
     }
 
-
-
     search (text$: Observable<string>) {
         text$.pipe(
             debounceTime(300),
@@ -156,26 +152,6 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
     }
 
 
-    // refreshOptions() {
-    //     // console.log("Issuing Portfolio Query");
-    //     this.listQuery.q(this.listFilter);
-    //     this.service.suggest(this.listQuery)
-    //     .then( response => {
-    //         //Should not have to wrap with zone, but for some reason, the
-    //         // async call (despite using Angular HttpClient under the hood)
-    //         // is happening outside of zone.
-    //         //see: https://github.com/angular/angular/issues/7381
-    //         this._ngZone.run(() => {
-    //             this.totalResults = response.totalResults;
-    //             this.resultsSrc.next(response.results.slice(0));
-    //         });
-    //     })
-    //     .catch( e => {
-    //         console.log("An error occurred: " + e.message);
-    //     })
-    // }
-
-
     getIndex(item) : number {
         if(!this.selections || !this.selections.length) return -1;
         return this.selections.findIndex(t=>t.uri===item.uri);
@@ -190,19 +166,5 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
         if(index<0) this.selections.push(item);
         else this.selections.splice(index, 1);
     }
-
-    previousPage() {
-        let page: number = Math.max(0, this.listQuery.getPage()-1);
-        this.listQuery.page(page);
-        // this.refreshOptions();
-    }
-
-    nextPage() {
-        let lastPage = Math.min(this.totalResults / this.listQuery.getPageSize());
-        let page:number = Math.min(this.listQuery.getPage()+1, lastPage);
-        this.listQuery.page(page);
-        // this.refreshOptions();
-    }
-
 
 }

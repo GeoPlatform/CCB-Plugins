@@ -6,8 +6,8 @@ import { ISubscription } from "rxjs/Subscription";
 import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 
 import { Constraints, Constraint } from './models/constraint';
-import { CodecFactory, FreeTextCodec } from './constraints/codecs';
 import { Codec } from './models/codec';
+import { CodecFactory, FreeTextCodec } from './constraints';
 
 
 @Component({

@@ -7,31 +7,15 @@
 </div>
 
 <!-- paging controls for results -->
-<div class="c-pagination">
-    <span>{{totalResults}} results</span>
-    <div>
-        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
-            <option value="5">5 per page</option>
-            <option value="10">10 per page</option>
-            <option value="20">20 per page</option>
-            <option value="50">50 per page</option>
-            <option value="100">100 per page</option>
-        </select>
-    </div>
-    <div>
-        <button type="button" class="btn btn-default" (click)="previousPage()">
-            <span class="fas fa-angle-double-left"></span>
-        </button>
-        <span>
-            {{query.getPage()*query.getPageSize()+1}} -
-            {{query.getPage()*query.getPageSize()+query.getPageSize()}}
-        </span>
-        <button type="button" class="btn btn-default" (click)="nextPage()">
-            <span class="fas fa-angle-double-right"></span>
-        </button>
-    </div>
+<div class="c-toolbar">
+    <gp-pagination
+        [query]="query"
+        [totalResults]="totalResults"
+        (onEvent)="onPagingEvent($event)">
+    </gp-pagination>
+
     <div class="flex-1"></div>
-    <div>
+    <div class="c-sort">
         <select [(ngModel)]="sortField" (change)="onSortChange()">
             <option value="modified,desc">Most recently modified</option>
             <option value="modified,asc">Least recently modified</option>
@@ -60,7 +44,7 @@
             </div>
             <div class="flex-1">
                 <div class="c-results-item__heading">
-                    <a>
+                    <a href="{{getActivationUrl(item)}}" target="_blank">
                         <span *ngIf="item.label">{{item.label}}</span>
                         <span *ngIf="!item.label">Un-titled {{item.type}}</span>
                     </a>

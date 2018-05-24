@@ -11,6 +11,7 @@ import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 
 import { CkanService } from '../../shared/ckan.service';
 import { Constraints, Constraint } from '../../models/constraint';
+import { PagingEvent } from '../../shared/paging/paging.component';
 
 import { findOrgName } from './orgs';
 
@@ -92,10 +93,6 @@ export class CkanComponent implements OnInit {
         this.queryChange.next(this.query);
     }
 
-    onPageSizeChange() {
-        this.query.setPageSize(this.pageSize);
-        this.queryChange.next(this.query);
-    }
 
     executeQuery() {
         this.loading = true;
@@ -121,16 +118,28 @@ export class CkanComponent implements OnInit {
         })
     }
 
-    previousPage() {
-        let page: number = Math.max(0, this.query.getPage()-1);
-        this.query.page(page);
-        this.queryChange.next(this.query);
-    }
+    // previousPage() {
+    //     let page: number = Math.max(0, this.query.getPage()-1);
+    //     this.query.page(page);
+    //     this.queryChange.next(this.query);
+    // }
+    //
+    // nextPage() {
+    //     let lastPage = Math.min(this.totalResults / this.query.getPageSize());
+    //     let page:number = Math.min(this.query.getPage()+1, lastPage);
+    //     this.query.page(page);
+    //     this.queryChange.next(this.query);
+    // }
+    //
+    // onPageSizeChange() {
+    //     this.query.setPageSize(this.pageSize);
+    //     this.queryChange.next(this.query);
+    // }
 
-    nextPage() {
-        let lastPage = Math.min(this.totalResults / this.query.getPageSize());
-        let page:number = Math.min(this.query.getPage()+1, lastPage);
-        this.query.page(page);
+    onPagingEvent($event : PagingEvent) {
+        if($event.page) this.query.page($event.page);
+        if($event.size) this.query.pageSize($event.size);
+        else return;
         this.queryChange.next(this.query);
     }
 

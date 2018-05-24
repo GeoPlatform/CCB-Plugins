@@ -1,29 +1,22 @@
-<div class="c-pagination d-flex flex-align-center">
-    <span>{{totalResults}} results</span>
-    <div>
-        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
-            <option value="5">5 per page</option>
-            <option value="10">10 per page</option>
-            <option value="20">20 per page</option>
-            <option value="50">50 per page</option>
-            <option value="100">100 per page</option>
-        </select>
-    </div>
-    <div>
-        <button type="button" class="btn btn-default" (click)="previousPage()">
-            <span class="fas fa-angle-double-left"></span>
-        </button>
-        <span>
-            {{query.getPage()*query.getPageSize()+1}} -
-            {{query.getPage()*query.getPageSize()+query.getPageSize()}}
-        </span>
-        <button type="button" class="btn btn-default" (click)="nextPage()">
-            <span class="fas fa-angle-double-right"></span>
-        </button>
-    </div>
+
+<!-- display error message if one is encountered -->
+<div *ngIf="error" class="c-message--error">
+    <header>{{error.error}}</header>
+    <main>{{error.message}}</main>
+    <footer><a (click)="error=null">DISMISS</a></footer>
+</div>
+
+
+<!-- paging controls for results -->
+<div class="c-toolbar">
+    <gp-pagination
+        [query]="query"
+        [totalResults]="totalResults"
+        (onEvent)="onPagingEvent($event)">
+    </gp-pagination>
     <div class="flex-1"></div>
-    <div>
-        <select>
+    <div class="c-sort">
+        <select [(ngModel)]="sortField" (change)="onSortChange()">
             <option value="modified,desc">Most recently modified</option>
             <option value="modified,asc">Least recently modified</option>
             <option value="label,asc">Name (A-Z)</option>
@@ -34,13 +27,48 @@
     </div>
 </div>
 
-<div class="c-results">
+<div *ngIf="!results || !results.results || !results.results.length">
+    <strong><em>No results found matching the specified constraints</em></strong>
+</div>
 
-    <div *ngIf="!results || !results.results || !results.results.length">
-        <strong><em>No results found matching the specified constraints</em></strong>
+<div *ngFor="let item of results?.results"
+    class="c-results-item c-results-item--{{item.type.toLowerCase().replace(':','-')}}">
+    <div class="c-results-item__body">
+
+        <!-- <div class="c-results-item__icon">
+            <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span>
+        </div> -->
+        <div class="flex-1">
+            <div class="c-results-item__heading">
+                <a>
+                    <span *ngIf="item.label">{{item.label}}</span>
+                    <span *ngIf="!item.label">Un-titled {{item.type}}</span>
+                </a>
+            </div>
+            <!-- <div class="c-results-item__facets is-url">{{item.uri}}</div> -->
+            <div class="c-results-item__facets">
+                <span class="c-results-item__type">
+                    <strong>{{item.type|friendlyType}}</strong>
+                    <span *ngIf="item.createdBy">
+                        by <a (click)="addCreatorConstraint(item.createdBy)">{{item.createdBy}}</a>
+                    </span>
+                </span> |
+                <span *ngIf="item.created" title="Creation date">created {{item.created|date}}</span> |
+                <span *ngIf="item.modified" title="Last modified date">last modified {{item.modified|date}}</span>
+            </div>
+            <div class="c-results-item__description" [innerHtml]="item.description"></div>
+            <div class="c-results-item__actions">
+                <a>Find similar</a>
+            </div>
+        </div>
+        <!-- icon if necessary -->
+        <thumbnail *ngIf="item.thumbnail" class="c-results-item__icon t--large"
+            [source]="item.thumbnail">
+        </thumbnail>
+
     </div>
 
-    <div *ngFor="let item of results?.results">
-        <div class="c-results-item"></div>
+    <div class="c-results-item__footer">
+
     </div>
 </div>

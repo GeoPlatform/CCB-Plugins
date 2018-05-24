@@ -1,4 +1,20 @@
 
+
+import { HttpClient } from '@angular/common/http';
+
+import { ConstraintEditor } from '../models/constraint';
+
+import { Codec } from '../models/codec';
+import { TypeCodec } from './type/codec';
+import { KeywordCodec } from './keywords/codec';
+import { ThemeCodec } from './theme/codec';
+import { PublisherCodec } from './publisher/codec';
+import { CreatorCodec } from './creator/codec';
+import { ExtentCodec } from './extent/codec';
+import { TemporalCodec } from './temporal/codec';
+import { SemanticCodec } from './semantic/codec';
+import { FreeTextCodec } from './freetext.codec';
+
 import { CurrentComponent } from './current/current.component';
 
 import { CreatorComponent } from './creator/creator.component';
@@ -40,8 +56,48 @@ SearchEditorRegistry.registerEditor( "semantic", "Semantic Concepts", SemanticCo
 
 
 
+
+
+
+
+
+
+/**
+ *
+ */
+class CodecFactory {
+
+    private codecs : [Codec] = [] as [Codec];
+
+    constructor(private http : HttpClient) {
+        this.codecs.push(new FreeTextCodec());
+        this.codecs.push(new TypeCodec());
+        this.codecs.push(new KeywordCodec());
+        this.codecs.push(new ThemeCodec(http));
+        this.codecs.push(new PublisherCodec(http));
+        this.codecs.push(new CreatorCodec());
+        this.codecs.push(new ExtentCodec());
+        this.codecs.push(new TemporalCodec());
+        this.codecs.push(new SemanticCodec());
+    }
+
+    get () : Codec {
+        return null;
+    }
+
+    list () : [Codec] {
+        return this.codecs;
+    }
+
+};
+
+
+
+
+
 export {
-    CurrentComponent, 
+    CodecFactory,
+    CurrentComponent,
     SearchEditorRegistry as EditorRegistry,
     CreatorComponent,
     KeywordsComponent,
@@ -51,5 +107,14 @@ export {
     TemporalComponent,
     ThemeComponent,
     TypeComponent,
-    SemanticComponent
+    SemanticComponent,
+    FreeTextCodec,
+    TypeCodec,
+    KeywordCodec,
+    ThemeCodec,
+    PublisherCodec,
+    CreatorCodec,
+    ExtentCodec,
+    TemporalCodec,
+    SemanticCodec
 }

@@ -69,6 +69,8 @@ const appRoutes: Routes = [
 
 
 import { EnvironmentSettings } from './shared/env.service';
+import { DebugComponent } from './shared/debug/debug.component';
+import { PagingComponent } from './shared/paging/paging.component';
 export function initializeApp(env: EnvironmentSettings) {
   return () => env.load();
 }
@@ -99,7 +101,9 @@ export function initializeApp(env: EnvironmentSettings) {
     SemanticComponent,
     EditorComponent,
     NgbdTypeaheadHttp,
-    ThumbnailComponent
+    ThumbnailComponent,
+    DebugComponent,
+    PagingComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { enableTracing: false } ),
