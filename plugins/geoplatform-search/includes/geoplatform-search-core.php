@@ -17,14 +17,14 @@
   <div class='gp-search'>
     <div class='header'><h2 class='gp-search-title'><?php echo $a['title'] ?></h2></div>
 
-    <?php if ($a['showsearch'] == 1): ?>
+    <?php if ($searchVal == 1): ?>
     <div class='search-bar'>
       <div class='search-bar-icon'><span class="dashicons dashicons-search"></span></div>
       <div class='search-bar-input'><input class='<?php echo cname('input', $a['uuid']); ?> search-bar-input-text' placeholder='Search for items' type='text' /></div>
     </div>
     <?php endif ?>
 
-    <?php if ($a['showpaging'] == 1): ?>
+    <?php if ($pagingVal == 1): ?>
     <div class="<?php echo cname('paging', $a['uuid']); ?> gp-search-paging">
       <div class='gp-search-paging-arrow gp-search-paging-arrow-left gp-search-paging-arrow-disabled' title='Go to first page'><span class="<?php echo cname('paging-arrow-first', $a['uuid']); ?> dashicons dashicons-controls-skipback"></span></div>
       <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to previous page'><span class="<?php echo cname('paging-arrow-previous', $a['uuid']); ?> dashicons dashicons-controls-back"></span></div>
@@ -39,7 +39,7 @@
     </div>
 
     <div class="<?php echo cname('objects-none', $a['uuid']); ?> gp-search-objects-none">No results found.</div>
-        
+
     <div class="<?php echo cname('working', $a['uuid']); ?> gp-search-working">
       <div class='gp-search-working-content'>
         <div class='gp-search-working-spinner'></div>
@@ -48,7 +48,7 @@
     </div>
     <div class="<?php echo cname('error', $a['uuid']); ?> gp-search-error">
       <div class='gp-search-error-title'>Not Found</div>
-      <div>Error retrieving data.  Try again or contact us about this error.</div>  
+      <div>Error retrieving data.  Try again or contact us about this error.</div>
     </div>
   </div>
 </div>

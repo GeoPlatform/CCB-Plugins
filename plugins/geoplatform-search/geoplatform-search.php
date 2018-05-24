@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.1
+ * @since             1.0.2
  * @package           GP_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Search Plugin
  * Plugin URI:        www.geoplatform.gov
  * Description:       Search for geoplatform objects.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Author:            Image Matters LLC
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
@@ -28,7 +28,7 @@ define("UAL", "https://ual.geoplatform.gov");
 define('GP_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('GP_SEARCH_URL', plugin_dir_url(__FILE__));
 define('GP_SEARCH_NAME', "GeoPlatform Search");
-define('GP_SEARCH_VERSION', "1.0.1");
+define('GP_SEARCH_VERSION', "1.0.2");
 
 function gpsearch_add_stylesheet() {
   wp_register_style('gpsearch', GP_SEARCH_URL . 'assets/css/geoplatform-search-core.css', array(), false, 'all');
@@ -52,6 +52,8 @@ function gp_search_shortcode_creation($atts){
  // $uuid = wp_generate_uuid4();
   $uuid = uniqid();
   $uuid = str_replace("-", "", $uuid);
+  $pagingVal = 1;
+  $searchVal = 1;
 
   // load the settings - add default values if none exist already
   $options = get_option('gpsearch_settings', array(
@@ -62,22 +64,6 @@ function gp_search_shortcode_creation($atts){
     'gpsearch_checkbox_show_search' => 1,
     'gpsearch_select_sort' => 'modified',
     'gpsearch_select_perpage' => 10));
-
-  // handle true/false values in shortcode.  is stored in settings api as 1 or 0
-  if ($atts !=  null)
-  {
-    $pagingVal = $atts['showpaging'];
-    if ($pagingVal == 'true' || $pagingVal == '1' || $pagingVal == '')
-      $atts['showpaging'] = 1;
-    else
-      $atts['showpaging'] = 0;
-
-    $searchVal = $atts['showsearch'];
-      if ($searchVal == 'true' || $searchVal == '1' || $searchVal == '')
-        $atts['showsearch'] = 1;
-      else
-        $atts['showsearch'] = 0;
-  }
 
   // populate via shortcode, using settings api values as defaults
   $a = shortcode_atts(array(
@@ -90,6 +76,20 @@ function gp_search_shortcode_creation($atts){
     'maxresults' => $options['gpsearch_select_perpage'],
     'uuid' => $uuid
   ), $atts);
+
+  // handle true/false values in shortcode.  is stored in settings api as 1 or 0
+  if ($atts !=  null)
+  {
+    if (array_key_exists('showpaging', $atts) && isset($atts['showpaging'])){
+      if ($atts['showpaging'] == 'false' || $atts['showpaging'] == '0' || $atts['showpaging'] == 'f')
+        $pagingVal = 0;
+    }
+
+    if (array_key_exists('showsearch', $atts) && isset($atts['showsearch'])){
+      if ($atts['showsearch'] == 'false' || $atts['showsearch'] == '0' || $atts['showsearch'] == 'f')
+        $searchVal = 0;
+    }
+  }
 
   ob_start();
   include( GP_SEARCH_DIR . '/includes/geoplatform-search-core.php' );  // inject php
