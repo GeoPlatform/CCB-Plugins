@@ -174,11 +174,8 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	// Variables that vary among themes. They are set to default values for work
 	// in the GeoPlatform themes, then changed if one such theme is absent.
 	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
-	$geopmap_heading_title_size = '1.6975em';
-	if ($geopmap_theme == 'F'){
+	if ($geopmap_theme == 'F')
 		$geopmap_info_icon = 'fas fa-info-circle';
-		$geopmap_heading_title_size = '1em';
-	}
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -197,11 +194,11 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			<a title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" style="z-index:1;">
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
-				<div class="geop-display-header" style="font-size:<?php echo $geopmap_heading_title_size ?>;">
+				<div class="geop-display-header">
 					<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 						<tr class="geop-no-border">
 							<th class="geop-no-border geop-no-cushion">
-								<span class="geop-white-item geop-display-header-text geop-no-transform"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
+								<span class="geop-white-item geop-no-transform"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
 							</th>
 							<th class="geop-no-border geop-no-cushion">
 								<span class="<?php echo $geopmap_info_icon ?> geop-white-item geop-header-controls"></span>
@@ -297,7 +294,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	$geopmap_base_icon = 'glyphicon';
 	$geopmap_check_icon = 'glyphicon-check';
 	$geopmap_uncheck_icon = 'glyphicon-unchecked';
-	$geopmap_heading_title_size = '1.6975em';
 
 	if ($geopmap_theme == 'F'){
 		$geopmap_list_icon = 'fa fa-bars';
@@ -305,7 +301,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		$geopmap_base_icon = 'fa';
 		$geopmap_check_icon = 'fa-check-square';
 		$geopmap_uncheck_icon = 'fa-square';
-		$geopmap_heading_title_size = '1em';
 	}
 	?>
 
@@ -325,12 +320,12 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  <!-- Name, link, and layer control card. Provides a link to the map with the
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
-			<div class="geop-display-header" id="title_<?php echo $geopmap_divrand; ?>" style="font-size:<?php echo $geopmap_heading_title_size ?>;">
+			<div class="geop-display-header" id="title_<?php echo $geopmap_divrand; ?>">
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 					<tr class="geop-no-border">
 						<th class="geop-no-border geop-no-cushion">
 							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo esc_attr($geopmap_shortcode_array['name']); ?>" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
-								<span class="geop-white-item geop-hidden-link geop-display-header-text"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
+								<span class="geop-white-item geop-hidden-link"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
 							</a>
 						</th>
 						<th class="geop-no-border geop-no-cushion">
