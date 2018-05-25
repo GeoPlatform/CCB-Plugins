@@ -27,9 +27,10 @@
     		<?php if ($paged > 1) { ?>
 
     		<nav id="nav-posts">
-          <br />
-    			<div class="prev"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
-    			<div class="next"><?php previous_posts_link('Newer Posts &raquo;'); ?></div>
+          <div class="row">
+    			<div class="prev col-md-6"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
+    			<div class="next col-md-6 text-right"><?php previous_posts_link('Newer Posts &raquo;'); ?></div>
+          </div>
     		</nav>
 
     		<?php } else { ?>
