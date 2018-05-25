@@ -9,16 +9,25 @@
             <option value="100">100 per page</option>
         </select>
     </div>
-    <div class="c-pagination__actions">
-        <button type="button" class="btn btn-outline-secondary" (click)="previousPage()">
+    <div class="btn-group">
+        <button *ngIf="query.getPage()>1" (click)="goToPage(0)"
+            type="button" class="btn btn-link">
             <span class="fas fa-angle-double-left"></span>
         </button>
-        <span>
+        <button [class.disabled]="query.getPage()<=0" (click)="previousPage()"
+            type="button" class="btn btn-link">
+            <span class="fas fa-angle-left"></span>
+        </button>
+        <button type="button" class="btn btn-link disabled">
+            <span style="color:#000">{{query.getPage()+1}}</span>
+        </button>
+        <!-- <div class="c-pagination__current-page">
             {{query.getPage()*query.getPageSize()+1}} -
             {{query.getPage()*query.getPageSize()+query.getPageSize()}}
-        </span>
-        <button type="button" class="btn btn-outline-secondary" (click)="nextPage()">
-            <span class="fas fa-angle-double-right"></span>
+        </div> -->
+        <button *ngIf="hasNextPage()" (click)="nextPage()"
+            type="button" class="btn btn-link">
+            <span class="fas fa-angle-right"></span>
         </button>
     </div>
 </div>

@@ -1,5 +1,5 @@
 import {
-    NgZone, Component, OnInit, OnChanges, OnDestroy,
+    Component, OnInit, OnChanges, OnDestroy,
     Input, Output, EventEmitter, SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -31,10 +31,7 @@ export class CcbComponent implements OnInit {
     public error: {label:string, message: string, code?:number} = null;
     private queryChange: Subject<Query> = new Subject<Query>();
 
-    constructor(
-        private _ngZone: NgZone,
-        private http : HttpClient
-    ) {
+    constructor( private http : HttpClient ) {
         this.service = new CCBService(http);
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = this.defaultQuery.getSort();
@@ -123,42 +120,26 @@ export class CcbComponent implements OnInit {
     executeQuery() {
         // this.service.search(this.query)
         // .then( response => {
-        //     //Should not have to wrap with zone, but for some reason, the
-        //     // async call (despite using Angular HttpClient under the hood)
-        //     // is happening outside of zone.
-        //     //see: https://github.com/angular/angular/issues/7381
-        //     this._ngZone.run(() => {
         //         this.totalResults = response.totalResults;
         //         this.results = response;
-        //     });
         // })
         // .catch( e => {
         //     console.log("An error occurred: " + e.message);
         // })
     }
 
-    // previousPage() {
-    //     let page: number = Math.max(0, this.query.getPage()-1);
-    //     this.query.page(page);
-    //     this.executeQuery();
-    // }
-    //
-    // nextPage() {
-    //     let lastPage = Math.min(this.totalResults / this.query.getPageSize());
-    //     let page:number = Math.min(this.query.getPage()+1, lastPage);
-    //     this.query.page(page);
-    //     this.executeQuery();
-    // }
-    //
-    // onPageSizeChange() {
-    //     this.query.setPageSize(this.pageSize);
-    //     this.executeQuery();
-    // }
-
     onPagingEvent($event : PagingEvent) {
-        if($event.page) this.query.page($event.page);
-        if($event.size) this.query.pageSize($event.size);
-        else return;
+        // console.log("Paging Event: " + JSON.stringify($event));
+        let changed = false;
+        if(!isNaN($event.page)) {
+            this.query.setPage($event.page);
+            changed = true;
+        }
+        if(!isNaN($event.size)) {
+            this.query.setPageSize($event.size);
+            changed = true;
+        }
+        if(!changed) return;
         this.queryChange.next(this.query);
     }
 }

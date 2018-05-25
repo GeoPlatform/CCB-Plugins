@@ -1,5 +1,5 @@
 import {
-    NgZone, Component, OnInit, OnChanges, OnDestroy,
+    Component, OnInit, OnChanges, OnDestroy,
     Input, Output, EventEmitter, SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -36,10 +36,7 @@ export class CkanComponent implements OnInit {
 
     private queryChange: Subject<Query> = new Subject<Query>();
 
-    constructor(
-        private _ngZone: NgZone,
-        private http : HttpClient
-    ) {
+    constructor( private http : HttpClient ) {
         this.service = new CkanService(http);
         this.query = new Query()
             .pageSize(this.pageSize)
@@ -98,16 +95,10 @@ export class CkanComponent implements OnInit {
         this.loading = true;
         this.service.search(this.query)
         .then( response => {
-            //Should not have to wrap with zone, but for some reason, the
-            // async call (despite using Angular HttpClient under the hood)
-            // is happening outside of zone.
-            //see: https://github.com/angular/angular/issues/7381
-            this._ngZone.run(() => {
-                this.loading = false;
-                this.error = null;
-                this.totalResults = response.totalResults;
-                this.results = response;
-            });
+            this.loading = false;
+            this.error = null;
+            this.totalResults = response.totalResults;
+            this.results = response;
         })
         .catch( e => {
             this.loading = false;
@@ -118,28 +109,21 @@ export class CkanComponent implements OnInit {
         })
     }
 
-    // previousPage() {
-    //     let page: number = Math.max(0, this.query.getPage()-1);
-    //     this.query.page(page);
-    //     this.queryChange.next(this.query);
-    // }
-    //
-    // nextPage() {
-    //     let lastPage = Math.min(this.totalResults / this.query.getPageSize());
-    //     let page:number = Math.min(this.query.getPage()+1, lastPage);
-    //     this.query.page(page);
-    //     this.queryChange.next(this.query);
-    // }
-    //
-    // onPageSizeChange() {
-    //     this.query.setPageSize(this.pageSize);
-    //     this.queryChange.next(this.query);
-    // }
-
+    /**
+     *
+     */
     onPagingEvent($event : PagingEvent) {
-        if($event.page) this.query.page($event.page);
-        if($event.size) this.query.pageSize($event.size);
-        else return;
+        // console.log("Paging Event: " + JSON.stringify($event));
+        let changed = false;
+        if(!isNaN($event.page)) {
+            this.query.setPage($event.page);
+            changed = true;
+        }
+        if(!isNaN($event.size)) {
+            this.query.setPageSize($event.size);
+            changed = true;
+        }
+        if(!changed) return;
         this.queryChange.next(this.query);
     }
 
@@ -156,12 +140,18 @@ export class CkanComponent implements OnInit {
         return "Other";
     }
 
+    /**
+     *
+     */
     getItemThumbnail(item) {
         return item.publishers && item.publishers.length ?
             (item.publishers[0].thumbnail ?
                 item.publishers[0].thumbnail.url : null) : null;
     }
 
+    /*
+     *
+     */
     canImportItem(item) {
         return false;
     }

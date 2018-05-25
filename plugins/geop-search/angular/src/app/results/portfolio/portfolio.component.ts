@@ -1,6 +1,7 @@
 import {
-    NgZone, Component, OnInit, OnChanges, OnDestroy,
-    Input, Output, EventEmitter, SimpleChanges, SimpleChange
+    Component, OnInit, OnChanges, OnDestroy,
+    Input, Output, EventEmitter,
+    SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ISubscription } from "rxjs/Subscription";
@@ -36,13 +37,10 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public query : Query;
     public results : any;
     public error: {label:string, message: string, code?:number} = null;
-
+    public isLoading : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
 
-    constructor(
-        private _ngZone: NgZone,
-        private http : HttpClient
-    ) {
+    constructor( private http : HttpClient ) {
         this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = this.defaultQuery.getSort();
@@ -84,6 +82,9 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             this.listener.unsubscribe();
     }
 
+    /**
+     *
+     */
     onConstraintChange(constraints?: Constraints) {
 
         this.query = this.defaultQuery.clone();
@@ -95,70 +96,69 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.queryChange.next(this.query);
     }
 
-
+    /**
+     *
+     */
     executeQuery() {
-        // console.log("Issuing Portfolio Query");
-        // console.log(JSON.stringify(this.query.getQuery()));
 
+        // console.log("PortfolioComponent.executeQuery() - " +
+        //    JSON.stringify(this.query.getQuery()));
+
+        this.isLoading = true;
         this.service.search(this.query)
         .then( response => {
-            //Should not have to wrap with zone, but for some reason, the
-            // async call (despite using Angular HttpClient under the hood)
-            // is happening outside of zone.
-            //see: https://github.com/angular/angular/issues/7381
-            this._ngZone.run(() => {
-                this.totalResults = response.totalResults;
-                this.results = response;
-            });
+            this.isLoading = false;
+            this.totalResults = response.totalResults;
+            this.results = response;
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
-            this._ngZone.run(() => {
-                this.error = {
-                    label:"Unable to load results",
-                    message: e.message,
-                    code: e.status || 500
-                };
-            });
+            this.isLoading = false;
+            this.error = {
+                label:"Unable to load results",
+                message: e.message,
+                code: e.status || 500
+            };
         })
     }
 
-    // previousPage() {
-    //     let page: number = Math.max(0, this.query.getPage()-1);
-    //     this.query.page(page);
-    //     // this.executeQuery();
-    //     this.queryChange.next(this.query);
-    // }
-    //
-    // nextPage() {
-    //     let lastPage = Math.min(this.totalResults / this.query.getPageSize());
-    //     let page:number = Math.min(this.query.getPage()+1, lastPage);
-    //     this.query.page(page);
-    //     // this.executeQuery();
-    //     this.queryChange.next(this.query);
-    // }
-    // onPageSizeChange() {
-    //     this.query.setPageSize(this.pageSize);
-    //     this.queryChange.next(this.query);
-    // }
-
+    /**
+     *
+     */
     onSortChange() {
         this.query.sort(this.sortField);
         this.queryChange.next(this.query);
     }
 
+    /**
+     *
+     */
     onPagingEvent($event : PagingEvent) {
-        if($event.page) this.query.page($event.page);
-        if($event.size) this.query.pageSize($event.size);
-        else return;
+        // console.log("Paging Event: " + JSON.stringify($event));
+        let changed = false;
+        if(!isNaN($event.page)) {
+            this.query.setPage($event.page);
+            changed = true;
+        }
+        if(!isNaN($event.size)) {
+            this.query.setPageSize($event.size);
+            changed = true;
+        }
+        if(!changed) return;
         this.queryChange.next(this.query);
     }
 
+    /**
+     *
+     */
     addCreatorConstraint(username) {
         let constraint = new CreatorCodec().toConstraint(username);
         this.constraints.set(constraint);
     }
 
+    /**
+     *
+     */
     getIconPath(item) {
         let type = "dataset";
         switch(item.type) {
@@ -176,6 +176,9 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         return `/assets/${type}.svg`;
     }
 
+    /**
+     *
+     */
     getActivationUrl(item) {
         let url = null;
         switch(item.type) {
@@ -212,6 +215,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         }
         return url;
     }
+
 
     getMapViewerURL () {
         return Config.wmvUrl || Config.ualUrl.replace('ual', 'viewer');

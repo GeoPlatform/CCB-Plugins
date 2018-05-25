@@ -50,4 +50,13 @@ export class PagingComponent implements OnInit {
         this.onEvent.emit(evt);
     }
 
+    hasNextPage() {
+        return Math.floor(this.totalResults / this.pageSize) > this.query.getPage();
+    }
+
+    goToPage(page) {
+        let evt : PagingEvent = { page: page*1 };
+        this.onEvent.emit(evt);
+    }
+
 }

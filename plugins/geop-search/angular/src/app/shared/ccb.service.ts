@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-    HttpClient, HttpRequest, HttpParams, HttpEvent, HttpResponse, HttpErrorResponse 
+    HttpClient, HttpRequest, HttpParams, HttpEvent, HttpResponse, HttpErrorResponse
 } from '@angular/common/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subject } from 'rxjs';

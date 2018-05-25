@@ -1,4 +1,13 @@
 
+.is-faded {
+    opacity: 0.5;
+}
+
+.c-status-indicator {
+    width: 32px;
+}
+
+
 /* center icons / thumbnails */
 .c-results-item .c-results-item__icon {
     display: flex;

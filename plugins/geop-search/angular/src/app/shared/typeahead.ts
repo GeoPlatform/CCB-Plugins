@@ -8,34 +8,13 @@ import {
 
 
 
-// const WIKI_URL = 'https://en.wikipedia.org/w/api.php';
-// const PARAMS = new HttpParams({
-//   fromObject: {
-//     action: 'opensearch',
-//     format: 'json',
-//     origin: '*'
-//   }
-// });
-//
-// @Injectable()
-// export class WikipediaService {
-//   constructor(private http: HttpClient) {}
-//
-//   search(term: string) {
-//     if (term === '') {
-//       return of([]);
-//     }
-//
-//     return this.http
-//       .get(WIKI_URL, {params: PARAMS.set('search', term)}).pipe(
-//         map(response => response[1])
-//       );
-//   }
-// }
-
-
-
-
+/**
+ * HttpTypeaheadService
+ *
+ * Service interface required to be implemented and provided to
+ * an NgbdTypeaheadHttp instance in order to fetch asynchronous
+ * results via an HTTP request
+ */
 export interface HttpTypeaheadService {
     search(text : string) : Observable<any>;
 }
@@ -52,7 +31,7 @@ export interface HttpTypeaheadService {
             [ngbTypeahead]="search"
             [resultFormatter]="formatFn"
             (selectItem)="onSelection($event)"
-            placeholder="Find..." />
+            placeholder="{{placeholder}}" />
         <span *ngIf="searching">searching...</span>
         <div class="invalid-feedback" *ngIf="searchFailed">Sorry, suggestions could not be loaded.</div>
       </div>
@@ -62,12 +41,14 @@ export class NgbdTypeaheadHttp {
 
     @Input() service : HttpTypeaheadService;
     @Input() formatter : Function;
+    @Input() placeholder : string = "Begin typing to see results...";
     @Output() resultSelected : EventEmitter<any> = new EventEmitter<any>();
 
     model: any;
     searching = false;
     searchFailed = false;
     hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
+
 
     constructor() {}
 
