@@ -105,7 +105,7 @@ if (is_category()) {
 }
 ?>
 
-    <div id='news-topics'>
+    <div id='news-topics' style="word-wrap: break-word;">
     	<h5><a href="<?php echo esc_url(addhttp($url1)); ?>" target="_blank"
     	  title="<?php echo $topic1 ?>">
     		<?php echo $topic1 ?>
