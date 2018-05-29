@@ -82,7 +82,7 @@ export class ExtentComponent implements OnInit, OnDestroy, ConstraintEditor {
         className : 'map-extent'
     };
 
-    private service : HttpTypeaheadService;
+    public service : HttpTypeaheadService;
 
 
     constructor(private http : HttpClient) {

@@ -74,11 +74,11 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
 
     private codec : Codec = new SemanticCodec();
     // private service : KGService;
-    private service : HttpTypeaheadService;
+    public service : HttpTypeaheadService;
     public totalResults : number = 0;
     public listFilter: string = "";
     private listQuery: KGQuery = new KGQuery().pageSize(10);
-    private selections : [{uri:string}] = [] as [{uri:string}];
+    public selections : [{uri:string}] = [] as [{uri:string}];
     private resultsSrc = new Subject<any>();
     public resultsObs$ = this.resultsSrc.asObservable();
 

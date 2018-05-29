@@ -142,4 +142,12 @@ export class CcbComponent implements OnInit {
         if(!changed) return;
         this.queryChange.next(this.query);
     }
+
+    /**
+     *
+     */
+    onSortChange() {
+        this.query.sort(this.sortField);
+        this.queryChange.next(this.query);
+    }
 }
