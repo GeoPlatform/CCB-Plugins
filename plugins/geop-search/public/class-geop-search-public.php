@@ -76,7 +76,7 @@ class Geop_Search_Public {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geop-search-public.css', array(), $this->version, 'all' );
 
         wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'https://use.fontawesome.com/releases/v5.0.10/css/all.css', array(), $this->version, 'all' );
-        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../angular/dist/styles.0897164e53002fa81de9.bundle.css', array(), $this->version, 'all' );
+        wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/styles.bundle.css', array(), $this->version, 'all' );
 
 	}
 
@@ -101,10 +101,10 @@ class Geop_Search_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geop-search-public.js', array( 'jquery' ), $this->version, false );
 
-        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../angular/dist/inline.318b50c57b4eba3d437b.bundle.js', array( 'jquery' ), $this->version, false );
-        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../angular/dist/polyfills.9b3d10ba589dbdd70e8a.bundle.js', array( 'jquery' ), $this->version, false );
-        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../angular/dist/scripts.f983477da97f645b405a.bundle.js', array( 'jquery' ), $this->version, false );
-        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . '../angular/dist/main.b5c8f92775b3dc19a2bf.bundle.js', array( 'jquery' ), $this->version, false );
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/inline.bundle.js', array( 'jquery' ), $this->version, false );
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/polyfills.bundle.js', array( 'jquery' ), $this->version, false );
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/scripts.bundle.js', array( 'jquery' ), $this->version, false );
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/main.bundle.js', array( 'jquery' ), $this->version, false );
 
 	}
 

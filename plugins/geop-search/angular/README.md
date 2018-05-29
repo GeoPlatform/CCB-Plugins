@@ -10,7 +10,7 @@ If you have not already setup your development environment to work using Angular
 > Make sure to get version 6.x of NodeJS.
 
 2. Install Angular-CLI 1.7.4
-> [user ~]$ sudo npm install -g @anular/cli@1.7.4
+> [user ~]$ sudo npm install -g @angular/cli@1.7.4
 
 3. Run NPM install in the angular dirctory
 > [user ~]$ cd { dir-of-clone/plugins/geop-search/angular }
