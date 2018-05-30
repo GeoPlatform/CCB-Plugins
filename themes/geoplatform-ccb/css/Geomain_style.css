@@ -4135,7 +4135,8 @@ body .btn.btn-lg {
     padding: 3em 0 0;
     background: rgba(0, 0, 0, .5);
     text-shadow: 0 0 5px #000;
-    color: #fff
+    color: #fff;
+    min-height:17rem;
 }
 
 .banner>.content .additional-info {
@@ -4202,11 +4203,13 @@ body .btn.btn-lg {
 }
 
 .banner.banner--fixed-height {
-    height: 17rem
+    min-height: 17rem
 }
 
 .banner.banner--fixed-height>.content {
     padding: 3rem
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 header.navbar-fixed-top .banner {
@@ -5805,6 +5808,11 @@ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
     height: 100%;
 }
 
+.svc-card__title {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+}
+
 /*--------------------------------------------------------------
 # Theme Unit Test fixes
 --------------------------------------------------------------*/
@@ -5835,3 +5843,8 @@ img[class*="wp-image-"]{
   max-width: 100%;
   height:auto;
 }
+
+/*#single-banner {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+}*/
