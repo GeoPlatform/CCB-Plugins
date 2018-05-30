@@ -5713,12 +5713,14 @@ and https://github.com/Automattic/_s/blob/master/style.css
 	display: inline;
 	float: left;
 	margin-right: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 .alignright {
 	display: inline;
 	float: right;
 	margin-left: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 .aligncenter {
@@ -5801,4 +5803,35 @@ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
 .svc-card__img img {
     width: 100%;
     height: 100%;
+}
+
+/*--------------------------------------------------------------
+# Theme Unit Test fixes
+--------------------------------------------------------------*/
+
+/*Table styling without class declaration
+Pulled from https://github.com/twbs/bootstrap/blob/v4-dev/dist/css/bootstrap.css#L2079-L2241 */
+table {
+ width: 100%;
+ max-width: 100%;
+ margin-bottom: 1rem;
+}
+table th,
+table td {
+ padding: 0.75rem;
+ vertical-align: top;
+ border-top: 1px solid #eceeef;
+}
+table thead th {
+ vertical-align: bottom;
+ border-bottom: 2px solid #eceeef;
+}
+table tbody + tbody {
+ border-top: 2px solid #eceeef;
+}
+
+/*Image alignment and sizing issues outside of content area */
+img[class*="wp-image-"]{
+  max-width: 100%;
+  height:auto;
 }

@@ -759,7 +759,7 @@ function geoplatform_sidebar() {
 //-------------------------------
 
 if ( ! isset( $content_width ) ) {
-	$content_width = 900;
+	$content_width = 600;
 }
 
 
