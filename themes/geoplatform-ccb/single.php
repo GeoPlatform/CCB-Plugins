@@ -8,8 +8,8 @@ get_template_part( 'single-banner', get_post_format() );
     <div class="col-md-8 col-sm-8">
       <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
       //https://codex.wordpress.org/Customizing_the_Read_More#How_to_use_Read_More_in_Pages
-      global $more;
-      $more = 0;
+      // global $more;
+      // $more = 0;
       get_template_part( 'post-single', get_post_format() );
 
       //Un-comment the code below to show comments on the posts
