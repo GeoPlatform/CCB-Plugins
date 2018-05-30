@@ -4,7 +4,7 @@
 
 <div class="entry-content">
 	<br />
-	<?php the_content(); ?>
+	<?php the_content('Read more...'); ?>
 </div>
 
 <!-- the rest of the content -->

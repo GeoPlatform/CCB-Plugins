@@ -901,3 +901,17 @@ function filter_Search($query){
     }
 }
 add_action('pre_get_posts','filter_search');
+
+/**
+ * Filter the "read more" excerpt string link to the post.
+ *
+ * @param string $more "Read more" excerpt string.
+ * @return string (Maybe) modified "read more" excerpt string.
+ */
+function geop_ccb_excerpt_more( $more ) {
+    return sprintf( '<a class="read-more" href="%1$s">%2$s</a>',
+        get_permalink( get_the_ID() ),
+        __( ' Read More...', 'geoplatform-ccb' )
+    );
+}
+add_filter( 'excerpt_more', 'geop_ccb_excerpt_more' );
