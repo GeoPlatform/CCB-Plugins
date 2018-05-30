@@ -61,6 +61,7 @@
             <p>
               <?php echo $placeholder_text; ?>
             </p>
+
           <div class="card-footer card-footer-right"></div><!--#card-footer card-footer-right-->
         </div><!--#row-->
       </div><!-- #col-lg-12 -->

@@ -171,8 +171,8 @@ add_theme_support( 'post-thumbnails' );
 //-------------------------------
 // Diabling auto formatting and adding <p> tags to copy/pasted HTML in pages
 //-------------------------------
-remove_filter( 'the_content', 'wpautop' );
-remove_filter( 'the_excerpt', 'wpautop' );
+//remove_filter( 'the_content', 'wpautop' );
+//remove_filter( 'the_excerpt', 'wpautop' );
 
 /********************************************************/
 // Adding Dashicons in WordPress Front-end
