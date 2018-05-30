@@ -14,3 +14,37 @@
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
+<html>
+<body>
+  <div style="width:70%;">
+    <p>Your GeoPlatform Search Manager has been created and can be accessed via the Visit Search Interface button below.
+      Alternatively, if something has occured that renderd the page inoperable, press the Recreate Search Interface button below.
+    </p>
+    <a href="<?php echo home_url('geoplatform_search/'); ?>" target="_blank">
+      <input class="button-secondary" type="submit" value="Visit Search Interface" />
+    </a>
+    <button class="button-secondary" id="geopsearch_reset">Recreate Search Interface</button>
+  </div>
+
+  <script>
+  jQuery('document').ready(function(){
+    jQuery('#geopsearch_reset').click(function(){
+      <?php
+      if (get_post_status(3333)){
+        $interface_post = array(
+          'post_title' => 'GeoPlatform Search',
+          'post_name' => 'geoplatform_search',
+          'post_content' => '[geopsearch_page]',
+          'post_status' => 'publish',
+          'post_type' => 'page',
+          'ID' => 3333
+        );
+      }
+      wp_insert_post($interface_post);
+      ?>
+    });
+  })
+  </script>
+
+</body>
+</html>
