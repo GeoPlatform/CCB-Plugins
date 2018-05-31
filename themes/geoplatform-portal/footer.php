@@ -1,4 +1,3 @@
-
 <footer>
     <div class="container-fluid top-link-row">
         <div class="row">
@@ -13,7 +12,7 @@
             <div class="col-md-6">
                 <h3>
                     <!--<img src="/img/GeoPlatform_logo_sm.png" alt="GeoPlatform Logo" style="height: 1.5rem; vertical-align: bottom;">-->
-                    <a href="<?php echo $GLOBALS['wpp_url']; ?>" title="Go to the Geoplatform Home Page">
+                    <a href="<?php echo site_url(); ?>" target="_blank" title="Go to the Geoplatform Home Page">
                         <span class="icon-gp"></span>
                         GeoPlatform
                     </a>
@@ -44,15 +43,19 @@
                     <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
 
 
-                <!-- <br class="hidden-xs">
+                <br class="hidden-xs">
                 <h4 style="color:white">Get Involved</h4>
                 <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
-                <ul> -->
+                <ul>
 
             </div>
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <h4 style="color:white">Explore Data</h4>
                 <ul>
+                    <li><a href="<?php echo $GLOBALS['oe_url']; ?>" target="_blank">Object Editor
+                      <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                      </a>
+                    </li>
                     <li>
                         <a href="<?php echo esc_url("https://geoplatform.maps.arcgis.com/home/"); ?>" target="_blank">
                             GeoPlatform ArcGIS Organization<sup><span class="glyphicon glyphicon-new-window"></span></sup>
@@ -60,7 +63,7 @@
                     </li>
                     <li>
                         <a href="<?php echo $GLOBALS['ckan_url']; ?>" target="_blank">
-                            Search Catalog
+                            Search Data.gov
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
@@ -127,7 +130,7 @@
             </div>
             <div class="col-md-4 col-sm-5 col-xs-12">
                 <a href="<?php echo esc_url("http://www.fgdc.gov"); ?>" target="_blank">
-                    <img src="<?php echo esc_url("/wp-content/uploads/2017/01/fgdc_logo_dkbg.png"); ?>" target="_blank" alt="FGDC Logo">
+                    <img src="<?php echo esc_url("" . get_template_directory_uri() . "/img/fgdc_logo_dkbg.png"); ?>" target="_blank" alt="FGDC Logo">
                 </a>
             </div>
         </div>
@@ -138,12 +141,3 @@
 <?php wp_footer();?>
 </body>
 </html>
-
-<!-- code for authentication
-
-<% if(NODE_ENV === "dev") { %>
-<script src="//localhost:35729/livereload.js"></script>
-<% } %>
-
-<% if(error && error.message && error.message.indexOf("expire")>0) { %>
-    <!--<script>alert("Your session has expired. Please sign in again.");</script>-->

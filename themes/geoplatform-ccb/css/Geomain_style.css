@@ -5579,6 +5579,10 @@ and https://github.com/Automattic/_s/blob/master/style.css
 --------------------------------------------------------------*/
 .sticky {
 	display: block;
+  border-style: double;
+  border-width: 0px 5px 0px 5px;
+  border-color: #339933;
+  padding-left: 7px;
 }
 
 .hentry {

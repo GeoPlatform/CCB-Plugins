@@ -1,4 +1,5 @@
 <?php
+
 function gp_getEnv($name, $def){
 	return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
@@ -16,6 +17,11 @@ $idp_url = gp_getEnv('idp_url',"https://idp.geoplatform.gov");
 $oe_url = gp_getEnv('oe_url',"https://oe.geoplatform.gov");
 $sd_url = gp_getEnv('sd_url',"servicedesk@geoplatform.gov");
 $ga_code = gp_getEnv('ga_code','UA-00000000-0');
+$comm_url = gp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
+$accounts_url = gp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
+
+//Disable admin bar (un-comment for prod sites)
+add_filter('show_admin_bar', '__return_false');
 
 //-------------------------------
 // Add scripts and stylesheets
@@ -62,14 +68,13 @@ add_theme_support( 'custom-header' );
 function register_my_menus() {
   register_nav_menus(
     array(
-      'headfoot-featured' => 'HF - Featured',
-      'headfoot-getInvolved' => 'HF - Get Involved',
-      'headfoot-appservices' => 'HF - Apps and Services',
-      'headfoot-aboutL' => 'HF - About Left',
-      'headfoot-aboutR' => 'HF - About Right',
-      'headfoot-help' => 'HF - Help',
-      'headfoot-themes' => 'HF - Themes',
-			'community-links' => 'Community Links'
+      'headfoot-featured' => __( 'HF - Featured' ),
+      'headfoot-getInvolved' => __( 'HF - Get Involved' ),
+      'headfoot-appservices' => __( 'HF - Apps and Services' ),
+      'headfoot-aboutL' => __( 'HF - About Left' ),
+      'headfoot-aboutR' => __( 'HF - About Right' ),
+      'headfoot-help' => __( 'HF - Help' ),
+      'headfoot-themes' => __( 'HF - Themes')
     )
   );
 }
@@ -86,48 +91,6 @@ add_theme_support( 'post-thumbnails' );
 remove_filter( 'the_content', 'wpautop' );
 remove_filter( 'the_excerpt', 'wpautop' );
 
-
-//-------------------------------
-//Localizing our script for AJAX calls
-//via https://premium.wpmudev.org/blog/load-posts-ajax/?utm_expid=3606929-101._J2UGKNuQ6e7Of8gblmOTA.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
-//-------------------------------
-// wp_localize_script( 'ajax-pagination', 'ajaxpagination', array(
-// 	'ajaxurl' => admin_url( 'admin-ajax.php' )
-// ));
-
-//-------------------------------
-//adding actions for AJAX pagination for logged in and non logged in users
-//via https://premium.wpmudev.org/blog/load-posts-ajax/?utm_expid=3606929-101._J2UGKNuQ6e7Of8gblmOTA.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
-//-------------------------------
-// add_action( 'wp_ajax_nopriv_ajax_pagination', 'my_ajax_pagination' );
-// add_action( 'wp_ajax_ajax_pagination', 'my_ajax_pagination' );
-//
-// function my_ajax_pagination() {
-//     echo get_bloginfo( 'version' );
-//
-//     die();
-// }
-//OR
-//similar solution https://code.tutsplus.com/articles/getting-started-with-ajax-wordpress-pagination--wp-23099
-// function MyAjaxFunction(){
-//   //get the data from ajax() call
-//    $GreetingAll = $_POST['GreetingAll '];
-//    $results = "<h2>".$GreetingAll."</h2>";
-//   // Return the String
-//    die($results);
-//   }
-//   // creating Ajax call for WordPress
-//    add_action( 'wp_ajax_nopriv_ MyAjaxFunction', 'MyAjaxFunction' );
-//    add_action( 'wp_ajax_ MyAjaxFunction', 'MyAjaxFunction' );
-
-
-//-------------------------------
-// Custom settings page in wp-admin
-//-------------------------------
-//https://www.sitepoint.com/create-a-wordpress-theme-settings-page-with-the-settings-api/
-//Wordpress used to do this before adding the Customizer. Could be useful for custom requests/functionality
-//for power users, otherwise keeping things in the Customizer would probably be easier for a lay user
-//https://make.wordpress.org/themes/handbook/review/required/#options-and-settings for reference on current conventions/if we ever want to submit this publicly
 
 
 //---------------------------------------
@@ -269,49 +232,27 @@ function geo_customize_register( $wp_customize )
          ) ) );
 
 
-				//Map Gallery Custom link section, settings, and controls
-			$wp_customize->add_section( 'custom_links_section' , array(
-				'title'    => __( 'Custom Links Section', 'geoplatform-2017-theme' ),
+				//color section, settings, and controls
+		$wp_customize->add_section( 'custom_links_section' , array(
+				'title'    => __( 'Custom Links Section', 'starter' ),
 				'priority' => 60
-			) );
+		) );
 			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
 					'default'   => 'Insert Map Gallery Link here',
 					'transport' => 'refresh',
-					'sanitize_callback' => 'sanitize_text_field'
 				) );
-			$wp_customize->add_control( 'Map_Gallery_link_box', array(
+		  $wp_customize->add_control( 'Map_Gallery_link_box', array(
 					'label' => 'Map Gallery link',
 					'section' => 'custom_links_section',
-					'description' => 'Make sure your gallery is pointing to UAL instead of registry. For example, https://registry.geoplatform.gov/api/galleries/{your map gallery ID} will not work, but https://ual.geoplatform.gov/api/galleries/{your map gallery ID} will',
 					'type' => 'url',
 					'priority' => 10
 				) );
-
-				//Add radio button to choose link style between envs (sit, stg, or prod)
-				$wp_customize->add_setting( 'Map_Gallery_env_choice' , array(
-						'default'   => 'prod',
-						'transport' => 'refresh',
-						'sanitize_callback' => 'geop_sanitize_mapchoice'
-					) );
-				$wp_customize->add_control( 'Map_Gallery_env_choice', array(
-						'label' => 'Map Gallery Environment',
-						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
-						'section' => 'custom_links_section',
-						'type' => 'radio',
-						'priority' => 20,
-						'choices' => array(
-								'match'=>'My gallery link matches my site enviroment',
-								'sit' => 'sit (sit-ual.geoplatform.us)',
-								'stg' => 'stg (stg-ual.geoplatform.gov)',
-								'prod' => 'prod (ual.geoplatform.gov)'
-								)
-					) );
 
 				//remove default colors section as Header Color Section does this job better
 				 $wp_customize->remove_section( 'colors' );
 
 				 //Remove default Menus and Static Front page sections as this theme doesn't utilize them at this time
-				 $wp_customize->remove_panel( 'nav_menus');
+				 // $wp_customize->remove_panel( 'nav_menus');
 				 $wp_customize->remove_section( 'static_front_page' );
 
 				 //remove site tagline and checkbox for showing site title and tagline from Site Identity section

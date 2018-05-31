@@ -4971,7 +4971,7 @@ header.t-transparent .header__menu>li>button:hover, header.t-transparent .header
 
 @media (min-width:768px) {
     .mega-menu, .mega-menu.mega-menu-left, .mega-menu.mega-menu-right {
-        margin-top: -65%
+        margin-top: -76%
     }
 }
 
