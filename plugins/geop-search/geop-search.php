@@ -65,7 +65,7 @@ function geopsearch_page_shortcode_creation() {
 add_filter('page_template', 'geopsearch_page_template');
 function geopsearch_page_template($page_template) {
     if (is_page('geoplatform_search'))
-        $page_template = dirname( __FILE__ ) . '/public/partials/page-geoplatform_search.php';
+        $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
     return $page_template;
 }
 

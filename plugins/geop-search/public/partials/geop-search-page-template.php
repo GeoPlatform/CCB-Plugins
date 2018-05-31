@@ -9,7 +9,7 @@
  <!DOCTYPE html>
  <html <?php language_attributes(); ?>>
  <head>
- <base href="http://localhost/my-test-site/wp-content/plugins/geop-search/">
+ <base href="<?php echo plugin_dir_url("geop-search.php"); ?>geop-search/">
  <meta charset="utf-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -97,6 +97,7 @@
              </div><!--#col-md-12-->
          </div><!--#row-->
  </header>
+
  <?php get_template_part( 'mega-menu', get_post_format() ); ?>
  <!--Used for the Main banner background to show up properly-->
  <?php get_template_part( 'single-banner', get_post_format() ); ?>
