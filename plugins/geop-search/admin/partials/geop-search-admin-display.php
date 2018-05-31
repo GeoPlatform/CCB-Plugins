@@ -16,9 +16,11 @@
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
 <html>
 <body>
+  <div class="wrap">
+  <h2 class="geopsearch_admin_title"><?php echo esc_html(get_admin_page_title()); ?></h2>
   <div style="width:70%;">
     <p>Your GeoPlatform Search Manager has been created and can be accessed via the Visit Search Interface button below.
-      Alternatively, if something has occured that renderd the page inoperable, press the Recreate Search Interface button below.
+      Alternatively, if something has occured that renders the page inoperable, press the Recreate Search Interface button below.
     </p>
     <a href="<?php echo home_url('geoplatform_search/'); ?>" target="_blank">
       <input class="button-secondary" type="submit" value="Visit Search Interface" />
@@ -45,6 +47,7 @@
     });
   })
   </script>
+</div>
 
 </body>
 </html>

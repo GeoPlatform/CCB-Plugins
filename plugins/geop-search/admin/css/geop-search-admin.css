@@ -2,3 +2,11 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+ .geopsearch_admin_title {
+   font-size: 23px;
+   font-weight: 400;
+   margin: 0;
+   padding: 9px 0 4px;
+   line-height: 29px;
+ }

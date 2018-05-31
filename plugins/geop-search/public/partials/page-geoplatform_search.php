@@ -101,7 +101,7 @@
  <!--Used for the Main banner background to show up properly-->
  <?php get_template_part( 'single-banner', get_post_format() ); ?>
 
- <div class="container">
+ <div class="container" style="max-width:2000px;">
 
      <div class="row">
        <div class="loop">
