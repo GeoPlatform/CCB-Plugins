@@ -1,28 +1,31 @@
 <?php
-function gp_getEnv($name, $def){
+//-------------------------------
+// Get Docker container enviroment variables
+//-------------------------------
+function geop_ccb_getEnv($name, $def){
     return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
 
-$maps_url = gp_getEnv('maps_url', 'https://maps.geoplatform.gov');
-$viewer_url = gp_getEnv('viewer_url', 'https://viewer.geoplatform.gov');
-$marketplace_url = gp_getEnv('marketplace_url',"https://marketplace.geoplatform.gov");
-$dashboard_url = gp_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
-$wpp_url = gp_getEnv('wpp_url',"https://geoplatform.gov");
-$ual_url = gp_getEnv('ual_url',"https://ual.geoplatform.gov");
-$ckan_mp_url = gp_getEnv('ckan_mp_url',"https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace");
-$ckan_url = gp_getEnv('ckan_url',"https://ckan.geoplatform.gov/");
-$cms_url = gp_getEnv('cms_url',"https://cms.geoplatform.gov/resources");
-$idp_url = gp_getEnv('idp_url',"https://idp.geoplatform.gov");
-$oe_url = gp_getEnv('oe_url',"https://oe.geoplatform.gov");
-$sd_url = gp_getEnv('sd_url',"servicedesk@geoplatform.gov");
-$ga_code = gp_getEnv('ga_code','UA-00000000-0');
+$maps_url = geop_ccb_getEnv('maps_url', 'https://maps.geoplatform.gov');
+$viewer_url = geop_ccb_getEnv('viewer_url', 'https://viewer.geoplatform.gov');
+$marketplace_url = geop_ccb_getEnv('marketplace_url',"https://marketplace.geoplatform.gov");
+$dashboard_url = geop_ccb_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
+$wpp_url = geop_ccb_getEnv('wpp_url',"https://geoplatform.gov");
+$ual_url = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov");
+$ckan_mp_url = geop_ccb_getEnv('ckan_mp_url',"https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace");
+$ckan_url = geop_ccb_getEnv('ckan_url',"https://ckan.geoplatform.gov/");
+$cms_url = geop_ccb_getEnv('cms_url',"https://cms.geoplatform.gov/resources");
+$idp_url = geop_ccb_getEnv('idp_url',"https://idp.geoplatform.gov");
+$oe_url = geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov");
+$sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
+$ga_code = geop_ccb_getEnv('ga_code','UA-00000000-0');
 
 
 //-------------------------------
 // Add scripts and stylesheets
 //-------------------------------
 //https://www.taniarascia.com/wordpress-from-scratch-part-two/
-function startwordpress_scripts() {
+function geop_ccb_scripts() {
   wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
 	wp_enqueue_style( 'bootstrap-css','//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
@@ -35,13 +38,13 @@ function startwordpress_scripts() {
 	//Google Analytics tracking
 	//wp_enqueue_script( 'google-analytics', get_template_directory_uri() . '/js/google_analytics.js');
 }
-add_action( 'wp_enqueue_scripts', 'startwordpress_scripts' );
+add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 
 //-------------------------------
 // Add Google Analytics
 //http://www.wpbeginner.com/beginners-guide/how-to-install-google-analytics-in-wordpress/
 //-------------------------------
-function gp_add_googleanalytics(){ ?>
+function geop_ccb_add_googleanalytics(){ ?>
 	<script>
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -55,16 +58,16 @@ function gp_add_googleanalytics(){ ?>
 	</script>
 <?php
 }
-add_action('wp_head','gp_add_googleanalytics');
+add_action('wp_head','geop_ccb_add_googleanalytics');
 
 //-------------------------------
 // Add Google Lato Fonts
 //-------------------------------
-function startwordpress_google_fonts() {
+function geop_ccb_google_fonts() {
 				wp_register_style('Lato/Slabo', 'https://fonts.googleapis.com/css?family=Lato:400,700|Slabo+27px');
 				wp_enqueue_style( 'Lato/Slabo');
 		}
-add_action('wp_enqueue_scripts', 'startwordpress_google_fonts');
+add_action('wp_enqueue_scripts', 'geop_ccb_google_fonts');
 
 //-------------------------------
 // WordPress Titles
@@ -80,7 +83,7 @@ add_theme_support( 'custom-header' );
 //Support adding Menus for header and footer
 //https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
 //--------------------------
-function register_my_menus() {
+function geop_ccb_register_menus() {
   register_nav_menus(
     array(
 			'community-links' => 'Community Links',
@@ -95,10 +98,10 @@ function register_my_menus() {
     )
   );
 }
-add_action( 'init', 'register_my_menus' );
+add_action( 'init', 'geop_ccb_register_menus' );
 
 
-function gp_create_services_menu(){
+function geop_ccb_create_services_menu(){
 //pre-filling menu items
 //https://codex.wordpress.org/Function_Reference/wp_create_nav_menu
 // Check if the menu exists
@@ -161,7 +164,7 @@ if( !$menu_exists){
 		set_theme_mod('nav_menu_locations', $locations);
 	}
 }
-add_action('init', 'gp_create_services_menu');
+add_action('init', 'geop_ccb_create_services_menu');
 
 //-------------------------------
 // Support Featured Images
@@ -177,18 +180,16 @@ add_theme_support( 'post-thumbnails' );
 /********************************************************/
 // Adding Dashicons in WordPress Front-end
 /********************************************************/
-add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
-function load_dashicons_front_end() {
+add_action( 'wp_enqueue_scripts', 'geop_ccb_load_dashicons_front_end' );
+function geop_ccb_load_dashicons_front_end() {
   wp_enqueue_style( 'dashicons' );
 }
-
-
 
 //---------------------------------------
 //Supporting Theme Customizer editing
 //https://codex.wordpress.org/Theme_Customization_API
 //--------------------------------------
-function geo_customize_register( $wp_customize )
+function geop_ccb_customize_register( $wp_customize )
 {
 		//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
@@ -285,7 +286,7 @@ function geo_customize_register( $wp_customize )
 
 		$wp_customize->add_setting('font_choice',array(
         'default' => 'lato',
-				'sanitize_callback' => 'geop_sanitize_fonts',
+				'sanitize_callback' => 'geop_ccb_sanitize_fonts',
     	));
 
 		$wp_customize->add_control('font_choice',array(
@@ -324,7 +325,7 @@ function geo_customize_register( $wp_customize )
 				 $wp_customize->add_setting('call2action_button', array(
 					 'default' => '',
 					 'transport' => 'refresh',
-           'sanitize_callback' => 'geop_sanitize_checkbox'
+           'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
 				 ) );
 
 				 $wp_customize->add_control('call2action_button', array(
@@ -386,7 +387,7 @@ function geo_customize_register( $wp_customize )
 				$wp_customize->add_setting( 'Map_Gallery_env_choice' , array(
 						'default'   => 'prod',
 						'transport' => 'refresh',
-						'sanitize_callback' => 'geop_sanitize_mapchoice'
+						'sanitize_callback' => 'geop_ccb_sanitize_mapchoice'
 					) );
 				$wp_customize->add_control( 'Map_Gallery_env_choice', array(
 						'label' => 'Map Gallery Environment',
@@ -415,25 +416,25 @@ function geo_customize_register( $wp_customize )
 				 $wp_customize->remove_control('display_header_text');
 
 }
-add_action( 'customize_register', 'geo_customize_register');
+add_action( 'customize_register', 'geop_ccb_customize_register');
 
 //-------------------------------
 //Sanitization callbak functions for customizer
 //https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
 //-------------------------------
-function geop_sanitize_fonts( $value ) {
+function geop_ccb_sanitize_fonts( $value ) {
     if ( ! in_array( $value, array( 'lato', 'slabo' ) ) )
         $value = 'lato';
     return $value;
 }
 
-function geop_sanitize_mapchoice( $value ) {
+function geop_ccb_sanitize_mapchoice( $value ) {
     if ( ! in_array( $value, array( 'match', 'sit', 'stg', 'prod' ) ) )
         $value = 'match';
     return $value;
 }
 
-function geop_sanitize_checkbox( $checked ){
+function geop_ccb_sanitize_checkbox( $checked ){
     //returns true if checkbox is checked
     return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
@@ -442,17 +443,17 @@ function geop_sanitize_checkbox( $checked ){
 //getting Enqueue script for custom customize control.
 //-------------------------------
  //https://codex.wordpress.org/Plugin_API/Action_Reference/customize_controls_enqueue_scripts
-function custom_customize_enqueue() {
+function geop_ccb_custom_customize_enqueue() {
 	wp_enqueue_script( 'custom-customize', get_template_directory_uri() . '/customizer/customizer.js', array( 'jquery', 'customize-controls' ), false, true );
 }
-add_action( 'customize_controls_enqueue_scripts', 'custom_customize_enqueue' );
+add_action( 'customize_controls_enqueue_scripts', 'geop_ccb_custom_customize_enqueue' );
 
 //-------------------------------
 //Dynamically show the colors changing
 //-------------------------------
 //needs to have 'transport' => 'refresh' in add_setting() above in order to work
 //https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
-function header_customize_css()
+function geop_ccb_header_customize_css()
 {
     ?>
          <style type="text/css">
@@ -466,13 +467,13 @@ function header_customize_css()
          </style>
     <?php
 }
-add_action( 'wp_head', 'header_customize_css');
+add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
 //-------------------------------
 //Override banner background-image as the custom header
 //-------------------------------
 //https://codex.wordpress.org/Function_Reference/wp_add_inline_style
-function header_image_method() {
+function geop_ccb_header_image_method() {
 	wp_enqueue_style(
 		'custom-style',
 		get_template_directory_uri() . '/css/Geomain_style.css'
@@ -487,42 +488,38 @@ function header_image_method() {
                 }";
         wp_add_inline_style( 'custom-style', $custom_css );
 }
-add_action( 'wp_enqueue_scripts', 'header_image_method' );
-
+add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 
 //-------------------------------
 //Give page and post banners a WYSIWYG editor
 //-------------------------------
 //http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box/
-
 define('WYSIWYG_META_BOX_ID', 'my-editor');
-
 add_action('admin_init', 'wysiwyg_register_custom_meta_box');
-
 function wysiwyg_register_custom_meta_box()
  {
- add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'custom_wysiwyg', 'post');
- add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'custom_wysiwyg', 'page');
+ add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'post');
+ add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'page');
  }
 
-function custom_wysiwyg($post)
+function geop_ccb_custom_wysiwyg($post)
  {
  echo "<h3>Anything you add below will show up in the Banner:</h3>";
- $content = get_post_meta($post->ID, 'custom_wysiwyg', true);
- wp_editor(htmlspecialchars_decode($content) , 'custom_wysiwyg', array(
+ $content = get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true);
+ wp_editor(htmlspecialchars_decode($content) , 'geop_ccb_custom_wysiwyg', array(
  "media_buttons" => true
  ));
  }
 
-function custom_wysiwyg_save_postdata($post_id)
+function geop_ccb_custom_wysiwyg_save_postdata($post_id)
  {
- if (!empty($_POST['custom_wysiwyg']))
+ if (!empty($_POST['geop_ccb_custom_wysiwyg']))
  {
- $data = htmlspecialchars_decode($_POST['custom_wysiwyg']);
- update_post_meta($post_id, 'custom_wysiwyg', $data);
+ $data = htmlspecialchars_decode($_POST['geop_ccb_custom_wysiwyg']);
+ update_post_meta($post_id, 'geop_ccb_custom_wysiwyg', $data);
  }
  }
-add_action('save_post', 'custom_wysiwyg_save_postdata');
+add_action('save_post', 'geop_ccb_custom_wysiwyg_save_postdata');
 
 
 //Making Category description pages WYSIWYG
@@ -531,8 +528,8 @@ add_action('save_post', 'custom_wysiwyg_save_postdata');
 remove_filter( 'pre_term_description', 'wp_filter_kses' );
 remove_filter( 'term_description', 'wp_kses_data' );
 
-add_filter('edit_category_form_fields', 'cat_description');
-function cat_description($tag)
+add_filter('edit_category_form_fields', 'geop_ccb_cat_description');
+function geop_ccb_cat_description($tag)
 {
 	?>
 			<!-- <table class="form-table"> -->
@@ -541,7 +538,7 @@ function cat_description($tag)
 							<td>
 							<?php
 									$settings = array('wpautop' => true, 'media_buttons' => true, 'quicktags' => true, 'textarea_rows' => '15', 'textarea_name' => 'description' );
-									wp_editor(wp_kses_post($tag->description , ENT_QUOTES, 'UTF-8'), 'cat_description', $settings);
+									wp_editor(wp_kses_post($tag->description , ENT_QUOTES, 'UTF-8'), 'geop_ccb_cat_description', $settings);
 							?>
 							<br />
 							<span class="description">The description is not prominent by default; however, some themes may show it.</span>
@@ -551,8 +548,8 @@ function cat_description($tag)
 	<?php
 }
 
-add_action('admin_head', 'remove_default_category_description');
-function remove_default_category_description()
+add_action('admin_head', 'geop_ccb_remove_default_category_description');
+function geop_ccb_remove_default_category_description()
 {
     global $current_screen;
     if ( $current_screen->id == 'edit-category' )
@@ -575,10 +572,10 @@ function remove_default_category_description()
 
 
 //add extra fields to category edit form hook
-add_action ( 'edit_category_form_fields', 'extra_category_fields');
+add_action ( 'edit_category_form_fields', 'geop_ccb_extra_category_fields_forms');
 
 //add extra fields to category edit form callback function
-function extra_category_fields( $tag ) {    //check for existing featured ID
+function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing featured ID
     $t_id = $tag->term_id;
     $cat_meta = get_option( "category_$t_id");
 ?>
@@ -599,11 +596,8 @@ function extra_category_fields( $tag ) {    //check for existing featured ID
 <th scope="row" valign="top"><label for="topic-url1">Topic 1 URL</label></th>
 <td style="padding: 5px 5px;">
 <input type="text" name="Cat_meta[topic-url1]" id="Cat_meta[topic-url1]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url1'] ? $cat_meta['topic-url1'] : ''; ?>"><br />
-
-
     </td>
 </tr>
-
 
 <!-- Topic 2 Name and Url -->
 <tr class="form-field">
@@ -618,12 +612,10 @@ function extra_category_fields( $tag ) {    //check for existing featured ID
 				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
 		</td>
 </tr>
-
 <tr class="form-field">
 <th scope="row" valign="top"><label for="topic-url2">Topic 2 URL</label></th>
 <td style="padding: 5px 5px;">
 <input type="text" name="Cat_meta[topic-url2]" id="Cat_meta[topic-url2]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url2'] ? $cat_meta['topic-url2'] : ''; ?>">
-
     </td>
 </tr>
 
@@ -664,7 +656,6 @@ function extra_category_fields( $tag ) {    //check for existing featured ID
 <th scope="row" valign="top"><label for="topic-url4">Topic 4 URL</label></th>
 <td style="padding: 5px 5px;">
 <input type="text" name="Cat_meta[topic-url4]" id="Cat_meta[topic-url4]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url4'] ? $cat_meta['topic-url4'] : ''; ?>"><br />
-
     </td>
 </tr>
 
@@ -685,16 +676,15 @@ function extra_category_fields( $tag ) {    //check for existing featured ID
 <th scope="row" valign="top"><label for="topic-url5">Topic 5 URL</label></th>
 <td style="padding: 5px 5px;">
 <input type="text" name="Cat_meta[topic-url5]" id="Cat_meta[topic-url5]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url5'] ? $cat_meta['topic-url5'] : ''; ?>"><br />
-
     </td>
 </tr>
 <?php
 }
-// save extra category extra fields hook
-add_action ( 'edited_category', 'save_extra_category_fileds');
 
-// save extra category extra fields callback function
-function save_extra_category_fileds( $term_id ) {
+// save extra category fields hook
+add_action ( 'edited_category', 'geop_ccb_save_extra_category_fields');
+// save extra category fields callback function
+function geop_ccb_save_extra_category_fields( $term_id ) {
     if ( isset( $_POST['Cat_meta'] ) ) {
         $t_id = $term_id;
         $cat_meta = get_option( "category_$t_id");
@@ -711,22 +701,21 @@ function save_extra_category_fileds( $term_id ) {
 
 //Adding Categories and Tag functionality to pages (for frontpage setting)
 //https://stackoverflow.com/questions/14323582/wordpress-how-to-add-categories-and-tags-on-pages
-
-function page_cat_tag_settings() {
+function geop_ccb_page_cat_tag_settings() {
 // Add tag metabox to page
 register_taxonomy_for_object_type('post_tag', 'page');
 // Add category metabox to page
 register_taxonomy_for_object_type('category', 'page');
 }
- // Add to the admin_init hook of your theme functions.php file
-add_action( 'init', 'page_cat_tag_settings' );
+// Add to the admin_init hook of your theme functions.php file
+add_action( 'init', 'geop_ccb_page_cat_tag_settings' );
 
 // ensure all tags and categories are included in queries
-function tags_categories_support_query($wp_query) {
+function geop_ccb_tags_categories_support_query($wp_query) {
   if ($wp_query->get('tag')) $wp_query->set('post_type', 'any');
   if ($wp_query->get('category_name')) $wp_query->set('post_type', 'any');
 }
-add_action('pre_get_posts', 'tags_categories_support_query');
+add_action('pre_get_posts', 'geop_ccb_tags_categories_support_query');
 
 
 //-------------------------------
@@ -735,10 +724,8 @@ add_action('pre_get_posts', 'tags_categories_support_query');
 // https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
 //------------------------------------
 
-add_action( 'widgets_init', 'geoplatform_sidebar' );
-
-function geoplatform_sidebar() {
-
+add_action( 'widgets_init', 'geop_ccb_sidebar' );
+function geop_ccb_sidebar() {
     register_sidebar(
         array(
             'id' => 'geoplatform-widgetized-area',
@@ -757,11 +744,9 @@ function geoplatform_sidebar() {
 //Global Content Width
 //per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
 //-------------------------------
-
 if ( ! isset( $content_width ) ) {
 	$content_width = 600;
 }
-
 
 //-------------------------------
 //Theme Support for Automatic Feed links per theme check
@@ -781,7 +766,7 @@ add_theme_support( 'html5', array( 'search-form' ) );
 //https://codex.wordpress.org/Function_Reference/add_cap
 //https://codex.wordpress.org/Roles_and_Capabilities
 //-------------------------------
-function gp_add_theme_caps(){
+function geop_ccb_add_theme_caps(){
 	// gets the roles
 	$subRole = get_role('subscriber');
 	$contribRole = get_role('contributor');
@@ -832,13 +817,13 @@ function gp_add_theme_caps(){
     //Allows these roles to upload files on the site
 		$contribRole->add_cap('upload_files');
 }
-add_action( 'admin_init', 'gp_add_theme_caps' );
+add_action( 'admin_init', 'geop_ccb_add_theme_caps' );
 
 //------------------
 // Capabilities removed on Deactivation
 //https://codex.wordpress.org/Plugin_API/Action_Reference/switch_theme
 //--------------------
-function gp_remove_theme_caps() {
+function geop_ccb_remove_theme_caps() {
 	// Theme is deactivated
 	// Need to remove these capabilities from the database
 	// gets the roles
@@ -893,11 +878,11 @@ function gp_remove_theme_caps() {
   //Allows these roles to upload files on the site
   $contribRole->remove_cap('upload_files');
 }
-add_action('switch_theme', 'gp_remove_theme_caps');
+add_action('switch_theme', 'geop_ccb_remove_theme_caps');
 
 //private pages and posts show up in search for correct roles
 //https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
-function filter_Search($query){
+function geop_ccb_filter_search($query){
     if( is_admin() || ! $query->is_main_query() ) return;
     if ($query->is_search) {
         if( current_user_can('read_private_posts') && current_user_can('read_private_pages') ) {
@@ -906,7 +891,7 @@ function filter_Search($query){
         }
     }
 }
-add_action('pre_get_posts','filter_search');
+add_action('pre_get_posts','geop_ccb_filter_search');
 
 /**
  * Filter the "read more" excerpt string link to the post.

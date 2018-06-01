@@ -4125,7 +4125,7 @@ body .btn.btn-lg {
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
-    /*functions.php -> header_image_method()*/
+    /*functions.php -> geop_ccb_header_image_method()*/
     background-image: url(<?php >echo get_header_image(); ?>)
 }
 
@@ -4178,7 +4178,7 @@ body .btn.btn-lg {
 
 @media (min-width:768px) {
     .banner {
-      /*functions.php -> header_image_method()*/
+      /*functions.php -> geop_ccb_header_image_method()*/
         background-image: url(<?php >echo get_header_image(); ?>)
     }
     .banner .attribution .source-link {
@@ -4191,13 +4191,13 @@ body .btn.btn-lg {
 
 @media (min-width:992px) {
     .banner {
-      /*functions.php -> header_image_method()*/
+      /*functions.php -> geop_ccb_header_image_method()*/
         background-image: url(<?php >echo get_header_image(); ?>)
     }
 }
 
 @media (min-width:1200px) {
-  /*functions.php -> header_image_method()*/
+  /*functions.php -> geop_ccb_header_image_method()*/
     .banner {
         background-image: url(<?php >echo get_header_image(); ?>)
     }
