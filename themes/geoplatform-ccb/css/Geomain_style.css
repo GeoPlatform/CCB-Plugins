@@ -5788,6 +5788,8 @@ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
 }
 .gp-ui-card .text--primary {
   font-size: 1em!important;
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .gp-ui-card__body:last-child{
@@ -5843,4 +5845,14 @@ table tbody + tbody {
 img[class*="wp-image-"]{
   max-width: 100%;
   height:auto;
+}
+
+div .comment-body p img {
+  height: auto;
+  width: 100%;
+}
+
+/*keeps words in the widget area*/
+div#widgetized-area {
+    word-wrap: break-word;
 }
