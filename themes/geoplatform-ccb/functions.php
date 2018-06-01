@@ -769,6 +769,12 @@ if ( ! isset( $content_width ) ) {
 //-------------------------------
 add_theme_support( 'automatic-feed-links' );
 
+//-------------------------------
+//Theme Support for html5, and the html5 search form
+//https://developer.wordpress.org/reference/functions/get_search_form/
+//http://buildwpyourself.com/wordpress-search-form-template/
+//-------------------------------
+add_theme_support( 'html5', array( 'search-form' ) );
 
 //-------------------------------
 // Theme specific enabled capabilities

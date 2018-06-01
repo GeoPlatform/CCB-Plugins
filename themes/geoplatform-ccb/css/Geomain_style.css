@@ -1798,7 +1798,7 @@ body .input-group-lg>.form-control, body .input-group-lg>.input-group-addon, bod
 }
 
 .input-group-slick>input.form-control {
-    height: 2.25em;
+    height: 2.5rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem
 }
@@ -4021,7 +4021,8 @@ body .btn.btn-lg {
 }
 
 .input-group-slick {
-    font-size: 1rem
+    font-size: 1rem;
+    width:fit-content;
 }
 
 .input-group-slick>.btn {
@@ -4948,7 +4949,7 @@ header.t-transparent .header__menu>li>button:hover, header.t-transparent .header
     background: 0 0;
     box-shadow: none;
     padding: 0;
-    margin-top: 4em
+    margin-top: 5.25em
 }
 
 .mega-menu__body {
