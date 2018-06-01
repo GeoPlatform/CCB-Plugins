@@ -5,13 +5,18 @@ if (is_category()) {
   //get catergory id
   $cat_id = get_query_var('cat');
 }
+elseif (is_page()) {
+  $terms = get_the_terms($post->ID, 'category');
+  $cat_id = $terms[0]->term_id;
+  // var_dump($cat_id);
+}
  else {
    //if a post
    //gets topmost category in post
    $post_category = get_the_category()[0]->term_id;
    $cat_id = $post_category;
  }
- //var_dump($cat_id);
+ // var_dump($cat_id);
 //then i get the data from the database
  $cat_data = get_option("category_$cat_id");
  //var_dump($cat_data);
