@@ -911,3 +911,12 @@ function geop_ccb_excerpt_more( $more ) {
     }
 }
 add_filter( 'excerpt_more', 'geop_ccb_excerpt_more' );
+
+/**
+ * Registers an editor stylesheet for the theme.
+ *https://developer.wordpress.org/reference/functions/add_editor_style/
+ */
+function geop_ccb_theme_add_editor_styles() {
+    add_editor_style( 'custom-editor-style.css' );
+}
+add_action( 'admin_init', 'geop_ccb_theme_add_editor_styles' );
