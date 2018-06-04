@@ -13,7 +13,7 @@
  * @package           Geop_Search
  *
  * @wordpress-plugin
- * Plugin Name:       GeoPlatform Search Plugin
+ * Plugin Name:       GeoPlatform Search
  * Plugin URI:        www.geoplatform.gov
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
