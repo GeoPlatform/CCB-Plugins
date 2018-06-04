@@ -19,7 +19,8 @@ Geoplatform CCB offers a number a features not common for WordPress themes, incl
 * integration with other Geoplatform.gov services
 * Page Categories and Tags
 * banner WYSIWYG editor for front page, posts, and pages
-* Category Specific Sidebar Links  
+* Category Specific Sidebar Links
+* Front Page Categories  
 
 ### Enhanced capabilities
 
@@ -63,15 +64,24 @@ You can edit the main banner on the front page, and for all posts, pages, and ca
 * **Category Pages** have a **"Description"** area. Anything put in there will show up in the Category page's banner.   
 
 ### Category Specific Sidebar Links
-You are able to add up to 5 links to each category page. The links can be added in each category page. 
+You are able to add up to 5 links to each category page. The links can be added in each category page.
+
+### Front Page Categories
+The Front page of this theme is designed to showcase Categories of the site. Each category will show up with a placeholder image. To change the Featured Image of each category, you need to download and activate the [Categories Images plugin](https://wordpress.org/plugins/categories-images/).
+
+Once activated, you can add a new featured image to each category in that specific category page.
 
 ## Frequently Asked Questions
 
 * What is the Geoplatform Community Core Bundle?
 
-An answer to that question.
+The Community Core Bundle (CCB) enables independent development of a self-contained community website (i.e., a Community Space) that operates on the infrastructure of the GeoPlatform. More info about CCB's and Geoplatform can be found [here.](https://www.geoplatform.gov/geoplatform-help/ccb/ccb-getting-started/#what_is_a_ccb)
 
-*
+* Does this theme need to be active for other Geoplatform plugins to work?
+
+No, Geoplatform plugins work independently of the theme. 
+
+
 
 
 ## Copyright
