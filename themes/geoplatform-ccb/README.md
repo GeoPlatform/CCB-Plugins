@@ -13,23 +13,65 @@ The Geoplatform Community Core Bundle theme is the core theme for WordPress site
 
 ## Description
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+Geoplatform CCB offers a number a features not common for WordPress themes, including:
 
+* enhanced user capabilities for Editors, Authors, Contributors, and Subscribers
+* integration with other Geoplatform.gov services
+* Page Categories and Tags
+* banner WYSIWYG editor for front page, posts, and pages
+* Category Specific Sidebar Links  
 
-A few notes about the sections above:
+### Enhanced capabilities
 
-*   "Contributors" is a comma separated list of wp.orgusernames
-*   "Tags" is a comma separated list of tags that apply to the theme
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the theme*. Note that it might work on
-higher versions... this is just the highest one you've verified.
+This theme gives higher capabilities to the default WordPress roles to give better use of the theme to those below Administrators. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities will be noted in this table below, and the enhanced roles we will prefix with GP-[Role].
 
+| Capability               |GP-Editor|GP-Author|GP-Contributor|GP-Subscriber|
+|--------------------------|:-------:|--------:|-------------:|------------:|
+|**edit_theme_options**    | X       |         |              |             |             
+|**list_users**            | X       |         |              |             |              
+|**manage_options**        | X       |         |              |             |               
+|**edit_dashboard**        | X       |         |              |             |               
+|**customize**             | X       |         |              |             |               
+|**edit_pages**            | X       | X       |              |             |               
+|**edit_published_pages**  | X       | X       |              |             |               
+|**publish_pages**         | X       | X       |              |             |               
+|**delete_pages**          | X       | X       |              |             |                
+|**delete_published_pages**| X       | X       |              |             |                
+|**edit_private_posts**    | X       | X       |              |             |                
+|**read_private_posts**    | X       | X       | X            | X           |                
+|**edit_private_pages**    | X       | X       |              |             |               
+|**read_private_pages**    | X       | X       | X            | X           |                
+|**upload_files**          | X       | X       | X            |             | |
+
+### Geoplatform Integration
+Using the Customizer, you can add a map gallery created in https://maps.geoplatform.gov into the front page. Follow these steps to add a map gallery into the theme.
+
+ 1. Create a Map gallery in https://maps.geoplatform.gov.
+ 2. When viewing the gallery, the url will have the gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/[your gallery ID]
+ 3. Copy the ID of the gallery
+ 4. Sign into your WordPress site, open the Customizer, and go to the Custom Links section
+ 5. Paste your Gallery ID in the text box. If your gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
+
+### Page Categories and Tags
+Like Posts, Pages can also be assigned to one or more Categories and Tags with this theme. This works the same as adding a category or tag to a post.
+
+### Banner WYSIWYG editor
+You can edit the main banner on the front page, and for all posts, pages, and category pages.
+
+* To edit the **Front Page** banner, navigate to the **Customizer -> Banner Area**. It uses the TinyMCE WYSIWYG editor, just like posts and pages. It also has a **Call to Action Button** that goes right below the content, that you can enable in that Customizer area.
+* **Posts** and **Pages** have another editor area right below the main content area called **"Banner Area Custom Content"**. Anything put in there will show up in that **Post** or **Pages** banner.
+* **Category Pages** have a **"Description"** area. Anything put in there will show up in the Category page's banner.   
+
+### Category Specific Sidebar Links
+You are able to add up to 5 links to each category page. The links can be added in each category page. 
 
 ## Frequently Asked Questions
 
-* A question that someone might have?
+* What is the Geoplatform Community Core Bundle?
 
 An answer to that question.
+
+*
 
 
 ## Copyright
@@ -42,10 +84,6 @@ Geoplatform CCB bundles the following third-party resources:
 Bootstrap (3.3.7). Copyright 2018 Twitter.
 **License:** MIT
 Source: https://getbootstrap.com/docs/3.3/
-
-Font Awesome icons, Copyright Dave Gandy
-**License:** SIL Open Font License, version 1.1.
-Source: http://fontawesome.io/
 
 
 ## Changelog
