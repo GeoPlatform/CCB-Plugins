@@ -16,11 +16,11 @@
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Author:            Image Matters LLC
  * Author URI:        www.imagemattersllc.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain:       geoplatform-maps
  * Domain Path:       /languages
  *
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.0.7' );
+define( 'GEOPMAP_PLUGIN', '1.0.8' );
 
 /**
  * The code that runs during plugin activation.
