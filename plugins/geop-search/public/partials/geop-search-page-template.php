@@ -9,7 +9,6 @@
  <!DOCTYPE html>
  <html <?php language_attributes(); ?>>
  <head>
- <base href="<?php echo plugin_dir_url("geop-search.php"); ?>geop-search/">
  <meta charset="utf-8">
      <meta http-equiv="X-UA-Compatible" content="IE=edge">
      <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,6 +40,7 @@
  //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
  if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
      <?php wp_head();?>
+     <base href="<?php echo plugin_dir_url("geop-search.php"); ?>geop-search/">
 
    </head>
  <body <?php body_class(); ?>>
@@ -120,5 +120,10 @@
      </div><!--#row-->
    </div><!--#container-->
 
+  <script type="text/javascript">
+  jQuery('document').ready(function(){
+    window.history.pushState('null', 'GeoPlatform Search', '<?php echo site_url('geoplatform-search') ?>/');
+  });
+  </script>
 
 <?php get_footer(); ?>
