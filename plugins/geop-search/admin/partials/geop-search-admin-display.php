@@ -35,7 +35,7 @@
       if (get_post_status(3333)){
         $interface_post = array(
           'post_title' => 'GeoPlatform Search',
-          'post_name' => 'geoplatform_search',
+          'post_name' => 'geoplatform-search',
           'post_content' => '[geopsearch_page]',
           'post_status' => 'publish',
           'post_type' => 'page',
@@ -44,6 +44,7 @@
       }
       wp_insert_post($interface_post);
       ?>
+      location.reload();
     });
   })
   </script>
