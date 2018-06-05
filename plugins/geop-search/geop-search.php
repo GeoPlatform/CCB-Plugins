@@ -71,17 +71,15 @@ function geopsearch_page_template($page_template) {
 
 // Sets the parameters of and then creates the search page.
 function geopsearch_add_interface_page() {
-	if (get_post_status(3333)){
-		$interface_post = array(
-			'post_title' => 'GeoPlatform Search',
-			'post_name' => 'geoplatform-search',
-			'post_content' => '[geopsearch_page]',
-			'post_status' => 'publish',
-			'post_type' => 'post',
-			'ID' => 3333
-		);
-	}
-  wp_insert_post($interface_post);
+	$interface_post = array(
+		'post_title' => 'GeoPlatform Search',
+		'post_name' => 'geoplatform-search',
+		'post_content' => '[geopsearch_page]',
+		'post_status' => 'publish',
+		'post_type' => 'page',
+		'ID' => 3333
+	);
+	wp_insert_post($interface_post);
 }
 
 // Activation hooks, includiong our interface addition to fire on activation.
