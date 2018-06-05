@@ -32,13 +32,13 @@
   jQuery('document').ready(function(){
     jQuery('#geopsearch_reset').click(function(){
       <?php
+      wp_delete_post(url_to_postid( site_url('geoplatform-search')));
       $interface_post = array(
         'post_title' => 'GeoPlatform Search',
         'post_name' => 'geoplatform-search',
         'post_content' => '[geopsearch_page]',
         'post_status' => 'publish',
-        'post_type' => 'page',
-        'ID' => 3333
+        'post_type' => 'page'
       );
       wp_insert_post($interface_post);
       ?>
