@@ -64,17 +64,17 @@ function geopsearch_page_shortcode_creation() {
 // Applies our custom page template to the created page.
 add_filter('page_template', 'geopsearch_page_template');
 function geopsearch_page_template($page_template) {
-    if (is_page('geoplatform-search'))
+    if (is_page('search'))
         $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
     return $page_template;
 }
 
 // Sets the parameters of and then creates the search page.
 function geopsearch_add_interface_page() {
-	wp_delete_post(url_to_postid( site_url('geoplatform-search')));
+	wp_delete_post(url_to_postid( site_url('search')));
 	$interface_post = array(
 		'post_title' => 'GeoPlatform Search',
-		'post_name' => 'geoplatform-search',
+		'post_name' => 'search',
 		'post_content' => '[geopsearch_page]',
 		'post_status' => 'publish',
 		'post_type' => 'page'

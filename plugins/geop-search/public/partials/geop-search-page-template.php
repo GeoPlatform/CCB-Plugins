@@ -122,8 +122,12 @@
 
   <script type="text/javascript">
   jQuery('document').ready(function(){
-    window.history.pushState('null', 'GeoPlatform Search', '<?php echo site_url('geoplatform-search') ?>/');
+    setTimeout(geopsearch_timeout, 1000);
   });
+
+  function geopsearch_timeout(){
+    window.history.pushState('null', 'GeoPlatform Search', '<?php echo esc_url( get_permalink( get_page_by_title( 'GeoPlatform Search' ))); ?>');
+  }
   </script>
 
 <?php get_footer(); ?>
