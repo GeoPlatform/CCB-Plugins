@@ -366,8 +366,8 @@ function geop_ccb_customize_register( $wp_customize )
 				) );
 
 				//Map Gallery Custom link section, settings, and controls
-			$wp_customize->add_section( 'custom_links_section' , array(
-				'title'    => __( 'Custom Links Section', 'geoplatform-ccb' ),
+			$wp_customize->add_section( 'map_gallery_section' , array(
+				'title'    => __( 'Map Gallery', 'geoplatform-ccb' ),
 				'priority' => 60
 			) );
 			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
@@ -377,8 +377,8 @@ function geop_ccb_customize_register( $wp_customize )
 				) );
 			$wp_customize->add_control( 'Map_Gallery_link_box', array(
 					'label' => 'Map Gallery link',
-					'section' => 'custom_links_section',
-					'description' => 'Make sure your gallery is pointing to UAL instead of registry. For example, https://registry.geoplatform.gov/api/galleries/{your map gallery ID} will not work, but https://ual.geoplatform.gov/api/galleries/{your map gallery ID} will',
+					'section' => 'map_gallery_section',
+					'description' => 'Make sure you use a full UAL link. Example: https://ual.geoplatform.gov/api/galleries/{your map gallery ID}',
 					'type' => 'url',
 					'priority' => 10
 				) );
@@ -392,7 +392,7 @@ function geop_ccb_customize_register( $wp_customize )
 				$wp_customize->add_control( 'Map_Gallery_env_choice', array(
 						'label' => 'Map Gallery Environment',
 						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
-						'section' => 'custom_links_section',
+						'section' => 'map_gallery_section',
 						'type' => 'radio',
 						'priority' => 20,
 						'choices' => array(

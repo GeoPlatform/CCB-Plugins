@@ -1,6 +1,6 @@
 # Geoplatform CCB (Community Core Bundle)
 
-**Contributors:** kevins713  
+**Contributors:** kevins713, imagemattersllc  
 **Requires at least:** WordPress 4.6.4  
 **Tested up to:** WordPress 4.9.6  
 **Stable tag:** 3.0.5   
@@ -45,13 +45,21 @@ This theme gives higher capabilities to the default WordPress roles to give bett
 |**upload_files**          | X       | X       | X            |             | |
 
 ### Geoplatform Integration
-Using the Customizer, you can add a map gallery created in https://maps.geoplatform.gov into the front page. Follow these steps to add a map gallery into the theme.
+#### Map Gallery
+Using the Customizer, you can add a map gallery created in https://maps.geoplatform.gov into the front page. Follow these steps to add a map gallery into the theme:
 
  1. Create a Map gallery in https://maps.geoplatform.gov.
- 2. When viewing the gallery, the url will have the gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/[your gallery ID]
- 3. Copy the ID of the gallery
- 4. Sign into your WordPress site, open the Customizer, and go to the Custom Links section
- 5. Paste your Gallery ID in the text box. If your gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
+ 2. When viewing the gallery, the url will have the gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/ **[your Gallery ID]**.
+ 3. Copy the ID of the gallery.
+ 4. Sign into your WordPress site, open the Customizer, and go to the **Map Gallery** section.
+ 5. Paste your Gallery ID in the text box, and add a UAL url link to the front of it. Example: https://ual.geoplatform.gov/api/galleries/ **[your Gallery ID]**.
+
+ If your gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
+
+ **Note:** This version still has SIT and STG choices for development for this gallery functionality. In later versions everything will default to PROD.  
+
+#### Map Plugin
+If you would like to dynamically add single maps from https://maps.geoplatform.gov, you can use our [Maps Plugin](), already out on the Wordpress Marketplace. See the link provided for it's documentation and use.
 
 ### Page Categories and Tags
 Like Posts, Pages can also be assigned to one or more Categories and Tags with this theme. This works the same as adding a category or tag to a post.
@@ -79,9 +87,7 @@ The Community Core Bundle (CCB) enables independent development of a self-contai
 
 * Does this theme need to be active for other Geoplatform plugins to work?
 
-No, Geoplatform plugins work independently of the theme. 
-
-
+No, Geoplatform plugins work independently of the theme.
 
 
 ## Copyright
