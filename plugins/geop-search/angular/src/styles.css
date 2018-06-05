@@ -90,6 +90,10 @@ button.btn.btn-sm {
     display: flex;
     justify-content: flex-end;
     margin-top: 1em;
+
+    background: transparent;    /* to prevent inheriting */
+    color: #333;                /* from footer styles    */
+    padding: 0;                 /* in theme              */
 }
 
 

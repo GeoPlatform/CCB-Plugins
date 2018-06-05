@@ -62,9 +62,8 @@ import { ThumbnailComponent } from './shared/thumbnail/thumbnail.component';
 //ROUTING CONFIG
 const appRoutes: Routes = [
 
-    { path: '', component: AppComponent }
-    // ,
-    // { path: '**',     component: PageNotFoundComponent }
+    { path: '',     component: AppComponent },
+    { path: '**',   component: AppComponent }
 ];
 
 

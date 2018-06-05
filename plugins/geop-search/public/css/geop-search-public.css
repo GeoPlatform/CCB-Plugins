@@ -2,7 +2,16 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
- .c-constraint-options {
+
+app-root {
+    /* compensate for <br> used in template the app will be placed in */
+    margin-top: -24px;
+}
+
+
+
+
+ /* .c-constraint-options {
    padding: 0.5em 0.5em 0.5em 0.5em;
    overflow: hidden;
    border: 1px solid #bbb;
@@ -39,7 +48,7 @@
   color: #000 !important;
 }
 
-.nav-item {
+ .nav-item {
   border: 1px solid #bbb;
 }
 
@@ -63,3 +72,5 @@
   background: #fff;
   color: inherit
 }
+
+*/
