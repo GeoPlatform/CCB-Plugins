@@ -65,9 +65,11 @@ function geopsearch_page_shortcode_creation() {
 add_filter('page_template', 'geopsearch_page_template');
 function geopsearch_page_template($page_template) {
     if (is_page('geoplatform_search'))
-        $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
+        $page_template = dirname( __FILE__ ) . '/public/partials/page_full-width.php';
     return $page_template;
 }
+// $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
+
 
 // Sets the parameters of and then creates the search page.
 function geopsearch_add_interface_page() {
