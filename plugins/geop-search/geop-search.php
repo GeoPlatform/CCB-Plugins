@@ -56,7 +56,7 @@ function deactivate_geop_search() {
 }
 
 // Shortcode workaround to inject the search control PHP file into the search page.
-add_shortcode( 'geopsearch_search_page', 'geopsearch_page_shortcode_creation' );
+add_shortcode( 'geopsearch_page', 'geopsearch_page_shortcode_creation' );
 function geopsearch_page_shortcode_creation() {
 	include 'public/class-geop-search-output.php';
 }
@@ -65,11 +65,9 @@ function geopsearch_page_shortcode_creation() {
 add_filter('page_template', 'geopsearch_page_template');
 function geopsearch_page_template($page_template) {
     if (is_page('geoplatform_search'))
-        $page_template = dirname( __FILE__ ) . '/public/partials/page_full-width.php';
+        $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
     return $page_template;
 }
-// $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
-
 
 // Sets the parameters of and then creates the search page.
 function geopsearch_add_interface_page() {
@@ -77,7 +75,7 @@ function geopsearch_add_interface_page() {
 		$interface_post = array(
 			'post_title' => 'GeoPlatform Search',
 			'post_name' => 'geoplatform_search',
-			'post_content' => '[geopsearch_search_page]',
+			'post_content' => '[geopsearch_page]',
 			'post_status' => 'publish',
 			'post_type' => 'page',
 			'ID' => 3333

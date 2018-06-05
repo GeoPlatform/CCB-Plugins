@@ -22,7 +22,7 @@
     <p>Your GeoPlatform Search Manager has been created and can be accessed via the Visit Search Interface button below.
       Alternatively, if something has occured that renders the page inoperable, press the Recreate Search Interface button below.
     </p>
-    <a href="<?php echo home_url('geoplatform_search/'); ?>" target="_blank">
+    <a href="<?php echo esc_url( get_permalink( get_page_by_title( 'GeoPlatform Search' ))); ?>" target="_blank">
       <input class="button-secondary" type="submit" value="Visit Search Interface" />
     </a>
     <button class="button-secondary" id="geopsearch_reset">Recreate Search Interface</button>
