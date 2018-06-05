@@ -13,7 +13,7 @@
  * @package           Geop_Search
  *
  * @wordpress-plugin
- * Plugin Name:       GeoPlatform Search Plugin
+ * Plugin Name:       GeoPlatform Search
  * Plugin URI:        www.geoplatform.gov
  * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
  * Version:           1.0.0
@@ -64,24 +64,22 @@ function geopsearch_page_shortcode_creation() {
 // Applies our custom page template to the created page.
 add_filter('page_template', 'geopsearch_page_template');
 function geopsearch_page_template($page_template) {
-    if (is_page('geoplatform_search'))
+    if (is_page('search'))
         $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
     return $page_template;
 }
 
 // Sets the parameters of and then creates the search page.
 function geopsearch_add_interface_page() {
-	if (get_post_status(3333)){
-		$interface_post = array(
-			'post_title' => 'GeoPlatform Search',
-			'post_name' => 'geoplatform_search',
-			'post_content' => '[geopsearch_page]',
-			'post_status' => 'publish',
-			'post_type' => 'page',
-			'ID' => 3333
-		);
-	}
-  wp_insert_post($interface_post);
+	wp_delete_post(url_to_postid( get_permalink( get_page_by_title( 'GeoPlatform Search' ))), true);
+	$interface_post = array(
+		'post_title' => 'GeoPlatform Search',
+		'post_name' => 'search',
+		'post_content' => '[geopsearch_page]',
+		'post_status' => 'publish',
+		'post_type' => 'page'
+	);
+	wp_insert_post($interface_post);
 }
 
 // Activation hooks, includiong our interface addition to fire on activation.
