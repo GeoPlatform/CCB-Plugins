@@ -71,7 +71,7 @@ function geopsearch_page_template($page_template) {
 
 // Sets the parameters of and then creates the search page.
 function geopsearch_add_interface_page() {
-	wp_delete_post(url_to_postid( site_url('search')));
+	wp_delete_post(url_to_postid( get_permalink( get_page_by_title( 'GeoPlatform Search' ))), true);
 	$interface_post = array(
 		'post_title' => 'GeoPlatform Search',
 		'post_name' => 'search',
