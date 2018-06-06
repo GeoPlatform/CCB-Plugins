@@ -6,4 +6,5 @@
 app-root {
     /* compensate for <br> used in template the app will be placed in */
     margin-top: -24px;
+    display: block;
 }
