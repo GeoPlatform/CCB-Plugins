@@ -1,6 +1,6 @@
 <?php
 /*
-    A GeoPlatform Category Template
+    A GeoPlatform Tag Template
 */
 
 get_header();
@@ -18,28 +18,22 @@ get_template_part( 'mega-menu', get_post_format() );
           <h4>Posts and Pages with the Tag : <?php single_tag_title();?></h4>
             <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
               <div class="svc-card" style="padding:inherit; margin-right:-1em;">
-
-
                 <div class="svc-card__body" style="flex-basis:102%;">
-                    <div class="svc-card__title"><?php the_title(); ?> <?php printf( esc_html(__( '( %s )', 'geoplatform-ccb' )), get_post_type( get_the_ID() ) ); ?></div>
-
+                    <div class="svc-card__title"><?php the_title(); ?> <?php printf( esc_html(__( '( %s )', 'geoplatform-ccb' )), esc_attr(get_post_type( get_the_ID() ) ) ); ?></div>
                     <p>
                         <?php the_excerpt('',TRUE);?>
                     </p>
                     <br>
-
                     <a class="btn btn-info" href="<?php the_permalink();?>">More Information</a>
-
-                </div>
-                </div>
+                </div><!--#svc-card__body-->
+                </div><!--#svc-card-->
                 <br>
-
             <?php endwhile; endif; ?>
-        </div>
+        </div><!--#col-md-9-->
 
         <div class="col-md-3">
             <?php get_template_part('sidebar'); ?>
-        </div>
-    </div>
+        </div><!--#col-md-9-->
+    </div><!--#row-->
 	<br \>
 </div><?php get_footer(); ?>
