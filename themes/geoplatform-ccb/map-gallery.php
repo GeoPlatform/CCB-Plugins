@@ -68,7 +68,7 @@
               $thumbnail = $single_result['thumbnail']['url'];
               }
             //for MM maps
-            elseif ($single_result['thumbnail']) {
+            elseif (isset($single_result['thumbnail'])) {
               switch ($gallery_link_env) {
                 case 'sit':
                   $thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map['assetId'] . "/thumbnail";
