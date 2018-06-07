@@ -58,7 +58,16 @@ function deactivate_geop_search() {
 // Shortcode workaround to inject the search control PHP file into the search page.
 add_shortcode( 'geopsearch_page', 'geopsearch_page_shortcode_creation' );
 function geopsearch_page_shortcode_creation() {
-	include 'public/class-geop-search-output.php';
+	?>
+	<app-root></app-root>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+	<link href="public/css/styles.bundle.css" rel="stylesheet" />
+	<link href="public/css/geop-search-styles.css" rel="stylesheet" />
+	<script type="text/javascript" src="<?php echo plugin_dir_url( __FILE__ ) . 'public/js/inline.bundle.js' ?>"></script>
+	<script type="text/javascript" src="<?php echo plugin_dir_url( __FILE__ ) . 'public/js/polyfills.bundle.js' ?>"></script>
+	<script type="text/javascript" src="<?php echo plugin_dir_url( __FILE__ ) . 'public/js/scripts.bundle.js' ?>"></script>
+	<script type="text/javascript" src="<?php echo plugin_dir_url( __FILE__ ) . 'public/js/main.bundle.js' ?>"></script>
+	<?php
 }
 
 // Applies our custom page template to the created page.

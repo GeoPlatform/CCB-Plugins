@@ -105,7 +105,7 @@
  <div class="container" style="max-width:2000px;">
 
      <div class="row">
-       <div class="loop">
+       <div class="loop" style="width:100%">
          <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
 
        get_template_part( 'page-single', get_post_format() );
@@ -120,7 +120,7 @@
      </div><!--#row-->
    </div><!--#container-->
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
   jQuery('document').ready(function(){
     setTimeout(geopsearch_timeout, 1000);
   });
@@ -128,6 +128,6 @@
   function geopsearch_timeout(){
     window.history.pushState('null', 'GeoPlatform Search', '<?php echo esc_url( get_permalink( get_page_by_title( 'GeoPlatform Search' ))); ?>');
   }
-  </script>
+  </script> -->
 
 <?php get_footer(); ?>
