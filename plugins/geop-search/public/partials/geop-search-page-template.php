@@ -40,7 +40,7 @@
  //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
  if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
     <?php wp_head();?>
-    <base href="<?php echo plugin_dir_url("geop-search.php"); ?>geop-search/">
+    <base href="<?php echo plugin_dir_url("geop-search.php"); ?>geop-search/"></base>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
    	<link href="public/css/styles.bundle.css" rel="stylesheet" />
    	<script type="text/javascript" src="<?php echo plugin_dir_url("geop-search.php") . 'geop-search/public/js/inline.bundle.js' ?>"></script>
@@ -111,16 +111,7 @@
 
      <div class="row">
        <div class="loop" style="width:100%">
-         <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-
-       get_template_part( 'page-single', get_post_format() );
-
-       //Un-comment the code below to show comments on the posts
-       //if ( comments_open() || get_comments_number() ) :
-       //	  comments_template();
-       //	endif;
-     endwhile; endif;
-     ?>
+         <app-root></app-root>
       </div><!--#loop-->
      </div><!--#row-->
    </div><!--#container-->
