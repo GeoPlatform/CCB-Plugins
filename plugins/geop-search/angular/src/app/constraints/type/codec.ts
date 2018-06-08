@@ -10,12 +10,21 @@ export class TypeCodec implements Codec {
     public typeOptions : {label:string; id:string;}[];
 
     constructor() {
-        this.typeOptions = Object.keys(ItemTypes).map(k=>{
+        this.typeOptions = Object.keys(ItemTypes)
+        .filter(k=> {
+            let t = ItemTypes[k];
+            return  t !== ItemTypes.CONTACT && t !== ItemTypes.CONCEPT &&
+                    t !== ItemTypes.CONCEPT_SCHEME && t !== ItemTypes.STANDARD;
+        })
+        .map(k=>{
             let v = ItemTypes[k], label = v;
             if(~label.indexOf(":")) label = label.split(':')[1];
-            if("VCard" === label) label = "Contact";
             return {label: label, id: v};
-        });
+        }).concat([
+            { label: 'Page',  id: 'pages'  },
+            { label: 'Post',  id: 'posts'  },
+            { label: 'Media', id: 'media' }
+        ]);
     }
 
     parseParams(params: Params, constraints?: Constraints) : Constraint {

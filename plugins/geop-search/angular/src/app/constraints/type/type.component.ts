@@ -89,6 +89,10 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
             case ItemTypes.COMMUNITY:       type =  'community'; break;
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+            //WP types
+            case 'pages':                   type =  'page'; break;
+            case 'posts':                   type =  'post'; break;
+            case 'media':                   type =  'attachment'; break;
         }
         return `/assets/${type}.svg`;
     }

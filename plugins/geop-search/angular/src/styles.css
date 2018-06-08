@@ -332,6 +332,10 @@ button.btn.btn-sm {
         max-height: 126px;
         min-height: 42px;
     }
+
+    .c-results-item .c-results-item__icon:last-child {
+        margin: 0 0 1em 1em;
+    }
     .c-results-item .c-results-item__icon.t--large {
         flex: 0 1 125px;
         max-width: 125px;
@@ -511,6 +515,9 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 .c-results-item--skos-conceptscheme .svg-icon svg path { fill: #bbb; }
 .c-results-item--org-organization .svg-icon svg path { fill: #777; }
 .c-results-item--vcard-vcard .svg-icon svg path { fill: #333; }
+.c-results-item--page .svg-icon svg path { fill: #777; }
+.c-results-item--post .svg-icon svg path { fill: #777; }
+.c-results-item--attachment .svg-icon svg path { stroke: #777; }
 
 
 .dcat-dataset .svg-icon svg path { fill: darkblue; }
@@ -523,6 +530,9 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 .skos-conceptscheme .svg-icon svg path { fill: #bbb; }
 .org-organization .svg-icon svg path { fill: #777; }
 .vcard-vcard .svg-icon svg path { fill: #333; }
+.page .svg-icon svg path { fill: #777; }
+.post .svg-icon svg path { fill: #777; }
+.attachment .svg-icon svg path { stroke: #777; }
 
 
 
