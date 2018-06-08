@@ -28,15 +28,14 @@ $ga_code = geop_ccb_getEnv('ga_code','UA-00000000-0');
 function geop_ccb_scripts() {
   wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
-	wp_enqueue_style( 'bootstrap-css','//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
-	wp_enqueue_script( 'jquery', get_template_directory_uri() . '/js/jquery.min.js', array('jquery'), '2.1.4', true );
-	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/bootstrap.min.js', array('jquery'), '3.3.7', true );
-	wp_enqueue_script( 'bootstrap', get_template_directory_uri() . '/js/geoplatform.style.min.js', array('jquery'));
-	wp_enqueue_script( 'auth', get_template_directory_uri() . '/scripts/authentication.js');
-	wp_enqueue_script( 'fixedScroll', get_template_directory_uri() . '/scripts/fixed_scroll.js');
+	wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
+	wp_enqueue_script( 'bootstrap-min', get_template_directory_uri() . '/js/bootstrap.min.js', array(), '3.3.7', true);
+  //wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
+	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
+  wp_enqueue_script( 'geoplatform-ccb-min', get_template_directory_uri() . '/js/geoplatform.style.min.js', array('jquery'), null, true );
+	wp_enqueue_script( 'auth', get_template_directory_uri() . '/scripts/authentication.js', array(), null, true);
+	wp_enqueue_script( 'fixedScroll', get_template_directory_uri() . '/scripts/fixed_scroll.js', array(), null, true);
 	wp_enqueue_script( 'ajax-pagination',  get_template_directory_uri() . '/js/ajax-pagination.js', array( 'jquery' ), '1.0', true );
-	//Google Analytics tracking
-	//wp_enqueue_script( 'google-analytics', get_template_directory_uri() . '/js/google_analytics.js');
 }
 add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 
@@ -171,11 +170,6 @@ add_action('init', 'geop_ccb_create_services_menu');
 //-------------------------------
 add_theme_support( 'post-thumbnails' );
 
-//-------------------------------
-// Diabling auto formatting and adding <p> tags to copy/pasted HTML in pages
-//-------------------------------
-//remove_filter( 'the_content', 'wpautop' );
-//remove_filter( 'the_excerpt', 'wpautop' );
 
 /********************************************************/
 // Adding Dashicons in WordPress Front-end
