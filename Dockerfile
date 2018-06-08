@@ -27,6 +27,13 @@ RUN curl -L -o /usr/src/tinymce-advanced.zip \
 					/usr/src/tinymce-advanced.zip; \
 		rm /usr/src/tinymce-advanced.zip
 
+# easy-wp-smtp:
+RUN curl -L -o /usr/src/easy-wp-smtp.zip \
+					https://downloads.wordpress.org/plugin/easy-wp-smtp.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/easy-wp-smtp.zip; \
+		rm /usr/src/easy-wp-smtp.zip
+
 ########### Install Developer Dependencies #############
 # theme check:
 RUN curl -L -o /usr/src/theme-check.zip \
