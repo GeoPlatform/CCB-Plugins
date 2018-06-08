@@ -20,9 +20,8 @@ if [[ ! $root_url =~ ^https?://.+  ]]; then
 fi
 
 
-# Setup the .htaccess file
-sed -ie "s/%%sitename%%/$sitename/g" .htaccess
-
+# Setup the URL rewriting
+sed -ie "s/%%sitename%%/$sitename/g" /etc/apache2/apache2.conf
 
 # Return to the regularly scheduled program
 # CMD arg: https://github.com/docker-library/wordpress/blob/master/php7.2/apache/Dockerfile#L60

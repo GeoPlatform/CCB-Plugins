@@ -9,9 +9,6 @@ php_value max_input_time 1000
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Rewrite all base URLS coming in
-  RewriteRule (.*)%%sitename%%\/?(.*) $1/$2 [L]
-
   RewriteBase /%%sitename%%/
   RewriteRule ^index\.php$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
