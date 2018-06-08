@@ -15,7 +15,7 @@
       "timeout": "5000",
 
       //{env}-{id} of application deployed
-      "appId": "gpsearch-plugin"
+      "appId": "geopcomsearch-plugin"
     };
   }
 })();
