@@ -55,12 +55,6 @@ function deactivate_geop_search() {
 	Geop_Search_Deactivator::deactivate();
 }
 
-// Shortcode workaround to inject the search control PHP file into the search page.
-add_shortcode( 'geopsearch_page', 'geopsearch_page_shortcode_creation' );
-function geopsearch_page_shortcode_creation() {
-	include 'public/class-geop-search-output.php';
-}
-
 // Applies our custom page template to the created page.
 add_filter('page_template', 'geopsearch_page_template');
 function geopsearch_page_template($page_template) {
@@ -75,7 +69,7 @@ function geopsearch_add_interface_page() {
 	$interface_post = array(
 		'post_title' => 'GeoPlatform Search',
 		'post_name' => 'search',
-		'post_content' => '[geopsearch_page]',
+		'post_content' => '',
 		'post_status' => 'publish',
 		'post_type' => 'page'
 	);
