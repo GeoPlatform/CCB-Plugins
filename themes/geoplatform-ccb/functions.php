@@ -808,9 +808,6 @@ function geop_ccb_add_theme_caps(){
 		//Allows these roles to see list of users on site
 		$editorRole->add_cap('list_users');
 
-		//Allows these roles to manage options on the site
-		$editorRole->add_cap('manage_options');
-
 		//Allows these roles to edit themes on the site
 		$editorRole->add_cap('edit_theme');
 
@@ -868,9 +865,6 @@ function geop_ccb_remove_theme_caps() {
 
 	//Disallows these roles to see list of users on site
 	$editorRole->remove_cap('list_users');
-
-	//Disallows these roles to manage options on the site
-	$editorRole->remove_cap('manage_options');
 
 	//Disallows these roles to edit themes on the site
 	$editorRole->remove_cap('edit_theme');
