@@ -14,11 +14,10 @@
     <div *ngIf="isClosed" (click)="isClosed=!isClosed">
         <em>Expand to see current constraints</em>
     </div>
+    <div *ngIf="isEmpty() && !isClosed">
+        <em>Add constraints using the options above</em>
+    </div>
     <div class="c-constraints">
-
-        <div *ngIf="isEmpty()">
-            <em>Add constraints using the options above</em>
-        </div>
 
         <div *ngFor="let constraint of constraints.list()"
             class="c-constraint c-constraint__{{constraint.name}}">

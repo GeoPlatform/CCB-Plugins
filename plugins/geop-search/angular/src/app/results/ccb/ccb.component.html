@@ -9,11 +9,22 @@
 
 <!-- paging controls for results -->
 <div class="c-toolbar">
-    <gp-pagination
+    <!-- <gp-pagination
         [query]="query"
         [totalResults]="totalResults"
         (onEvent)="onPagingEvent($event)">
-    </gp-pagination>
+    </gp-pagination> -->
+    <div>
+        <span>at least {{totalResults}} results</span>
+        <button *ngIf="query.getPage()>0" (click)="previousPage()"
+            type="button" class="btn btn-secondary">
+            prev
+        </button>
+        <button *ngIf="results?.results.length >= query.getPageSize()" (click)="nextPage()"
+            type="button" class="btn btn-secondary">
+            next
+        </button>
+    </div>
     <div class="flex-1"></div>
     <div class="c-sort">
         <select [(ngModel)]="sortField" (change)="onSortChange()">
@@ -35,40 +46,52 @@
     class="c-results-item c-results-item--{{item.type.toLowerCase().replace(':','-')}}">
     <div class="c-results-item__body">
 
-        <!-- <div class="c-results-item__icon">
+        <div class="c-results-item__icon">
             <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span>
-        </div> -->
+        </div>
+
         <div class="flex-1">
+
             <div class="c-results-item__heading">
-                <a>
-                    <span *ngIf="item.label">{{item.label}}</span>
-                    <span *ngIf="!item.label">Un-titled {{item.type}}</span>
+                <a href="{{item.link}}" target="_blank">
+                    <span *ngIf="item.title">{{item.title.rendered}}</span>
+                    <span *ngIf="!item.title">Un-titled {{item.type}}</span>
                 </a>
             </div>
-            <!-- <div class="c-results-item__facets is-url">{{item.uri}}</div> -->
+
             <div class="c-results-item__facets">
                 <span class="c-results-item__type">
-                    <strong>{{item.type|friendlyType}}</strong>
-                    <span *ngIf="item.createdBy">
-                        by <a (click)="addCreatorConstraint(item.createdBy)">{{item.createdBy}}</a>
-                    </span>
+                    <strong>
+                        <span *ngIf="item.media_type">{{item.media_type}} </span>
+                        {{item.type}}
+                    </strong>
+                    by
+                    <a *ngIf="item.author.label"
+                        (click)="constrainToUser(item.author.label)">
+                        {{item.author.label}}
+                    </a>
+                    <span *ngIf="!item.author.id">unknown author</span>
                 </span> |
-                <span *ngIf="item.created" title="Creation date">created {{item.created|date}}</span> |
-                <span *ngIf="item.modified" title="Last modified date">last modified {{item.modified|date}}</span>
+                <span>created {{item.date|date}}</span> |
+                <span>last modified {{item.modified|date}}</span>
             </div>
-            <div class="c-results-item__description" [innerHtml]="item.description"></div>
-            <div class="c-results-item__actions">
-                <a>Find similar</a>
-            </div>
+
+            <div class="c-results-item__description"
+                *ngIf="'image'!==item.media_type"
+                [innerHtml]="item.description?.rendered"></div>
+
+            <div class="c-results-item__actions"></div>
+
         </div>
+
         <!-- icon if necessary -->
-        <thumbnail *ngIf="item.thumbnail" class="c-results-item__icon t--large"
-            [source]="item.thumbnail">
-        </thumbnail>
+        <div class="c-results-item__icon" *ngIf="'image'===item.media_type">
+            <img src="{{item.source_url}}">
+        </div>
+
 
     </div>
 
-    <div class="c-results-item__footer">
+    <div class="c-results-item__footer"></div>
 
-    </div>
 </div>

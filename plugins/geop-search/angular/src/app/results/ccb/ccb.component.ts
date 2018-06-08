@@ -9,6 +9,7 @@ import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 
 import { CCBService } from '../../shared/ccb.service';
 import { Constraints, Constraint } from '../../models/constraint';
+import { CreatorCodec } from '../../constraints/creator/codec';
 import { PagingEvent } from '../../shared/paging/paging.component';
 
 @Component({
@@ -23,7 +24,7 @@ export class CcbComponent implements OnInit {
     private service : CCBService;
     private listener : ISubscription;
     public totalResults : number = 0;
-    public pageSize : number = 10;
+    public pageSize : number = 20;
     public query : Query;
     public sortField : string;
     private defaultQuery : Query;
@@ -45,46 +46,46 @@ export class CcbComponent implements OnInit {
     ngOnInit() {
 
         //TODO remove
-        this.results = {
-            results: [
-                {
-                    type: "Post",
-                    label: "One", id: '1', description: "This is a temporary result",
-                    created: new Date().getTime(), modified: new Date().getTime()
-                },
-                {
-                    type: "Post",
-                    label: "Two", id: '2', description: "This is a temporary result",
-                    created: new Date().getTime(), modified: new Date().getTime()
-                },
-                {
-                    type: "Page",
-                    label: "Three", id: '3', description: "This is a temporary result",
-                    created: new Date().getTime(), modified: new Date().getTime()
-                },
-                {
-                    type: "Page",
-                    label: "Four", id: '4', description: "This is a temporary result",
-                    created: new Date().getTime(), modified: new Date().getTime()
-                },
-                {
-                    type: "File",
-                    label: "Five", id: '5', description: "This is a temporary result",
-                    created: new Date().getTime(), modified: new Date().getTime()
-                },
-                {
-                    type: "File",
-                    label: "Six", id: '6', description: "This is a temporary result",
-                    created: new Date().getTime(), modified: new Date().getTime()
-                },
-                {
-                    type: "User",
-                    label: "Seven", id: '7', description: "This is a temporary result",
-                    created: new Date().getTime(), modified: new Date().getTime()
-                }
-            ]
-        };
-        this.totalResults = 7;
+        // this.results = {
+        //     results: [
+        //         {
+        //             type: "Post",
+        //             label: "One", id: '1', description: "This is a temporary result",
+        //             created: new Date().getTime(), modified: new Date().getTime()
+        //         },
+        //         {
+        //             type: "Post",
+        //             label: "Two", id: '2', description: "This is a temporary result",
+        //             created: new Date().getTime(), modified: new Date().getTime()
+        //         },
+        //         {
+        //             type: "Page",
+        //             label: "Three", id: '3', description: "This is a temporary result",
+        //             created: new Date().getTime(), modified: new Date().getTime()
+        //         },
+        //         {
+        //             type: "Page",
+        //             label: "Four", id: '4', description: "This is a temporary result",
+        //             created: new Date().getTime(), modified: new Date().getTime()
+        //         },
+        //         {
+        //             type: "File",
+        //             label: "Five", id: '5', description: "This is a temporary result",
+        //             created: new Date().getTime(), modified: new Date().getTime()
+        //         },
+        //         {
+        //             type: "File",
+        //             label: "Six", id: '6', description: "This is a temporary result",
+        //             created: new Date().getTime(), modified: new Date().getTime()
+        //         },
+        //         {
+        //             type: "User",
+        //             label: "Seven", id: '7', description: "This is a temporary result",
+        //             created: new Date().getTime(), modified: new Date().getTime()
+        //         }
+        //     ]
+        // };
+        // this.totalResults = 7;
 
     }
 
@@ -118,14 +119,14 @@ export class CcbComponent implements OnInit {
     }
 
     executeQuery() {
-        // this.service.search(this.query)
-        // .then( response => {
-        //         this.totalResults = response.totalResults;
-        //         this.results = response;
-        // })
-        // .catch( e => {
-        //     console.log("An error occurred: " + e.message);
-        // })
+        this.service.search(this.query)
+        .then( response => {
+            this.totalResults = response.totalResults;
+            this.results = response;
+        })
+        .catch( e => {
+            console.log("An error occurred: " + e.message);
+        })
     }
 
     onPagingEvent($event : PagingEvent) {
@@ -143,11 +144,34 @@ export class CcbComponent implements OnInit {
         this.queryChange.next(this.query);
     }
 
+    previousPage() {
+        this.query.setPage(this.query.getPage()-1);
+        this.queryChange.next(this.query);
+    }
+
+    nextPage() {
+        this.query.setPage(this.query.getPage()+1);
+        this.queryChange.next(this.query);
+    }
+
     /**
      *
      */
     onSortChange() {
         this.query.sort(this.sortField);
         this.queryChange.next(this.query);
+    }
+
+
+    constrainToUser (user) {
+        let constraint = new CreatorCodec().toConstraint(user);
+        this.constraints.set(constraint);
+    }
+
+    /**
+     *
+     */
+    getIconPath(item) {
+        return `/assets/${item.type}.svg`;
     }
 }
