@@ -10,16 +10,6 @@
  * @subpackage Geop_Maps/public
  */
 
-/**
- * The public-facing functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the public-facing stylesheet and JavaScript.
- *
- * @package    Geop_Maps
- * @subpackage Geop_Maps/public
- * @author     Kevin Schmidt <kevins@imagemattersllc.com>
- */
 class Geop_Maps_Public {
 
 	/**

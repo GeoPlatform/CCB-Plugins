@@ -21,7 +21,7 @@
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       geoplatform-search
+ * Text Domain:       geoplatform-com-search
  */
 
 define("UAL", "https://ual.geoplatform.gov");
@@ -31,7 +31,7 @@ define('GP_SEARCH_NAME', "GeoPlatform Community Search");
 define('GP_SEARCH_VERSION', "1.0.2");
 
 function gpsearch_add_stylesheet() {
-  wp_register_style('gpsearch', GP_SEARCH_URL . 'assets/css/geoplatform-search-core.css', array(), false, 'all');
+  wp_register_style('gpsearch', GP_SEARCH_URL . 'assets/css/geoplatform-com-search-core.css', array(), false, 'all');
   wp_enqueue_style('gpsearch');
 }
 add_action( 'wp_print_styles', 'gpsearch_add_stylesheet' );
@@ -92,7 +92,7 @@ function gp_search_shortcode_creation($atts){
   }
 
   ob_start();
-  include( GP_SEARCH_DIR . '/includes/geoplatform-search-core.php' );  // inject php
+  include( GP_SEARCH_DIR . '/includes/geoplatform-com-search-core.php' );  // inject php
 	return ob_get_clean();
 }
 
@@ -114,7 +114,7 @@ function gpsearch_add_admin_script() {
   wp_enqueue_script('q');
   wp_register_script('clientapi', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
   wp_enqueue_script('clientapi');
-  wp_register_style('gpsearchadmin_css', GP_SEARCH_URL . 'assets/css/geoplatform-search-admin.css', false, 'all');
+  wp_register_style('gpsearchadmin_css', GP_SEARCH_URL . 'assets/css/geoplatform-com-search-admin.css', false, 'all');
   wp_enqueue_style('gpsearchadmin_css');
 }
 add_action( 'admin_enqueue_scripts', 'gpsearch_add_admin_script' );
@@ -127,7 +127,7 @@ add_action('admin_menu', 'gp_search_plugin_admin_menu');
 
 // tell it what to display for admin page
 function gp_search_plugin_display_admin_page() {
-  include( GP_SEARCH_DIR . '/includes/geoplatform-search-admin.php' ); // inject php
+  include( GP_SEARCH_DIR . '/includes/geoplatform-com-search-admin.php' ); // inject php
 }
 
 // settings api setup.  requires callbacks to handling displaying the fields.
