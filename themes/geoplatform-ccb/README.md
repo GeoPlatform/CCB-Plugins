@@ -4,7 +4,7 @@
 **Requires at least:** WordPress 4.6.4  
 **Tested up to:** WordPress 4.9.6  
 **Stable tag:** 3.0.5   
-**Version:** 3.1.0  
+**Version:** 3.1.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, education
@@ -59,7 +59,7 @@ Using the Customizer, you can add a map gallery created in https://maps.geoplatf
  **Note:** This version still has SIT and STG choices for development for this gallery functionality. In later versions everything will default to PROD.  
 
 #### Map Plugin
-If you would like to dynamically add single maps from https://maps.geoplatform.gov, you can use our [Maps Plugin](), already out on the Wordpress Marketplace. See the link provided for it's documentation and use.
+If you would like to dynamically add single maps from https://maps.geoplatform.gov, you can use our [Maps Plugin](), soon to be out on the Wordpress Marketplace. See the link provided for it's documentation and use.
 
 ### Page Categories and Tags
 Like Posts, Pages can also be assigned to one or more Categories and Tags with this theme. This works the same as adding a category or tag to a post.
@@ -75,9 +75,9 @@ You can edit the main banner on the front page, and for all posts, pages, and ca
 You are able to add up to 5 links to each category page. The links can be added in each category page.
 
 ### Front Page Categories
-The Front page of this theme is designed to showcase Categories of the site. Each category will show up with a placeholder image. To change the Featured Image of each category, you need to download and activate the [Categories Images plugin](https://wordpress.org/plugins/categories-images/).
+The Front page of this theme is designed to showcase Categories of the site. Each category will show up with a placeholder image. To change the Featured Image of each category, you need to navigate to the area where you can edit Categories (**Posts/Pages->Categories->[Your Category]**). It will show up in the Banner of that category as well as the front page card of that category.
 
-Once activated, you can add a new featured image to each category in that specific category page.
+The front page organizes categories by name in ascending order, and show the first 12 categories in that organization structure. You can cycle through the categories with a **"More/Previous Categories"** Links below the cards. Later updates will incorporate dynamically being able to change the organization of these.
 
 ## Frequently Asked Questions
 
@@ -94,6 +94,9 @@ No, Geoplatform plugins work independently of the theme.
 
 Geoplatform CCB WordPress Theme, Copyright 2018 Geoplatform.gov.
 Geoplatform CCB is distributed under the terms of the GNU GPL.
+
+Geoplatform CCB Theme is incorporates code and templates from Underscores WordPress Theme, Copyright 2013 Automattic, Inc.
+Underscores WordPress Theme is distributed under the terms of the GNU GPL
 
 Geoplatform CCB bundles the following third-party resources:
 
