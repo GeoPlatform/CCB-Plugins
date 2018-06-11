@@ -1798,7 +1798,7 @@ body .input-group-lg>.form-control, body .input-group-lg>.input-group-addon, bod
 }
 
 .input-group-slick>input.form-control {
-    height: 2.25em;
+    height: 2.5rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem
 }
@@ -4021,7 +4021,8 @@ body .btn.btn-lg {
 }
 
 .input-group-slick {
-    font-size: 1rem
+    font-size: 1rem;
+    width:fit-content;
 }
 
 .input-group-slick>.btn {
@@ -4124,7 +4125,7 @@ body .btn.btn-lg {
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
-    /*functions.php -> header_image_method()*/
+    /*functions.php -> geop_ccb_header_image_method()*/
     background-image: url(<?php >echo get_header_image(); ?>)
 }
 
@@ -4135,7 +4136,8 @@ body .btn.btn-lg {
     padding: 3em 0 0;
     background: rgba(0, 0, 0, .5);
     text-shadow: 0 0 5px #000;
-    color: #fff
+    color: #fff;
+    min-height:17rem;
 }
 
 .banner>.content .additional-info {
@@ -4176,7 +4178,7 @@ body .btn.btn-lg {
 
 @media (min-width:768px) {
     .banner {
-      /*functions.php -> header_image_method()*/
+      /*functions.php -> geop_ccb_header_image_method()*/
         background-image: url(<?php >echo get_header_image(); ?>)
     }
     .banner .attribution .source-link {
@@ -4189,24 +4191,26 @@ body .btn.btn-lg {
 
 @media (min-width:992px) {
     .banner {
-      /*functions.php -> header_image_method()*/
+      /*functions.php -> geop_ccb_header_image_method()*/
         background-image: url(<?php >echo get_header_image(); ?>)
     }
 }
 
 @media (min-width:1200px) {
-  /*functions.php -> header_image_method()*/
+  /*functions.php -> geop_ccb_header_image_method()*/
     .banner {
         background-image: url(<?php >echo get_header_image(); ?>)
     }
 }
 
 .banner.banner--fixed-height {
-    height: 17rem
+    min-height: 17rem
 }
 
 .banner.banner--fixed-height>.content {
     padding: 3rem
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
 }
 
 header.navbar-fixed-top .banner {
@@ -4945,7 +4949,7 @@ header.t-transparent .header__menu>li>button:hover, header.t-transparent .header
     background: 0 0;
     box-shadow: none;
     padding: 0;
-    margin-top: 4em
+    margin-top: 5.25em
 }
 
 .mega-menu__body {
@@ -5713,12 +5717,14 @@ and https://github.com/Automattic/_s/blob/master/style.css
 	display: inline;
 	float: left;
 	margin-right: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 .alignright {
 	display: inline;
 	float: right;
 	margin-left: 1.5em;
+  margin-bottom: 1.5em;
 }
 
 .aligncenter {
@@ -5782,6 +5788,8 @@ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
 }
 .gp-ui-card .text--primary {
   font-size: 1em!important;
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .gp-ui-card__body:last-child{
@@ -5801,4 +5809,50 @@ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
 .svc-card__img img {
     width: 100%;
     height: 100%;
+}
+
+.svc-card__title {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+}
+
+/*--------------------------------------------------------------
+# Theme Unit Test fixes
+--------------------------------------------------------------*/
+
+/*Table styling without class declaration
+Pulled from https://github.com/twbs/bootstrap/blob/v4-dev/dist/css/bootstrap.css#L2079-L2241 */
+table {
+ width: 100%;
+ max-width: 100%;
+ margin-bottom: 1rem;
+}
+table th,
+table td {
+ padding: 0.75rem;
+ vertical-align: top;
+ border-top: 1px solid #eceeef;
+}
+table thead th {
+ vertical-align: bottom;
+ border-bottom: 2px solid #eceeef;
+}
+table tbody + tbody {
+ border-top: 2px solid #eceeef;
+}
+
+/*Image alignment and sizing issues outside of content area */
+img[class*="wp-image-"]{
+  max-width: 100%;
+  height:auto;
+}
+
+div .comment-body p img {
+  height: auto;
+  width: 100%;
+}
+
+/*keeps words in the widget area*/
+div#widgetized-area {
+    word-wrap: break-word;
 }

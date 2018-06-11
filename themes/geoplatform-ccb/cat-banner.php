@@ -1,5 +1,14 @@
-<?php if (function_exists('z_taxonomy_image_url') && z_taxonomy_image_url()) {
-  $gp_banner_image = z_taxonomy_image_url();
+<?php
+/**
+ * The template the category banner
+ *
+ * @package Geoplatform_CCB
+ */
+$category = get_category( get_query_var( 'cat' ) );//get category data
+$cat_id = $category->cat_ID; //get category ID
+$class_category_image = get_term_meta($cat_id, 'category-image-id', true);//Get the image ID
+if ( $class_category_image ) {
+  $gp_banner_image = wp_get_attachment_image_src($class_category_image, 'full')[0]; //get and set the URL
 } else {
   $gp_banner_image = get_template_directory_uri() . '/img/placeholder-category-photo.jpeg';
 }

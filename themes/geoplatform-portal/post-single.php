@@ -19,5 +19,5 @@
 </div>
 
 <!-- the rest of the content -->
-<h5 class="blog-post-meta">Updated on <?php the_date(); ?> by <a href="#"><?php the_author(); ?></a></h5>
+<h5 class="blog-post-meta">Updated on <?php the_modified_date(); ?></h5>
 </div><!-- /.blog-post -->

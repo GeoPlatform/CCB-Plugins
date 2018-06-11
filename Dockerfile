@@ -20,12 +20,19 @@ RUN rm -rf /usr/src/wordpress/wp-content/plugins/hello.php
 RUN rm -rf /usr/src/wordpress/wp-content/themes/*
 
 ########### Install common dependencies ################
-# categories-images:
-RUN curl -L -o /usr/src/categories-images.zip \
-					https://downloads.wordpress.org/plugin/categories-images.2.5.4.zip; \
+# tinymce-advanced:
+RUN curl -L -o /usr/src/tinymce-advanced.zip \
+					https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
-					/usr/src/categories-images.zip; \
-		rm /usr/src/categories-images.zip
+					/usr/src/tinymce-advanced.zip; \
+		rm /usr/src/tinymce-advanced.zip
+
+# easy-wp-smtp:
+RUN curl -L -o /usr/src/easy-wp-smtp.zip \
+					https://downloads.wordpress.org/plugin/easy-wp-smtp.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/easy-wp-smtp.zip; \
+		rm /usr/src/easy-wp-smtp.zip
 
 ########### Install Developer Dependencies #############
 # theme check:
