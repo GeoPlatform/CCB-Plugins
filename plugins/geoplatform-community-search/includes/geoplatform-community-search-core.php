@@ -198,7 +198,6 @@
       initSearch = '<?php echo $a['keyword'] ?>';
     }
     query.setQ(initSearch);
-    console.log(initSearch);
 
     // Section that adds keyword to search bar query.
     // query.setQ(searchSelector.val() + ' <?php echo $a['keyword'] ?>');
