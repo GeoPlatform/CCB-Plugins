@@ -124,6 +124,13 @@ $geopcomsearch_perpage = $geopcomsearch_fields['geopcomsearch_select_perpage'];
         <td class='gp-search-options-cell'>10</td>
         <td class='gp-search-options-cell'></td>
       </tr>
+      <tr class='gp-search-options-row'>
+        <td class='gp-search-options-cell'>keyword</td>
+        <td class='gp-search-options-cell'>Filter results by keywords</td>
+        <td class='gp-search-options-cell'>[geopcomsearch keyword=water,volcanos]</td>
+        <td class='gp-search-options-cell'>any</td>
+        <td class='gp-search-options-cell'>Use commas to seperate terms, no spaces allowed</td>
+      </tr>
     </tbody>
   </table>
 </div>

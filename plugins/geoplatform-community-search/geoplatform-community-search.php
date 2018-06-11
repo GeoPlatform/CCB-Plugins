@@ -63,6 +63,7 @@ function geopcomsearch__shortcode_creation($atts){
     'geopcomsearch_checkbox_show_paging' => 1,
     'geopcomsearch_checkbox_show_search' => 1,
     'geopcomsearch_select_sort' => 'modified',
+    'geopcomsearch_select_keyword' => 'any',
     'geopcomsearch_select_perpage' => 10));
 
   // populate via shortcode, using settings api values as defaults
@@ -74,6 +75,7 @@ function geopcomsearch__shortcode_creation($atts){
     'showsearch' => $options['geopcomsearch_checkbox_show_search'],
     'sort' => $options['geopcomsearch_select_sort'],
     'maxresults' => $options['geopcomsearch_select_perpage'],
+    'keyword' => $options['geopcomsearch_select_keyword'],
     'geopcomsearch_uuid' => $geopcomsearch_uuid
   ), $atts);
 

@@ -191,13 +191,24 @@
     listSelector.empty();
 
     var query = new GeoPlatform.Query();
-    query.setQ(searchSelector.val());
+
+    // Sets default query based on keyword, overwritten if search bar input.
+    var initSearch = searchSelector.val()
+    if (!initSearch){
+      initSearch = '<?php echo $a['keyword'] ?>';
+    }
+    query.setQ(initSearch);
+    console.log(initSearch);
+
+    // Section that adds keyword to search bar query.
+    // query.setQ(searchSelector.val() + ' <?php echo $a['keyword'] ?>');
+
     query.setFacets(null);
     query.setFields(['resourceTypes', 'landingPage', 'modified']);
 
     let objType = '<?php echo $a['objtype'] ?>';
 
-    var types = [];
+    var typesArray = [];
     if (objType !== undefined && objType.length > 0)
     {
       var objTypeSplit = objType.split(',');
@@ -205,26 +216,25 @@
       {
         switch (objTypeSplit[i])
         {
-          case 'map': types.push(GeoPlatform.ItemTypes.MAP); break;
-          case 'dataset': types.push(GeoPlatform.ItemTypes.DATASET); break;
-          case 'service': types.push(GeoPlatform.ItemTypes.SERVICE); break;
-          case 'layer': types.push(GeoPlatform.ItemTypes.LAYER); break;
-          case 'gallery': types.push(GeoPlatform.ItemTypes.GALLERY); break;
-          case 'community': types.push(GeoPlatform.ItemTypes.COMMUNITY); break;
+          case 'map': typesArray.push(GeoPlatform.ItemTypes.MAP); break;
+          case 'dataset': typesArray.push(GeoPlatform.ItemTypes.DATASET); break;
+          case 'service': typesArray.push(GeoPlatform.ItemTypes.SERVICE); break;
+          case 'layer': typesArray.push(GeoPlatform.ItemTypes.LAYER); break;
+          case 'gallery': typesArray.push(GeoPlatform.ItemTypes.GALLERY); break;
+          case 'community': typesArray.push(GeoPlatform.ItemTypes.COMMUNITY); break;
         }
       }
     }
-
-    if (types.length === 0)
+    if (typesArray.length === 0)
     {
-      types.push(GeoPlatform.ItemTypes.MAP);
-      types.push(GeoPlatform.ItemTypes.DATASET);
-      types.push(GeoPlatform.ItemTypes.SERVICE);
-      types.push(GeoPlatform.ItemTypes.LAYER);
-      types.push(GeoPlatform.ItemTypes.GALLERY);
-      types.push(GeoPlatform.ItemTypes.COMMUNITY);
+      typesArray.push(GeoPlatform.ItemTypes.MAP);
+      typesArray.push(GeoPlatform.ItemTypes.DATASET);
+      typesArray.push(GeoPlatform.ItemTypes.SERVICE);
+      typesArray.push(GeoPlatform.ItemTypes.LAYER);
+      typesArray.push(GeoPlatform.ItemTypes.GALLERY);
+      typesArray.push(GeoPlatform.ItemTypes.COMMUNITY);
     }
-    query.setTypes(types);
+    query.setTypes(typesArray);
 
     let sort = '<?php echo $a['sort'] ?>';
     if (sort === undefined || sort.length === 0)
