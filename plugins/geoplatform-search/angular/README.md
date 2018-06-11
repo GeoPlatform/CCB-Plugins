@@ -13,7 +13,7 @@ If you have not already setup your development environment to work using Angular
 > [user ~]$ sudo npm install -g @angular/cli@1.7.4
 
 3. Run NPM install in the angular dirctory
-> [user ~]$ cd { dir-of-clone/plugins/geop-search/angular }
+> [user ~]$ cd { dir-of-clone/plugins/geoplatform-search/angular }
 > [user angular]$ npm install
 
 4. Build plugin from source

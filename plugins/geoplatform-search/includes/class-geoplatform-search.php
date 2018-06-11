@@ -72,7 +72,7 @@ class Geop_Search {
 		} else {
 			$this->version = '1.0.0';
 		}
-		$this->plugin_name = 'geop-search';
+		$this->plugin_name = 'geoplatform-search';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -103,24 +103,24 @@ class Geop_Search {
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geop-search-loader.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geoplatform-search-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geop-search-i18n.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geoplatform-search-i18n.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-geop-search-admin.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-geoplatform-search-admin.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-geop-search-public.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-geoplatform-search-public.php';
 
 		$this->loader = new Geop_Search_Loader();
 

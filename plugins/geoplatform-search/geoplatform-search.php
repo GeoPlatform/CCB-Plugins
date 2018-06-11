@@ -21,7 +21,7 @@
  * Author URI:        http://www.imagemattersllc.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       geop-search
+ * Text Domain:       geoplatform-search
  * Domain Path:       /languages
  */
 
@@ -39,19 +39,19 @@ define( 'PLUGIN_NAME_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-geop-search-activator.php
+ * This action is documented in includes/class-geoplatform-search-activator.php
  */
 function activate_geop_search() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geop-search-activator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-search-activator.php';
 	Geop_Search_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-geop-search-deactivator.php
+ * This action is documented in includes/class-geoplatform-search-deactivator.php
  */
 function deactivate_geop_search() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geop-search-deactivator.php';
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-search-deactivator.php';
 	Geop_Search_Deactivator::deactivate();
 }
 
@@ -59,7 +59,7 @@ function deactivate_geop_search() {
 add_filter('page_template', 'geopsearch_page_template');
 function geopsearch_page_template($page_template) {
     if (is_page('search'))
-        $page_template = dirname( __FILE__ ) . '/public/partials/geop-search-page-template.php';
+        $page_template = dirname( __FILE__ ) . '/public/partials/geoplatform-search-page-template.php';
     return $page_template;
 }
 
@@ -85,7 +85,7 @@ register_deactivation_hook( __FILE__, 'deactivate_geop_search' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-geop-search.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-search.php';
 
 /**
  * Begins execution of the plugin.

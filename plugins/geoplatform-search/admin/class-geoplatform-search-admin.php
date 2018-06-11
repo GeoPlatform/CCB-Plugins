@@ -73,7 +73,7 @@ class Geop_Search_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geop-search-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-search-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -96,7 +96,7 @@ class Geop_Search_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geop-search-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-search-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -141,7 +141,7 @@ class Geop_Search_Admin {
 	 */
 
 	public function display_plugin_setup_page() {
-	    include_once( 'partials/geop-search-admin-display.php' );
+	    include_once( 'partials/geoplatform-search-admin-display.php' );
 	}
 
 
