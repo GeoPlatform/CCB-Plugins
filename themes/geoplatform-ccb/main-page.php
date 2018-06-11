@@ -64,16 +64,18 @@
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
             <?php } //foreach ?>
-            <p>
-              <?php
-              if ($image_set == true) {
-                $placeholder_text = '';
-              }
-              else{
-                $placeholder_text = $placeholder_text_template;
-              }
-              echo wp_kses_post($placeholder_text); ?>
-            </p>
+            <div class="col-md-12">
+              <p>
+                <?php
+                if ($image_set == true) {
+                  $placeholder_text = '';
+                }
+                else{
+                  $placeholder_text = $placeholder_text_template;
+                }
+                echo wp_kses_post($placeholder_text); ?>
+              </p>
+            </div>
             <div class="alignleft" style="margin-top: 1em;"><?php previous_posts_link('&laquo; Previous Categories') ?></div>
             <div class="alignright" style="margin-top: 1em;"><?php next_posts_link('More Categories &raquo;') ?></div>
             </div><!--#col-md-12-->
