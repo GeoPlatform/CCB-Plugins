@@ -5,8 +5,8 @@
 **Tested up to:** WordPress 4.9.6  
 **Stable tag:** 3.0.5   
 **Version:** 3.1.1  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**License:** Apache 2.0
+**License URI:** http://www.apache.org/licenses/LICENSE-2.0 
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, education
 
 The Geoplatform Community Core Bundle theme is the core theme for WordPress sites hosted by Geoplatform.gov.

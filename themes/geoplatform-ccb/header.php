@@ -75,11 +75,16 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                     </li>
 
                 </ul>
-                <h4 class="brand">
-                  <a href="<?php echo esc_url($GLOBALS['wpp_url']); ?>" title="Go to the Geoplatform Home Page">
-                      <span class="icon-gp"></span>
-                      GeoPlatform
-                  </a>
+                <?php
+                  if (function_exists('the_custom_logo') && has_custom_logo()){
+                    echo '<h4 id="custom_header_logo">';
+                    the_custom_logo();
+                  }
+                  else{
+                    echo '<h4 class="brand"><a href="';
+                    echo esc_url($GLOBALS['wpp_url']);
+                    echo '" title="Go to the Geoplatform Home Page"><span class="icon-gp"></span>GeoPlatform</a>';
+                  }?>
                   <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
                   <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
                   <?php echo esc_html(get_bloginfo( 'name' )); ?>

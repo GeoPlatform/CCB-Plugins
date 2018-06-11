@@ -78,6 +78,22 @@ add_theme_support( 'title-tag' );
 //------------------------------------
 add_theme_support( 'custom-header' );
 
+//------------------------------------
+//Support for a custom logo image
+// https://developer.wordpress.org/themes/functionality/custom-logo/
+//------------------------------------
+// add_theme_support( 'custom-logo' );
+function geop_ccb_custom_logo_setup() {
+    $geop_ccb_logo_defaults = array(
+        'height'      => 40,
+        'width'       => 40,
+        'flex-height' => false,
+        'flex-width'  => false
+    );
+    add_theme_support( 'custom-logo', $geop_ccb_logo_defaults );
+}
+add_action( 'after_setup_theme', 'geop_ccb_custom_logo_setup' );
+
 //--------------------------
 //Support adding Menus for header and footer
 //https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
