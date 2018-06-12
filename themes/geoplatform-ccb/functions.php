@@ -1081,7 +1081,9 @@ $GP_TAX_META -> init();
 
 
 /**
- * Thumbnail column value added to category admin.
+ * Thumbnail column added to category admin.
+ *
+ * Functionality inspired by categories-images plugin.
  *
  * @access public
  * @param mixed $columns
@@ -1100,7 +1102,9 @@ function geopccb_category_column_filter( $columns ) {
 }
 
 /**
- * Thumbnail column value added to category admin.
+ * Thumbnail added to category admin column, or default if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
  *
  * @access public
  * @param mixed $columns
@@ -1110,7 +1114,11 @@ function geopccb_category_column_filter( $columns ) {
  */
 function geopccb_category_column_action( $columns, $column, $id ) {
   $class_category_image = get_term_meta($id, 'category-image-id', true);//Get the image ID
-    if ( $column == 'thumb' )
-        $columns = '<span><img src="' . wp_get_attachment_image_src($class_category_image, 'full')[0] . '" alt="' . __('', 'categories-images') . '" class="wp-post-image" /></span>';
+    if ( $column == 'thumb' ){
+      $temp_img = wp_get_attachment_image_src($class_category_image, 'full')[0];
+      if (!$temp_img)
+        $temp_img = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
+      $columns = '<span><img src="' . $temp_img . '" alt="' . __('', 'categories-images') . '" style="max-height: 128ypx; max-width: 200px;" /></span>';
+    }
     return $columns;
 }
