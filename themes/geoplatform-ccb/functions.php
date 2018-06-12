@@ -68,15 +68,72 @@ function geop_ccb_google_fonts() {
 		}
 add_action('wp_enqueue_scripts', 'geop_ccb_google_fonts');
 
-//-------------------------------
-// WordPress Titles
-//-------------------------------
-add_theme_support( 'title-tag' );
+function geop_ccb_setup(){
 
-//------------------------------------
-//Support for a custom header Images
-//------------------------------------
-add_theme_support( 'custom-header' );
+  /*
+  * Make theme available for translation.
+  * If you're building a theme based on Geoplatform CCB, use a find and replace
+  * to change 'geoplatform-ccb' to the name of your theme in all the template files.
+  */
+  load_theme_textdomain( 'geoplatform-ccb' );
+
+  /*
+  * WordPress Titles
+  */
+  add_theme_support( 'title-tag' );
+
+  /*
+  * Support for a custom header Images
+  */
+  add_theme_support( 'custom-header' );
+
+  /*
+  * Support Featured Images
+  */
+  add_theme_support( 'post-thumbnails' );
+
+  /*
+  * Theme Support for Automatic Feed links per theme check
+  * https://codex.wordpress.org/Automatic_Feed_Links
+  */
+  add_theme_support( 'automatic-feed-links' );
+
+  //-------------------------------
+  //Theme Support for html5, and the html5 search form
+  //https://developer.wordpress.org/reference/functions/get_search_form/
+  //http://buildwpyourself.com/wordpress-search-form-template/
+  //-------------------------------
+  add_theme_support( 'html5', array( 'search-form' ) );
+
+  add_theme_support('starter-content', array(
+    //things to add in (if possible)
+    // Banner area content
+    // Starter menus (see gp_create_services_menu)
+    'nav_menus' => array(
+            'header-left' => array(
+                'name' => __('My Test Navigation', 'id'),
+                'items' =>  array(
+                'link_maps'   =>  array(
+                    'title' =>  _x( 'Maps', 'geoplatform-ccb' ),
+                    'url'   =>  $GLOBALS['maps_url'],
+                ),
+                'link_oe'    =>  array(
+                    'title' =>  _x( 'Object Editor', 'geoplatform-ccb' ),
+                    'url'   =>  $GLOBALS['oe_url'],
+                ),
+                'link_away'  =>  array(
+                    'title' =>  _x( 'Geoplatform Home<sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb' ),
+                    'url'   =>  esc_url( 'https://google.com' ),
+                ),
+            )
+        ),
+    // Map Gallery Link
+    //
+    )
+  ));
+
+}
+add_action('after_setup_theme', 'geop_ccb_setup');
 
 //------------------------------------
 //Support for a custom logo image
@@ -93,6 +150,7 @@ function geop_ccb_custom_logo_setup() {
     add_theme_support( 'custom-logo', $geop_ccb_logo_defaults );
 }
 add_action( 'after_setup_theme', 'geop_ccb_custom_logo_setup' );
+
 
 //--------------------------
 //Support adding Menus for header and footer
@@ -180,12 +238,6 @@ if( !$menu_exists){
 	}
 }
 add_action('init', 'geop_ccb_create_services_menu');
-
-//-------------------------------
-// Support Featured Images
-//-------------------------------
-add_theme_support( 'post-thumbnails' );
-
 
 /********************************************************/
 // Adding Dashicons in WordPress Front-end
@@ -759,19 +811,6 @@ if ( ! isset( $content_width ) ) {
 }
 
 //-------------------------------
-//Theme Support for Automatic Feed links per theme check
-//https://codex.wordpress.org/Automatic_Feed_Links
-//-------------------------------
-add_theme_support( 'automatic-feed-links' );
-
-//-------------------------------
-//Theme Support for html5, and the html5 search form
-//https://developer.wordpress.org/reference/functions/get_search_form/
-//http://buildwpyourself.com/wordpress-search-form-template/
-//-------------------------------
-add_theme_support( 'html5', array( 'search-form' ) );
-
-//-------------------------------
 // Theme specific enabled capabilities
 //https://codex.wordpress.org/Function_Reference/add_cap
 //https://codex.wordpress.org/Roles_and_Capabilities
@@ -918,7 +957,7 @@ add_filter( 'excerpt_more', 'geop_ccb_excerpt_more' );
 
 /**
  * Registers an editor stylesheet for the theme.
- *https://developer.wordpress.org/reference/functions/add_editor_style/
+ * https://developer.wordpress.org/reference/functions/add_editor_style/
  */
 function geop_ccb_theme_add_editor_styles() {
     add_editor_style( 'custom-editor-style.css' );
