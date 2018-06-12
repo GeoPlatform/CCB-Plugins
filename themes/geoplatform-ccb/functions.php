@@ -948,8 +948,8 @@ class GP_TAX_META {
    add_action( 'edited_category', array ( $this, 'updated_category_image' ), 10, 2 );
    add_action( 'admin_enqueue_scripts', array( $this, 'load_media' ) );
    add_action( 'admin_footer', array ( $this, 'add_script' ) );
-  //  add_filter( 'manage_category_posts_columns', 'z_taxonomy_columns' );
-  //  add_filter( 'manage_category_custom_column', 'z_taxonomy_column', 10, 3 );
+   // add_filter( 'manage_edit-categories_columns', 'z_taxonomy_columns' );
+   // add_filter( 'manage_categories_custom_column', 'z_taxonomy_column', 10, 3 );
  }
 
 public function load_media() {
@@ -1079,6 +1079,65 @@ $GP_TAX_META -> init();
 
 }
 
+
+
+/**
+ * Thumbnail column added to category admin.
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+function geopccb_category_column_action( $columns ) {
+    $new_columns = array();
+    $new_columns['cb'] = $columns['cb'];
+    $new_columns['thumb'] = __('Image', 'geoplatform-ccb');
+
+    unset( $columns['cb'] );
+
+    return array_merge( $new_columns, $columns );
+}
+add_action('manage_categories_custom_column','geopccb_category_column_action');
+
+
+/**
+ * Thumbnail column value added to category admin.
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+function geopccb_category_column_filter( $columns ) {
+  unset($columns['slug']);
+  $columns['image'] = __( 'Image', 'your_text_domain');
+  $class_category_image = get_term_meta($id, 'category-image-id', true);
+  return $columns;
+}
+add_filter('manage_categories_posts_columns','geopccb_category_column_filter');
+
+function add_book_columns($columns) {
+    unset($columns['cb']);
+    return array_merge($columns,
+      array('publisher' => __('Publisher'),
+            'book_author' =>__( 'Book Author')));
+}
+add_filter('manage_categories_posts_columns' , 'add_book_columns');
+
+function z_taxonomy_columns( $columns ) {
+  $new_columns = array();
+  $new_columns['cb'] = $columns['cb'];
+  $new_columns['thumb'] = __('Image', 'categories-images');
+
+  unset( $columns['cb'] );
+
+  return array_merge( $new_columns, $columns );
+}
+add_filter( 'manage_categories_posts_columns', 'z_taxonomy_columns' );
+
+
+
 // /**
 //  * Thumbnail column added to category admin.
 //  *
@@ -1086,7 +1145,7 @@ $GP_TAX_META -> init();
 //  * @param mixed $columns
 //  * @return void
 //  */
-// function z_taxonomy_columns( $columns ) {
+// function geopccb_category_column_action( $columns ) {
 //     $new_columns = array();
 //     $new_columns['cb'] = $columns['cb'];
 //     $new_columns['thumb'] = __('Image', 'geoplatform-ccb');
@@ -1095,7 +1154,7 @@ $GP_TAX_META -> init();
 //
 //     return array_merge( $new_columns, $columns );
 // }
-// add_filter('manage_category_posts_columns','z_taxonomy_columns');
+// add_action('manage_categories_custom_column','geopccb_category_column_action');
 //
 // /**
 //  * Thumbnail column value added to category admin.
@@ -1106,10 +1165,10 @@ $GP_TAX_META -> init();
 //  * @param mixed $id
 //  * @return void
 //  */
-// function z_taxonomy_column( $columns, $column, $id ) {
+// function geopccb_category_column_filter( $columns, $column, $id ) {
 //   $class_category_image = get_term_meta($id, 'category-image-id', true);//Get the image ID
 //     if ( $column == 'thumb' )
 //         $columns = '<span><img src="' . wp_get_attachment_image_src($class_category_image, 'full')[0] . '" alt="' . __('Thumbnail', 'categories-images') . '" class="wp-post-image" /></span>';
 //     return $columns;
 // }
-// add_action('manage_category_posts_custom_column','z_taxonomy_column');
+// add_filter('manage_categories_posts_columns','geopccb_category_column_filter');
