@@ -38,8 +38,8 @@ if [ -d "$DIRECTORY" ]; then
   pushd $DIRECTORY
     if [ -f docker-compose.yml ]; then
       docker-compose down #stops and removes containers
+      rm -rf docker-compose.yml
     fi
-    rm -rf *
   popd
 else
   mkdir $DIRECTORY
