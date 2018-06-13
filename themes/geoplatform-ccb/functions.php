@@ -151,6 +151,12 @@ function geop_ccb_setup(){
 }
 add_action('after_setup_theme', 'geop_ccb_setup');
 
+//Use for testing purposes to enable Fresh site and load starter content after switching the theme in and out
+function geop_ccb_fresh_site_enable(){
+  update_option('fresh_site', 1);
+}
+add_action('switch_theme','geop_ccb_fresh_site_enable');
+
 //------------------------------------
 //Support for a custom logo image
 // https://developer.wordpress.org/themes/functionality/custom-logo/
