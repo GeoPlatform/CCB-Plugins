@@ -11,7 +11,7 @@
         <div class="row">
           <div class="col-md-12">
             <?php
-              $category_image_placeholder = get_template_directory_uri() . "/img/placeholder-category-photo.jpeg";
+              $category_image_placeholder = get_template_directory_uri() . "/img/default-category-photo.jpeg";
               $placeholder_text_template = 'The category photo(s) above have a placeholder image in them. If you would like to edit your category card photos,
               please navigate to Posts(or Pages)->Categories to edit and set your specfic category image';
               $image_set = false;

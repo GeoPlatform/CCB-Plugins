@@ -84,7 +84,11 @@ function geop_ccb_setup(){
   /*
   * Support for a custom header Images
   */
-  add_theme_support( 'custom-header' );
+  $header_args = array(
+  	'default-image' => get_template_directory_uri() . '/img/default-banner.png',
+    'uploads'       => true,
+    );
+  add_theme_support( 'custom-header', $header_args);
 
   /*
   * Support Featured Images
@@ -128,6 +132,18 @@ function geop_ccb_setup(){
         ),
     // Map Gallery Link
     //
+
+    'attachments' => array(
+			'image-banner' => array(
+				'post_title' => _x( 'Banner', 'Theme starter content', 'geoplatform-ccb' ),
+				'file' => '/img/placeholder-banner.png',
+			),
+			'image-category' => array(
+				'post_title' => _x( 'Category', 'Theme starter content', 'geoplatform-ccb' ),
+				'file' => '/img/default-category-photo.jpeg',
+			),
+		),
+
     )
   ));
 
@@ -540,9 +556,6 @@ function geop_ccb_header_image_method() {
 		get_template_directory_uri() . '/css/Geomain_style.css'
 	);
 			$headerImage = get_header_image();
-			if (! $headerImage) {
-				$headerImage = get_template_directory_uri() . "/img/placeholder-banner.png";
-			}
         $custom_css = "
                 .banner{
                         background-image: url({$headerImage});
