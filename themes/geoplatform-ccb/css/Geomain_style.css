@@ -5857,6 +5857,7 @@ div#widgetized-area {
     word-wrap: break-word;
 }
 
+/* Styling for custom theme logos */
 header #custom_header_logo, header #custom_header_logo>a, header #custom_header_logo>a:visited{
   color: #fff;
   text-decoration: none;

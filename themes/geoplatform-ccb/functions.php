@@ -948,8 +948,8 @@ class GP_TAX_META {
    add_action( 'edited_category', array ( $this, 'updated_category_image' ), 10, 2 );
    add_action( 'admin_enqueue_scripts', array( $this, 'load_media' ) );
    add_action( 'admin_footer', array ( $this, 'add_script' ) );
-  //  add_filter( 'manage_category_posts_columns', 'z_taxonomy_columns' );
-  //  add_filter( 'manage_category_custom_column', 'z_taxonomy_column', 10, 3 );
+   add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter' );
+   add_filter( 'manage_category_custom_column', 'geopccb_category_column_action', 10, 3 );
  }
 
 public function load_media() {
@@ -1079,37 +1079,46 @@ $GP_TAX_META -> init();
 
 }
 
-// /**
-//  * Thumbnail column added to category admin.
-//  *
-//  * @access public
-//  * @param mixed $columns
-//  * @return void
-//  */
-// function z_taxonomy_columns( $columns ) {
-//     $new_columns = array();
-//     $new_columns['cb'] = $columns['cb'];
-//     $new_columns['thumb'] = __('Image', 'geoplatform-ccb');
-//
-//     unset( $columns['cb'] );
-//
-//     return array_merge( $new_columns, $columns );
-// }
-// add_filter('manage_category_posts_columns','z_taxonomy_columns');
-//
-// /**
-//  * Thumbnail column value added to category admin.
-//  *
-//  * @access public
-//  * @param mixed $columns
-//  * @param mixed $column
-//  * @param mixed $id
-//  * @return void
-//  */
-// function z_taxonomy_column( $columns, $column, $id ) {
-//   $class_category_image = get_term_meta($id, 'category-image-id', true);//Get the image ID
-//     if ( $column == 'thumb' )
-//         $columns = '<span><img src="' . wp_get_attachment_image_src($class_category_image, 'full')[0] . '" alt="' . __('Thumbnail', 'categories-images') . '" class="wp-post-image" /></span>';
-//     return $columns;
-// }
-// add_action('manage_category_posts_custom_column','z_taxonomy_column');
+
+/**
+ * Thumbnail column added to category admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+function geopccb_category_column_filter( $columns ) {
+  $new_columns = array();
+  $new_columns['cb'] = $columns['cb'];
+  $new_columns['thumb'] = __('Image', 'categories-images');
+
+  unset( $columns['cb'] );
+
+  return array_merge( $new_columns, $columns );
+}
+
+/**
+ * Thumbnail added to category admin column, or default if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+function geopccb_category_column_action( $columns, $column, $id ) {
+  $class_category_image = get_term_meta($id, 'category-image-id', true);//Get the image ID
+    if ( $column == 'thumb' ){
+      $temp_img = wp_get_attachment_image_src($class_category_image, 'full')[0];
+      if (!$temp_img)
+        $temp_img = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
+      $columns = '<img src="' . $temp_img . '" style="max-height: 12em; max-width: 100%;" />';
+    }
+    return $columns;
+}
