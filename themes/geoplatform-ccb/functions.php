@@ -1118,7 +1118,7 @@ function geopccb_category_column_action( $columns, $column, $id ) {
       $temp_img = wp_get_attachment_image_src($class_category_image, 'full')[0];
       if (!$temp_img)
         $temp_img = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
-      $columns = '<img src="' . $temp_img . '" style="max-height: 100%; max-width: 100%;" />';
+      $columns = '<img src="' . $temp_img . '" style="max-height: 12em; max-width: 100%;" />';
     }
     return $columns;
 }
