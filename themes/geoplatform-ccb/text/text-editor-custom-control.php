@@ -17,10 +17,6 @@ class Text_Editor_Custom_Control extends WP_Customize_Control
                   <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
                   <input type="hidden" <?php $this->link(); ?> value="<?php echo esc_textarea( $content ); ?>">
                   <?php
-//                     if (!$content){
-//                       $content = "<h1 style='text-align: center'>Your Community's Title</h1>
-// <p style='text-align: center'>Create and manage your own Dynamic Digital Community on the GeoPlatform!</p>";
-//                     }
                     $settings = array(
                         'textarea_name' => $this->id,
                         'media_buttons' => false,

@@ -395,7 +395,8 @@ function geop_ccb_customize_register( $wp_customize )
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
              'default'   => "<h1 style='text-align: center'>Your Community Title</h1>
-<p style='text-align: center'>Create and manage your own Dynamic Digital Community on the GeoPlatform!</p>",
+                            <p style='text-align: center'>Create and manage your own
+                            Dynamic Digital Community on the GeoPlatform!</p>",
 						 'transport' => 'refresh',
 						 'sanitize_callback' => 'wp_kses_post'
          ) );
@@ -408,7 +409,7 @@ function geop_ccb_customize_register( $wp_customize )
 
 				 //Call to action button (formerly "Learn More" button)
 				 $wp_customize->add_setting('call2action_button', array(
-					 'default' => '',
+					 'default' => true,
 					 'transport' => 'refresh',
            'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
 				 ) );
@@ -421,7 +422,7 @@ function geop_ccb_customize_register( $wp_customize )
 				 ) );
 
 				 $wp_customize->add_setting('call2action_text', array(
-					 'default' => '',
+					 'default' => 'Learn More',
 					 'transport' => 'refresh',
 					 'sanitize_callback' => 'sanitize_text_field',
 				 ));
@@ -436,7 +437,7 @@ function geop_ccb_customize_register( $wp_customize )
 				 ) );
 
 				 $wp_customize->add_setting('call2action_url', array(
-					'default' => '',
+					'default' => 'https://geoplatform.gov/about',
 					'transport' => 'refresh',
 					'sanitize_callback' => 'esc_url_raw',
 				));
@@ -456,7 +457,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'priority' => 60
 			) );
 			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
-					'default'   => 'Insert Map Gallery Link here',
+					'default'   => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
 					'transport' => 'refresh',
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
