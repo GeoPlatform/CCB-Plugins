@@ -69,7 +69,6 @@ function geop_ccb_google_fonts() {
 add_action('wp_enqueue_scripts', 'geop_ccb_google_fonts');
 
 function geop_ccb_setup(){
-
   /*
   * Make theme available for translation.
   * If you're building a theme based on Geoplatform CCB, use a find and replace
@@ -892,6 +891,7 @@ function geop_ccb_remove_theme_caps() {
   $contribRole->remove_cap('upload_files');
 }
 add_action('switch_theme', 'geop_ccb_remove_theme_caps');
+
 
 //private pages and posts show up in search for correct roles
 //https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
