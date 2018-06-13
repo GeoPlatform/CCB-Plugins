@@ -111,6 +111,7 @@ function geop_ccb_setup(){
   add_theme_support('starter-content', array(
     //things to add in (if possible)
     // Banner area content
+
     // Starter menus (see gp_create_services_menu)
     'nav_menus' => array(
             'header-left' => array(
@@ -644,7 +645,6 @@ function geop_ccb_remove_default_category_description()
 //-------------------------------
 //https://en.bainternet.info/wordpress-category-extra-fields/
 
-
 //add extra fields to category edit form hook
 add_action ( 'edit_category_form_fields', 'geop_ccb_extra_category_fields_forms');
 
@@ -653,75 +653,75 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
     $t_id = $tag->term_id;
     $cat_meta = get_option( "category_$t_id");
 ?>
-<!-- Topic 1 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name1">Topic 1 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name1]" id="Cat_meta[topic-name1]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name1'] ? $cat_meta['topic-name1'] : ''; ?>">
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url1">Topic 1 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url1]" id="Cat_meta[topic-url1]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url1'] ? $cat_meta['topic-url1'] : ''; ?>"><br />
-    </td>
-</tr>
-
-<!-- Topic 2 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name2">Topic 2 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name2]" id="Cat_meta[topic-name2]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name2'] ? $cat_meta['topic-name2'] : ''; ?>">
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url2">Topic 2 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url2]" id="Cat_meta[topic-url2]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url2'] ? $cat_meta['topic-url2'] : ''; ?>">
-    </td>
-</tr>
-
-<!-- Topic 3 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name3">Topic 3 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name3]" id="Cat_meta[topic-name3]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name3'] ? $cat_meta['topic-name3'] : ''; ?>">
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url3">Topic 3 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url3]" id="Cat_meta[topic-url3]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url3'] ? $cat_meta['topic-url3'] : ''; ?>"><br />
+  <!-- Topic 1 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name1">Topic 1 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name1]" id="Cat_meta[topic-name1]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name1'] ? $cat_meta['topic-name1'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url1">Topic 1 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url1]" id="Cat_meta[topic-url1]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url1'] ? $cat_meta['topic-url1'] : ''; ?>"><br />
       </td>
-</tr>
+  </tr>
 
-<!-- Topic 4 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name4">Topic 4 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name4]" id="Cat_meta[topic-name4]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name4'] ? $cat_meta['topic-name4'] : ''; ?>">
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url4">Topic 4 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url4]" id="Cat_meta[topic-url4]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url4'] ? $cat_meta['topic-url4'] : ''; ?>"><br />
-    </td>
-</tr>
+  <!-- Topic 2 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name2">Topic 2 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name2]" id="Cat_meta[topic-name2]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name2'] ? $cat_meta['topic-name2'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url2">Topic 2 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url2]" id="Cat_meta[topic-url2]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url2'] ? $cat_meta['topic-url2'] : ''; ?>">
+      </td>
+  </tr>
 
-<!-- Topic 5 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name5">Topic 5 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name5]" id="Cat_meta[topic-name5]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name5'] ? $cat_meta['topic-name5'] : ''; ?>">
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url5">Topic 5 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url5]" id="Cat_meta[topic-url5]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url5'] ? $cat_meta['topic-url5'] : ''; ?>"><br />
-    </td>
-</tr>
+  <!-- Topic 3 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name3">Topic 3 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name3]" id="Cat_meta[topic-name3]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name3'] ? $cat_meta['topic-name3'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url3">Topic 3 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url3]" id="Cat_meta[topic-url3]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url3'] ? $cat_meta['topic-url3'] : ''; ?>"><br />
+        </td>
+  </tr>
+
+  <!-- Topic 4 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name4">Topic 4 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name4]" id="Cat_meta[topic-name4]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name4'] ? $cat_meta['topic-name4'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url4">Topic 4 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url4]" id="Cat_meta[topic-url4]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url4'] ? $cat_meta['topic-url4'] : ''; ?>"><br />
+      </td>
+  </tr>
+
+  <!-- Topic 5 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name5">Topic 5 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name5]" id="Cat_meta[topic-name5]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name5'] ? $cat_meta['topic-name5'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url5">Topic 5 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url5]" id="Cat_meta[topic-url5]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url5'] ? $cat_meta['topic-url5'] : ''; ?>"><br />
+      </td>
+  </tr>
 <?php
 }
 
@@ -767,7 +767,6 @@ add_action('pre_get_posts', 'geop_ccb_tags_categories_support_query');
 // https://codex.wordpress.org/Function_Reference/dynamic_sidebar
 // https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
 //------------------------------------
-
 add_action( 'widgets_init', 'geop_ccb_sidebar' );
 function geop_ccb_sidebar() {
     register_sidebar(
