@@ -20,11 +20,12 @@ export class TypeCodec implements Codec {
             let v = ItemTypes[k], label = v;
             if(~label.indexOf(":")) label = label.split(':')[1];
             return {label: label, id: v};
-        }).concat([
-            { label: 'Page',  id: 'pages'  },
-            { label: 'Post',  id: 'posts'  },
-            { label: 'Media', id: 'media' }
-        ]);
+        });
+        // .concat([
+        //     { label: 'Page',  id: 'pages'  },
+        //     { label: 'Post',  id: 'posts'  },
+        //     { label: 'Media', id: 'media' }
+        // ]);
     }
 
     parseParams(params: Params, constraints?: Constraints) : Constraint {

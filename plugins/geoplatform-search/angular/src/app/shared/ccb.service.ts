@@ -8,8 +8,6 @@ import { ISubscription } from "rxjs/Subscription";
 
 import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 
-// const CCB_URL = 'https://sit-ccb.geoplatform.us/sit-ccb/wp-json/wp/v2/';
-
 @Injectable()
 export class CCBService {
 
@@ -23,49 +21,60 @@ export class CCBService {
 
     search(query : Query) : Promise<any> {
 
-        let reqs = [];
-        let qry = query.clone();
-
         let types = query.getTypes();
-        if(!types || !types.length) {
-            //default to all 3 types supported so far
-            types = ['pages','posts','media'];
-        } else {
-            //remove types set on query object
-            qry.setTypes(null);
-        }
+        if(!types || !types.length)
+            return Promise.resolve({totalResults:0, results:[]});
 
-        return Promise.all(
-            types.map( type => {
-                let request = this.buildRequest(qry, type);
-                return this.execute(request).catch(e=>[]);
-            })
-        ).then(results => {
-            //have to build unified list ordering the items by their modified date
-            let hits = [];
-            results.forEach( group => {
-                if(group && Array.isArray(group)) {
-                    hits = hits.concat(group);
-                } //else it's an unexpected response, ignore that group
-            });
+        let type = types[0];
+        let request = this.buildRequest(query, type);
+        return this.execute(request);
 
-            //WP api doesn't return total hits count, so we have to calculate
-            // total counts using current paging info and current page of results
-            let total = (query.getPage() * query.getPageSize()) + hits.length;
-
-            hits.sort( (a,b) => a.modified < b.modified ? 1 : -1 );
-            hits = hits.slice(0, query.getPageSize());
-            hits.forEach( hit => {
-                hit.author = { id: hit.author, label: this.usersList[hit.author] };
-                if(!hit.author) this.updateUserList();
-            });
-
-            return {
-                totalResults: total,
-                results: hits
-            };
-        })
-        .catch(e => Promise.reject(e));
+        // let reqs = [];
+        // let qry = query.clone();
+        //
+        // let types = query.getTypes();
+        // if(!types || !types.length) {
+        //     //default to all 3 types supported so far
+        //     types = ['pages','posts','media'];
+        // } else {
+        //     //remove types set on query object
+        //     qry.setTypes(null);
+        // }
+        //
+        // return Promise.all(
+        //     types.map( type => {
+        //         let request = this.buildRequest(qry, type);
+        //         return this.execute(request).catch(e=>{
+        //             return { totalResults: 0, results: [] }
+        //         });
+        //     })
+        // ).then(responses => {
+        //
+        //     //have to build unified list ordering the items by their modified date
+        //     let totalResults = 0;
+        //     let hits = [];
+        //     responses.forEach( (group:{totalResults:number;results:any[]}) => {
+        //         let total = group.totalResults || 0;
+        //         totalResults += total;
+        //         let results = group.results || [];
+        //         if(results && Array.isArray(results)) {
+        //             hits = hits.concat(results);
+        //         } //else it's an unexpected response, ignore that group
+        //     });
+        //
+        //     hits.sort( (a,b) => a.modified < b.modified ? 1 : -1 );
+        //     hits = hits.slice(0, query.getPageSize());
+        //     hits.forEach( hit => {
+        //         hit.author = { id: hit.author, label: this.usersList[hit.author] };
+        //         if(!hit.author) this.updateUserList();
+        //     });
+        //
+        //     return {
+        //         totalResults: totalResults,
+        //         results: hits
+        //     };
+        // })
+        // .catch(e => Promise.reject(e));
 
     }
 
@@ -115,14 +124,20 @@ export class CCBService {
      */
     execute(request : HttpRequest<any>) {
 
-        // let url = request.url + '?' + request.params.toString();
-        // return this.http.jsonp(url, '_jsonp')  //'_jsonp' is WP callback param
+        let url = request.url + '?' + request.params.toString();
+
         return this.http.request(request)
         .map( (event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
-                return (event as HttpResponse<any>).body;
+                let res : HttpResponse<any> = event as HttpResponse<any>;
+                let wpTotal : any = res.headers.get('X-WP-Total');
+                let total : number = isNaN(wpTotal) ? 0 : wpTotal*1;
+                return {
+                    results: this.fixAuthors(res.body),
+                    totalResults: total as number
+                };
             }
-            return [];
+            return { totalResults: 0, results: [] };
         })
         .toPromise()
         .catch( err => {
@@ -130,16 +145,28 @@ export class CCBService {
             if (err instanceof HttpErrorResponse) {
                 throw new Error(err.error.message);
             }
-            return {};
+            return { totalResults: 0, results: [] };
         });
     }
 
-
+    fixAuthors(items) : any[] {
+        items.forEach( item => {
+            item.author = {
+                id: item.author,
+                label: this.usersList[item.author]
+            };
+            if(!item.author) this.updateUserList();
+        });
+        return items;
+    }
 
     updateUserList() {
         //cache a list of users
-        this.execute(new HttpRequest<any>('GET', this.baseUrl + '/users'))
-        .then( users => {
+        this.execute(new HttpRequest<any>('GET', this.baseUrl + '/users', {
+            params: { "per_page": 100 }
+        }))
+        .then( response => {
+            let users = response.results;
             users.forEach( user => {
                 this.usersList[user.id] = user.name;
             });
