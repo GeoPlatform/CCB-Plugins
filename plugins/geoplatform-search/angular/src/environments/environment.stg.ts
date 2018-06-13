@@ -4,8 +4,8 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-    production: false,
-    env: 'development',
-    ualUrl: 'https://sit-ual.geoplatform.us',
-    wpUrl: 'https://sit-ccb.geoplatform.us'
+    production: true,
+    env: 'stg',
+    ualUrl: 'https://stg-ual.geoplatform.gov',
+    wpUrl: 'https://stg-ccb.geoplatform.gov'
 };

@@ -9,12 +9,6 @@ import { InlineSVGModule } from 'ng-inline-svg';
 
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 
-
-// import { Config } from 'geoplatform.client';
-// Config.configure({
-//     ualUrl: 'https://sit-ual.geoplatform.us'
-// });
-
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
 // and declaring the new paths for the images here globally, the
@@ -27,6 +21,10 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'marker-shadow.png',
 });
 
+import { Config } from 'geoplatform.client';
+
+//configure the necessary environment variables needed by GeoPlatformClient
+import { environment } from '../environments/environment';
 
 
 import { AppComponent } from './app.component';
@@ -57,6 +55,9 @@ import { CCBService } from './shared/ccb.service';
 
 import { NgbdTypeaheadHttp } from './shared/typeahead';
 import { ThumbnailComponent } from './shared/thumbnail/thumbnail.component';
+import { DebugComponent } from './shared/debug/debug.component';
+import { PagingComponent } from './shared/paging/paging.component';
+import { TypedResultsComponent } from './results/ccb/typed-results/typed-results.component';
 
 
 //ROUTING CONFIG
@@ -67,13 +68,15 @@ const appRoutes: Routes = [
 ];
 
 
-import { EnvironmentSettings } from './shared/env.service';
-import { DebugComponent } from './shared/debug/debug.component';
-import { PagingComponent } from './shared/paging/paging.component';
-export function initializeApp(env: EnvironmentSettings) {
-  return () => env.load();
+// import { EnvironmentSettings } from './shared/env.service';
+// export function initializeApp(env: EnvironmentSettings) {
+//   return () => env.load();
+// }
+export function initializeApp() {
+  return () => {
+      Config.configure(environment);
+  }
 }
-
 
 
 @NgModule({
@@ -102,7 +105,8 @@ export function initializeApp(env: EnvironmentSettings) {
     NgbdTypeaheadHttp,
     ThumbnailComponent,
     DebugComponent,
-    PagingComponent
+    PagingComponent,
+    TypedResultsComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { enableTracing: false } ),
@@ -115,11 +119,16 @@ export function initializeApp(env: EnvironmentSettings) {
   ],
   providers: [
       CCBService,
-      EnvironmentSettings,
+      // EnvironmentSettings,
+      // {
+      //     provide: APP_INITIALIZER,
+      //     useFactory: initializeApp,
+      //     deps: [EnvironmentSettings], multi: true
+      // }
       {
           provide: APP_INITIALIZER,
           useFactory: initializeApp,
-          deps: [EnvironmentSettings], multi: true
+          multi: true
       }
   ],
   entryComponents: [

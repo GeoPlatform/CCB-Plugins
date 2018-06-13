@@ -1,0 +1,77 @@
+<!-- paging controls for results -->
+<div class="c-toolbar">
+    <gp-pagination
+        [query]="query"
+        [totalResults]="totalResults"
+        (onEvent)="onPagingEvent($event)">
+    </gp-pagination>
+    <div class="flex-1"></div>
+    <div class="c-sort">
+        <select [(ngModel)]="sortField" (change)="onSortChange()">
+            <option value="modified,desc">Most recently modified</option>
+            <option value="modified,asc">Least recently modified</option>
+            <option value="label,asc">Name (A-Z)</option>
+            <option value="label,desc">Name (Z-A)</option>
+            <option value="type,asc">Type (A-Z)</option>
+            <option value="type,desc">Type (Z-A)</option>
+        </select>
+    </div>
+</div>
+
+<div *ngIf="!results || !results.length">
+    <strong><em>No results found matching the specified constraints</em></strong>
+</div>
+
+<div *ngFor="let item of results"
+    class="c-results-item c-results-item--{{item.type.toLowerCase().replace(':','-')}}">
+    <div class="c-results-item__body">
+
+        <div class="c-results-item__icon">
+            <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span>
+        </div>
+
+        <div class="flex-1">
+
+            <div class="c-results-item__heading">
+                <a href="{{item.link}}" target="_blank">
+                    <span *ngIf="item.title">{{item.title.rendered}}</span>
+                    <span *ngIf="!item.title">Un-titled {{item.type}}</span>
+                </a>
+            </div>
+
+            <div class="c-results-item__facets">
+                <span class="c-results-item__type">
+                    <strong>
+                        <span *ngIf="item.media_type">{{item.media_type}} </span>
+                        {{item.type}}
+                    </strong>
+                    by
+                    <a *ngIf="item.author.label"
+                        (click)="constrainToUser(item.author.label)">
+                        {{item.author.label}}
+                    </a>
+                    <span *ngIf="!item.author.id">unknown author</span>
+                </span> |
+                <span>created {{item.date|date}}</span> |
+                <span>last modified {{item.modified|date}}</span>
+            </div>
+
+            <div class="c-results-item__description"
+                *ngIf="'image'!==item.media_type"
+                [innerHtml]="item.description?.rendered"></div>
+
+            <div class="c-results-item__actions"></div>
+
+        </div>
+
+        <!-- icon if necessary -->
+        <div class="c-results-item__icon" *ngIf="'image'===item.media_type">
+            <img src="{{item.source_url}}">
+        </div>
+
+
+    </div>
+
+    <div class="c-results-item__footer"></div>
+
+</div>

@@ -51,7 +51,7 @@ export class PagingComponent implements OnInit {
     }
 
     hasNextPage() {
-        return this.totalResults > (this.query.getPage() * this.pageSize);
+        return this.totalResults > ((this.query.getPage()+1) * this.pageSize);
     }
 
     goToPage(page) {
