@@ -14,6 +14,7 @@ services:
     volumes:
       - ./plugins:/var/www/html/wp-content/plugins:rw
       - ./themes:/var/www/html/wp-content/themes:rw
+      - ./uploads:/var/www/html/wp-content/uploads:rw
     environment:
       # Site specifics
       root_url: http://localhost
