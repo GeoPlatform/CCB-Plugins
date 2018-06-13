@@ -646,12 +646,6 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
 <th scope="row" valign="top"><label for="topic-name1">Topic 1 Name</label></th>
 		<td style="padding: 5px 5px;">
 			<input type="text" name="Cat_meta[topic-name1]" id="Cat_meta[topic-name1]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name1'] ? $cat_meta['topic-name1'] : ''; ?>">
-			<!-- <label for="url_type1" style="margin-left:1em;"><b>URL Type: </b></label> -->
-			<!-- <select name="Cat_meta[url_type1]" id="Cat_meta[url_type1]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php //echo ($cat_meta['url_type1'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select> -->
-				<!-- <span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
 		</td>
 </tr>
 <tr class="form-field">
@@ -666,12 +660,6 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
 <th scope="row" valign="top"><label for="topic-name2">Topic 2 Name</label></th>
 		<td style="padding: 5px 5px;">
 			<input type="text" name="Cat_meta[topic-name2]" id="Cat_meta[topic-name2]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name2'] ? $cat_meta['topic-name2'] : ''; ?>">
-			<!-- <label for="url_type2" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type2]" id="Cat_meta[url_type2]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php //echo ($cat_meta['url_type2'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
 		</td>
 </tr>
 <tr class="form-field">
@@ -686,12 +674,6 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
 <th scope="row" valign="top"><label for="topic-name3">Topic 3 Name</label></th>
 		<td style="padding: 5px 5px;">
 			<input type="text" name="Cat_meta[topic-name3]" id="Cat_meta[topic-name3]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name3'] ? $cat_meta['topic-name3'] : ''; ?>">
-			<!-- <label for="url_type3" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type3]" id="Cat_meta[url_type3]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php // echo ($cat_meta['url_type3'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
 		</td>
 </tr>
 <tr class="form-field">
@@ -706,12 +688,6 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
 <th scope="row" valign="top"><label for="topic-name4">Topic 4 Name</label></th>
 		<td style="padding: 5px 5px;">
 			<input type="text" name="Cat_meta[topic-name4]" id="Cat_meta[topic-name4]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name4'] ? $cat_meta['topic-name4'] : ''; ?>">
-			<!-- <label for="url_type4" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type4]" id="Cat_meta[url_type4]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php  // echo ($cat_meta['url_type4'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
 		</td>
 </tr>
 <tr class="form-field">
@@ -726,12 +702,6 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
 <th scope="row" valign="top"><label for="topic-name5">Topic 5 Name</label></th>
 		<td style="padding: 5px 5px;">
 			<input type="text" name="Cat_meta[topic-name5]" id="Cat_meta[topic-name5]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name5'] ? $cat_meta['topic-name5'] : ''; ?>">
-			<!-- <label for="url_type5" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type5]" id="Cat_meta[url_type5]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php // echo ($cat_meta['url_type5'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
 		</td>
 </tr>
 <tr class="form-field">
