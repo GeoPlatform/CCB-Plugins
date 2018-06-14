@@ -129,8 +129,9 @@ function geop_ccb_setup(){
                     'title' =>  _x( 'Geoplatform Home<sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb' ),
                     'url'   =>  esc_url( 'https://google.com' ),
                 ),
-            )
-        ),
+              ),
+            ),
+          ),
     // Map Gallery Link
     //
 
@@ -146,7 +147,7 @@ function geop_ccb_setup(){
 		),
 
     )
-  ));
+  );
 
 }
 add_action('after_setup_theme', 'geop_ccb_setup');
