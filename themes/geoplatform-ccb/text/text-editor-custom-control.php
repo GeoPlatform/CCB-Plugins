@@ -15,7 +15,8 @@ class Text_Editor_Custom_Control extends WP_Customize_Control
             ?>
                 <label>
                   <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
-                  <input type="hidden" <?php $this->link(); ?> value="<?php echo esc_textarea( $content ); ?>">
+                  <!-- updated per https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/28 -->
+                  <input type="hidden" <?php echo $this->get_link(); ?> value="<?php echo esc_textarea( $content ); ?>">
                   <?php
                     $settings = array(
                         'textarea_name' => $this->id,

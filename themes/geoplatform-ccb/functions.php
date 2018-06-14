@@ -395,7 +395,7 @@ function geop_ccb_customize_register( $wp_customize )
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
-             'default'   => "<h1 style='text-align: center'>Your Community Title</h1>
+             'default'   => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
                             <p style='text-align: center'>Create and manage your own
                             Dynamic Digital Community on the GeoPlatform!</p>",
 						 'transport' => 'refresh',
