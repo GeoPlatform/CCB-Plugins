@@ -11,7 +11,7 @@
                     <?php $c2a_button = get_theme_mod('call2action_button', 'true');
                           $c2a_url = get_theme_mod('call2action_url','http://geoplatform.gov');
                     ?>
-                    <?php if ($c2a_button === true) { ?>
+                    <?php if ($c2a_button == true) { ?>
                       <div class="text-centered">
                             <a href="<?php echo esc_url($c2a_url);?>" class="btn btn-lg btn-white-outline">
                               <?php echo esc_html(get_theme_mod('call2action_text'));?></a>
