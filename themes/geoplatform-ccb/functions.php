@@ -116,23 +116,35 @@ function geop_ccb_setup(){
     // Starter menus (see gp_create_services_menu)
     'nav_menus' => array(
             'header-left' => array(
-                'name' => __('My Test Navigation', 'id'),
+                'name' => __('My Test Navigation', 'geoplatform-ccb'),
                 'items' =>  array(
-                'link_maps'   =>  array(
-                    'title' =>  _x( 'Maps', 'geoplatform-ccb' ),
-                    'url'   =>  $GLOBALS['maps_url'],
-                ),
-                'link_oe'    =>  array(
-                    'title' =>  _x( 'Object Editor', 'geoplatform-ccb' ),
-                    'url'   =>  $GLOBALS['oe_url'],
-                ),
-                'link_away'  =>  array(
-                    'title' =>  _x( 'Geoplatform Home<sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ccb' ),
-                    'url'   =>  esc_url( 'https://google.com' ),
-                ),
-              ),
+					'link_map_view'   =>  array(
+						'title' =>  _x( 'Map Viewer', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['viewer_url'],
+					),
+					'link_map_man'    =>  array(
+						'title' =>  _x( 'Map Manager', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['maps_url'],
+					),
+					'link_marketplace'    =>  array(
+						'title' =>  _x( 'Marketplace Preview', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['marketplace_url'],
+					),
+					'link_perf_dash'    =>  array(
+						'title' =>  _x( 'Performance Dashboard', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['dashboard_url'],
+					),
+					'link_ckan'    =>  array(
+						'title' =>  _x( 'Search Catalog', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['ckan_url'],
+					),
+					'link_ckan_mp'    =>  array(
+						'title' =>  _x( 'Search Marketplace', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['ckan_mp_url'],
+					),
+              	),
             ),
-          ),
+        ),
     // Map Gallery Link
     //
 
