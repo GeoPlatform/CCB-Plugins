@@ -34,7 +34,7 @@
                 <button type="button" class="btn btn-light btn-sm"
                     title="Remove this constraint"
                     (click)="remove(constraint)">
-                    <span class="far fa-times-circle"></span>
+                    <span class="far fa-times-circle t-fg--danger"></span>
                 </button>
                 <div class="flex-1" [innerHTML]="getValueDisplay(constraint.value, constraint)"></div>
             </div>
@@ -44,7 +44,7 @@
                     <button type="button" class="btn btn-light btn-sm"
                         title="Remove this value"
                         (click)="removeValue(constraint, value)">
-                        <span class="far fa-times-circle"></span>
+                        <span class="far fa-times-circle t-fg--danger"></span>
                     </button>
                     <div class="flex-1" [innerHTML]="getValueDisplay(value, constraint)"></div>
                 </div>
