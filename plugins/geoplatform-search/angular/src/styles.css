@@ -12,7 +12,20 @@ h1 { font-size: 1.75em; }
 
 hr { margin: 0.5em 0; }
 
+
+.t-fg--danger { color: #f00; }
+.t-fg--success { color: #393; }
+
+
 .hidden { display: none; }
+
+.u-break--all {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.u-text--sm { font-size: 0.875em; }
+
+
 
 p { margin: 0.25em 0; }
 
@@ -162,14 +175,21 @@ button.btn.btn-sm {
     display: block;
     padding: 0.5em 1em;
     background-color: #fff;
-    color: #4A90E2;
+
     cursor: pointer;
     border-bottom: 1px solid #ddd;
+}
+a.list-item, .list-item a {
+    color: #4A90E2;
 }
 .list-item.selected {
     background-color: #4A90E2;
     color: #fff;
     border-color: #4A90E2;
+}
+a.list-item.selected,
+.list-item.selected a {
+    color: #fff;
 }
 
 
@@ -565,4 +585,17 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 /* hide the leaflet draw control for circle marker */
 .leaflet-draw-section a.leaflet-draw-draw-circlemarker {
     display: none!important;
+}
+
+
+
+
+
+
+ngbd-typeahead-http ngb-typeahead-window.dropdown-menu button {
+    font-size: 0.875em;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    word-break: break-all; /* for uris */
+    word-wrap: break-word;
 }
