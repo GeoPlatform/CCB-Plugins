@@ -11,8 +11,8 @@
         <div class="row">
           <div class="col-md-12">
             <?php
-              $category_image_placeholder = get_template_directory_uri() . "/img/default-category-photo.jpeg";
-              $placeholder_text_template = 'The category photo(s) above have a placeholder image in them. If you would like to edit your category card photos,
+              $category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
+              $default_text_template = 'The category photo(s) above have a default image in them. If you would like to edit your category card photos,
               please navigate to Posts(or Pages)->Categories to edit and set your specfic category image';
               $image_set = false;
               //pagination
@@ -43,7 +43,7 @@
                       $image_set = true; //at least one category has been changed
                     }
                     else { //No category image set
-                      $category_image = $category_image_placeholder;
+                      $category_image = $category_image_default;
                     }
                   ?>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
@@ -68,12 +68,12 @@
               <p>
                 <?php
                 if ($image_set == true) {
-                  $placeholder_text = '';
+                  $default_text = '';
                 }
                 else{
-                  $placeholder_text = $placeholder_text_template;
+                  $default_text = $default_text_template;
                 }
-                echo wp_kses_post($placeholder_text); ?>
+                echo wp_kses_post($default_text); ?>
               </p>
             </div>
             <div class="alignleft" style="margin-top: 1em;"><?php previous_posts_link('&laquo; Previous Categories') ?></div>
