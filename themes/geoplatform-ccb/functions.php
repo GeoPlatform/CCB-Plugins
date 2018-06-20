@@ -109,14 +109,11 @@ function geop_ccb_setup(){
   add_theme_support( 'html5', array( 'search-form' ) );
 
   add_theme_support('starter-content', array(
-    //things to add in (if possible)
-    // Banner area content
-
     // Starter menus (see gp_create_services_menu)
-    'nav_menus' => array(
-            'header-left' => array(
-                'name' => __('My Test Navigation', 'geoplatform-ccb'),
-                'items' =>  array(
+	'nav_menus' => array(
+			'header-left' => array(
+				'name' => __('My Test Navigation', 'geoplatform-ccb'),
+				'items' =>  array(
 					'link_map_view'   =>  array(
 						'title' =>  _x( 'Map Viewer', 'Theme starter Content', 'geoplatform-ccb' ),
 						'url'   =>  $GLOBALS['viewer_url'],
@@ -141,13 +138,11 @@ function geop_ccb_setup(){
 						'title' =>  _x( 'Search Marketplace', 'Theme starter Content', 'geoplatform-ccb' ),
 						'url'   =>  $GLOBALS['ckan_mp_url'],
 					),
-              	),
-            ),
-        ),
-    // Map Gallery Link
-    //
+				),
+			),
+		),
 
-    'attachments' => array(
+	'attachments' => array(
 			'image-banner' => array(
 				'post_title' => _x( 'Banner', 'Theme starter content', 'geoplatform-ccb' ),
 				'file' => '/img/placeholder-banner.png',
