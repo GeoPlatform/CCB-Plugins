@@ -157,10 +157,13 @@ function geop_ccb_setup(){
 				'file' => '/img/default-category-photo.jpeg',
 			),
 		),
-
-    )
+	'options' => array(
+		'show_on_front' => 'page',
+		'page_on_front' => '{{home}}',
+		'page_for_posts' => '{{blog}}',
+		),
+	)
   );
-
 }
 add_action('after_setup_theme', 'geop_ccb_setup');
 
