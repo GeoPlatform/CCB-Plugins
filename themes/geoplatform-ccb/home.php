@@ -11,13 +11,20 @@ get_template_part( 'single-banner', get_post_format() );
   <div class="row">
     <div class="col-md-8 col-sm-8">
         <?php 
+            $content = get_queried_object()->post_content;
+            echo "<br>";
+            echo wp_kses_post( $content );
+            echo "<br>";
             if ( have_posts() ) : ?>
             <?php while ( have_posts() ) : the_post(); ?>
-            <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-                <h3><a href="<?php the_permalink(); ?>" title="Read more"><?php the_title(); ?></a></h3>
-                <h4><?php echo get_the_date(); ?></h4>
-                <?php the_excerpt(); ?>
-            </div>
+            <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+		        <?php the_title( sprintf( '<h3 style="margin-bottom:0"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' );?>
+                <a href="<?php echo esc_url( get_permalink()); ?>"<cite style="color:#006621"><?php echo esc_url( get_permalink());?></cite></a>
+                <p>
+                    <?php the_excerpt('',TRUE); ?>
+                </p>
+            </article><!-- #post-the_ID();-->
+            <hr />
             <?php endwhile; ?>
         <?php endif; ?>
         <nav id="nav-posts">
