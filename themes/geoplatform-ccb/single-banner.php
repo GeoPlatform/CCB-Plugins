@@ -19,8 +19,9 @@
 
                 <?php } elseif (is_home()){
                    //get title through queried object, because the_title is more of a loop hook
-                   $home_title = get_queried_object()->post_title;
-                   $home_banner_meta = get_post_meta( get_queried_object_id(), 'geop_ccb_custom_wysiwyg', true );
+                   $home_title = (empty(get_queried_object()->post_title)) ? 'Blog Posts' : get_queried_object()->post_title;
+                   //get home banner meta https://wordpress.stackexchange.com/questions/208225/why-does-get-post-meta-not-work-with-the-posts-page
+                   $home_banner_meta = (empty(get_post_meta( get_queried_object_id(), 'geop_ccb_custom_wysiwyg', true ))) ? 'Example Banner Content' : get_post_meta( get_queried_object_id(), 'geop_ccb_custom_wysiwyg', true );;
                    ?>
                    <h3 style="color:white"><?php echo $home_title; ?></h3>
                     <p>

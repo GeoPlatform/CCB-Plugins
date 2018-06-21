@@ -152,10 +152,20 @@ function geop_ccb_setup(){
 				'file' => '/img/default-category-photo.jpeg',
 			),
 		),
+	'posts' => array(
+		'home',
+		'about',
+		'blog',
+	),
 	'options' => array(
-		'show_on_front' => 'page',
+		'show_on_front' => 'posts',
 		'page_on_front' => '{{home}}',
 		'page_for_posts' => '{{blog}}',
+		),
+	'widgets' => array(
+		'geoplatform-widgetized-area' => array(
+				'text_about',
+			),
 		),
 	)
   );
