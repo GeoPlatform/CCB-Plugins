@@ -1798,7 +1798,7 @@ body .input-group-lg>.form-control, body .input-group-lg>.input-group-addon, bod
 }
 
 .input-group-slick>input.form-control {
-    height: 2.5rem;
+    height: 2.25rem;
     padding-left: 2.5rem;
     padding-right: 2.5rem
 }

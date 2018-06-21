@@ -55,7 +55,7 @@
                 </p>
             </div><!--#col-md-4 col-sm-5 col-xs-12-->
             <div class="col-md-4 col-sm-5 col-xs-12">
-                <a href="<?php echo esc_url("http://www.fgdc.gov"); ?>" target="_blank">
+                <a href="<?php echo esc_url("https://www.fgdc.gov"); ?>" target="_blank">
                     <img src="<?php echo esc_url("" . get_template_directory_uri() . "/img/fgdc_logo_dkbg.png"); ?>" target="_blank" alt="FGDC Logo">
                 </a>
             </div><!--#col-md-4 col-sm-5 col-xs-12-->
