@@ -10,3 +10,6 @@ plugins/openid-connect-generic-master
 # Ignore default themes files
 themes/index.php
 themes/twenty*
+
+# Ignore uploads folder
+uploads/*
