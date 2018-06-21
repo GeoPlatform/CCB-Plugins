@@ -805,8 +805,8 @@ function geop_ccb_sidebar() {
             'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-ccb' ),
             'class' => 'widget-class',
             'before_widget' => '<div id="%1$s" class="card widget %2$s">',
-						'after_widget'  => '</div>',
-						'before_title'  => '<h4>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h4>',
 						'after_title'   => '</h4>'
         )
     );
