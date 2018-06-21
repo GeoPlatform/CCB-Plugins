@@ -1,7 +1,11 @@
 <?php
-//-------------------------------
-// Get Docker container enviroment variables
-//-------------------------------
+/**
+ * Get Docker container enviroment variables
+ *
+ * @param [string] $name
+ * @param [string] $def (default)
+ * @return ENV[$name] or $def if none found
+ */
 function geop_ccb_getEnv($name, $def){
     return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
@@ -141,7 +145,6 @@ function geop_ccb_setup(){
 				),
 			),
 		),
-
 	'attachments' => array(
 			'image-banner' => array(
 				'post_title' => _x( 'Banner', 'Theme starter content', 'geoplatform-ccb' ),
@@ -177,6 +180,7 @@ function geop_ccb_fresh_site_enable(){
   update_option('fresh_site', 1);
 }
 add_action('switch_theme','geop_ccb_fresh_site_enable');
+
 
 //------------------------------------
 //Support for a custom logo image

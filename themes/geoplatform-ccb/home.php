@@ -11,10 +11,11 @@ get_template_part( 'single-banner', get_post_format() );
   <div class="row">
     <div class="col-md-8 col-sm-8">
         <?php 
-            $content = get_queried_object()->post_content;
-            echo "<br>";
-            echo wp_kses_post( $content );
-            echo "<br>";
+                $content = (empty(get_queried_object()->post_content)) ? '' : get_queried_object()->post_content;
+                echo "<br>";
+                echo wp_kses_post( $content );
+                echo "<br>";
+           
             if ( have_posts() ) : ?>
             <?php while ( have_posts() ) : the_post(); ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
