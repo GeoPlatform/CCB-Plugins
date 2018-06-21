@@ -677,7 +677,7 @@ function geop_ccb_remove_default_category_description()
 add_action ( 'edit_category_form_fields', 'geop_ccb_extra_category_fields_forms');
 
 //add extra fields to category edit form callback function
-function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing featured ID
+function geop_ccb_extra_category_fields_forms( $tag ) { //check for existing featured ID
     $t_id = $tag->term_id;
     $cat_meta = get_option( "category_$t_id");
 ?>
@@ -686,6 +686,12 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
   <th scope="row" valign="top"><label for="topic-name1">Topic 1 Name</label></th>
   		<td style="padding: 5px 5px;">
   			<input type="text" name="Cat_meta[topic-name1]" id="Cat_meta[topic-name1]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name1'] ? $cat_meta['topic-name1'] : ''; ?>">
+		  </td>
+		  <td style="padding: 5px 5px;">
+			  <p><?php echo "t_id: " . $t_id; ?></p>
+			  <p><?php var_dump($cat_meta); ?></p>
+			  <p><?php var_dump(get_option("category_2", array())); ?></p>
+			  <p><?php var_dump($tag); ?></p>
   		</td>
   </tr>
   <tr class="form-field">
@@ -1170,4 +1176,40 @@ function geopccb_category_column_action( $columns, $column, $id ) {
       $columns = '<img src="' . $temp_img . '" style="max-height: 12em; max-width: 100%;" />';
     }
     return $columns;
+}
+
+/**
+ * Using Sane Defaults 
+ * https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
+ *
+ * @return void
+ */
+function geop_ccb_get_option_defaults() {
+	$term_id = empty(get_query_var('cat') ? '' : get_query_var('cat') );_
+	$defaults = array(
+		"category_$term_id" => array(),
+		'option_2' => 'value_2',
+		'option_3' => 'value_3'
+	);
+	return apply_filters( 'geop_ccb_option_defaults', $defaults );
+}
+
+/**
+ * Getting the appropriate defaults 
+ * https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
+ * 
+ * @return void
+ */
+function geop_ccb_get_options() {
+    // Options API
+    return wp_parse_args( 
+        get_option( 'theme_geop_ccb_options', array() ), 
+        geop_ccb_get_option_defaults() 
+    );
+    // Theme Mods API:
+    return wp_parse_args( 
+        get_theme_mods(), 
+        geop_ccb_get_option_defaults() 
+    );
+    
 }
