@@ -11,6 +11,7 @@ import { CCBService } from '../../shared/ccb.service';
 import { Constraints, Constraint } from '../../models/constraint';
 import { CreatorCodec } from '../../constraints/creator/codec';
 import { PagingEvent } from '../../shared/paging/paging.component';
+import { ServerRoutes } from '../../server-routes.enum'
 
 @Component({
   selector: 'results-ccb',
@@ -172,7 +173,7 @@ export class CcbComponent implements OnInit {
      *
      */
     getIconPath(item) {
-        return `wp-content/plugins/geoplatform-search/assets/${item.type}.svg`;
+        return `${ServerRoutes.ASSETS}${item.type}.svg`;
     }
 
     isActive(id) { return this.currentTab === id; }

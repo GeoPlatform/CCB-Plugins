@@ -18,6 +18,7 @@ import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { Constraints, Constraint } from '../../models/constraint';
 import { CreatorCodec } from '../../constraints/creator/codec';
 import { PagingEvent } from '../../shared/paging/paging.component';
+import { ServerRoutes } from '../../server-routes.enum'
 
 @Component({
     selector: 'results-portfolio',
@@ -173,7 +174,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
         }
-        return `wp-content/plugins/geoplatform-search/assets/${type}.svg`;
+        return `${ServerRoutes.ASSETS}${type}.svg`;
     }
 
     /**

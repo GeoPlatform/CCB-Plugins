@@ -13,6 +13,8 @@ import { Codec } from '../../models/codec';
 
 import { TypeCodec } from './codec';
 
+import { ServerRoutes } from '../../server-routes.enum'
+
 
 @Component({
   selector: 'constraint-types',
@@ -94,7 +96,7 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
             case 'posts':                   type =  'post'; break;
             case 'media':                   type =  'attachment'; break;
         }
-        return `wp-content/plugins/geoplatform-search/assets/${type}.svg`;
+        return `${ServerRoutes.ASSETS}${type}.svg`;
     }
 
 }

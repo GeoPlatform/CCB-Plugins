@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { ServerRoutes } from './server-routes.enum';
 
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 
@@ -14,7 +15,7 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 // and declaring the new paths for the images here globally, the
 // images can be referenced successfully across the rest of the app
 import * as L from 'leaflet';
-L.Icon.Default.imagePath = "wp-content/plugins/geoplatform-search/assets/"
+L.Icon.Default.imagePath = ServerRoutes.ASSETS
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'marker-icon-2x.png',
   iconUrl: 'marker-icon.png',
