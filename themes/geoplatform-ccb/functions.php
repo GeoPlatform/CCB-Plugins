@@ -1,7 +1,11 @@
 <?php
-//-------------------------------
-// Get Docker container enviroment variables
-//-------------------------------
+/**
+ * Get Docker container enviroment variables
+ *
+ * @param [string] $name
+ * @param [string] $def (default)
+ * @return ENV[$name] or $def if none found
+ */
 function geop_ccb_getEnv($name, $def){
     return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
@@ -26,13 +30,13 @@ $ga_code = geop_ccb_getEnv('ga_code','UA-00000000-0');
 //-------------------------------
 //https://www.taniarascia.com/wordpress-from-scratch-part-two/
 function geop_ccb_scripts() {
-  wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
-	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
+  	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
+	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
 	wp_enqueue_script( 'bootstrap-min', get_template_directory_uri() . '/js/bootstrap.min.js', array(), '3.3.7', true);
-  //wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
+	//wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
-  wp_enqueue_script( 'geoplatform-ccb-min', get_template_directory_uri() . '/js/geoplatform.style.min.js', array('jquery'), null, true );
+  	wp_enqueue_script( 'geoplatform-ccb-min', get_template_directory_uri() . '/js/geoplatform.style.min.js', array('jquery'), null, true );
 	wp_enqueue_script( 'auth', get_template_directory_uri() . '/scripts/authentication.js', array(), null, true);
 	wp_enqueue_script( 'fixedScroll', get_template_directory_uri() . '/scripts/fixed_scroll.js', array(), null, true);
 	wp_enqueue_script( 'ajax-pagination',  get_template_directory_uri() . '/js/ajax-pagination.js', array( 'jquery' ), '1.0', true );
@@ -68,15 +72,115 @@ function geop_ccb_google_fonts() {
 		}
 add_action('wp_enqueue_scripts', 'geop_ccb_google_fonts');
 
-//-------------------------------
-// WordPress Titles
-//-------------------------------
-add_theme_support( 'title-tag' );
+function geop_ccb_setup(){
+  /*
+  * Make theme available for translation.
+  * If you're building a theme based on Geoplatform CCB, use a find and replace
+  * to change 'geoplatform-ccb' to the name of your theme in all the template files.
+  */
+  load_theme_textdomain( 'geoplatform-ccb' );
 
-//------------------------------------
-//Support for a custom header Images
-//------------------------------------
-add_theme_support( 'custom-header' );
+  /*
+  * WordPress Titles
+  */
+  add_theme_support( 'title-tag' );
+
+  /*
+  * Support for a custom header Images
+  */
+  $header_args = array(
+  	'default-image' => get_template_directory_uri() . '/img/default-banner.png',
+    'uploads'       => true,
+    );
+  add_theme_support( 'custom-header', $header_args);
+
+  /*
+  * Support Featured Images
+  */
+  add_theme_support( 'post-thumbnails' );
+
+  /*
+  * Theme Support for Automatic Feed links per theme check
+  * https://codex.wordpress.org/Automatic_Feed_Links
+  */
+  add_theme_support( 'automatic-feed-links' );
+
+  //-------------------------------
+  //Theme Support for html5, and the html5 search form
+  //https://developer.wordpress.org/reference/functions/get_search_form/
+  //http://buildwpyourself.com/wordpress-search-form-template/
+  //-------------------------------
+  add_theme_support( 'html5', array( 'search-form' ) );
+
+  add_theme_support('starter-content', array(
+    // Starter menus (see gp_create_services_menu)
+	'nav_menus' => array(
+			'header-left' => array(
+				'name' => __('My Test Navigation', 'geoplatform-ccb'),
+				'items' =>  array(
+					'link_map_view'   =>  array(
+						'title' =>  _x( 'Map Viewer', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['viewer_url'],
+					),
+					'link_map_man'    =>  array(
+						'title' =>  _x( 'Map Manager', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['maps_url'],
+					),
+					'link_marketplace'    =>  array(
+						'title' =>  _x( 'Marketplace Preview', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['marketplace_url'],
+					),
+					'link_perf_dash'    =>  array(
+						'title' =>  _x( 'Performance Dashboard', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['dashboard_url'],
+					),
+					'link_ckan'    =>  array(
+						'title' =>  _x( 'Search Catalog', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['ckan_url'],
+					),
+					'link_ckan_mp'    =>  array(
+						'title' =>  _x( 'Search Marketplace', 'Theme starter Content', 'geoplatform-ccb' ),
+						'url'   =>  $GLOBALS['ckan_mp_url'],
+					),
+				),
+			),
+		),
+	'attachments' => array(
+			'image-banner' => array(
+				'post_title' => _x( 'Banner', 'Theme starter content', 'geoplatform-ccb' ),
+				'file' => '/img/placeholder-banner.png',
+			),
+			'image-category' => array(
+				'post_title' => _x( 'Category', 'Theme starter content', 'geoplatform-ccb' ),
+				'file' => '/img/default-category-photo.jpeg',
+			),
+		),
+	'posts' => array(
+		'home',
+		'about',
+		'blog',
+	),
+	'options' => array(
+		'show_on_front' => 'posts',
+		'page_on_front' => '{{home}}',
+		'page_for_posts' => '{{blog}}',
+		),
+	'widgets' => array(
+		'geoplatform-widgetized-area' => array(
+				'text_about',
+			),
+		),
+	)
+  );
+}
+add_action('after_setup_theme', 'geop_ccb_setup');
+
+//Use for testing purposes to enable Fresh site and load starter content after switching the theme in and out
+function geop_ccb_fresh_site_enable(){
+  update_option('fresh_site', 1);
+}
+add_action('switch_theme','geop_ccb_fresh_site_enable');
+
 
 //------------------------------------
 //Support for a custom logo image
@@ -93,6 +197,7 @@ function geop_ccb_custom_logo_setup() {
     add_theme_support( 'custom-logo', $geop_ccb_logo_defaults );
 }
 add_action( 'after_setup_theme', 'geop_ccb_custom_logo_setup' );
+
 
 //--------------------------
 //Support adding Menus for header and footer
@@ -180,12 +285,6 @@ if( !$menu_exists){
 	}
 }
 add_action('init', 'geop_ccb_create_services_menu');
-
-//-------------------------------
-// Support Featured Images
-//-------------------------------
-add_theme_support( 'post-thumbnails' );
-
 
 /********************************************************/
 // Adding Dashicons in WordPress Front-end
@@ -320,7 +419,9 @@ function geop_ccb_customize_register( $wp_customize )
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
-             'default'        => '',
+             'default'   => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
+                            <p style='text-align: center'>Create and manage your own
+                            Dynamic Digital Community on the GeoPlatform!</p>",
 						 'transport' => 'refresh',
 						 'sanitize_callback' => 'wp_kses_post'
          ) );
@@ -333,7 +434,7 @@ function geop_ccb_customize_register( $wp_customize )
 
 				 //Call to action button (formerly "Learn More" button)
 				 $wp_customize->add_setting('call2action_button', array(
-					 'default' => '',
+					 'default' => true,
 					 'transport' => 'refresh',
            'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
 				 ) );
@@ -346,7 +447,7 @@ function geop_ccb_customize_register( $wp_customize )
 				 ) );
 
 				 $wp_customize->add_setting('call2action_text', array(
-					 'default' => '',
+					 'default' => 'Learn More',
 					 'transport' => 'refresh',
 					 'sanitize_callback' => 'sanitize_text_field',
 				 ));
@@ -361,7 +462,7 @@ function geop_ccb_customize_register( $wp_customize )
 				 ) );
 
 				 $wp_customize->add_setting('call2action_url', array(
-					'default' => '',
+					'default' => 'https://geoplatform.gov/about',
 					'transport' => 'refresh',
 					'sanitize_callback' => 'esc_url_raw',
 				));
@@ -381,7 +482,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'priority' => 60
 			) );
 			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
-					'default'   => 'Insert Map Gallery Link here',
+					'default'   => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
 					'transport' => 'refresh',
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
@@ -489,9 +590,6 @@ function geop_ccb_header_image_method() {
 		get_template_directory_uri() . '/css/Geomain_style.css'
 	);
 			$headerImage = get_header_image();
-			if (! $headerImage) {
-				$headerImage = get_template_directory_uri() . "/img/placeholder-banner.png";
-			}
         $custom_css = "
                 .banner{
                         background-image: url({$headerImage});
@@ -580,7 +678,6 @@ function geop_ccb_remove_default_category_description()
 //-------------------------------
 //https://en.bainternet.info/wordpress-category-extra-fields/
 
-
 //add extra fields to category edit form hook
 add_action ( 'edit_category_form_fields', 'geop_ccb_extra_category_fields_forms');
 
@@ -589,105 +686,75 @@ function geop_ccb_extra_category_fields_forms( $tag ) {    //check for existing 
     $t_id = $tag->term_id;
     $cat_meta = get_option( "category_$t_id");
 ?>
-<!-- Topic 1 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name1">Topic 1 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name1]" id="Cat_meta[topic-name1]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name1'] ? $cat_meta['topic-name1'] : ''; ?>">
-			<!-- <label for="url_type1" style="margin-left:1em;"><b>URL Type: </b></label> -->
-			<!-- <select name="Cat_meta[url_type1]" id="Cat_meta[url_type1]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php //echo ($cat_meta['url_type1'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select> -->
-				<!-- <span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url1">Topic 1 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url1]" id="Cat_meta[topic-url1]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url1'] ? $cat_meta['topic-url1'] : ''; ?>"><br />
-    </td>
-</tr>
-
-<!-- Topic 2 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name2">Topic 2 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name2]" id="Cat_meta[topic-name2]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name2'] ? $cat_meta['topic-name2'] : ''; ?>">
-			<!-- <label for="url_type2" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type2]" id="Cat_meta[url_type2]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php //echo ($cat_meta['url_type2'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url2">Topic 2 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url2]" id="Cat_meta[topic-url2]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url2'] ? $cat_meta['topic-url2'] : ''; ?>">
-    </td>
-</tr>
-
-<!-- Topic 3 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name3">Topic 3 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name3]" id="Cat_meta[topic-name3]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name3'] ? $cat_meta['topic-name3'] : ''; ?>">
-			<!-- <label for="url_type3" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type3]" id="Cat_meta[url_type3]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php // echo ($cat_meta['url_type3'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url3">Topic 3 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url3]" id="Cat_meta[topic-url3]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url3'] ? $cat_meta['topic-url3'] : ''; ?>"><br />
+  <!-- Topic 1 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name1">Topic 1 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name1]" id="Cat_meta[topic-name1]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name1'] ? $cat_meta['topic-name1'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url1">Topic 1 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url1]" id="Cat_meta[topic-url1]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url1'] ? $cat_meta['topic-url1'] : ''; ?>"><br />
       </td>
-</tr>
+  </tr>
 
-<!-- Topic 4 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name4">Topic 4 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name4]" id="Cat_meta[topic-name4]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name4'] ? $cat_meta['topic-name4'] : ''; ?>">
-			<!-- <label for="url_type4" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type4]" id="Cat_meta[url_type4]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php  // echo ($cat_meta['url_type4'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url4">Topic 4 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url4]" id="Cat_meta[topic-url4]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url4'] ? $cat_meta['topic-url4'] : ''; ?>"><br />
-    </td>
-</tr>
+  <!-- Topic 2 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name2">Topic 2 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name2]" id="Cat_meta[topic-name2]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name2'] ? $cat_meta['topic-name2'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url2">Topic 2 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url2]" id="Cat_meta[topic-url2]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url2'] ? $cat_meta['topic-url2'] : ''; ?>">
+      </td>
+  </tr>
 
-<!-- Topic 5 Name and Url -->
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-name5">Topic 5 Name</label></th>
-		<td style="padding: 5px 5px;">
-			<input type="text" name="Cat_meta[topic-name5]" id="Cat_meta[topic-name5]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name5'] ? $cat_meta['topic-name5'] : ''; ?>">
-			<!-- <label for="url_type5" style="margin-left:1em;"><b>URL Type: </b></label>
-			<select name="Cat_meta[url_type5]" id="Cat_meta[url_type5]" class="postform">
-				<option value="value_1" selected="selected">NewsMap</option>
-				<option value="value_2" <?php // echo ($cat_meta['url_type5'] == "value_2") ? 'selected="selected"': ''; ?>>Regular</option>
-			</select>
-				<span class="description">  Choose "NewsMap" for link below to show your EMM NewsBrief URL, or "Regular" to use any normal full URL.</span> -->
-		</td>
-</tr>
-<tr class="form-field">
-<th scope="row" valign="top"><label for="topic-url5">Topic 5 URL</label></th>
-<td style="padding: 5px 5px;">
-<input type="text" name="Cat_meta[topic-url5]" id="Cat_meta[topic-url5]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url5'] ? $cat_meta['topic-url5'] : ''; ?>"><br />
-    </td>
-</tr>
+  <!-- Topic 3 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name3">Topic 3 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name3]" id="Cat_meta[topic-name3]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name3'] ? $cat_meta['topic-name3'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url3">Topic 3 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url3]" id="Cat_meta[topic-url3]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url3'] ? $cat_meta['topic-url3'] : ''; ?>"><br />
+        </td>
+  </tr>
+
+  <!-- Topic 4 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name4">Topic 4 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name4]" id="Cat_meta[topic-name4]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name4'] ? $cat_meta['topic-name4'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url4">Topic 4 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url4]" id="Cat_meta[topic-url4]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url4'] ? $cat_meta['topic-url4'] : ''; ?>"><br />
+      </td>
+  </tr>
+
+  <!-- Topic 5 Name and Url -->
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name5">Topic 5 Name</label></th>
+  		<td style="padding: 5px 5px;">
+  			<input type="text" name="Cat_meta[topic-name5]" id="Cat_meta[topic-name5]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name5'] ? $cat_meta['topic-name5'] : ''; ?>">
+  		</td>
+  </tr>
+  <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-url5">Topic 5 URL</label></th>
+  <td style="padding: 5px 5px;">
+  <input type="text" name="Cat_meta[topic-url5]" id="Cat_meta[topic-url5]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url5'] ? $cat_meta['topic-url5'] : ''; ?>"><br />
+      </td>
+  </tr>
 <?php
 }
 
@@ -733,7 +800,6 @@ add_action('pre_get_posts', 'geop_ccb_tags_categories_support_query');
 // https://codex.wordpress.org/Function_Reference/dynamic_sidebar
 // https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
 //------------------------------------
-
 add_action( 'widgets_init', 'geop_ccb_sidebar' );
 function geop_ccb_sidebar() {
     register_sidebar(
@@ -743,8 +809,8 @@ function geop_ccb_sidebar() {
             'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-ccb' ),
             'class' => 'widget-class',
             'before_widget' => '<div id="%1$s" class="card widget %2$s">',
-						'after_widget'  => '</div>',
-						'before_title'  => '<h4>',
+			'after_widget'  => '</div>',
+			'before_title'  => '<h4>',
 						'after_title'   => '</h4>'
         )
     );
@@ -757,19 +823,6 @@ function geop_ccb_sidebar() {
 if ( ! isset( $content_width ) ) {
 	$content_width = 600;
 }
-
-//-------------------------------
-//Theme Support for Automatic Feed links per theme check
-//https://codex.wordpress.org/Automatic_Feed_Links
-//-------------------------------
-add_theme_support( 'automatic-feed-links' );
-
-//-------------------------------
-//Theme Support for html5, and the html5 search form
-//https://developer.wordpress.org/reference/functions/get_search_form/
-//http://buildwpyourself.com/wordpress-search-form-template/
-//-------------------------------
-add_theme_support( 'html5', array( 'search-form' ) );
 
 //-------------------------------
 // Theme specific enabled capabilities
@@ -884,6 +937,7 @@ function geop_ccb_remove_theme_caps() {
 }
 add_action('switch_theme', 'geop_ccb_remove_theme_caps');
 
+
 //private pages and posts show up in search for correct roles
 //https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
 function geop_ccb_filter_search($query){
@@ -918,7 +972,7 @@ add_filter( 'excerpt_more', 'geop_ccb_excerpt_more' );
 
 /**
  * Registers an editor stylesheet for the theme.
- *https://developer.wordpress.org/reference/functions/add_editor_style/
+ * https://developer.wordpress.org/reference/functions/add_editor_style/
  */
 function geop_ccb_theme_add_editor_styles() {
     add_editor_style( 'custom-editor-style.css' );

@@ -2,10 +2,11 @@
 plugins/hello.php
 plugins/index.php
 plugins/akismet
-plugins/categories-images
 plugins/theme-sniffer
 plugins/theme-check
-plugins/openid-connect-generic-master 
+plugins/openid-connect-generic-master
+plugins/easy-wp-smtp
+plugins/tinymce-advanced 
 
 # Ignore default themes files
 themes/index.php
