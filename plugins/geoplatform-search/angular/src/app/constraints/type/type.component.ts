@@ -94,7 +94,7 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
             case 'posts':                   type =  'post'; break;
             case 'media':                   type =  'attachment'; break;
         }
-        return `/assets/${type}.svg`;
+        return `wp-content/plugins/geoplatform-search/assets/${type}.svg`;
     }
 
 }

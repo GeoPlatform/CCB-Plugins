@@ -172,7 +172,7 @@ export class CcbComponent implements OnInit {
      *
      */
     getIconPath(item) {
-        return `/assets/${item.type}.svg`;
+        return `wp-content/plugins/geoplatform-search/assets/${item.type}.svg`;
     }
 
     isActive(id) { return this.currentTab === id; }

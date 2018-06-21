@@ -26,7 +26,7 @@ export class EnvironmentSettings {
 
     public load() : Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            this.http.get('./assets/env.json').toPromise()
+            this.http.get('.wp-content/plugins/geoplatform-search/assets/env.json').toPromise()
             .then((response : Response) => {
                 // console.log("Loaded env: " + JSON.stringify(response));
                 Config.configure(response);

@@ -14,7 +14,7 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 // and declaring the new paths for the images here globally, the
 // images can be referenced successfully across the rest of the app
 import * as L from 'leaflet';
-L.Icon.Default.imagePath = 'assets/';
+L.Icon.Default.imagePath = "wp-content/plugins/geoplatform-search/assets/"
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'marker-icon-2x.png',
   iconUrl: 'marker-icon.png',

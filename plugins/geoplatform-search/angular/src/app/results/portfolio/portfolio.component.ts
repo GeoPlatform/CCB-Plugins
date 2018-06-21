@@ -173,7 +173,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
         }
-        return `/assets/${type}.svg`;
+        return `wp-content/plugins/geoplatform-search/assets/${type}.svg`;
     }
 
     /**

@@ -134,7 +134,7 @@ export class TypedResultsComponent implements OnInit {
      *
      */
     getIconPath(item) {
-        return `/assets/${item.type}.svg`;
+        return `wp-content/plugins/geoplatform-search/assets/${item.type}.svg`;
     }
 
 }
