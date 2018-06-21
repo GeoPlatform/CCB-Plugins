@@ -12,11 +12,12 @@
             <div class="col-md-6">
                 <h3>
                     <!--<img src="/img/GeoPlatform_logo_sm.png" alt="GeoPlatform Logo" style="height: 1.5rem; vertical-align: bottom;">-->
-                    <a href="<?php echo esc_url($GLOBALS['wpp_url']); ?>" title="Go to the Geoplatform Home Page">
+                    <a href="<?php echo esc_url($GLOBALS['wpp_url']); ?>" title="<?php _e( 'Go to the Geoplatform Home Page', 'geoplatform-ccb'); ?>">
                         <span class="icon-gp"></span>
                         <?php _e( 'GeoPlatform', 'geoplatform-ccb'); ?>
                     </a>
-                    <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
+                    <?php $geop_ccb_home_name = esc_html(get_bloginfo( 'name' )); ?>
+                    <a href="<?php echo esc_url(get_site_url());?>" title="<?php printf( __( 'Go to the %s Home Page', 'geoplatform-ccb'), $geop_ccb_home_name); ?>">
                     <?php echo esc_html(get_bloginfo( 'name' )); ?>
                   </a>
                 </h3>
@@ -26,15 +27,15 @@
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
               <!--Featured location-->
-                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : 'Example Menu Title';?></h4>
+                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : _e( 'Example Menu Title', 'geoplatform-ccb'); ?></h4>
                     <?php wp_nav_menu( array( 'theme_location' => 'footer-left' ) ); ?>
             </div><!--#col-md-4 col-sm-4 col-xs-12-->
             <div class="col-md-4 col-sm-4 col-xs-12">
-              <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : 'Example Menu Title';?></h4>
+              <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : _e( 'Example Menu Title', 'geoplatform-ccb'); ?></h4>
               <?php wp_nav_menu( array( 'theme_location' => 'footer-center' ) ); ?>
             </div><!--#col-md-4 col-sm-4 col-xs-12-->
             <div class="col-md-4 col-sm-4 col-xs-12">
-                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : 'Example Menu Title';?></h4>
+                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : _e( 'Example Menu Title', 'geoplatform-ccb'); ?></h4>
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) ); ?>

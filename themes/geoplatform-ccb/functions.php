@@ -416,12 +416,11 @@ function geop_ccb_customize_register( $wp_customize )
 				'priority' => 50
 			) );
 
+    $geop_ccb_default_title = "<h1 style='text-align: center; color:white;'>" . __( 'Your Community Title', 'geoplatform-ccb') . "</h1><p style='text-align: center'>" . __( 'Create and manage your own Dynamic Digital Community on the GeoPlatform!', 'geoplatform-ccb') . "</p>";
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
-             'default'   => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
-                            <p style='text-align: center'>Create and manage your own
-                            Dynamic Digital Community on the GeoPlatform!</p>",
+             'default'   => $geop_ccb_default_title,
 						 'transport' => 'refresh',
 						 'sanitize_callback' => 'wp_kses_post'
          ) );
@@ -502,12 +501,12 @@ function geop_ccb_customize_register( $wp_customize )
 					) );
 				$wp_customize->add_control( 'Map_Gallery_env_choice', array(
 						'label' => 'Map Gallery Environment',
-						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
+						'description' => __( 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.', 'geoplatform-ccb'),
 						'section' => 'map_gallery_section',
 						'type' => 'radio',
 						'priority' => 20,
 						'choices' => array(
-								'match'=>'My gallery link matches my site enviroment',
+								'match'=>__( 'My gallery link matches my site enviroment', 'geoplatform-ccb'),
 								'sit' => 'sit (sit-ual.geoplatform.us)',
 								'stg' => 'stg (stg-ual.geoplatform.gov)',
 								'prod' => 'prod (ual.geoplatform.gov)'
@@ -612,7 +611,7 @@ function wysiwyg_register_custom_meta_box()
 
 function geop_ccb_custom_wysiwyg($post)
  {
- echo "<h3>Anything you add below will show up in the Banner:</h3>";
+ echo "<h3>" . __( 'Anything you add below will show up in the Banner:', 'geoplatform-ccb') . "</h3>";
  $content = get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true);
  wp_editor(htmlspecialchars_decode($content) , 'geop_ccb_custom_wysiwyg', array(
  "media_buttons" => true
