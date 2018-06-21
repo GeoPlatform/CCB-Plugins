@@ -96,7 +96,7 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
             case 'posts':                   type =  'post'; break;
             case 'media':                   type =  'attachment'; break;
         }
-        return `${ServerRoutes.ASSETS}${type}.svg`;
+        return `../${ServerRoutes.ASSETS}${type}.svg`;
     }
 
 }

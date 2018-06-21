@@ -113,11 +113,11 @@
    </div><!--#container-->
 
    <!-- The files that make it happen -->
-   <link href="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/angular/dist/styles.bundle.css'?>" rel="stylesheet" />
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/angular/dist/inline.bundle.js' ?>"></script>
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/angular/dist/polyfills.bundle.js' ?>"></script>
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/angular/dist/scripts.bundle.js' ?>"></script>
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/angular/dist/main.bundle.js' ?>"></script>
+   <link href="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/css/styles.bundle.css'?>" rel="stylesheet" />
+   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/inline.bundle.js' ?>"></script>
+   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/polyfills.bundle.js' ?>"></script>
+   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/scripts.bundle.js' ?>"></script>
+   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/main.bundle.js' ?>"></script>
 
 
   <!-- <script type="text/javascript">

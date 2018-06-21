@@ -174,7 +174,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
         }
-        return `${ServerRoutes.ASSETS}${type}.svg`;
+        return `../${ServerRoutes.ASSETS}${type}.svg`;
     }
 
     /**

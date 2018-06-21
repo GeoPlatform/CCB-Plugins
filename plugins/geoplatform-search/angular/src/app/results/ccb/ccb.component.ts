@@ -173,7 +173,7 @@ export class CcbComponent implements OnInit {
      *
      */
     getIconPath(item) {
-        return `${ServerRoutes.ASSETS}${item.type}.svg`;
+        return `../${ServerRoutes.ASSETS}${item.type}.svg`;
     }
 
     isActive(id) { return this.currentTab === id; }
