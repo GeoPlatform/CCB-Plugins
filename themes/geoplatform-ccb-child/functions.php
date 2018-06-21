@@ -6,10 +6,10 @@
 //--------------------------------------------------
 function geopccb_child_theme_enqueue_styles() {
 
-  wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
-	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
-	wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
-  wp_enqueue_style( 'child-test-css',get_template_directory_uri() . '/test_this_css.css');
+  // wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
+	// wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
+	// wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
+  // wp_enqueue_style( 'child-test-css',get_template_directory_uri() . '/test_this_css.css');
 
   wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( 'custom-style' ), wp_get_theme()->get('Version'));
   wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/css/Geomain_style.css', array( 'theme-style' ), wp_get_theme()->get('Version'));
