@@ -21,7 +21,7 @@ export class CcbComponent implements OnInit {
 
     @Input() constraints: Constraints;
 
-    private service : CCBService;
+    public service : CCBService;
     private listener : ISubscription;
     public totalResults : number = 0;
     private defaultQuery : Query;

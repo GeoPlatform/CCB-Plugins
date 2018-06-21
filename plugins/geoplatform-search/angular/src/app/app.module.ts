@@ -109,7 +109,7 @@ export function initializeApp() {
     TypedResultsComponent
   ],
   imports: [
-    RouterModule.forRoot( appRoutes, { enableTracing: false } ),
+    RouterModule.forRoot( appRoutes, { useHash: true } ),
     BrowserModule,
     FormsModule,
     HttpClientModule,
