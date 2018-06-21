@@ -17,7 +17,7 @@
 
     <div class="gp-ui-card__footer">
         <div class="pull-right">
-            <a href="<?php the_permalink(); ?>" class="btn btn-link pull-right">Learn More</a>
+            <a href="<?php the_permalink(); ?>" class="btn btn-link pull-right"><?php _e( 'Learn More', 'geoplatform-ccb'); ?></a>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
       </div>
       <div class="gp-ui-card__footer">
           <div class="pull-right">
-              <a href="<?php the_permalink(); ?>" class="btn btn-link pull-right">Learn More</a>
+              <a href="<?php the_permalink(); ?>" class="btn btn-link pull-right"><?php _e( 'Learn More', 'geoplatform-ccb'); ?></a>
           </div>
       </div>
   <?php } ?>

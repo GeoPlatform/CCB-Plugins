@@ -47,7 +47,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                             <button type="button" class="btn btn-link header__btn dropdown-toggle"
                                     data-toggle="dropdown" data-target="#megamenu" aria-expanded="false">
                                 <span class="icon-hamburger-menu t-light"></span>
-                                <span class="hidden-xs">Menu <span class="caret"></span></span>
+                                <span class="hidden-xs"><?php _e( 'Menu', 'geoplatform-ccb'); ?><span class="caret"></span></span>
                             </button>
                         </div>
                     </li>
@@ -62,11 +62,11 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                             <!--if(!authenticated) -->
                             <?php if (!is_user_logged_in()){?>
                               <a href="<?php echo esc_url(wp_login_url( get_option('siteurl') ) ); ?>">
-                                  <button style="color:white;" type="button" class="btn btn-link" onclick="login">Sign In</button>
+                                  <button style="color:white;" type="button" class="btn btn-link" onclick="login"><?php _e( 'Sign In', 'geoplatform-ccb'); ?></button>
                                 </a>
                           <?php  } else {?>
                             <a href="<?php echo esc_url(wp_logout_url( home_url() ) ); ?>">
-                                <button style="color:white;" type="button" class="btn btn-link">Sign out</button>
+                                <button style="color:white;" type="button" class="btn btn-link"><?php _e( 'Sign Out', 'geoplatform-ccb'); ?></button>
                               </a>
                             <?php } ?>
 

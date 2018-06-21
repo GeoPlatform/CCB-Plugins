@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
     Template for featured links of categories in sidebar
 */
@@ -43,11 +43,11 @@ $cat_id = empty(get_query_var('cat') ? '' : get_query_var('cat') );
     return $url;
 }
 ?>
-<?php if (empty($cat_id)) { 
+<?php if (empty($cat_id)) {
 
 } else { ?>
 <div class="card">
-  <h4 class="card-title"><span class="glyphicon glyphicon-star"></span> Community Related Information</h4>
+  <h4 class="card-title"><span class="glyphicon glyphicon-star"></span> <?php _e( 'Community Related Information', 'geoplatform-ccb'); ?></h4>
 
     <div id='news-topics' style="word-wrap: break-word;">
       <?php if ($topic1) {?>
@@ -56,7 +56,7 @@ $cat_id = empty(get_query_var('cat') ? '' : get_query_var('cat') );
     		<?php echo $topic1 ?>
       </a></h4>
       <?php } else { ?>
-        <p>It seems you don't have any links set for your Category. To set them, go to your category edit page and add some links.</p>
+        <p><?php _e( "It seems you don't have any links set for your Category. To set them, go to your category edit page and add some links.", 'geoplatform-ccb'); ?></p>
 
         <?php } ?>
     <?php if ($topic2){ ?>

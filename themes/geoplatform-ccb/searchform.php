@@ -11,6 +11,6 @@ http://buildwpyourself.com/wordpress-search-form-template/ -->
       <span class="glyphicon glyphicon-search"></span>
       <input type="search" class="form-control" placeholder="<?php echo esc_attr( 'Search...', 'geoplatform-ccb' ); ?>"
       name="s" id="search-input" value="<?php echo esc_attr( get_search_query() ); ?>"/>
-      <button type="submit" class="btn btn-default" id="search-submit">Search</button>
+      <button type="submit" class="btn btn-default" id="search-submit"><?php _e( 'Search', 'geoplatform-ccb'); ?></button>
   </div>
 </form>
