@@ -1,0 +1,28 @@
+/*
+ Theme Name:   Geoplatform CCB Child
+ Theme URI:    http://www.imagemattersllc.com/
+ Description:  Geoplatform CCB Child Theme
+ Author:       Image Matters LLC
+ Author URI:   http://www.imagemattersllc.com/
+ Template:     geoplatform-ccb
+ Version:      0.0.1
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  geoplatform-ccb-child
+*/
+
+/*
+  The info above is metadata, and all that's required for this file. However,
+  this file can also be populated with CSS data
+ */
+
+h4 {
+    font-size: 3rem
+}
+
+footer {
+    background: #aaa;
+    color: #333;
+    padding: 2em 0
+}
