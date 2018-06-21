@@ -1143,7 +1143,7 @@ $GP_TAX_META -> init();
 function geopccb_category_column_filter( $columns ) {
   $new_columns = array();
   $new_columns['cb'] = $columns['cb'];
-  $new_columns['thumb'] = __('Image', 'categories-images');
+  $new_columns['thumb'] = __('Image', 'geoplatform-ccb');
 
   unset( $columns['cb'] );
 
