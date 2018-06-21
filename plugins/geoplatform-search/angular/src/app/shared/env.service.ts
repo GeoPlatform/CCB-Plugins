@@ -6,6 +6,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 
 import { Config } from 'geoplatform.client';
+import { ServerRoutes } from '../server-routes.enum'
 
 
 /**
@@ -26,7 +27,7 @@ export class EnvironmentSettings {
 
     public load() : Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            this.http.get('./assets/env.json').toPromise()
+            this.http.get(`.${ServerRoutes.ASSETS}/env.json`).toPromise()
             .then((response : Response) => {
                 // console.log("Loaded env: " + JSON.stringify(response));
                 Config.configure(response);

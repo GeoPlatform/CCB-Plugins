@@ -10,6 +10,7 @@ import { CCBService } from '../../../shared/ccb.service';
 import { CreatorCodec } from '../../../constraints/creator/codec';
 import { Constraints, Constraint } from '../../../models/constraint';
 import { PagingEvent } from '../../../shared/paging/paging.component';
+import { ServerRoutes } from '../../../server-routes.enum'
 
 @Component({
   selector: 'ccb-typed-results',
@@ -134,7 +135,7 @@ export class TypedResultsComponent implements OnInit {
      *
      */
     getIconPath(item) {
-        return `/assets/${item.type}.svg`;
+        return `../${ServerRoutes.ASSETS}${item.type}.svg`;
     }
 
 }
