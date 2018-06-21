@@ -14,7 +14,8 @@
 
 /*
   The info above is metadata, and all that's required for this file. However,
-  this file can also be populated with CSS data
+  this file can also be populated with CSS data that should override what is
+  contained in the parent theme.
  */
 
 h4 {

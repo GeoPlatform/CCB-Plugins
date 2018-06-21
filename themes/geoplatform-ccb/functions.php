@@ -83,6 +83,7 @@ add_theme_support( 'custom-header' );
 // https://developer.wordpress.org/themes/functionality/custom-logo/
 //------------------------------------
 // add_theme_support( 'custom-logo' );
+if ( ! function_exists ( 'geop_ccb_custom_logo_setup' ) ) {
 function geop_ccb_custom_logo_setup() {
     $geop_ccb_logo_defaults = array(
         'height'      => 40,
@@ -91,8 +92,10 @@ function geop_ccb_custom_logo_setup() {
         'flex-width'  => false
     );
     add_theme_support( 'custom-logo', $geop_ccb_logo_defaults );
+    echo "MASTER";
 }
 add_action( 'after_setup_theme', 'geop_ccb_custom_logo_setup' );
+}
 
 //--------------------------
 //Support adding Menus for header and footer
