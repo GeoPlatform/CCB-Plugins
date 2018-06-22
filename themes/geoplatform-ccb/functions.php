@@ -302,8 +302,9 @@ function geop_ccb_customize_register( $wp_customize )
     ) );
 
 		//h1 color setting and control
-		$wp_customize->add_setting( 'header_color_setting' , array(
-				'default'   => '#000000',
+		$wp_customize->add_setting( 'geop_ccb_get_options[header_color_setting]' , array(
+				'default'   => '#dd3333',
+				'type'		=> 'option',
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -311,11 +312,11 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color', array(
 				'label'    => __( 'Header1 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'header_color_setting',
+				'settings' => 'geop_ccb_get_options[header_color_setting]',
 		) ) );
 
 		//h2 color setting and control
-		$wp_customize->add_setting( 'header2_color_setting' , array(
+		$wp_customize->add_setting( 'geop_ccb_get_options[header2_color_setting]' , array(
 				'default'   => '#000000',
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
@@ -324,7 +325,7 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color', array(
 				'label'    => __( 'Header 2 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'header2_color_setting',
+				'settings' => 'geop_ccb_get_options[header2_color_setting]',
 		) ) );
 
 		//h3 color setting and control
@@ -561,15 +562,15 @@ add_action( 'customize_controls_enqueue_scripts', 'geop_ccb_custom_customize_enq
 //https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
 function geop_ccb_header_customize_css()
 {
+	$geop_ccb_options = geop_ccb_get_options();
     ?>
          <style type="text/css">
-             h1 { color: <?php echo get_theme_mod('header_color_setting', '#000000'); ?>; }
-						 h2 { color: <?php echo get_theme_mod('header2_color_setting', '#000000'); ?>!important; }
-						 h3 { color: <?php echo get_theme_mod('header3_color_setting', '#000000'); ?>; }
-						 h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', '#000000'); ?>; }
-						 .text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', '#428bca'); ?>; }
-						 header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', '#fff'); ?>; }
-
+            h1 { color: <?php echo $geop_ccb_options['header_color_setting']; ?>; }
+			h2 { color: <?php echo get_theme_mod('header2_color_setting', '#000000'); ?>!important; }
+			h3 { color: <?php echo get_theme_mod('header3_color_setting', '#000000'); ?>; }
+			h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', '#000000'); ?>; }
+			.text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', '#428bca'); ?>; }
+			header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', '#fff'); ?>; }
          </style>
     <?php
 }
@@ -584,7 +585,7 @@ function geop_ccb_header_image_method() {
 		'custom-style',
 		get_template_directory_uri() . '/css/Geomain_style.css'
 	);
-			$headerImage = get_header_image();
+		$headerImage = get_header_image();
         $custom_css = "
                 .banner{
                         background-image: url({$headerImage});
@@ -1185,10 +1186,11 @@ function geopccb_category_column_action( $columns, $column, $id ) {
  * @return void
  */
 function geop_ccb_get_option_defaults() {
-	$term_id = empty(get_query_var('cat') ? '' : get_query_var('cat') );_
+	$term_id = (empty(get_query_var('cat')) ? '1' : get_query_var('cat') );
 	$defaults = array(
 		"category_$term_id" => array(),
-		'option_2' => 'value_2',
+		'header_color_setting' => '#dd3333',
+		'header2_color_setting' => '#dd3333',
 		'option_3' => 'value_3'
 	);
 	return apply_filters( 'geop_ccb_option_defaults', $defaults );
@@ -1207,9 +1209,9 @@ function geop_ccb_get_options() {
         geop_ccb_get_option_defaults() 
     );
     // Theme Mods API:
-    return wp_parse_args( 
-        get_theme_mods(), 
-        geop_ccb_get_option_defaults() 
-    );
+    // return wp_parse_args( 
+    //     get_theme_mods(), 
+    //     geop_ccb_get_option_defaults() 
+    // );
     
 }
