@@ -9,7 +9,7 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.0
+ * @since             1.0.8
  * @package           Geop_Maps
  *
  * @wordpress-plugin
@@ -18,7 +18,7 @@
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
  * Version:           1.0.8
  * Author:            Image Matters LLC
- * Author URI:        www.imagemattersllc.com
+ * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
  * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain:       geoplatform-maps
