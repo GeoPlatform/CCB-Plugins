@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/cor
 import { QueryParameters } from 'geoplatform.client';
 
 import { Constraints, Constraint, MultiValueConstraint } from '../../models/constraint';
-
+import { TemporalCodec, Constants as TemporalConstants } from '../temporal/codec';
 
 @Component({
   selector: 'constraints-current',
@@ -45,8 +45,9 @@ export class CurrentComponent implements OnInit {
     }
 
     getValueDisplay(value : any, constraint:Constraint) : string {
+        if(!value) return '';
 
-        if(QueryParameters.EXTENT === constraint.name && value) {
+        if(QueryParameters.EXTENT === constraint.name) {
             let bbox = value.split(',');
             return `<div>
                 <div>North: ${bbox[3]}</div>
@@ -54,10 +55,16 @@ export class CurrentComponent implements OnInit {
                 <div>East: ${bbox[2]}</div>
                 <div>West: ${bbox[0]}</div>
                 </div>`;
+
+        } else if(
+            TemporalConstants.KEY === constraint.name || 
+            QueryParameters.BEGINS === constraint.name ||
+            QueryParameters.ENDS === constraint.name
+        ) {
+            return new TemporalCodec().toString(this.constraints);
         }
 
-        if(value) return value.label ? value.label : value;
-        return '';
+        return value.label ? value.label : value;
     }
 
 }
