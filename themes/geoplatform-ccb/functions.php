@@ -385,30 +385,6 @@ function geop_ccb_customize_register( $wp_customize )
 				'settings' => 'geop_ccb_get_options[brand_color_setting]',
 		) ) );
 
-
-
-		//Fonts section, settings, and controls
-		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
-		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
-				'priority' => 50
-			) );
-
-		$wp_customize->add_setting('font_choice',array(
-        'default' => 'lato',
-				'sanitize_callback' => 'geop_ccb_sanitize_fonts',
-    	));
-
-		$wp_customize->add_control('font_choice',array(
-        'type' => 'radio',
-        'label' => 'Fonts',
-        'section' => 'font_section',
-        'choices' => array(
-            'lato' => __('Lato', 'geoplatform-ccb'),
-            'slabo' => __('Slabo',  'geoplatform-ccb')
-						),
-				));
-
 		//Banner Intro Text editor section, settings, and controls
 		// pulled from https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
 		//fixed some issues with linking up through https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
