@@ -72,7 +72,7 @@ class Geop_Search_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+  	wp_enqueue_style( 'styles_bundle', plugin_dir_url( __FILE__ ) . 'css/styles.bundle.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-search-public.css', array(), $this->version, 'all' );
 	}
 
@@ -94,9 +94,11 @@ class Geop_Search_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+  	wp_enqueue_script( 'inline_bundle', plugin_dir_url( __FILE__ ) . 'js/inline.bundle.js', array(), $this->version, true );
+		wp_enqueue_script( 'polyfills_bundle', plugin_dir_url( __FILE__ ) . 'js/polyfills.bundle.js', array(), $this->version, true );
+		wp_enqueue_script( 'scripts_bundle', plugin_dir_url( __FILE__ ) . 'js/scripts.bundle.js', array(), $this->version, true );
+		wp_enqueue_script( 'main_bundle', plugin_dir_url( __FILE__ ) . 'js/main.bundle.js', array(), $this->version, true );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-search-public.js', array( 'jquery' ), $this->version, false );
-		// echo "sanity check";
 	}
 
 }

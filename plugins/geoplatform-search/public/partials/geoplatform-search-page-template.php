@@ -40,7 +40,6 @@
  //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
  if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
     <?php wp_head();?>
-    <!-- <base href="<?php echo plugin_dir_url("geoplatform-search.php"); ?>geoplatform-search/"></base> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
 
    </head>
@@ -50,7 +49,7 @@
          <div class="row">
              <div class="col-md-12">
                  <ul role="menu" class="header__menu">
-                     <!--<li><?php get_search_form(); ?></li>-->
+                     <li><?php get_search_form(); ?></li>
                      <li>
                          <!-- mega menu toggle -->
                          <div class="btn-group">
@@ -103,7 +102,7 @@
  <!--Used for the Main banner background to show up properly-->
  <?php get_template_part( 'single-banner', get_post_format() ); ?>
 
- <div class="container" style="max-width:2000px;">
+ <div class="container" style="max-width:2000px; width:100%">
 
      <div class="row">
        <div class="loop" style="width:100%">
@@ -111,23 +110,5 @@
       </div><!--#loop-->
      </div><!--#row-->
    </div><!--#container-->
-
-   <!-- The files that make it happen -->
-   <link href="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/css/styles.bundle.css'?>" rel="stylesheet" />
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/inline.bundle.js' ?>"></script>
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/polyfills.bundle.js' ?>"></script>
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/scripts.bundle.js' ?>"></script>
-   <script type="text/javascript" src="<?php echo plugin_dir_url("geoplatform-search.php") . 'geoplatform-search/public/js/main.bundle.js' ?>"></script>
-
-
-  <!-- <script type="text/javascript">
-  jQuery('document').ready(function(){
-    setTimeout(geopsearch_timeout, 1000);
-  });
-
-  function geopsearch_timeout(){
-    window.history.pushState('null', 'GeoPlatform Search', '<?php echo esc_url( get_permalink( get_page_by_title( 'GeoPlatform Search' ))); ?>');
-  }
-  </script> -->
 
 <?php get_footer(); ?>

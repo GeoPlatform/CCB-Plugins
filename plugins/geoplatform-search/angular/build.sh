@@ -42,4 +42,3 @@ cp $NGDIST/*.ttf $CSSDEST
 # Move assets as well!
 echo $ASSETDEST " <- " $NGDIST/assets
 cp $NGDIST/assets/* $ASSETDEST
-

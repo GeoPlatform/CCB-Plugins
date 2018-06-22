@@ -25,15 +25,11 @@
  * @package    Geop_Search
  */
 
-// If uninstall not called from WordPress, then exit. Otherwise, delete the wpdb
-// table created for use with the GeoPlatform Maps plugin.
+// If uninstall not called from WordPress, then exit. Otherwise, delete the
+// search page.
 if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 else {
-	global $wpdb;
-	$geopmap_table_name = $wpdb->prefix . 'geop_maps_db';
-	$geopmap_sql = "DROP TABLE IF EXISTS $geopmap_table_name;";
-	$wpdb->query($geopmap_sql);
-	delete_option("geop_maps_db_version");
+	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'geoplatform-search' ))), true);
 }
