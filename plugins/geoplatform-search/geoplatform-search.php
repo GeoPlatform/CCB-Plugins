@@ -104,6 +104,20 @@ register_deactivation_hook( __FILE__, 'deactivate_geop_search' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-search.php';
 
+
+function geopsearch_page_enqueues(){
+	if (is_page('geoplatform-search')){
+		wp_enqueue_script( 'inline_bundle', plugin_dir_url( __FILE__ ) . 'public/js/inline.bundle.js', array(), false, true );
+		wp_enqueue_script( 'polyfills_bundle', plugin_dir_url( __FILE__ ) . 'public/js/polyfills.bundle.js', array(), false, true );
+		wp_enqueue_script( 'scripts_bundle', plugin_dir_url( __FILE__ ) . 'public/js/scripts.bundle.js', array(), false, true );
+		wp_enqueue_script( 'main_bundle', plugin_dir_url( __FILE__ ) . 'public/js/main.bundle.js', array(), false, true );
+		// wp_enqueue_style( 'styles_bundle', plugin_dir_url( __FILE__ ) . 'css/styles.bundle.css', array(), false, 'all' );
+	}
+}
+
+add_action( 'template_redirect', 'geopsearch_page_enqueues' );
+
+
 /**
  * Begins execution of the plugin.
  *
