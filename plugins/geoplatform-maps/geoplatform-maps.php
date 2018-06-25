@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.8
+ * @since             1.0.9
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.0.8
+ * Version:           1.0.9
  * Author:            Image Matters LLC
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.0.8' );
+define( 'GEOPMAP_PLUGIN', '1.0.9' );
 
 /**
  * The code that runs during plugin activation.
