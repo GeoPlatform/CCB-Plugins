@@ -1,4 +1,6 @@
-<?php $geop_ccb_options = geop_ccb_get_options();?>
+<?php $geop_ccb_options = geop_ccb_get_options();
+      $geop_ccb_theme_mods = geop_ccb_get_theme_mods();
+?>
 <div class="banner section--linked">
     <div class="content">
         <div class="container">
@@ -6,7 +8,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12">
                   <!-- WYSIWYG Text area. See functions.php -> text_editor_setting() for details
                   Current area modeled off of Geoplatform styling -->
-                <?php echo wp_kses_post($geop_ccb_options['text_editor_setting']);?>
+                <?php echo wp_kses_post(get_theme_mod( 'text_editor_setting', $geop_ccb_theme_mods['text_editor_setting'] ));?>
                   <div class="row">
                     <br />
                     <?php $c2a_button = $geop_ccb_options['call2action_button_setting'];

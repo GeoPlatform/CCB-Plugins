@@ -395,18 +395,18 @@ function geop_ccb_customize_register( $wp_customize )
 
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
-         $wp_customize->add_setting( 'geop_ccb_get_options[text_editor_setting]', array(
+         $wp_customize->add_setting( 'text_editor_setting', array(
             'default'   => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
                             <p style='text-align: center'>Create and manage your own
                             Dynamic Digital Community on the GeoPlatform!</p>",
 			'transport' => 'refresh',
-			'type' 		=> 'option',
+			'type' 		=> 'theme_mod',
 			'sanitize_callback' => 'wp_kses_post'
          ) );
-         $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'geop_ccb_get_options[text_editor_setting]', array(
+         $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'text_editor_setting', array(
              'label'   => __( 'Banner Text Editor', 'geoplatform-ccb' ),
              'section' => 'banner_text_section',
-             'settings'   => 'geop_ccb_get_options[text_editor_setting]',
+             'settings'   => 'text_editor_setting',
              'priority' => 10
          ) ) );
 
@@ -1206,10 +1206,13 @@ function geop_ccb_get_options() {
         get_option( 'geop_ccb_get_options', array() ), 
         geop_ccb_get_option_defaults() 
     );
-    // Theme Mods API:
-    // return wp_parse_args( 
-    //     get_theme_mods(), 
-    //     geop_ccb_get_option_defaults() 
-    // );
     
+}
+
+function geop_ccb_get_theme_mods() {
+	// Theme Mods API:
+    return wp_parse_args( 
+        get_theme_mods(), 
+        geop_ccb_get_option_defaults() 
+    );
 }
