@@ -672,16 +672,19 @@ function geop_ccb_extra_category_fields_forms( $tag ) { //check for existing fea
 ?>
   <!-- Topic 1 Name and Url -->
   <tr class="form-field">
+  <th scope="row" valign="top"><label for="topic-name1">testing</label></th>
+		  <td style="padding: 5px 5px;">
+			  <p><?php echo "t_id: tag->term_id:  " . $t_id; ?></p>
+			  <p><?php echo "cat_meta: " . var_dump($cat_meta); ?></p>
+			  <p><?php echo "get_option(category_2): " .var_dump(get_option("category_2", array())); ?></p>
+			  <p><?php echo "tag:" .var_dump($tag); ?></p>
+  		</td>
+  </tr>
+  <tr class="form-field">
   <th scope="row" valign="top"><label for="topic-name1">Topic 1 Name</label></th>
   		<td style="padding: 5px 5px;">
   			<input type="text" name="Cat_meta[topic-name1]" id="Cat_meta[topic-name1]" size="20" style="width:20%;" value="<?php echo $cat_meta['topic-name1'] ? $cat_meta['topic-name1'] : ''; ?>">
 		  </td>
-		  <td style="padding: 5px 5px;">
-			  <p><?php echo "t_id: " . $t_id; ?></p>
-			  <p><?php var_dump($cat_meta); ?></p>
-			  <p><?php var_dump(get_option("category_2", array())); ?></p>
-			  <p><?php var_dump($tag); ?></p>
-  		</td>
   </tr>
   <tr class="form-field">
   <th scope="row" valign="top"><label for="topic-url1">Topic 1 URL</label></th>
