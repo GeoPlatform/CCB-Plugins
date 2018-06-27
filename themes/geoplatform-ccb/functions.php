@@ -37,6 +37,7 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
 	  wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
   }
+  add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 }
 
 //-------------------------------
