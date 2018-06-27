@@ -26,16 +26,16 @@
                         });
                     }
 
-                    if(editor){
-                        editor.onChange.add(function (ed, e) {
-                            ed.save();
-                            content = editor.getContent();
-                            clearTimeout(setChange);
-                            setChange = setTimeout(function(){
-                                input.val(content).trigger('change');
-                            },500);
-                        });
-                    }
+                    // if(editor){
+                    //     editor.onChange.add(function (ed, e) {
+                    //         ed.save();
+                    //         content = editor.getContent();
+                    //         clearTimeout(setChange);
+                    //         setChange = setTimeout(function(){
+                    //             input.val(content).trigger('change');
+                    //         },500);
+                    //     });
+                    // }
 
                     tArea.css({
                         visibility: 'visible'

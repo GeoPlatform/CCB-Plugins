@@ -395,58 +395,65 @@ function geop_ccb_customize_register( $wp_customize )
 
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
-         $wp_customize->add_setting( 'text_editor_setting', array(
-             'default'   => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
+         $wp_customize->add_setting( 'geop_ccb_get_options[text_editor_setting]', array(
+            'default'   => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
                             <p style='text-align: center'>Create and manage your own
                             Dynamic Digital Community on the GeoPlatform!</p>",
-						 'transport' => 'refresh',
-						 'sanitize_callback' => 'wp_kses_post'
+			'transport' => 'refresh',
+			'type' 		=> 'option',
+			'sanitize_callback' => 'wp_kses_post'
          ) );
-         $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'text_editor_setting', array(
+         $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'geop_ccb_get_options[text_editor_setting]', array(
              'label'   => __( 'Banner Text Editor', 'geoplatform-ccb' ),
              'section' => 'banner_text_section',
-             'settings'   => 'text_editor_setting',
+             'settings'   => 'geop_ccb_get_options[text_editor_setting]',
              'priority' => 10
          ) ) );
 
 				 //Call to action button (formerly "Learn More" button)
-				 $wp_customize->add_setting('call2action_button', array(
+				 $wp_customize->add_setting('geop_ccb_get_options[call2action_button_setting]', array(
 					 'default' => true,
+					 'type'		=> 'option',
 					 'transport' => 'refresh',
-           'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
+           			'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
 				 ) );
 
-				 $wp_customize->add_control('call2action_button', array(
+				 $wp_customize->add_control('call2action_button_control', array(
 					 'section' => 'banner_text_section',
 					 'label' =>__( 'Show Call to Action button?', 'geoplatform-ccb' ),
 					 'type' => 'checkbox',
+					 'settings' => 'geop_ccb_get_options[call2action_button_setting]',
 					 'priority' => 20,
 				 ) );
 
-				 $wp_customize->add_setting('call2action_text', array(
+				 $wp_customize->add_setting('geop_ccb_get_options[call2action_text_setting]', array(
 					 'default' => 'Learn More',
+					 'type'		=> 'option',
 					 'transport' => 'refresh',
 					 'sanitize_callback' => 'sanitize_text_field',
 				 ));
-				 $wp_customize->add_control('call2action_text', array(
+				 $wp_customize->add_control('call2action_text_control', array(
 					 'section' => 'banner_text_section',
 					 'label' =>__( 'Button Text', 'geoplatform-ccb' ),
 					 'type' => 'text',
+					 'settings' => 'geop_ccb_get_options[call2action_text_setting]',
 					 'priority' => 30,
 					 'input_attrs' => array(
 						'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ccb' ),
 					),
 				 ) );
 
-				 $wp_customize->add_setting('call2action_url', array(
+				 $wp_customize->add_setting('geop_ccb_get_options[call2action_url_setting]', array(
 					'default' => 'https://geoplatform.gov/about',
+					'type'		=> 'option',
 					'transport' => 'refresh',
 					'sanitize_callback' => 'esc_url_raw',
 				));
-				$wp_customize->add_control('call2action_url', array(
+				$wp_customize->add_control('call2action_url_control', array(
 					'section' => 'banner_text_section',
 					'label' =>__( 'Button URL', 'geoplatform-ccb' ),
 					'type' => 'URL',
+					'settings' => 'geop_ccb_get_options[call2action_url_setting]',
 					'priority' => 40,
 					'input_attrs' => array(
 					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
@@ -1176,7 +1183,13 @@ function geop_ccb_get_option_defaults() {
 		'header4_color_setting' => '#000000',
 		'link_color_setting' => '#428bca',
 		'brand_color_setting' => '#fff',
-		'option_3' => 'value_3'
+		'text_editor_setting' => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
+								<p style='text-align: center'>Create and manage your own
+								Dynamic Digital Community on the GeoPlatform!</p>",
+		'call2action_button_setting' => true,
+		'call2action_url_setting' => 'https://geoplatform.gov/about',
+		'call2action_text_setting' => 'Learn More',
+		'option_3' => 'value_3',
 	);
 	return apply_filters( 'geop_ccb_option_defaults', $defaults );
 }
