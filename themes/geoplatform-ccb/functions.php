@@ -309,7 +309,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color', array(
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color_control', array(
 				'label'    => __( 'Header1 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'geop_ccb_get_options[header_color_setting]',
@@ -323,7 +323,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color', array(
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color_control', array(
 				'label'    => __( 'Header 2 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'geop_ccb_get_options[header2_color_setting]',
@@ -337,7 +337,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h3_link_color', array(
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h3_link_color_control', array(
 				'label'    => __( 'Header 3 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'geop_ccb_get_options[header3_color_setting]',
@@ -351,7 +351,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h4_link_color', array(
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h4_link_color_control', array(
 				'label'    => __( 'Header 4 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'geop_ccb_get_options[header4_color_setting]',
@@ -365,7 +365,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'a_link_color', array(
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'a_link_color_control', array(
 				'label'    => __( 'Link Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'geop_ccb_get_options[link_color_setting]',
@@ -379,7 +379,7 @@ function geop_ccb_customize_register( $wp_customize )
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'brand_color', array(
+		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'brand_color_control', array(
 				'label'    => __( 'Brand Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'geop_ccb_get_options[brand_color_setting]',
@@ -554,11 +554,11 @@ function geop_ccb_header_customize_css()
     ?>
          <style type="text/css">
             h1 { color: <?php echo $geop_ccb_options['header_color_setting']; ?>; }
-			h2 { color: <?php echo $geop_ccb_options['header2_color_setting'];; ?>!important; }
-			h3 { color: <?php echo $geop_ccb_options['header3_color_setting'];; ?>; }
-			h4, .section--linked .heading .title { color: <?php echo $geop_ccb_options['header_color4_setting'];; ?>; }
-			.text-selected, .text-active, a, a:visited { color: <?php echo $geop_ccb_options['link_color_setting'];; ?>; }
-			header.t-transparent .brand>a { color: <?php echo $geop_ccb_options['brand_color_setting'];; ?>; }
+			h2 { color: <?php echo $geop_ccb_options['header2_color_setting']; ?>!important; }
+			h3 { color: <?php echo $geop_ccb_options['header3_color_setting']; ?>; }
+			h4, .section--linked .heading .title { color: <?php echo $geop_ccb_options['header_color4_setting']; ?>; }
+			.text-selected, .text-active, a, a:visited { color: <?php echo $geop_ccb_options['link_color_setting']; ?>; }
+			header.t-transparent .brand>a { color: <?php echo $geop_ccb_options['brand_color_setting']; ?>; }
          </style>
     <?php
 }
@@ -1203,7 +1203,7 @@ function geop_ccb_get_option_defaults() {
 function geop_ccb_get_options() {
     // Options API
     return wp_parse_args( 
-        get_option( 'theme_geop_ccb_options', array() ), 
+        get_option( 'geop_ccb_get_options', array() ), 
         geop_ccb_get_option_defaults() 
     );
     // Theme Mods API:
