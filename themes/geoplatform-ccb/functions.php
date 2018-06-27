@@ -463,32 +463,36 @@ function geop_ccb_customize_register( $wp_customize )
 				//Map Gallery Custom link section, settings, and controls
 			$wp_customize->add_section( 'map_gallery_section' , array(
 				'title'    => __( 'Map Gallery', 'geoplatform-ccb' ),
-				'priority' => 60
+				'priority' => 70
 			) );
-			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
+			$wp_customize->add_setting( 'geop_ccb_get_options[map_gallery_link_box_setting]' , array(
 					'default'   => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
 					'transport' => 'refresh',
+					'type' => 'option',
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
-			$wp_customize->add_control( 'Map_Gallery_link_box', array(
-					'label' => 'Map Gallery link',
+			$wp_customize->add_control( 'map_gallery_link_box_control', array(
 					'section' => 'map_gallery_section',
+					'label' => 'Map Gallery link',
+					'settings' => 'geop_ccb_get_options[map_gallery_link_box_setting]',
 					'description' => 'Make sure you use a full UAL link. Example: https://ual.geoplatform.gov/api/galleries/{your map gallery ID}',
 					'type' => 'url',
 					'priority' => 10
 				) );
 
 				//Add radio button to choose link style between envs (sit, stg, or prod)
-				$wp_customize->add_setting( 'Map_Gallery_env_choice' , array(
+				$wp_customize->add_setting( 'geop_ccb_get_options[map_gallery_env_choice_setting]' , array(
 						'default'   => 'prod',
 						'transport' => 'refresh',
+						'type' => 'option',
 						'sanitize_callback' => 'geop_ccb_sanitize_mapchoice'
 					) );
-				$wp_customize->add_control( 'Map_Gallery_env_choice', array(
+				$wp_customize->add_control( 'map_gallery_env_choice_control', array(
+						'section' => 'map_gallery_section',
 						'label' => 'Map Gallery Environment',
 						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
-						'section' => 'map_gallery_section',
 						'type' => 'radio',
+						'settings' => 'geop_ccb_get_options[map_gallery_env_choice_setting]',
 						'priority' => 20,
 						'choices' => array(
 								'match'=>'My gallery link matches my site enviroment',
@@ -1192,6 +1196,8 @@ function geop_ccb_get_option_defaults() {
 		'call2action_button_setting' => true,
 		'call2action_url_setting' => 'https://geoplatform.gov/about',
 		'call2action_text_setting' => 'Learn More',
+		'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
+		'map_gallery_env_choice_setting' => 'prod',
 		'option_3' => 'value_3',
 	);
 	return apply_filters( 'geop_ccb_option_defaults', $defaults );
