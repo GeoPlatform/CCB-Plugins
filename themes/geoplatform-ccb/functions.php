@@ -25,10 +25,13 @@ $sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
 $ga_code = geop_ccb_getEnv('ga_code','UA-00000000-0');
 
 
-//-------------------------------
-// Add scripts and stylesheets
-//-------------------------------
-//https://www.taniarascia.com/wordpress-from-scratch-part-two/
+/**
+ * Add scripts to header
+ * 
+ * @link https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts
+ *
+ * @return void
+ */
 function geop_ccb_scripts() {
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
@@ -38,35 +41,31 @@ function geop_ccb_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 
-//-------------------------------
-// Add Google Analytics
-//http://www.wpbeginner.com/beginners-guide/how-to-install-google-analytics-in-wordpress/
-//-------------------------------
-function geop_ccb_add_googleanalytics(){ ?>
-	<script>
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-	var php_ga_code = "<?php echo $GLOBALS['ga_code']; ?>"
-
-	ga('create', php_ga_code , 'auto');
-	ga('send', 'pageview');
-	</script>
-<?php
-}
-add_action('wp_head','geop_ccb_add_googleanalytics');
-
-//-------------------------------
-// Add Google Lato Fonts
-//-------------------------------
+/**
+ * Add Google Lato Fonts
+ * 
+ * @link https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts
+ *
+ * @return void
+ */
 function geop_ccb_google_fonts() {
 				wp_register_style('Lato/Slabo', 'https://fonts.googleapis.com/css?family=Lato:400,700|Slabo+27px');
 				wp_enqueue_style( 'Lato/Slabo');
 		}
 add_action('wp_enqueue_scripts', 'geop_ccb_google_fonts');
 
+/**
+ * Setup Theme and add supports
+ * 
+ * @link https://developer.wordpress.org/reference/functions/add_theme_support/
+ * @link https://developer.wordpress.org/reference/functions/add_theme_support/#feed-links
+ * @link /https://developer.wordpress.org/reference/functions/get_search_form/
+ * @link http://buildwpyourself.com/wordpress-search-form-template/
+ * @link https://make.wordpress.org/core/2016/11/30/starter-content-for-themes-in-4-7/
+ * 
+ * @return void
+ */
 function geop_ccb_setup(){
   /*
   * Make theme available for translation.
@@ -95,18 +94,18 @@ function geop_ccb_setup(){
   add_theme_support( 'post-thumbnails' );
 
   /*
-  * Theme Support for Automatic Feed links per theme check
-  * https://codex.wordpress.org/Automatic_Feed_Links
+  * Theme Support for Automatic Feed links 
   */
   add_theme_support( 'automatic-feed-links' );
 
-  //-------------------------------
-  //Theme Support for html5, and the html5 search form
-  //https://developer.wordpress.org/reference/functions/get_search_form/
-  //http://buildwpyourself.com/wordpress-search-form-template/
-  //-------------------------------
+  /**
+   * Theme Support for html5, and the html5 search form
+   */
   add_theme_support( 'html5', array( 'search-form' ) );
 
+  /**
+   * Starter Content
+   */
   add_theme_support('starter-content', array(
     // Starter menus (see gp_create_services_menu)
 	'nav_menus' => array(
@@ -170,18 +169,13 @@ function geop_ccb_setup(){
 }
 add_action('after_setup_theme', 'geop_ccb_setup');
 
-//Use for testing purposes to enable Fresh site and load starter content after switching the theme in and out
-function geop_ccb_fresh_site_enable(){
-  update_option('fresh_site', 1);
-}
-add_action('switch_theme','geop_ccb_fresh_site_enable');
-
-
-//------------------------------------
-//Support for a custom logo image
-// https://developer.wordpress.org/themes/functionality/custom-logo/
-//------------------------------------
-// add_theme_support( 'custom-logo' );
+/**
+ * Support for a custom logo image
+ *
+ * @link https://developer.wordpress.org/themes/functionality/custom-logo/
+ * 
+ * @return void
+ */
 function geop_ccb_custom_logo_setup() {
     $geop_ccb_logo_defaults = array(
         'height'      => 40,
@@ -193,32 +187,40 @@ function geop_ccb_custom_logo_setup() {
 }
 add_action( 'after_setup_theme', 'geop_ccb_custom_logo_setup' );
 
-
-//--------------------------
-//Support adding Menus for header and footer
-//https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
-//--------------------------
+/**
+ * Support adding Menus for header and footer
+ * 
+ * @link https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
+ * 
+ * @return void
+ */
 function geop_ccb_register_menus() {
   register_nav_menus(
     array(
-			'community-links' => 'Community Links',
-			'header-left' => 'Header Menu - Left Column',
-      'header-center' => 'Header Menu - Center Column',
-      'header-right-col1' => 'Header Menu - Right Column 1',
-			'header-right-col2' => 'Header Menu - Right Column 2',
-			'footer-left' => 'Footer Menu - Left Column',
-      'footer-center' => 'Footer Menu - Center Column',
-      'footer-right-col1' => 'Footer Menu - Right Column 1',
-			'footer-right-col2' => 'Footer Menu - Right Column 2'
+		'community-links' => 'Community Links',
+		'header-left' => 'Header Menu - Left Column',
+      	'header-center' => 'Header Menu - Center Column',
+      	'header-right-col1' => 'Header Menu - Right Column 1',
+		'header-right-col2' => 'Header Menu - Right Column 2',
+		'footer-left' => 'Footer Menu - Left Column',
+      	'footer-center' => 'Footer Menu - Center Column',
+      	'footer-right-col1' => 'Footer Menu - Right Column 1',
+		'footer-right-col2' => 'Footer Menu - Right Column 2'
     )
   );
 }
 add_action( 'init', 'geop_ccb_register_menus' );
 
 
+/**
+ * Pre-populate services menus
+ *
+ * @link https://codex.wordpress.org/Function_Reference/wp_create_nav_menu
+ * @link https://rochcass.wordpress.com/2016/01/14/wordpress-create-menu-locations-and-assigning-menus-programmatically/
+ * 
+ * @return void
+ */
 function geop_ccb_create_services_menu(){
-//pre-filling menu items
-//https://codex.wordpress.org/Function_Reference/wp_create_nav_menu
 // Check if the menu exists
 $menu_name = 'Apps & Services';
 $menu_exists = wp_get_nav_menu_object( $menu_name );
@@ -272,7 +274,6 @@ if( !$menu_exists){
 			));
 
 		//Get theme locations and set this menu to those locations
-		//https://rochcass.wordpress.com/2016/01/14/wordpress-create-menu-locations-and-assigning-menus-programmatically/
 		$locations = get_theme_mod('nav_menu_locations');
 		$locations['footer-center'] = $menu_id;
 		$locations['header-center'] = $menu_id;
@@ -281,18 +282,29 @@ if( !$menu_exists){
 }
 add_action('init', 'geop_ccb_create_services_menu');
 
-/********************************************************/
-// Adding Dashicons in WordPress Front-end
-/********************************************************/
-add_action( 'wp_enqueue_scripts', 'geop_ccb_load_dashicons_front_end' );
+/**
+ * Adding Dashicons in WordPress Front-end
+ *
+ * @return void
+ */
 function geop_ccb_load_dashicons_front_end() {
   wp_enqueue_style( 'dashicons' );
 }
+add_action( 'wp_enqueue_scripts', 'geop_ccb_load_dashicons_front_end' );
 
-//---------------------------------------
-//Supporting Theme Customizer editing
-//https://codex.wordpress.org/Theme_Customization_API
-//--------------------------------------
+/**
+ * Supporting Theme Customizer editing
+ *
+ * @link https://codex.wordpress.org/Theme_Customization_API
+ * 
+ * Banner intro text editor links
+ * @link https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
+ * fixed some issues with linking up 
+ * @link https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
+ * 
+ * @param [type] $wp_customize
+ * @return void
+ */
 function geop_ccb_customize_register( $wp_customize )
 {	
 	//get defaults array
@@ -383,8 +395,6 @@ function geop_ccb_customize_register( $wp_customize )
 		) ) );
 
 		//Banner Intro Text editor section, settings, and controls
-		// pulled from https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
-		//fixed some issues with linking up through https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
 		$wp_customize->add_section( 'banner_text_section' , array(
 				'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
 				'priority' => 50
@@ -496,7 +506,6 @@ function geop_ccb_customize_register( $wp_customize )
 				 $wp_customize->remove_section( 'colors' );
 
 				 //Remove default Menus and Static Front page sections as this theme doesn't utilize them at this time
-				 //$wp_customize->remove_panel( 'nav_menus');
 				 $wp_customize->remove_section( 'static_front_page' );
 
 				 //remove site tagline and checkbox for showing site title and tagline from Site Identity section
@@ -507,43 +516,67 @@ function geop_ccb_customize_register( $wp_customize )
 }
 add_action( 'customize_register', 'geop_ccb_customize_register');
 
-//-------------------------------
-//Sanitization callbak functions for customizer
-//https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
-//-------------------------------
+/**
+ * Sanitization callback functions for customizer fonts
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $value
+ * @return void
+ */
 function geop_ccb_sanitize_fonts( $value ) {
     if ( ! in_array( $value, array( 'lato', 'slabo' ) ) )
         $value = 'lato';
     return $value;
 }
 
+/**
+ * Sanitization callback functions for customizer mapchoice
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $value
+ * @return void
+ */
 function geop_ccb_sanitize_mapchoice( $value ) {
     if ( ! in_array( $value, array( 'match', 'sit', 'stg', 'prod' ) ) )
         $value = 'match';
     return $value;
 }
 
+/**
+ * Sanitization callback functions for customizer checkbox
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $value
+ * @return void
+ */
 function geop_ccb_sanitize_checkbox( $checked ){
     //returns true if checkbox is checked
     return ( ( isset( $checked ) && true == $checked ) ? true : false );
 }
 
-//-------------------------------
-//getting Enqueue script for custom customize control.
-//-------------------------------
- //https://codex.wordpress.org/Plugin_API/Action_Reference/customize_controls_enqueue_scripts
+/**
+ * getting Enqueue script for custom customize control.
+ *
+ * @link https://codex.wordpress.org/Plugin_API/Action_Reference/customize_controls_enqueue_scripts
+ * @return void
+ */ 
 function geop_ccb_custom_customize_enqueue() {
 	wp_enqueue_script( 'custom-customize', get_template_directory_uri() . '/customizer/customizer.js', array( 'jquery', 'customize-controls' ), false, true );
 }
 add_action( 'customize_controls_enqueue_scripts', 'geop_ccb_custom_customize_enqueue' );
 
-//-------------------------------
-//Dynamically show the colors changing
-//-------------------------------
-//needs to have 'transport' => 'refresh' in add_setting() above in order to work
-//https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
+
+/**
+ * Dynamically show the colors changing
+ *
+ * @link https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
+ * 
+ * needs to have 'transport' => 'refresh' in add_setting() above in order to work
+ * 
+ * @return void
+ */
 function geop_ccb_header_customize_css()
-{
+{	//Get defaults
 	$geop_ccb_options = geop_ccb_get_theme_mods();
     ?>
          <style type="text/css">
@@ -558,10 +591,13 @@ function geop_ccb_header_customize_css()
 }
 add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
-//-------------------------------
-//Override banner background-image as the custom header
-//-------------------------------
-//https://codex.wordpress.org/Function_Reference/wp_add_inline_style
+/**
+ * Override banner background-image as the custom header
+ *
+ * @link https://codex.wordpress.org/Function_Reference/wp_add_inline_style
+ * 
+ * @return void
+ */
 function geop_ccb_header_image_method() {
 	wp_enqueue_style(
 		'custom-style',
@@ -576,40 +612,72 @@ function geop_ccb_header_image_method() {
 }
 add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 
-//-------------------------------
-//Give page and post banners a WYSIWYG editor
-//-------------------------------
-//http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box/
+/**
+ * Give page and post banners a WYSIWYG editor
+ * 
+ * @link http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box
+ * 
+ * @return void
+ */
 define('WYSIWYG_META_BOX_ID', 'my-editor');
+function wysiwyg_register_custom_meta_box(){
+ 	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'post');
+ 	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'page');
+ }
 add_action('admin_init', 'wysiwyg_register_custom_meta_box');
-function wysiwyg_register_custom_meta_box()
- {
- add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'post');
- add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'page');
+
+/**
+ * Setup input area for posts/pages
+ *
+ * @link http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box
+ * @param object $post
+ * @return void
+ */
+function geop_ccb_custom_wysiwyg($post){
+ 	echo "<h3>Anything you add below will show up in the Banner:</h3>";
+ 	$content = get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true);
+ 	wp_editor(htmlspecialchars_decode($content) , 'geop_ccb_custom_wysiwyg', array(
+ 		"media_buttons" => true
+ 	));
  }
 
-function geop_ccb_custom_wysiwyg($post)
- {
- echo "<h3>Anything you add below will show up in the Banner:</h3>";
- $content = get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true);
- wp_editor(htmlspecialchars_decode($content) , 'geop_ccb_custom_wysiwyg', array(
- "media_buttons" => true
- ));
- }
+ /**
+  * Save Post data
 
-function geop_ccb_custom_wysiwyg_save_postdata($post_id)
- {
- if (!empty($_POST['geop_ccb_custom_wysiwyg']))
- {
- $data = htmlspecialchars_decode($_POST['geop_ccb_custom_wysiwyg']);
- update_post_meta($post_id, 'geop_ccb_custom_wysiwyg', $data);
- }
+  * @link http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box
+
+  * @param int $post_id
+  * @return void
+  */
+function geop_ccb_custom_wysiwyg_save_postdata($post_id){
+	if (!empty($_POST['geop_ccb_custom_wysiwyg'])){
+		$data = htmlspecialchars_decode($_POST['geop_ccb_custom_wysiwyg']);
+		update_post_meta($post_id, 'geop_ccb_custom_wysiwyg', $data);
+	}
  }
 add_action('save_post', 'geop_ccb_custom_wysiwyg_save_postdata');
 
 
 //Making Category description pages WYSIWYG
 //https://paulund.co.uk/add-tinymce-editor-category-description
+
+/* Plugin Name: Tinymce Category Description 
+Description: Adds a tinymce editor to the category description box 
+Author: Paulund 
+Author URI: http://www.paulund.co.uk 
+Version: 1.0 License: GPL2 
+*/ 
+/* Copyright (C) Year Author Email This program is free software; 
+you can redistribute it and/or modify it under the terms of the 
+GNU General Public License, version 2, as published by the Free 
+Software Foundation. This program is distributed in the hope 
+that it will be useful, but WITHOUT ANY WARRANTY; without even 
+the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+PARTICULAR PURPOSE. See the GNU General Public License for 
+more details. You should have received a copy of the GNU 
+General Public License along with this program; if not, 
+write to the 
+Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA */
 
 remove_filter( 'pre_term_description', 'wp_filter_kses' );
 remove_filter( 'term_description', 'wp_kses_data' );
