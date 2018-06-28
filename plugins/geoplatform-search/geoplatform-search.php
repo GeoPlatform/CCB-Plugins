@@ -114,8 +114,50 @@ function geopsearch_page_enqueues(){
 		wp_enqueue_style( 'styles_bundle', plugin_dir_url( __FILE__ ) . 'public/css/styles.bundle.css', array(), false, 'all' );
 	}
 }
-
 add_action( 'template_redirect', 'geopsearch_page_enqueues' );
+
+// Hook backbone for shortcode interpretation.
+function geopsearch_shortcode_creation($atts){
+  ob_start();?>
+
+	<!-- Search bar section. -->
+	  <div class="container-fluid">
+	    <div class="row">
+        <form id="geoplatformsearchform">
+          <div class="input-group-slick input-group-slick--lg" style="font-family: Lato,Helvetica,Arial,sans-serif;">
+            <span class="glyphicon glyphicon-search"></span>
+            <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg">
+            <button id="geoplatformsearchbutton" type="button" class="btn btn-primary">Search</button>
+        	</div>
+	      </form>
+	    </div>
+	  </div>
+
+	  <script>
+
+	// Code section. First jQuery triggers off of form submission (enter button) and
+	// navigates to the geoplatform-search page with the search field params.
+	  jQuery( "#geoplatformsearchform" ).submit(function( event ) {
+	    event.preventDefault();
+	    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+	  });
+
+	// Functionally identical to above, triggered by submit button press.
+	  jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
+	    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+	  });
+	  </script>
+
+	<?php
+	return ob_get_clean();
+}
+
+// Adds the shortcode hook to init.
+function geopsearch_shortcodes_init()
+{
+    add_shortcode('geopsearch', 'geopsearch_shortcode_creation');
+}
+add_action('init', 'geopsearch_shortcodes_init');
 
 
 /**
