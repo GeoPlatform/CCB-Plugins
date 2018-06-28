@@ -295,7 +295,8 @@ function geop_ccb_load_dashicons_front_end() {
 //--------------------------------------
 function geop_ccb_customize_register( $wp_customize )
 {
-		//color section, settings, and controls
+	$theme_options = geop_ccb_get_theme_mods();
+	//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
         'title'    => __( 'Header Color Section', 'geoplatform-ccb' ),
         'priority' => 30
@@ -396,9 +397,7 @@ function geop_ccb_customize_register( $wp_customize )
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
-            'default'   => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
-                            <p style='text-align: center'>Create and manage your own
-                            Dynamic Digital Community on the GeoPlatform!</p>",
+            'default'   => $theme_options['text_editor_setting'],
 			'transport' => 'refresh',
 			'type' 		=> 'theme_mod',
 			'sanitize_callback' => 'wp_kses_post'
