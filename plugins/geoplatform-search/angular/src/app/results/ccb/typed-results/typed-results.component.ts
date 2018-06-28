@@ -34,6 +34,8 @@ export class TypedResultsComponent implements OnInit {
     public totalResults : number = 0;
     public error: {label:string, message: string, code?:number} = null;
 
+    public fallbackImg = `../${environment.assets}img-404.png`;
+
     constructor() {
 
         this.defaultQuery = new Query().pageSize(this.pageSize);

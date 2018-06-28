@@ -57,7 +57,10 @@ import {
 import { CCBService } from './shared/ccb.service';
 
 import { NgbdTypeaheadHttp } from './shared/typeahead';
-import { ThumbnailComponent } from './shared/thumbnail/thumbnail.component';
+import {
+    ImageFallbackDirective,
+    ThumbnailComponent
+} from './shared/thumbnail/thumbnail.component';
 import { DebugComponent } from './shared/debug/debug.component';
 import { PagingComponent } from './shared/paging/paging.component';
 import { TypedResultsComponent } from './results/ccb/typed-results/typed-results.component';
@@ -106,6 +109,7 @@ export function initializeApp() {
     SemanticComponent,
     EditorComponent,
     NgbdTypeaheadHttp,
+    ImageFallbackDirective,
     ThumbnailComponent,
     DebugComponent,
     PagingComponent,
