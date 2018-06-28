@@ -34,6 +34,13 @@ RUN curl -L -o /usr/src/easy-wp-smtp.zip \
 					/usr/src/easy-wp-smtp.zip; \
 		rm /usr/src/easy-wp-smtp.zip
 
+# custom-sidebars:
+RUN curl -L -o /usr/src/custom-sidebars.zip \
+					https://downloads.wordpress.org/plugin/custom-sidebars.3.1.6.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/custom-sidebars.zip; \
+		rm /usr/src/custom-sidebars.zip
+
 ########### Install Developer Dependencies #############
 # theme check:
 RUN curl -L -o /usr/src/theme-check.zip \
