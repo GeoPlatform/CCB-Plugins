@@ -6,9 +6,9 @@ $theme_options = geop_ccb_get_options();
 //get catergory id
 $cat_id = empty(get_query_var('cat') ? '' : get_query_var('cat') );
 //then i get the data from the database
- $cat_data = get_option("category_$cat_id");
-$cat_data =  $theme_options["category_$cat_id"];
-  //get data from user
+$cat_data = get_option("category_$cat_id");
+//$cat_data =  $theme_options["category_$cat_id"];
+//get data from user
  $meta1 = $cat_data['topic-url1'];
  $meta2 = $cat_data['topic-url2'];
  $meta3 = $cat_data['topic-url3'];
