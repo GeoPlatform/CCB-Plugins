@@ -16,9 +16,11 @@ export class TemporalCodec implements Codec {
     constructor() { }
 
     parseParams(params: Params, constraints?: Constraints) : Constraint {
-        let value = {};
-        value[Constants.BEGINS] = params[Constants.BEGINS];
-        value[Constants.ENDS] = params[Constants.ENDS];
+        let start = params[Constants.BEGINS];
+        let end = params[Constants.ENDS];
+        let value = start || end ? {} : null;
+        if(start) value[Constants.BEGINS] = start;
+        if(end) value[Constants.ENDS] = end;
         let constraint = this.toConstraint(value);
         if(constraints) constraints.set(constraint);
         return constraint;
@@ -38,14 +40,6 @@ export class TemporalCodec implements Codec {
                 params[Constants.ENDS] = this.formatDateStr(constraint.value[1].value);
             }
         }
-        // else {
-        //     constraint = constraints.get(QueryParameters.BEGINS);
-        //     if(constraint) params[Constants.BEGINS] = this.formatDateStr(constraint.value);
-        //     else {
-        //         constraint = constraints.get(QueryParameters.ENDS);
-        //         if(constraint) params[Constants.ENDS] = this.formatDateStr(constraint.value);
-        //     }
-        // }
     }
 
     getValue(constraints: Constraints) : any {
@@ -62,20 +56,6 @@ export class TemporalCodec implements Codec {
             }
             return value;
         }
-
-        // constraint = constraints.get(QueryParameters.BEGINS);
-        // if(constraint) {
-        //     let value = {};
-        //     value[Constants.BEGINS] = this.formatDateStr(constraint.value);
-        //     return value;
-        // }
-        //
-        // constraint = constraints.get(QueryParameters.ENDS);
-        // if(constraint) {
-        //     let value = {};
-        //     value[Constants.ENDS] = this.formatDateStr(constraint.value);
-        //     return value;
-        // }
 
         return null;
     }
@@ -104,14 +84,8 @@ export class TemporalCodec implements Codec {
             "Ends"
         );
 
-        // if(start && end) {
         return new CompoundConstraint(Constants.KEY, [start,end], "Temporal Extent");
-        // } else if(start) {
-        //     return start;
-        // } else if(end) {
-        //     return end;
-        // }
-        // return null;
+
     }
 
 
