@@ -30,7 +30,6 @@ $geop_ccb_theme_mods = geop_ccb_get_theme_mods();
                     <?php $c2a_button = get_theme_mod( 'call2action_button_setting', $geop_ccb_theme_mods['call2action_button_setting'] );
                           $c2a_url = get_theme_mod( 'call2action_url_setting', $geop_ccb_theme_mods['call2action_url_setting'] );
                           $c2a_text = get_theme_mod( 'call2action_text_setting', $geop_ccb_theme_mods['call2action_text_setting'] );
-
                     ?>
                     <?php if ($c2a_button == true) { ?>
                       <div class="text-centered">
@@ -38,7 +37,6 @@ $geop_ccb_theme_mods = geop_ccb_get_theme_mods();
                               <?php echo esc_html($c2a_text);?></a>
                       </div><!--#text-centered-->
                     <?php } ?>
-
                   </div><!--#row-->
                 </div><!--#col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 col-sm-12 col-xs-12-->
             </div><!--#row-->
