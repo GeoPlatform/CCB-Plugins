@@ -1,7 +1,13 @@
 <?php
-/*
-    A GeoPlatform Tag Template
-*/
+/**
+ * The template for displaying Tag archive
+ *
+ * @package GeoPlatform CCB
+ * 
+ * @link https://codex.wordpress.org/Tag_Templates
+ * 
+ * @since 3.0.0
+ */
 
 get_header();
 get_template_part( 'mega-menu', get_post_format() );

@@ -1,6 +1,6 @@
 <?php
 /**
- * default search form
+ * A Geoplatform default search form
  */
 ?>
 <!-- HTML5 basic search form. Used for reference
