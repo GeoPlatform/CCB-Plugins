@@ -7,24 +7,35 @@
 
   <br>
 
+<!-- Search bar section. -->
   <div class="container-fluid">
     <div class="row">
       <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-        <div class="input-group-slick input-group-slick--lg">
-        <span class="glyphicon glyphicon-search"></span>
-        <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg"> 
-        <button type="button" class="btn btn-primary"
-          onclick="window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val()">
-          Search
-        </button>
-        <!--
-        ^ THIS BUTTON SHOULD SEND USER TO THE SEARCH PLUGIN PAGE WHEN CLICKED AND SHOULD SEND
-        THE CONTENTS OF THE INPUT ELEMENT ABOVE IT AS THE "q=" QUERY STRING PARAMETER.
-        -->
-        </div>
+        <form id="geoplatformsearchform">
+          <div class="input-group-slick input-group-slick--lg">
+            <span class="glyphicon glyphicon-search"></span>
+            <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg">
+            <button id="geoplatformsearchbutton" type="button" class="btn btn-primary">Search</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+
+  <script>
+
+// Code section. First jQuery triggers off of form submission (enter button) and
+// navigates to the geoplatform-search page with the search field params.
+  jQuery( "#geoplatformsearchform" ).submit(function( event ) {
+    event.preventDefault();
+    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+  });
+
+// Functionally identical to above, triggered by submit button press.
+  jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
+    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+  });
+  </script>
 
   <br>
   <br>
