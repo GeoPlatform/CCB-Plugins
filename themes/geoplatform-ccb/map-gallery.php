@@ -12,8 +12,9 @@
         <div class="text-center">
           <div class="row">
         <?php
-        $theme_options = geop_ccb_get_options();
-        $customizerLink = $theme_options['map_gallery_link_box_setting'];
+        //get theme mod defaults
+        $theme_options = geop_ccb_get_theme_mods();
+        $customizerLink = get_theme_mod('map_gallery_link_box_setting', $theme_options['map_gallery_link_box_setting']);
         if (!$customizerLink ){
           echo 'The Map Gallery Link in Customizer->Custom Links Section is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery. ';
         }
@@ -31,7 +32,7 @@
         }
 
         //if map gallery env radio is different than current env
-        $gallery_link_env = $theme_options['map_gallery_env_choice_setting'];
+        $gallery_link_env = get_theme_mod('map_gallery_env_choice_setting', $theme_options['map_gallery_env_choice_setting']);
         //var_dump($gallery_link_env);
 
         if( ! empty( $result ) ) {

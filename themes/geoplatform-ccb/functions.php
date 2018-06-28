@@ -294,8 +294,10 @@ function geop_ccb_load_dashicons_front_end() {
 //https://codex.wordpress.org/Theme_Customization_API
 //--------------------------------------
 function geop_ccb_customize_register( $wp_customize )
-{
+{	
+	//get defaults array
 	$theme_options = geop_ccb_get_theme_mods();
+
 	//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
         'title'    => __( 'Header Color Section', 'geoplatform-ccb' ),
@@ -303,9 +305,8 @@ function geop_ccb_customize_register( $wp_customize )
     ) );
 
 		//h1 color setting and control
-		$wp_customize->add_setting( 'geop_ccb_get_options[header_color_setting]' , array(
-				'default'   => '#000000',
-				'type'		=> 'option',
+		$wp_customize->add_setting( 'header_color_setting' , array(
+				'default'   => $theme_options['header_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -313,13 +314,12 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color_control', array(
 				'label'    => __( 'Header1 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'geop_ccb_get_options[header_color_setting]',
+				'settings' => 'header_color_setting',
 		) ) );
 
 		//h2 color setting and control
-		$wp_customize->add_setting( 'geop_ccb_get_options[header2_color_setting]' , array(
-				'default'   => '#000000',
-				'type'		=> 'option',
+		$wp_customize->add_setting( 'header2_color_setting' , array(
+				'default'   => $theme_options['header2_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -327,13 +327,12 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color_control', array(
 				'label'    => __( 'Header 2 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'geop_ccb_get_options[header2_color_setting]',
+				'settings' => 'header2_color_setting',
 		) ) );
 
 		//h3 color setting and control
-		$wp_customize->add_setting( 'geop_ccb_get_options[header3_color_setting]' , array(
-				'default'   => '#000000',
-				'type'		=> 'option',
+		$wp_customize->add_setting( 'header3_color_setting' , array(
+				'default'   => $theme_options['header3_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -341,13 +340,12 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h3_link_color_control', array(
 				'label'    => __( 'Header 3 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'geop_ccb_get_options[header3_color_setting]',
+				'settings' => 'header3_color_setting',
 		) ) );
 
 		//h4 color setting and control
-		$wp_customize->add_setting( 'geop_ccb_get_options[header4_color_setting]' , array(
-				'default'   => '#000000',
-				'type'		=> 'option',
+		$wp_customize->add_setting( 'header4_color_setting' , array(
+				'default'   => $theme_options['header4_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -355,13 +353,12 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h4_link_color_control', array(
 				'label'    => __( 'Header 4 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'geop_ccb_get_options[header4_color_setting]',
+				'settings' => 'header4_color_setting',
 		) ) );
 
     //link (<a>) color and control
-		$wp_customize->add_setting( 'geop_ccb_get_options[link_color_setting]' , array(
-				'default'   => '#428bca',
-				'type'		=> 'option',
+		$wp_customize->add_setting( 'link_color_setting' , array(
+				'default'   => $theme_options['link_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -369,13 +366,12 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'a_link_color_control', array(
 				'label'    => __( 'Link Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'geop_ccb_get_options[link_color_setting]',
+				'settings' => 'link_color_setting',
 		) ) );
 
 		//.brand color and control
-		$wp_customize->add_setting( 'geop_ccb_get_options[brand_color_setting]' , array(
-				'default'   => '#fff',
-				'type'		=> 'option',
+		$wp_customize->add_setting( 'brand_color_setting' , array(
+				'default'   => $theme_options['brand_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -383,7 +379,7 @@ function geop_ccb_customize_register( $wp_customize )
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'brand_color_control', array(
 				'label'    => __( 'Brand Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
-				'settings' => 'geop_ccb_get_options[brand_color_setting]',
+				'settings' => 'brand_color_setting',
 		) ) );
 
 		//Banner Intro Text editor section, settings, and controls
@@ -410,9 +406,8 @@ function geop_ccb_customize_register( $wp_customize )
          ) ) );
 
 				 //Call to action button (formerly "Learn More" button)
-				 $wp_customize->add_setting('geop_ccb_get_options[call2action_button_setting]', array(
-					 'default' => true,
-					 'type'		=> 'option',
+				 $wp_customize->add_setting('call2action_button_setting', array(
+					 'default' => $theme_options['call2action_button_setting'],
 					 'transport' => 'refresh',
            			'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
 				 ) );
@@ -421,13 +416,12 @@ function geop_ccb_customize_register( $wp_customize )
 					 'section' => 'banner_text_section',
 					 'label' =>__( 'Show Call to Action button?', 'geoplatform-ccb' ),
 					 'type' => 'checkbox',
-					 'settings' => 'geop_ccb_get_options[call2action_button_setting]',
+					 'settings' => 'call2action_button_setting',
 					 'priority' => 20,
 				 ) );
 
-				 $wp_customize->add_setting('geop_ccb_get_options[call2action_text_setting]', array(
-					 'default' => 'Learn More',
-					 'type'		=> 'option',
+				 $wp_customize->add_setting('call2action_text_setting', array(
+					 'default' => $theme_options['call2action_text_setting'],
 					 'transport' => 'refresh',
 					 'sanitize_callback' => 'sanitize_text_field',
 				 ));
@@ -435,16 +429,15 @@ function geop_ccb_customize_register( $wp_customize )
 					 'section' => 'banner_text_section',
 					 'label' =>__( 'Button Text', 'geoplatform-ccb' ),
 					 'type' => 'text',
-					 'settings' => 'geop_ccb_get_options[call2action_text_setting]',
+					 'settings' => 'call2action_text_setting',
 					 'priority' => 30,
 					 'input_attrs' => array(
 						'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ccb' ),
 					),
 				 ) );
 
-				 $wp_customize->add_setting('geop_ccb_get_options[call2action_url_setting]', array(
-					'default' => 'https://geoplatform.gov/about',
-					'type'		=> 'option',
+				 $wp_customize->add_setting('call2action_url_setting', array(
+					'default' => $theme_options['call2action_url_setting'],
 					'transport' => 'refresh',
 					'sanitize_callback' => 'esc_url_raw',
 				));
@@ -452,7 +445,7 @@ function geop_ccb_customize_register( $wp_customize )
 					'section' => 'banner_text_section',
 					'label' =>__( 'Button URL', 'geoplatform-ccb' ),
 					'type' => 'URL',
-					'settings' => 'geop_ccb_get_options[call2action_url_setting]',
+					'settings' => 'call2action_url_setting',
 					'priority' => 40,
 					'input_attrs' => array(
 					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
@@ -464,26 +457,24 @@ function geop_ccb_customize_register( $wp_customize )
 				'title'    => __( 'Map Gallery', 'geoplatform-ccb' ),
 				'priority' => 70
 			) );
-			$wp_customize->add_setting( 'geop_ccb_get_options[map_gallery_link_box_setting]' , array(
-					'default'   => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
+			$wp_customize->add_setting( 'map_gallery_link_box_setting' , array(
+					'default'   => $theme_options['map_gallery_link_box_setting'],
 					'transport' => 'refresh',
-					'type' => 'option',
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
 			$wp_customize->add_control( 'map_gallery_link_box_control', array(
 					'section' => 'map_gallery_section',
 					'label' => 'Map Gallery link',
-					'settings' => 'geop_ccb_get_options[map_gallery_link_box_setting]',
+					'settings' => 'map_gallery_link_box_setting',
 					'description' => 'Make sure you use a full UAL link. Example: https://ual.geoplatform.gov/api/galleries/{your map gallery ID}',
 					'type' => 'url',
 					'priority' => 10
 				) );
 
 				//Add radio button to choose link style between envs (sit, stg, or prod)
-				$wp_customize->add_setting( 'geop_ccb_get_options[map_gallery_env_choice_setting]' , array(
-						'default'   => 'prod',
+				$wp_customize->add_setting( 'map_gallery_env_choice_setting' , array(
+						'default'   => $theme_options['map_gallery_env_choice_setting'],
 						'transport' => 'refresh',
-						'type' => 'option',
 						'sanitize_callback' => 'geop_ccb_sanitize_mapchoice'
 					) );
 				$wp_customize->add_control( 'map_gallery_env_choice_control', array(
@@ -491,7 +482,7 @@ function geop_ccb_customize_register( $wp_customize )
 						'label' => 'Map Gallery Environment',
 						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
 						'type' => 'radio',
-						'settings' => 'geop_ccb_get_options[map_gallery_env_choice_setting]',
+						'settings' => 'map_gallery_env_choice_setting',
 						'priority' => 20,
 						'choices' => array(
 								'match'=>'My gallery link matches my site enviroment',
@@ -553,15 +544,15 @@ add_action( 'customize_controls_enqueue_scripts', 'geop_ccb_custom_customize_enq
 //https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
 function geop_ccb_header_customize_css()
 {
-	$geop_ccb_options = geop_ccb_get_options();
+	$geop_ccb_options = geop_ccb_get_theme_mods();
     ?>
          <style type="text/css">
-            h1 { color: <?php echo $geop_ccb_options['header_color_setting']; ?>; }
-			h2 { color: <?php echo $geop_ccb_options['header2_color_setting']; ?>!important; }
-			h3 { color: <?php echo $geop_ccb_options['header3_color_setting']; ?>; }
-			h4, .section--linked .heading .title { color: <?php echo $geop_ccb_options['header_color4_setting']; ?>; }
-			.text-selected, .text-active, a, a:visited { color: <?php echo $geop_ccb_options['link_color_setting']; ?>; }
-			header.t-transparent .brand>a { color: <?php echo $geop_ccb_options['brand_color_setting']; ?>; }
+            h1 { color: <?php echo get_theme_mod('header_color_setting', $geop_ccb_options['header_color_setting']); ?>; }
+			h2 { color: <?php echo get_theme_mod('header2_color_setting', $geop_ccb_options['header2_color_setting']); ?>!important; }
+			h3 { color: <?php echo get_theme_mod('header3_color_setting', $geop_ccb_options['header3_color_setting']); ?>; }
+			h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', $geop_ccb_options['header4_color_setting']); ?>; }
+			.text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', $geop_ccb_options['link_color_setting']); ?>; }
+			header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', $geop_ccb_options['brand_color_setting']); ?>; }
          </style>
     <?php
 }

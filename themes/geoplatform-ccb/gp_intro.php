@@ -11,9 +11,9 @@
                 <?php echo wp_kses_post(get_theme_mod( 'text_editor_setting', $geop_ccb_theme_mods['text_editor_setting'] ));?>
                   <div class="row">
                     <br />
-                    <?php $c2a_button = $geop_ccb_options['call2action_button_setting'];
-                          $c2a_url = $geop_ccb_options['call2action_url_setting'];
-                          $c2a_text = $geop_ccb_options['call2action_text_setting'];
+                    <?php $c2a_button = get_theme_mod( 'call2action_button_setting', $geop_ccb_theme_mods['call2action_button_setting'] );
+                          $c2a_url = get_theme_mod( 'call2action_url_setting', $geop_ccb_theme_mods['call2action_url_setting'] );
+                          $c2a_text = get_theme_mod( 'call2action_text_setting', $geop_ccb_theme_mods['call2action_text_setting'] );
 
                     ?>
                     <?php if ($c2a_button == true) { ?>
