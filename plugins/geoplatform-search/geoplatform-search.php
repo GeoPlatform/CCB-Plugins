@@ -114,11 +114,7 @@ function geopsearch_page_enqueues(){
 		wp_enqueue_style( 'styles_bundle', plugin_dir_url( __FILE__ ) . 'public/css/styles.bundle.css', array(), false, 'all' );
 	}
 }
-
 add_action( 'template_redirect', 'geopsearch_page_enqueues' );
-
-
-
 
 // Hook backbone for shortcode interpretation.
 function geopsearch_shortcode_creation($atts){
@@ -128,7 +124,7 @@ function geopsearch_shortcode_creation($atts){
 	  <div class="container-fluid">
 	    <div class="row">
         <form id="geoplatformsearchform">
-          <div class="input-group-slick input-group-slick--lg">
+          <div class="input-group-slick input-group-slick--lg" style="font-family: Lato,Helvetica,Arial,sans-serif;">
             <span class="glyphicon glyphicon-search"></span>
             <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg">
             <button id="geoplatformsearchbutton" type="button" class="btn btn-primary">Search</button>
@@ -162,10 +158,6 @@ function geopsearch_shortcodes_init()
     add_shortcode('geopsearch', 'geopsearch_shortcode_creation');
 }
 add_action('init', 'geopsearch_shortcodes_init');
-
-
-
-
 
 
 /**
