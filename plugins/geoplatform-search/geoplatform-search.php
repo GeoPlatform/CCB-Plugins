@@ -124,8 +124,6 @@ add_action( 'template_redirect', 'geopsearch_page_enqueues' );
 function geopsearch_shortcode_creation($atts){
   ob_start();?>
 
-<!-- Gives a little breathing room -->
-	<br>
 	<!-- Search bar section. -->
 	  <div class="container-fluid">
 	    <div class="row">
