@@ -122,62 +122,48 @@ add_action( 'template_redirect', 'geopsearch_page_enqueues' );
 
 // Hook backbone for shortcode interpretation.
 function geopsearch_shortcode_creation($atts){
-  // generate a new geopsearch_uuid for each instance
- // $geopsearch_uuid = wp_generate_geopsearch_uuid4();
-  // $geopsearch_uuid = uniqid();
-  // $geopsearch_uuid = str_replace("-", "", $geopsearch_uuid);
-  // $geopsearch_pagingVal = 1;
-  // $geopsearch_searchVal = 1;
+  ob_start();?>
 
-  // // load the settings - add default values if none exist already
-  // $options = get_option('geopsearch_settings', array(
-  //   'geopsearch_select_community' => 'any',
-  //   'geopsearch_text_title' => 'Community Items',
-  //   'geopsearch_select_objtype' => 'any',
-  //   'geopsearch_checkbox_show_paging' => 1,
-  //   'geopsearch_checkbox_show_search' => 1,
-  //   'geopsearch_select_sort' => 'modified',
-  //   'geopsearch_select_keyword' => 'any',
-  //   'geopsearch_select_perpage' => 10));
-	//
-  // // populate via shortcode, using settings api values as defaults
-  // $a = shortcode_atts(array(
-  //   'community' => $options['geopsearch_select_community'],
-  //   'title' => $options['geopsearch_text_title'],
-  //   'objtype' => $options['geopsearch_select_objtype'],
-	// 	'showpaging' => $options['geopsearch_checkbox_show_paging'],
-  //   'showsearch' => $options['geopsearch_checkbox_show_search'],
-  //   'sort' => $options['geopsearch_select_sort'],
-  //   'maxresults' => $options['geopsearch_select_perpage'],
-  //   'keyword' => $options['geopsearch_select_keyword'],
-  //   'geopsearch_uuid' => $geopsearch_uuid
-  // ), $atts);
+<!-- Gives a little breathing room -->
+	<br>
+	<!-- Search bar section. -->
+	  <div class="container-fluid">
+	    <div class="row">
+        <form id="geoplatformsearchform">
+          <div class="input-group-slick input-group-slick--lg">
+            <span class="glyphicon glyphicon-search"></span>
+            <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg">
+            <button id="geoplatformsearchbutton" type="button" class="btn btn-primary">Search</button>
+        	</div>
+	      </form>
+	    </div>
+	  </div>
 
-  // handle true/false values in shortcode.  is stored in settings api as 1 or 0
-  // if ($atts !=  null)
-  // {
-  //   if (array_key_exists('showpaging', $atts) && isset($atts['showpaging'])){
-  //     if ($atts['showpaging'] == 'false' || $atts['showpaging'] == '0' || $atts['showpaging'] == 'f')
-  //       $geopsearch_pagingVal = 0;
-  //   }
-	//
-  //   if (array_key_exists('showsearch', $atts) && isset($atts['showsearch'])){
-  //     if ($atts['showsearch'] == 'false' || $atts['showsearch'] == '0' || $atts['showsearch'] == 'f')
-  //       $geopsearch_searchVal = 0;
-  //   }
-  // }
+	  <script>
 
-  ob_start();
-  include( plugin_dir_url(__FILE__) . '/public/partials/geoplatform-search-shortcode.php' );  // inject php
+	// Code section. First jQuery triggers off of form submission (enter button) and
+	// navigates to the geoplatform-search page with the search field params.
+	  jQuery( "#geoplatformsearchform" ).submit(function( event ) {
+	    event.preventDefault();
+	    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+	  });
+
+	// Functionally identical to above, triggered by submit button press.
+	  jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
+	    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+	  });
+	  </script>
+
+	<?php
 	return ob_get_clean();
 }
 
 // Adds the shortcode hook to init.
-function geopsearch__shortcodes_init()
+function geopsearch_shortcodes_init()
 {
-    add_shortcode('geopsearch', 'geopsearch__shortcode_creation');
+    add_shortcode('geopsearch', 'geopsearch_shortcode_creation');
 }
-add_action('init', 'geopsearch__shortcodes_init');
+add_action('init', 'geopsearch_shortcodes_init');
 
 
 
