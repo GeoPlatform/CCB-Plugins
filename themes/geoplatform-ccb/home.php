@@ -1,7 +1,14 @@
 <?php
-/*
-    A GeoPlatform Home Page Template, for showing blog posts
-*/
+/**
+ * A GeoPlatform Home Page Template, for showing blog posts
+ * 
+ * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#home-page-display
+ * 
+* @package GeoPlatform CCB
+* 
+* @since 3.1.2
+ */
+
 get_header();
 get_template_part( 'mega-menu', get_post_format( ) );
 get_template_part( 'single-banner', get_post_format() );
@@ -11,6 +18,7 @@ get_template_part( 'single-banner', get_post_format() );
   <div class="row">
     <div class="col-md-8 col-sm-8">
         <?php 
+                //handling page content to show up if needed
                 $content = (empty(get_queried_object()->post_content)) ? '' : get_queried_object()->post_content;
                 echo "<br>";
                 echo wp_kses_post( $content );

@@ -1,3 +1,14 @@
+<?php
+/**
+ * The template for page content 
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-template-files/
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
+ */
+?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<br />
 

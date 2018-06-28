@@ -1,3 +1,18 @@
+<?php 
+/**
+ * A GeoPlatform Header template
+ * 
+ * @link https://codex.wordpress.org/Designing_Headers
+ * 
+ * enhanced comment display
+ * @link //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 1.0.0
+ */
+
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -9,7 +24,6 @@
     <meta name="author" content="">
 <?php
 //enabling enhanced comment display
-//per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
 if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
     <?php wp_head();?>
 

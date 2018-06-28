@@ -1,10 +1,16 @@
 <?php
 /**
- * A Geoplatform default search form
+ * The template for default search form 
+ * 
+ * HTML5 basic search form. Used for reference
+ * @link http://buildwpyourself.com/wordpress-search-form-template/
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.1.0
  */
 ?>
-<!-- HTML5 basic search form. Used for reference
-http://buildwpyourself.com/wordpress-search-form-template/ -->
+
 <!-- GP styled search form -->
 <form role="search" method="get" id="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 <div class="input-group-slick">

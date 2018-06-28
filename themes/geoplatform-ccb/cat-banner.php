@@ -1,8 +1,14 @@
 <?php
 /**
- * The template the category banner
+ * The template the category page banner
  *
  * @package Geoplatform_CCB
+ * 
+ * @link https://codex.wordpress.org/Function_Reference/get_category
+ * @link https://developer.wordpress.org/reference/functions/get_term_meta/
+ * 
+ * @since 3.1.2
+ * 
  */
 $category = get_category( get_query_var( 'cat' ) );//get category data
 $cat_id = $category->cat_ID; //get category ID

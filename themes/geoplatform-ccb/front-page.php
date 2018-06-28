@@ -1,7 +1,13 @@
 <?php 
-/*
-    A GeoPlatform Front Page Template
-*/
+/**
+ * A GeoPlatform Front Page Template
+ * 
+ * @link https://codex.wordpress.org/Creating_a_Static_Front_Page
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.1.2
+ */
 
 if ( 'page' == get_option( 'show_on_front' ) ) {
     include( get_page_template() );

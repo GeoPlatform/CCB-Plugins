@@ -1,3 +1,19 @@
+<?php
+/**
+ * The main page template to showcase Featured Categories
+ * 
+ * pagination
+ * @link https://stackoverflow.com/questions/36976897/paginate-category-list-wordpress
+ * 
+ * getting the categories
+ * @link  https://developer.wordpress.org/reference/functions/get_categories/
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
+ */
+?>
+
 <div class="whatsNew section--linked">
   <div class="container-fluid">
     <div class="col-lg-12">
@@ -15,8 +31,8 @@
               $default_text_template = 'The category photo(s) above have a default image in them. If you would like to edit your category card photos,
               please navigate to Posts(or Pages)->Categories to edit and set your specfic category image';
               $image_set = false;
+
               //pagination
-              //https://stackoverflow.com/questions/36976897/paginate-category-list-wordpress
               if ( get_query_var('paged') ) {
                        $paged = get_query_var('paged');
                    } else if ( get_query_var('page') ) {
@@ -25,7 +41,7 @@
               $per_page = 12;
               $paged_offset = ($paged - 1) * $per_page;
 
-              //https://developer.wordpress.org/reference/functions/get_categories/
+              //getting the categories 
               $categories = get_categories( array(
                   'orderby'   => 'name',
                   'order'     => 'ASC',
@@ -34,7 +50,6 @@
                   'paged'     => $paged,
                   'offset'    => $paged_offset
               ) );
-              //https://developer.wordpress.org/reference/functions/get_categories/
               //List categories and descriptions
               foreach( $categories as $category ) {
                     if (get_term_meta($category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull

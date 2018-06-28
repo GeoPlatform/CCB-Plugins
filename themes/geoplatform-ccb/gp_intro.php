@@ -1,5 +1,21 @@
-<?php $geop_ccb_options = geop_ccb_get_options();
-      $geop_ccb_theme_mods = geop_ccb_get_theme_mods();
+<?php 
+/**
+ * A template for the front page banner
+ * 
+ * WYSIWYG banner area
+ * @link https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
+ * @link https://github.com/paulund/wordpress-theme-customizer-custom-controls/
+ * 
+ * Sane defaults for theme mods 
+ * @link https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 1.0.0
+ */
+
+//get theme mod defaults
+$geop_ccb_theme_mods = geop_ccb_get_theme_mods();
 ?>
 <div class="banner section--linked">
     <div class="content">

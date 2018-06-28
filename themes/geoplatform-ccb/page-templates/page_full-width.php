@@ -2,7 +2,11 @@
 /**
  * Template Name: Full Width Page
  *
- *https://developer.wordpress.org/themes/template-files-section/page-templates/
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ * 
+ * @package Geoplatform CCB
+ * 
+ * @since 2.0.0
  */
  ?>
 

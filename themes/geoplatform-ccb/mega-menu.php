@@ -1,6 +1,15 @@
-<!--
- Mega Menu
- -->
+<?php
+/**
+ * The template for Geoplatform dropdown Mega Menu 
+ * 
+ * based on Geoplatform style guide 
+ * @link https://www.geoplatform.gov/style/navigation/
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 1.0.0
+ */
+?>
 <nav class="mega-menu mega-menu-right" id="megamenu" role="menu">
 
     <div class="mega-menu-content container">

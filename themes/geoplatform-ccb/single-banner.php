@@ -1,7 +1,13 @@
 <?php
-/*
-    A GeoPlatform Single Post/Page Banner Template
-*/
+/**
+ * The template for Single post and page banners
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/post-template-files/
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
+ */
 ?>
 <div class="banner banner--fixed-height">
 <!--Used for the Main banner background to show up properly-->
