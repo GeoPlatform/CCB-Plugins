@@ -57,11 +57,14 @@ export class CurrentComponent implements OnInit {
                 </div>`;
 
         } else if(
-            TemporalConstants.KEY === constraint.name || 
+            TemporalConstants.KEY === constraint.name ||
             QueryParameters.BEGINS === constraint.name ||
             QueryParameters.ENDS === constraint.name
         ) {
             return new TemporalCodec().toString(this.constraints);
+
+        } else if(QueryParameters.USED_BY_ID === constraint.name) {
+            return value.label || value.title || "Un-titled Community";
         }
 
         return value.label ? value.label : value;

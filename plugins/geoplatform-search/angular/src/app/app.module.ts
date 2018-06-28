@@ -41,6 +41,7 @@ import {
     ContactComponent,
     CreatorComponent,
     PublisherComponent,
+    CommunityComponent,
     ExtentComponent,
     SemanticComponent,
     TemporalComponent,
@@ -95,6 +96,7 @@ export function initializeApp() {
     CurrentComponent,
     ResultsComponent,
     PublisherComponent,
+    CommunityComponent,
     CreatorComponent,
     ExtentComponent,
     TemporalComponent,
@@ -113,7 +115,8 @@ export function initializeApp() {
     ThumbnailComponent,
     DebugComponent,
     PagingComponent,
-    TypedResultsComponent
+    TypedResultsComponent,
+    CommunityComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { useHash: true } ),
@@ -144,6 +147,7 @@ export function initializeApp() {
       ContactComponent,
       CreatorComponent,
       PublisherComponent,
+      CommunityComponent,
       ExtentComponent,
       SemanticComponent,
       TemporalComponent,

@@ -3,10 +3,15 @@
   <br><br>
 
   <label for="pubsFilter">Filter organizations</label>
-  <input type="text" id="pubsFilter" placeholder="Find organization by name..."
-    [(ngModel)]="listFilter"
-    (keyup.enter)="refreshOptions()">
-
+  <div class="input-group-slick">
+      <span class="fa fa-search"></span>
+      <input type="text" id="pubsFilter"
+            class="form-control"
+            placeholder="Find organization by name..."
+            [(ngModel)]="listFilter"
+            (keyup.enter)="refreshOptions()">
+      <button type="button" class="btn btn-default" (click)="refreshOptions()">Find</button>
+  </div>
   <hr>
 
 
@@ -30,7 +35,7 @@
           <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
       </div>
   </div>
-  
+
   <a *ngFor="let organization of resultsObs$ | async"
     class="list-item"
     [ngClass]="{selected:isSelected(organization)}"
