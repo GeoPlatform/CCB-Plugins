@@ -9,5 +9,5 @@ export const environment = {
     ualUrl: 'https://sit-ual.geoplatform.us',
     wpUrl: 'https://sit-ccb.geoplatform.us',
     root: '/',
-    assets: '/assets/'
+    assets: 'assets/'
 };
