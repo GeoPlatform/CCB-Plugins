@@ -12,6 +12,9 @@ https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/ -->
 <?php get_template_part( 'mainpage', get_post_format() ); ?>
 
 <!-- Cornerstone Actions section from GeoPlatform-->
+<?php get_template_part( 'gpsearch', get_post_format() ); ?>
+
+<!-- Cornerstone Actions section from GeoPlatform-->
 <?php get_template_part( 'cornerstones', get_post_format() ); ?>
 
 <!-- Applications & Services section from GeoPlatform-->
