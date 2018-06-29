@@ -7,7 +7,7 @@
 **Version:** 3.1.1  
 **License:** Apache 2.0
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0 
-**Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, education
+**Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
 
 The Geoplatform Community Core Bundle theme is the core theme for WordPress sites hosted by Geoplatform.gov.
 
@@ -71,11 +71,8 @@ You can edit the main banner on the front page, and for all posts, pages, and ca
 * **Posts** and **Pages** have another editor area right below the main content area called **"Banner Area Custom Content"**. Anything put in there will show up in that **Post** or **Pages** banner.
 * **Category Pages** have a **"Description"** area. Anything put in there will show up in the Category page's banner.   
 
-### Category Specific Sidebar Links
-You are able to add up to 5 links to each category page. The links can be added in each category page.
-
 ### Front Page Categories
-The Front page of this theme is designed to showcase Categories of the site. Each category will show up with a placeholder image. To change the Featured Image of each category, you need to navigate to the area where you can edit Categories (**Posts/Pages->Categories->[Your Category]**). It will show up in the Banner of that category as well as the front page card of that category.
+The Front page of this theme is designed to showcase Categories of the site. Each category will show up with a default image. To change the Featured Image of each category, you need to navigate to the area where you can edit Categories (**Posts/Pages->Categories->[Your Category]**). It will show up in the Banner of that category as well as the front page card of that category.
 
 The front page organizes categories by name in ascending order, and show the first 12 categories in that organization structure. You can cycle through the categories with a **"More/Previous Categories"** Links below the cards. Later updates will incorporate dynamically being able to change the organization of these.
 
@@ -101,6 +98,13 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
+Geoplatform CCB Theme incorporates code from [Categories Images plugin](https://wordpress.org/plugins/categories-images/), Copyright 2018 Muhammad Said El Zahlan
+Categories Images plugin is distributed under the terms of the GNU GPL
+
+Geoplatform CCB Theme incorporates code from [Paulunds Category Image Description](https://paulund.co.uk/add-tinymce-editor-category-description), Copyright 2014 Paulund. Category Image Description is distributed under the terms of the GNU GPL2
+
+Geoplatform CCB Theme incorporates code from the [Showcase Theme](https://catapultthemes.com/downloads/showcase-easy-digital-downloads-theme/), originally derived from Gareth's [Blog post on the subject](https://catapultthemes.com/adding-an-image-upload-field-to-categories/) at Catapult Themes. Copyright 2018 Catapult. Showcase Theme is distributed under the terms of the GNU GPL2
+
 Geoplatform CCB bundles the following third-party resources:
 
 Bootstrap (3.3.7). Copyright 2018 Twitter.
@@ -108,9 +112,26 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 
+
+
 ## Changelog
 
-### 3.1.0
-* Released: June [##], 2018
+### 3.1.2
+* Released June 29, 2018
 
-Initial release on Wordpress.org. Previous versions were developed privately for Geoplatform.gov customers.
+Updated per requirements listed in [Wordpress Theme requirements](https://make.wordpress.org/themes/handbook/review/required/)
+
+#### Notable Changes
+ - Removed Category links
+ - Integrated Category images
+ - Now Child theme ready
+ - Front page template added
+ - Custom logo enabled
+ - Editor style enabled
+ - Theme now translatable
+ - Significant code refactoring, security updates, and bug fixes
+
+### 3.1.0
+* Released: June 5, 2018
+
+Initial submission on Wordpress.org. Previous versions were developed privately for Geoplatform.gov customers.
