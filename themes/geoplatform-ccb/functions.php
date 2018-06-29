@@ -719,32 +719,40 @@ function geop_ccb_remove_default_category_description()
 }
 
 
-
-//Adding Categories and Tag functionality to pages (for frontpage setting)
-//https://stackoverflow.com/questions/14323582/wordpress-how-to-add-categories-and-tags-on-pages
+/**
+ * Adding Categories and Tag functionality to pages (for frontpage setting)
+ * 
+ * @link https://stackoverflow.com/questions/14323582/wordpress-how-to-add-categories-and-tags-on-pages
+ *
+ * @return void
+ */
 function geop_ccb_page_cat_tag_settings() {
-// Add tag metabox to page
-register_taxonomy_for_object_type('post_tag', 'page');
-// Add category metabox to page
-register_taxonomy_for_object_type('category', 'page');
+	// Add tag metabox to page
+	register_taxonomy_for_object_type('post_tag', 'page');
+	// Add category metabox to page
+	register_taxonomy_for_object_type('category', 'page');
 }
-// Add to the admin_init hook of your theme functions.php file
 add_action( 'init', 'geop_ccb_page_cat_tag_settings' );
 
-// ensure all tags and categories are included in queries
+/**
+ * Ensure all tags and categories are included in query
+ *
+ * @param array $wp_query
+ * @return void
+ */
 function geop_ccb_tags_categories_support_query($wp_query) {
   if ($wp_query->get('tag')) $wp_query->set('post_type', 'any');
   if ($wp_query->get('category_name')) $wp_query->set('post_type', 'any');
 }
 add_action('pre_get_posts', 'geop_ccb_tags_categories_support_query');
 
-
-//-------------------------------
-// Widgetizing the theme
-// https://codex.wordpress.org/Function_Reference/dynamic_sidebar
-// https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
-//------------------------------------
-add_action( 'widgets_init', 'geop_ccb_sidebar' );
+/**
+ * Widgetizing the theme
+ *
+ * @link https://codex.wordpress.org/Function_Reference/dynamic_sidebar
+ * @link https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
+ * @return void
+ */
 function geop_ccb_sidebar() {
     register_sidebar(
         array(
@@ -759,20 +767,25 @@ function geop_ccb_sidebar() {
         )
     );
 }
+add_action( 'widgets_init', 'geop_ccb_sidebar' );
 
-//-------------------------------
-//Global Content Width
-//per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
-//-------------------------------
+/**
+ * Global Content Width
+ * 
+ * @link https://codex.wordpress.org/Content_Width#Adding_Theme_Support
+ */
 if ( ! isset( $content_width ) ) {
 	$content_width = 600;
 }
 
-//-------------------------------
-// Theme specific enabled capabilities
-//https://codex.wordpress.org/Function_Reference/add_cap
-//https://codex.wordpress.org/Roles_and_Capabilities
-//-------------------------------
+/**
+ * Theme specific enabled capabilities
+ * 
+ * @link https://codex.wordpress.org/Function_Reference/add_cap
+ * @link https://codex.wordpress.org/Roles_and_Capabilities
+ *
+ * @return void
+ */
 function geop_ccb_add_theme_caps(){
 	// gets the roles
 	$subRole = get_role('subscriber');
@@ -823,10 +836,13 @@ function geop_ccb_add_theme_caps(){
 }
 add_action( 'admin_init', 'geop_ccb_add_theme_caps' );
 
-//------------------
-// Capabilities removed on Deactivation
-//https://codex.wordpress.org/Plugin_API/Action_Reference/switch_theme
-//--------------------
+/**
+ *  Capabilities removed on Deactivation
+ * 
+ * @link https://codex.wordpress.org/Plugin_API/Action_Reference/switch_theme
+ *
+ * @return void
+ */
 function geop_ccb_remove_theme_caps() {
 	// Theme is deactivated
 	// Need to remove these capabilities from the database
@@ -881,9 +897,14 @@ function geop_ccb_remove_theme_caps() {
 }
 add_action('switch_theme', 'geop_ccb_remove_theme_caps');
 
-
-//private pages and posts show up in search for correct roles
-//https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
+/**
+ * Private pages and posts show up in search for correct roles
+ * 
+ * @link https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
+ *
+ * @param array $query
+ * @return void
+ */
 function geop_ccb_filter_search($query){
     if( is_admin() || ! $query->is_main_query() ) return;
     if ($query->is_search) {
@@ -916,7 +937,7 @@ add_filter( 'excerpt_more', 'geop_ccb_excerpt_more' );
 
 /**
  * Registers an editor stylesheet for the theme.
- * https://developer.wordpress.org/reference/functions/add_editor_style/
+ * @link https://developer.wordpress.org/reference/functions/add_editor_style/
  */
 function geop_ccb_theme_add_editor_styles() {
     add_editor_style( 'custom-editor-style.css' );
@@ -925,7 +946,7 @@ add_action( 'admin_init', 'geop_ccb_theme_add_editor_styles' );
 
 /**
  * Category Image class
- * From https://catapultthemes.com/adding-an-image-upload-field-to-categories/
+ * @link https://catapultthemes.com/adding-an-image-upload-field-to-categories/
  **/
 if ( ! class_exists( 'GP_TAX_META' ) ) {
 
@@ -937,7 +958,7 @@ class GP_TAX_META {
 
  /*
   * Initialize the class and start calling our hooks and filters
-  * @since 1.0.0
+  * @since 3.1.2
  */
  public function init() {
    add_action( 'category_add_form_fields', array ( $this, 'add_category_image' ), 10, 2 );
@@ -956,7 +977,7 @@ public function load_media() {
 
  /*
   * Add a form field in the new category page
-  * @since 1.0.0
+  * @since 3.1.2
  */
  public function add_category_image ( $taxonomy ) { ?>
    <div class="form-field term-group">
@@ -973,7 +994,7 @@ public function load_media() {
 
  /*
   * Save the form field
-  * @since 1.0.0
+  * @since 3.1.2
  */
  public function save_category_image ( $term_id, $tt_id ) {
    if( isset( $_POST['category-image-id'] ) && '' !== $_POST['category-image-id'] ){
@@ -984,7 +1005,7 @@ public function load_media() {
 
  /*
   * Edit the form field
-  * @since 1.0.0
+  * @since 3.1.2
  */
  public function update_category_image ( $term, $taxonomy ) { ?>
    <tr class="form-field term-group-wrap">
@@ -1010,7 +1031,7 @@ public function load_media() {
 
 /*
  * Update the form field value
- * @since 1.0.0
+ * @since 3.1.2
  */
  public function updated_category_image ( $term_id, $tt_id ) {
    if( isset( $_POST['category-image-id'] ) && '' !== $_POST['category-image-id'] ){
@@ -1023,7 +1044,7 @@ public function load_media() {
 
 /*
  * Add script
- * @since 1.0.0
+ * @since 3.1.2
  */
  public function add_script() { ?>
    <script>
@@ -1123,7 +1144,7 @@ function geopccb_category_column_action( $columns, $column, $id ) {
 
 /**
  * Using Sane Defaults 
- * https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
+ * @link https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
  *
  * @return void
  */
@@ -1152,19 +1173,10 @@ function geop_ccb_get_option_defaults() {
 
 /**
  * Getting the appropriate defaults 
- * https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
+ * @link https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
  * 
  * @return void
  */
-function geop_ccb_get_options() {
-    // Options API
-    return wp_parse_args( 
-        get_option( 'geop_ccb_get_options', array() ), 
-        geop_ccb_get_option_defaults() 
-    );
-    
-}
-
 function geop_ccb_get_theme_mods() {
 	// Theme Mods API:
     return wp_parse_args( 
