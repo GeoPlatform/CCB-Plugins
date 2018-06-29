@@ -65,6 +65,7 @@ import {
 import { DebugComponent } from './shared/debug/debug.component';
 import { PagingComponent } from './shared/paging/paging.component';
 import { TypedResultsComponent } from './results/ccb/typed-results/typed-results.component';
+import { SimilarityComponent } from './constraints/similarity/similarity.component';
 
 
 //ROUTING CONFIG
@@ -116,7 +117,8 @@ export function initializeApp() {
     DebugComponent,
     PagingComponent,
     TypedResultsComponent,
-    CommunityComponent
+    CommunityComponent,
+    SimilarityComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { useHash: true } ),

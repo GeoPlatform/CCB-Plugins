@@ -74,7 +74,7 @@
                     </div>
                     <div class="c-results-item__description" [innerHtml]="item.description"></div>
                     <div class="c-results-item__actions">
-                        <a>Find similar</a>
+                        <a (click)="findSimilarTo(item)">Find similar items</a>
                     </div>
                 </div>
                 <!-- icon if necessary -->

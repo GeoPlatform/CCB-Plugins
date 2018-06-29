@@ -14,6 +14,7 @@ import { CreatorCodec } from './creator/codec';
 import { ExtentCodec } from './extent/codec';
 import { TemporalCodec } from './temporal/codec';
 import { SemanticCodec } from './semantic/codec';
+import { SimilarityCodec } from './similarity/codec';
 import { FreeTextCodec } from './freetext.codec';
 
 import { CurrentComponent } from './current/current.component';
@@ -28,6 +29,7 @@ import { TemporalComponent } from './temporal/temporal.component';
 import { ThemeComponent } from './theme/theme.component';
 import { TypeComponent } from './type/type.component';
 import { SemanticComponent } from './semantic/semantic.component';
+import { SimilarityComponent } from './similarity/similarity.component';
 
 
 class EditorRegistry {
@@ -83,6 +85,7 @@ class CodecFactory {
         this.codecs.push(new ExtentCodec());
         this.codecs.push(new TemporalCodec());
         this.codecs.push(new SemanticCodec());
+        this.codecs.push(new SimilarityCodec(http));
     }
 
     get () : Codec {
@@ -113,6 +116,7 @@ export {
     ThemeComponent,
     TypeComponent,
     SemanticComponent,
+    SimilarityComponent,
     FreeTextCodec,
     TypeCodec,
     KeywordCodec,
@@ -122,5 +126,6 @@ export {
     CreatorCodec,
     ExtentCodec,
     TemporalCodec,
-    SemanticCodec
+    SemanticCodec,
+    SimilarityCodec
 }

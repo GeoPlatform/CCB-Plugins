@@ -5,7 +5,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" [ngClass]="{active:isActive('community')}"
-            (click)="setActive('community')">Community</a>
+            (click)="setActive('community')">Site Content</a>
     </li>
     <!-- <li class="nav-item">
         <a class="nav-link" [ngClass]="{active:isActive('ckan')}"
@@ -30,11 +30,8 @@
     </div> -->
 </div>
 
-
-
-<hr>
-
 <div *ngIf="isDevEnv()">
+    <hr>
     <h5>Debug Output <small>this only appears in development</small></h5>
     {{constraints.constraints | json}}
 </div>
