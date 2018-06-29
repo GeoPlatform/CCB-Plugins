@@ -109,6 +109,11 @@ button.btn.btn-sm {
     padding: 0;                 /* in theme              */
 }
 
+.c-constraint__editor .input-group-slick {
+    width: 100%;
+}
+
+
 
 
 .c-toolbar { }

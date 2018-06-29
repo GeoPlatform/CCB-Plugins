@@ -17,6 +17,8 @@ import {
 import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { Constraints, Constraint } from '../../models/constraint';
 import { CreatorCodec } from '../../constraints/creator/codec';
+import { SimilarityCodec } from '../../constraints/similarity/codec';
+
 import { PagingEvent } from '../../shared/paging/paging.component';
 // import { ServerRoutes } from '../../server-routes.enum'
 import { environment } from '../../../environments/environment';
@@ -155,6 +157,11 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
      */
     addCreatorConstraint(username) {
         let constraint = new CreatorCodec().toConstraint(username);
+        this.constraints.set(constraint);
+    }
+
+    findSimilarTo(item) {
+        let constraint = new SimilarityCodec(this.http).toConstraint(item);
         this.constraints.set(constraint);
     }
 
