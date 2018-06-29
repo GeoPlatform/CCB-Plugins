@@ -90,6 +90,18 @@ button.btn.btn-sm {
 }
 
 
+/* here to override Portal Theme overriding this plugin's style */
+.btn-outline-danger {
+    color: #dc3545!important;
+    background-color: transparent!important;
+    background-image: none!important;
+    border-color: #dc3545!important;
+}
+.btn-outline-danger:hover {
+    color: #fff!important;
+}
+
+
 
 
 
@@ -110,7 +122,7 @@ button.btn.btn-sm {
 }
 
 .c-constraint__editor .input-group-slick {
-    width: 100%;
+    width: 100% !important; /* override Portal Theme's usage of "width:fit-content" */
 }
 
 

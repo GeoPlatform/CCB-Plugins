@@ -15,7 +15,7 @@ export class CCBService {
     private usersList : { id: number; label: string }[] = [] as { id: number; label: string }[];
 
     constructor(private http : HttpClient) {
-        this.baseUrl = '/wp-json/wp/v2';
+        this.baseUrl = Config.wpUrl + '/wp-json/wp/v2';
         this.updateUserList();
     }
 
