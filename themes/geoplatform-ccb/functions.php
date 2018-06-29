@@ -658,27 +658,29 @@ function geop_ccb_custom_wysiwyg_save_postdata($post_id){
 add_action('save_post', 'geop_ccb_custom_wysiwyg_save_postdata');
 
 
-//Making Category description pages WYSIWYG
-//https://paulund.co.uk/add-tinymce-editor-category-description
 
-/* Plugin Name: Tinymce Category Description 
-Description: Adds a tinymce editor to the category description box 
-Author: Paulund 
-Author URI: http://www.paulund.co.uk 
-Version: 1.0 License: GPL2 
-*/ 
-/* Copyright (C) Year Author Email This program is free software; 
-you can redistribute it and/or modify it under the terms of the 
-GNU General Public License, version 2, as published by the Free 
-Software Foundation. This program is distributed in the hope 
-that it will be useful, but WITHOUT ANY WARRANTY; without even 
-the implied warranty of MERCHANTABILITY or FITNESS FOR A 
-PARTICULAR PURPOSE. See the GNU General Public License for 
-more details. You should have received a copy of the GNU 
-General Public License along with this program; if not, 
-write to the 
-Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA */
-
+/*  */
+/**
+ * Making Category description pages WYSIWYG
+ * 
+ * @link https://paulund.co.uk/add-tinymce-editor-category-description
+ * 
+ * Author: Paulund 
+ * Author URI: http://www.paulund.co.uk 
+ * Version: 1.0 License: GPL2 
+ * 
+ * Copyright (C) Year Author Email This program is free software; 
+ * you can redistribute it and/or modify it under the terms of the 
+ * GNU General Public License, version 2, as published by the Free 
+ * Software Foundation. This program is distributed in the hope 
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even 
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A 
+ * PARTICULAR PURPOSE. See the GNU General Public License for 
+ * more details. You should have received a copy of the GNU 
+ * General Public License along with this program; if not, 
+ * write to the 
+ * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+ */
 remove_filter( 'pre_term_description', 'wp_filter_kses' );
 remove_filter( 'term_description', 'wp_kses_data' );
 
@@ -1103,6 +1105,8 @@ $GP_TAX_META -> init();
  * Thumbnail column added to category admin.
  *
  * Functionality inspired by categories-images plugin.
+ * 
+ * @link https://wordpress.org/plugins/categories-images/
  *
  * @access public
  * @param mixed $columns
@@ -1124,7 +1128,8 @@ function geopccb_category_column_filter( $columns ) {
  * Thumbnail added to category admin column, or default if not applicable.
  *
  * Functionality inspired by categories-images plugin.
- *
+ * @link https://wordpress.org/plugins/categories-images/
+ * 
  * @access public
  * @param mixed $columns
  * @param mixed $column
@@ -1166,7 +1171,6 @@ function geop_ccb_get_option_defaults() {
 		'call2action_text_setting' => 'Learn More',
 		'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
 		'map_gallery_env_choice_setting' => 'prod',
-		'option_3' => 'value_3',
 	);
 	return apply_filters( 'geop_ccb_option_defaults', $defaults );
 }
