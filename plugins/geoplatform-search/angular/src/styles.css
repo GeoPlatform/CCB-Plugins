@@ -90,6 +90,25 @@ button.btn.btn-sm {
 }
 
 
+/* here to override Portal Theme overriding this plugin's style */
+.btn-outline-danger {
+    color: #dc3545!important;
+    background-color: transparent!important;
+    background-image: none!important;
+    border-color: #dc3545!important;
+}
+
+
+
+
+
+
+.input-group-slick {
+    width: 100% !important; /* override Portal Theme's usage of "width:fit-content" */
+}
+
+
+
 
 
 
@@ -109,9 +128,6 @@ button.btn.btn-sm {
     padding: 0;                 /* in theme              */
 }
 
-.c-constraint__editor .input-group-slick {
-    width: 100%;
-}
 
 
 
@@ -545,19 +561,19 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 .c-results-item--attachment .svg-icon svg path { stroke: #777; }
 
 
-.dcat-dataset .svg-icon svg path { fill: darkblue; }
-.regp-service .svg-icon svg path { fill: green; }
-.layer .svg-icon svg path { fill: lightblue; }
-.map .svg-icon svg path { fill: red; }
-.gallery .svg-icon svg path { fill: orange; }
-.community .svg-icon svg path { fill: #909064; }
-.skos-concept .svg-icon svg path { fill: #ddd; }
-.skos-conceptscheme .svg-icon svg path { fill: #bbb; }
-.org-organization .svg-icon svg path { fill: #777; }
-.vcard-vcard .svg-icon svg path { fill: #333; }
-.page .svg-icon svg path { fill: #777; }
-.post .svg-icon svg path { fill: #777; }
-.attachment .svg-icon svg path { stroke: #777; }
+.gp-dcat-dataset .svg-icon svg path { fill: darkblue; }
+.gp-regp-service .svg-icon svg path { fill: green; }
+.gp-layer .svg-icon svg path { fill: lightblue; }
+.gp-map .svg-icon svg path { fill: red; }
+.gp-gallery .svg-icon svg path { fill: orange; }
+.gp-community .svg-icon svg path { fill: #909064; }
+.gp-skos-concept .svg-icon svg path { fill: #ddd; }
+.gp-skos-conceptscheme .svg-icon svg path { fill: #bbb; }
+.gp-org-organization .svg-icon svg path { fill: #777; }
+.gp-vcard-vcard .svg-icon svg path { fill: #333; }
+.gp-page .svg-icon svg path { fill: #777; }
+.gp-post .svg-icon svg path { fill: #777; }
+.gp-attachment .svg-icon svg path { stroke: #777; }
 
 
 
