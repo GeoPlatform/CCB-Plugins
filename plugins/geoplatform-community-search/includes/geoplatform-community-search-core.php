@@ -19,18 +19,18 @@
 
     <?php if ($geopcomsearch_searchVal == 1): ?>
     <div class='search-bar'>
-      <div class='search-bar-icon'><span class="dashicons dashicons-search"></span></div>
+      <div class='search-bar-icon'><span class="glyphicon glyphicon-search"></span></div>
       <div class='search-bar-input'><input class='<?php echo geopcomsearch_cname('input', $a['geopcomsearch_uuid']); ?> search-bar-input-text' placeholder='Search for items' type='text' /></div>
     </div>
     <?php endif ?>
 
     <?php if ($geopcomsearch_pagingVal == 1): ?>
     <div class="<?php echo geopcomsearch_cname('paging', $a['geopcomsearch_uuid']); ?> gp-search-paging">
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-left gp-search-paging-arrow-disabled' title='Go to first page'><span class="<?php echo geopcomsearch_cname('paging-arrow-first', $a['geopcomsearch_uuid']); ?> dashicons dashicons-controls-skipback"></span></div>
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to previous page'><span class="<?php echo geopcomsearch_cname('paging-arrow-previous', $a['geopcomsearch_uuid']); ?> dashicons dashicons-controls-back"></span></div>
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-left gp-search-paging-arrow-disabled' title='Go to first page'><span class="<?php echo geopcomsearch_cname('paging-arrow-first', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-fast-backward"></span></div>
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to previous page'><span class="<?php echo geopcomsearch_cname('paging-arrow-previous', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-backward"></span></div>
       <div class='<?php echo geopcomsearch_cname('paging-text', $a['geopcomsearch_uuid']); ?> gp-search-paging-text'></div>
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to next page'><span class="<?php echo geopcomsearch_cname('paging-arrow-next', $a['geopcomsearch_uuid']); ?> dashicons dashicons-controls-forward"></span></div>
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-right gp-search-paging-arrow-disabled' title='Go to last page'><span class="<?php echo geopcomsearch_cname('paging-arrow-last', $a['geopcomsearch_uuid']); ?> dashicons dashicons-controls-skipforward"></span></div>
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to next page'><span class="<?php echo geopcomsearch_cname('paging-arrow-next', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-forward"></span></div>
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-right gp-search-paging-arrow-disabled' title='Go to last page'><span class="<?php echo geopcomsearch_cname('paging-arrow-last', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-fast-forward"></span></div>
     </div>
     <?php endif ?>
 
@@ -166,7 +166,7 @@
           html.push("<div style='max-width:" + width + "px;'class='modified'>Modified: " + new Date(objs[i].modified).toLocaleString() + "</div>");
           html.push("</div>");
           html.push("<div class='right'>");
-          html.push("<a href='" + oeLink + "' target='_blank'><span class='dashicons dashicons-info'></span></a>");
+          html.push("<a href='" + oeLink + "' target='_blank'><span class='glyphicon glyphicon-info-sign' style='font-size:20px'></span></a>");
           html.push("</div>");
           html.push("</div>");
           html.push("</li>");
