@@ -24,15 +24,18 @@
 
 
   <div class="c-pagination">
-      <span>{{totalResults}} orgs</span>
-      <span>{{listQuery.getPageSize()}} per page</span>
+      <span>{{totalResults}} total</span>
+      <span> (<em>max {{listQuery.getPageSize()}} per page</em>)</span>
       <div>
-          <button type="button" class="btn btn-sm" (click)="previousPage()">&lt;&lt;</button>
-          <span>
-              {{listQuery.getPage()*listQuery.getPageSize()+1}} -
-              {{listQuery.getPage()*listQuery.getPageSize()+listQuery.getPageSize()}}
-          </span>
-          <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
+          <span>Showing {{getPageStart()}} - {{getPageEnd()}}</span>
+          <button type="button" class="btn btn-sm"
+            *ngIf="listQuery.getPage()>0" (click)="previousPage()">
+            &lt;&lt;
+          </button>
+          <button type="button" class="btn btn-sm"
+            *ngIf="hasNext()" (click)="nextPage()">
+            &gt;&gt;
+          </button>
       </div>
   </div>
 

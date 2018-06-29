@@ -49,4 +49,17 @@ implements OnInit, OnDestroy, ConstraintEditor {
     apply() {
         super.apply(this.constraints);
     }
+
+    getPageStart() {
+        return this.listQuery.getPage() * this.listQuery.getPageSize()+1;
+    }
+    getPageEnd() {
+        return Math.min(
+            this.listQuery.getPage() * this.listQuery.getPageSize() + this.listQuery.getPageSize(),
+            this.totalResults
+        );
+    }
+    hasNext() {
+        return this.totalResults > this.getPageEnd();
+    }
 }

@@ -6,7 +6,9 @@
                 placeholder="Search the GeoPlatform"
                 [(ngModel)]="freeText"
                 (keyup.enter)="onFreeTextChange()">
-            <span class="fa fa-times" (click)="freeText=null;onFreeTextChange()"></span>
+            <span class="fa fa-times"
+                *ngIf="freeText && freeText.length"
+                (click)="freeText=null;onFreeTextChange()"></span>
         </div>
 
         <button type="button"
