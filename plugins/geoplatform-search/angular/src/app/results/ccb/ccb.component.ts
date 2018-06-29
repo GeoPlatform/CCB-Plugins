@@ -11,6 +11,8 @@ import { CCBService } from '../../shared/ccb.service';
 import { Constraints, Constraint } from '../../models/constraint';
 import { CreatorCodec } from '../../constraints/creator/codec';
 import { PagingEvent } from '../../shared/paging/paging.component';
+// import { ServerRoutes } from '../../server-routes.enum'
+import { environment } from "../../../environments/environment";
 
 @Component({
   selector: 'results-ccb',
@@ -21,7 +23,7 @@ export class CcbComponent implements OnInit {
 
     @Input() constraints: Constraints;
 
-    private service : CCBService;
+    public service : CCBService;
     private listener : ISubscription;
     public totalResults : number = 0;
     private defaultQuery : Query;
@@ -172,7 +174,8 @@ export class CcbComponent implements OnInit {
      *
      */
     getIconPath(item) {
-        return `/assets/${item.type}.svg`;
+        // return `../${ServerRoutes.ASSETS}${item.type}.svg`;
+        return `../${environment.assets}${item.type}.svg`;
     }
 
     isActive(id) { return this.currentTab === id; }

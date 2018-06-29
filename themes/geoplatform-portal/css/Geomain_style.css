@@ -5746,3 +5746,32 @@ per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
 	max-width: 100%;
 	height: auto;
 }
+
+/*--------------------------------------------------------------
+# updated CSS for DT-1911
+per https://geoplatform.atlassian.net/browse/DT-1911
+--------------------------------------------------------------*/
+.input-group-slick.input-group-slick--lg
+
+{ font-size: 1.25em; }
+.input-group-slick.input-group-slick--lg > .glyphicon
+
+{ top: 0.875em; }
+.input-group-slick.input-group-slick--lg > .form-control
+
+{ height: 2.25em; }
+.input-group-slick.input-group-slick--lg > .form-control:not(:first-child)
+
+{ padding-left: 2em; }
+.input-group-slick.input-group-slick--lg > .btn
+
+{ font-size: inherit; }
+body .form-control.input-lg
+
+{ font-size: 1.25em; height: 2.875em; padding: 0.625em 1em; }
+.search.section--linked
+
+{ background: #fff; }
+.search.section--linked .input-group-slick .form-control
+
+{ padding-right: 4em; }

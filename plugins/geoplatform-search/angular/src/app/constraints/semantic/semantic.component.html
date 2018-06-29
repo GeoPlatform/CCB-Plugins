@@ -6,38 +6,32 @@
     <br>
 
     <label for="semFilter">Find Concepts</label>
-    <!-- <input type="text" id="semFilter" placeholder="Enter keywords"
-      [(ngModel)]="listFilter"
-      (keyup.enter)="refreshOptions()">
 
-      <hr>
-    -->
-
-      <ngbd-typeahead-http [service]="service"
-        [formatter]="getSuggestionLabel"
-        (resultSelected)="selectSuggestion($event)">
-      </ngbd-typeahead-http>
-
-      <a *ngFor="let option of selections" class="list-item">{{option.label}}</a>
-
-    <!-- <div class="c-pagination">
-        <span>{{totalResults}} options</span>
-        <span>{{listQuery.getPageSize()}} per page</span>
+    <ng-template #semanticTypeaheadTemplate let-r="result" let-t="term">
         <div>
-            <button type="button" class="btn btn-sm" (click)="previousPage()">&lt;&lt;</button>
-            <span>
-                {{listQuery.getPage()*listQuery.getPageSize()+1}} -
-                {{listQuery.getPage()*listQuery.getPageSize()+listQuery.getPageSize()}}
-            </span>
-            <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
+            <span class="u-break--all t-text--strong u-pd-bottom--sm">{{r.prefLabel}}</span>
+            <br>
+            <span class="u-break--all u-text--sm t-text--italic">{{r.uri}}</span>
         </div>
+    </ng-template>
+    <ngbd-typeahead-http [service]="service"
+        [formatter]="getSuggestionLabel"
+        (resultSelected)="selectSuggestion($event)"
+        [template]="semanticTypeaheadTemplate"
+        [failMessage]="'Sorry, suggestions could not be loaded.'">
+    </ngbd-typeahead-http>
+
+    <div *ngIf="searchError" class="t-bg--danger t-fg--white">
+        {{searchError.message}}
     </div>
-    <a *ngFor="let option of resultsObs$ | async"
-      class="list-item"
-      [ngClass]="{selected:isSelected(option)}"
-      (click)="select(option)">
-        {{option.label}}
-    </a> -->
+
+    <div *ngFor="let option of selections" class="list-item">
+        <button type="button" class="btn btn-link btn-sm" (click)="select(option)">
+            <span class="far fa-times-circle t-fg--danger"></span>
+        </button>
+        {{option.label}}<br>
+        <span class="u-break--all u-text--sm">{{option.uri}}</span>
+    </div>
 
     <footer>
         <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>

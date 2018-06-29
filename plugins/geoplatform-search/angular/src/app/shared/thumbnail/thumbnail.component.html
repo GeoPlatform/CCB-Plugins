@@ -1,9 +1,10 @@
 
-<img src="/assets/image-404.png" *ngIf="!source||(!source.url&&!source.contentData)">
+<img src="{{fallback}}" *ngIf="!source||(!source.url&&!source.contentData)">
 
-<img src="source.url" *ngIf="source.url">
+<img src="source.url" *ngIf="source.url" fallback="{{fallback}}">
 
 <img *ngIf="source.contentData"
     [style.background-size]="contain"
     [style.background-repeat]="no-repeat"
-    [style.background-image]="getBackgroundImage()">
+    [style.background-image]="getBackgroundImage()"
+    fallback="{{fallback}}">

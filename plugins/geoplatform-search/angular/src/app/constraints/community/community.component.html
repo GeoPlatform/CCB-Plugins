@@ -1,0 +1,49 @@
+<div class="c-constraint__editor">
+  <p>Select one or more communities from the list below and click "Apply"</p>
+  <br><br>
+
+  <label for="pubsFilter">Filter communities</label>
+  <div class="input-group-slick">
+      <span class="fa fa-search"></span>
+      <input type="text" id="pubsFilter"
+        class="form-control"
+        placeholder="Find community by name..."
+        [(ngModel)]="listFilter"
+        (keyup.enter)="refreshOptions()">
+      <button type="button" class="btn btn-default" (click)="refreshOptions()">Find</button>
+  </div>
+  <hr>
+
+
+  <!-- display error message if one is encountered -->
+  <div *ngIf="error" class="c-message--error">
+    <header>{{error.error}}</header>
+    <main>{{error.message}}</main>
+    <footer><a (click)="error=null">DISMISS</a></footer>
+  </div>
+
+
+  <div class="c-pagination">
+      <span>{{totalResults}} communities</span>
+      <span>{{listQuery.getPageSize()}} per page</span>
+      <div>
+          <button type="button" class="btn btn-sm" (click)="previousPage()">&lt;&lt;</button>
+          <span>
+              {{listQuery.getPage()*listQuery.getPageSize()+1}} -
+              {{listQuery.getPage()*listQuery.getPageSize()+listQuery.getPageSize()}}
+          </span>
+          <button type="button" class="btn btn-sm" (click)="nextPage()">&gt;&gt;</button>
+      </div>
+  </div>
+
+  <a *ngFor="let community of resultsObs$ | async"
+    class="list-item"
+    [ngClass]="{selected:isSelected(community)}"
+    (click)="select(community)">
+      {{community.label||community.title||"Un-titled Community"}}
+  </a>
+
+  <footer>
+      <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
+  </footer>
+</div>

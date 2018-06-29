@@ -5,18 +5,22 @@ import { Constraint, CompoundConstraint, Constraints } from '../../models/constr
 import { Codec } from '../../models/codec';
 
 
-const KEY = "temporal";
-const BEGINS = "begins";
-const ENDS = "ends";
+export const Constants = {
+    KEY: "temporal",
+    BEGINS: "begins",
+    ENDS: "ends"
+};
 
 export class TemporalCodec implements Codec {
 
     constructor() { }
 
     parseParams(params: Params, constraints?: Constraints) : Constraint {
-        let value = {};
-        value[BEGINS] = params[BEGINS];
-        value[ENDS] = params[ENDS];
+        let start = params[Constants.BEGINS];
+        let end = params[Constants.ENDS];
+        let value = start || end ? {} : null;
+        if(start) value[Constants.BEGINS] = start;
+        if(end) value[Constants.ENDS] = end;
         let constraint = this.toConstraint(value);
         if(constraints) constraints.set(constraint);
         return constraint;
@@ -24,19 +28,16 @@ export class TemporalCodec implements Codec {
 
     setParam(params: Params, constraints: Constraints) {
 
-        delete params[BEGINS];
-        delete params[ENDS];
+        delete params[Constants.BEGINS];
+        delete params[Constants.ENDS];
 
-        let constraint = constraints.get(KEY);
+        let constraint = constraints.get(Constants.KEY);
         if(constraint) {
-            params[BEGINS] = constraint.value[0].value;
-            params[ENDS] = constraint.value[1].value;
-        } else {
-            constraint = constraints.get(QueryParameters.BEGINS);
-            if(constraint) params[BEGINS] = constraint.value;
-            else {
-                constraint = constraints.get(QueryParameters.ENDS);
-                if(constraint) params[ENDS] = constraint.value;
+            if(constraint.value[0].value) {
+                params[Constants.BEGINS] = this.formatDateStr(constraint.value[0].value);
+            }
+            if(constraint.value[1].value) {
+                params[Constants.ENDS] = this.formatDateStr(constraint.value[1].value);
             }
         }
     }
@@ -44,25 +45,15 @@ export class TemporalCodec implements Codec {
     getValue(constraints: Constraints) : any {
         if(!constraints) return null;
 
-        let constraint = constraints.get(KEY);
+        let constraint = constraints.get(Constants.KEY);
         if(constraint) {
             let value = {};
-            value[BEGINS] = constraint.value[0].value;
-            value[ENDS] = constraint.value[1].value;
-            return value;
-        }
-
-        constraint = constraints.get(QueryParameters.BEGINS);
-        if(constraint) {
-            let value = {};
-            value[BEGINS] = constraint.value;
-            return value;
-        }
-
-        constraint = constraints.get(QueryParameters.ENDS);
-        if(constraint) {
-            let value = {};
-            value[ENDS] = constraint.value;
+            if(constraint.value[0].value) {
+                value[Constants.BEGINS] = this.formatDateStr(constraint.value[0].value);
+            }
+            if(constraint.value[1].value) {
+                value[Constants.ENDS] = this.formatDateStr(constraint.value[1].value);
+            }
             return value;
         }
 
@@ -71,29 +62,42 @@ export class TemporalCodec implements Codec {
 
     toString(constraints: Constraints) : string {
         let result = '';
-        let value = this.getValue(constraints);
-        if(value && value[BEGINS])  result += 'Beginning ' + value[BEGINS] + ' ';
-        if(value && value[ENDS])    result += 'Ending ' + value[ENDS];
+        let value = this.getValue(constraints); //will format timestamps as strings
+        if(value && value[Constants.BEGINS])
+            result += '<div>Beginning ' + value[Constants.BEGINS] + ' </div>';
+        if(value && value[Constants.ENDS])
+            result += '<div>Ending ' + value[Constants.ENDS] + '</div>';
         return result;
     }
 
     toConstraint(value : any) : Constraint {
         if(!value) return null;
 
-        let start = value && value[BEGINS] ?
-            new Constraint(QueryParameters.BEGINS, value[BEGINS], "Begins") : null;
-        let end = value && value[ENDS] ?
-            new Constraint(QueryParameters.ENDS, value[ENDS], "Ends") : null;
+        let start = new Constraint(
+            QueryParameters.BEGINS,
+            value && value[Constants.BEGINS] ? Date.parse(value[Constants.BEGINS]) : null,
+            "Begins"
+        );
+        let end = new Constraint(
+            QueryParameters.ENDS,
+            value && value[Constants.ENDS] ? Date.parse(value[Constants.ENDS]) : null,
+            "Ends"
+        );
 
-        if(start && end) {
-            return new CompoundConstraint(KEY, [start,end], "Temporal Extent");
-        } else if(start) {
-            return start;
-        } else if(end) {
-            return end;
-        }
+        return new CompoundConstraint(Constants.KEY, [start,end], "Temporal Extent");
 
-        return null;
     }
 
+
+    formatDateStr(dateValue) {
+        let date = dateValue;
+        if(!date) return '';
+
+        if(typeof(date) === 'number') date = new Date(date);
+        else if(typeof(date.toISOString()) === 'undefined') {
+            date = Date.parse(date);
+        }
+        if(!date) return '';
+        return date.toISOString().split('T')[0];
+    }
 }

@@ -3,10 +3,15 @@
   <br><br>
 
   <label for="themesFilter">Filter themes</label>
-  <input type="text" id="themesFilter" placeholder="Specify themes..."
-    [(ngModel)]="listFilter"
-    (keyup.enter)="refreshOptions()">
-
+  <div class="input-group-slick">
+      <span class="fa fa-search"></span>
+      <input type="text" id="themesFilter"
+        class="form-control"
+        placeholder="Specify themes..."
+        [(ngModel)]="listFilter"
+        (keyup.enter)="refreshOptions()">
+      <button type="button" class="btn btn-default" (click)="refreshOptions()">Find</button>
+  </div>    
   <hr>
 
   <!-- display error message if one is encountered -->
@@ -41,5 +46,5 @@
   <footer>
       <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
   </footer>
-  
+
 </div>

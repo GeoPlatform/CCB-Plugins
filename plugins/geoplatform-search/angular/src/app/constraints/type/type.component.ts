@@ -13,6 +13,9 @@ import { Codec } from '../../models/codec';
 
 import { TypeCodec } from './codec';
 
+// import { ServerRoutes } from '../../server-routes.enum'
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'constraint-types',
@@ -94,7 +97,8 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
             case 'posts':                   type =  'post'; break;
             case 'media':                   type =  'attachment'; break;
         }
-        return `/assets/${type}.svg`;
+        return `../${environment.assets}${type}.svg`;
+        // return `../${ServerRoutes.ASSETS}${type}.svg`;
     }
 
 }

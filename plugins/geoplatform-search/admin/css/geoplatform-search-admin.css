@@ -10,3 +10,19 @@
    padding: 9px 0 4px;
    line-height: 29px;
  }
+
+ .input-group-slick.input-group-slick--lg {
+     font-size: 1.25em;
+ }
+ .input-group-slick.input-group-slick--lg > .glyphicon {
+     top: 0.875em;
+ }
+ .input-group-slick.input-group-slick--lg > .form-control {
+     height: 2.25em;
+ }
+ .input-group-slick.input-group-slick--lg > .form-control:not(:first-child) {
+     padding-left: 2em;
+ }
+ .input-group-slick.input-group-slick--lg > .btn {
+     font-size: inherit;
+ }

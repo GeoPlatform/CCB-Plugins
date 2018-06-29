@@ -11,6 +11,12 @@ https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/ -->
 <!--WP Features and Announcements-->
 <?php get_template_part( 'mainpage', get_post_format() ); ?>
 
+<!-- Search bar section from GeoPlatform only if plugin is active -->
+<?php
+  if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) ))
+    get_template_part( 'gpsearch', get_post_format() );
+?>
+
 <!-- Cornerstone Actions section from GeoPlatform-->
 <?php get_template_part( 'cornerstones', get_post_format() ); ?>
 

@@ -47,6 +47,8 @@ export class ItemListConstraint {
         if(this.types)
             this.listQuery.types(this.types);
 
+        this.configureQuery(this.listQuery);
+
         let selections = this.codec.getValue(constraints) as [string];
         if(selections && selections.length) {
             //resolve each id in selections to get object with label
@@ -66,6 +68,10 @@ export class ItemListConstraint {
         this.listFilter = null;
         this.resultsObs$ = null;
         this.resultsSrc = null;
+    }
+
+    configureQuery(query : Query) {
+        //implement in subclass
     }
 
     refreshOptions() {

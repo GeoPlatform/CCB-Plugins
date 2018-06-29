@@ -38,12 +38,24 @@ if [ -d "$DIRECTORY" ]; then
   pushd $DIRECTORY
     if [ -f docker-compose.yml ]; then
       docker-compose down #stops and removes containers
+      rm -rf docker-compose.yml
     fi
-    rm -rf *
   popd
 else
   mkdir $DIRECTORY
 fi
+
+##############################################################
+# Check for, create, and modifiy ownership of uploads folder #
+##############################################################
+UPLOAD_DIR=$DIRECTORY/uploads
+if [ ! -d "$UPLOAD_DIR" ]; then
+   pushd $DIRECTORY
+      mkdir uploads
+   popd
+fi
+chown -R root:docker $UPLOAD_DIR
+chmod -R 757 $UPLOAD_DIR
 
 #########################################
 # Setup github integration user account #
