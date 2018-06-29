@@ -226,7 +226,8 @@
 
 .gp-search .search-bar .search-bar-icon span
 {
-  font-size: 26px;
+  font-size: 20px;
+  color: #549BE6;
 }
 
 .gp-search .search-bar .search-bar-icon .dashicons-search
@@ -234,13 +235,14 @@
   color: #549BE6;
 }
 
+
 @media screen and (min-width: 800px)
 {
   .gp-search .gp-search-title { font-size: 18px; }
   .gp-search .search-bar .search-bar-input .search-bar-input-text { font-size: 14px; }
   .gp-search .gp-search-paging .gp-search-paging-text { font-size: 14px; }
   .gp-search .gp-search-error .gp-search-error-title { font-size: 18px; }
-  .gp-search .gp-search-paging .gp-search-paging-arrow span { font-size: 24px; }
+  .gp-search .gp-search-paging .gp-search-paging-arrow span { font-size: 20px; }
   .gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .left { font-size: 14px; }
   .gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .right span {  font-size: 24px; }
   .gp-search .gp-search-working .gp-search-working-content .gp-search-working-text { font-size: 14px; }
