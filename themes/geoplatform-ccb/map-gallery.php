@@ -44,18 +44,20 @@
 
         if( ! empty( $result ) ) {
           foreach($result['items'] as $map){
+            //set map ID
+            $map_id = $map['asset']['id'];
             switch ($gallery_link_env) {
               case 'sit':
-                $single_map = wp_remote_get( 'https://sit-ual.geoplatform.us/api/maps/'.$map['assetId'].'');
+                $single_map = wp_remote_get( 'https://sit-ual.geoplatform.us/api/maps/'.$map_id.'');
                 break;
               case 'stg':
-                $single_map = wp_remote_get( 'https://stg-ual.geoplatform.gov/api/maps/'.$map['assetId'].'');
+                $single_map = wp_remote_get( 'https://stg-ual.geoplatform.gov/api/maps/'.$map_id.'');
                 break;
               case 'prod':
-                $single_map = wp_remote_get( 'https://ual.geoplatform.gov/api/maps/'.$map['assetId'].'');
+                $single_map = wp_remote_get( 'https://ual.geoplatform.gov/api/maps/'.$map_id . '');
                 break;
               default:
-                $single_map = wp_remote_get( $GLOBALS['ual_url'] .'/api/maps/'.$map['assetId'].'');
+                $single_map = wp_remote_get( $GLOBALS['ual_url'] .'/api/maps/'.$map_id.'');
                 break;
                 }
             
@@ -78,16 +80,16 @@
             elseif (isset($single_result['thumbnail'])) {
               switch ($gallery_link_env) {
                 case 'sit':
-                  $thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map['assetId'] . "/thumbnail";
+                  $thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $map_id . "/thumbnail";
                   break;
                 case 'stg':
-                  $thumbnail = 'https://stg-ual.geoplatform.gov/api/maps/'. $map['assetId'] . "/thumbnail";
+                  $thumbnail = 'https://stg-ual.geoplatform.gov/api/maps/'. $map_id . "/thumbnail";
                   break;
                 case 'prod':
-                  $thumbnail = 'https://ual.geoplatform.gov/api/maps/'. $map['assetId'] . "/thumbnail";
+                  $thumbnail = 'https://ual.geoplatform.gov/api/maps/'. $map_id . "/thumbnail";
                   break;
                 default:
-                  $thumbnail = $GLOBALS['ual_url'] . '/api/maps/' . $map['assetId'] . "/thumbnail";
+                  $thumbnail = $GLOBALS['ual_url'] . '/api/maps/' . $map_id . "/thumbnail";
                   break;
                   }
               }
@@ -120,16 +122,16 @@
                         <?php } else{
                           switch ($gallery_link_env) {
                             case 'sit':
-                              $href = 'https://sit-viewer.geoplatform.us/?id=' . $map['assetId'];
+                              $href = 'https://sit-viewer.geoplatform.us/?id=' . $map_id;
                               break;
                             case 'stg':
-                              $href = 'https://stg-viewer.geoplatform.gov/?id=' . $map['assetId'];
+                              $href = 'https://stg-viewer.geoplatform.gov/?id=' . $map_id;
                               break;
                             case 'prod':
-                              $href = 'https://viewer.geoplatform.gov/?id=' . $map['assetId'];
+                              $href = 'https://viewer.geoplatform.gov/?id=' . $map_id;
                               break;
                             default:
-                              $href = $GLOBALS['viewer_url'] . '/?id=' . $map['assetId'];
+                              $href = $GLOBALS['viewer_url'] . '/?id=' . $map_id;
                               break;
                               }
                             ?>
