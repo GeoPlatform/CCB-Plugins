@@ -58,7 +58,7 @@ Using the Customizer, you can add a map gallery created in https://maps.geoplatf
  **Note:** This version still has SIT and STG choices for development for this gallery functionality. In later versions everything will default to PROD.  
 
 #### Map Plugin
-If you would like to dynamically add single maps from https://maps.geoplatform.gov, you can use our [Maps Plugin](), soon to be out on the Wordpress Marketplace. See the link provided for it's documentation and use.
+If you would like to dynamically add single maps from https://maps.geoplatform.gov, you can use our [Maps Plugin](https://wordpress.org/plugins/geoplatform-maps/), currently out on the Wordpress Marketplace. See the link provided for it's documentation and use.
 
 ### Page Categories and Tags
 Like Posts, Pages can also be assigned to one or more Categories and Tags with this theme. This works the same as adding a category or tag to a post.
