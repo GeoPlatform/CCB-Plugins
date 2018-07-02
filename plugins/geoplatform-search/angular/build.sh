@@ -14,7 +14,7 @@ ASSETDEST="../assets"
 # to suplement the new shiny "advanced" Angular tool.
 #
 # Thanks Google!
-ng build --prod
+ng build --prod --environment=${1:-prod}
 
 declare -a names=(
   "main"
@@ -42,4 +42,3 @@ cp $NGDIST/*.ttf $CSSDEST
 # Move assets as well!
 echo $ASSETDEST " <- " $NGDIST/assets
 cp $NGDIST/assets/* $ASSETDEST
-

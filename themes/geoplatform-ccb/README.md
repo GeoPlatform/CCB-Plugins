@@ -19,7 +19,6 @@ Geoplatform CCB offers a number a features not common for WordPress themes, incl
 * integration with other Geoplatform.gov services
 * Page Categories and Tags
 * banner WYSIWYG editor for front page, posts, and pages
-* Category Specific Sidebar Links
 * Front Page Categories  
 
 ### Enhanced capabilities
@@ -98,7 +97,7 @@ Licensed under the Apache License, Version 2.0 (the "License"); you may not use 
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-Geoplatform CCB Theme incorporates code from [Categories Images plugin](https://wordpress.org/plugins/categories-images/), Copyright 2018 Muhammad Said El Zahlan
+Geoplatform CCB Theme incorporates code from [Categories Images plugin](https://wordpress.org/plugins/categories-images/), Copyright 2018 Muhammad Said El Zahlan.
 Categories Images plugin is distributed under the terms of the GNU GPL
 
 Geoplatform CCB Theme incorporates code from [Paulunds Category Image Description](https://paulund.co.uk/add-tinymce-editor-category-description), Copyright 2014 Paulund. Category Image Description is distributed under the terms of the GNU GPL2

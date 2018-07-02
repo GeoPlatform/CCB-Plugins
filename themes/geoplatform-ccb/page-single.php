@@ -21,6 +21,6 @@
 
 <!-- the rest of the content -->
 <h5><?php the_tags();?></h5>
-<h5 class="blog-post-meta">Updated <?php the_modified_date(); ?></h5>
+<h5 class="blog-post-meta"><?php _e( 'Updated', 'geoplatform-ccb'); ?> <?php the_modified_date(); ?></h5>
 
 </article><!-- post-the_ID();-->

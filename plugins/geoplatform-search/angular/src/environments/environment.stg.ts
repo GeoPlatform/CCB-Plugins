@@ -7,5 +7,7 @@ export const environment = {
     production: true,
     env: 'stg',
     ualUrl: 'https://stg-ual.geoplatform.gov',
-    wpUrl: 'https://stg-ccb.geoplatform.gov'
+    wpUrl: 'https://stg-ccb.geoplatform.gov',
+    root: 'wp-content/plugins/geoplatform-search/',
+    assets: 'wp-content/plugins/geoplatform-search/assets/'
 };

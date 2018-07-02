@@ -27,7 +27,7 @@
 
         $customizerLink = get_theme_mod('map_gallery_link_box_setting', $theme_options['map_gallery_link_box_setting']);
         if (!$customizerLink ){
-          echo 'The Map Gallery Link in Customizer->Custom Links Section is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery. ';
+          _e( 'The Map Gallery Link in Customizer->Custom Links Section is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery.', 'geoplatform-ccb');
         }
         
         $link_scrub = wp_remote_get( ''.$customizerLink.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
@@ -36,7 +36,7 @@
         if(!empty($response)){
           $result = json_decode($response, true);
         }else{
-          $result = "This Gallery has no recent activity. Try adding some maps!";
+          $result = __('This Gallery has no recent activity. Try adding some maps!', 'geoplatform-ccb');
         }
 
         //if map gallery env radio is different than current env
@@ -67,7 +67,7 @@
             if(!empty($map_body)){
               $single_result = json_decode($map_body, true);
             }else{
-              $single_result = "The map did not load properly";
+              $single_result = __( 'The map did not load properly', 'geoplatform-ccb');
             }
             //for AGOL Maps
             //use isset() to get rid of php notices
@@ -94,7 +94,7 @@
 
                   //if the map doesn't have a thumbnail
                   else {
-                    $thumbnail = "Could not find image";
+                    $thumbnail = __( 'Could not find image.', 'geoplatform-ccb');
                     continue;
                     }
 

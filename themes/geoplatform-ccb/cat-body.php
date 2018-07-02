@@ -21,7 +21,7 @@
             <?php the_excerpt('',TRUE);?>
         </p>
       <br/>
-      <a class="btn btn-info" href="<?php the_permalink();?>">More Information</a>
+      <a class="btn btn-info" href="<?php the_permalink();?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
   </div><!--#svc-card__body-->
 </div><!--#svc-card-->
 <br />
@@ -34,7 +34,7 @@
             <?php the_excerpt('Read more',TRUE);?>
         </p>
       <br>
-      <a class="btn btn-info" href="<?php the_permalink();?>">More Information</a>
+      <a class="btn btn-info" href="<?php the_permalink();?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
   </div><!--#svc-card__body-->
 </div><!--#svc-card-->
 <br />

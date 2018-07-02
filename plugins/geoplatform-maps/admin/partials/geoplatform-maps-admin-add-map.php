@@ -127,8 +127,8 @@ if (!$geopmap_invalid_bool){
       $geopmap_map_description = $geopmap_result['description'];
       if (empty($geopmap_map_description)){
         $geopmap_map_description = $geopmap_result['title'];
-      if (empty($geopmap_map_description))
-        $geopmap_map_description = "This map does not have a description.";
+        if (empty($geopmap_map_description))
+          $geopmap_map_description = "This map does not have a description.";
       }
       $geopmap_map_thumbnail = $geopmap_ual_url . '/api/maps/'. $geopmap_map_id . "/thumbnail";
     }
@@ -143,6 +143,10 @@ if (!$geopmap_invalid_bool){
     if (is_numeric($geopmap_ual_map_width))
       $geopmap_shortcode .= " width='" . $geopmap_ual_map_width . "'";
     $geopmap_shortcode .= "]";
+
+    // Cuts off anything from in a map's description after the first new line,
+    // which was breaking the addition operation.
+    $geopmap_map_description = (explode("\n", $geopmap_map_description))[0];
 
     // Finally, the variables are added to the table in key/value pairs.
     $wpdb->insert($geopmap_table_name,

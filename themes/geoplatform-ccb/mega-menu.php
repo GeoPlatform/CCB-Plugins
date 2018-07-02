@@ -24,9 +24,9 @@
                             </div><!--#media-object-->
                         </div><!--#media-left-->
                         <div class="media-body">
-                            <p><em>Create a new account or log in using an existing account.</em></p>
-                            <a class="" href="<?php echo esc_url($GLOBALS['idp_url'] . "/modifyuser.html"); ?>" target="_blank">Register</a> a new account<br/>
-                            <a class="" onClick="login()">Sign In</a> to an existing account
+                            <p><em><?php _e( 'Create a new account or log in using an existing account.', 'geoplatform-ccb'); ?></em></p>
+                            <a class="" href="<?php echo esc_url($GLOBALS['idp_url'] . "/modifyuser.html"); ?>" target="_blank"><?php _e( 'Register', 'geoplatform-ccb'); ?></a><?php _e( ' a new account', 'geoplatform-ccb'); ?><br/>
+                            <a class="" onClick="login()"><?php _e( 'Sign In', 'geoplatform-ccb'); ?></a><?php _e( ' to an existing account', 'geoplatform-ccb'); ?>
                         </div><!--#media-body-->
                     </div><!--#media-->
             </div><!--#account-details visible-xs-->

@@ -46,11 +46,17 @@ class RecommenderTypeaheadService implements HttpTypeaheadService {
         if (term === '') return Observable.of([]);
 
         this.listQuery.q(term);
-        return fromPromise(this.service.suggest(this.listQuery))
-        .pipe(
+        let promise = this.service.suggest(this.listQuery)
+        // .then( response => return Observable.of(response.results||[]))
+        // .catch(e => {
+            // return Promise.reject(e)
+        // });
+        return fromPromise(promise).pipe(
             map((response:any) => response.results||[]),
             //catch and gracefully handle rejections
-            catchError(error => Observable.of([]))
+            catchError(error => {
+                return Observable.throw(error);
+            })
         );
     }
 }
@@ -85,6 +91,8 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
 
     public searching = false;
     public searchFailed = false;
+    public searchError : Error;
+    public failMessage : string = 'Sorry, suggestions could not be loaded.';
     public hideSearchingWhenUnsubscribed = new Observable(() => () => this.searching = false);
 
 
@@ -122,26 +130,6 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
             this.constraints.set(constraint);
         }
     }
-
-    search (text$: Observable<string>) {
-        text$.pipe(
-            debounceTime(300),
-            distinctUntilChanged(),
-            tap(() => this.searching = true),
-            switchMap( (term:string) : Observable<any> => {
-                return this.service.search(term).pipe(
-                    tap(() => this.searchFailed = false),
-                    catchError(() => {
-                        this.searchFailed = true;
-                        return Observable.of([]);
-                    }))
-            }),
-            tap(() => this.searching = false)
-            // ,
-            // merge(this.hideSearchingWhenUnsubscribed)
-        );
-    }
-
 
     getSuggestionLabel (result) {
         return result.label;

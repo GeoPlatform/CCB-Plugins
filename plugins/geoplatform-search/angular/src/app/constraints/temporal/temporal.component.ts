@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angu
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
-import { TemporalCodec } from './codec';
+import { Constants, TemporalCodec } from './codec';
 
 @Component({
   selector: 'constraint-temporal',
@@ -15,8 +15,8 @@ export class TemporalComponent implements OnInit {
     @Input() constraints : Constraints;
     @Output() onConstraintEvent : EventEmitter<Constraint> = new EventEmitter<Constraint>();
 
-    public startDate : any;
-    public endDate : any;
+    public startDate : string;
+    public endDate : string;
     private codec : TemporalCodec = new TemporalCodec();
 
     constructor() { }
@@ -24,18 +24,26 @@ export class TemporalComponent implements OnInit {
     ngOnInit() {
         let value = this.codec.getValue(this.constraints);
         if(value) {
-            this.startDate = value.startDate;
-            this.endDate = value.endDate;
+            if(value.begins) {
+                let d = new Date(value.begins);
+                this.startDate = d.toISOString().split('T')[0];
+            }
+            if(value.ends) {
+                let d = new Date(value.ends);
+                this.endDate = d.toISOString().split('T')[0];
+            }
         }
     }
 
     getCodec() : Codec { return this.codec; }
 
     apply() {
-        let constraint = this.codec.toConstraint({
-            startDate: this.startDate, endDate: this.endDate
-        });
+        let value = {};
+        value[Constants.BEGINS] = this.startDate;
+        value[Constants.ENDS] = this.endDate;
+        let constraint = this.codec.toConstraint(value);
         this.constraints.set(constraint);
     }
+
 
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { environment } from '../../../environments/environment';
+
 @Component({
     selector: 'debug-json',
     templateUrl: './debug.component.html',
@@ -8,11 +10,12 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DebugComponent implements OnInit {
 
     @Input() json: any;
+    public isDev : boolean = false;
 
     constructor() { }
 
     ngOnInit() {
-
+        this.isDev = !environment.production;
     }
 
     toHTML(arg?: any) {

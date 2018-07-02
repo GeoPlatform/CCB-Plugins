@@ -184,12 +184,12 @@ a.list-item, .list-item a {
 }
 .list-item.selected {
     background-color: #4A90E2;
-    color: #fff;
+    color: #fff!important;
     border-color: #4A90E2;
 }
 a.list-item.selected,
 .list-item.selected a {
-    color: #fff;
+    color: #fff!important;
 }
 
 

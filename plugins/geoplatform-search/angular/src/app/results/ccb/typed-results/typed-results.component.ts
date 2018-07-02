@@ -10,7 +10,8 @@ import { CCBService } from '../../../shared/ccb.service';
 import { CreatorCodec } from '../../../constraints/creator/codec';
 import { Constraints, Constraint } from '../../../models/constraint';
 import { PagingEvent } from '../../../shared/paging/paging.component';
-import { ServerRoutes } from '../../../server-routes.enum'
+// import { ServerRoutes } from '../../../server-routes.enum'
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'ccb-typed-results',
@@ -32,6 +33,8 @@ export class TypedResultsComponent implements OnInit {
     public results : any[];
     public totalResults : number = 0;
     public error: {label:string, message: string, code?:number} = null;
+
+    public fallbackImg = `../${environment.assets}img-404.png`;
 
     constructor() {
 
@@ -83,7 +86,7 @@ export class TypedResultsComponent implements OnInit {
 
         this.service.search(this.query)
         .then( response => {
-            console.log(`${this.type} got back ${response.totalResults} hits`);
+            // console.log(`${this.type} got back ${response.totalResults} hits`);
             this.totalResults = response.totalResults;
             this.results = response.results;
         })
@@ -135,7 +138,8 @@ export class TypedResultsComponent implements OnInit {
      *
      */
     getIconPath(item) {
-        return `../${ServerRoutes.ASSETS}${item.type}.svg`;
+        // return `../${ServerRoutes.ASSETS}${item.type}.svg`;
+        return `../${environment.assets}${item.type}.svg`;
     }
 
 }

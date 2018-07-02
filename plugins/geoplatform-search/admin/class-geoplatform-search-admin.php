@@ -153,9 +153,6 @@ class Geop_Search_Admin {
 	public function validate($input) {
 	    // All checkboxes inputs
 	    $valid = array();
-	    //Validate
-			//$valid['map_env'] = sanitize_text_field($input['map_env']);
-			//$valid['map_env_select'] = sanitize_option($input['map_env_select']);
 	    $valid['ual_map_id'] = sanitize_text_field($input['ual_map_id']);
 	    return $valid;
 	 }

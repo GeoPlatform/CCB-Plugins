@@ -17,8 +17,13 @@
     <ngbd-typeahead-http [service]="service"
         [formatter]="getSuggestionLabel"
         (resultSelected)="selectSuggestion($event)"
-        [template]="semanticTypeaheadTemplate">
+        [template]="semanticTypeaheadTemplate"
+        [failMessage]="'Sorry, suggestions could not be loaded.'">
     </ngbd-typeahead-http>
+
+    <div *ngIf="searchError" class="t-bg--danger t-fg--white">
+        {{searchError.message}}
+    </div>
 
     <div *ngFor="let option of selections" class="list-item">
         <button type="button" class="btn btn-link btn-sm" (click)="select(option)">

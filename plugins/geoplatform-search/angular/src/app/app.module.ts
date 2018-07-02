@@ -6,16 +6,21 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { ServerRoutes } from './server-routes.enum';
+// import { ServerRoutes } from './server-routes.enum';
 
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
+
+//configure the necessary environment variables needed by GeoPlatformClient
+import { environment } from '../environments/environment';
+
+
 
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
 // and declaring the new paths for the images here globally, the
 // images can be referenced successfully across the rest of the app
 import * as L from 'leaflet';
-L.Icon.Default.imagePath = ServerRoutes.ASSETS
+L.Icon.Default.imagePath = environment.assets; //ServerRoutes.ASSETS
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'marker-icon-2x.png',
   iconUrl: 'marker-icon.png',
@@ -23,9 +28,6 @@ L.Icon.Default.mergeOptions({
 });
 
 import { Config } from 'geoplatform.client';
-
-//configure the necessary environment variables needed by GeoPlatformClient
-import { environment } from '../environments/environment';
 
 
 import { AppComponent } from './app.component';
@@ -55,7 +57,10 @@ import {
 import { CCBService } from './shared/ccb.service';
 
 import { NgbdTypeaheadHttp } from './shared/typeahead';
-import { ThumbnailComponent } from './shared/thumbnail/thumbnail.component';
+import {
+    ImageFallbackDirective,
+    ThumbnailComponent
+} from './shared/thumbnail/thumbnail.component';
 import { DebugComponent } from './shared/debug/debug.component';
 import { PagingComponent } from './shared/paging/paging.component';
 import { TypedResultsComponent } from './results/ccb/typed-results/typed-results.component';
@@ -104,6 +109,7 @@ export function initializeApp() {
     SemanticComponent,
     EditorComponent,
     NgbdTypeaheadHttp,
+    ImageFallbackDirective,
     ThumbnailComponent,
     DebugComponent,
     PagingComponent,

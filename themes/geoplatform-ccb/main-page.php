@@ -21,15 +21,14 @@
 		        <div class="line"></div>
                 <div class="line-arrow"></div>
               <div class="title darkened">
-                Featured
+                <?php _e( 'Featured', 'geoplatform-ccb'); ?>
               </div>
         </h4>
         <div class="row">
           <div class="col-md-12">
             <?php
               $category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
-              $default_text_template = 'The category photo(s) above have a default image in them. If you would like to edit your category card photos,
-              please navigate to Posts(or Pages)->Categories to edit and set your specfic category image';
+              $default_text_template = __( "The category photo(s) above have a default image in them. If you would like to edit your category card photos, please navigate to Posts(or Pages)->Categories to edit and set your specfic category image", 'geoplatform-ccb');
               $image_set = false;
 
               //pagination
