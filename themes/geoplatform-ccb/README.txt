@@ -1,17 +1,17 @@
-# Geoplatform CCB (Community Core Bundle)
+=== Geoplatform CCB (Community Core Bundle) ===
 
-**Contributors:** kevins713, imagemattersllc  
-**Requires at least:** WordPress 4.6.4  
-**Tested up to:** WordPress 4.9.6  
-**Stable tag:** 3.0.5   
-**Version:** 3.1.2  
-**License:** Apache 2.0
-**License URI:** http://www.apache.org/licenses/LICENSE-2.0 
-**Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
+Contributors: kevins713, imagemattersllc  
+Requires at least: WordPress 4.6.4  
+Tested up to: WordPress 4.9.6  
+**Stable tag: 3.0.5   
+Version: 3.1.2  
+License: Apache 2.0
+License URI: http://www.apache.org/licenses/LICENSE-2.0 
+Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
 
 The Geoplatform Community Core Bundle theme is the core theme for WordPress sites hosted by Geoplatform.gov.
 
-## Description
+== Description ==
 
 Geoplatform CCB offers a number a features not common for WordPress themes, including:
 
@@ -21,7 +21,7 @@ Geoplatform CCB offers a number a features not common for WordPress themes, incl
 * banner WYSIWYG editor for front page, posts, and pages
 * Front Page Categories  
 
-### Enhanced capabilities
+**Enhanced capabilities**
 
 This theme gives higher capabilities to the default WordPress roles to give better use of the theme to those below Administrators. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities will be noted in this table below, and the enhanced roles we will prefix with GP-[Role].
 
@@ -43,8 +43,9 @@ This theme gives higher capabilities to the default WordPress roles to give bett
 |**read_private_pages**    | X       | X       | X            | X           |                
 |**upload_files**          | X       | X       | X            |             | |
 
-### Geoplatform Integration
-#### Map Gallery
+**Geoplatform Integration**
+
+**Map Gallery**
 Using the Customizer, you can add a map gallery created in https://maps.geoplatform.gov into the front page. Follow these steps to add a map gallery into the theme:
 
  1. Create a Map gallery in https://maps.geoplatform.gov.
@@ -57,36 +58,36 @@ Using the Customizer, you can add a map gallery created in https://maps.geoplatf
 
  **Note:** This version still has SIT and STG choices for development for this gallery functionality. In later versions everything will default to PROD.  
 
-#### Map Plugin
+**Map Plugin**
 If you would like to dynamically add single maps from https://maps.geoplatform.gov, you can use our [Maps Plugin](https://wordpress.org/plugins/geoplatform-maps/), currently out on the Wordpress Marketplace. See the link provided for it's documentation and use.
 
-### Page Categories and Tags
+**Page Categories and Tags**
 Like Posts, Pages can also be assigned to one or more Categories and Tags with this theme. This works the same as adding a category or tag to a post.
 
-### Banner WYSIWYG editor
+**Banner WYSIWYG editor**
 You can edit the main banner on the front page, and for all posts, pages, and category pages.
 
 * To edit the **Front Page** banner, navigate to the **Customizer -> Banner Area**. It uses the TinyMCE WYSIWYG editor, just like posts and pages. It also has a **Call to Action Button** that goes right below the content, that you can enable in that Customizer area.
 * **Posts** and **Pages** have another editor area right below the main content area called **"Banner Area Custom Content"**. Anything put in there will show up in that **Post** or **Pages** banner.
 * **Category Pages** have a **"Description"** area. Anything put in there will show up in the Category page's banner.   
 
-### Front Page Categories
+**Front Page Categories**
 The Front page of this theme is designed to showcase Categories of the site. Each category will show up with a default image. To change the Featured Image of each category, you need to navigate to the area where you can edit Categories (**Posts/Pages->Categories->[Your Category]**). It will show up in the Banner of that category as well as the front page card of that category.
 
 The front page organizes categories by name in ascending order, and show the first 12 categories in that organization structure. You can cycle through the categories with a **"More/Previous Categories"** Links below the cards. Later updates will incorporate dynamically being able to change the organization of these.
 
-## Frequently Asked Questions
+== Frequently Asked Questions ==
 
-* What is the Geoplatform Community Core Bundle?
+= What is the Geoplatform Community Core Bundle? =
 
 The Community Core Bundle (CCB) enables independent development of a self-contained community website (i.e., a Community Space) that operates on the infrastructure of the GeoPlatform. More info about CCB's and Geoplatform can be found [here.](https://www.geoplatform.gov/geoplatform-help/ccb/ccb-getting-started/#what_is_a_ccb)
 
-* Does this theme need to be active for other Geoplatform plugins to work?
+= Does this theme need to be active for other Geoplatform plugins to work? ==
 
 No, Geoplatform plugins work independently of the theme.
 
 
-## Copyright
+== Copyright ==
 
 GeoPlatform-CCB for use with GeoPlatform.gov products and general use.
 Copyright (C) 2018 Image Matters LLC
@@ -110,14 +111,14 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 **License:** MIT
 Source: (https://getbootstrap.com/docs/3.3/)
 
-## Changelog
+== Changelog ==
 
-### 3.1.2
+= 3.1.2 =
 * Released June 29, 2018
 
 Updated per requirements listed in [Wordpress Theme requirements](https://make.wordpress.org/themes/handbook/review/required/)
 
-#### Notable Changes
+* Notable Changes
  - Removed Category links
  - Integrated Category images
  - Now Child theme ready
@@ -127,7 +128,7 @@ Updated per requirements listed in [Wordpress Theme requirements](https://make.w
  - Theme now translatable
  - Significant code refactoring, security updates, and bug fixes
 
-### 3.1.0
+= 3.1.0 =
 * Released: June 5, 2018
 
 Initial submission on Wordpress.org. Previous versions were developed privately for Geoplatform.gov customers.
