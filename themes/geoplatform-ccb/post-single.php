@@ -1,3 +1,13 @@
+<?php
+/**
+ * The template for single post content
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
+ */
+?>
+
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<br />
 

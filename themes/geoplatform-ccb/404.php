@@ -4,7 +4,9 @@
  *
  * @link https://codex.wordpress.org/Creating_an_Error_404_Page
  *
- * @package GeoPlatform_Test
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
  */
 
 get_header();

@@ -1,3 +1,13 @@
+<?php
+/**
+ * The template for single post content, in card format
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
+ */
+?>
+
 <div class="col-sm-6 col-md-4">
 <div class="gp-ui-card gp-ui-card--md gp-ui-card">
   <?php if ( has_post_thumbnail() ) {?>

@@ -1,3 +1,13 @@
+<?php
+/**
+ * The Gallery template to integrate with Geoplatform Map galleries
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
+ */
+?>
+
 <div class="apps-and-services section--linked">
   <h4 class="heading text-centered">
       <div class="line"></div>
@@ -12,15 +22,14 @@
         <div class="text-center">
           <div class="row">
         <?php
-        $customizerLink = get_theme_mod( 'Map_Gallery_link_box' );
+        //get theme mod defaults
+        $theme_options = geop_ccb_get_theme_mods();
 
+        $customizerLink = get_theme_mod('map_gallery_link_box_setting', $theme_options['map_gallery_link_box_setting']);
         if (!$customizerLink ){
           _e( 'The Map Gallery Link in Customizer->Custom Links Section is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery.', 'geoplatform-ccb');
         }
-        //test urls
-        //https://sit-ual.geoplatform.us/api/galleries/b423c1dd427e0d2111e50f496de3662
-        //https://sit-ual.geoplatform.us/api/galleries/c7fb5668586e38c69abd3adfcc3cc7f9 (AGOL and MM maps)
-        //$customizerLink = "https://sit-ual.geoplatform.us/api/items?createdBy=laraduffy&size=10&sort=_modified,desc&type=Map&fields=*";
+        
         $link_scrub = wp_remote_get( ''.$customizerLink.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
         $response = wp_remote_retrieve_body( $link_scrub );
 
@@ -31,8 +40,7 @@
         }
 
         //if map gallery env radio is different than current env
-        $gallery_link_env = get_theme_mod('Map_Gallery_env_choice');
-        //var_dump($gallery_link_env);
+        $gallery_link_env = get_theme_mod('map_gallery_env_choice_setting', $theme_options['map_gallery_env_choice_setting']);
 
         if( ! empty( $result ) ) {
           foreach($result['items'] as $map){
@@ -50,8 +58,7 @@
                 $single_map = wp_remote_get( $GLOBALS['ual_url'] .'/api/maps/'.$map['assetId'].'');
                 break;
                 }
-            //var_dump($single_map);
-            //$single_map = wp_remote_get( $GLOBALS['ual_url'] .'/api/maps/'.$map['assetId'].'');
+            
             if( is_wp_error( $single_map ) ) {
               return false; // Bail early
             }
@@ -83,8 +90,6 @@
                   $thumbnail = $GLOBALS['ual_url'] . '/api/maps/' . $map['assetId'] . "/thumbnail";
                   break;
                   }
-              //$thumbnail = $GLOBALS['ual_url'] . '/api/maps/' . $map['assetId'] . "/thumbnail";
-              //var_dump($thumbnail);
               }
 
                   //if the map doesn't have a thumbnail
@@ -104,7 +109,8 @@
                     }
                     $label = $map['label'];
                     ?>
-
+                    
+                <!-- Card for the map -->
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div class="gp-ui-card gp-ui-card--minimal">
                         <div class="media">

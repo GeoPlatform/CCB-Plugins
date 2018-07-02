@@ -4,7 +4,9 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package GeoPlatform_Test
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
  */
 
 get_header();
