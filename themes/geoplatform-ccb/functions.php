@@ -1133,24 +1133,26 @@ if ( ! function_exists ( 'geopccb_category_column_action' ) ) {
  *
  * @return void
  */
-function geop_ccb_get_option_defaults() {
-	$defaults = array(
-		'header_color_setting' => '#000000',
-		'header2_color_setting' => '#000000',
-		'header3_color_setting' => '#000000',
-		'header4_color_setting' => '#000000',
-		'link_color_setting' => '#428bca',
-		'brand_color_setting' => '#fff',
-		'text_editor_setting' => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
-								<p style='text-align: center'>Create and manage your own
-								Dynamic Digital Community on the GeoPlatform!</p>",
-		'call2action_button_setting' => true,
-		'call2action_url_setting' => 'https://geoplatform.gov/about',
-		'call2action_text_setting' => 'Learn More',
-		'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
-		'map_gallery_env_choice_setting' => 'prod',
-	);
-	return apply_filters( 'geop_ccb_option_defaults', $defaults );
+if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
+	function geop_ccb_get_option_defaults() {
+		$defaults = array(
+			'header_color_setting' => '#000000',
+			'header2_color_setting' => '#000000',
+			'header3_color_setting' => '#000000',
+			'header4_color_setting' => '#000000',
+			'link_color_setting' => '#428bca',
+			'brand_color_setting' => '#fff',
+			'text_editor_setting' => "<h1 style='text-align: center; color:white;'>Your Community Title</h1>
+									<p style='text-align: center'>Create and manage your own
+									Dynamic Digital Community on the GeoPlatform!</p>",
+			'call2action_button_setting' => true,
+			'call2action_url_setting' => 'https://geoplatform.gov/about',
+			'call2action_text_setting' => 'Learn More',
+			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
+			'map_gallery_env_choice_setting' => 'prod',
+		);
+		return apply_filters( 'geop_ccb_option_defaults', $defaults );
+	}
 }
 
 /**
@@ -1159,10 +1161,12 @@ function geop_ccb_get_option_defaults() {
  * 
  * @return void
  */
-function geop_ccb_get_theme_mods() {
-	// Theme Mods API:
-    return wp_parse_args( 
-        get_theme_mods(), 
-        geop_ccb_get_option_defaults() 
-    );
+if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
+	function geop_ccb_get_theme_mods() {
+		// Theme Mods API:
+		return wp_parse_args( 
+			get_theme_mods(), 
+			geop_ccb_get_option_defaults() 
+		);
+	}
 }
