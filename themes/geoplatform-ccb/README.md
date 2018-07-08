@@ -1,13 +1,13 @@
 # GeoPlatform Community Core Bundle (CCB)
 
-**Contributors:** imagemattersllc
-**Requires at least:** WordPress 4.6.4
-**Tested up to:** WordPress 4.9.6
-**Stable tag:** 3.0.5
-**Version:** 3.1.2
-**License:** Apache 2.0
-**License URI:** http://www.apache.org/licenses/LICENSE-2.0
-**Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
+**Contributors:** imagemattersllc   
+**Requires at least:** WordPress 4.6.4   
+**Tested up to:** WordPress 4.9.6   
+**Stable tag:** 3.0.5   
+**Version:** 3.1.2   
+**License:** Apache 2.0   
+**License URI:** http://www.apache.org/licenses/LICENSE-2.0   
+**Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
 
 The GeoPlatform Community Core Bundle (CCB) theme is the core theme for WordPress sites hosted by GeoPlatform.gov.
 
