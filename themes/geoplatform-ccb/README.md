@@ -23,7 +23,7 @@ GeoPlatform CCB offers a number a features not common for WordPress themes, incl
 
 ### Enhanced Capabilities
 
-This theme assigns higher capabilities to the default WordPress roles to facilitate broader community-based contribution and collaboration while supporting access to restricted content. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities are noted in the table below, (enhanced roles are prefixed with "GP-".
+This theme assigns higher capabilities to the default WordPress roles to facilitate broader community-based contribution and collaboration while supporting access to restricted content. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities are noted in the table below (enhanced roles are prefixed with "GP-").
 
 | Capability               |GP-Editor|GP-Author|GP-Contributor|GP-Subscriber|
 |--------------------------|:-------:|--------:|-------------:|------------:|
