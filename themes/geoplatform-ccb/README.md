@@ -1,6 +1,6 @@
 # GeoPlatform Community Core Bundle (CCB)
 
-**Contributors:** imagemattersllc   
+**Contributors:** imagemattersllc, kevins713   
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
 **Stable tag:** 3.0.5   
@@ -28,8 +28,7 @@ This theme assigns higher capabilities to the default WordPress roles to facilit
 | Capability               |GP-Editor|GP-Author|GP-Contributor|GP-Subscriber|
 |--------------------------|:-------:|--------:|-------------:|------------:|
 |**edit_theme_options**    | X       |         |              |             |             
-|**list_users**            | X       |         |              |             |              
-|**manage_options**        | X       |         |              |             |               
+|**list_users**            | X       |         |              |             |                             
 |**edit_dashboard**        | X       |         |              |             |               
 |**customize**             | X       |         |              |             |               
 |**edit_pages**            | X       | X       |              |             |               
@@ -129,3 +128,16 @@ Updated per requirements listed in [Wordpress Theme requirements](https://make.w
 * Released: June 5, 2018
 
 Initial submission on Wordpress.org. Previous versions were developed privately for GeoPlatform.gov customers.
+
+<br>
+
+### Contact Information 
+Authors:
+Image Matters LLC
+201 Loudoun St, SW
+Leesburg, Virginia 20175
+USA
+(www.imagemattersllc.com)
+
+Technical Support:
+servicedesk@geoplatform.gov

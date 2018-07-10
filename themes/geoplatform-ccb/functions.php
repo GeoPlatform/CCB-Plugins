@@ -752,6 +752,8 @@ if ( ! isset( $content_width ) ) {
  * 
  * @link https://codex.wordpress.org/Function_Reference/add_cap
  * @link https://codex.wordpress.org/Roles_and_Capabilities
+ * 
+ * @uses WP_Role::add_cap()
  *
  * @return void
  */
@@ -785,6 +787,12 @@ if ( ! function_exists ( 'geop_ccb_add_theme_caps' ) ) {
 
 		//Allows these roles to delete published pages
 		$authRole->add_cap('delete_published_pages');
+		
+		//Allows these roles to edit private_posts
+		$authRole->add_cap('edit_private_posts');
+		
+		//Allows these roles to edit private_pages
+		$authRole->add_cap('edit_private_pages');
 
 		//Allows these roles to use Customizer
 		$editorRole->add_cap('customize');
@@ -812,6 +820,8 @@ if ( ! function_exists ( 'geop_ccb_add_theme_caps' ) ) {
  * 
  * @link https://codex.wordpress.org/Plugin_API/Action_Reference/switch_theme
  *
+ * @uses WP_Role::remove_cap()
+ * 
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
@@ -827,12 +837,10 @@ if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
 		// Remove the capability when theme is deactivated
 		$contribRole->remove_cap('read_private_pages');
 		$authRole->remove_cap('read_private_pages');
-		$subRole->remove_cap('read_private_pages');
-
+		
 		//Disallows these roles to read private posts
 		$contribRole->remove_cap('read_private_posts');
 		$authRole->remove_cap('read_private_posts');
-		$subRole->remove_cap('read_private_posts');
 
 		//Disallows these roles to edit pages
 		$authRole->remove_cap('edit_pages');
@@ -848,6 +856,12 @@ if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
 
 		//Disallows these roles to delete published pages
 		$authRole->remove_cap('delete_published_pages');
+
+		//Disallows these roles to edit private_posts
+		$authRole->remove_cap('edit_private_posts');
+		
+		//Disallows these roles to edit private_pages
+		$authRole->remove_cap('edit_private_pages');
 
 		//Disallows these roles to use Customizer
 		$editorRole->remove_cap('customize');
