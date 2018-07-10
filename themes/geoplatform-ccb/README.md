@@ -15,7 +15,7 @@ The GeoPlatform Community Core Bundle (CCB) theme is the core theme for WordPres
 
 GeoPlatform CCB offers a number a features not common for WordPress themes, including:
 
-* Enhanced user capabilities for Editors, Authors, Contributors, and Subscribers
+* Enhanced capabilities for Editor, Author, Contributor, and Subscriber roles
 * Integration with other GeoPlatform.gov plugins and services
 * Page Categories and Tags
 * Banner WYSIWYG editor for front page, posts, and pages
@@ -23,7 +23,7 @@ GeoPlatform CCB offers a number a features not common for WordPress themes, incl
 
 ### Enhanced Capabilities
 
-This theme assigns higher capabilities to the default WordPress roles to facilitate broader community-based contribution and collaboration while supporting access to restricted content. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities are noted in the table below (enhanced roles are prefixed with "GP-").
+This theme assigns higher capabilities to the default WordPress roles to facilitate broader community-based contribution and collaboration while controlling access to restricted content by user role. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities for the GeoPlatform CCB theme are noted in the table below (enhanced roles are prefixed with "GP-").
 
 | Capability               |GP-Editor|GP-Author|GP-Contributor|GP-Subscriber|
 |--------------------------|:-------:|--------:|-------------:|------------:|
@@ -44,18 +44,18 @@ This theme assigns higher capabilities to the default WordPress roles to facilit
 
 ### GeoPlatform Integration
 #### Map Gallery
-Using the Customizer, you can add a Map Gallery, created with the GeoPlatform "Map Manager" application (https://maps.geoplatform.gov), into the front page. Follow these steps to add a map gallery into the theme:
+Using the Customizer, you can add a Map Gallery, created with the GeoPlatform [Map Manager](https://maps.geoplatform.gov), into the front page. Follow these steps to add a map gallery into the theme:
 
- 1. Create a Map Gallery with the Map Manager application (https://maps.geoplatform.gov).
- 2. When viewing the gallery, the URL will have the Gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/ **[your Gallery ID]**.
- 3. Copy the ID of the gallery.
+ 1. Create a Map Gallery with the [Map Manager](https://maps.geoplatform.gov) application .
+ 2. When viewing the Gallery in Map Manager, the URL will have the Gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/ **[your Gallery ID]**.
+ 3. Copy the ID of the Gallery from Map Manager page.
  4. Sign into your WordPress site as an Administrator or Editor user, open the Customizer, and go to the **Map Gallery** section.
  5. Paste your Gallery ID in the text box, and add a fully resolvable URL link to the front of it. Example: https://ual.geoplatform.gov/api/galleries/ **[your Gallery ID]**.
 
- If your gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, make sure the you've got the correct Gallery ID or otherwise please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
+ If your Gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, make sure the you've got the correct Gallery ID or otherwise please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
 
 #### Map Plugin
-To dynamically add single "Open Maps" from the GeoPlatform Map Viewer (https://maps.geoplatform.gov) or other applications, you can use the GeoPlatform [Maps Plugin](https://wordpress.org/plugins/geoplatform-maps/), available on the Wordpress Marketplace. See the link provided there for documentation and usage guidance.
+To dynamically add single "Open Maps" from the [GeoPlatform Map Viewer](https://maps.geoplatform.gov) or other applications, you can use the GeoPlatform [Maps Plugin](https://wordpress.org/plugins/geoplatform-maps/), available on the Wordpress Marketplace. See the link provided there for documentation and usage guidance.
 
 ### Page Categories and Tags
 Like Posts, Pages can also be assigned to one or more Categories and Tags with this theme. This works the same as adding a category or tag to a Post.
@@ -76,16 +76,15 @@ The Front Page organizes categories by name in ascending order, and show the fir
 
 * What is the GeoPlatform Community Core Bundle?
 
-The Community Core Bundle (CCB) enables independent development of a self-contained community website (i.e., a "Community Space") that operates on the infrastructure of the GeoPlatform. More info about CCB's and GeoPlatform can be found [here.](https://www.geoplatform.gov/geoplatform-help/ccb/ccb-getting-started/#what_is_a_ccb)
+The Community Core Bundle (CCB) enables independent development of a self-contained community website (i.e., a "Community Space") that operates on the infrastructure of the GeoPlatform. More info about CCB's and GeoPlatform can be found [here](https://www.geoplatform.gov/geoplatform-help/ccb/ccb-getting-started/#what_is_a_ccb).
 
 * Does this theme need to be active for other GeoPlatform plugins to work?
 
 No, GeoPlatform plugins work independently of the theme.
 
-
 ## Copyright
 
-GeoPlatform-CCB for use with GeoPlatform.gov products and general use.
+GeoPlatform-CCB for use by GeoPlatform.gov hosted communities and for general use.
 Copyright (C) 2018 Image Matters LLC
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
