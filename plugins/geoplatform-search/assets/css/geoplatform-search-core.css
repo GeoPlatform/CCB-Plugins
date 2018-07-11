@@ -1,0 +1,264 @@
+.gp-search
+{
+  border: 1px solid #E1E1E1;
+}
+
+
+.gp-search .header
+{
+   height: 48px;
+   background-color: #0F2463;
+   padding-top: 16px;
+   padding-left: 16px;
+   padding-bottom: 8px;
+}
+
+.gp-search .gp-search-title
+{
+  margin: 0;
+  padding: 0;
+  font-size: 18px;
+  color: white !important;
+  font-weight: 700;
+  font-family: Lato,Helvetica,Arial,sans-serif;
+}
+
+.gp-search .gp-search-paging
+{
+   padding-top: 8px;
+   padding-bottom: 8px;
+   padding-left: 16px;
+   padding-right: 16px;
+   width: 100%;
+   align-items: center;
+   display: flex;
+   border-bottom: 1px solid #E1E1E1;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow
+{
+  line-height: 20px;
+  display: inline-block !important;
+  min-width: 28px;
+  flex: 0;
+  border: 1px solid transparent;
+  color: #549BE6;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow span
+{
+  padding: 0;
+  margin: 0;
+  line-height: 20px;
+  display: inline-block !important;
+  width: 20px;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow-left
+{
+  margin-right: 8px;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow-right
+{
+  margin-left: 8px;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow:hover:not(.gp-search-paging-arrow-disabled)
+{
+  border: 1px solid #999;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow:active:not(.gp-search-paging-arrow-disabled)
+{
+  background-color: #333;
+  color: white;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow-disabled
+{
+  color: #eee;
+  cursor: not-allowed;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-arrow span
+{
+  font-size: 20px;
+}
+
+.gp-search .gp-search-paging .gp-search-paging-text
+{
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+  flex: 1;
+}
+
+.gp-search .gp-search-objects
+{
+  font-size: 12px;
+}
+
+.gp-search .gp-search-error
+{
+  font-size: 12px;
+  background-color: #D9534F;
+  color: white;
+  padding-top: 8px;
+  padding-left: 16px;
+  padding-bottom: 8px;
+}
+
+.gp-search  .gp-search-error .gp-search-error-title
+{
+  font-size: 16px;
+}
+
+.gp-search .gp-search-objects-none
+{
+   text-align: center;
+   font-size: 12px;
+   padding-top: 8px;
+   padding-bottom: 8px;
+}
+
+.gp-search .gp-search-working
+{
+  padding-top: 1em;
+  display: flex;
+  justify-content: space-around;
+}
+
+.gp-search .gp-search-working .gp-search-working-content
+{
+  width: 160px;
+  display:flex;
+}
+
+.gp-search .gp-search-working .gp-search-working-content .gp-search-working-text
+{
+  font-size: 12px;
+  width: 200px;
+}
+
+.gp-search .gp-search-working .gp-search-working-content .gp-search-working-spinner
+{
+  flex: 0 26px;
+  background: url('/wp-admin/images/wpspin_light.gif') no-repeat;
+  background-size: 16px 16px;
+  height: 16px;
+  margin: 0 .5em;
+}
+
+.gp-search .gp-search-objects .gp-search-object-list
+{
+  list-style: none !important;
+  font-size: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content
+{
+  display:flex;
+  align-items: center;
+  border-bottom: .025em solid #E1E1E1;
+}
+
+.gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content a
+{
+  border-bottom: none;
+}
+
+.gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .right
+{
+  flex:0;
+  min-width: 28px;
+}
+
+.gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .right span
+{
+  color: #549BE6;
+  display: inline-block;
+}
+
+.gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .left
+{
+  flex: 1;
+  display:flex;
+  flex-direction: column;
+  font-size: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .left .link
+{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.gp-search .search-bar
+{
+  display:flex;
+  align-items: center;
+  padding: 4px 16px;
+}
+
+.gp-search .search-bar .search-bar-input
+{
+  flex: 1;
+  padding: 0px 4px;
+}
+
+.gp-search .search-bar .search-bar-input .search-bar-input-text
+{
+  font-size: 12px;
+  width: 100%;
+}
+
+.gp-search .search-bar .search-bar-icon
+{
+  flex: 0 30px;
+}
+
+.gp-search .search-bar .search-bar-icon span
+{
+  font-size: 26px;
+}
+
+.gp-search .search-bar .search-bar-icon .dashicons-search
+{
+  color: #549BE6;
+}
+
+@media screen and (min-width: 800px)
+{
+  .gp-search .gp-search-title { font-size: 18px; }
+  .gp-search .search-bar .search-bar-input .search-bar-input-text { font-size: 14px; }
+  .gp-search .gp-search-paging .gp-search-paging-text { font-size: 14px; }
+  .gp-search .gp-search-error .gp-search-error-title { font-size: 18px; }
+  .gp-search .gp-search-paging .gp-search-paging-arrow span { font-size: 24px; }
+  .gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .left { font-size: 14px; }
+  .gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .right span {  font-size: 24px; }
+  .gp-search .gp-search-working .gp-search-working-content .gp-search-working-text { font-size: 14px; }
+  .gp-search .gp-search-objects-none { font-size: 14px; }
+  .gp-search .gp-search-error { font-size: 14px; }
+}
+
+/*
+@media screen and (min-width: 800px)
+{
+  .gp-search .gp-search-title { font-size: 20px; }
+  .gp-search .search-bar .search-bar-input .search-bar-input-text { font-size: 16px; }
+  .gp-search .gp-search-paging .gp-search-paging-text { font-size: 16px; }
+  .gp-search .gp-search-error .gp-search-error-title { font-size: 20px; }
+  .gp-search .gp-search-paging .gp-search-paging-arrow span { font-size: 28px; }
+  .gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .left { font-size: 16px; }
+  .gp-search .gp-search-objects .gp-search-object-list .gp-search-object-list-item .gp-search-object-list-item-content .right span {  font-size: 28px; }
+  .gp-search .gp-search-working .gp-search-working-content .gp-search-working-text { font-size: 16px; }
+  .gp-search .gp-search-objects-none { font-size: 16px; }
+  .gp-search .gp-search-error { font-size: 16px; }
+}*/
