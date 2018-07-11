@@ -199,9 +199,6 @@
     }
     query.setQ(initSearch);
 
-    // Section that adds keyword to search bar query.
-    // query.setQ(searchSelector.val() + ' <?php echo $a['keyword'] ?>');
-
     query.setFacets(null);
     query.setFields(['resourceTypes', 'landingPage', 'modified']);
 
