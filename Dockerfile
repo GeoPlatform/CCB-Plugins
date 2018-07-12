@@ -12,7 +12,7 @@ RUN apt-get install unzip
 
 # Pull the config into the final hosted directory
 ADD ./config/apache2.conf /etc/apache2/
-ADD ./config/.htaccess /var/www/html/
+#ADD ./config/.htaccess /var/www/html/
 ADD ./config/wp-config.php /var/www/html/
 
 # Remove the default plugins and themes
