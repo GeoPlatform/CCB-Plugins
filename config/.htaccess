@@ -8,12 +8,5 @@ php_value max_input_time 1000
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
   RewriteEngine On
-
-  RewriteBase /%%sitename%%/
-  RewriteRule ^index\.php$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /%%sitename%%/index.php [L]
-
 </IfModule>
 # END WordPress
