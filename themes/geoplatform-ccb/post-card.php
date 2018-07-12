@@ -12,8 +12,7 @@
 <div class="gp-ui-card gp-ui-card--md gp-ui-card">
   <?php if ( has_post_thumbnail() ) {?>
     <a class="media embed-responsive embed-responsive-16by9" href="<?php the_permalink(); ?>"
-        title="<?php _e( 'Register for the Geospatial Platform Workshop', 'geoplatform-ccb') ?> ">
-
+        title="<?php the_title(); ?>">
         <img class="embed-responsive-item" src="<?php the_post_thumbnail_url(); ?>" >
 
     </a>
