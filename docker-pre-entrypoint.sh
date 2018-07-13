@@ -21,8 +21,12 @@ fi
 
 
 # Setup the URL rewriting
-sed -i "s/%%sitename%%/$sitename/g" /etc/apache2/apache2.conf
-# sed -i "s/%%sitename%%/$sitename/g" .htaccess
+# sed -i "s/%%sitename%%/$sitename/g" /etc/apache2/apache2.conf
+sed -i "s/%%sitename%%/$sitename/g" .htaccess
+
+# Set proper ownership and permissions of .htaccess for WP
+chmod 644 .htaccess
+chown www-data:www-data .htaccess
 
 # Return to the regularly scheduled program
 # CMD arg: https://github.com/docker-library/wordpress/blob/master/php7.2/apache/Dockerfile#L60
