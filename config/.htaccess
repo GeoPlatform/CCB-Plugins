@@ -5,15 +5,29 @@ php_value post_max_size 100M
 php_value max_execution_time 300
 php_value max_input_time 1000
 
-# BEGIN WordPress
+# Due to the way that sites are deployed using a sitename directory extension
+# (to enable multi-tenent without virtualhosts)we must rewrite the URLs coming
+# from the browser to the correct path on the local server.
+# The convention is:
+# 	https://communities.geoplatform.us/{sitename}/index.php
+#
+# We must rewrite the incoming URL without the {sitename}. This is done
+# simply with the rewrite rule:
+#   RewriteRule ^%%sitename%%(.*) $1 [L]
+#
+# The docker-pre-entry.sh script will replace %%sitename%% with the passed
+# in environemnt variable.
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
-
-  RewriteBase /%%sitename%%/
-  RewriteRule ^index\.php$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /%%sitename%%/index.php [L]
-
+  RewriteRule ^%%sitename%%(.*) $1 [L]
 </IfModule>
+
+# Wordpress updates everything in between these blocks below. Our custom rules 
+# above will stay put. Once Permalink settings are changed in WordPress, the 
+# block below will automatically be updated with Wordpress specific RewriteRules 
+# that fit the permalink convention that was chosen. 
+
+# BEGIN WordPress
+
 # END WordPress

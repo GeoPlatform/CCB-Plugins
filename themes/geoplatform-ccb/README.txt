@@ -1,29 +1,29 @@
-# GeoPlatform Community Core Bundle (CCB)
-
-**Contributors:** imagemattersllc, kevins713   
-**Requires at least:** WordPress 4.6.4   
-**Tested up to:** WordPress 4.9.6   
-**Stable tag:** 3.0.5   
-**Version:** 3.1.2   
-**License:** Apache 2.0   
-**License URI:** http://www.apache.org/licenses/LICENSE-2.0   
-**Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
+=== GeoPlatform Community Core Bundle (CCB) ===
+ 
+-Contributors: imagemattersllc, kevins713   
+-Requires at least: WordPress 4.6.4   
+-Tested up to: WordPress 4.9.6   
+-Stable tag: 3.0.5   
+-Version: 3.1.2   
+-License: Apache 2.0   
+-License URI: http://www.apache.org/licenses/LICENSE-2.0   
+-Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
 
 The GeoPlatform Community Core Bundle (CCB) theme is the core theme for WordPress sites hosted by GeoPlatform.gov.
 
-## Description
+== Description ==
 
 GeoPlatform CCB offers a number a features not common for WordPress themes, including:
 
-* Enhanced capabilities for Editor, Author, Contributor, and Subscriber roles
+* Enhanced user capabilities for Editors, Authors, Contributors, and Subscribers
 * Integration with other GeoPlatform.gov plugins and services
 * Page Categories and Tags
 * Banner WYSIWYG editor for front page, posts, and pages
 * Front Page Categories  
 
-### Enhanced Capabilities
+**Enhanced Capabilities**
 
-This theme assigns higher capabilities to the default WordPress roles to facilitate broader community-based contribution and collaboration while controlling access to restricted content by user role. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities for the GeoPlatform CCB theme are noted in the table below (enhanced roles are prefixed with "GP-").
+This theme assigns higher capabilities to the default WordPress roles to facilitate broader community-based contribution and collaboration while supporting access to restricted content. Default WordPress roles can be found here https://codex.wordpress.org/Roles_and_Capabilities. The enhanced capabilities are noted in the table below (enhanced roles are prefixed with "GP-").
 
 | Capability               |GP-Editor|GP-Author|GP-Contributor|GP-Subscriber|
 |--------------------------|:-------:|--------:|-------------:|------------:|
@@ -42,49 +42,49 @@ This theme assigns higher capabilities to the default WordPress roles to facilit
 |**read_private_pages**    | X       | X       | X            |             |                
 |**upload_files**          | X       | X       | X            |             | |
 
-### GeoPlatform Integration
-#### Map Gallery
-Using the Customizer, you can add a Map Gallery, created with the GeoPlatform [Map Manager](https://maps.geoplatform.gov), into the front page. Follow these steps to add a map gallery into the theme:
+**GeoPlatform Integration**
+**Map Gallery**
+Using the Customizer, you can add a Map Gallery, created with the GeoPlatform "Map Manager" application (https://maps.geoplatform.gov), into the front page. Follow these steps to add a map gallery into the theme:
 
- 1. Create a Map Gallery with the [Map Manager](https://maps.geoplatform.gov) application .
- 2. When viewing the Gallery in Map Manager, the URL will have the Gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/ **[your Gallery ID]**.
- 3. Copy the ID of the Gallery from Map Manager page.
+ 1. Create a Map Gallery with the Map Manager application (https://maps.geoplatform.gov).
+ 2. When viewing the gallery, the URL will have the Gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/ **[your Gallery ID]**.
+ 3. Copy the ID of the gallery.
  4. Sign into your WordPress site as an Administrator or Editor user, open the Customizer, and go to the **Map Gallery** section.
  5. Paste your Gallery ID in the text box, and add a fully resolvable URL link to the front of it. Example: https://ual.geoplatform.gov/api/galleries/ **[your Gallery ID]**.
 
- If your Gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, make sure the you've got the correct Gallery ID or otherwise please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
+ If your gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, make sure the you've got the correct Gallery ID or otherwise please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
 
-#### Map Plugin
-To dynamically add single "Open Maps" from the [GeoPlatform Map Viewer](https://maps.geoplatform.gov) or other applications, you can use the GeoPlatform [Maps Plugin](https://wordpress.org/plugins/geoplatform-maps/), available on the Wordpress Marketplace. See the link provided there for documentation and usage guidance.
+**Map Plugin**
+To dynamically add single "Open Maps" from the GeoPlatform Map Viewer (https://maps.geoplatform.gov) or other applications, you can use the GeoPlatform [Maps Plugin](https://wordpress.org/plugins/geoplatform-maps/), available on the Wordpress Marketplace. See the link provided there for documentation and usage guidance.
 
-### Page Categories and Tags
+**Page Categories and Tags**
 Like Posts, Pages can also be assigned to one or more Categories and Tags with this theme. This works the same as adding a category or tag to a Post.
 
-### Banner WYSIWYG editor
+**Banner WYSIWYG editor**
 You can edit the main banner on the front page, and for all Posts, Pages, and Category Pages.
 
 * To edit the **Front Page** banner, navigate to the **Customizer -> Banner Area**. It uses the TinyMCE WYSIWYG editor, just like posts and pages. It also has a **Call to Action Button** that goes right below the content, that you can enable in that Customizer area.
 * **Posts** and **Pages** have another editor area right below the main content area called **"Banner Area Custom Content"**. Anything put in there will show up in that **Post** or **Pages** banner.
 * **Category Pages** have a **"Description"** area. Anything put in there will show up in the Category page's banner.   
-
-### Front Page Categories
+**Front Page Categories**
 The Front Page of this theme is designed to showcase Categories of the site. Each Category will appear with a default image on the front page. To change the Featured Image of each Category, navigate to the area where you can edit Categories (**Posts/Pages->Categories->[Your Category]**). The image will appear in the Banner of that category as well as the Front Page card of that Category.
 
 The Front Page organizes categories by name in ascending order, and show the first 12 categories in that organization structure. You can cycle through the categories with a **"More/Previous Categories"** Links below the cards. Later updates will incorporate dynamically being able to change the organization of these.
 
-## Frequently Asked Questions
+== Frequently Asked Questions ==
 
 * What is the GeoPlatform Community Core Bundle?
 
-The Community Core Bundle (CCB) enables independent development of a self-contained community website (i.e., a "Community Space") that operates on the infrastructure of the GeoPlatform. More info about CCB's and GeoPlatform can be found [here](https://www.geoplatform.gov/geoplatform-help/ccb/ccb-getting-started/#what_is_a_ccb).
+The Community Core Bundle (CCB) enables independent development of a self-contained community website (i.e., a "Community Space") that operates on the infrastructure of the GeoPlatform. More info about CCB's and GeoPlatform can be found [here.](https://www.geoplatform.gov/geoplatform-help/ccb/ccb-getting-started/#what_is_a_ccb)
 
 * Does this theme need to be active for other GeoPlatform plugins to work?
 
 No, GeoPlatform plugins work independently of the theme.
 
-## Copyright
 
-GeoPlatform-CCB for use by GeoPlatform.gov hosted communities and for general use.
+== Copyright ==
+
+GeoPlatform-CCB for use with GeoPlatform.gov products and general use.
 Copyright (C) 2018 Image Matters LLC
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
@@ -106,14 +106,14 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 **License:** MIT
 Source: (https://getbootstrap.com/docs/3.3/)
 
-## Changelog
+== Changelog ==
 
-### 3.1.2
+ = 3.1.2 = 
 * Released June 29, 2018
 
 Updated per requirements listed in [Wordpress Theme requirements](https://make.wordpress.org/themes/handbook/review/required/)
 
-#### Notable Changes
+* Notable Changes
  - Removed Category links
  - Integrated Category images
  - Now Child theme ready
@@ -123,7 +123,7 @@ Updated per requirements listed in [Wordpress Theme requirements](https://make.w
  - Theme now translatable
  - Significant code refactoring, security updates, and bug fixes
 
-### 3.1.0
+ =  3.1.0 = 
 * Released: June 5, 2018
 
 Initial submission on Wordpress.org. Previous versions were developed privately for GeoPlatform.gov customers.

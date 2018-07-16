@@ -1,3 +1,14 @@
+<?php 
+/**
+ * A GeoPlatform Category page, content body template
+ * 
+ * @link https://codex.wordpress.org/Category_Templates
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 2.0.0
+ */
+?>
 <br/>
 <?php if (has_post_thumbnail()){ ?>
 <div class="svc-card">

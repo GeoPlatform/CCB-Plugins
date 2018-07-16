@@ -1,3 +1,14 @@
+<?php
+/**
+ * The template for Single post and page banners
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/post-template-files/
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.0.0
+ */
+?>
 <div class="banner banner--fixed-height">
 <!--Used for the Main banner background to show up properly-->
   <div class="content">
@@ -13,8 +24,7 @@
                     <!--Otherwise page title shows above banner intro content-->
                     <h3 style="color:white"><?php the_title(); ?></h3>
                     <p>
-                      <?php echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)); 
-                      //var_dump(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true));?>
+                      <?php echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)); ?>
                     </p>
 
                 <?php } elseif (is_home()){

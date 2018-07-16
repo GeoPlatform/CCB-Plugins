@@ -10,20 +10,17 @@ If you have not already setup your development environment to work using Angular
 > Make sure to get version 6.x of NodeJS.
 
 2. Install Angular-CLI 1.7.4
+**Note:** Newer versions of Angular-CLI require newer versions of NodeJS which are not supported by GeoPlatform at this time.
 > [user ~]$ sudo npm install -g @angular/cli@1.7.4
 
 3. Run NPM install in the angular dirctory
 > [user ~]$ cd { dir-of-clone/plugins/geoplatform-search/angular }
 > [user angular]$ npm install
 
-4. Build plugin from source
-> [user dir]$ ng build --prod
+4. Build plugin from source for the desired environment. This build process specified the environment to be utilized as well as copying assets and built JS and CSS into the appropriate WP plugin locations suitable for usage inside WP. 
+> [user dir]$ ./build.sh [sit|stg|prod]
 
-5. Set environment settings
-> Create (or replace) assets/env.json and define environment variables needed for operation
-> "ualUrl" - URL of GeoPlatform API endpoint ('https://ual.geoplatform.gov' for production)
-
-6. More stuff needed to expose angular app from within WP
+5. More stuff needed to expose angular app from within WP
 > TODO
 
 After that you should enable to plugin in the local WordPress and begin testing/developing.
@@ -42,7 +39,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.  
 
 ## Running unit tests
 

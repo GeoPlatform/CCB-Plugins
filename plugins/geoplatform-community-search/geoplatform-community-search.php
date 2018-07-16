@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.3
+ * @since             1.0.5
  * @package           GP_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Community Search
  * Plugin URI:        www.geoplatform.gov
  * Description:       Search for geoplatform community objects.
- * Version:           1.0.3
+ * Version:           1.0.5
  * Author:            Image Matters LLC
  * Author URI:        www.geoplatform.gov
  * License:           GPL-2.0+
@@ -28,7 +28,7 @@ define("UAL", "https://ual.geoplatform.gov");
 define('GP_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('GP_SEARCH_URL', plugin_dir_url(__FILE__));
 define('GP_SEARCH_NAME', "GeoPlatform Community Search");
-define('GP_SEARCH_VERSION', "1.0.3");
+define('GP_SEARCH_VERSION', "1.0.5");
 
 function geopcomsearch_add_stylesheet() {
   wp_register_style('geopcomsearch', GP_SEARCH_URL . 'assets/css/geoplatform-community-search-core.css', array(), false, 'all');
@@ -63,7 +63,7 @@ function geopcomsearch__shortcode_creation($atts){
     'geopcomsearch_checkbox_show_paging' => 1,
     'geopcomsearch_checkbox_show_search' => 1,
     'geopcomsearch_select_sort' => 'modified',
-    'geopcomsearch_select_keyword' => 'any',
+    'geopcomsearch_text_keyword' => '',
     'geopcomsearch_select_perpage' => 10));
 
   // populate via shortcode, using settings api values as defaults
@@ -75,7 +75,7 @@ function geopcomsearch__shortcode_creation($atts){
     'showsearch' => $options['geopcomsearch_checkbox_show_search'],
     'sort' => $options['geopcomsearch_select_sort'],
     'maxresults' => $options['geopcomsearch_select_perpage'],
-    'keyword' => $options['geopcomsearch_select_keyword'],
+    'keyword' => $options['geopcomsearch_text_keyword'],
     'geopcomsearch_uuid' => $geopcomsearch_uuid
   ), $atts);
 
@@ -144,6 +144,7 @@ function geopcomsearch_settings_init() {
   add_settings_field('geopcomsearch_checkbox_show_search', __( 'Show Search Bar:', 'wordpress' ), 'geopcomsearch_checkbox_show_search_render', 'geopcomsearch', 'geopcomsearch_section' );
   add_settings_field('geopcomsearch_select_sort', __( 'Sort Field:', 'wordpress' ), 'geopcomsearch_select_sort_render', 'geopcomsearch', 'geopcomsearch_section' );
 	add_settings_field('geopcomsearch_select_perpage', __( 'Records Per Page:', 'wordpress' ), 'geopcomsearch_select_perpage_render', 'geopcomsearch', 'geopcomsearch_section' );
+  add_settings_field('geopcomsearch_text_keyword', __( 'Default Keywords:', 'wordpress' ), 'geopcomsearch_text_keyword_render', 'geopcomsearch', 'geopcomsearch_section' );
 }
 
 function geopcomsearch_settings_section_callback(  ) {	echo __( '', 'wordpress' ); } // don't display anything for settings title
@@ -235,6 +236,14 @@ function geopcomsearch_select_perpage_render(  ) {
     <option value='25' <?php selected( $geopcomsearch_perpageVal, 25 ); ?>>25 Items</option>
 	</select>
 <?php
+}
+
+function geopcomsearch_text_keyword_render(  ) {
+  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_text_keyword' => '' ));
+  $geopcomsearch_keywordVal = $options['geopcomsearch_text_keyword'];
+	?>
+	<input type='text' class='gp-form-control' name='geopcomsearch_settings[geopcomsearch_text_keyword]' value='<?php echo $geopcomsearch_keywordVal; ?>'>
+	<?php
 }
 
  ?>

@@ -4,7 +4,9 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
  *
- * @package GeoPlatform_Test
+ * @package GeoPlatform CCB
+ * 
+ * @since 3.1.0
  */
 
 get_header();

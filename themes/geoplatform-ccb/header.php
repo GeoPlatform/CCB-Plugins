@@ -1,3 +1,18 @@
+<?php 
+/**
+ * A GeoPlatform Header template
+ * 
+ * @link https://codex.wordpress.org/Designing_Headers
+ * 
+ * enhanced comment display
+ * @link //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 1.0.0
+ */
+
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -7,29 +22,8 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <!--http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons-->
-    <?php
-    $font_choice = get_theme_mod( 'font_choice' );
-    if( $font_choice != '' ) {
-        switch ( $font_choice ) {
-            case 'lato':
-                echo '<style type="text/css">';
-                echo "body { font-family: 'Lato', sans-serif !important;}";
-                echo '</style>';
-                break;
-            case 'slabo':
-                echo '<style type="text/css">';
-                echo "body { font-family: 'Slabo 27px', serif !important; }";
-                echo '</style>';
-                break;
-            //add more cases for more fonts later
-        }
-    }
-?>
 <?php
 //enabling enhanced comment display
-//per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
 if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
     <?php wp_head();?>
 
@@ -61,7 +55,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
                             <!--if(!authenticated) -->
                             <?php if (!is_user_logged_in()){?>
-                              <a href="<?php echo esc_url(wp_login_url( get_option('siteurl') ) ); ?>">
+                              <a href="<?php echo esc_url(wp_login_url( home_url() ) ); ?>">
                                   <button style="color:white;" type="button" class="btn btn-link" onclick="login"><?php _e( 'Sign In', 'geoplatform-ccb'); ?></button>
                                 </a>
                           <?php  } else {?>

@@ -7,6 +7,7 @@ $geopcomsearch_paging = $geopcomsearch_fields['geopcomsearch_checkbox_show_pagin
 $geopcomsearch_search = $geopcomsearch_fields['geopcomsearch_checkbox_show_search'];
 $geopcomsearch_sort = $geopcomsearch_fields['geopcomsearch_select_sort'];
 $geopcomsearch_perpage = $geopcomsearch_fields['geopcomsearch_select_perpage'];
+$geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
 ?>
 
 <div class='wrap gp-search-admin'>
@@ -48,6 +49,10 @@ $geopcomsearch_perpage = $geopcomsearch_fields['geopcomsearch_select_perpage'];
         <div class='gp-section'>
            <div class='label'><label for="<?php echo esc_attr($geopcomsearch_perpage['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_perpage['title']); ?></label></div>
            <div class='content'><?php call_user_func($geopcomsearch_perpage['callback'], $geopcomsearch_perpage['args']); ?></div>
+        </div>
+        <div class='gp-section'>
+           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_keyword['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_keyword['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_keyword['callback'], $geopcomsearch_keyword['args']); ?></div>
         </div>
       </div>
       <div class='submit'>

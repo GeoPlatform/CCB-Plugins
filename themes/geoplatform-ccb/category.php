@@ -1,15 +1,19 @@
 <?php
-/*
-    A GeoPlatform Category Template
-*/
+/**
+ * A GeoPlatform Category template
+ * 
+ * @link https://codex.wordpress.org/Category_Templates
+ * 
+ * @package GeoPlatform CCB
+ * 
+ * @since 2.0.0
+ */
 
 get_header();
 get_template_part( 'mega-menu', get_post_format() );
-
+//Used for the Main banner background to show up properly
+get_template_part( 'cat-banner', get_post_format() ); 
 ?>
-
-<!--Used for the Main banner background to show up properly-->
-<?php get_template_part( 'cat-banner', get_post_format() ); ?>
 
 <div class="container-fluid">
   <div class="row">
