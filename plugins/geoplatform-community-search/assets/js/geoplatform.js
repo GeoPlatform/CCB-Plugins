@@ -5,7 +5,13 @@
       // one of "development", "sit", "stg", "prd", or "production"
       "env": "development",
 
+      // Viewer URL.
       "wmvUrl": "https://viewer.geoplatform.gov",
+
+      // Test URL.
+      "testUrl": "https://ual.geoplatform.gov",
+
+      // Object Editor URL.
       "oeUrl": "https://oe.geoplatform.gov",
 
       //REQUIRED: URL to GeoPlatform UAL for API usage
