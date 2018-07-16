@@ -152,7 +152,7 @@
             if (objs[i].resourceTypes[0] === 'http://www.geoplatform.gov/ont/openmap/AGOLMap' && objs[i].landingPage !== undefined)
               label = "<a href='" + objs[i].landingPage + "' target='_blank'>" + objs[i].label + "</a>";
             else {
-              var url = GeoPlatform.wmvUrl + "?id=" + objs[i].resourceTypes[0];
+              var url = "https://viewer.geoplatform.gov?id=" + objs[i].id;
               label = "<a href='" + url + "' target='_blank'>" + objs[i].label + "</a>";
             }
           }
