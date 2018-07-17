@@ -26,8 +26,8 @@ services:
       dashboard_url: https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green
       wpp_url: https://sit.geoplatform.gov
       ual_url: https://ual.geoplatform.gov
-      ckan_mp_url: https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace
-      ckan_url: https://ckan.geoplatform.gov/
+      ckan_mp_url: https://data.geoplatform.gov/#/?progress=planned&h=Marketplace
+      ckan_url: https://data.geoplatform.gov/
       cms_url: https://cms.geoplatform.gov/resources
       idp_url: https://idp.geoplatform.gov
       oe_url: https://oe.geoplatform.gov
