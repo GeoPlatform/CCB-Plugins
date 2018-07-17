@@ -18,9 +18,9 @@ $marketplace_url = geop_ccb_getEnv('marketplace_url',"https://marketplace.geopla
 $dashboard_url = geop_ccb_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
 $wpp_url = geop_ccb_getEnv('wpp_url',"https://geoplatform.gov");
 $ual_url = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov");
-$ckan_mp_url = geop_ccb_getEnv('ckan_mp_url',"https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace");
-$ckan_url = geop_ccb_getEnv('ckan_url',"https://ckan.geoplatform.gov/");
-$cms_url = geop_ccb_getEnv('cms_url',"https://cms.geoplatform.gov/resources");
+$ckan_mp_url = geop_ccb_getEnv('ckan_mp_url',"https://data.geoplatform.gov/#/?progress=planned&h=Marketplace");
+$ckan_url = geop_ccb_getEnv('ckan_url',"https://data.geoplatform.gov/");
+$cms_url = geop_ccb_getEnv('cms_url',"https://www.geoplatform.gov/geoplatform-resources/");
 $idp_url = geop_ccb_getEnv('idp_url',"https://idp.geoplatform.gov");
 $oe_url = geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov");
 $sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
@@ -28,7 +28,7 @@ $ga_code = geop_ccb_getEnv('ga_code','UA-00000000-0');
 
 /**
  * Add scripts to header
- * 
+ *
  * @link https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts
  *
  * @return void
@@ -47,7 +47,7 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
 
 /**
  * Add Google Lato Fonts
- * 
+ *
  * @link https://codex.wordpress.org/Plugin_API/Action_Reference/wp_enqueue_scripts
  *
  * @return void
@@ -61,13 +61,13 @@ if ( ! function_exists ( 'geop_ccb_google_fonts' ) ) {
 }
 /**
  * Setup Theme and add supports
- * 
+ *
  * @link https://developer.wordpress.org/reference/functions/add_theme_support/
  * @link https://developer.wordpress.org/reference/functions/add_theme_support/#feed-links
  * @link /https://developer.wordpress.org/reference/functions/get_search_form/
  * @link http://buildwpyourself.com/wordpress-search-form-template/
  * @link https://make.wordpress.org/core/2016/11/30/starter-content-for-themes-in-4-7/
- * 
+ *
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_setup' ) ) {
@@ -99,7 +99,7 @@ if ( ! function_exists ( 'geop_ccb_setup' ) ) {
 	add_theme_support( 'post-thumbnails' );
 
 	/*
-	* Theme Support for Automatic Feed links 
+	* Theme Support for Automatic Feed links
 	*/
 	add_theme_support( 'automatic-feed-links' );
 
@@ -179,7 +179,7 @@ if ( ! function_exists ( 'geop_ccb_setup' ) ) {
  * Support for a custom logo image
  *
  * @link https://developer.wordpress.org/themes/functionality/custom-logo/
- * 
+ *
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_custom_logo_setup' ) ) {
@@ -197,9 +197,9 @@ if ( ! function_exists ( 'geop_ccb_custom_logo_setup' ) ) {
 
 /**
  * Support adding Menus for header and footer
- * 
+ *
  * @link https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
- * 
+ *
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_register_menus' ) ) {
@@ -238,17 +238,17 @@ if ( ! function_exists ( 'geop_ccb_load_dashicons_front_end' ) ) {
  * Supporting Theme Customizer editing
  *
  * @link https://codex.wordpress.org/Theme_Customization_API
- * 
+ *
  * Banner intro text editor links
  * @link https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
- * fixed some issues with linking up 
+ * fixed some issues with linking up
  * @link https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
- * 
+ *
  * @param [type] $wp_customize
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_customize_register' ) ) {
-function geop_ccb_customize_register( $wp_customize ) {	
+function geop_ccb_customize_register( $wp_customize ) {
 	//get defaults array
 	$theme_options = geop_ccb_get_theme_mods();
 
@@ -508,7 +508,7 @@ if ( ! function_exists ( 'geop_ccb_sanitize_checkbox' ) ) {
  *
  * @link https://codex.wordpress.org/Plugin_API/Action_Reference/customize_controls_enqueue_scripts
  * @return void
- */ 
+ */
 if ( ! function_exists ( 'geop_ccb_custom_customize_enqueue' ) ) {
 function geop_ccb_custom_customize_enqueue() {
 	wp_enqueue_script( 'custom-customize', get_template_directory_uri() . '/customizer/customizer.js', array( 'jquery', 'customize-controls' ), false, true );
@@ -521,9 +521,9 @@ function geop_ccb_custom_customize_enqueue() {
  * Dynamically show the colors changing
  *
  * @link https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
- * 
+ *
  * needs to have 'transport' => 'refresh' in add_setting() above in order to work
- * 
+ *
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_header_customize_css' ) ) {
@@ -548,7 +548,7 @@ if ( ! function_exists ( 'geop_ccb_header_customize_css' ) ) {
  * Override banner background-image as the custom header
  *
  * @link https://codex.wordpress.org/Function_Reference/wp_add_inline_style
- * 
+ *
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
@@ -569,9 +569,9 @@ if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
 
 /**
  * Give page and post banners a WYSIWYG editor
- * 
+ *
  * @link http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box
- * 
+ *
  * @return void
  */
 define('WYSIWYG_META_BOX_ID', 'my-editor');
@@ -620,23 +620,23 @@ if ( ! function_exists ( 'geop_ccb_custom_wysiwyg_save_postdata' ) ) {
 
 /**
  * Making Category description pages WYSIWYG
- * 
+ *
  * @link https://paulund.co.uk/add-tinymce-editor-category-description
- * 
- * Author: Paulund 
- * Author URI: http://www.paulund.co.uk 
- * Version: 1.0 License: GPL2 
- * 
- * Copyright (C) Year Author Email This program is free software; 
- * you can redistribute it and/or modify it under the terms of the 
- * GNU General Public License, version 2, as published by the Free 
- * Software Foundation. This program is distributed in the hope 
- * that it will be useful, but WITHOUT ANY WARRANTY; without even 
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A 
- * PARTICULAR PURPOSE. See the GNU General Public License for 
- * more details. You should have received a copy of the GNU 
- * General Public License along with this program; if not, 
- * write to the 
+ *
+ * Author: Paulund
+ * Author URI: http://www.paulund.co.uk
+ * Version: 1.0 License: GPL2
+ *
+ * Copyright (C) Year Author Email This program is free software;
+ * you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License, version 2, as published by the Free
+ * Software Foundation. This program is distributed in the hope
+ * that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details. You should have received a copy of the GNU
+ * General Public License along with this program; if not,
+ * write to the
  * Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  */
 remove_filter( 'pre_term_description', 'wp_filter_kses' );
@@ -683,7 +683,7 @@ if ( ! function_exists ( 'geop_ccb_remove_default_category_description' ) ) {
 
 /**
  * Adding Categories and Tag functionality to pages (for frontpage setting)
- * 
+ *
  * @link https://stackoverflow.com/questions/14323582/wordpress-how-to-add-categories-and-tags-on-pages
  *
  * @return void
@@ -740,7 +740,7 @@ if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
 
 /**
  * Global Content Width
- * 
+ *
  * @link https://codex.wordpress.org/Content_Width#Adding_Theme_Support
  */
 if ( ! isset( $content_width ) ) {
@@ -749,10 +749,10 @@ if ( ! isset( $content_width ) ) {
 
 /**
  * Theme specific enabled capabilities
- * 
+ *
  * @link https://codex.wordpress.org/Function_Reference/add_cap
  * @link https://codex.wordpress.org/Roles_and_Capabilities
- * 
+ *
  * @uses WP_Role::add_cap()
  *
  * @return void
@@ -787,10 +787,10 @@ if ( ! function_exists ( 'geop_ccb_add_theme_caps' ) ) {
 
 		//Allows these roles to delete published pages
 		$authRole->add_cap('delete_published_pages');
-		
+
 		//Allows these roles to edit private_posts
 		$authRole->add_cap('edit_private_posts');
-		
+
 		//Allows these roles to edit private_pages
 		$authRole->add_cap('edit_private_pages');
 
@@ -817,11 +817,11 @@ if ( ! function_exists ( 'geop_ccb_add_theme_caps' ) ) {
 
 /**
  *  Capabilities removed on Deactivation
- * 
+ *
  * @link https://codex.wordpress.org/Plugin_API/Action_Reference/switch_theme
  *
  * @uses WP_Role::remove_cap()
- * 
+ *
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
@@ -837,7 +837,7 @@ if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
 		// Remove the capability when theme is deactivated
 		$contribRole->remove_cap('read_private_pages');
 		$authRole->remove_cap('read_private_pages');
-		
+
 		//Disallows these roles to read private posts
 		$contribRole->remove_cap('read_private_posts');
 		$authRole->remove_cap('read_private_posts');
@@ -859,7 +859,7 @@ if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
 
 		//Disallows these roles to edit private_posts
 		$authRole->remove_cap('edit_private_posts');
-		
+
 		//Disallows these roles to edit private_pages
 		$authRole->remove_cap('edit_private_pages');
 
@@ -885,7 +885,7 @@ if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
 }
 /**
  * Private pages and posts show up in search for correct roles
- * 
+ *
  * @link https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
  *
  * @param array $query
@@ -1095,7 +1095,7 @@ $GP_TAX_META -> init();
  * Thumbnail column added to category admin.
  *
  * Functionality inspired by categories-images plugin.
- * 
+ *
  * @link https://wordpress.org/plugins/categories-images/
  *
  * @access public
@@ -1121,7 +1121,7 @@ if ( ! function_exists ( 'geopccb_category_column_filter' ) ) {
  *
  * Functionality inspired by categories-images plugin.
  * @link https://wordpress.org/plugins/categories-images/
- * 
+ *
  * @access public
  * @param mixed $columns
  * @param mixed $column
@@ -1142,7 +1142,7 @@ if ( ! function_exists ( 'geopccb_category_column_action' ) ) {
 }
 
 /**
- * Using Sane Defaults 
+ * Using Sane Defaults
  * @link https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
  *
  * @return void
@@ -1170,17 +1170,17 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 }
 
 /**
- * Getting the appropriate defaults 
+ * Getting the appropriate defaults
  * @link https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
- * 
+ *
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 	function geop_ccb_get_theme_mods() {
 		// Theme Mods API:
-		return wp_parse_args( 
-			get_theme_mods(), 
-			geop_ccb_get_option_defaults() 
+		return wp_parse_args(
+			get_theme_mods(),
+			geop_ccb_get_option_defaults()
 		);
 	}
 }
