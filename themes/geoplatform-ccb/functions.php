@@ -1184,3 +1184,10 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 		);
 	}
 }
+
+require '/plugin-update-checker-4.4/plugin-update-checker.php';
+$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+	'https://github.com/GeoPlatform/CCB-Plugins/blob/feature/plugin-update-checker/config/gp-ccb-update-details.json',
+	__FILE__,
+	'geoplatform-ccb'
+);
