@@ -17,7 +17,7 @@
  * Plugin URI:        www.geoplatform.gov
  * Description:       Browse, search, and filter GeoPlatform service objects.
  * Version:           1.0.3
- * Author:            Image Matters LLC
+ * Author:            Image Matters LLC: Patrick Neal, Lee Heazel
  * Author URI:        http://www.imagemattersllc.com/
  * License:           Apache 2.0
  * License URI:       http://www.apache.org/licenses/LICENSE-2.0
