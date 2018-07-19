@@ -1,8 +1,8 @@
-=== GeoPlatform Maps ===
+=== GeoPlatform Search ===
 Contributors: imagemattersllc
 Author URI: http://www.imagemattersllc.com
 Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-search
-Tags: map, maps, Open Map, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore
+Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 4.9.5
@@ -10,28 +10,31 @@ Stable tag: 1.0.3
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
-Utilize a dedicated interface to browse, search, and filter GeoPlatform service objects.
+Browse, search, and access the portfolio of GeoPlatform.gov assets.
 
 == Description ==
 
-The GeoPlatform Search plugin is used to provide the user with an easy, intuitive means by which to browse, search, and filter GeoPlatform service objects directly within their site. Simple in design, the plugin generates a dedicated interface which hosts all of the tools needed. Additionally, it provides the ability via shortcode to access that interface via a non-intrusive search bar placecd wherever you like.
+The GeoPlatform Search plugin is used to browse, search, and access the portfolio of GeoPlatform assets (Datasets, Services, Layers, Maps, Galleries, Communities) by users throughout the GeoPlatform ecosystem. The plugin presents for users an application interface to the GeoPlatform search engine via the GeoPlatform Open API. Additionally, the plugin integrates searching for and accessing local content (pages, posts, documents) found on the site.
 
-With the GeoPlatform Search plugin installed, simple activation will create a new page on your site titled "GeoPlatform Search." This new page acts as a dedicated, full-sized interface for the search application. It gives you full access to the entire library of GeoPlatform assets. From here, you can browse the results, sort them by an array of different criteria, and filter them using a wide array of different criteria:
+The plugin can be used to embed search bars into your pages and posts for searching the GeoPlatform portfolio. Just generate and include a shortcode found in the settings page to integrate a search bar anywhere.
 
+With the GeoPlatform Search plugin installed, activation will create a new page on your site called "GeoPlatform Search." This new page acts as a dedicated search application, with full-sized UI, providing full access to the entire portfolio of GeoPlatform assets. 
+
+Using the GeoPlatform Search plugin, you can browse the entire portfolio of GeoPlatform assets using a wide array of criteria (below) and standard search functionality such as paging and sorting:
+
+* Free text search
 * Keyword search
-* Community
-* Creator
+* Community association
+* Asset Creator
 * Geographic extent
 * Points of contact
 * Publishers
 * Semantic concepts
 * Temporal extent
 * Themes
-* Types
+* Asset Types
 
-On the administrative side, the GeoPlatform Search plugin is incredibly simple. In the unlikely event that the search page become corrupted or otherwise unusable, a button here will regenerate the page. Additionally, another button provides a direct link to the search page.
-
-Another feature of this plugin is the ability to embed search bars into your pages and posts that interact with the interface. Through the simple inclusion of the shortcode found in the settings page anywhere on your site, any user can use the evoked search bar to perform a filtering operation on the search page's interface, navigating to it in the process.
+The GeoPlatform Search plugin provides a simple administrative interface, supplying admin users the ability to regenerate the page should the need arise. It also provides a direct link to the search page.
 
 == Installation ==
 
@@ -57,31 +60,26 @@ Another feature of this plugin is the ability to embed search bars into your pag
 
 == Frequently Asked Questions ==
 
-= Question =
+= I've installed the plugin, how do I access the search page? =
 
-Response
+Upon activation, the plugin creates a dedicate search page on your site with the title “GeoPlatform Search.” There are multiple ways to access it: the plugin’s settings provides a direct link to page, and you can also insert a shortcode into another page or post that directs users to it. And, of course, it can be found under the page listing in the admin dashboard.
 
-= Question =
+= My search page got corrupted, how do I fix it? =
 
-Response
+It is unlikely that the page would be corrupted, but in case it has, the plugin’s settings can regenerate the page with a press of the Recreate Search Interface button.
 
-= Question =
+= How can I make the page easily accessible to my readers? =
 
-Response
+The Search plugin provides shortcode support that will work anywhere on your site where text is input. When inserting a shortcode, you embed a search bar into your post that accepts search criteria and navigates directly to the search page.
 
-= Question =
+= Do the same constraints apply to both GeoPlatform Assets (“Portfolio”) results as well as “Site Content” results? =
 
-Response
-
-= Question =
-
-Response
+In a limited fashion, yes.  Free-text and creator constraints apply to both types of results, but mostly the available constraints apply only to GeoPlatform Assets.
 
 == Screenshots ==
 
-1. Import maps from the [GeoPlatform Map Manager](https://maps.geoplatform.gov/) and build your own map library for your community.
-2. Use the shortcode generated by the GeoPlatform Maps plugin to insert maps into your posts.
-3. Enjoy full pan and zoom control over your maps, toggle layers, view layer details, and launch the map in a separate application in your browser.
+1. Enjoy a vibrant and feature-rich browsing environment of GeoPlatform assets.
+2. Use shortcode to place search bar access to the Search application anywhere in your site.
 
 == Changelog ==
 
@@ -113,3 +111,4 @@ USA
 
 Technical Support:
 servicedesk@geoplatform.gov
+
