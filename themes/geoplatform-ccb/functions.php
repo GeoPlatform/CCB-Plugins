@@ -24,7 +24,7 @@ $cms_url = geop_ccb_getEnv('cms_url',"https://www.geoplatform.gov/geoplatform-re
 $idp_url = geop_ccb_getEnv('idp_url',"https://idp.geoplatform.gov");
 $oe_url = geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov");
 $sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
-$ga_code = geop_ccb_getEnv('ga_code','UA-00000000-0');
+$ga_code = geop_ccb_getEnv('ga_code','UA-42040723-1');
 
 /**
  * Add scripts to header
@@ -44,6 +44,26 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 }
 
+//-------------------------------
+// Add Google Analytics
+//http://www.wpbeginner.com/beginners-guide/how-to-install-google-analytics-in-wordpress/
+//-------------------------------
+
+
+if ( ! function_exists ( 'gp_add_googleanalytics' ) ) {
+  function gp_add_googleanalytics(){ ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122866646-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-122866646-1');
+    </script>
+  <?php
+  }
+  add_action('wp_head','gp_add_googleanalytics');
+}
 
 /**
  * Add Google Lato Fonts
