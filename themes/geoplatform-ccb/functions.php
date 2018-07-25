@@ -7,7 +7,7 @@
  * @return ENV[$name] or $def if none found
  */
 if ( ! function_exists( 'geop_ccb_getEnv' ) ){
-function geop_ccb_getEnv($name, $def){
+  function geop_ccb_getEnv($name, $def){
     return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 	}
 }

@@ -28,33 +28,33 @@
           <div class="col-md-12">
             <?php
               $geopccb_category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
-              $default_text_template = __( "The category photo(s) above have a default image in them. If you would like to edit your category card photos, please navigate to Posts(or Pages)->Categories to edit and set your specfic category image", 'geoplatform-ccb');
-              $image_set = false;
+              $geopccb_default_text_template = __( "The category photo(s) above have a default image in them. If you would like to edit your category card photos, please navigate to Posts(or Pages)->Categories to edit and set your specfic category image", 'geoplatform-ccb');
+              $geopccb_image_set = false;
 
               //pagination
               if ( get_query_var('paged') ) {
-                       $paged = get_query_var('paged');
+                       $geopccb_paged = get_query_var('paged');
                    } else if ( get_query_var('page') ) {
-                       $paged = get_query_var('page');
-                   } else {$paged = 1;}
-              $per_page = 12;
-              $paged_offset = ($paged - 1) * $per_page;
+                       $geopccb_paged = get_query_var('page');
+                   } else {$geopccb_paged = 1;}
+              $geopccb_per_page = 12;
+              $geopccb_paged_offset = ($geopccb_paged - 1) * $geopccb_per_page;
 
               //getting the categories
-              $categories = get_categories( array(
+              $geopccb_categories = get_categories( array(
                   'orderby'   => 'name',
                   'order'     => 'ASC',
                   'hide_empty'=> 0,
-                  'number'    => $per_page,
-                  'paged'     => $paged,
-                  'offset'    => $paged_offset
+                  'number'    => $geopccb_per_page,
+                  'paged'     => $geopccb_paged,
+                  'offset'    => $geopccb_paged_offset
               ) );
               //List categories and descriptions
-              foreach( $categories as $geopccb_category ) {
+              foreach( $geopccb_categories as $geopccb_category ) {
                     if (get_term_meta($geopccb_category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull
                       $geopccb_class_category_image = get_term_meta($geopccb_category->cat_ID, 'category-image-id', true); //Get that ID
                       $geopccb_category_image = wp_get_attachment_image_src($geopccb_class_category_image, 'full')[0]; //get and set the URL
-                      $image_set = true; //at least one category has been changed
+                      $geopccb_image_set = true; //at least one category has been changed
                     }
                     else { //No category image set
                       $geopccb_category_image = $geopccb_category_image_default;
@@ -81,13 +81,13 @@
             <div class="col-md-12">
               <p>
                 <?php
-                if ($image_set == true) {
-                  $default_text = '';
+                if ($geopccb_image_set == true) {
+                  $geopccb_default_text = '';
                 }
                 else{
-                  $default_text = $default_text_template;
+                  $geopccb_default_text = $geopccb_default_text_template;
                 }
-                echo wp_kses_post($default_text); ?>
+                echo wp_kses_post($geopccb_default_text); ?>
               </p>
             </div>
             <div class="alignleft" style="margin-top: 1em;"><?php previous_posts_link('&laquo; Previous Categories') ?></div>
