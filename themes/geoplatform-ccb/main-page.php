@@ -1,15 +1,15 @@
 <?php
 /**
  * The main page template to showcase Featured Categories
- * 
+ *
  * pagination
  * @link https://stackoverflow.com/questions/36976897/paginate-category-list-wordpress
- * 
+ *
  * getting the categories
  * @link  https://developer.wordpress.org/reference/functions/get_categories/
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 3.0.0
  */
 ?>
@@ -27,7 +27,7 @@
         <div class="row">
           <div class="col-md-12">
             <?php
-              $category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
+              $geopccb_category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
               $default_text_template = __( "The category photo(s) above have a default image in them. If you would like to edit your category card photos, please navigate to Posts(or Pages)->Categories to edit and set your specfic category image", 'geoplatform-ccb');
               $image_set = false;
 
@@ -40,7 +40,7 @@
               $per_page = 12;
               $paged_offset = ($paged - 1) * $per_page;
 
-              //getting the categories 
+              //getting the categories
               $categories = get_categories( array(
                   'orderby'   => 'name',
                   'order'     => 'ASC',
@@ -50,14 +50,14 @@
                   'offset'    => $paged_offset
               ) );
               //List categories and descriptions
-              foreach( $categories as $category ) {
-                    if (get_term_meta($category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull
-                      $class_category_image = get_term_meta($category->cat_ID, 'category-image-id', true); //Get that ID
-                      $category_image = wp_get_attachment_image_src($class_category_image, 'full')[0]; //get and set the URL
+              foreach( $categories as $geopccb_category ) {
+                    if (get_term_meta($geopccb_category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull
+                      $geopccb_class_category_image = get_term_meta($geopccb_category->cat_ID, 'category-image-id', true); //Get that ID
+                      $geopccb_category_image = wp_get_attachment_image_src($geopccb_class_category_image, 'full')[0]; //get and set the URL
                       $image_set = true; //at least one category has been changed
                     }
                     else { //No category image set
-                      $category_image = $category_image_default;
+                      $geopccb_category_image = $geopccb_category_image_default;
                     }
                   ?>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
@@ -69,10 +69,10 @@
                           rgba(0, 0, 0, 0.3)
                           ),
                           url(%4$s);" href="%1$s" alt="%2$s" class="media embed-responsive embed-responsive-16by9" id="module"><h3 id="mid">%3$s</h3></a>',
-                        esc_url( get_category_link( $category->term_id ) ),
-                        esc_attr( sprintf( __( 'View all posts in %s', 'geoplatform-ccb' ), $category->name ) ),
-                        esc_attr( sprintf( __( ' %s', 'geoplatform-ccb' ), $category->name ) ),
-                        esc_url($category_image)
+                        esc_url( get_category_link( $geopccb_category->term_id ) ),
+                        esc_attr( sprintf( __( 'View all posts in %s', 'geoplatform-ccb' ), $geopccb_category->name ) ),
+                        esc_attr( sprintf( __( ' %s', 'geoplatform-ccb' ), $geopccb_category->name ) ),
+                        esc_url($geopccb_category_image)
                     );
                     ?>
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->

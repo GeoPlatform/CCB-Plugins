@@ -1,18 +1,18 @@
 <?php
 /**
  * A GeoPlatform Category template
- * 
+ *
  * @link https://codex.wordpress.org/Category_Templates
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 2.0.0
  */
 
 get_header();
 get_template_part( 'mega-menu', get_post_format() );
 //Used for the Main banner background to show up properly
-get_template_part( 'cat-banner', get_post_format() ); 
+get_template_part( 'cat-banner', get_post_format() );
 ?>
 
 <div class="container-fluid">
@@ -21,33 +21,33 @@ get_template_part( 'cat-banner', get_post_format() );
     <div class="col-md-9">
       <?php
       //gets id of current category
-      $category = $wp_query->get_queried_object_id();
-      //var_dump($category);
+      $geopccb_category = $wp_query->get_queried_object_id();
+      //var_dump($geopccb_category);
 
       if (current_user_can('read_private_posts')) {
-        $SQLQuery = array(
+        $geopccb_SQLQuery = array(
         'orderby' => 'date',
         'post_status'=> array('publish','private'),
         'order' => 'DESC',
         'post_type' => array('post','page'),
-        'cat'=> $category,
+        'cat'=> $geopccb_category,
         );
       }
       else{
-        $SQLQuery = array(
+        $geopccb_SQLQuery = array(
         'post_type' => array('post','page'),
         'orderby' => 'date',
         'order' => 'ASC',
-        'cat'=> $category
+        'cat'=> $geopccb_category
         );
       }
-       $the_query = new WP_Query( $SQLQuery );
+       $geopccb_the_query = new WP_Query( $geopccb_SQLQuery );
 
        // The Loop
-       if ( $the_query->have_posts() ) {
-         while ( $the_query->have_posts() ) {
-           $the_query->the_post();
-           //echo $category;
+       if ( $geopccb_the_query->have_posts() ) {
+         while ( $geopccb_the_query->have_posts() ) {
+           $geopccb_the_query->the_post();
+           //echo $geopccb_category;
            get_template_part('cat-body', get_post_format());
          }
        }

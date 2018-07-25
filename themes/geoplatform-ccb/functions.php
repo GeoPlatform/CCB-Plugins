@@ -270,7 +270,7 @@ if ( ! function_exists ( 'geop_ccb_load_dashicons_front_end' ) ) {
 if ( ! function_exists ( 'geop_ccb_customize_register' ) ) {
 function geop_ccb_customize_register( $wp_customize ) {
 	//get defaults array
-	$theme_options = geop_ccb_get_theme_mods();
+	$geopccb_theme_options = geop_ccb_get_theme_mods();
 
 	//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
@@ -280,7 +280,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h1 color setting and control
 		$wp_customize->add_setting( 'header_color_setting' , array(
-				'default'   => $theme_options['header_color_setting'],
+				'default'   => $geopccb_theme_options['header_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -293,7 +293,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h2 color setting and control
 		$wp_customize->add_setting( 'header2_color_setting' , array(
-				'default'   => $theme_options['header2_color_setting'],
+				'default'   => $geopccb_theme_options['header2_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -306,7 +306,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h3 color setting and control
 		$wp_customize->add_setting( 'header3_color_setting' , array(
-				'default'   => $theme_options['header3_color_setting'],
+				'default'   => $geopccb_theme_options['header3_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -319,7 +319,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h4 color setting and control
 		$wp_customize->add_setting( 'header4_color_setting' , array(
-				'default'   => $theme_options['header4_color_setting'],
+				'default'   => $geopccb_theme_options['header4_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -332,7 +332,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
     //link (<a>) color and control
 		$wp_customize->add_setting( 'link_color_setting' , array(
-				'default'   => $theme_options['link_color_setting'],
+				'default'   => $geopccb_theme_options['link_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -345,7 +345,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//.brand color and control
 		$wp_customize->add_setting( 'brand_color_setting' , array(
-				'default'   => $theme_options['brand_color_setting'],
+				'default'   => $geopccb_theme_options['brand_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -365,7 +365,7 @@ function geop_ccb_customize_register( $wp_customize ) {
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
-            'default'   => $theme_options['text_editor_setting'],
+            'default'   => $geopccb_theme_options['text_editor_setting'],
 			'transport' => 'refresh',
 			'type' 		=> 'theme_mod',
 			'sanitize_callback' => 'wp_kses_post'
@@ -379,7 +379,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 				 //Call to action button (formerly "Learn More" button)
 				 $wp_customize->add_setting('call2action_button_setting', array(
-					 'default' => $theme_options['call2action_button_setting'],
+					 'default' => $geopccb_theme_options['call2action_button_setting'],
 					 'transport' => 'refresh',
            			'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
 				 ) );
@@ -393,7 +393,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 				 ) );
 
 				 $wp_customize->add_setting('call2action_text_setting', array(
-					 'default' => $theme_options['call2action_text_setting'],
+					 'default' => $geopccb_theme_options['call2action_text_setting'],
 					 'transport' => 'refresh',
 					 'sanitize_callback' => 'sanitize_text_field',
 				 ));
@@ -409,7 +409,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 				 ) );
 
 				 $wp_customize->add_setting('call2action_url_setting', array(
-					'default' => $theme_options['call2action_url_setting'],
+					'default' => $geopccb_theme_options['call2action_url_setting'],
 					'transport' => 'refresh',
 					'sanitize_callback' => 'esc_url_raw',
 				));
@@ -430,7 +430,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 				'priority' => 70
 			) );
 			$wp_customize->add_setting( 'map_gallery_link_box_setting' , array(
-					'default'   => $theme_options['map_gallery_link_box_setting'],
+					'default'   => $geopccb_theme_options['map_gallery_link_box_setting'],
 					'transport' => 'refresh',
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
@@ -445,7 +445,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 				//Add radio button to choose link style between envs (sit, stg, or prod)
 				$wp_customize->add_setting( 'map_gallery_env_choice_setting' , array(
-						'default'   => $theme_options['map_gallery_env_choice_setting'],
+						'default'   => $geopccb_theme_options['map_gallery_env_choice_setting'],
 						'transport' => 'refresh',
 						'sanitize_callback' => 'geop_ccb_sanitize_mapchoice'
 					) );
@@ -613,8 +613,8 @@ if ( ! function_exists ( 'wysiwyg_register_custom_meta_box' ) ) {
 if ( ! function_exists ( 'geop_ccb_custom_wysiwyg' ) ) {
 	function geop_ccb_custom_wysiwyg($post){
 		echo "<h3>Anything you add below will show up in the Banner:</h3>";
-		$content = get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true);
-		wp_editor(htmlspecialchars_decode($content) , 'geop_ccb_custom_wysiwyg', array(
+		$geopccb_content = get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true);
+		wp_editor(htmlspecialchars_decode($geopccb_content) , 'geop_ccb_custom_wysiwyg', array(
 			"media_buttons" => true
 		));
 	}
@@ -671,8 +671,8 @@ if ( ! function_exists ( 'geop_ccb_cat_description' ) ) {
   			<th scope="row" valign="top"><label for="description">Description</label></th>
   			<td>
   			  <?php
-  				  $settings = array('wpautop' => true, 'media_buttons' => true, 'quicktags' => true, 'textarea_rows' => '15', 'textarea_name' => 'description' );
-  				  wp_editor(wp_kses_post($tag->description , ENT_QUOTES, 'UTF-8'), 'geop_ccb_cat_description', $settings);
+  				  $geopccb_settings = array('wpautop' => true, 'media_buttons' => true, 'quicktags' => true, 'textarea_rows' => '15', 'textarea_name' => 'description' );
+  				  wp_editor(wp_kses_post($tag->description , ENT_QUOTES, 'UTF-8'), 'geop_ccb_cat_description', $geopccb_settings);
   		    ?>
   			  <br />
   			  <span class="description">The description is not prominent by default; however, some themes may show it.</span>
@@ -1150,9 +1150,9 @@ if ( ! function_exists ( 'geopccb_category_column_filter' ) ) {
  */
 if ( ! function_exists ( 'geopccb_category_column_action' ) ) {
   function geopccb_category_column_action( $columns, $column, $id ) {
-    $class_category_image = get_term_meta($id, 'category-image-id', true);//Get the image ID
+    $geopccb_class_category_image = get_term_meta($id, 'category-image-id', true);//Get the image ID
       if ( $column == 'thumb' ){
-        $temp_img = wp_get_attachment_image_src($class_category_image, 'full')[0];
+        $temp_img = wp_get_attachment_image_src($geopccb_class_category_image, 'full')[0];
         if (!$temp_img)
           $temp_img = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
         $columns = '<img src="' . $temp_img . '" style="max-height: 12em; max-width: 100%;" />';

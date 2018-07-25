@@ -1,9 +1,9 @@
 <?php
 /**
  * The Gallery template to integrate with Geoplatform Map galleries
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 3.0.0
  */
 ?>
@@ -23,14 +23,14 @@
           <div class="row">
         <?php
         //get theme mod defaults
-        $theme_options = geop_ccb_get_theme_mods();
+        $geopccb_theme_options = geop_ccb_get_theme_mods();
 
-        $customizerLink = get_theme_mod('map_gallery_link_box_setting', $theme_options['map_gallery_link_box_setting']);
-        if (!$customizerLink ){
+        $geopccb_customizerLink = get_theme_mod('map_gallery_link_box_setting', $geopccb_theme_options['map_gallery_link_box_setting']);
+        if (!$geopccb_customizerLink ){
           _e( 'The Map Gallery Link in Customizer->Custom Links Section is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery.', 'geoplatform-ccb');
         }
-        
-        $link_scrub = wp_remote_get( ''.$customizerLink.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
+
+        $link_scrub = wp_remote_get( ''.$geopccb_customizerLink.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
         $response = wp_remote_retrieve_body( $link_scrub );
 
         if(!empty($response)){
@@ -40,7 +40,7 @@
         }
 
         //if map gallery env radio is different than current env
-        $gallery_link_env = get_theme_mod('map_gallery_env_choice_setting', $theme_options['map_gallery_env_choice_setting']);
+        $gallery_link_env = get_theme_mod('map_gallery_env_choice_setting', $geopccb_theme_options['map_gallery_env_choice_setting']);
 
         if( ! empty( $result ) ) {
           foreach($result['items'] as $map){
@@ -60,7 +60,7 @@
                 $single_map = wp_remote_get( $GLOBALS['ual_url'] .'/api/maps/'.$map_id.'');
                 break;
                 }
-            
+
             if( is_wp_error( $single_map ) ) {
               return false; // Bail early
             }
@@ -111,7 +111,7 @@
                     }
                     $label = $map['label'];
                     ?>
-                    
+
                 <!-- Card for the map -->
                 <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <div class="gp-ui-card gp-ui-card--minimal">
