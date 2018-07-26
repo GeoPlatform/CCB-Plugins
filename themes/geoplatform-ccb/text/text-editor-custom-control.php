@@ -11,20 +11,20 @@ class Text_Editor_Custom_Control extends WP_Customize_Control
        */
       public function render_content()
        {
-            $content = $this->value();
+            $geopccb_content = $this->value();
             ?>
                 <label>
                   <span class="customize-control-title"><?php echo esc_html( $this->label ); ?></span>
                   <!-- updated per https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/28 -->
-                  <input class="wp-editor-area" type="hidden" <?php echo $this->get_link(); ?> value="<?php echo esc_textarea( $content ); ?>">
+                  <input class="wp-editor-area" type="hidden" <?php echo $this->get_link(); ?> value="<?php echo esc_textarea( $geopccb_content ); ?>">
                   <?php
-                    $settings = array(
+                    $geopccb_settings = array(
                         'textarea_name' => $this->id,
                         'media_buttons' => false,
                         'drag_drop_upload' => false,
                         'teeny' => false
                     );
-                    wp_editor($content, $this->id, $settings );
+                    wp_editor($geopccb_content, $this->id, $geopccb_settings );
 
                     do_action('admin_footer');
                     do_action('admin_print_footer_scripts');

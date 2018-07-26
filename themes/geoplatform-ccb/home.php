@@ -1,11 +1,11 @@
 <?php
 /**
  * A GeoPlatform Home Page Template, for showing blog posts
- * 
+ *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#home-page-display
- * 
+ *
 * @package GeoPlatform CCB
-* 
+*
 * @since 3.1.2
  */
 
@@ -17,13 +17,13 @@ get_template_part( 'single-banner', get_post_format() );
 <div class="container">
   <div class="row">
     <div class="col-md-8 col-sm-8">
-        <?php 
+        <?php
                 //handling page content to show up if needed
-                $content = (empty(get_queried_object()->post_content)) ? '' : get_queried_object()->post_content;
+                $geopccb_content = (empty(get_queried_object()->post_content)) ? '' : get_queried_object()->post_content;
                 echo "<br>";
-                echo wp_kses_post( $content );
+                echo wp_kses_post( $geopccb_content );
                 echo "<br>";
-           
+
             if ( have_posts() ) : ?>
             <?php while ( have_posts() ) : the_post(); ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

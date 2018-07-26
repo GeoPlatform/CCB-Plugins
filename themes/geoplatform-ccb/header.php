@@ -1,14 +1,14 @@
-<?php 
+<?php
 /**
  * A GeoPlatform Header template
- * 
+ *
  * @link https://codex.wordpress.org/Designing_Headers
- * 
+ *
  * enhanced comment display
  * @link //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 1.0.0
  */
 
@@ -77,7 +77,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                   else{
                     echo '<h4 class="brand"><a href="';
                     echo esc_url($GLOBALS['wpp_url']);
-                    echo '" title="' . __( 'Go to the Geoplatform Home Page', 'geoplatform-ccb') . '><span class="icon-gp"></span>GeoPlatform</a>';
+                    echo '" title="' . __( 'Go to the Geoplatform Home Page', 'geoplatform-ccb') . '><span class="icon-gp"></span>GeoPlatform:</a>';
                   }?>
                   <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
                   <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
