@@ -848,49 +848,52 @@ function gp_add_theme_caps(){
 	$authRole = get_role( 'author' );
 	$editorRole = get_role('editor');
 
-		//Allows these roles to read private pages
-		$contribRole->add_cap('read_private_pages');
-		$authRole->add_cap('read_private_pages');
+	//Allows these roles to read private pages
+	$contribRole->add_cap('read_private_pages');
+	$authRole->add_cap('read_private_pages');
 
-		//Allows these roles to read private posts
-		$contribRole->add_cap('read_private_posts');
-		$authRole->add_cap('read_private_posts');
+	//Allows these roles to read private posts
+	$contribRole->add_cap('read_private_posts');
+	$authRole->add_cap('read_private_posts');
 
-		//Allows these roles to edit pages
-		$authRole->add_cap('edit_pages');
+	//Allows these roles to edit pages
+	$authRole->add_cap('edit_pages');
 
-		//Allows these roles to edit published pages
-		$authRole->add_cap('edit_published_pages');
+	//Allows these roles to edit published pages
+	$authRole->add_cap('edit_published_pages');
 
-		//Allows these roles to publish pages
-		$authRole->add_cap('publish_pages');
+	//Allows these roles to publish pages
+	$authRole->add_cap('publish_pages');
 
-		//Allows these roles to delete pages
-		$authRole->add_cap('delete_pages');
+	//Allows these roles to delete pages
+	$authRole->add_cap('delete_pages');
 
-		//Allows these roles to delete published pages
-		$authRole->add_cap('delete_published_pages');
+	//Allows these roles to delete published pages
+	$authRole->add_cap('delete_published_pages');
 
- 		//Allows these roles to use Customizer
-		$editorRole->add_cap('customize');
+	//Allows these roles to edit private_posts
+	$authRole->add_cap('edit_private_posts');
 
-		//Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”
-		$editorRole->add_cap('edit_theme_options');
+	//Allows these roles to edit private_pages
+	$authRole->add_cap('edit_private_pages');
 
-		//Allows these roles to edit WP Dashboard layout
-		$editorRole->add_cap('edit_dashboard');
+	//Allows these roles to use Customizer
+	$editorRole->add_cap('customize');
 
-		//Allows these roles to see list of users on site
-		$editorRole->add_cap('list_users');
+	//Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”
+	$editorRole->add_cap('edit_theme_options');
 
-		//Allows these roles to manage options on the site
-		$editorRole->add_cap('manage_options');
+	//Allows these roles to edit WP Dashboard layout
+	$editorRole->add_cap('edit_dashboard');
 
-		//Allows these roles to edit themes on the site
-		$editorRole->add_cap('edit_theme');
+	//Allows these roles to see list of users on site
+	$editorRole->add_cap('list_users');
 
-    //Allows these roles to upload files on the site
-		$contribRole->add_cap('upload_files');
+	//Allows these roles to edit themes on the site
+	$editorRole->add_cap('edit_theme');
+
+  //Allows these roles to upload files on the site
+	$contribRole->add_cap('upload_files');
 }
 add_action( 'admin_init', 'gp_add_theme_caps' );
 
@@ -910,12 +913,10 @@ function gp_remove_theme_caps() {
 	// Remove the capability when theme is deactivated
 	$contribRole->remove_cap('read_private_pages');
 	$authRole->remove_cap('read_private_pages');
-	$subRole->remove_cap('read_private_pages');
 
 	//Disallows these roles to read private posts
 	$contribRole->remove_cap('read_private_posts');
 	$authRole->remove_cap('read_private_posts');
-	$subRole->remove_cap('read_private_posts');
 
 	//Disallows these roles to edit pages
 	$authRole->remove_cap('edit_pages');
@@ -932,6 +933,12 @@ function gp_remove_theme_caps() {
 	//Disallows these roles to delete published pages
 	$authRole->remove_cap('delete_published_pages');
 
+	//Disallows these roles to edit private_posts
+	$authRole->remove_cap('edit_private_posts');
+
+	//Disallows these roles to edit private_pages
+	$authRole->remove_cap('edit_private_pages');
+
 	//Disallows these roles to use Customizer
 	$editorRole->remove_cap('customize');
 
@@ -943,9 +950,6 @@ function gp_remove_theme_caps() {
 
 	//Disallows these roles to see list of users on site
 	$editorRole->remove_cap('list_users');
-
-	//Disallows these roles to manage options on the site
-	$editorRole->remove_cap('manage_options');
 
 	//Disallows these roles to edit themes on the site
 	$editorRole->remove_cap('edit_theme');
