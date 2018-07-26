@@ -9,9 +9,9 @@ $marketplace_url = gp_getEnv('marketplace_url',"https://marketplace.geoplatform.
 $dashboard_url = gp_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
 $wpp_url = gp_getEnv('wpp_url',"https://geoplatform.gov");
 $ual_url = gp_getEnv('ual_url',"https://ual.geoplatform.gov");
-$ckan_mp_url = gp_getEnv('ckan_mp_url',"https://ckan.geoplatform.gov/#/?progress=planned&h=Marketplace");
-$ckan_url = gp_getEnv('ckan_url',"https://ckan.geoplatform.gov/");
-$cms_url = gp_getEnv('cms_url',"https://cms.geoplatform.gov/resources");
+$ckan_mp_url = gp_getEnv('ckan_mp_url',"https://data.geoplatform.gov/#/?progress=planned&h=Marketplace");
+$ckan_url = gp_getEnv('ckan_url',"https://data.geoplatform.gov/");
+$cms_url = gp_getEnv('cms_url',"https://www.geoplatform.gov/geoplatform-resources/");
 $idp_url = gp_getEnv('idp_url',"https://idp.geoplatform.gov");
 $oe_url = gp_getEnv('oe_url',"https://oe.geoplatform.gov");
 $sd_url = gp_getEnv('sd_url',"servicedesk@geoplatform.gov");
