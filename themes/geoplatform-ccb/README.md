@@ -82,6 +82,10 @@ The Community Core Bundle (CCB) enables independent development of a self-contai
 
 No, GeoPlatform plugins work independently of the theme.
 
+* The dropdown menu no longer functions.
+
+This is most likely due to conflicting uses of the Bootstrap library. The GeoPlatform CCB theme utilizes Bootstrap for some of its operations, and loading that asset with a plugin as well can cause conflicts. It is advised to avoid using that plugin.
+
 ## Copyright
 
 GeoPlatform-CCB for use by GeoPlatform.gov hosted communities and for general use.
@@ -130,7 +134,7 @@ Initial submission on Wordpress.org. Previous versions were developed privately 
 
 <br>
 
-### Contact Information 
+### Contact Information
 Authors:
 Image Matters LLC
 201 Loudoun St, SW
