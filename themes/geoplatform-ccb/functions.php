@@ -20,7 +20,7 @@ $geopccb_wpp_url = geop_ccb_getEnv('wpp_url',"https://geoplatform.gov");
 $geopccb_ual_url = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov");
 $geopccb_ckan_mp_url = geop_ccb_getEnv('ckan_mp_url',"https://data.geoplatform.gov/#/?progress=planned&h=Marketplace");
 $geopccb_ckan_url = geop_ccb_getEnv('ckan_url',"https://data.geoplatform.gov/");
-$geopccb_cms_url = geop_ccb_getEnv('cms_url',"https://www.geoplatform.gov/geoplatform-resources/");
+$geopccb_cms_url = geop_ccb_getEnv('cms_url',"https://marketplace.geoplatform.gov/");
 $geopccb_idp_url = geop_ccb_getEnv('idp_url',"https://idp.geoplatform.gov");
 $geopccb_oe_url = geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov");
 $geopccb_sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
