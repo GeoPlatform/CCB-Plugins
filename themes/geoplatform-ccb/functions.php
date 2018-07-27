@@ -56,7 +56,7 @@ if ( ! function_exists ( 'geopccb_add_googleanalytics' ) ) {
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'UA-122866646-1');
+      gtag('config', 'UA-42040723-1');
     </script>
   <?php
   }
