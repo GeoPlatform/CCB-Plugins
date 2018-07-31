@@ -562,6 +562,21 @@ if ( ! function_exists ( 'geop_ccb_header_customize_css' ) ) {
 	add_action( 'wp_head', 'geop_ccb_header_customize_css');
 }
 
+
+/**
+ * Register a default header, so that users may change back to it.
+ *
+ * https://wordpress.stackexchange.com/questions/195641/default-header-image-does-not-display
+ *
+ */
+register_default_headers( array(
+  'default-image' => array(
+    'url'           => get_template_directory_uri() . '/img/default-banner.png',
+    'thumbnail_url' => get_template_directory_uri() . '/img/default-banner.png',
+    'description'   => __( 'Default Header Image', 'geoplatform-ccb' )
+  ),
+));
+
 /**
  * Override banner background-image as the custom header
  *
@@ -1200,9 +1215,14 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 	}
 }
 
-require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-$myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/feature/plugin-update-checker/config/gp-ccb-update-details.json',
-	__FILE__,
-	'geoplatform-ccb'
-);
+if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
+  function geop_ccb_distro_manager() {
+    require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+    $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+    	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/feature/plugin-update-checker/config/gp-ccb-update-details.json',
+    	__FILE__,
+    	'geoplatform-ccb'
+    );
+  }
+  geop_ccb_distro_manager();
+}
