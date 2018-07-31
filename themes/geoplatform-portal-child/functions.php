@@ -1,5 +1,11 @@
 <?php
 
+function gpp_getEnv($name, $def){
+	return isset($_ENV[$name]) ? $_ENV[$name] : $def;
+}
+$geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
+$geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
+
 function geopportal_enqueue_scripts() {
     wp_enqueue_script( 'auth', get_stylesheet_directory_uri() . '/scripts/authentication.js' );
     wp_enqueue_script( 'fixedScroll', get_stylesheet_directory_uri() . '/scripts/fixed_scroll.js');
@@ -39,6 +45,30 @@ function geop_ccb_register_menus() {
   );
 }
 add_action( 'init', 'geop_ccb_register_menus' );
+
+//-------------------------------
+// Widgetizing the theme
+// https://codex.wordpress.org/Function_Reference/dynamic_sidebar
+// https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
+//------------------------------------
+
+add_action( 'widgets_init', 'geoplatform_sidebar' );
+
+function geoplatform_sidebar() {
+
+    register_sidebar(
+        array(
+            'id' => 'geoplatform-widgetized-area',
+            'name' => __( 'Sidebar Widget', 'geoplatform-2017-theme' ),
+            'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-2017-theme' ),
+                        'class' => 'widget-class',
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+						'after_widget'  => '</div>',
+						'before_title'  => '<h4>',
+						'after_title'   => '</h4>'
+        )
+    );
+}
 
 //-------------------------------
 // Diabling auto formatting and adding <p> tags to copy/pasted HTML in pages

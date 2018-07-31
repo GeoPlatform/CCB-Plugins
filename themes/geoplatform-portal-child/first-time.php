@@ -44,7 +44,7 @@ if($current_user->ID == 0) {
 <?php } else {
 	$ch = curl_init();
 	//$url = "https://registry.geoplatform.gov/api/maps?author=" . $current_user->user_login . "&sortElement=updated&sortOrder=dsc&count=4";
-  $url = $GLOBALS['ual_url'] . "/api/items?createdBy=" . $current_user->user_login . "&size=3&sort=_modified,desc&type=Map&fields=*";
+  $url = $GLOBALS['geopccb_ual_url'] . "/api/items?createdBy=" . $current_user->user_login . "&size=3&sort=_modified,desc&type=Map&fields=*";
 	curl_setopt($ch, CURLOPT_URL, $url);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	$response = curl_exec($ch);
