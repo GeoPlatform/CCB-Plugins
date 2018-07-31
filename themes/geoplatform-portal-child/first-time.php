@@ -30,7 +30,7 @@ if($current_user->ID == 0) {
                 <br>
 
                   <div class="first-time-buttons">
-                      <a href="<?php echo $GLOBALS['accounts_url'];?>/register" class="btn btn-lg btn-accent">Register</a>
+                      <a href="<?php echo $GLOBALS['geopccb_accounts_url'];?>/register" class="btn btn-lg btn-accent">Register</a>
                       <!-- &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp;
                       <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>" class="btn btn-lg btn-primary">Sign In</a> -->
                   </div><!--#firstTime first-time-buttons-->
@@ -59,8 +59,6 @@ if($current_user->ID == 0) {
 ?>
 
   <div class="whatsNew section--linked">
-
-
   	<div class="container">
   	  <h4 class="heading">
   	      <div class="line"></div>
@@ -68,7 +66,6 @@ if($current_user->ID == 0) {
   	      <div class="title">My Account</div>
   	  </h4>
   	  <br>
-
   	    <div class="row">
 
   	        <div class="col-xs-12 col-sm-4">
@@ -80,7 +77,7 @@ if($current_user->ID == 0) {
 
   	            <?php //var_dump($current_user); ?>
 
-              <a class="btn btn-info" href="<?php echo $GLOBALS['accounts_url'];?>/profile" title="Edit Account Details">
+              <a class="btn btn-info" href="<?php echo $GLOBALS['geopccb_accounts_url'];?>/profile" title="Edit Account Details">
                   <span class="glyphicon glyphicon-wrench"></span>
                   Edit
               </a>
@@ -99,46 +96,48 @@ if($current_user->ID == 0) {
   	              <div class="row">
 
   	                <?php
+                    if (array_key_exists('results', $result) && isset($result['results'])){
+					            $user_activity = $result['results'];
 
-  					            $user_activity = $result['results'];
+                      if(count($user_activity) > 0){
+              					foreach($user_activity as $item){
+                          $map_reference_url = "";
+                          $agol_url = $item['landingPage'];
 
-              					if(count($user_activity) > 0){
-              						foreach($user_activity as $item){
-                              $map_reference_url = "";
-                              $agol_url = $item['landingPage'];
-                              //incorporate for AGOL maps
-                              if (empty($agol_url)){
-                                $map_reference_url =  $GLOBALS['viewer_url'] . '/?id=' . $item['id'];
-                              }
-                              else{
-                                $map_reference_url = $agol_url;
-                              }
-                							$thumb = $GLOBALS['ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+                          //incorporate for AGOL maps
+                          if (empty($agol_url))
+                            $map_reference_url = $GLOBALS['geopccb_viewer_url'] . '/?id=' . $item['id'];
+                          else
+                            $map_reference_url = $agol_url;
 
-                							//if(empty($thumb)) $thumb = 'https://registry.geoplatform.gov/api/maps/' . $item['_id'] . '/thumbnail?format=image';
-                              if(empty($thumb)) $thumb =  $GLOBALS['ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
-                							else if(!(strpos($thumb, 'http') == 0 )) $thumb =  $GLOBALS['ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
-                								$map_activity_date = gmdate("M d Y", $item['updated'] / 1000);
+            							$thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+
+                          if(empty($thumb))
+                            $thumb =  $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+            							else if(!(strpos($thumb, 'http') == 0 ))
+                            $thumb =  $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+            							$map_activity_date = gmdate("M d Y", $item['updated'] / 1000);
   					          ?>
 
-  							<div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0">
-  								<div class="gp-ui-card gp-ui-card--minimal">
-  							  		<a class="media embed-responsive embed-responsive-16by9" href="<?php echo $map_reference_url; ?>">
-  							    		<img class="embed-responsive-item" src="<?php echo $thumb; ?>" alt="<?php echo $item['label']; ?>" >
-  							  		</a>
-  							  		<div class="gp-ui-card__body">
-  							    		<div class="text--primary">
-  											<a href="<?php echo $map_reference_url; ?>"> <?php echo $item['label']; ?> </a>
-  							  			</div><!--gp-ui-card__body-->
-  									</div><!--gp-ui-card gp-ui-card-minimal-->
-  								</div><!--#col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0-->
-  							</div><!--#col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0-->
+  							    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0">
+  								    <div class="gp-ui-card gp-ui-card--minimal">
+  							  		  <a class="media embed-responsive embed-responsive-16by9" href="<?php echo $map_reference_url; ?>">
+  							    		  <img class="embed-responsive-item" src="<?php echo $thumb; ?>" alt="<?php echo $item['label']; ?>" >
+  							  		  </a>
+  							  		  <div class="gp-ui-card__body">
+  							    		  <div class="text--primary">
+  											    <a href="<?php echo $map_reference_url; ?>"> <?php echo $item['label']; ?> </a>
+  							  			  </div><!--gp-ui-card__body-->
+  									    </div><!--gp-ui-card gp-ui-card-minimal-->
+  								    </div><!--#col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0-->
+  							    </div><!--#col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0-->
 
-  					<?php
-              } //foreach
-  					} else {
-  						echo '<em>You have no recent items. You should create some content!</em>';
-  					}
+  					        <?php
+                        } //foreach
+  					          } else
+  						          echo '<em>You have no recent items. You should create some content!</em>';
+                    } else
+                      echo '<em>You have no recent items. You should create some content!</em>';
             ?>
                 </div><!--#My Recent Items row-->
 	            </div><!--#id "recent_items"-->

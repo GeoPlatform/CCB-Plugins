@@ -52,7 +52,7 @@
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <h4 style="color:white">Explore Data</h4>
                 <ul>
-                    <li><a href="<?php echo $GLOBALS['oe_url']; ?>" target="_blank">Object Editor
+                    <li><a href="<?php echo $GLOBALS['geopccb_oe_url']; ?>" target="_blank">Object Editor
                       <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                       </a>
                     </li>
@@ -62,31 +62,31 @@
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo $GLOBALS['ckan_url']; ?>" target="_blank">
+                        <a href="<?php echo $GLOBALS['geopccb_ckan_url']; ?>" target="_blank">
                             Search Data.gov
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo $GLOBALS['ckan_mp_url']; ?>" target="_blank">Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
-                    <li><a href="<?php echo $GLOBALS['cms_url']; ?>" target="_blank">Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
+                        <a href="<?php echo $GLOBALS['geopccb_ckan_mp_url']; ?>" target="_blank">Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
+                    <li><a href="<?php echo $GLOBALS['geopccb_cms_url']; ?>" target="_blank">Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
                 </ul>
                 <br class="hidden-xs">
                 <h4 style="color:white">Apps &amp; Services</h4>
                 <ul>
-                  <li><a href="<?php echo $GLOBALS['viewer_url']; ?>" target="_blank">Map Viewer
+                  <li><a href="<?php echo $GLOBALS['geopccb_viewer_url']; ?>" target="_blank">Map Viewer
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>
-                  <li><a href="<?php echo $GLOBALS['maps_url']; ?>" target="_blank">Map Manager
+                  <li><a href="<?php echo $GLOBALS['geopccb_maps_url']; ?>" target="_blank">Map Manager
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>
-                  <li><a href="<?php echo $GLOBALS['marketplace_url']; ?>" target="_blank">Marketplace Preview
+                  <li><a href="<?php echo $GLOBALS['geopccb_marketplace_url']; ?>" target="_blank">Marketplace Preview
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>
-                  <li><a href="<?php echo $GLOBALS['dashboard_url']; ?>" target="_blank">Performance Dashboard
+                  <li><a href="<?php echo $GLOBALS['geopccb_dashboard_url']; ?>" target="_blank">Performance Dashboard
                     <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                     </a>
                   </li>

@@ -83,7 +83,7 @@
                                 <button style="color:white;" type="button" class="btn btn-link">Sign out</button>
                               </a>
                             <?php } ?> -->
-                            <a href="<?php echo esc_url($GLOBALS['accounts_url']);?>">My Account</a>
+                            <a href="<?php echo esc_url($GLOBALS['geopccb_accounts_url']);?>">My Account</a>
                         </div>
                     </li>
                 </ul>

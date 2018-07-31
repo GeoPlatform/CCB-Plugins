@@ -1,5 +1,5 @@
 
-<div class="cornerstones section--linked">
+<div class="cornerstones whatsNew section--linked">
     <!-- top directional lines and section heading -->
     <h4 class="heading">
         <div class="line"></div>
@@ -17,7 +17,7 @@
                         <img alt="Communicate and Contribute" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/social_md.jpeg"); ?>" class="img--prominent">
                     </div><!--#col-xs-12 col-sm-4 col-sm-push-4-->
                     <div class="col-xs-12 col-sm-4 col-sm-pull-4">
-                        <h5><a href="<?php echo esc_url($GLOBALS['comm_url']); ?>" target="_blank">GeoPlatform Communities</a></h5>
+                        <h5><a href="<?php echo esc_url($GLOBALS['geopccb_comm_url']); ?>" target="_blank">GeoPlatform Communities</a></h5>
                         <p>
                             A key goal of the Geospatial Platform is to expand the use and understanding of National geospatial resources. Active social interaction plays an important role in sharing vital, timely knowledge to keep our collective data, content and services fresh and engaging. The more you participate and contribute, the better the GeoPlatform.gov experience becomes for everyone.
                         </p>
@@ -44,7 +44,7 @@
 
                     <div class="col-xs-12 col-sm-4 col-sm-pull-4">
                         <h5>
-                            <a href="<?php echo esc_url($GLOBALS['ckan_url']); ?>" target="_blank">
+                            <a href="<?php echo esc_url($GLOBALS['geopccb_ckan_url']); ?>" target="_blank">
                                 Search Data.gov
                             </a>
                         </h5>
@@ -54,7 +54,7 @@
                     </div><!--#col-xs-12 col-sm-4 col-sm-pull-4-->
 
                     <div class="col-xs-12 col-sm-4">
-                        <h5><a href="<?php echo esc_url($GLOBALS['ckan_mp_url']); ?>" target="_blank">Explore the Marketplace</a></h5>
+                        <h5><a href="<?php echo esc_url($GLOBALS['geopccb_ckan_mp_url']); ?>" target="_blank">Explore the Marketplace</a></h5>
                         <p>
                           The Marketplace facilitates collaboration on the
                           planned acquisition and production of

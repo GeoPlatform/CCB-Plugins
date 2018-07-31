@@ -1,4 +1,4 @@
-<div class="search section--linked">
+<div class="search section--linked" style="background:#fff">
 
   <h4 class="heading">
     <div class="line"></div>

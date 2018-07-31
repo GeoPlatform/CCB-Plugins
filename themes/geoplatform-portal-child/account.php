@@ -32,7 +32,7 @@
         <div class="row">
             <div class="col-md-12">
                 <!-- <a class="btn btn-primary pull-right" onclick="login()">Sign In</a> -->
-                <a class="btn btn-accent" href="<?php echo $GLOBALS["accounts_url"]?>/register">Register</a>
+                <a class="btn btn-accent" href="<?php echo $GLOBALS["geopccb_accounts_url"]?>/register">Register</a>
             </div>
         </div>
     </div>
@@ -50,59 +50,57 @@
 
 		    curl_close($ch);
 
-			if(!empty($response)){
-		    	$result = json_decode($response, true);
-		    }else{
-			    $result = "No recent activity";
-		    }
-
+			if(!empty($response))
+		   	$result = json_decode($response, true);
+		  else
+			  $result = "No recent activity";
 	?>
 
     <div id="userInfoSection">
 	    <h5>Welcome Back</h5>
-        <span><?php echo $current_user->user_firstname . ' ' . $current_user->user_lastname?></span>
-        <div class="text-muted"><?php echo $current_user->user_email ?></div>
-        <h5 class="text-accented">My Recent Resources</h5>
-		<div><?php
+      <span><?php echo $current_user->user_firstname . ' ' . $current_user->user_lastname?></span>
+      <div class="text-muted"><?php echo $current_user->user_email ?></div>
+      <h5 class="text-accented">My Recent Resources</h5>
+		  <div><?php
 
-			$user_activity = $result['results'];
+        if (array_key_exists('results', $result) && isset($result['results'])){
+		      $user_activity = $result['results'];
 
-			if(count($user_activity) > 0) {
-	            foreach($user_activity as $item){
-                    //$map_reference_url = $item['referenceUrl'];
-                    $map_reference_url = "";
-                    $agol_url = $item['landingPage'];
-                    //incorporate for AGOL maps
-                    if (empty($agol_url)){
-                      $map_reference_url = $GLOBALS['viewer_url'] . '/?id=' . $item['id'];
-                    }
-                    else{
-                      $map_reference_url = $agol_url;
-                    }
-                    $thumb = $GLOBALS['ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+			    if(count($user_activity) > 0) {
+	          foreach($user_activity as $item){
+              //$map_reference_url = $item['referenceUrl'];
+              $map_reference_url = "";
+              $agol_url = $item['landingPage'];
 
-                    //if(empty($thumb)) $thumb = 'https://registry.geoplatform.gov/api/maps/' . $item['_id'] . '/thumbnail?format=image';
+              //incorporate for AGOL maps
+              if (empty($agol_url))
+                $map_reference_url = $GLOBALS['geopccb_viewer_url'] . '/?id=' . $item['id'];
+              else
+                $map_reference_url = $agol_url;
 
-                    if(empty($thumb)) $thumb = $GLOBALS['ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
-                    else if(!(strpos($thumb, 'http') == 0 )) $thumb = $GLOBALS['ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+              $thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
 
-					$map_activity_date = gmdate("M d Y", $item['modified'] / 1000);
+              if(empty($thumb))
+                $thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+              else if(!(strpos($thumb, 'http') == 0 ))
+                $thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
 
-                    echo    '<div class="media">';
-                    echo    '  <a href="' . $map_reference_url . '" class="media-left media-middle">';
-                    echo    '    <img class="media-object bordered" src="' . $thumb . '" alt="' . $item['label'] . '" height="48">';
-                    echo    '  </a>';
-                    echo    '  <div class="media-body">';
-                    echo    '    <div class="media-heading"><a href="' . $map_reference_url . '">' . $item['label'] . '</a></div>';
-                    echo    '    <small class="text-muted">' . $map_activity_date . '</small>';
-                    echo    '  </div>';
-                    echo    '</div>';
-                }
+					    $map_activity_date = gmdate("M d Y", $item['modified'] / 1000);
 
-            } else {
-                echo '<em>You have no recent items. You should create some content!</em>';
+              echo    '<div class="media">';
+              echo    '  <a href="' . $map_reference_url . '" class="media-left media-middle">';
+              echo    '    <img class="media-object bordered" src="' . $thumb . '" alt="' . $item['label'] . '" height="48">';
+              echo    '  </a>';
+              echo    '  <div class="media-body">';
+              echo    '    <div class="media-heading"><a href="' . $map_reference_url . '">' . $item['label'] . '</a></div>';
+              echo    '    <small class="text-muted">' . $map_activity_date . '</small>';
+              echo    '  </div>';
+              echo    '</div>';
             }
-
+          } else
+            echo '<em>You have no recent items. You should create some content!</em>';
+        } else
+          echo '<em>You have no recent items. You should create some content!</em>';
 			?></div>
     </div>
 
