@@ -12,7 +12,7 @@
     <div class="row">
       <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
         <form id="geoplatformsearchform">
-          <div class="input-group-slick input-group-slick--lg">
+          <div class="input-group-slick input-group-slick--lg" style="width:100%">
             <span class="glyphicon glyphicon-search"></span>
             <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg">
             <button id="geoplatformsearchbutton" type="button" class="btn btn-primary">Search</button>
