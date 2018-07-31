@@ -1,16 +1,22 @@
 <?php
 
 function geopportal_enqueue_scripts() {
-
-    $parent_style = 'custom-style'; // This is 'twentyfifteen-style' for the Twenty Fifteen theme.
-
-    wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
-    wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( $parent_style ), wp_get_theme()->get('Version'));
-    wp_enqueue_style( 'jquery' );
     wp_enqueue_script( 'auth', get_stylesheet_directory_uri() . '/scripts/authentication.js' );
     wp_enqueue_script( 'fixedScroll', get_stylesheet_directory_uri() . '/scripts/fixed_scroll.js');
+    wp_enqueue_script( 'jquery' );
 }
 add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
+
+function geopportal_enqueue_styles() {
+  // $parent_style = 'custom-style'; // This is 'twentyfifteen-style' for the Twenty Fifteen theme.
+  //
+  // wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
+  // wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( $parent_style ), wp_get_theme()->get('Version'));
+   wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
+
+
+}
+add_action( 'wp_enqueue_styles', 'geopportal_enqueue_styles' );
 
 //Disable admin bar (un-comment for prod sites)
 // add_filter('show_admin_bar', '__return_false');

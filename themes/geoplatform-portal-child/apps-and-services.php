@@ -12,7 +12,7 @@
         <div class="row">
 
             <div class="col-sm-6">
-                <img src="<?php echo esc_url("" . get_template_directory_uri() . "/img/services_md.jpeg"); ?>" class="img--prominent">
+                <img src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/services_md.jpeg"); ?>" class="img--prominent">
             </div><!--#col-sm-6-->
             <div class="col-sm-6">
 
