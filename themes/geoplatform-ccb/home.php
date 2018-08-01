@@ -30,7 +30,7 @@ get_template_part( 'single-banner', get_post_format() );
 		        <?php the_title( sprintf( '<h3 style="margin-bottom:0"><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></h3>' );?>
                 <a href="<?php echo esc_url( get_permalink()); ?>"<cite style="color:#006621"><?php echo esc_url( get_permalink());?></cite></a>
                 <p>
-                    <?php the_excerpt('',TRUE); ?>
+                  <?php the_excerpt('',TRUE); ?>
                 </p>
             </article><!-- #post-the_ID();-->
             <hr />
