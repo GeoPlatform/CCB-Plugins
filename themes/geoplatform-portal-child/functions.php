@@ -52,23 +52,203 @@ add_action( 'init', 'geop_ccb_register_menus' );
 // https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
 //------------------------------------
 
-add_action( 'widgets_init', 'geoplatform_sidebar' );
-
-function geoplatform_sidebar() {
-
-    register_sidebar(
-        array(
-            'id' => 'geoplatform-widgetized-area',
-            'name' => __( 'Sidebar Widget', 'geoplatform-2017-theme' ),
-            'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-2017-theme' ),
-                        'class' => 'widget-class',
-            'before_widget' => '<div id="%1$s" class="widget %2$s">',
-						'after_widget'  => '</div>',
-						'before_title'  => '<h4>',
-						'after_title'   => '</h4>'
-        )
-    );
+/**
+ * Sidebar setup
+ */
+function wpsites_before_post_widget( $content ) {
+	if ( is_singular( array( 'post', 'page' ) ) && is_active_sidebar( 'before-post' ) && is_main_query() ) {
+		dynamic_sidebar('before-post');
+	}
+	return $content;
 }
+add_filter( 'the_content', 'wpsites_before_post_widget' );
+
+/**
+ * Adds sidebar accounts widget.
+ */
+class Geopportal_Account_Widget extends WP_Widget {
+
+	/**
+	 * Register widget with WordPress.
+	 */
+	function __construct() {
+		parent::__construct(
+			'geopportal_account_widget', // Base ID
+			esc_html__( 'GeoPlatform Account Widget', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform Account Widget', 'geoplatform-ccb' ), ) // Args
+		);
+	}
+
+	/**
+	 * Front-end display of widget. Just gets account template.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
+		get_template_part( 'account', get_post_format() );
+	}
+
+	/**
+	 * Back-end widget form. Just gives text.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		$title = "Account Management";
+		?>
+		<p>
+		  The GeoPlatform theme Account Management widget.
+		</p>
+		<?php
+	}
+
+	/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {}
+}
+
+
+/**
+ * Adds sidebar featured services widget.
+ */
+class Geopportal_Featured_Sidebar_Widget extends WP_Widget {
+
+	/**
+	 * Register widget with WordPress.
+	 */
+	function __construct() {
+		parent::__construct(
+			'geopportal_featured_sidebar_widget', // Base ID
+			esc_html__( 'GeoPlatform Featured Sidebar Widget', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform Featured Sidebar Widget', 'geoplatform-ccb' ), ) // Args
+		);
+	}
+
+	/**
+	* Front-end display of widget. Just gets featured-services template.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
+		get_template_part( 'featured-services', get_post_format() );
+	}
+
+	/**
+	 * Back-end widget form.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		$title = "Sidebar Featured Services";
+		?>
+		<p>
+		  The GeoPlatform theme Featured Services widget.
+		</p>
+		<?php
+	}
+
+	/**
+	 * Sanitize widget form values as they are saved.
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {
+		$instance = array();
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? sanitize_text_field( $new_instance['title'] ) : '';
+
+		return $instance;
+	}
+}
+
+
+/**
+ * Adds sidebar contact form widget.
+ */
+class Geopportal_Contact_Widget extends WP_Widget {
+
+	/**
+	 * Register widget with WordPress.
+	 */
+	function __construct() {
+		parent::__construct(
+			'geopportal_contact_widget', // Base ID
+			esc_html__( 'GeoPlatform Contact Widget', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform Contact Widget', 'geoplatform-ccb' ), ) // Args
+		);
+	}
+
+	/**
+	 * Front-end display of widget. Just gets contact template.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
+		get_template_part( 'contact', get_post_format() );
+	}
+
+	/**
+	 * Back-end widget form. Just text.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		$title = "Contact Information";
+		?>
+		<p>
+		  The GeoPlatform theme contact information widget.
+		</p>
+		<?php
+	}
+
+	/**
+	 * Sanitize widget form values as they are saved. N/A
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {}
+}
+
+
+function geopportal_register_widgets() {
+    register_widget( 'Geopportal_Account_Widget' );
+		register_widget( 'Geopportal_Featured_Sidebar_Widget' );
+		register_widget( 'Geopportal_Contact_Widget' );
+}
+add_action( 'widgets_init', 'geopportal_register_widgets' );
+
 
 //-------------------------------
 // Diabling auto formatting and adding <p> tags to copy/pasted HTML in pages
