@@ -7,7 +7,7 @@
  * @link https://codex.wordpress.org/Function_Reference/get_category
  * @link https://developer.wordpress.org/reference/functions/get_term_meta/
  *
- * @since 3.1.2
+ * @since 3.1.3
  *
  */
 $geopccb_category = get_category( get_query_var( 'cat' ) );//get category data

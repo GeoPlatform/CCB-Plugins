@@ -6,7 +6,7 @@
  *
  * @package GeoPlatform CCB
  *
- * @since 3.1.2
+ * @since 3.1.3
  */
 ?>
 <footer>

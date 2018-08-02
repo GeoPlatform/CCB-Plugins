@@ -980,7 +980,7 @@ class GP_TAX_META {
 
  /*
   * Initialize the class and start calling our hooks and filters
-  * @since 3.1.2
+  * @since 3.1.3
  */
  public function init() {
    add_action( 'category_add_form_fields', array ( $this, 'add_category_image' ), 10, 2 );
@@ -999,7 +999,7 @@ public function load_media() {
 
  /*
   * Add a form field in the new category page
-  * @since 3.1.2
+  * @since 3.1.3
  */
  public function add_category_image ( $taxonomy ) { ?>
    <div class="form-field term-group">
@@ -1016,7 +1016,7 @@ public function load_media() {
 
  /*
   * Save the form field
-  * @since 3.1.2
+  * @since 3.1.3
  */
  public function save_category_image ( $geopccb_term_id, $tt_id ) {
    if( isset( $_POST['category-image-id'] ) && '' !== $_POST['category-image-id'] ){
@@ -1027,7 +1027,7 @@ public function load_media() {
 
  /*
   * Edit the form field
-  * @since 3.1.2
+  * @since 3.1.3
  */
  public function update_category_image ( $geopccb_term, $taxonomy ) { ?>
    <tr class="form-field term-group-wrap">
@@ -1053,7 +1053,7 @@ public function load_media() {
 
 /*
  * Update the form field value
- * @since 3.1.2
+ * @since 3.1.3
  */
  public function updated_category_image ( $geopccb_term_id, $tt_id ) {
    if( isset( $_POST['category-image-id'] ) && '' !== $_POST['category-image-id'] ){
@@ -1066,7 +1066,7 @@ public function load_media() {
 
 /*
  * Add script
- * @since 3.1.2
+ * @since 3.1.3
  */
  public function add_script() { ?>
    <script>
