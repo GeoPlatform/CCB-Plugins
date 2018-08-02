@@ -115,7 +115,9 @@ Source: (https://getbootstrap.com/docs/3.3/)
 = 3.1.3 =
 * Released August 2, 2018
 
-Fixed a number of bugs.
+- Update checking allows user to update the theme.
+- Google Analytics incorporated.
+- Numerous back-end improvements and bug fixes.
 
  = 3.1.2 =
 * Released June 29, 2018
