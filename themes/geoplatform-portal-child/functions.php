@@ -477,7 +477,7 @@ function geop_ccb_customize_register( $wp_customize )
 {
 		//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
-        'title'    => __( 'Header Color Section', 'geoplatform-2017-theme' ),
+        'title'    => __( 'Header Color Section', 'geoplatform-ccb' ),
         'priority' => 30
     ) );
 
@@ -489,7 +489,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color', array(
-				'label'    => __( 'Header1 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header1 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header_color_setting',
 		) ) );
@@ -502,7 +502,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color', array(
-				'label'    => __( 'Header 2 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 2 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header2_color_setting',
 		) ) );
@@ -515,7 +515,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h3_link_color', array(
-				'label'    => __( 'Header 3 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 3 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header3_color_setting',
 		) ) );
@@ -528,7 +528,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h4_link_color', array(
-				'label'    => __( 'Header 4 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 4 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header4_color_setting',
 		) ) );
@@ -541,7 +541,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'a_link_color', array(
-				'label'    => __( 'Link Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Link Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'link_color_setting',
 		) ) );
@@ -554,7 +554,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'brand_color', array(
-				'label'    => __( 'Brand Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Brand Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'brand_color_setting',
 		) ) );
@@ -564,7 +564,7 @@ function geop_ccb_customize_register( $wp_customize )
 		//Fonts section, settings, and controls
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Section', 'geoplatform-2017-theme' ),
+				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
 				'priority' => 50
 			) );
 
@@ -578,8 +578,8 @@ function geop_ccb_customize_register( $wp_customize )
         'label' => 'Fonts',
         'section' => 'font_section',
         'choices' => array(
-            'lato' => __('Lato', 'geoplatform-2017-theme'),
-            'slabo' => __('Slabo',  'geoplatform-2017-theme')
+            'lato' => __('Lato', 'geoplatform-ccb'),
+            'slabo' => __('Slabo',  'geoplatform-ccb')
 						),
 				));
 
@@ -587,7 +587,7 @@ function geop_ccb_customize_register( $wp_customize )
 		// pulled from https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
 		//fixed some issues with linking up through https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
 		$wp_customize->add_section( 'banner_text_section' , array(
-				'title'    => __( 'Banner Area', 'geoplatform-2017-theme' ),
+				'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
 				'priority' => 50
 			));
 

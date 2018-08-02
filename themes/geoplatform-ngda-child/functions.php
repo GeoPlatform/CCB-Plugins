@@ -7,454 +7,119 @@ $geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communiti
 $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
 function geopngda_enqueue_scripts() {
-    wp_enqueue_script( 'auth', get_stylesheet_directory_uri() . '/scripts/authentication.js' );
-    wp_enqueue_script( 'fixedScroll', get_stylesheet_directory_uri() . '/scripts/fixed_scroll.js');
     wp_enqueue_script( 'jquery' );
 }
-add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'geopngda_enqueue_scripts' );
 
 function geopngda_enqueue_styles() {
    wp_enqueue_style( 'parent-style', get_template_directory_uri() . '/style.css' );
 }
-add_action( 'wp_enqueue_styles', 'geopportal_enqueue_styles' );
+add_action( 'wp_enqueue_styles', 'geopngda_enqueue_styles' );
 
-//Disable admin bar (un-comment for prod sites)
-// add_filter('show_admin_bar', '__return_false');
+
+
+
+
+
+
+
+
+//------------------------------------
+//Support for a custom header Images
+//------------------------------------
+add_theme_support( 'custom-header' );
 
 //--------------------------
 //Support adding Menus for header and footer
 //https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
 //--------------------------
-function geop_ccb_register_menus() {
+function register_my_menus() {
   register_nav_menus(
     array(
-      'headfoot-featured' => __( 'HF - Featured' ),
-      'headfoot-getInvolved' => __( 'HF - Get Involved' ),
-      'headfoot-appservices' => __( 'HF - Apps and Services' ),
-      'headfoot-aboutL' => __( 'HF - About Left' ),
-      'headfoot-aboutR' => __( 'HF - About Right' ),
-      'headfoot-help' => __( 'HF - Help' ),
-      'headfoot-themes' => __( 'HF - Themes')
+			'community-links' => 'Community Links',
+			'header-left' => 'Header Menu - Left Column',
+      'header-center' => 'Header Menu - Center Column',
+      'header-right-col1' => 'Header Menu - Right Column 1',
+			'header-right-col2' => 'Header Menu - Right Column 2',
+			'footer-left' => 'Footer Menu - Left Column',
+      'footer-center' => 'Footer Menu - Center Column',
+      'footer-right-col1' => 'Footer Menu - Right Column 1',
+			'footer-right-col2' => 'Footer Menu - Right Column 2'
     )
   );
 }
-add_action( 'init', 'geop_ccb_register_menus' );
+add_action( 'init', 'register_my_menus' );
+
+
+function gp_create_services_menu(){
+//pre-filling menu items
+//https://codex.wordpress.org/Function_Reference/wp_create_nav_menu
+// Check if the menu exists
+$menu_name = 'Apps & Services';
+$menu_exists = wp_get_nav_menu_object( $menu_name );
+
+// If it doesn't exist, let's create it.
+if( !$menu_exists){
+		$menu_id = wp_create_nav_menu($menu_name);
+
+	// Set up default menu items
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Map Viewer <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
+			'menu-item-url' => $GLOBALS['viewer_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Map Manager <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
+			'menu-item-url' => $GLOBALS['maps_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Marketplace Preview <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
+			'menu-item-url' => $GLOBALS['marketplace_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Performance Dashboard <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
+			'menu-item-url' => $GLOBALS['dashboard_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Search Catalog <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
+			'menu-item-url' => $GLOBALS['ckan_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+		wp_update_nav_menu_item($menu_id, 0, array(
+			'menu-item-title' =>  __('Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>', 'geoplatform-ngda'),
+			'menu-item-url' => $GLOBALS['ckan_mp_url'],
+			'menu-item-status' => 'publish',
+			'menu-item-type' => 'custom',
+			'menu-item-target'=> '_blank',
+			));
+
+		//Get theme locations and set this menu to those locations
+		//https://rochcass.wordpress.com/2016/01/14/wordpress-create-menu-locations-and-assigning-menus-programmatically/
+		$locations = get_theme_mod('nav_menu_locations');
+		$locations['footer-center'] = $menu_id;
+		$locations['header-center'] = $menu_id;
+		set_theme_mod('nav_menu_locations', $locations);
+	}
+}
+add_action('init', 'gp_create_services_menu');
 
 //-------------------------------
-// Widgetizing the theme
-// https://codex.wordpress.org/Function_Reference/dynamic_sidebar
-// https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
-//------------------------------------
-
-/**
- * Sidebar setup
- */
-function wpsites_before_post_widget( $content ) {
-	if ( is_singular( array( 'post', 'page' ) ) && is_active_sidebar( 'before-post' ) && is_main_query() ) {
-		dynamic_sidebar('before-post');
-	}
-	return $content;
-}
-add_filter( 'the_content', 'wpsites_before_post_widget' );
-
-/**
- * Adds sidebar accounts widget.
- */
-class Geopportal_Account_Widget extends WP_Widget {
-
-	/**
-	 * Register widget with WordPress.
-	 */
-	function __construct() {
-		parent::__construct(
-			'geopportal_account_widget', // Base ID
-			esc_html__( 'GeoPlatform Sidebar Account', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Sidebar Account', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	/**
-	 * Front-end display of widget. Just gets account template.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */
-	public function widget( $args, $instance ) {
-		get_template_part( 'account', get_post_format() );
-	}
-
-	/**
-	 * Back-end widget form. Just gives text.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
-	 */
-	public function form( $instance ) {
-		$title = "Account Management";
-		?>
-		<p>
-		  The GeoPlatform theme Account Management widget for the sidebar.
-		</p>
-		<?php
-	}
-
-	/**
-	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds sidebar featured services widget.
- */
-class Geopportal_Featured_Sidebar_Widget extends WP_Widget {
-
-	/**
-	 * Register widget with WordPress.
-	 */
-	function __construct() {
-		parent::__construct(
-			'geopportal_featured_sidebar_widget', // Base ID
-			esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	/**
-	* Front-end display of widget. Just gets featured-services template.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */
-	public function widget( $args, $instance ) {
-		get_template_part( 'featured-services', get_post_format() );
-	}
-
-	/**
-	 * Back-end widget form.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
-	 */
-	public function form( $instance ) {
-		$title = "Sidebar Featured Services";
-		?>
-		<p>
-		  The GeoPlatform theme Featured Services widget for the sidebar.
-		</p>
-		<?php
-	}
-
-	/**
-	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds sidebar contact form widget.
- */
-class Geopportal_Contact_Widget extends WP_Widget {
-
-	/**
-	 * Register widget with WordPress.
-	 */
-	function __construct() {
-		parent::__construct(
-			'geopportal_contact_widget', // Base ID
-			esc_html__( 'GeoPlatform Sidebar Contact', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Sidebar Contact', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	/**
-	 * Front-end display of widget. Just gets contact template.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */
-	public function widget( $args, $instance ) {
-		get_template_part( 'contact', get_post_format() );
-	}
-
-	/**
-	 * Back-end widget form. Just text.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
-	 */
-	public function form( $instance ) {
-		$title = "Contact Information";
-		?>
-		<p>
-		  The GeoPlatform theme contact information widget for the sidebar.
-		</p>
-		<?php
-	}
-
-	/**
-	 * Sanitize widget form values as they are saved. N/A
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-function geopportal_register_sidebar_widgets() {
-    register_widget( 'Geopportal_Account_Widget' );
-		register_widget( 'Geopportal_Featured_Sidebar_Widget' );
-		register_widget( 'Geopportal_Contact_Widget' );
-}
-add_action( 'widgets_init', 'geopportal_register_sidebar_widgets' );
-
-
-//------------------------------------
-// Widgetizing the portal page
-//------------------------------------
-
-/**
- * Widgetizing the front page
- */
-if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
-	function geop_ccb_frontpage() {
-		register_sidebar(
-		array(
-			'id' => 'geoplatform-widgetized-page',
-			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-child' ),
-			'description' => __( 'Widgets that go on the portal front page can be added here', 'geoplatform-portal-child' ),
-			'class' => 'widget-class'
-		)
-		);
-	}
-	add_action( 'widgets_init', 'geop_ccb_frontpage' );
-}
-
-
-/**
- * Adds main-page front-page widget.
- */
-class Geopportal_MainPage_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_mainpage_widget', // Base ID
-			esc_html__( 'GeoPlatform Features & Announcements', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Features & Announcements', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		get_template_part( 'main-page', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "Features and Announcements";
-		?>
-		<p>
-		  The GeoPlatform theme Features and Announcements widget.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds gpsearch front-page widget.
- */
-class Geopportal_GPSearch_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_gpsearch_widget', // Base ID
-			esc_html__( 'GeoPlatform Search', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Search', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) ))
-	    get_template_part( 'gpsearch', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "GeoPlatform Search";
-		?>
-		<p>
-		  The GeoPlatform theme Search bar widget. Will only display if the plugin is active.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds cornerstones front-page widget.
- */
-class Geopportal_Cornerstones_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_cornerstones_widget', // Base ID
-			esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-    get_template_part( 'cornerstones', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "GeoPlatform Cornerstones";
-		?>
-		<p>
-		  The GeoPlatform theme Cornerstones widget.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds apps and services front-page widget.
- */
-class Geopportal_Services_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_services_widget', // Base ID
-			esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		get_template_part( 'apps-and-services', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "Apps & Services";
-		?>
-		<p>
-		  The GeoPlatform theme Apps & Services widget.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds featured applications front-page widget.
- */
-class Geopportal_Featured_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_featured_widget', // Base ID
-			esc_html__( 'GeoPlatform Featured Application', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Featured Application', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		get_template_part( 'featured', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "Featured Applications";
-		?>
-		<p>
-		  The GeoPlatform theme Featured Applications widget.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds account front-page widget.
- */
-class Geopportal_Front_Account_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_front_account_widget', // Base ID
-			esc_html__( 'GeoPlatform Account', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Account', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		get_template_part( 'first-time', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "My Account";
-		?>
-		<p>
-		  The GeoPlatform theme widget for front-page account management.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-function geopportal_register_portal_widgets() {
-    register_widget( 'Geopportal_MainPage_Widget' );
-		register_widget( 'Geopportal_GPSearch_Widget' );
-		register_widget( 'Geopportal_Cornerstones_Widget' );
-		register_widget( 'Geopportal_Services_Widget' );
-		register_widget( 'Geopportal_Featured_Widget' );
-		register_widget( 'Geopportal_Front_Account_Widget' );
-}
-add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
-
-
-
-
+// Support Featured Images
+//-------------------------------
+add_theme_support( 'post-thumbnails' );
 
 //-------------------------------
 // Diabling auto formatting and adding <p> tags to copy/pasted HTML in pages
@@ -462,16 +127,24 @@ add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 remove_filter( 'the_content', 'wpautop' );
 remove_filter( 'the_excerpt', 'wpautop' );
 
+/********************************************************/
+// Adding Dashicons in WordPress Front-end
+/********************************************************/
+add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
+function load_dashicons_front_end() {
+  wp_enqueue_style( 'dashicons' );
+}
+
 
 //---------------------------------------
 //Supporting Theme Customizer editing
 //https://codex.wordpress.org/Theme_Customization_API
 //--------------------------------------
-function geop_ccb_customize_register( $wp_customize )
+function geo_customize_register( $wp_customize )
 {
 		//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
-        'title'    => __( 'Header Color Section', 'geoplatform-2017-theme' ),
+        'title'    => __( 'Header Color Section', 'geoplatform-ngda' ),
         'priority' => 30
     ) );
 
@@ -483,7 +156,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color', array(
-				'label'    => __( 'Header1 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header1 Color', 'geoplatform-ngda' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header_color_setting',
 		) ) );
@@ -496,7 +169,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color', array(
-				'label'    => __( 'Header 2 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 2 Color', 'geoplatform-ngda' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header2_color_setting',
 		) ) );
@@ -509,7 +182,7 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h3_link_color', array(
-				'label'    => __( 'Header 3 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 3 Color', 'geoplatform-ngda' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header3_color_setting',
 		) ) );
@@ -522,33 +195,33 @@ function geop_ccb_customize_register( $wp_customize )
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h4_link_color', array(
-				'label'    => __( 'Header 4 Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Header 4 Color', 'geoplatform-ngda' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header4_color_setting',
 		) ) );
 
     //link (<a>) color and control
 		$wp_customize->add_setting( 'link_color_setting' , array(
-				'default'   => '#000000',
+				'default'   => '#428bca',
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'a_link_color', array(
-				'label'    => __( 'Link Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Link Color', 'geoplatform-ngda' ),
 				'section'  => 'header_color_section',
 				'settings' => 'link_color_setting',
 		) ) );
 
 		//.brand color and control
 		$wp_customize->add_setting( 'brand_color_setting' , array(
-				'default'   => '#000000',
+				'default'   => '#fff',
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'brand_color', array(
-				'label'    => __( 'Brand Color', 'geoplatform-2017-theme' ),
+				'label'    => __( 'Brand Color', 'geoplatform-ngda' ),
 				'section'  => 'header_color_section',
 				'settings' => 'brand_color_setting',
 		) ) );
@@ -558,7 +231,7 @@ function geop_ccb_customize_register( $wp_customize )
 		//Fonts section, settings, and controls
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Section', 'geoplatform-2017-theme' ),
+				'title'    => __( 'Font Section', 'geoplatform-ngda' ),
 				'priority' => 50
 			) );
 
@@ -572,8 +245,8 @@ function geop_ccb_customize_register( $wp_customize )
         'label' => 'Fonts',
         'section' => 'font_section',
         'choices' => array(
-            'lato' => __('Lato', 'geoplatform-2017-theme'),
-            'slabo' => __('Slabo',  'geoplatform-2017-theme')
+            'lato' => __('Lato', 'geoplatform-ngda'),
+            'slabo' => __('Slabo',  'geoplatform-ngda')
 						),
 				));
 
@@ -581,11 +254,9 @@ function geop_ccb_customize_register( $wp_customize )
 		// pulled from https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
 		//fixed some issues with linking up through https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
 		$wp_customize->add_section( 'banner_text_section' , array(
-				'title'    => __( 'Banner Area', 'geoplatform-2017-theme' ),
+				'title'    => __( 'Banner Area', 'geoplatform-ngda' ),
 				'priority' => 50
-			));
-
-
+			) );
 
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
@@ -595,34 +266,171 @@ function geop_ccb_customize_register( $wp_customize )
 						 'sanitize_callback' => 'wp_kses_post'
          ) );
          $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'text_editor_setting', array(
-             'label'   => 'Banner Text Editor',
+             'label'   => __( 'Banner Text Editor', 'geoplatform-ngda' ),
              'section' => 'banner_text_section',
              'settings'   => 'text_editor_setting',
-             'priority' => 20
+             'priority' => 10
          ) ) );
 
+				 //Call to action button (formerly "Learn More" button)
+				 $wp_customize->add_setting('call2action_button', array(
+					 'default' => '',
+					 'transport' => 'refresh',
+           'sanitize_callback' => 'geop_sanitize_checkbox'
+				 ) );
 
-				//color section, settings, and controls
-		$wp_customize->add_section( 'custom_links_section' , array(
-				'title'    => __( 'Custom Links Section', 'starter' ),
+				 $wp_customize->add_control('call2action_button', array(
+					 'section' => 'banner_text_section',
+					 'label' =>__( 'Show Call to Action button?', 'geoplatform-ngda' ),
+					 'type' => 'checkbox',
+					 'priority' => 20,
+				 ) );
+
+				 $wp_customize->add_setting('call2action_text', array(
+					 'default' => '',
+					 'transport' => 'refresh',
+					 'sanitize_callback' => 'sanitize_text_field',
+				 ));
+				 $wp_customize->add_control('call2action_text', array(
+					 'section' => 'banner_text_section',
+					 'label' =>__( 'Button Text', 'geoplatform-ngda' ),
+					 'type' => 'text',
+					 'priority' => 30,
+					 'input_attrs' => array(
+						'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ngda' ),
+					),
+				 ) );
+
+				 $wp_customize->add_setting('call2action_url', array(
+					'default' => '',
+					'transport' => 'refresh',
+					'sanitize_callback' => 'esc_url_raw',
+				));
+				$wp_customize->add_control('call2action_url', array(
+					'section' => 'banner_text_section',
+					'label' =>__( 'Button URL', 'geoplatform-ngda' ),
+					'type' => 'URL',
+					'priority' => 40,
+					'input_attrs' => array(
+					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ngda' ),
+				 ),
+				) );
+
+				//Map Gallery Custom link section, settings, and controls
+			$wp_customize->add_section( 'custom_links_section' , array(
+				'title'    => __( 'Custom Links Section', 'geoplatform-ngda' ),
 				'priority' => 60
-		) );
+			) );
 			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
 					'default'   => 'Insert Map Gallery Link here',
 					'transport' => 'refresh',
+					'sanitize_callback' => 'sanitize_text_field'
 				) );
-		  $wp_customize->add_control( 'Map_Gallery_link_box', array(
+			$wp_customize->add_control( 'Map_Gallery_link_box', array(
 					'label' => 'Map Gallery link',
 					'section' => 'custom_links_section',
+					'description' => 'Make sure your gallery is pointing to UAL instead of registry. For example, https://registry.geoplatform.gov/api/galleries/{your map gallery ID} will not work, but https://ual.geoplatform.gov/api/galleries/{your map gallery ID} will',
 					'type' => 'url',
 					'priority' => 10
 				) );
+
+				//Add radio button to choose link style between envs (sit, stg, or prod)
+				$wp_customize->add_setting( 'Map_Gallery_env_choice' , array(
+						'default'   => 'prod',
+						'transport' => 'refresh',
+						'sanitize_callback' => 'geop_sanitize_mapchoice'
+					) );
+				$wp_customize->add_control( 'Map_Gallery_env_choice', array(
+						'label' => 'Map Gallery Environment',
+						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
+						'section' => 'custom_links_section',
+						'type' => 'radio',
+						'priority' => 20,
+						'choices' => array(
+								'match'=>'My gallery link matches my site enviroment',
+								'sit' => 'sit (sit-ual.geoplatform.us)',
+								'stg' => 'stg (stg-ual.geoplatform.gov)',
+								'prod' => 'prod (ual.geoplatform.gov)'
+								)
+					) );
+
+					//Community Info section, settings, and controls
+				$wp_customize->add_section( 'community_info_section' , array(
+						'title'    => __( 'Community Info Sidebar', 'geoplatform-ngda' ),
+						'priority' => 70
+				) );
+						$wp_customize->add_setting( 'Community_Name_box' , array(
+								'default'   => 'Insert Community Name here',
+								'transport' => 'refresh',
+								'sanitize_callback' => 'sanitize_text_field'
+							) );
+						$wp_customize->add_control( 'Community_Name_box', array(
+								'label' => 'Community Name',
+								'section' => 'community_info_section',
+								'type' => 'text',
+								'priority' => 10
+							) );
+						$wp_customize->add_setting( 'Community_Type_box' , array(
+								'default'   => 'Insert Community Type here',
+								'transport' => 'refresh',
+								'sanitize_callback' => 'sanitize_text_field'
+							) );
+						$wp_customize->add_control( 'Community_Type_box', array(
+								'label' => 'Community Type',
+								'section' => 'community_info_section',
+								'type' => 'text',
+								'priority' => 20
+							) );
+						$wp_customize->add_setting( 'Sponsor_box' , array(
+								'default'   => 'Insert Sponsor here',
+								'transport' => 'refresh',
+								'sanitize_callback' => 'sanitize_text_field'
+							) );
+						$wp_customize->add_control( 'Sponsor_box', array(
+								'label' => 'Sponsor',
+								'section' => 'community_info_section',
+								'type' => 'text',
+								'priority' => 30
+							) );
+						$wp_customize->add_setting( 'Sponsor_Email_box' , array(
+								'default'   => 'Insert Sponsor Email here',
+								'transport' => 'refresh',
+								'sanitize_callback' => 'sanitize_email'
+							) );
+						$wp_customize->add_control( 'Sponsor_Email_box', array(
+								'label' => 'Sponsor Email',
+								'section' => 'community_info_section',
+								'type' => 'email',
+								'priority' => 40
+							) );
+						$wp_customize->add_setting( 'Theme_Lead_Agency_box' , array(
+								'default'   => 'Insert Theme Lead Agency here',
+								'transport' => 'refresh',
+								'sanitize_callback' => 'sanitize_text_field'
+							) );
+						$wp_customize->add_control( 'Theme_Lead_Agency_box', array(
+								'label' => 'Theme Lead Agency',
+								'section' => 'community_info_section',
+								'type' => 'text',
+								'priority' => 50
+							) );
+						$wp_customize->add_setting( 'Theme_Lead_box' , array(
+								'default'   => 'Insert Theme Lead here',
+								'transport' => 'refresh',
+								'sanitize_callback' => 'sanitize_text_field'
+							) );
+						$wp_customize->add_control( 'Theme_Lead_box', array(
+								'label' => 'Theme Lead',
+								'section' => 'community_info_section',
+								'type' => 'text',
+								'priority' => 60
+							) );
 
 				//remove default colors section as Header Color Section does this job better
 				 $wp_customize->remove_section( 'colors' );
 
 				 //Remove default Menus and Static Front page sections as this theme doesn't utilize them at this time
-				 // $wp_customize->remove_panel( 'nav_menus');
+				 //$wp_customize->remove_panel( 'nav_menus');
 				 $wp_customize->remove_section( 'static_front_page' );
 
 				 //remove site tagline and checkbox for showing site title and tagline from Site Identity section
@@ -631,22 +439,159 @@ function geop_ccb_customize_register( $wp_customize )
 				 $wp_customize->remove_control('display_header_text');
 
 }
-add_action( 'customize_register', 'geop_ccb_customize_register');
+add_action( 'customize_register', 'geo_customize_register');
 
-
-function custom_wysiwyg($post) {
-  echo "<h3>Anything you add below will show up in the Banner:</h3>";
-  $content = get_post_meta($post->ID, 'custom_wysiwyg', true);
-  wp_editor(htmlspecialchars_decode($content) , 'custom_wysiwyg', array("media_buttons" => true));
+//-------------------------------
+//Sanitization callbak functions for customizer
+//https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+//-------------------------------
+function geop_sanitize_fonts( $value ) {
+    if ( ! in_array( $value, array( 'lato', 'slabo' ) ) )
+        $value = 'lato';
+    return $value;
 }
 
-function geopportal_custom_wysiwyg_save_postdata($post_id) {
-  if (!empty($_POST['custom_wysiwyg'])) {
-    $data = htmlspecialchars_decode($_POST['custom_wysiwyg']);
-    update_post_meta($post_id, 'custom_wysiwyg', $data);
-  }
+function geop_sanitize_mapchoice( $value ) {
+    if ( ! in_array( $value, array( 'match', 'sit', 'stg', 'prod' ) ) )
+        $value = 'match';
+    return $value;
 }
-add_action('save_post', 'geopportal_custom_wysiwyg_save_postdata');
+
+function geop_sanitize_checkbox( $checked ){
+    //returns true if checkbox is checked
+    return ( ( isset( $checked ) && true == $checked ) ? true : false );
+}
+
+//-------------------------------
+//getting Enqueue script for custom customize control.
+//-------------------------------
+ //https://codex.wordpress.org/Plugin_API/Action_Reference/customize_controls_enqueue_scripts
+function custom_customize_enqueue() {
+	wp_enqueue_script( 'custom-customize', get_template_directory_uri() . '/customizer/customizer.js', array( 'jquery', 'customize-controls' ), false, true );
+}
+add_action( 'customize_controls_enqueue_scripts', 'custom_customize_enqueue' );
+
+//-------------------------------
+//Dynamically show the colors changing
+//-------------------------------
+//needs to have 'transport' => 'refresh' in add_setting() above in order to work
+//https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
+function header_customize_css()
+{
+    ?>
+         <style type="text/css">
+             h1 { color: <?php echo get_theme_mod('header_color_setting', '#000000'); ?>; }
+						 h2 { color: <?php echo get_theme_mod('header2_color_setting', '#000000'); ?>!important; }
+						 h3 { color: <?php echo get_theme_mod('header3_color_setting', '#000000'); ?>; }
+						 h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', '#000000'); ?>; }
+						 .text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', '#428bca'); ?>; }
+						 header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', '#fff'); ?>; }
+
+         </style>
+    <?php
+}
+add_action( 'wp_head', 'header_customize_css');
+
+//-------------------------------
+//Override banner background-image as the custom header
+//-------------------------------
+//https://codex.wordpress.org/Function_Reference/wp_add_inline_style
+function header_image_method() {
+	wp_enqueue_style(
+		'custom-style',
+		get_template_directory_uri() . '/css/Geomain_style.css'
+	);
+			$headerImage = get_header_image();
+			if (! $headerImage) {
+				$headerImage = get_template_directory_uri() . "/img/placeholder-banner.png";
+			}
+        $custom_css = "
+                .banner{
+                        background-image: url({$headerImage});
+                }";
+        wp_add_inline_style( 'custom-style', $custom_css );
+}
+add_action( 'wp_enqueue_scripts', 'header_image_method' );
+
+
+//-------------------------------
+//Give page and post banners a WYSIWYG editor
+//-------------------------------
+//http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box/
+
+define('WYSIWYG_META_BOX_ID', 'my-editor');
+
+add_action('admin_init', 'wysiwyg_register_custom_meta_box');
+
+function wysiwyg_register_custom_meta_box()
+ {
+ add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ngda') , 'custom_wysiwyg', 'post');
+ add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ngda') , 'custom_wysiwyg', 'page');
+ }
+
+function custom_wysiwyg($post)
+ {
+ echo "<h3>Anything you add below will show up in the Banner:</h3>";
+ $content = get_post_meta($post->ID, 'custom_wysiwyg', true);
+ wp_editor(htmlspecialchars_decode($content) , 'custom_wysiwyg', array(
+ "media_buttons" => true
+ ));
+ }
+
+function custom_wysiwyg_save_postdata($post_id)
+ {
+ if (!empty($_POST['custom_wysiwyg']))
+ {
+ $data = htmlspecialchars_decode($_POST['custom_wysiwyg']);
+ update_post_meta($post_id, 'custom_wysiwyg', $data);
+ }
+ }
+add_action('save_post', 'custom_wysiwyg_save_postdata');
+
+
+
+//Making Category description pages WYSIWYG
+//https://paulund.co.uk/add-tinymce-editor-category-description
+
+remove_filter( 'pre_term_description', 'wp_filter_kses' );
+remove_filter( 'term_description', 'wp_kses_data' );
+
+add_filter('edit_category_form_fields', 'cat_description');
+function cat_description($tag)
+{
+    ?>
+        <!-- <table class="form-table"> -->
+            <tr class="form-field">
+                <th scope="row" valign="top"><label for="description">Description</label></th>
+                <td>
+                <?php
+                    $settings = array('wpautop' => true, 'media_buttons' => true, 'quicktags' => true, 'textarea_rows' => '15', 'textarea_name' => 'description' );
+                    wp_editor(wp_kses_post($tag->description , ENT_QUOTES, 'UTF-8'), 'cat_description', $settings);
+                ?>
+                <br />
+                <span class="description">The description is not prominent by default; however, some themes may show it.</span>
+                </td>
+            </tr>
+        <!-- </table> -->
+    <?php
+}
+
+add_action('admin_head', 'remove_default_category_description');
+function remove_default_category_description()
+{
+    global $current_screen;
+    if ( $current_screen->id == 'edit-category' )
+    {
+    ?>
+        <script type="text/javascript">
+        jQuery(function($) {
+            $('textarea#description').closest('tr.form-field').remove();
+        });
+        </script>
+    <?php
+    }
+}
+
 
 //-------------------------------
 //Add extra boxes to Category editor
@@ -773,7 +718,6 @@ function extra_category_fields( $tag ) {    //check for existing featured ID
 // save extra category extra fields hook
 add_action ( 'edited_category', 'save_extra_category_fileds');
 
-
 // save extra category extra fields callback function
 function save_extra_category_fileds( $term_id ) {
     if ( isset( $_POST['Cat_meta'] ) ) {
@@ -790,6 +734,51 @@ function save_extra_category_fileds( $term_id ) {
     }
 }
 
+//Adding Categories and Tag functionality to pages (for frontpage setting)
+//https://stackoverflow.com/questions/14323582/wordpress-how-to-add-categories-and-tags-on-pages
+
+function page_cat_tag_settings() {
+// Add tag metabox to page
+register_taxonomy_for_object_type('post_tag', 'page');
+// Add category metabox to page
+register_taxonomy_for_object_type('category', 'page');
+}
+ // Add to the admin_init hook of your theme functions.php file
+add_action( 'init', 'page_cat_tag_settings' );
+
+// ensure all tags and categories are included in queries
+function tags_categories_support_query($wp_query) {
+  if ($wp_query->get('tag')) $wp_query->set('post_type', 'any');
+  if ($wp_query->get('category_name')) $wp_query->set('post_type', 'any');
+}
+add_action('pre_get_posts', 'tags_categories_support_query');
+
+
+
+//-------------------------------
+// Widgetizing the theme
+// https://codex.wordpress.org/Function_Reference/dynamic_sidebar
+// https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
+//------------------------------------
+
+add_action( 'widgets_init', 'geoplatform_sidebar' );
+
+function geoplatform_sidebar() {
+
+    register_sidebar(
+        array(
+            'id' => 'geoplatform-widgetized-area',
+            'name' => __( 'Sidebar Widgets', 'geoplatform-ngda' ),
+            'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-ngda' ),
+                        'class' => 'widget-class',
+            'before_widget' => '<div id="%1$s" class="widget %2$s">',
+						'after_widget'  => '</div>',
+						'before_title'  => '<h4>',
+						'after_title'   => '</h4>'
+        )
+    );
+}
+
 //-------------------------------
 //Global Content Width
 //per https://codex.wordpress.org/Content_Width#Adding_Theme_Support
@@ -799,4 +788,146 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
 
-?>
+
+//-------------------------------
+//Theme Support for Automatic Feed links per theme check
+//https://codex.wordpress.org/Automatic_Feed_Links
+//-------------------------------
+add_theme_support( 'automatic-feed-links' );
+
+
+//-------------------------------
+// Theme specific enabled capabilities
+//https://codex.wordpress.org/Function_Reference/add_cap
+//https://codex.wordpress.org/Roles_and_Capabilities
+//-------------------------------
+function gp_add_theme_caps(){
+	// gets the roles
+	$subRole = get_role('subscriber');
+	$contribRole = get_role('contributor');
+	$authRole = get_role( 'author' );
+	$editorRole = get_role('editor');
+
+	//Allows these roles to read private pages
+	$contribRole->add_cap('read_private_pages');
+	$authRole->add_cap('read_private_pages');
+
+	//Allows these roles to read private posts
+	$contribRole->add_cap('read_private_posts');
+	$authRole->add_cap('read_private_posts');
+
+	//Allows these roles to edit pages
+	$authRole->add_cap('edit_pages');
+
+	//Allows these roles to edit published pages
+	$authRole->add_cap('edit_published_pages');
+
+	//Allows these roles to publish pages
+	$authRole->add_cap('publish_pages');
+
+	//Allows these roles to delete pages
+	$authRole->add_cap('delete_pages');
+
+	//Allows these roles to delete published pages
+	$authRole->add_cap('delete_published_pages');
+
+	//Allows these roles to edit private_posts
+	$authRole->add_cap('edit_private_posts');
+
+	//Allows these roles to edit private_pages
+	$authRole->add_cap('edit_private_pages');
+
+	//Allows these roles to use Customizer
+	$editorRole->add_cap('customize');
+
+	//Allow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”
+	$editorRole->add_cap('edit_theme_options');
+
+	//Allows these roles to edit WP Dashboard layout
+	$editorRole->add_cap('edit_dashboard');
+
+	//Allows these roles to see list of users on site
+	$editorRole->add_cap('list_users');
+
+	//Allows these roles to edit themes on the site
+	$editorRole->add_cap('edit_theme');
+
+  //Allows these roles to upload files on the site
+	$contribRole->add_cap('upload_files');
+}
+add_action( 'admin_init', 'gp_add_theme_caps' );
+
+//------------------
+// Capabilities removed on Deactivation
+//https://codex.wordpress.org/Plugin_API/Action_Reference/switch_theme
+//--------------------
+function gp_remove_theme_caps() {
+	// Theme is deactivated
+	// Need to remove these capabilities from the database
+	// gets the roles
+	$subRole = get_role('subscriber');
+	$contribRole = get_role('contributor');
+	$authRole = get_role( 'author' );
+	$editorRole = get_role('editor');
+
+	// Remove the capability when theme is deactivated
+	$contribRole->remove_cap('read_private_pages');
+	$authRole->remove_cap('read_private_pages');
+
+	//Disallows these roles to read private posts
+	$contribRole->remove_cap('read_private_posts');
+	$authRole->remove_cap('read_private_posts');
+
+	//Disallows these roles to edit pages
+	$authRole->remove_cap('edit_pages');
+
+	//Disallows these roles to edit published pages
+	$authRole->remove_cap('edit_published_pages');
+
+	//Disallows these roles to publish pages
+	$authRole->remove_cap('publish_pages');
+
+	//Disallows these roles to delete pages
+	$authRole->remove_cap('delete_pages');
+
+	//Disallows these roles to delete published pages
+	$authRole->remove_cap('delete_published_pages');
+
+	//Disallows these roles to edit private_posts
+	$authRole->remove_cap('edit_private_posts');
+
+	//Disallows these roles to edit private_pages
+	$authRole->remove_cap('edit_private_pages');
+
+	//Disallows these roles to use Customizer
+	$editorRole->remove_cap('customize');
+
+	//Disallow access to “Widgets”, “Menus”, “Customize”, “Background” and “Header” under “Appearance”
+	$editorRole->remove_cap('edit_theme_options');
+
+	//Disallows these roles to edit WP Dashboard layout
+	$editorRole->remove_cap('edit_dashboard');
+
+	//Disallows these roles to see list of users on site
+	$editorRole->remove_cap('list_users');
+
+	//Disallows these roles to edit themes on the site
+	$editorRole->remove_cap('edit_theme');
+
+  //Allows these roles to upload files on the site
+  $contribRole->remove_cap('upload_files');
+}
+add_action('switch_theme', 'gp_remove_theme_caps');
+
+//private pages and posts show up in search for correct roles
+//https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
+function filter_Search($query){
+    if( is_admin() || ! $query->is_main_query() ) return;
+    if ($query->is_search) {
+        if( current_user_can('read_private_posts') && current_user_can('read_private_pages') ) {
+            $query->set('post_status',array('private','publish'));
+						$query->set('post_type',array('post','page'));
+        }
+    }
+}
+add_action('pre_get_posts','filter_search');
