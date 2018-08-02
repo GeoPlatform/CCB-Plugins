@@ -805,4 +805,15 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
 
+
+function geop_portal_distro_manager() {
+  require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+  $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+  	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/feature/plugin-update-checker/config/gp-ccb-update-details.json',
+  	__FILE__,
+  	'geoplatform-portal-child'
+  );
+}
+geop_portal_distro_manager();
+
 ?>
