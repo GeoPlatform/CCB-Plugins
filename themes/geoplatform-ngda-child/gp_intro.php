@@ -42,7 +42,7 @@ $geop_ccb_theme_mods = geop_ccb_get_theme_mods();
             </div><!--#row-->
         </div><!--#container-->
         <div style="margin-right:30px;">
-          <ul role="menu" class="header__menu" style="color:white;">
+          <ul role="menu" class="header__menu">
 
 
         <?php wp_nav_menu( array(
