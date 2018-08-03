@@ -46,6 +46,13 @@ function geop_ccb_register_menus() {
 }
 add_action( 'init', 'geop_ccb_register_menus' );
 
+/********************************************************/
+// Kills the loading of Dashicons in WordPress Front-end
+// If Dashicons should be loaded, just comment out.
+/********************************************************/
+add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
+function geop_ccb_load_dashicons_front_end() {}
+
 //-------------------------------
 // Widgetizing the theme
 // https://codex.wordpress.org/Function_Reference/dynamic_sidebar
