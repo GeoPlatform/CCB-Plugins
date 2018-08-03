@@ -252,3 +252,13 @@ function save_extra_category_fileds( $term_id ) {
 if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
+
+function geop_ngda_distro_manager() {
+  require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+  $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+  	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ngda-update-details.json',
+  	__FILE__,
+  	'geoplatform-ngda-child'
+  );
+}
+geop_ngda_distro_manager();
