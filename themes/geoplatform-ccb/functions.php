@@ -354,6 +354,31 @@ function geop_ccb_customize_register( $wp_customize ) {
 				'settings' => 'brand_color_setting',
 		) ) );
 
+
+
+
+		//Fonts section, settings, and controls
+		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+		$wp_customize->add_section( 'font_section' , array(
+				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
+				'priority' => 50
+		) );
+
+		$wp_customize->add_setting('font_choice',array(
+        'default' => 'lato',
+				'sanitize_callback' => 'geop_sanitize_fonts',
+  	));
+
+		$wp_customize->add_control('font_choice',array(
+        'type' => 'radio',
+        'label' => 'Fonts',
+        'section' => 'font_section',
+        'choices' => array(
+            'lato' => __('Lato', 'geoplatform-ccb'),
+            'slabo' => __('Slabo',  'geoplatform-ccb')
+					),
+		));
+
 		//Banner Intro Text editor section, settings, and controls
 		$wp_customize->add_section( 'banner_text_section' , array(
 				'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
@@ -421,6 +446,8 @@ function geop_ccb_customize_register( $wp_customize ) {
 					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
 				 ),
 				) );
+
+////////////////////////// PICK UP HERE FRIDAY
 
 				//Map Gallery Custom link section, settings, and controls
 			$wp_customize->add_section( 'map_gallery_section' , array(
@@ -588,6 +615,9 @@ if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
 	function geop_ccb_header_image_method() {
 		wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/Geomain_style.css');
 			$geopccb_headerImage = get_header_image();
+      if (! $geopccb_headerImage)
+        $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
+
 			$geopccb_custom_css = "
 					.banner{
 							background-image: url({$geopccb_headerImage});
