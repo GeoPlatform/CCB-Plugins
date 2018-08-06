@@ -366,7 +366,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		$wp_customize->add_setting('font_choice',array(
         'default' => 'lato',
-				'sanitize_callback' => 'geop_sanitize_fonts',
+				'sanitize_callback' => 'geop_ccb_sanitize_fonts',
   	));
 
 		$wp_customize->add_control('font_choice',array(
@@ -446,8 +446,6 @@ function geop_ccb_customize_register( $wp_customize ) {
 					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
 				 ),
 				) );
-
-////////////////////////// PICK UP HERE FRIDAY
 
 				//Map Gallery Custom link section, settings, and controls
 			$wp_customize->add_section( 'map_gallery_section' , array(
@@ -563,7 +561,7 @@ function geop_ccb_custom_customize_enqueue() {
 
 
 /**
- * Dynamically show the colors changing
+ * Dynamically show the colors and fonts changing
  *
  * @link https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
  *
@@ -583,6 +581,7 @@ if ( ! function_exists ( 'geop_ccb_header_customize_css' ) ) {
 				h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', $geop_ccb_options['header4_color_setting']); ?>; }
 				.text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', $geop_ccb_options['link_color_setting']); ?>; }
 				header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', $geop_ccb_options['brand_color_setting']); ?>; }
+        h1, h2, h3, h4, h5, h6 { font-family:  <?php echo get_theme_mod('font_choice', $geop_ccb_options['font_choice']); ?>;}
 			</style>
 		<?php
 	}
@@ -1224,6 +1223,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'call2action_text_setting' => 'Learn More',
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
 			'map_gallery_env_choice_setting' => 'prod',
+      'font_choice' => 'lato',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
 	}
@@ -1244,6 +1244,7 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 		);
 	}
 }
+
 
 if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
   function geop_ccb_distro_manager() {

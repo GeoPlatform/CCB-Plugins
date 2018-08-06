@@ -28,9 +28,6 @@ remove_filter( 'the_excerpt', 'wpautop' );
 //--------------------------------------
 
 
-
-
-
 function geop_ngda_customize_register( $wp_customize )
 {
 					//Community Info section, settings, and controls
@@ -104,45 +101,6 @@ function geop_ngda_customize_register( $wp_customize )
 								'type' => 'text',
 								'priority' => 60
 							) );
-
-
-							//Map Gallery Custom link section, settings, and controls
-						$wp_customize->add_section( 'custom_links_section' , array(
-							'title'    => __( 'Custom Links Section', 'geoplatform-ngda' ),
-							'priority' => 60
-						) );
-						$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
-								'default'   => 'Insert Map Gallery Link here',
-								'transport' => 'refresh',
-								'sanitize_callback' => 'sanitize_text_field'
-							) );
-						$wp_customize->add_control( 'Map_Gallery_link_box', array(
-								'label' => 'Map Gallery link',
-								'section' => 'custom_links_section',
-								'description' => 'Make sure your gallery is pointing to UAL instead of registry. For example, https://registry.geoplatform.gov/api/galleries/{your map gallery ID} will not work, but https://ual.geoplatform.gov/api/galleries/{your map gallery ID} will',
-								'type' => 'url',
-								'priority' => 10
-							) );
-
-							//Add radio button to choose link style between envs (sit, stg, or prod)
-							$wp_customize->add_setting( 'Map_Gallery_env_choice' , array(
-									'default'   => 'prod',
-									'transport' => 'refresh',
-									'sanitize_callback' => 'geop_sanitize_mapchoice'
-								) );
-							$wp_customize->add_control( 'Map_Gallery_env_choice', array(
-									'label' => 'Map Gallery Environment',
-									'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
-									'section' => 'custom_links_section',
-									'type' => 'radio',
-									'priority' => 20,
-									'choices' => array(
-											'match'=>'My gallery link matches my site enviroment',
-											'sit' => 'sit (sit-ual.geoplatform.us)',
-											'stg' => 'stg (stg-ual.geoplatform.gov)',
-											'prod' => 'prod (ual.geoplatform.gov)'
-											)
-								) );
 
 
 }

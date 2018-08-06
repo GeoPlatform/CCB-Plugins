@@ -26,6 +26,7 @@
         $geopccb_theme_options = geop_ccb_get_theme_mods();
 
         $geopccb_customizerLink = get_theme_mod('map_gallery_link_box_setting', $geopccb_theme_options['map_gallery_link_box_setting']);
+
         if (!$geopccb_customizerLink ){
           _e( 'The Map Gallery Link in Customizer->Custom Links Section is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery.', 'geoplatform-ccb');
         }

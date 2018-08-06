@@ -39,12 +39,6 @@ function geop_ccb_register_menus() {
 }
 add_action( 'init', 'geop_ccb_register_menus' );
 
-/********************************************************/
-// Kills the loading of Dashicons in WordPress Front-end
-// If Dashicons should be loaded, just comment out.
-/********************************************************/
-add_action( 'wp_enqueue_scripts', 'load_dashicons_front_end' );
-function geop_ccb_load_dashicons_front_end() {}
 
 //-------------------------------
 // Widgetizing the theme
@@ -448,6 +442,38 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
 }
 
 
+
+/**
+ * Adds map gallery front-page widget.
+ */
+class Geopportal_Gallery_Widget extends WP_Widget {
+
+	function __construct() {
+		parent::__construct(
+			'geopportal_gallery_widget', // Base ID
+			esc_html__( 'GeoPlatform Map Gallery', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform Map Gallery', 'geoplatform-ccb' ), ) // Args
+		);
+	}
+
+	public function widget( $args, $instance ) {
+    get_template_part( 'map-gallery', get_post_format() );
+	}
+
+	public function form( $instance ) {
+		$title = "GeoPlatform Map Gallery";
+		?>
+		<p>
+		  The GeoPlatform theme Map Gallery widget.
+		</p>
+		<?php
+	}
+
+	public function update( $new_instance, $old_instance ) {}
+}
+
+
+
 function geopportal_register_portal_widgets() {
     register_widget( 'Geopportal_MainPage_Widget' );
 		register_widget( 'Geopportal_GPSearch_Widget' );
@@ -455,6 +481,7 @@ function geopportal_register_portal_widgets() {
 		register_widget( 'Geopportal_Services_Widget' );
 		register_widget( 'Geopportal_Featured_Widget' );
 		register_widget( 'Geopportal_Front_Account_Widget' );
+		register_widget( 'Geopportal_Gallery_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 
@@ -473,171 +500,27 @@ remove_filter( 'the_excerpt', 'wpautop' );
 //Supporting Theme Customizer editing
 //https://codex.wordpress.org/Theme_Customization_API
 //--------------------------------------
-function geop_ccb_customize_register( $wp_customize )
+function geop_portal_customize_register( $wp_customize )
 {
-		//color section, settings, and controls
-    $wp_customize->add_section( 'header_color_section' , array(
-        'title'    => __( 'Header Color Section', 'geoplatform-ccb' ),
-        'priority' => 30
-    ) );
 
-		//h1 color setting and control
-		$wp_customize->add_setting( 'header_color_setting' , array(
-				'default'   => '#000000',
-				'transport' => 'refresh',
-				'sanitize_callback' => 'sanitize_hex_color'
-		) );
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color', array(
-				'label'    => __( 'Header1 Color', 'geoplatform-ccb' ),
-				'section'  => 'header_color_section',
-				'settings' => 'header_color_setting',
-		) ) );
-
-		//h2 color setting and control
-		$wp_customize->add_setting( 'header2_color_setting' , array(
-				'default'   => '#000000',
-				'transport' => 'refresh',
-				'sanitize_callback' => 'sanitize_hex_color'
-		) );
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h2_link_color', array(
-				'label'    => __( 'Header 2 Color', 'geoplatform-ccb' ),
-				'section'  => 'header_color_section',
-				'settings' => 'header2_color_setting',
-		) ) );
-
-		//h3 color setting and control
-		$wp_customize->add_setting( 'header3_color_setting' , array(
-				'default'   => '#000000',
-				'transport' => 'refresh',
-				'sanitize_callback' => 'sanitize_hex_color'
-		) );
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h3_link_color', array(
-				'label'    => __( 'Header 3 Color', 'geoplatform-ccb' ),
-				'section'  => 'header_color_section',
-				'settings' => 'header3_color_setting',
-		) ) );
-
-		//h4 color setting and control
-		$wp_customize->add_setting( 'header4_color_setting' , array(
-				'default'   => '#000000',
-				'transport' => 'refresh',
-				'sanitize_callback' => 'sanitize_hex_color'
-		) );
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'h4_link_color', array(
-				'label'    => __( 'Header 4 Color', 'geoplatform-ccb' ),
-				'section'  => 'header_color_section',
-				'settings' => 'header4_color_setting',
-		) ) );
-
-    //link (<a>) color and control
-		$wp_customize->add_setting( 'link_color_setting' , array(
-				'default'   => '#000000',
-				'transport' => 'refresh',
-				'sanitize_callback' => 'sanitize_hex_color'
-		) );
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'a_link_color', array(
-				'label'    => __( 'Link Color', 'geoplatform-ccb' ),
-				'section'  => 'header_color_section',
-				'settings' => 'link_color_setting',
-		) ) );
-
-		//.brand color and control
-		$wp_customize->add_setting( 'brand_color_setting' , array(
-				'default'   => '#000000',
-				'transport' => 'refresh',
-				'sanitize_callback' => 'sanitize_hex_color'
-		) );
-
-		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'brand_color', array(
-				'label'    => __( 'Brand Color', 'geoplatform-ccb' ),
-				'section'  => 'header_color_section',
-				'settings' => 'brand_color_setting',
-		) ) );
-
-
-
-		//Fonts section, settings, and controls
-		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
-		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
-				'priority' => 50
-			) );
-
-		$wp_customize->add_setting('font_choice',array(
-        'default' => 'lato',
-				'sanitize_callback' => 'geop_sanitize_fonts',
-    	));
-
-		$wp_customize->add_control('font_choice',array(
-        'type' => 'radio',
-        'label' => 'Fonts',
-        'section' => 'font_section',
-        'choices' => array(
-            'lato' => __('Lato', 'geoplatform-ccb'),
-            'slabo' => __('Slabo',  'geoplatform-ccb')
-						),
-				));
-
-		//Banner Intro Text editor section, settings, and controls
-		// pulled from https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
-		//fixed some issues with linking up through https://github.com/paulund/wordpress-theme-customizer-custom-controls/issues/4
-		$wp_customize->add_section( 'banner_text_section' , array(
-				'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
-				'priority' => 50
-			));
-
-
-
-         // Add a text editor control
-         require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
-         $wp_customize->add_setting( 'text_editor_setting', array(
-             'default'        => '',
-						 'transport' => 'refresh',
-						 'sanitize_callback' => 'wp_kses_post'
-         ) );
-         $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'text_editor_setting', array(
-             'label'   => 'Banner Text Editor',
-             'section' => 'banner_text_section',
-             'settings'   => 'text_editor_setting',
-             'priority' => 20
-         ) ) );
-
-
-				//color section, settings, and controls
-		$wp_customize->add_section( 'custom_links_section' , array(
-				'title'    => __( 'Custom Links Section', 'starter' ),
-				'priority' => 60
-		) );
-			$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
-					'default'   => 'Insert Map Gallery Link here',
-					'transport' => 'refresh',
-				) );
-		  $wp_customize->add_control( 'Map_Gallery_link_box', array(
-					'label' => 'Map Gallery link',
-					'section' => 'custom_links_section',
-					'type' => 'url',
-					'priority' => 10
-				) );
-
-				//remove default colors section as Header Color Section does this job better
-				 $wp_customize->remove_section( 'colors' );
-
-				 //Remove default Menus and Static Front page sections as this theme doesn't utilize them at this time
-				 // $wp_customize->remove_panel( 'nav_menus');
-				 $wp_customize->remove_section( 'static_front_page' );
-
-				 //remove site tagline and checkbox for showing site title and tagline from Site Identity section
-				 //; Not needed for the theme
-				 $wp_customize->remove_control('blogdescription');
-				 $wp_customize->remove_control('display_header_text');
+		// 		//color section, settings, and controls
+		// $wp_customize->add_section( 'custom_links_section' , array(
+		// 		'title'    => __( 'Custom Links Section', 'starter' ),
+		// 		'priority' => 60
+		// ) );
+		// 	$wp_customize->add_setting( 'Map_Gallery_link_box' , array(
+		// 			'default'   => 'Insert Map Gallery Link here',
+		// 			'transport' => 'refresh',
+		// 		) );
+		//   $wp_customize->add_control( 'Map_Gallery_link_box', array(
+		// 			'label' => 'Map Gallery link',
+		// 			'section' => 'custom_links_section',
+		// 			'type' => 'url',
+		// 			'priority' => 10
+		// 		) );
 
 }
-add_action( 'customize_register', 'geop_ccb_customize_register');
+add_action( 'customize_register', 'geop_portal_customize_register');
 
 
 function custom_wysiwyg($post) {

@@ -12,10 +12,10 @@
   <?php
   $customizerLink = get_theme_mod( 'Map_Gallery_link_box' );
 
-  if($customizerLink){
+//  if($customizerLink){
   get_template_part( 'map-gallery', get_post_format() );
-} else{
+//} else{
 
-}?>
+//}?>
 
 <?php get_footer(); ?>
