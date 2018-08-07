@@ -2,11 +2,8 @@
  Mega Menu
  -->
 <nav class="mega-menu mega-menu-right" id="megamenu" role="menu">
-
     <div class="mega-menu-content container">
-
         <div class="mega-menu__body">
-
             <div class="account-details visible-xs">
                 <!-- <% if(!authenticated) { %> -->
                     <div class="media">
@@ -21,17 +18,11 @@
                             <a class="" href="<?php echo esc_url($GLOBALS['geopccb_accounts_url']. "/login");?>">Sign In</a> to an existing account
                         </div>
                     </div>
-
             </div>
-
-
             <div class="row">
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <h5>Featured</h5>
                         <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
-
-
-
                     <br class="hidden-xs">
                     <h5>Get Involved</h5>
                     <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
@@ -85,32 +76,22 @@
                             </a>
                          </li>
                     </ul>
-
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <h5>About</h5>
                     <div class="row">
                         <div class="col-md-6 col-sm-12 col-xs-12">
                           <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutL' ) ); ?>
-
-
-
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                           <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutR' ) ); ?>
-
                         </div>
                     </div>
                     <br class="hidden-xs">
-
                     <!-- <h5>Themes</h5>
 			<?php wp_nav_menu( array( 'theme_location' => 'headfoot-themes','fallback_cb' => '') ); ?> -->
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 </nav>

@@ -7,7 +7,6 @@
         </div>
     </div>
     <div class="container">
-
         <div class="row">
             <div class="col-md-6">
                 <h3>
@@ -20,7 +19,6 @@
                     <?php echo get_bloginfo( 'name' ); ?>
                   </a>
                 </h3>
-
             </div>
             <div class="col-md-6">
                 <div class="pull-right" style="margin-top: 2rem;">
@@ -32,10 +30,7 @@
                 </div>
             </div>
         </div>
-
         <hr/>
-
-
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
               <!--Featured location-->
@@ -97,15 +92,12 @@
                         </a>
                      </li>
                 </ul>
-
             </div>
             <div class="col-md-4 col-sm-4 col-xs-12">
                 <h4 style="color:white">About</h4>
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutL' ) ); ?>
-
-
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
                       <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutR' ) ); ?>
@@ -113,14 +105,9 @@
                     </div>
                 </div>
                 <br class="hidden-xs">
-
-
             </div>
-
         </div>
-
         <hr>
-
         <div class="row">
             <div class="col-md-8 col-sm-7 col-xs-12">
                 <p>Implementation of the GeoPlatform embodies the principles and spirit of Open Government, emphasizing government-to-citizen communication, accountability, and transparency. The GeoPlatform supports open formats, data standards, and common core and extensible metadata. The portfolio of data, applications, and services provided here is stewarded through the use of open licenses and careful review and hosted on an infrastructure that maximizes interoperability. Increased sharing and reuse of resources facilitated by the GeoPlatform will reduce costs, result in savings and wise investments, and stimulate innovation and entrepreneurship. On balance, the integrated approach of the GeoPlatform means that the federal portfolio of geospatial data is better managed, serves a broader audience, and is easier to use.</p>
@@ -136,7 +123,6 @@
         </div>
     </div>
 </footer>
-
 
 <?php wp_footer();?>
 </body>

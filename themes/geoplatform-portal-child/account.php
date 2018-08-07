@@ -1,3 +1,7 @@
+<?php
+/* This file is for the sidebar account widget in posts. For the main page, see first-time.php.
+*/
+?>
 <div class="card">
 
 

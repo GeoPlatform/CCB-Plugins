@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Get additional Docker container enviroment variables
+ *
+ * @param [string] $name
+ * @param [string] $def (default)
+ * @return ENV[$name] or $def if none found
+ */
 function gpp_getEnv($name, $def){
 	return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
+// set additional env variables
 $geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
 $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
+/**
+ * Establish this as a child theme of GeoPlatform CCB.
+ * Also loads jQuery and several assets.
+ */
 function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
 
@@ -230,7 +241,9 @@ class Geopportal_Contact_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {}
 }
 
-
+/**
+ * Registers sidebar widgets.
+ */
 function geopportal_register_sidebar_widgets() {
     register_widget( 'Geopportal_Account_Widget' );
 		register_widget( 'Geopportal_Featured_Sidebar_Widget' );
@@ -472,8 +485,9 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {}
 }
 
-
-
+/**
+ * Registers front page widgets.
+ */
 function geopportal_register_portal_widgets() {
     register_widget( 'Geopportal_MainPage_Widget' );
 		register_widget( 'Geopportal_GPSearch_Widget' );
@@ -484,8 +498,6 @@ function geopportal_register_portal_widgets() {
 		register_widget( 'Geopportal_Gallery_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
-
-
 
 
 
@@ -688,7 +700,11 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
 
-
+/**
+ * CDN Distribution handler
+ *
+ * @link https://github.com/YahnisElsts/plugin-update-checker
+ */
 function geop_portal_distro_manager() {
   require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
   $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(

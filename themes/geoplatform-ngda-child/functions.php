@@ -1,11 +1,22 @@
 <?php
-
+/**
+ * Get additional Docker container enviroment variables
+ *
+ * @param [string] $name
+ * @param [string] $def (default)
+ * @return ENV[$name] or $def if none found
+ */
 function gpp_getEnv($name, $def){
 	return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
+// set additional env variables
 $geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
 $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
+/**
+ * Establish this as a child theme of GeoPlatform CCB.
+ * Also loads jQuery.
+ */
 function geopngda_enqueue_scripts() {
 	$parent_style = 'parent-style';
 
@@ -26,8 +37,6 @@ remove_filter( 'the_excerpt', 'wpautop' );
 //Supporting Theme Customizer editing
 //https://codex.wordpress.org/Theme_Customization_API
 //--------------------------------------
-
-
 function geop_ngda_customize_register( $wp_customize )
 {
 					//Community Info section, settings, and controls
@@ -140,10 +149,8 @@ function geop_ngda_extra_category_fields( $tag ) {    //check for existing featu
 <td style="padding: 5px 5px;">
 <input type="text" name="Cat_meta[topic-url1]" id="Cat_meta[topic-url1]" size="20" style="width:80%;" value="<?php echo $cat_meta['topic-url1'] ? $cat_meta['topic-url1'] : ''; ?>"><br />
 
-
     </td>
 </tr>
-
 
 <!-- Topic 2 Name and Url -->
 <tr class="form-field">
@@ -256,6 +263,11 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
 
+/**
+ * CDN Distribution handler
+ *
+ * @link https://github.com/YahnisElsts/plugin-update-checker
+ */
 function geop_ngda_distro_manager() {
   require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
   $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(

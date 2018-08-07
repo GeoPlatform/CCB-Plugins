@@ -80,6 +80,7 @@
           $geopccb_gallery_link_env = get_theme_mod('map_gallery_env_choice_setting', $geopccb_theme_options['map_gallery_env_choice_setting']);
         }
 
+        // Further operations continue only if all validity checks pass.
         if( !$geopccb_invalid_bool ) {
           foreach($geopccb_result['items'] as $geopccb_map){
             try {
@@ -191,6 +192,8 @@
               </div><!--row-->
             </div><!--card text-center-->
           <?php } //if ! (empty ($geopccb_result))
+
+              // If a validity check fails, the feedback is given here.
               else { ?>
                 <div>
                   <p>

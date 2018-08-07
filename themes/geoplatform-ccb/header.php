@@ -49,8 +49,6 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                     <!-- login button toggle -->
                     <!-- Disable for now, re-enable for authentication -->
                     <li class="hidden-xs">
-
-
                         <div class="btn-account btn-group">
 
                             <!--if(!authenticated) -->
@@ -63,11 +61,8 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                                 <button style="color:white;" type="button" class="btn btn-link"><?php _e( 'Sign Out', 'geoplatform-ccb'); ?></button>
                               </a>
                             <?php } ?>
-
                         </div>
-
                     </li>
-
                 </ul>
                 <?php
                   if (function_exists('the_custom_logo') && has_custom_logo()){

@@ -3,9 +3,7 @@
 <?php get_template_part( 'single-banner', get_post_format() ); ?>
 
 <div class="container">
-
     <div class="row">
-
         <div class="col-md-8 col-sm-8">
           <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
 
@@ -17,15 +15,10 @@
         //	endif;
       endwhile; endif;
       ?>
-
     </div>
     <div class="col-md-4 col-sm-4">
       <?php get_template_part( 'sidebar', get_post_format() ); ?>
     </div>
-
-
   </div>
 </div>
-
-
 <?php get_footer(); ?>

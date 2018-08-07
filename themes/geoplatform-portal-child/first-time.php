@@ -1,4 +1,6 @@
   <?php
+/* This file is for the main page account widget. For the sidebar widget in posts, see account.php.
+ */
 $current_user = wp_get_current_user();
 if($current_user->ID == 0) {
 ?>

@@ -354,9 +354,6 @@ function geop_ccb_customize_register( $wp_customize ) {
 				'settings' => 'brand_color_setting',
 		) ) );
 
-
-
-
 		//Fonts section, settings, and controls
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'font_section' , array(
@@ -1245,7 +1242,11 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 	}
 }
 
-
+/**
+ * CDN Distribution handler
+ * 
+ * @link https://github.com/YahnisElsts/plugin-update-checker
+ */
 if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
   function geop_ccb_distro_manager() {
     require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
