@@ -27,10 +27,9 @@
         $geopccb_invalid_bool = false;
         $geopccb_error_report = '';
 
+        // Explode customizerLink for use in validity checking.
         $geopccb_customizerLink = get_theme_mod('map_gallery_link_box_setting', $geopccb_theme_options['map_gallery_link_box_setting']);
         $geopccb_customizerLink_array = explode('/', $geopccb_customizerLink);
-//        _e($geopccb_customizerLink);
-//        echo var_dump($geopccb_customizerLink_array);   https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7
 
         // Map link format validity block one
         // Checks in turn if the gallery link is empty, if it contains a base URI,
@@ -57,9 +56,8 @@
           $geopccb_error_report = 'Invalid gallery ID. Please check your your input and try again.';
         }
 
-        // Map link format validity block two.  https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7
-        // Grabs the gallery JSON. If the grab fails or returns a non-gallery,
-        // an error is reported.
+        // Map link format validity block two.
+        // Grabs the gallery JSON. If the grab fails or returns a non-gallery, an error is reported.
         if (!$geopccb_invalid_bool){
           $geopccb_link_scrub = wp_remote_get( ''.$geopccb_customizerLink.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
           $geopccb_response = wp_remote_retrieve_body( $geopccb_link_scrub );

@@ -581,7 +581,7 @@ if ( ! function_exists ( 'geop_ccb_header_customize_css' ) ) {
 				h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', $geop_ccb_options['header4_color_setting']); ?>; }
 				.text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', $geop_ccb_options['link_color_setting']); ?>; }
 				header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', $geop_ccb_options['brand_color_setting']); ?>; }
-        h1, h2, h3, h4, h5, h6 { font-family:  <?php echo get_theme_mod('font_choice', $geop_ccb_options['font_choice']); ?>;}
+        h1, h2, h3, h4, h5, h6, div, p { font-family:  <?php echo get_theme_mod('font_choice', $geop_ccb_options['font_choice']); ?>;}
 			</style>
 		<?php
 	}
