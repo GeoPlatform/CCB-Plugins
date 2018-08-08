@@ -31,7 +31,8 @@ echo "==========================="
 
 
 # Zip file creation and success feedback.
-zip -r $name $path
+pushd $type
+zip -r $name $name
 echo "==========================="
 
 # Push to S3 (cp for single asset)
@@ -43,6 +44,7 @@ echo "Artifact pushed to CDN: http://dyk46gk69472z.cloudfront.net/CCB/$type/$nam
 echo "It may take a few minutes for the resource to propagate through the CDN."
 
 # Delete the zip
-rm $name.zip
+#rm $name.zip
+popd
 
 
