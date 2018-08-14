@@ -1,5 +1,5 @@
 === GeoPlatform Maps ===
-Contributors: imagemattersllc, lheazel
+Contributors: imagemattersllc
 Author URI: http://www.imagemattersllc.com
 Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-maps
 Tags: map, maps, Open Map, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore
