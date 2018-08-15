@@ -1244,7 +1244,7 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 
 /**
  * CDN Distribution handler
- * 
+ *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
 if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
