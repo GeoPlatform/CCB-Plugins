@@ -15,7 +15,7 @@
                           <h3 style="color:white"><?php the_title(); ?></h3>
 
                           <p>
-                            <?php echo get_post_meta($post->ID, 'custom_wysiwyg', true); ?>
+                            <?php echo get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true); ?>
                           </p>
                         <?php } elseif (is_archive()) {
                                 the_archive_title( '<h1 class="page-title">', '</h1>' );
