@@ -10,12 +10,11 @@
       ?>
 
   <?php
-  $customizerLink = get_theme_mod( 'Map_Gallery_link_box' );
-
-  if($customizerLink){
+  $geopccb_theme_options = geop_ccb_get_theme_mods();
+  $geopccb_customizerLink = get_theme_mod('map_gallery_link_box_setting', $geopccb_theme_options['map_gallery_link_box_setting']);
+  if($geopccb_customizerLink){
     get_template_part( 'map-gallery', get_post_format() );
   }
-
 //}?>
 
 <?php get_footer(); ?>
