@@ -5,16 +5,11 @@
                 <div class="row">
                     <div class="col-md-10 col-sm-10 col-xs-12">
                       <!--Insert any banner info or things you'd like here-->
-
-		                    <?php if (is_single()){ ?>
-
-		     <!--if it is a post, the Theme header(banner intro content)shows above the page title.-->
+	                    <?php if (is_single()){ ?>
+                      <h3 style="color:white"><?php the_title(); ?></h3>
                       <p>
-                        <?php echo get_post_meta($post->ID, 'custom_wysiwyg', true); ?>
+                        <?php echo get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true); ?>
                       </p>
-
-                        <h3 style="color:white"><?php the_title(); ?></h3>
-
                       <?php } elseif (is_page()) { ?>
 			                   <!--Otherwise page title shows above banner intro content-->
                           <h3 style="color:white"><?php the_title(); ?></h3>

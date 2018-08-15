@@ -118,7 +118,7 @@ add_action( 'customize_register', 'geop_ngda_customize_register');
 
 
 /**
- * Deviated widget form for NGDA.
+ * Deviated widget form for NGDA. Removes card format from each widget area, compressing them.
  *
  * @link https://codex.wordpress.org/Function_Reference/dynamic_sidebar
  * @link https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar

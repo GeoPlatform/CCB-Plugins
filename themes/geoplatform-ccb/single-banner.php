@@ -3,9 +3,9 @@
  * The template for Single post and page banners
  *
  * @link https://developer.wordpress.org/themes/template-files-section/post-template-files/
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 3.0.0
  */
 ?>
