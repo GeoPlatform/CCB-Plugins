@@ -15,38 +15,38 @@
 
 <div class='wrap'>
   <div class='gp-search'>
-    <div class='header'><h2 class='gp-search-title'><?php echo $a['title'] ?></h2></div>
+    <div class='header'><h2 class='gp-search-title'><?php echo $geopmap_shortcode_array['title'] ?></h2></div>
 
     <?php if ($geopcomsearch_searchVal == 1): ?>
     <div class='search-bar'>
       <div class='search-bar-icon'><span class="glyphicon glyphicon-search"></span></div>
-      <div class='search-bar-input'><input class='<?php echo geopcomsearch_cname('input', $a['geopcomsearch_uuid']); ?> search-bar-input-text' placeholder='Search for items' type='text' /></div>
+      <div class='search-bar-input'><input class='<?php echo geopcomsearch_cname('input', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> search-bar-input-text' placeholder='Search for items' type='text' /></div>
     </div>
     <?php endif ?>
 
     <?php if ($geopcomsearch_pagingVal == 1): ?>
-    <div class="<?php echo geopcomsearch_cname('paging', $a['geopcomsearch_uuid']); ?> gp-search-paging">
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-left gp-search-paging-arrow-disabled' title='Go to first page'><span class="<?php echo geopcomsearch_cname('paging-arrow-first', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-fast-backward"></span></div>
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to previous page'><span class="<?php echo geopcomsearch_cname('paging-arrow-previous', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-backward"></span></div>
-      <div class='<?php echo geopcomsearch_cname('paging-text', $a['geopcomsearch_uuid']); ?> gp-search-paging-text'></div>
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to next page'><span class="<?php echo geopcomsearch_cname('paging-arrow-next', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-forward"></span></div>
-      <div class='gp-search-paging-arrow gp-search-paging-arrow-right gp-search-paging-arrow-disabled' title='Go to last page'><span class="<?php echo geopcomsearch_cname('paging-arrow-last', $a['geopcomsearch_uuid']); ?> glyphicon glyphicon-fast-forward"></span></div>
+    <div class="<?php echo geopcomsearch_cname('paging', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> gp-search-paging">
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-left gp-search-paging-arrow-disabled' title='Go to first page'><span class="<?php echo geopcomsearch_cname('paging-arrow-first', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> glyphicon glyphicon-fast-backward"></span></div>
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to previous page'><span class="<?php echo geopcomsearch_cname('paging-arrow-previous', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> glyphicon glyphicon-backward"></span></div>
+      <div class='<?php echo geopcomsearch_cname('paging-text', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> gp-search-paging-text'></div>
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-disabled' title='Go to next page'><span class="<?php echo geopcomsearch_cname('paging-arrow-next', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> glyphicon glyphicon-forward"></span></div>
+      <div class='gp-search-paging-arrow gp-search-paging-arrow-right gp-search-paging-arrow-disabled' title='Go to last page'><span class="<?php echo geopcomsearch_cname('paging-arrow-last', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> glyphicon glyphicon-fast-forward"></span></div>
     </div>
     <?php endif ?>
 
-    <div class="<?php echo geopcomsearch_cname('objects', $a['geopcomsearch_uuid']); ?> gp-search-objects">
-      <ul class="<?php echo geopcomsearch_cname('object-list', $a['geopcomsearch_uuid']); ?> gp-search-object-list"></ul>
+    <div class="<?php echo geopcomsearch_cname('objects', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> gp-search-objects">
+      <ul class="<?php echo geopcomsearch_cname('object-list', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> gp-search-object-list"></ul>
     </div>
 
-    <div class="<?php echo geopcomsearch_cname('objects-none', $a['geopcomsearch_uuid']); ?> gp-search-objects-none">No results found.</div>
+    <div class="<?php echo geopcomsearch_cname('objects-none', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> gp-search-objects-none">No results found.</div>
 
-    <div class="<?php echo geopcomsearch_cname('working', $a['geopcomsearch_uuid']); ?> gp-search-working">
+    <div class="<?php echo geopcomsearch_cname('working', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> gp-search-working">
       <div class='gp-search-working-content'>
         <div class='gp-search-working-spinner'></div>
         <div class='gp-search-working-text'>Retrieving objects...</div>
       </div>
     </div>
-    <div class="<?php echo geopcomsearch_cname('error', $a['geopcomsearch_uuid']); ?> gp-search-error">
+    <div class="<?php echo geopcomsearch_cname('error', $geopmap_shortcode_array['geopcomsearch_uuid']); ?> gp-search-error">
       <div class='gp-search-error-title'>Not Found</div>
       <div>Error retrieving data.  Try again or contact us about this error.</div>
     </div>
@@ -64,12 +64,12 @@
 
   var page = 1, totalPages = 0, totalResults = 0, start = 0;
   var perPage = 0;
-  try { perPage = parseInt(<?php echo $a['maxresults'] ?>); }
+  try { perPage = parseInt(<?php echo $geopmap_shortcode_array['maxresults'] ?>); }
   catch (e) { perPage = 25; }
   if (perPage < 0) perPage = 25;
   if (perPage > 500) perPage = 500;
 
-  let geopcomsearch_uuid = '<?php echo $a['geopcomsearch_uuid'] ?>';
+  let geopcomsearch_uuid = '<?php echo $geopmap_shortcode_array['geopcomsearch_uuid'] ?>';
 
   var firstArrowSelector = $('.gp-search-' + geopcomsearch_uuid + '-paging-arrow-first');
   var previousArrowSelector = $('.gp-search-' + geopcomsearch_uuid + '-paging-arrow-previous');
@@ -195,14 +195,14 @@
     // Sets default query based on keyword, overwritten if search bar input.
     var initSearch = searchSelector.val()
     if (!initSearch){
-      initSearch = '<?php echo $a['keyword'] ?>';
+      initSearch = '<?php echo $geopmap_shortcode_array['keyword'] ?>';
     }
     query.setQ(initSearch);
 
     query.setFacets(null);
     query.setFields(['resourceTypes', 'landingPage', 'modified']);
 
-    let objType = '<?php echo $a['objtype'] ?>';
+    let objType = '<?php echo $geopmap_shortcode_array['objtype'] ?>';
 
     var typesArray = [];
     if (objType !== undefined && objType.length > 0)
@@ -232,7 +232,7 @@
     }
     query.setTypes(typesArray);
 
-    let sort = '<?php echo $a['sort'] ?>';
+    let sort = '<?php echo $geopmap_shortcode_array['sort'] ?>';
     if (sort === undefined || sort.length === 0)
       query.setSort('modified,desc');
     else
@@ -246,7 +246,7 @@
     query.setPage(page - 1);
     query.setPageSize(perPage);
 
-    let community = '<?php echo $a['community'] ?>';
+    let community = '<?php echo $geopmap_shortcode_array['community'] ?>';
 
     if (community !== undefined && community.length > 0 && community !== 'any')
       query.usedBy(community);
