@@ -1,7 +1,7 @@
 === GeoPlatform Maps ===
 Contributors: imagemattersllc
 Author URI: http://www.imagemattersllc.com
-Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-maps
+Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-community-search
 Tags: map, maps, Open Map, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
@@ -20,7 +20,7 @@ The GeoPlatform Maps plugin is used to create and manage customized and reusable
 
 The GeoPlatform Maps plugin makes use of Open Map object implementations such as those created, managed, and served from [GeoPlatform.gov](https://www.geoplatform.gov/). Open Map objects are implementation-agnostic, Linked Open Data representations of any web map resource. The GeoPlatform Maps plugin uses the [GeoPlatform Open API] (https://www.geoplatform.gov/geoplatform-help/api/) to link to Open Map objects created, organized, and advertised by the [GeoPlatform Map Manager](https://maps.geoplatform.gov/) application. You can link to any existing Open Map object listed by the GeoPlatform Map Manager application. Feel free to register an user account at [GeoPlatform.gov](https://www.geoplatform.gov/) so you can create your own custom Open Map objects. The GeoPlatform Maps plugin establishes links to Open Map objects using their MapID property.
 
-With the GeoPlatform Maps plugin installed, use the "Settings" page in the Dashboard menu to create shortcode links to Open Map objects hosted on the [GeoPlatform.gov Maps Database](https://maps.geoplatform.gov/). The MapID can be found as part of the URL in the displayed area shown when the "Show Embed" control is selected from the GeoPlatform Map Manager application. Adding maps to your own local collection of Open Map objects is as simple as pasting the MapID of the desired Open Map into the "Input Map ID" text field and then pressing the "Add Map" button. If the specified MapID is valid, a new map  will be added to your local collection! You can also optionally specify height and width values to control the size and shape of the map object to be embedded into you Wordpress page or post.
+With the GeoPlatform Maps plugin installed, use the "Settings" page in the Dashboard menu to create shortcode links to Open Map objects hosted on the [GeoPlatform.gov Maps Database](https://maps.geoplatform.gov/). The MapID can be found as part of the URL in the displayed area shown when the "Show Embed" control is selected from the GeoPlatform Map Manager application. Adding maps to your own local collection of Open Map objects is as simple as pasting the MapID of the desired Open Map into the "Input Map ID" text field and then pressing the "Add Map" button. If the specified MapID is valid, a new map  will be added to your local collection! You can also optionally specify height and width values to control the size and shape of the map object to be embedded into your page or post.
 
 Each Open Map added using the GeoPlatform Maps plugin generates a shortcode. Just copy this shortcode and paste it within your pages and posts to embed a dynamic, customized, interactive map within your content! The size of the map components is limited to width and height if specified. By default, map components automatically expand to fit the region in which it was inserted.
 
@@ -44,7 +44,7 @@ Map components created with the GeoPlatform Maps plugin give users the ability t
 **Manual Installation Through File Structure**
 
 1. If you possess this plugin in a zipped format, unzip it.
-2. Using an FTP client or command line, connect to your Wordpress server.
+2. Using an FTP client or command line, connect to your server.
 3. Copy the plugin's unzipped file structure into your remote plugins directory.
 4. Navigate to "Plugins > Installed Plugins" and activate it.
 
