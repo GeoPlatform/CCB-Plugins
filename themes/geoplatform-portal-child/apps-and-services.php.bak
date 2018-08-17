@@ -1,20 +1,8 @@
-<?php
-class Geopportal_Services_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_services_widget', // Base ID
-			esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		echo $args['before_widget'];?>
-
-
 
 <div class="apps-and-services section--linked">
+
+
+
     <div class="container">
       <h4 class="heading text-centered">
           <div class="line"></div>
@@ -52,25 +40,3 @@ class Geopportal_Services_Widget extends WP_Widget {
         <div class="line"></div>
     </div><!--#footing-->
 </div><!--#apps-and-services section-linked-->
-
-
-<?php
-echo $args['after_widget'];
-}
-
-public function form( $instance ) {
-$title = "Apps & Services";
-?>
-<p>
-  The GeoPlatform theme Apps & Services widget.
-</p>
-<?php
-}
-
-public function update( $new_instance, $old_instance ) {}
-}
-
-function geopportal_register_portal_service_widget() {
-		register_widget( 'Geopportal_Services_Widget' );
-}
-add_action( 'widgets_init', 'geopportal_register_portal_service_widget' );

@@ -368,31 +368,32 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 /**
  * Adds apps and services front-page widget.
  */
-class Geopportal_Services_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_services_widget', // Base ID
-			esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		get_template_part( 'apps-and-services', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "Apps & Services";
-		?>
-		<p>
-		  The GeoPlatform theme Apps & Services widget.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
+// class Geopportal_Services_Widget extends WP_Widget {
+//
+// 	function __construct() {
+// 		parent::__construct(
+// 			'geopportal_services_widget', // Base ID
+// 			esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
+// 			array( 'description' => esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), ) // Args
+// 		);
+// 	}
+//
+// 	public function widget( $args, $instance ) {
+// 		echo $args['before_widget'];
+// 		get_template_part( 'apps-and-services', get_post_format() );
+// 		echo $args['after_widget'];
+// 	}
+//
+// 	public function form( $instance ) {
+// 		$title = "Apps & Services";
+//
+// 		<p>
+// 		  The GeoPlatform theme Apps & Services widget.
+// 		</p>
+// 	}
+//
+// 	public function update( $new_instance, $old_instance ) {}
+// }
 
 
 /**
@@ -485,6 +486,9 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {}
 }
 
+
+get_template_part( 'apps-and-services', get_post_format() );
+
 /**
  * Registers front page widgets.
  */
@@ -492,7 +496,7 @@ function geopportal_register_portal_widgets() {
     register_widget( 'Geopportal_MainPage_Widget' );
 		register_widget( 'Geopportal_GPSearch_Widget' );
 		register_widget( 'Geopportal_Cornerstones_Widget' );
-		register_widget( 'Geopportal_Services_Widget' );
+		// register_widget( 'Geopportal_Services_Widget' );
 		register_widget( 'Geopportal_Featured_Widget' );
 		register_widget( 'Geopportal_Front_Account_Widget' );
 		register_widget( 'Geopportal_Gallery_Widget' );
