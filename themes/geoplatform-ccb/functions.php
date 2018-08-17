@@ -1258,3 +1258,19 @@ if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
   }
   geop_ccb_distro_manager();
 }
+
+/**
+ * Second image handler for individual banners.
+ *
+ * @link https://github.com/voceconnect/multi-post-thumbnails/wiki
+ */
+ if (class_exists('geop_ccb_MultiPostThumbnails')) {
+     new geop_ccb_MultiPostThumbnails(
+         array(
+             // Replace [YOUR THEME TEXT DOMAIN] below with the text domain of your theme (found in the theme's `style.css`).
+             'label' => __( 'Banner Image', 'geoplatform-ccb'),
+             'id' => 'geop-ccb-banner-image',
+             'post_type' => 'post'
+         )
+     );
+ }
