@@ -719,4 +719,7 @@ function geop_portal_distro_manager() {
 }
 geop_portal_distro_manager();
 
+
+add_filter('widget_text', 'do_shortcode');
+
 ?>
