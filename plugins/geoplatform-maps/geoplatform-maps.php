@@ -17,7 +17,7 @@
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
  * Version:           1.0.9
- * Author:            Image Matters LLC
+ * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
  * License URI:       http://www.apache.org/licenses/LICENSE-2.0

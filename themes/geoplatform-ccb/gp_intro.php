@@ -1,16 +1,16 @@
-<?php 
+<?php
 /**
  * A template for the front page banner
- * 
+ *
  * WYSIWYG banner area
  * @link https://wpshout.com/making-themes-more-wysiwyg-with-the-wordpress-customizer/
  * @link https://github.com/paulund/wordpress-theme-customizer-custom-controls/
- * 
- * Sane defaults for theme mods 
+ *
+ * Sane defaults for theme mods
  * @link https://make.wordpress.org/themes/2014/07/09/using-sane-defaults-in-themes/
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 1.0.0
  */
 
@@ -27,14 +27,14 @@ $geop_ccb_theme_mods = geop_ccb_get_theme_mods();
                 <?php echo wp_kses_post(get_theme_mod( 'text_editor_setting', $geop_ccb_theme_mods['text_editor_setting'] ));?>
                   <div class="row">
                     <br />
-                    <?php $c2a_button = get_theme_mod( 'call2action_button_setting', $geop_ccb_theme_mods['call2action_button_setting'] );
-                          $c2a_url = get_theme_mod( 'call2action_url_setting', $geop_ccb_theme_mods['call2action_url_setting'] );
-                          $c2a_text = get_theme_mod( 'call2action_text_setting', $geop_ccb_theme_mods['call2action_text_setting'] );
+                    <?php $geopccb_c2a_button = wp_kses_post(get_theme_mod( 'call2action_button_setting', $geop_ccb_theme_mods['call2action_button_setting'] ));
+                          $geopccb_c2a_url = wp_kses_post(get_theme_mod( 'call2action_url_setting', $geop_ccb_theme_mods['call2action_url_setting'] ));
+                          $geopccb_c2a_text = wp_kses_post(get_theme_mod( 'call2action_text_setting', $geop_ccb_theme_mods['call2action_text_setting'] ));
                     ?>
-                    <?php if ($c2a_button == true) { ?>
+                    <?php if ($geopccb_c2a_button == true) { ?>
                       <div class="text-centered">
-                            <a href="<?php echo esc_url($c2a_url);?>" class="btn btn-lg btn-white-outline">
-                              <?php echo esc_html($c2a_text);?></a>
+                            <a href="<?php echo esc_url($geopccb_c2a_url);?>" class="btn btn-lg btn-white-outline">
+                              <?php echo esc_html($geopccb_c2a_text);?></a>
                       </div><!--#text-centered-->
                     <?php } ?>
                   </div><!--#row-->

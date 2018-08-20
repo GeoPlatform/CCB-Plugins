@@ -16,18 +16,38 @@
               // The Query
               // $the_query = new WP_Query( array( 'post_type' => 'page', 'post__in' => array( 429, 433, 415), 'orderby' => 'post__in' ) );
 
-              //show pages with Front Page category_name
-              $args = array(
-              'post_type' => 'page',
-              'category_name'=> 'Front Page',
-              'orderby' => 'date',
-              'order' => 'ASC'
+              // show pages with Front Page category_name
+              // $args = array(
+              // 'post_type' => 'page',
+              // 'category_name'=> 'Front Page',
+              // 'orderby' => 'date',
+              // 'order' => 'ASC'
               //'date_query'    => array(
               //    'column'  => 'post_date',
               //    'after'   => '- 30 days'
               //    )
-              );
-              $the_query = new WP_Query( $args );
+              // );
+
+
+              if (current_user_can('read_private_pages')) {
+                $SQLQuery = array(
+                'post_type' => 'page',
+                'category_name'=> 'Front Page',
+                'orderby' => 'date',
+                'post_status'=> array('publish','private'),
+                'order' => 'ASC'
+                );
+              }
+              else{
+                $SQLQuery = array(
+                'post_type' => 'page',
+                'category_name'=> 'Front Page',
+                'orderby' => 'date',
+                'order' => 'ASC'
+                );
+              }
+
+              $the_query = new WP_Query( $SQLQuery );
               // The Loop
               if ( $the_query->have_posts() ) {
               	while ( $the_query->have_posts() ) {

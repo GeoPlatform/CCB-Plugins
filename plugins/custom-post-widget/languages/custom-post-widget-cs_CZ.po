@@ -1,0 +1,227 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Custom Post Widget 1.4\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/custom-post-widget\n"
+"POT-Creation-Date: 2015-09-26 14:26+0200\n"
+"PO-Revision-Date: 2015-09-26 14:27+0200\n"
+"Last-Translator: Martin Kucera <martin.kucera@jsemtest.cz>\n"
+"Language-Team: jsemweb.cz <admin@jsemweb.cz>\n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=( n == 1 ) ? 0 : ( n >= 2 && n <= 4 ) ? 1 : "
+"2;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-KeywordsList: _:1;gettext:1;dgettext:2;ngettext:1,2;dngettext:2,3;"
+"__:1;_e:1;_c:1;_n:1,2;_n_noop:1,2;_nc:1,2;__ngettext:1,2;__ngettext_noop:1,2;"
+"_x:1,2c;_ex:1,2c;_nx:1,2,4c;_nx_noop:1,2,3c;_n_js:1,2;_nx_js:1,2,3c;"
+"esc_attr__:1;esc_html__:1;esc_attr_e:1;esc_html_e:1;esc_attr_x:1,2c;"
+"esc_html_x:1,2c;comments_number_link:2,3;t:1;st:1;trans:1;transChoice:1,2\n"
+"X-Loco-Target-Locale: cs_CZ\n"
+"X-Generator: Poedit 1.8.5\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../meta-box.php:6 ../meta-box.php:47
+msgid "Content Block Information"
+msgstr "Popis"
+
+#: ../notice.php:11
+#, php-format
+msgid ""
+"Thank you for using the Custom Post Widget plugin. Visit the <a href="
+"\"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+"utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget\" "
+"target=\"_blank\">plugin website</a> to find out more about using this "
+"plugin. <a href=\"%1$s\" style=\"float:right;\">Hide Notice</a>"
+msgstr ""
+"Děkujeme vám za použití Custom Post Widget plugin. Navštivte <a href="
+"\"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+"utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget\" "
+"target=\"_blank\">webové stránky plugin</a> se dozvědět více o použití "
+"tohoto zásuvného modulu. <a href=\"%1$s\" style=\"float:right;\">Skrýt "
+"Oznámení</a>"
+
+#: ../popup.php:17 ../popup.php:18
+msgid "Add Content Block"
+msgstr "Vložit blok"
+
+#: ../popup.php:31
+msgid "Please select a Content Block"
+msgstr "Vyberte blok"
+
+#: ../popup.php:40 ../popup.php:64
+msgid "Insert Content Block"
+msgstr "Vložit blok"
+
+#: ../popup.php:43
+msgid "Select a Content Block below to add it to your post or page."
+msgstr "Vyberte blok, který chcete vložit do stránky nebo příspěvku."
+
+#: ../popup.php:48
+msgid "Select a Content Block"
+msgstr "Vyberte blok"
+
+#: ../popup.php:58 ../post-widget.php:41
+msgid "No content blocks available"
+msgstr "Zádné bloky nejsou dostupné"
+
+#: ../post-widget.php:11
+msgid "Displays custom post content in a widget"
+msgstr "Možnost zobrazení bloku na zvoleném místě webu."
+
+#: ../post-widget.php:12
+msgid "Content Block"
+msgstr "Blok"
+
+#: ../post-widget.php:26
+msgid "Content Block to Display:"
+msgstr "Vyberte blok:"
+
+#: ../post-widget.php:52 ../post-widget.php:126
+msgid "Edit Content Block"
+msgstr "Upravit blok"
+
+#: ../post-widget.php:58
+msgid "Show Post Title"
+msgstr "Zobrazit název bloku"
+
+#: ../post-widget.php:63
+msgid "Show featured image"
+msgstr "Zobrazit náhledový obrázek"
+
+#: ../post-widget.php:68
+msgid "Do not apply content filters"
+msgstr "Zakázat automatické formátování"
+
+#: ../post-widget.php:84
+msgid "Find"
+msgstr "Hledat"
+
+#: ../post-widget.php:121
+msgctxt "post type general name"
+msgid "Content Blocks"
+msgstr "Bloky"
+
+#: ../post-widget.php:122
+msgctxt "post type singular name"
+msgid "Content Block"
+msgstr "Blok"
+
+#: ../post-widget.php:123
+msgctxt "post type plural name"
+msgid "Content Blocks"
+msgstr "Bloky"
+
+#: ../post-widget.php:124
+msgctxt "block"
+msgid "Add Content Block"
+msgstr "Vytvořit blok"
+
+#: ../post-widget.php:125
+msgid "Add New Content Block"
+msgstr "Vytvořit blok obsahu"
+
+#: ../post-widget.php:127
+msgid "New Content Block"
+msgstr "Nový blok"
+
+#: ../post-widget.php:128
+msgid "View Content Block"
+msgstr "Zobrazit blok"
+
+#: ../post-widget.php:129
+msgid "Search Content Blocks"
+msgstr "Hledat bloky"
+
+#: ../post-widget.php:130
+msgid "No Content Blocks Found"
+msgstr "Žádné bloky nebyly nalezeny."
+
+#: ../post-widget.php:131
+msgid "No Content Blocks found in Trash"
+msgstr "Žádné bloky nebyly v koši nalezeny."
+
+#: ../post-widget.php:154
+#, php-format
+msgid "Content Block updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Blok byl aktualizován. <a href=\"%s\">Nastavit widgety</a>"
+
+#: ../post-widget.php:154 ../post-widget.php:157
+msgid "Content Block updated."
+msgstr "Blok byl aktualizován."
+
+#: ../post-widget.php:155
+msgid "Custom field updated."
+msgstr "Uživatelské pole bylo aktualizováno."
+
+#: ../post-widget.php:156
+msgid "Custom field deleted."
+msgstr "Uživatelské pole bylo odstraněno."
+
+#: ../post-widget.php:158
+#, php-format
+msgid "Content Block restored to revision from %s"
+msgstr "Byla obnovena následující verze bloku: %s"
+
+#: ../post-widget.php:159
+#, php-format
+msgid "Content Block published. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Blok byl publikován. <a href=\"%s\">Nastavit widgety</a>"
+
+#: ../post-widget.php:159
+msgid "Content Block published."
+msgstr "Blok byl publikován."
+
+#: ../post-widget.php:160
+msgid "Block saved."
+msgstr "Blok byl uložen."
+
+#: ../post-widget.php:161
+#, php-format
+msgid "Content Block submitted. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Blok byl aktualizován. <a href=\"%s\">Nastavit widgety</a>"
+
+#: ../post-widget.php:161
+msgid "Content Block submitted."
+msgstr "Blok byl aktualizován."
+
+#: ../post-widget.php:162
+#, php-format
+msgid "Content Block scheduled for: <strong>%1$s</strong>."
+msgstr "Zobrazení bloku bylo naplánováno na: <strong>%1$s</strong>."
+
+#: ../post-widget.php:162
+msgid "M j, Y @ G:i"
+msgstr "M j, Y @ G:i"
+
+#: ../post-widget.php:163
+#, php-format
+msgid "Content Block draft updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Koncept bloku byl aktualizován. <a href=\"%s\">Nastavit widgety</a>"
+
+#: ../post-widget.php:163
+msgid "Content Block draft updated."
+msgstr "Koncept bloku byl aktualizován."
+
+#~ msgid "Custom Post Widget"
+#~ msgstr "Custom Post Widget"
+
+#~ msgid ""
+#~ "http://www.vanderwijk.com/services/web-design/wordpress-custom-post-"
+#~ "widget/"
+#~ msgstr ""
+#~ "http://www.vanderwijk.com/services/web-design/wordpress-custom-post-"
+#~ "widget/"
+
+#~ msgid ""
+#~ "Show the content of a custom post of the type 'content_block' in a widget."
+#~ msgstr ""
+#~ "Umožňuje zobrazit uživatelský typ příspěvku \"Bloky obsahu\" ve widgetech."
+
+#~ msgid "Johan van der Wijk"
+#~ msgstr "Johan van der Wijk"
+
+#~ msgid "http://www.vanderwijk.com"
+#~ msgstr "http://www.vanderwijk.com"

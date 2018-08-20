@@ -1,0 +1,267 @@
+# Translation of Development (trunk) in Dutch
+# This file is distributed under the same license as the Development (trunk) package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Development (trunk)\n"
+"POT-Creation-Date: 2017-01-03 19:44+0100\n"
+"PO-Revision-Date: 2017-01-03 19:45+0100\n"
+"Last-Translator: Johan van der Wijk <info@vanderwijk.nl>\n"
+"Language-Team: \n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.8.11\n"
+
+#: custom-post-widget.php:57
+msgid "Review"
+msgstr "Schrijf een review"
+
+#: custom-post-widget.php:57
+msgid "Donate"
+msgstr "Doneer"
+
+#: meta-box.php:5 meta-box.php:61
+msgid "Content Block Information"
+msgstr "Inhoudsblok Informatie"
+
+#: meta-box.php:6
+msgid "Content Block Shortcodes"
+msgstr "Inhoudblok Shortcodes"
+
+#: meta-box.php:12
+msgid ""
+"You can place this content block into your posts, pages, custom post types "
+"or widgets using the shortcode below:"
+msgstr ""
+"Je kunt dit inhoudsblok invoegen in je berichten, pagina's, custom posts of "
+"widgets met de onderstaande shortcode:"
+
+#: meta-box.php:14 meta-box.php:18 meta-box.php:22
+msgid "Copy to clipboard"
+msgstr "Kopiëren naar klembord"
+
+#: meta-box.php:16
+msgid "Shortcode to use if you prefer using the slug instead of the post ID:"
+msgstr ""
+"Gebruik deze shortcode als je slug wilt gebruiken in plaats van de post ID:"
+
+#: meta-box.php:20
+msgid "Use this shortcode to include the content block title:"
+msgstr "Gebruik deze shortcode als je de titel van het inhoudsblok wilt tonen:"
+
+#: meta-box.php:30
+msgid "You can use this field to describe this content block:"
+msgstr "U kunt dit veld gebruiken om dit inhoudsblok te beschrijven:"
+
+#: popup.php:17 popup.php:18
+msgid "Add Content Block"
+msgstr "Inhoudsblok toevoegen"
+
+#: popup.php:31
+msgid "Please select a Content Block"
+msgstr "Kies een inhoudsblok"
+
+#: popup.php:40 popup.php:64
+msgid "Insert Content Block"
+msgstr "Voeg inhoudsblok toe"
+
+#: popup.php:43
+msgid "Select a Content Block below to add it to your post or page."
+msgstr "Kies een Inhoudsblok om toe te voegen."
+
+#: popup.php:48
+msgid "Select a Content Block"
+msgstr "Selecteer een inhoudsblok"
+
+#: popup.php:58 post-widget.php:41
+msgid "No content blocks available"
+msgstr "Geen inhoudsblokken beschikbaar"
+
+#: post-widget.php:11
+msgid "Displays custom post content in a widget"
+msgstr "Toont een inhoudsblok in een widget"
+
+#: post-widget.php:12
+msgid "Content Block"
+msgstr "Inhoudsblok"
+
+#: post-widget.php:26
+msgid "Content Block to Display:"
+msgstr "Weer te geven inhoudsblok:"
+
+#: post-widget.php:52 post-widget.php:126
+msgid "Edit Content Block"
+msgstr "Inhoudsblok Bewerken"
+
+#: post-widget.php:58
+msgid "Show post title"
+msgstr "Toon de titel"
+
+#: post-widget.php:63
+msgid "Show featured image"
+msgstr "Toon uitgelichte afbeelding"
+
+#: post-widget.php:68
+msgid "Do not apply content filters"
+msgstr "Apply_filters niet toepassen"
+
+#: post-widget.php:84
+msgid "Find"
+msgstr "Zoeken"
+
+#: post-widget.php:121
+msgctxt "post type general name"
+msgid "Content Blocks"
+msgstr "Inhoudsblokken"
+
+#: post-widget.php:122
+msgctxt "post type singular name"
+msgid "Content Block"
+msgstr "Inhoudsblok"
+
+#: post-widget.php:123
+msgctxt "post type plural name"
+msgid "Content Blocks"
+msgstr "Inhoudsblokken"
+
+#: post-widget.php:124
+msgctxt "block"
+msgid "Add Content Block"
+msgstr "Nieuw Inhoudsblok"
+
+#: post-widget.php:125
+msgid "Add New Content Block"
+msgstr "Nieuw inhoudsblok toevoegen"
+
+#: post-widget.php:127
+msgid "New Content Block"
+msgstr "Nieuw Inhoudsblok"
+
+#: post-widget.php:128
+msgid "View Content Block"
+msgstr "Inhoudsblok Bekijken"
+
+#: post-widget.php:129
+msgid "Search Content Blocks"
+msgstr "Inhoudsblokken zoeken"
+
+#: post-widget.php:130
+msgid "No Content Blocks Found"
+msgstr "Geen Inhoudsblokken"
+
+#: post-widget.php:131
+msgid "No Content Blocks found in Trash"
+msgstr "Geen Inhoudsblokken in de Prullenbak"
+
+#: post-widget.php:154
+#, php-format
+msgid "Content Block updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Inhoudsblok bijgewerkt. <a href=\"%s\">Beheer Widgets</a>"
+
+#: post-widget.php:154 post-widget.php:157
+msgid "Content Block updated."
+msgstr "Inhoudsblok bijgewerkt."
+
+#: post-widget.php:155
+msgid "Custom field updated."
+msgstr "Custom field bijgewerkt."
+
+#: post-widget.php:156
+msgid "Custom field deleted."
+msgstr ""
+"Aangepaste\n"
+" \n"
+"veld\n"
+" \n"
+"verwijderd\n"
+"."
+
+#: post-widget.php:158
+#, php-format
+msgid "Content Block restored to revision from %s"
+msgstr "Inhoudsblok teruggezet naar revisie %s"
+
+#: post-widget.php:159
+#, php-format
+msgid "Content Block published. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Inhoudsblok gepubliceerd. <a href=\"%s\">Beheer Widgets</a>"
+
+#: post-widget.php:159
+msgid "Content Block published."
+msgstr "Inhoudsblok gepubliceerd."
+
+#: post-widget.php:160
+msgid "Block saved."
+msgstr "Inhoudsblok Opgeslagen."
+
+#: post-widget.php:161
+#, php-format
+msgid "Content Block submitted. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Inhoudsblok toegevoegd. <a href=\"%s\">Beheer Widgets</a>"
+
+#: post-widget.php:161
+msgid "Content Block submitted."
+msgstr "Inhoudsblok toegevoegd."
+
+#: post-widget.php:162
+#, php-format
+msgid "Content Block scheduled for: <strong>%1$s</strong>."
+msgstr "Inhoudsblok zal worden gepubliceerd op: <strong>%1$s</strong>."
+
+#: post-widget.php:162
+msgid "M j, Y @ G:i"
+msgstr "j. M Y @ H:M"
+
+#: post-widget.php:163
+#, php-format
+msgid "Content Block draft updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Concept Inhoudsblok Bijgewerkt. <a href=\"%s\">Beheer Widgets</a>"
+
+#: post-widget.php:163
+msgid "Content Block draft updated."
+msgstr "Concept Inhoudsblok bijgewerkt."
+
+#. Plugin Name of the plugin/theme
+msgid "Custom Post Widget"
+msgstr "Custom Post Widget"
+
+#. Plugin URI of the plugin/theme
+msgid ""
+"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+"utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget"
+msgstr ""
+"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+"utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget"
+
+#. Description of the plugin/theme
+msgid ""
+"Show the content of a custom post of the type 'content_block' in a widget or "
+"with a shortcode."
+msgstr ""
+"Toon de inhoud van een custom post van het type 'content_block' in een "
+"widget of met een shortcode."
+
+#. Author of the plugin/theme
+msgid "Johan van der Wijk"
+msgstr "Johan van der Wijk"
+
+#. Author URI of the plugin/theme
+msgid "http://vanderwijk.nl"
+msgstr "http://vanderwijk.nl"
+
+#~ msgid "Show Post Title"
+#~ msgstr "Toon de titel"
+
+#~ msgid ""
+#~ "Thank you for using the Custom Post Widget plugin. Visit the <a href="
+#~ "\"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+#~ "utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget\" "
+#~ "target=\"_blank\">plugin website</a> to find out more about using this "
+#~ "plugin. <a href=\"%1$s\" style=\"float:right;\">Hide Notice</a>"
+#~ msgstr ""
+#~ "Bedankt voor het installeren van de Custom Post Widget plugin. Bezoek de "
+#~ "<a href=\"http://www.vanderwijk.com/wordpress/wordpress-custom-post-"
+#~ "widget/\" target=\"_blank\">plugin website</a> voor meer informatie over "
+#~ "deze plugin. <a href=\"%1$s\" style=\"float:right;\">Verberg Melding</a>"

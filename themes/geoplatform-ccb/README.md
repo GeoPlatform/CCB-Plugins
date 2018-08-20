@@ -1,10 +1,10 @@
 # GeoPlatform Community Core Bundle (CCB)
 
-**Contributors:** imagemattersllc, kevins713   
+**Contributors:** imagemattersllc, kevins713, lheazel
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
 **Stable tag:** 3.0.5   
-**Version:** 3.1.2   
+**Version:** 3.1.4
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -82,6 +82,10 @@ The Community Core Bundle (CCB) enables independent development of a self-contai
 
 No, GeoPlatform plugins work independently of the theme.
 
+* The dropdown menu no longer functions.
+
+This is most likely due to conflicting uses of the Bootstrap library. The GeoPlatform CCB theme utilizes Bootstrap for some of its operations, and loading that asset with a plugin as well can cause conflicts. It is advised to avoid using that plugin.
+
 ## Copyright
 
 GeoPlatform-CCB for use by GeoPlatform.gov hosted communities and for general use.
@@ -108,6 +112,13 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
+### 3.1.3
+* Released August 2, 2018
+
+ - Update checking allows user to update the theme.
+ - Google Analytics incorporated.
+ - Numerous back-end improvements and bug fixes.
+
 ### 3.1.2
 * Released June 29, 2018
 
@@ -130,7 +141,7 @@ Initial submission on Wordpress.org. Previous versions were developed privately 
 
 <br>
 
-### Contact Information 
+### Contact Information
 Authors:
 Image Matters LLC
 201 Loudoun St, SW

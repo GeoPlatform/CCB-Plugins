@@ -5,6 +5,6 @@
 
 <!-- the rest of the content -->
 <h5><?php the_tags();?></h5>
-<h5 class="blog-post-meta">Updated <?php the_date(); ?> by <a href="#"><?php the_author(); ?></a></h5>
+<h5 class="blog-post-meta">Updated <?php echo get_the_modified_date(); ?></h5>
 
 </article><!-- post-the_ID();-->

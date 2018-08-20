@@ -1,0 +1,275 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Custom Post Widget v2.8.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2015-12-09 15:26:01+0000\n"
+"Last-Translator: admin <srul864@gmail.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
+"X-Poedit-Language: Hebrew\n"
+"X-Poedit-Country: ISRAEL\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-Bookmarks: \n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Textdomain-Support: yes"
+
+#. translators: plugin header field 'Name'
+#: custom-post-widget.php:0
+#@ custom-post-widget
+msgid "Custom Post Widget"
+msgstr "וידג'ט לפרסומים מותאמים אישית"
+
+#. translators: plugin header field 'PluginURI'
+#: custom-post-widget.php:0
+#@ custom-post-widget
+msgid "http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: custom-post-widget.php:0
+#@ custom-post-widget
+msgid "Show the content of a custom post of the type 'content_block' in a widget or with a shortcode."
+msgstr "הצג התוכן של הודעה מותאמת אישית מסוג 'content_block' בוידג'ט או עם קוד קצר."
+
+#. translators: plugin header field 'Author'
+#: custom-post-widget.php:0
+#@ custom-post-widget
+msgid "Johan van der Wijk"
+msgstr "יוהן ואן דר וואג"
+
+#. translators: plugin header field 'AuthorURI'
+#: custom-post-widget.php:0
+#@ custom-post-widget
+msgid "http://vanderwijk.nl"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: custom-post-widget.php:0
+#@ custom-post-widget
+msgid "2.8.2"
+msgstr ""
+
+#: meta-box.php:6
+#: meta-box.php:47
+#@ custom-post-widget
+msgid "Content Block Information"
+msgstr "מידע לאזור תוכן"
+
+#: notice.php:11
+#, php-format
+#@ default
+msgid "Thank you for using the Custom Post Widget plugin. Visit the <a href=\"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget\" target=\"_blank\">plugin website</a> to find out more about using this plugin. <a href=\"%1$s\" style=\"float:right;\">Hide Notice</a>"
+msgstr ""
+
+#: popup.php:17
+#: popup.php:18
+#@ custom-post-widget
+msgid "Add Content Block"
+msgstr "הוסף אזור תוכן"
+
+#: popup.php:31
+#@ custom-post-widget
+msgid "Please select a Content Block"
+msgstr "נא לבחור אזור תוכן"
+
+#: popup.php:40
+#: popup.php:64
+#@ custom-post-widget
+msgid "Insert Content Block"
+msgstr "הוספת אזור תוכן"
+
+#: popup.php:43
+#@ custom-post-widget
+msgid "Select a Content Block below to add it to your post or page."
+msgstr "נא לבחור אזור תוכן על מנת להוסיף אותו אל הפרסום או העמוד"
+
+#: popup.php:48
+#@ custom-post-widget
+msgid "Select a Content Block"
+msgstr "בחירת אזור תוכן"
+
+#: popup.php:58
+#: post-widget.php:41
+#@ custom-post-widget
+msgid "No content blocks available"
+msgstr "אין אזורי תוכן זמינים"
+
+#: post-widget.php:11
+#@ custom-post-widget
+msgid "Displays custom post content in a widget"
+msgstr "מציג תוכן פרסום מותאם אישית בוידג'ט"
+
+#: post-widget.php:12
+#@ custom-post-widget
+msgid "Content Block"
+msgstr "אזור תוכן"
+
+#: post-widget.php:26
+#@ custom-post-widget
+msgid "Content Block to Display:"
+msgstr "אזור תוכן להצגה:"
+
+#: post-widget.php:52
+#: post-widget.php:126
+#@ custom-post-widget
+msgid "Edit Content Block"
+msgstr "עריכת אזור תוכן"
+
+#: post-widget.php:58
+#@ custom-post-widget
+msgid "Show Post Title"
+msgstr "הצג כותרת פרסום"
+
+#: post-widget.php:63
+#@ custom-post-widget
+msgid "Show featured image"
+msgstr "הצג תמונה מומלצת"
+
+#: post-widget.php:68
+#@ custom-post-widget
+msgid "Do not apply content filters"
+msgstr "אל תחיל מסנני תוכן"
+
+#: post-widget.php:84
+#@ custom-post-widget
+msgid "Find"
+msgstr "חיפוש"
+
+#: post-widget.php:121
+#@ custom-post-widget
+msgctxt "post type general name"
+msgid "Content Blocks"
+msgstr "אזורי תוכן"
+
+#: post-widget.php:122
+#@ custom-post-widget
+msgctxt "post type singular name"
+msgid "Content Block"
+msgstr "אזור תוכן"
+
+#: post-widget.php:123
+#@ custom-post-widget
+msgctxt "post type plural name"
+msgid "Content Blocks"
+msgstr "אזורי תוכן"
+
+#: post-widget.php:124
+#@ custom-post-widget
+msgctxt "block"
+msgid "Add Content Block"
+msgstr "הוספת אזור תוכן"
+
+#: post-widget.php:125
+#@ custom-post-widget
+msgid "Add New Content Block"
+msgstr "הוספת אזור תוכן חדש"
+
+#: post-widget.php:127
+#@ custom-post-widget
+msgid "New Content Block"
+msgstr "אזור תוכן חדש"
+
+#: post-widget.php:128
+#@ custom-post-widget
+msgid "View Content Block"
+msgstr "צפייה באזור תוכן"
+
+#: post-widget.php:129
+#@ custom-post-widget
+msgid "Search Content Blocks"
+msgstr "חיפוש אזורי תוכן"
+
+#: post-widget.php:130
+#@ custom-post-widget
+msgid "No Content Blocks Found"
+msgstr "לא נמצאו אזורי תוכן"
+
+#: post-widget.php:131
+#@ custom-post-widget
+msgid "No Content Blocks found in Trash"
+msgstr "לא נמצאו אזורי תוכן באשפה"
+
+#: post-widget.php:154
+#, php-format
+#@ custom-post-widget
+msgid "Content Block updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr "אזור התוכן עודכן. <a href=\"%s\">ניהול וידג'טים</a>"
+
+#: post-widget.php:154
+#: post-widget.php:157
+#@ custom-post-widget
+msgid "Content Block updated."
+msgstr "אזור התוכן עודכן."
+
+#: post-widget.php:155
+#@ custom-post-widget
+msgid "Custom field updated."
+msgstr "השדה המותאם אישית עודכן."
+
+#: post-widget.php:156
+#@ custom-post-widget
+msgid "Custom field deleted."
+msgstr "השדה המותאם אישית נמחק."
+
+#: post-widget.php:158
+#, php-format
+#@ custom-post-widget
+msgid "Content Block restored to revision from %s"
+msgstr "אזור התוכן שוחזר מ-%s"
+
+#: post-widget.php:159
+#, php-format
+#@ custom-post-widget
+msgid "Content Block published. <a href=\"%s\">Manage Widgets</a>"
+msgstr "אזור התוכן פורסם. <a href=\"%s\">ניהול וידג'טים</a>"
+
+#: post-widget.php:159
+#@ custom-post-widget
+msgid "Content Block published."
+msgstr "אזור התוכן פורסם."
+
+#: post-widget.php:160
+#@ custom-post-widget
+msgid "Block saved."
+msgstr "אזור נשמר."
+
+#: post-widget.php:161
+#, php-format
+#@ custom-post-widget
+msgid "Content Block submitted. <a href=\"%s\">Manage Widgets</a>"
+msgstr "אזור התוכן נשלח. <a href=\"%s\">ניהול וידג'טים</a>"
+
+#: post-widget.php:161
+#@ custom-post-widget
+msgid "Content Block submitted."
+msgstr "אזור התוכן נשלח."
+
+#: post-widget.php:162
+#, php-format
+#@ custom-post-widget
+msgid "Content Block scheduled for: <strong>%1$s</strong>."
+msgstr "אזור התוכן מתוכנן ל: <strong>%1$s</strong>."
+
+#: post-widget.php:162
+#@ custom-post-widget
+msgid "M j, Y @ G:i"
+msgstr ""
+
+#: post-widget.php:163
+#, php-format
+#@ custom-post-widget
+msgid "Content Block draft updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr "הטיוטה לאזור תוכן עודכנה. <a href=\"%s\">ניהול וידג'טים</a>"
+
+#: post-widget.php:163
+#@ custom-post-widget
+msgid "Content Block draft updated."
+msgstr "הטיוטה לאזור התוכן עודכנה."
+

@@ -7,24 +7,24 @@
  * @return ENV[$name] or $def if none found
  */
 if ( ! function_exists( 'geop_ccb_getEnv' ) ){
-function geop_ccb_getEnv($name, $def){
+  function geop_ccb_getEnv($name, $def){
     return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 	}
 }
 //set env variables
-$maps_url = geop_ccb_getEnv('maps_url', 'https://maps.geoplatform.gov');
-$viewer_url = geop_ccb_getEnv('viewer_url', 'https://viewer.geoplatform.gov');
-$marketplace_url = geop_ccb_getEnv('marketplace_url',"https://marketplace.geoplatform.gov");
-$dashboard_url = geop_ccb_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
-$wpp_url = geop_ccb_getEnv('wpp_url',"https://geoplatform.gov");
-$ual_url = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov");
-$ckan_mp_url = geop_ccb_getEnv('ckan_mp_url',"https://data.geoplatform.gov/#/?progress=planned&h=Marketplace");
-$ckan_url = geop_ccb_getEnv('ckan_url',"https://data.geoplatform.gov/");
-$cms_url = geop_ccb_getEnv('cms_url',"https://www.geoplatform.gov/geoplatform-resources/");
-$idp_url = geop_ccb_getEnv('idp_url',"https://idp.geoplatform.gov");
-$oe_url = geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov");
-$sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
-$ga_code = geop_ccb_getEnv('ga_code','UA-00000000-0');
+$geopccb_maps_url = geop_ccb_getEnv('maps_url', 'https://maps.geoplatform.gov');
+$geopccb_viewer_url = geop_ccb_getEnv('viewer_url', 'https://viewer.geoplatform.gov');
+$geopccb_marketplace_url = geop_ccb_getEnv('marketplace_url',"https://marketplace.geoplatform.gov");
+$geopccb_dashboard_url = geop_ccb_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green");
+$geopccb_wpp_url = geop_ccb_getEnv('wpp_url',"https://geoplatform.gov");
+$geopccb_ual_url = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov");
+$geopccb_ckan_mp_url = geop_ccb_getEnv('ckan_mp_url',"https://data.geoplatform.gov/#/?progress=planned&h=Marketplace");
+$geopccb_ckan_url = geop_ccb_getEnv('ckan_url',"https://data.geoplatform.gov/");
+$geopccb_cms_url = geop_ccb_getEnv('cms_url',"https://marketplace.geoplatform.gov/");
+$geopccb_idp_url = geop_ccb_getEnv('idp_url',"https://idp.geoplatform.gov");
+$geopccb_oe_url = geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov");
+$geopccb_sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
+$geopccb_ga_code = geop_ccb_getEnv('ga_code','UA-42040723-1');
 
 /**
  * Add scripts to header
@@ -44,6 +44,24 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 }
 
+//-------------------------------
+// Add Google Analytics
+//http://www.wpbeginner.com/beginners-guide/how-to-install-google-analytics-in-wordpress/
+//-------------------------------
+if ( ! function_exists ( 'geopccb_add_googleanalytics' ) ) {
+  function geopccb_add_googleanalytics(){ ?>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122866646-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-42040723-1');
+    </script>
+  <?php
+  }
+  add_action('wp_head','geopccb_add_googleanalytics');
+}
 
 /**
  * Add Google Lato Fonts
@@ -87,11 +105,11 @@ if ( ! function_exists ( 'geop_ccb_setup' ) ) {
 	/*
 	* Support for a custom header Images
 	*/
-	$header_args = array(
+	$geopccb_header_args = array(
 		'default-image' => get_template_directory_uri() . '/img/default-banner.png',
 		'uploads'       => true,
 		);
-	add_theme_support( 'custom-header', $header_args);
+	add_theme_support( 'custom-header', $geopccb_header_args);
 
 	/*
 	* Support Featured Images
@@ -119,27 +137,27 @@ if ( ! function_exists ( 'geop_ccb_setup' ) ) {
 					'items' =>  array(
 						'link_map_view'   =>  array(
 							'title' =>  _x( 'Map Viewer', 'Theme starter Content', 'geoplatform-ccb' ),
-							'url'   =>  $GLOBALS['viewer_url'],
+							'url'   =>  $GLOBALS['geopccb_viewer_url'],
 						),
 						'link_map_man'    =>  array(
 							'title' =>  _x( 'Map Manager', 'Theme starter Content', 'geoplatform-ccb' ),
-							'url'   =>  $GLOBALS['maps_url'],
+							'url'   =>  $GLOBALS['geopccb_maps_url'],
 						),
 						'link_marketplace'    =>  array(
 							'title' =>  _x( 'Marketplace Preview', 'Theme starter Content', 'geoplatform-ccb' ),
-							'url'   =>  $GLOBALS['marketplace_url'],
+							'url'   =>  $GLOBALS['geopccb_marketplace_url'],
 						),
 						'link_perf_dash'    =>  array(
 							'title' =>  _x( 'Performance Dashboard', 'Theme starter Content', 'geoplatform-ccb' ),
-							'url'   =>  $GLOBALS['dashboard_url'],
+							'url'   =>  $GLOBALS['geopccb_dashboard_url'],
 						),
 						'link_ckan'    =>  array(
 							'title' =>  _x( 'Search Catalog', 'Theme starter Content', 'geoplatform-ccb' ),
-							'url'   =>  $GLOBALS['ckan_url'],
+							'url'   =>  $GLOBALS['geopccb_ckan_url'],
 						),
 						'link_ckan_mp'    =>  array(
 							'title' =>  _x( 'Search Marketplace', 'Theme starter Content', 'geoplatform-ccb' ),
-							'url'   =>  $GLOBALS['ckan_mp_url'],
+							'url'   =>  $GLOBALS['geopccb_ckan_mp_url'],
 						),
 					),
 				),
@@ -250,7 +268,7 @@ if ( ! function_exists ( 'geop_ccb_load_dashicons_front_end' ) ) {
 if ( ! function_exists ( 'geop_ccb_customize_register' ) ) {
 function geop_ccb_customize_register( $wp_customize ) {
 	//get defaults array
-	$theme_options = geop_ccb_get_theme_mods();
+	$geopccb_theme_options = geop_ccb_get_theme_mods();
 
 	//color section, settings, and controls
     $wp_customize->add_section( 'header_color_section' , array(
@@ -260,7 +278,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h1 color setting and control
 		$wp_customize->add_setting( 'header_color_setting' , array(
-				'default'   => $theme_options['header_color_setting'],
+				'default'   => $geopccb_theme_options['header_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -273,7 +291,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h2 color setting and control
 		$wp_customize->add_setting( 'header2_color_setting' , array(
-				'default'   => $theme_options['header2_color_setting'],
+				'default'   => $geopccb_theme_options['header2_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -286,7 +304,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h3 color setting and control
 		$wp_customize->add_setting( 'header3_color_setting' , array(
-				'default'   => $theme_options['header3_color_setting'],
+				'default'   => $geopccb_theme_options['header3_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -299,7 +317,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//h4 color setting and control
 		$wp_customize->add_setting( 'header4_color_setting' , array(
-				'default'   => $theme_options['header4_color_setting'],
+				'default'   => $geopccb_theme_options['header4_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -312,7 +330,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
     //link (<a>) color and control
 		$wp_customize->add_setting( 'link_color_setting' , array(
-				'default'   => $theme_options['link_color_setting'],
+				'default'   => $geopccb_theme_options['link_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -325,7 +343,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 		//.brand color and control
 		$wp_customize->add_setting( 'brand_color_setting' , array(
-				'default'   => $theme_options['brand_color_setting'],
+				'default'   => $geopccb_theme_options['brand_color_setting'],
 				'transport' => 'refresh',
 				'sanitize_callback' => 'sanitize_hex_color'
 		) );
@@ -336,6 +354,28 @@ function geop_ccb_customize_register( $wp_customize ) {
 				'settings' => 'brand_color_setting',
 		) ) );
 
+		//Fonts section, settings, and controls
+		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+		$wp_customize->add_section( 'font_section' , array(
+				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
+				'priority' => 50
+		) );
+
+		$wp_customize->add_setting('font_choice',array(
+        'default' => 'lato',
+				'sanitize_callback' => 'geop_ccb_sanitize_fonts',
+  	));
+
+		$wp_customize->add_control('font_choice',array(
+        'type' => 'radio',
+        'label' => 'Fonts',
+        'section' => 'font_section',
+        'choices' => array(
+            'lato' => __('Lato', 'geoplatform-ccb'),
+            'slabo' => __('Slabo',  'geoplatform-ccb')
+					),
+		));
+
 		//Banner Intro Text editor section, settings, and controls
 		$wp_customize->add_section( 'banner_text_section' , array(
 				'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
@@ -345,7 +385,7 @@ function geop_ccb_customize_register( $wp_customize ) {
          // Add a text editor control
          require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
          $wp_customize->add_setting( 'text_editor_setting', array(
-            'default'   => $theme_options['text_editor_setting'],
+            'default'   => $geopccb_theme_options['text_editor_setting'],
 			'transport' => 'refresh',
 			'type' 		=> 'theme_mod',
 			'sanitize_callback' => 'wp_kses_post'
@@ -359,7 +399,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 				 //Call to action button (formerly "Learn More" button)
 				 $wp_customize->add_setting('call2action_button_setting', array(
-					 'default' => $theme_options['call2action_button_setting'],
+					 'default' => $geopccb_theme_options['call2action_button_setting'],
 					 'transport' => 'refresh',
            			'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
 				 ) );
@@ -373,7 +413,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 				 ) );
 
 				 $wp_customize->add_setting('call2action_text_setting', array(
-					 'default' => $theme_options['call2action_text_setting'],
+					 'default' => $geopccb_theme_options['call2action_text_setting'],
 					 'transport' => 'refresh',
 					 'sanitize_callback' => 'sanitize_text_field',
 				 ));
@@ -389,7 +429,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 				 ) );
 
 				 $wp_customize->add_setting('call2action_url_setting', array(
-					'default' => $theme_options['call2action_url_setting'],
+					'default' => $geopccb_theme_options['call2action_url_setting'],
 					'transport' => 'refresh',
 					'sanitize_callback' => 'esc_url_raw',
 				));
@@ -410,7 +450,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 				'priority' => 70
 			) );
 			$wp_customize->add_setting( 'map_gallery_link_box_setting' , array(
-					'default'   => $theme_options['map_gallery_link_box_setting'],
+					'default'   => $geopccb_theme_options['map_gallery_link_box_setting'],
 					'transport' => 'refresh',
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
@@ -425,7 +465,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 
 				//Add radio button to choose link style between envs (sit, stg, or prod)
 				$wp_customize->add_setting( 'map_gallery_env_choice_setting' , array(
-						'default'   => $theme_options['map_gallery_env_choice_setting'],
+						'default'   => $geopccb_theme_options['map_gallery_env_choice_setting'],
 						'transport' => 'refresh',
 						'sanitize_callback' => 'geop_ccb_sanitize_mapchoice'
 					) );
@@ -463,14 +503,14 @@ function geop_ccb_customize_register( $wp_customize ) {
  * Sanitization callback functions for customizer fonts
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
- * @param [type] $value
+ * @param [type] $geop_ccb_value
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_sanitize_fonts' ) ) {
-	function geop_ccb_sanitize_fonts( $value ) {
-    	if ( ! in_array( $value, array( 'lato', 'slabo' ) ) )
-        	$value = 'lato';
-    	return $value;
+	function geop_ccb_sanitize_fonts( $geop_ccb_value ) {
+    	if ( ! in_array( $geop_ccb_value, array( 'lato', 'slabo' ) ) )
+        	$geop_ccb_value = 'lato';
+    	return $geop_ccb_value;
 	}
 }
 
@@ -478,14 +518,14 @@ if ( ! function_exists ( 'geop_ccb_sanitize_fonts' ) ) {
  * Sanitization callback functions for customizer mapchoice
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
- * @param [type] $value
+ * @param [type] $geop_ccb_value
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_sanitize_mapchoice' ) ) {
-	function geop_ccb_sanitize_mapchoice( $value ) {
-		if ( ! in_array( $value, array( 'match', 'sit', 'stg', 'prod' ) ) )
-			$value = 'match';
-		return $value;
+	function geop_ccb_sanitize_mapchoice( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'match', 'sit', 'stg', 'prod' ) ) )
+			$geop_ccb_value = 'match';
+		return $geop_ccb_value;
 	}
 }
 
@@ -493,7 +533,7 @@ if ( ! function_exists ( 'geop_ccb_sanitize_mapchoice' ) ) {
  * Sanitization callback functions for customizer checkbox
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
- * @param [type] $value
+ * @param [type] $geop_ccb_value
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_sanitize_checkbox' ) ) {
@@ -518,7 +558,7 @@ function geop_ccb_custom_customize_enqueue() {
 
 
 /**
- * Dynamically show the colors changing
+ * Dynamically show the colors and fonts changing
  *
  * @link https://codex.wordpress.org/Theme_Customization_API#Part_2:_Generating_Live_CSS
  *
@@ -538,11 +578,27 @@ if ( ! function_exists ( 'geop_ccb_header_customize_css' ) ) {
 				h4, .section--linked .heading .title { color: <?php echo get_theme_mod('header4_color_setting', $geop_ccb_options['header4_color_setting']); ?>; }
 				.text-selected, .text-active, a, a:visited { color: <?php echo get_theme_mod('link_color_setting', $geop_ccb_options['link_color_setting']); ?>; }
 				header.t-transparent .brand>a { color: <?php echo get_theme_mod('brand_color_setting', $geop_ccb_options['brand_color_setting']); ?>; }
+        h1, h2, h3, h4, h5, h6, div, p { font-family:  <?php echo get_theme_mod('font_choice', $geop_ccb_options['font_choice']); ?>;}
 			</style>
 		<?php
 	}
 	add_action( 'wp_head', 'geop_ccb_header_customize_css');
 }
+
+
+/**
+ * Register a default header, so that users may change back to it.
+ *
+ * https://wordpress.stackexchange.com/questions/195641/default-header-image-does-not-display
+ *
+ */
+register_default_headers( array(
+  'default-image' => array(
+    'url'           => get_template_directory_uri() . '/img/default-banner.png',
+    'thumbnail_url' => get_template_directory_uri() . '/img/default-banner.png',
+    'description'   => __( 'Default Header Image', 'geoplatform-ccb' )
+  ),
+));
 
 /**
  * Override banner background-image as the custom header
@@ -553,16 +609,16 @@ if ( ! function_exists ( 'geop_ccb_header_customize_css' ) ) {
  */
 if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
 	function geop_ccb_header_image_method() {
-		wp_enqueue_style(
-			'custom-style',
-			get_template_directory_uri() . '/css/Geomain_style.css'
-		);
-			$headerImage = get_header_image();
-			$custom_css = "
+		wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/Geomain_style.css');
+			$geopccb_headerImage = get_header_image();
+      if (! $geopccb_headerImage)
+        $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
+
+			$geopccb_custom_css = "
 					.banner{
-							background-image: url({$headerImage});
+							background-image: url({$geopccb_headerImage});
 					}";
-			wp_add_inline_style( 'custom-style', $custom_css );
+			wp_add_inline_style( 'custom-style', $geopccb_custom_css );
 		}
 		add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 }
@@ -575,26 +631,26 @@ if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
  * @return void
  */
 define('WYSIWYG_META_BOX_ID', 'my-editor');
-if ( ! function_exists ( 'wysiwyg_register_custom_meta_box' ) ) {
-	function wysiwyg_register_custom_meta_box(){
+if ( ! function_exists ( 'geopccb_wysiwyg_register_custom_meta_box' ) ) {
+	function geopccb_wysiwyg_register_custom_meta_box(){
 		add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'post');
 		add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'page');
 	}
-	add_action('admin_init', 'wysiwyg_register_custom_meta_box');
+	add_action('admin_init', 'geopccb_wysiwyg_register_custom_meta_box');
 }
 
 /**
  * Setup input area for posts/pages
  *
  * @link http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box
- * @param object $post
+ * @param object $geopccb_post
  * @return void
  */
 if ( ! function_exists ( 'geop_ccb_custom_wysiwyg' ) ) {
-	function geop_ccb_custom_wysiwyg($post){
+	function geop_ccb_custom_wysiwyg($geopccb_post){
 		echo "<h3>Anything you add below will show up in the Banner:</h3>";
-		$content = get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true);
-		wp_editor(htmlspecialchars_decode($content) , 'geop_ccb_custom_wysiwyg', array(
+		$geopccb_content = get_post_meta($geopccb_post->ID, 'geop_ccb_custom_wysiwyg', true);
+		wp_editor(htmlspecialchars_decode($geopccb_content) , 'geop_ccb_custom_wysiwyg', array(
 			"media_buttons" => true
 		));
 	}
@@ -605,17 +661,17 @@ if ( ! function_exists ( 'geop_ccb_custom_wysiwyg' ) ) {
 
   * @link http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box
 
-  * @param int $post_id
+  * @param int $geopccb_post_id
   * @return void
   */
 if ( ! function_exists ( 'geop_ccb_custom_wysiwyg_save_postdata' ) ) {
-	function geop_ccb_custom_wysiwyg_save_postdata($post_id){
+	function geop_ccb_custom_wysiwyg_save_postdata($geopccb_post_id){
 		if (!empty($_POST['geop_ccb_custom_wysiwyg'])){
-			$data = htmlspecialchars_decode($_POST['geop_ccb_custom_wysiwyg']);
-			update_post_meta($post_id, 'geop_ccb_custom_wysiwyg', $data);
+			$geopccb_data = htmlspecialchars_decode($_POST['geop_ccb_custom_wysiwyg']);
+			update_post_meta($geopccb_post_id, 'geop_ccb_custom_wysiwyg', $geopccb_data);
+	  }
 	}
-	add_action('save_post', 'geop_ccb_custom_wysiwyg_save_postdata');
-	}
+  add_action('save_post', 'geop_ccb_custom_wysiwyg_save_postdata');
 }
 
 /**
@@ -644,18 +700,18 @@ remove_filter( 'term_description', 'wp_kses_data' );
 
 if ( ! function_exists ( 'geop_ccb_cat_description' ) ) {
   add_filter('edit_category_form_fields', 'geop_ccb_cat_description');
-  function geop_ccb_cat_description($tag) {
+  function geop_ccb_cat_description($geopccb_tag) {
   	?>
   	<!-- <table class="form-table"> -->
   		<tr class="form-field">
-  			<th scope="row" valign="top"><label for="description">Description</label></th>
+  			<th scope="row" valign="top"><label for="description"><?php _e('Description', 'geoplatform-ccb') ?></label></th>
   			<td>
   			  <?php
-  				  $settings = array('wpautop' => true, 'media_buttons' => true, 'quicktags' => true, 'textarea_rows' => '15', 'textarea_name' => 'description' );
-  				  wp_editor(wp_kses_post($tag->description , ENT_QUOTES, 'UTF-8'), 'geop_ccb_cat_description', $settings);
+  				  $geopccb_settings = array('wpautop' => true, 'media_buttons' => true, 'quicktags' => true, 'textarea_rows' => '15', 'textarea_name' => 'description' );
+  				  wp_editor(wp_kses_post($geopccb_tag->description , ENT_QUOTES, 'UTF-8'), 'geop_ccb_cat_description', $geopccb_settings);
   		    ?>
   			  <br />
-  			  <span class="description">The description is not prominent by default; however, some themes may show it.</span>
+  			  <span class="description"><?php _e('The description is not prominent by default; however, some themes may show it.', 'geoplatform-ccb') ?></span>
   		  </td>
   		</tr>
   		<!-- </table> -->
@@ -950,7 +1006,7 @@ class GP_TAX_META {
 
  /*
   * Initialize the class and start calling our hooks and filters
-  * @since 3.1.2
+  * @since 3.1.3
  */
  public function init() {
    add_action( 'category_add_form_fields', array ( $this, 'add_category_image' ), 10, 2 );
@@ -969,7 +1025,7 @@ public function load_media() {
 
  /*
   * Add a form field in the new category page
-  * @since 3.1.2
+  * @since 3.1.3
  */
  public function add_category_image ( $taxonomy ) { ?>
    <div class="form-field term-group">
@@ -986,30 +1042,30 @@ public function load_media() {
 
  /*
   * Save the form field
-  * @since 3.1.2
+  * @since 3.1.3
  */
- public function save_category_image ( $term_id, $tt_id ) {
+ public function save_category_image ( $geopccb_term_id, $tt_id ) {
    if( isset( $_POST['category-image-id'] ) && '' !== $_POST['category-image-id'] ){
-     $image = $_POST['category-image-id'];
-     add_term_meta( $term_id, 'category-image-id', $image, true );
+     $geopccb_image = $_POST['category-image-id'];
+     add_term_meta( $geopccb_term_id, 'category-image-id', $geopccb_image, true );
    }
  }
 
  /*
   * Edit the form field
-  * @since 3.1.2
+  * @since 3.1.3
  */
- public function update_category_image ( $term, $taxonomy ) { ?>
+ public function update_category_image ( $geopccb_term, $taxonomy ) { ?>
    <tr class="form-field term-group-wrap">
      <th scope="row">
        <label for="category-image-id"><?php _e( 'Image', 'geoplatform-ccb' ); ?></label>
      </th>
      <td>
-       <?php $image_id = get_term_meta ( $term -> term_id, 'category-image-id', true ); ?>
-       <input type="hidden" id="category-image-id" name="category-image-id" value="<?php echo $image_id; ?>">
+       <?php $geopccb_image_id = get_term_meta ( $geopccb_term -> term_id, 'category-image-id', true ); ?>
+       <input type="hidden" id="category-image-id" name="category-image-id" value="<?php echo $geopccb_image_id; ?>">
        <div id="category-image-wrapper">
-         <?php if ( $image_id ) { ?>
-           <?php echo wp_get_attachment_image ( $image_id, 'thumbnail' ); ?>
+         <?php if ( $geopccb_image_id ) { ?>
+           <?php echo wp_get_attachment_image ( $geopccb_image_id, 'thumbnail' ); ?>
          <?php } ?>
        </div>
        <p>
@@ -1023,20 +1079,20 @@ public function load_media() {
 
 /*
  * Update the form field value
- * @since 3.1.2
+ * @since 3.1.3
  */
- public function updated_category_image ( $term_id, $tt_id ) {
+ public function updated_category_image ( $geopccb_term_id, $tt_id ) {
    if( isset( $_POST['category-image-id'] ) && '' !== $_POST['category-image-id'] ){
-     $image = $_POST['category-image-id'];
-     update_term_meta ( $term_id, 'category-image-id', $image );
+     $geopccb_image = $_POST['category-image-id'];
+     update_term_meta ( $geopccb_term_id, 'category-image-id', $geopccb_image );
    } else {
-     update_term_meta ( $term_id, 'category-image-id', '' );
+     update_term_meta ( $geopccb_term_id, 'category-image-id', '' );
    }
  }
 
 /*
  * Add script
- * @since 3.1.2
+ * @since 3.1.3
  */
  public function add_script() { ?>
    <script>
@@ -1105,14 +1161,14 @@ $GP_TAX_META -> init();
  * @return void
  */
 if ( ! function_exists ( 'geopccb_category_column_filter' ) ) {
-  function geopccb_category_column_filter( $columns ) {
-    $new_columns = array();
-    $new_columns['cb'] = $columns['cb'];
-    $new_columns['thumb'] = __('Image', 'geoplatform-ccb');
+  function geopccb_category_column_filter( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['cb'] = $geopccb_columns['cb'];
+    $geopccb_new_columns['thumb'] = __('Image', 'geoplatform-ccb');
 
-    unset( $columns['cb'] );
+    unset( $geopccb_columns['cb'] );
 
-    return array_merge( $new_columns, $columns );
+    return array_merge( $geopccb_new_columns, $geopccb_columns );
   }
 }
 
@@ -1129,15 +1185,15 @@ if ( ! function_exists ( 'geopccb_category_column_filter' ) ) {
  * @return void
  */
 if ( ! function_exists ( 'geopccb_category_column_action' ) ) {
-  function geopccb_category_column_action( $columns, $column, $id ) {
-    $class_category_image = get_term_meta($id, 'category-image-id', true);//Get the image ID
-      if ( $column == 'thumb' ){
-        $temp_img = wp_get_attachment_image_src($class_category_image, 'full')[0];
-        if (!$temp_img)
-          $temp_img = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
-        $columns = '<img src="' . $temp_img . '" style="max-height: 12em; max-width: 100%;" />';
+  function geopccb_category_column_action( $geopccb_columns, $geopccb_column, $geopccb_id ) {
+    $geopccb_class_category_image = get_term_meta($geopccb_id, 'category-image-id', true);//Get the image ID
+      if ( $geopccb_column == 'thumb' ){
+        $geopccb_temp_img = wp_get_attachment_image_src($geopccb_class_category_image, 'full')[0];
+        if (!$geopccb_temp_img)
+          $geopccb_temp_img = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
+        $geopccb_columns = '<img src="' . $geopccb_temp_img . '" style="max-height: 12em; max-width: 100%;" />';
       }
-    return $columns;
+    return $geopccb_columns;
   }
 }
 
@@ -1164,6 +1220,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'call2action_text_setting' => 'Learn More',
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
 			'map_gallery_env_choice_setting' => 'prod',
+      'font_choice' => 'lato',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
 	}
@@ -1184,3 +1241,36 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 		);
 	}
 }
+
+/**
+ * CDN Distribution handler
+ *
+ * @link https://github.com/YahnisElsts/plugin-update-checker
+ */
+if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
+  function geop_ccb_distro_manager() {
+    require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+    $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+    	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
+    	__FILE__,
+    	'geoplatform-ccb'
+    );
+  }
+  geop_ccb_distro_manager();
+}
+
+/**
+ * Second image handler for individual banners.
+ *
+ * @link https://github.com/voceconnect/multi-post-thumbnails/wiki
+ */
+ if (class_exists('geop_ccb_MultiPostThumbnails')) {
+     new geop_ccb_MultiPostThumbnails(
+         array(
+             // Replace [YOUR THEME TEXT DOMAIN] below with the text domain of your theme (found in the theme's `style.css`).
+             'label' => __( 'Banner Image', 'geoplatform-ccb'),
+             'id' => 'geop-ccb-banner-image',
+             'post_type' => 'post'
+         )
+     );
+ }

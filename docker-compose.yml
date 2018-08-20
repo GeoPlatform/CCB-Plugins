@@ -24,9 +24,9 @@ services:
       viewer_url: https://viewer.geoplatform.gov
       marketplace_url: https://marketplace.geoplatform.gov
       dashboard_url: https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green
-      wpp_url: https://sit.geoplatform.gov
+      wpp_url: https://www.geoplatform.gov
       ual_url: https://ual.geoplatform.gov
-      ckan_mp_url: https://data.geoplatform.gov/#/?progress=planned&h=Marketplace
+      ckan_mp_url: https://marketplace.geoplatform.gov/
       ckan_url: https://data.geoplatform.gov/
       cms_url: https://cms.geoplatform.gov/resources
       idp_url: https://idp.geoplatform.gov

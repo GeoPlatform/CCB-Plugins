@@ -5,8 +5,8 @@
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#search-result
  *
  * @package GeoPlatform CCB
- * 
- * @since 3.1.0
+ *
+ * @since 3.1.4
  */
 
 get_header();

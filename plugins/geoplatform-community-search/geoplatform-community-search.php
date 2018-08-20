@@ -14,17 +14,17 @@
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Community Search
- * Plugin URI:        www.geoplatform.gov
+ * Plugin URI:        https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-community-search
  * Description:       Search for geoplatform community objects.
  * Version:           1.0.5
  * Author:            Image Matters LLC
- * Author URI:        www.geoplatform.gov
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Author URI:        http://www.imagemattersllc.com
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain:       geoplatform-community-search
  */
 
-define("UAL", "https://ual.geoplatform.gov");
+define("GP_SEARCH_UAL", "https://ual.geoplatform.gov");
 define('GP_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('GP_SEARCH_URL', plugin_dir_url(__FILE__));
 define('GP_SEARCH_NAME', "GeoPlatform Community Search");
@@ -37,17 +37,17 @@ function geopcomsearch_add_stylesheet() {
 add_action( 'wp_print_styles', 'geopcomsearch_add_stylesheet' );
 
 function geopcomsearch_add_script() {
-  wp_register_script('geoplatform', GP_SEARCH_URL . 'assets/js/geoplatform.js', array(), null);
-  wp_enqueue_script('geoplatform');
-  wp_register_script('q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js', array(), null);
-  wp_enqueue_script('q');
-  wp_register_script('clientapi', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
-  wp_enqueue_script('clientapi');
+  wp_register_script('geopcomsearch_framework', GP_SEARCH_URL . 'assets/js/geoplatform.js', array(), null);
+  wp_enqueue_script('geopcomsearch_framework');
+  wp_register_script('geopcomsearch_q', GP_SEARCH_URL . 'assets/js/q_2.0.3.js', array(), null);
+  wp_enqueue_script('geopcomsearch_q');
+  wp_register_script('geopcomsearch_client_api', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
+  wp_enqueue_script('geopcomsearch_client_api');
 }
 add_action( 'wp_print_scripts', 'geopcomsearch_add_script' );
 
 // Hook backbone for shortcode interpretation.
-function geopcomsearch__shortcode_creation($atts){
+function geopcomsearch__shortcode_creation($geopcomsearch_atts){
   // generate a new geopcomsearch_uuid for each instance
  // $geopcomsearch_uuid = wp_generate_geopcomsearch_uuid4();
   $geopcomsearch_uuid = uniqid();
@@ -56,7 +56,7 @@ function geopcomsearch__shortcode_creation($atts){
   $geopcomsearch_searchVal = 1;
 
   // load the settings - add default values if none exist already
-  $options = get_option('geopcomsearch_settings', array(
+  $geopcomsearch_options = get_option('geopcomsearch_settings', array(
     'geopcomsearch_select_community' => 'any',
     'geopcomsearch_text_title' => 'Community Items',
     'geopcomsearch_select_objtype' => 'any',
@@ -67,28 +67,28 @@ function geopcomsearch__shortcode_creation($atts){
     'geopcomsearch_select_perpage' => 10));
 
   // populate via shortcode, using settings api values as defaults
-  $a = shortcode_atts(array(
-    'community' => $options['geopcomsearch_select_community'],
-    'title' => $options['geopcomsearch_text_title'],
-    'objtype' => $options['geopcomsearch_select_objtype'],
-		'showpaging' => $options['geopcomsearch_checkbox_show_paging'],
-    'showsearch' => $options['geopcomsearch_checkbox_show_search'],
-    'sort' => $options['geopcomsearch_select_sort'],
-    'maxresults' => $options['geopcomsearch_select_perpage'],
-    'keyword' => $options['geopcomsearch_text_keyword'],
+  $geopmap_shortcode_array = shortcode_atts(array(
+    'community' => $geopcomsearch_options['geopcomsearch_select_community'],
+    'title' => $geopcomsearch_options['geopcomsearch_text_title'],
+    'objtype' => $geopcomsearch_options['geopcomsearch_select_objtype'],
+		'showpaging' => $geopcomsearch_options['geopcomsearch_checkbox_show_paging'],
+    'showsearch' => $geopcomsearch_options['geopcomsearch_checkbox_show_search'],
+    'sort' => $geopcomsearch_options['geopcomsearch_select_sort'],
+    'maxresults' => $geopcomsearch_options['geopcomsearch_select_perpage'],
+    'keyword' => $geopcomsearch_options['geopcomsearch_text_keyword'],
     'geopcomsearch_uuid' => $geopcomsearch_uuid
-  ), $atts);
+  ), $geopcomsearch_atts);
 
   // handle true/false values in shortcode.  is stored in settings api as 1 or 0
-  if ($atts !=  null)
+  if ($geopcomsearch_atts !=  null)
   {
-    if (array_key_exists('showpaging', $atts) && isset($atts['showpaging'])){
-      if ($atts['showpaging'] == 'false' || $atts['showpaging'] == '0' || $atts['showpaging'] == 'f')
+    if (array_key_exists('showpaging', $geopcomsearch_atts) && isset($geopcomsearch_atts['showpaging'])){
+      if ($geopcomsearch_atts['showpaging'] == 'false' || $geopcomsearch_atts['showpaging'] == '0' || $geopcomsearch_atts['showpaging'] == 'f')
         $geopcomsearch_pagingVal = 0;
     }
 
-    if (array_key_exists('showsearch', $atts) && isset($atts['showsearch'])){
-      if ($atts['showsearch'] == 'false' || $atts['showsearch'] == '0' || $atts['showsearch'] == 'f')
+    if (array_key_exists('showsearch', $geopcomsearch_atts) && isset($geopcomsearch_atts['showsearch'])){
+      if ($geopcomsearch_atts['showsearch'] == 'false' || $geopcomsearch_atts['showsearch'] == '0' || $geopcomsearch_atts['showsearch'] == 'f')
         $geopcomsearch_searchVal = 0;
     }
   }
@@ -110,12 +110,12 @@ add_action('init', 'geopcomsearch__shortcodes_init');
 
 // need to add these scripts on the admin side too
 function geopcomsearch_add_admin_script() {
-  wp_register_script('geoplatform', GP_SEARCH_URL . 'assets/js/geoplatform.js', array(), null);
-  wp_enqueue_script('geoplatform');
-  wp_register_script('q', 'https://cdnjs.cloudflare.com/ajax/libs/q.js/1.5.1/q.js', array(), null);
-  wp_enqueue_script('q');
-  wp_register_script('clientapi', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
-  wp_enqueue_script('clientapi');
+  wp_register_script('geopcomsearch_framework', GP_SEARCH_URL . 'assets/js/geoplatform.js', array(), null);
+  wp_enqueue_script('geopcomsearch_framework');
+  wp_register_script('geopcomsearch_q', GP_SEARCH_URL . 'assets/js/q_2.0.3.js', array(), null);
+  wp_enqueue_script('geopcomsearch_q');
+  wp_register_script('geopcomsearch_client_api', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
+  wp_enqueue_script('geopcomsearch_client_api');
   wp_register_style('geopcomsearchadmin_css', GP_SEARCH_URL . 'assets/css/geoplatform-community-search-admin.css', false, 'all');
   wp_enqueue_style('geopcomsearchadmin_css');
 }
@@ -152,18 +152,18 @@ function geopcomsearch_settings_section_callback2(  ) {	echo __( '', 'wordpress'
 
 function geopcomsearch_select_community_render() {
   // loading communities from ual
-  $url = UAL . "/api/communities";
-  $request = wp_remote_get($url);
-  $body = wp_remote_retrieve_body($request);
-  $data = json_decode($body);
-  $communities = $data->results;
+  $geopcomsearch_url = GP_SEARCH_UAL . "/api/communities";
+  $geopcomsearch_request = wp_remote_get($geopcomsearch_url);
+  $geopcomsearch_body = wp_remote_retrieve_body($geopcomsearch_request);
+  $geopcomsearch_data = json_decode($geopcomsearch_body);
+  $geopcomsearch_communities = $geopcomsearch_data->results;
 
-  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_select_community' => 'any' ));
-  $geopcomsearch_communityVal = $options['geopcomsearch_select_community'];
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_select_community' => 'any' ));
+  $geopcomsearch_communityVal = $geopcomsearch_options['geopcomsearch_select_community'];
 	?>
 	<select name='geopcomsearch_settings[geopcomsearch_select_community]' class='gp-form-control'>
 		<option value='any' <?php selected($geopcomsearch_communityVal, 'any'); ?>>Any Community</option>
-    <?php foreach($communities as $val): ?>
+    <?php foreach($geopcomsearch_communities as $val): ?>
          <option value='<?php echo $val->id ?>' <?php selected($geopcomsearch_communityVal, $val->id ); ?> ><?php echo $val->label ?></option>
     <?php endforeach; ?>
 	</select>
@@ -171,16 +171,16 @@ function geopcomsearch_select_community_render() {
 }
 
 function geopcomsearch_text_title_render(  ) {
-  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_text_title' => 'Community Items' ));
-  $geopcomsearch_titleVal = $options['geopcomsearch_text_title'];
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_text_title' => 'Community Items' ));
+  $geopcomsearch_titleVal = $geopcomsearch_options['geopcomsearch_text_title'];
 	?>
 	<input type='text' class='gp-form-control' name='geopcomsearch_settings[geopcomsearch_text_title]' value='<?php echo $geopcomsearch_titleVal; ?>'>
 	<?php
 }
 
 function geopcomsearch_select_objtype_render(  ) {
-  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_select_objtype' => 'any' ));
-  $geopcomsearch_objtypeVal = $options['geopcomsearch_select_objtype'];
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_select_objtype' => 'any' ));
+  $geopcomsearch_objtypeVal = $geopcomsearch_options['geopcomsearch_select_objtype'];
 	?>
 	<select name='geopcomsearch_settings[geopcomsearch_select_objtype]' class='gp-form-control'>
     <option value='any' <?php selected($geopcomsearch_objtypeVal, 'any'); ?>>Any Type</option>
@@ -195,16 +195,16 @@ function geopcomsearch_select_objtype_render(  ) {
 }
 
 function geopcomsearch_checkbox_show_paging_render(  ) {
-  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_checkbox_show_paging' => 1 ));
-  $geopcomsearch_pagingVal =  $options['geopcomsearch_checkbox_show_paging']
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_checkbox_show_paging' => 1 ));
+  $geopcomsearch_pagingVal =  $geopcomsearch_options['geopcomsearch_checkbox_show_paging']
 	?>
 	<input type='checkbox' name='geopcomsearch_settings[geopcomsearch_checkbox_show_paging]' <?php checked($geopcomsearch_pagingVal, 1 ); ?> value='1'>
 	<?php
 }
 
 function geopcomsearch_checkbox_show_search_render(  ) {
-  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_checkbox_show_search' => 1 ));
-  $geopcomsearch_searchVal = $options['geopcomsearch_checkbox_show_search'];
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_checkbox_show_search' => 1 ));
+  $geopcomsearch_searchVal = $geopcomsearch_options['geopcomsearch_checkbox_show_search'];
 
 	?>
 	<input type='checkbox' name='geopcomsearch_settings[geopcomsearch_checkbox_show_search]' <?php checked( $geopcomsearch_searchVal, 1 ); ?> value='1'>
@@ -212,8 +212,8 @@ function geopcomsearch_checkbox_show_search_render(  ) {
 }
 
 function geopcomsearch_select_sort_render(  ) {
-  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_select_sort' => 'modified' ));
-  $geopcomsearch_sortVal = $options['geopcomsearch_select_sort'];
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_select_sort' => 'modified' ));
+  $geopcomsearch_sortVal = $geopcomsearch_options['geopcomsearch_select_sort'];
 
 	?>
 	<select name='geopcomsearch_settings[geopcomsearch_select_sort]' class='gp-form-control'>
@@ -224,8 +224,8 @@ function geopcomsearch_select_sort_render(  ) {
 }
 
 function geopcomsearch_select_perpage_render(  ) {
-  $options = get_option('geopcomsearch_settings', array( 'geopcomsearch_select_perpage' => 10 ));
-  $geopcomsearch_perpageVal = $options['geopcomsearch_select_perpage'];
+  $geopcomsearch_options = get_option('geopcomsearch_settings', array( 'geopcomsearch_select_perpage' => 10 ));
+  $geopcomsearch_perpageVal = $geopcomsearch_options['geopcomsearch_select_perpage'];
 
   ?>
 	<select name='geopcomsearch_settings[geopcomsearch_select_perpage]' class='gp-form-control'>
@@ -239,8 +239,8 @@ function geopcomsearch_select_perpage_render(  ) {
 }
 
 function geopcomsearch_text_keyword_render(  ) {
-  $options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_text_keyword' => '' ));
-  $geopcomsearch_keywordVal = $options['geopcomsearch_text_keyword'];
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_text_keyword' => '' ));
+  $geopcomsearch_keywordVal = $geopcomsearch_options['geopcomsearch_text_keyword'];
 	?>
 	<input type='text' class='gp-form-control' name='geopcomsearch_settings[geopcomsearch_text_keyword]' value='<?php echo $geopcomsearch_keywordVal; ?>'>
 	<?php

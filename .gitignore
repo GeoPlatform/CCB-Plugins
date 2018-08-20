@@ -8,6 +8,9 @@ plugins/openid-connect-generic-master
 plugins/easy-wp-smtp
 plugins/tinymce-advanced
 plugins/custom-sidebars
+plugins/debug-bar
+plugins/email-subscribers
+
 
 # Ignore default themes files
 themes/index.php

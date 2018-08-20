@@ -1,0 +1,306 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Custom Post Widget v1.9.2\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/custom-post-widget\n"
+"POT-Creation-Date: 2017-01-03 11:48+0100\n"
+"PO-Revision-Date: 2017-01-03 11:51+0100\n"
+"Last-Translator: Johan van der Wijk <info@vanderwijk.nl>\n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2\n"
+"X-Poedit-Basepath: .\n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: Poedit 1.8.11\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: custom-post-widget.php:57
+msgid "Review"
+msgstr "Avis"
+
+#: custom-post-widget.php:57
+msgid "Donate"
+msgstr "Faire un don"
+
+#: meta-box.php:5 meta-box.php:57
+msgid "Content Block Information"
+msgstr "Informations sur le bloc de contenu"
+
+#: meta-box.php:6
+msgid "Content Block Shortcodes"
+msgstr "Bloc de contenu Shortcodes"
+
+#: meta-box.php:12
+msgid ""
+"You can place this content block into your posts, pages, custom post types "
+"or widgets using the shortcode below:"
+msgstr ""
+"Vous pouvez placer ce bloc de contenu dans vos messages, pages, types de "
+"poste personnalisé ou widgets en utilisant le shortcode ci-dessous:"
+
+#: meta-box.php:14 meta-box.php:18
+msgid "Copy to clipboard"
+msgstr "Copier"
+
+#: meta-box.php:16
+msgid "Use this shortcode to include the content block title:"
+msgstr "Utilisez ce shortcode pour inclure le titre du bloc de contenu:"
+
+#: meta-box.php:26
+msgid "You can use this field to describe this content block:"
+msgstr "Vous pouvez utiliser ce champ pour décrire ce bloc de contenu:"
+
+# @ custom-post-widget
+#: popup.php:17 popup.php:18
+msgid "Add Content Block"
+msgstr "Ajouter un bloc de contenu"
+
+# @ custom-post-widget
+#: popup.php:31
+msgid "Please select a Content Block"
+msgstr "Veuillez choisir un bloc de contenu"
+
+# @ custom-post-widget
+#: popup.php:40 popup.php:64
+msgid "Insert Content Block"
+msgstr "Insérer un bloc de contenu"
+
+# @ custom-post-widget
+#: popup.php:43
+msgid "Select a Content Block below to add it to your post or page."
+msgstr ""
+"Choisissez un bloc de contenu ci-bas pour l'ajouter à votre article ou page."
+
+# @ custom-post-widget
+#: popup.php:48
+msgid "Select a Content Block"
+msgstr "Choisissez un bloc"
+
+# @ custom-post-widget
+#: popup.php:58 post-widget.php:41
+msgid "No content blocks available"
+msgstr "Aucun bloc disponible"
+
+# @ custom-post-widget
+#: post-widget.php:11
+msgid "Displays custom post content in a widget"
+msgstr "Affiche le contenu d'un bloc dans un widget."
+
+# @ custom-post-widget
+#: post-widget.php:12
+msgid "Content Block"
+msgstr "Bloc de contenu"
+
+# @ custom-post-widget
+#: post-widget.php:26
+msgid "Content Block to Display:"
+msgstr "Bloc de contenu à afficher:"
+
+# @ custom-post-widget
+#: post-widget.php:52 post-widget.php:126
+msgid "Edit Content Block"
+msgstr "Modifier le bloc"
+
+#: post-widget.php:58
+msgid "Show post title"
+msgstr "Afficher le titre"
+
+#: post-widget.php:63
+msgid "Show featured image"
+msgstr "Afficher l'image à la une"
+
+#: post-widget.php:68
+msgid "Do not apply content filters"
+msgstr "Ne pas appliquer des filtres de contenu"
+
+# @ custom-post-widget
+#: post-widget.php:84
+msgid "Find"
+msgstr "Rechercher"
+
+# @ custom-post-widget
+#: post-widget.php:121
+msgctxt "post type general name"
+msgid "Content Blocks"
+msgstr "Blocs de contenu"
+
+# @ custom-post-widget
+#: post-widget.php:122
+msgctxt "post type singular name"
+msgid "Content Block"
+msgstr "Bloc de contenu"
+
+# @ custom-post-widget
+#: post-widget.php:123
+msgctxt "post type plural name"
+msgid "Content Blocks"
+msgstr "Blocs de contenu"
+
+# @ custom-post-widget
+#: post-widget.php:124
+msgctxt "block"
+msgid "Add Content Block"
+msgstr "Ajouter un bloc"
+
+# @ custom-post-widget
+#: post-widget.php:125
+msgid "Add New Content Block"
+msgstr "Ajouter un bloc"
+
+# @ custom-post-widget
+#: post-widget.php:127
+msgid "New Content Block"
+msgstr "Nouveau bloc"
+
+# @ custom-post-widget
+#: post-widget.php:128
+msgid "View Content Block"
+msgstr "Afficher le bloc"
+
+# @ custom-post-widget
+#: post-widget.php:129
+msgid "Search Content Blocks"
+msgstr "Recherche dans les blocs"
+
+# @ custom-post-widget
+#: post-widget.php:130
+msgid "No Content Blocks Found"
+msgstr "Aucun bloc trouvé"
+
+# @ custom-post-widget
+#: post-widget.php:131
+msgid "No Content Blocks found in Trash"
+msgstr "Aucun bloc trouvé dans la corbeille"
+
+# @ custom-post-widget
+#: post-widget.php:154
+#, php-format
+msgid "Content Block updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Bloc de contenu mis à jour. <a href=\"%s\">Gérer les widgets</a>"
+
+# @ custom-post-widget
+#: post-widget.php:154 post-widget.php:157
+msgid "Content Block updated."
+msgstr "Bloc de contenu mis à jour."
+
+# @ custom-post-widget
+#: post-widget.php:155
+msgid "Custom field updated."
+msgstr "Champ personnalisé mis à jour."
+
+# @ custom-post-widget
+#: post-widget.php:156
+msgid "Custom field deleted."
+msgstr "Champ personnalisé supprimé."
+
+# @ custom-post-widget
+#: post-widget.php:158
+#, php-format
+msgid "Content Block restored to revision from %s"
+msgstr "Bloc de contenu restauré à partir de la révision %s"
+
+# @ custom-post-widget
+#: post-widget.php:159
+#, php-format
+msgid "Content Block published. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Bloc de contenu publié. <a href=\"%s\">Gérer les widgets</a>"
+
+# @ custom-post-widget
+#: post-widget.php:159
+msgid "Content Block published."
+msgstr "Bloc de contenu publié."
+
+# @ custom-post-widget
+#: post-widget.php:160
+msgid "Block saved."
+msgstr "Bloc sauvegardé."
+
+# @ custom-post-widget
+#: post-widget.php:161
+#, php-format
+msgid "Content Block submitted. <a href=\"%s\">Manage Widgets</a>"
+msgstr "Bloc de contenu envoyé. <a href=\"%s\">Gérer les widgets</a>"
+
+# @ custom-post-widget
+#: post-widget.php:161
+msgid "Content Block submitted."
+msgstr "Bloc de contenu envoyé."
+
+# @ custom-post-widget
+#: post-widget.php:162
+#, php-format
+msgid "Content Block scheduled for: <strong>%1$s</strong>."
+msgstr "Publication du bloc prévue pour le <strong>%1$s</strong>."
+
+# @ custom-post-widget
+#: post-widget.php:162
+msgid "M j, Y @ G:i"
+msgstr "le j M Y, à G:i"
+
+# @ custom-post-widget
+#: post-widget.php:163
+#, php-format
+msgid "Content Block draft updated. <a href=\"%s\">Manage Widgets</a>"
+msgstr ""
+"Brouillon du bloc de contenu mis à jour. <a href=\"%s\">Gérer les widgets</a>"
+
+# @ custom-post-widget
+#: post-widget.php:163
+msgid "Content Block draft updated."
+msgstr "Brouillon du bloc de contenu mis à jour."
+
+#. Plugin Name of the plugin/theme
+msgid "Custom Post Widget"
+msgstr "Blocs de Contenu"
+
+#. Plugin URI of the plugin/theme
+msgid ""
+"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+"utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget"
+msgstr ""
+"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+"utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget"
+
+#. Description of the plugin/theme
+msgid ""
+"Show the content of a custom post of the type 'content_block' in a widget or "
+"with a shortcode."
+msgstr ""
+"Afficher le contenu d'un message personnalisé du type 'content_block' dans "
+"un widget ou avec un shortcode."
+
+#. Author of the plugin/theme
+msgid "Johan van der Wijk"
+msgstr "Johan van der Wijk"
+
+#. Author URI of the plugin/theme
+msgid "http://vanderwijk.nl"
+msgstr "http://vanderwijk.nl"
+
+#~ msgid ""
+#~ "Thank you for using the Custom Post Widget plugin. Visit the <a href="
+#~ "\"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+#~ "utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget\" "
+#~ "target=\"_blank\">plugin website</a> to find out more about using this "
+#~ "plugin. <a href=\"%1$s\" style=\"float:right;\">Hide Notice</a>"
+#~ msgstr ""
+#~ "Merci d'utiliser le plugin Custom Post Widget. Visitez le <a href="
+#~ "\"http://www.vanderwijk.com/wordpress/wordpress-custom-post-widget/?"
+#~ "utm_source=wordpress&utm_medium=plugin&utm_campaign=custom_post_widget\" "
+#~ "target=\"_blank\">site web de plugin</a> pour en savoir plus sur "
+#~ "l'utilisation de ce plugin. <a href=\"%1$s\" style=\"float:right;"
+#~ "\">Masquer Avis</a>"
+
+# @ custom-post-widget
+#~ msgid "Show Post Title"
+#~ msgstr "Afficher le titre du bloc"
+
+# @ custom-post-widget
+#~ msgid "Cancel"
+#~ msgstr "Annuler"
