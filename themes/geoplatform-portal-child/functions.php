@@ -251,7 +251,7 @@ class Geopportal_GPSearch_Widget extends WP_Widget {
 		$title = "GeoPlatform Search";
 		?>
 		<p>
-		  The GeoPlatform theme Search bar widget. Will only display if the plugin is active.
+		  The GeoPlatform theme Search bar widget. Will only display if the plugin is active. There are no settings involved with this widget.
 		</p>
 		<?php
 	}
@@ -423,7 +423,7 @@ function geopportal_register_portal_widgets() {
 	register_widget( 'Geopportal_Account_Widget' );
 	register_widget( 'Geopportal_Contact_Widget' );
 
-  register_widget( 'Geopportal_MainPage_Widget' );
+  // register_widget( 'Geopportal_MainPage_Widget' );
 	register_widget( 'Geopportal_GPSearch_Widget' );
 	register_widget( 'Geopportal_Cornerstones_Widget' );
 	// register_widget( 'Geopportal_Services_Widget' );
