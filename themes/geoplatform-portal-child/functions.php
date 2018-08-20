@@ -129,59 +129,57 @@ class Geopportal_Account_Widget extends WP_Widget {
 /**
  * Adds sidebar featured services widget.
  */
-class Geopportal_Featured_Sidebar_Widget extends WP_Widget {
-
-	/**
-	 * Register widget with WordPress.
-	 */
-	function __construct() {
-		parent::__construct(
-			'geopportal_featured_sidebar_widget', // Base ID
-			esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	/**
-	* Front-end display of widget. Just gets featured-services template.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */
-	public function widget( $args, $instance ) {
-		get_template_part( 'featured-services', get_post_format() );
-	}
-
-	/**
-	 * Back-end widget form.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
-	 */
-	public function form( $instance ) {
-		$title = "Sidebar Featured Services";
-		?>
-		<p>
-		  The GeoPlatform theme Featured Services widget for the sidebar.
-		</p>
-		<?php
-	}
-
-	/**
-	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {}
-}
+// class Geopportal_Featured_Sidebar_Widget extends WP_Widget {
+//
+// 	/**
+// 	 * Register widget with WordPress.
+// 	 */
+// 	function __construct() {
+// 		parent::__construct(
+// 			'geopportal_featured_sidebar_widget', // Base ID
+// 			esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), // Name
+// 			array( 'description' => esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), ) // Args
+// 		);
+// 	}
+//
+// 	/**
+// 	* Front-end display of widget. Just gets featured-services template.
+// 	 *
+// 	 * @see WP_Widget::widget()
+// 	 *
+// 	 * @param array $args     Widget arguments.
+// 	 * @param array $instance Saved values from database.
+// 	 */
+// 	public function widget( $args, $instance ) {
+// 		get_template_part( 'featured-services', get_post_format() );
+// 	}
+//
+// 	/**
+// 	 * Back-end widget form.
+// 	 *
+// 	 * @see WP_Widget::form()
+// 	 *
+// 	 * @param array $instance Previously saved values from database.
+// 	 */
+// 	public function form( $instance ) {
+// 		$title = "Sidebar Featured Services";
+// 		<p>
+// 		  The GeoPlatform theme Featured Services widget for the sidebar.
+// 		</p>
+// 	}
+//
+// 	/**
+// 	 * Sanitize widget form values as they are saved.
+// 	 *
+// 	 * @see WP_Widget::update()
+// 	 *
+// 	 * @param array $new_instance Values just sent to be saved.
+// 	 * @param array $old_instance Previously saved values from database.
+// 	 *
+// 	 * @return array Updated safe values to be saved.
+// 	 */
+// 	public function update( $new_instance, $old_instance ) {}
+// }
 
 
 /**
@@ -246,7 +244,7 @@ class Geopportal_Contact_Widget extends WP_Widget {
  */
 function geopportal_register_sidebar_widgets() {
     register_widget( 'Geopportal_Account_Widget' );
-		register_widget( 'Geopportal_Featured_Sidebar_Widget' );
+		// register_widget( 'Geopportal_Featured_Sidebar_Widget' );
 		register_widget( 'Geopportal_Contact_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_sidebar_widgets' );
@@ -478,7 +476,7 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 		$title = "GeoPlatform Map Gallery";
 		?>
 		<p>
-		  The GeoPlatform theme Map Gallery widget.
+		  The content of the GeoPlatform theme Map Gallery widget is controlled under Customization -> Map Gallery. There are no controls for it here.
 		</p>
 		<?php
 	}
@@ -486,18 +484,19 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {}
 }
 
-
+// Includes complex widgets which regester themselves.
 get_template_part( 'apps-and-services', get_post_format() );
+get_template_part( 'featured-services', get_post_format() );
 
 /**
- * Registers front page widgets.
+ * Registers simpler widgets.
  */
 function geopportal_register_portal_widgets() {
     register_widget( 'Geopportal_MainPage_Widget' );
 		register_widget( 'Geopportal_GPSearch_Widget' );
 		register_widget( 'Geopportal_Cornerstones_Widget' );
 		// register_widget( 'Geopportal_Services_Widget' );
-		register_widget( 'Geopportal_Featured_Widget' );
+		// register_widget( 'Geopportal_Featured_Widget' );
 		register_widget( 'Geopportal_Front_Account_Widget' );
 		register_widget( 'Geopportal_Gallery_Widget' );
 }
