@@ -264,31 +264,29 @@ class Geopportal_GPSearch_Widget extends WP_Widget {
 /**
  * Adds cornerstones front-page widget.
  */
-class Geopportal_Cornerstones_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_cornerstones_widget', // Base ID
-			esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-    get_template_part( 'cornerstones', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "GeoPlatform Cornerstones";
-		?>
-		<p>
-		  The GeoPlatform theme Cornerstones widget.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
+// class Geopportal_Cornerstones_Widget extends WP_Widget {
+//
+// 	function __construct() {
+// 		parent::__construct(
+// 			'geopportal_cornerstones_widget', // Base ID
+// 			esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), // Name
+// 			array( 'description' => esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), ) // Args
+// 		);
+// 	}
+//
+// 	public function widget( $args, $instance ) {
+//     get_template_part( 'cornerstones', get_post_format() );
+// 	}
+//
+// 	public function form( $instance ) {
+// 		$title = "GeoPlatform Cornerstones";
+// 		<p>
+// 		  The GeoPlatform theme Cornerstones widget.
+// 		</p>
+// 	}
+//
+// 	public function update( $new_instance, $old_instance ) {}
+// }
 
 
 /**
@@ -416,6 +414,7 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 get_template_part( 'apps-and-services', get_post_format() );
 get_template_part( 'featured-services', get_post_format() );
 get_template_part( 'main-page', get_post_format() );
+get_template_part( 'cornerstones', get_post_format() );
 
 /**
  * Registers simpler widgets.
@@ -426,7 +425,7 @@ function geopportal_register_portal_widgets() {
 
   // register_widget( 'Geopportal_MainPage_Widget' );
 	register_widget( 'Geopportal_GPSearch_Widget' );
-	register_widget( 'Geopportal_Cornerstones_Widget' );
+	// register_widget( 'Geopportal_Cornerstones_Widget' );
 	// register_widget( 'Geopportal_Services_Widget' );
 	register_widget( 'Geopportal_Featured_Widget' );
 	register_widget( 'Geopportal_Front_Account_Widget' );

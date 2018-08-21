@@ -6,7 +6,7 @@ class Geopportal_Services_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_services_widget', // Base ID
 			esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Apps & Services widget, with title, text, and hotlink customization. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Apps & Services widget for the front page, with title, text, and hotlink customization. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
