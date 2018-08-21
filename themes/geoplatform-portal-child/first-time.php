@@ -25,7 +25,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
     if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content']))
       $geopportal_firsttime_disp_out_content = apply_filters('widget_title', $instance['geopportal_firsttime_out_content']);
     else
-      $geopportal_firsttime_disp_out_content = "Sign up to access thousands of datasets uploaded by others and contribute your own data to the world! You can also share your expertise and find experts to help with your geospatial data needs by joining one of our <a href='" . home_url() . "social'>Communities</a>. Submit your metadata to <a href='http://www.data.gov' targetr='_blank'>Data.gov <span class='glyphicon glyphicon-new-window'></span></a> and we’ll add it to GeoPlatform so others can use it.";
+      $geopportal_firsttime_disp_out_content = "Sign up to access thousands of datasets uploaded by others and contribute your own data to the world! You can also share your expertise and find experts to help with your geospatial data needs by joining one of our <a href='" . home_url() . "/social'>Communities</a>. Submit your metadata to <a href='http://www.data.gov' targetr='_blank'>Data.gov <span class='glyphicon glyphicon-new-window'></span></a> and we’ll add it to GeoPlatform so others can use it.";
 		echo $args['before_widget'];
 
     /* This file is for the main page account widget. For the sidebar widget in posts, see account.php.
