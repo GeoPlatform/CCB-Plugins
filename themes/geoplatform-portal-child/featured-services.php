@@ -6,7 +6,7 @@ class Geopportal_Featured_Sidebar_Widget extends WP_Widget {
     parent::__construct(
 			'geopportal_featured_sidebar_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform featured services widget for the sidebar, featuring title and hotlink customization.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true ) // Args
+			array( 'description' => esc_html__( 'GeoPlatform featured services widget for the sidebar.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true ) // Args
 		);
 	}
 

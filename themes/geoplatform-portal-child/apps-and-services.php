@@ -6,7 +6,7 @@ class Geopportal_Services_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_services_widget', // Base ID
 			esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Apps & Services widget for the front page, with title, text, and hotlink customization. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform apps & services widget for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -82,6 +82,14 @@ class Geopportal_Services_Widget extends WP_Widget {
   // The admin side of the widget.
   public function form( $instance ) {
 
+		// Checks if the Content Boxes plugin is installed.
+		$geopportal_apsrv_cb_bool = false;
+		$geopportal_apsrv_cb_message = "Content Blocks plugin not found.";
+		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
+			$geopportal_apsrv_cb_bool = true;
+			$geopportal_apsrv_cb_message = "Click here to edit the content block";
+		}
+
     // Checks for entries in the widget admin boxes and provides defaults if empty.
     $geopportal_apsrv_title = ! empty( $instance['geopportal_apsrv_title'] ) ? $instance['geopportal_apsrv_title'] : 'Apps &amp; Services';
     $geopportal_apsrv_content = ! empty( $instance['geopportal_apsrv_content'] ) ? $instance['geopportal_apsrv_content'] : '';
@@ -89,7 +97,7 @@ class Geopportal_Services_Widget extends WP_Widget {
 		$geopportal_apsrv_button_link = ! empty( $instance['geopportal_apsrv_button_link'] ) ? $instance['geopportal_apsrv_button_link'] : 'https://www.geoplatform.gov/applications-and-services/';
 
     // Sets up the content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_apsrv_content', $instance) && isset($instance['geopportal_apsrv_content']) && !empty($instance['geopportal_apsrv_content'])){
+		if (array_key_exists('geopportal_apsrv_content', $instance) && isset($instance['geopportal_apsrv_content']) && !empty($instance['geopportal_apsrv_content']) && $geopportal_apsrv_cb_bool){
     	$geopportal_apsrv_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apsrv_content' ]);
     	if (is_numeric($geopportal_apsrv_temp_url))
       	$geopportal_apsrv_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apsrv_temp_url . "&action=edit";
@@ -108,7 +116,7 @@ class Geopportal_Services_Widget extends WP_Widget {
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_apsrv_content' ); ?>">Content Block Shortcode:</label><br>
       <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_apsrv_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_apsrv_content' ); ?>" value="<?php echo esc_attr($geopportal_apsrv_content); ?>" />
-      <a href="<?php echo esc_url($geopportal_apsrv_url); ?>" target="_blank">Click here to edit the content block</a><br>
+      <a href="<?php echo esc_url($geopportal_apsrv_url); ?>" target="_blank"><?php _e($geopportal_apsrv_cb_message, 'geoplatform-ccb') ?></a><br>
     </p>
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_apsrv_button_text' ); ?>">Button Text:</label>
@@ -130,8 +138,13 @@ class Geopportal_Services_Widget extends WP_Widget {
 		$instance[ 'geopportal_apsrv_button_link' ] = strip_tags( $new_instance[ 'geopportal_apsrv_button_link' ] );
     $instance[ 'geopportal_apsrv_url' ] = strip_tags( $new_instance[ 'geopportal_apsrv_url' ] );
 
+		// Checks if the Content Boxes plugin is installed.
+		$geopportal_apsrv_cb_bool = false;
+		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
+			$geopportal_apsrv_cb_bool = true;
+
     // Validity check for the content box URL.
-		if (array_key_exists('geopportal_apsrv_content', $instance) && isset($instance['geopportal_apsrv_content']) && !empty($instance['geopportal_apsrv_content'])){
+		if (array_key_exists('geopportal_apsrv_content', $instance) && isset($instance['geopportal_apsrv_content']) && !empty($instance['geopportal_apsrv_content']) && $geopportal_apsrv_cb_bool){
     	$geopportal_apsrv_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apsrv_content' ]);
     	if (is_numeric($geopportal_apsrv_temp_url))
       	$geopportal_apsrv_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apsrv_temp_url . "&action=edit";

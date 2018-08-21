@@ -6,7 +6,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
 	   parent::__construct(
   		'geopportal_front_account_widget', // Base ID
   		esc_html__( 'GeoPlatform Account', 'geoplatform-ccb' ), // Name
-  		array( 'description' => esc_html__( 'GeoPlatform Account widget for the front page, providing a reactive user account interface.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true ) // Args
+  		array( 'description' => esc_html__( 'GeoPlatform account widget for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true ) // Args
   	);
   }
 
@@ -183,13 +183,21 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
   // admin side of the widget
 	public function form( $instance ) {
 
+		// Checks if the Content Boxes plugin is installed.
+		$geopportal_firsttime_cb_bool = false;
+		$geopportal_firsttime_cb_message = "Content Blocks plugin not found.";
+		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
+			$geopportal_firsttime_cb_bool = true;
+			$geopportal_firsttime_cb_message = "Click here to edit the content block";
+		}
+
     // Top-left input boxes.
 		$geopportal_firsttime_in_title = ! empty( $instance['geopportal_firsttime_in_title'] ) ? $instance['geopportal_firsttime_in_title'] : 'My Account';
 		$geopportal_firsttime_out_title = ! empty( $instance['geopportal_firsttime_out_title'] ) ? $instance['geopportal_firsttime_out_title'] : 'First Time Here?';
     $geopportal_firsttime_out_content = ! empty( $instance['geopportal_firsttime_out_content'] ) ? $instance['geopportal_firsttime_out_content'] : '';
 
 		// Sets up the top-left content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content'])){
+		if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content']) && $geopportal_firsttime_cb_bool){
     	$geopportal_firsttime_out_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_firsttime_out_content' ]);
     	if (is_numeric($geopportal_firsttime_out_temp_url))
       	$geopportal_firsttime_out_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_firsttime_out_temp_url . "&action=edit";
@@ -212,7 +220,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_firsttime_out_content' ); ?>">Logged-Out Content Block Shortcode:</label><br>
       <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_firsttime_out_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_firsttime_out_content' ); ?>" value="<?php echo esc_attr($geopportal_firsttime_out_content); ?>" />
-      <a href="<?php echo esc_url($geopportal_firsttime_out_url); ?>" target="_blank">Click here to edit the content block</a><br>
+      <a href="<?php echo esc_url($geopportal_firsttime_out_url); ?>" target="_blank"><?php _e($geopportal_firsttime_cb_message, 'geoplatform-ccb') ?></a><br>
     </p>
     <?php
 	}
@@ -223,8 +231,13 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
 	  $instance[ 'geopportal_firsttime_out_title' ] = strip_tags( $new_instance[ 'geopportal_firsttime_out_title' ] );
 	  $instance[ 'geopportal_firsttime_out_content' ] = strip_tags( $new_instance[ 'geopportal_firsttime_out_content' ] );
 
+		// Checks if the Content Boxes plugin is installed.
+		$geopportal_firsttime_cb_bool = false;
+		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
+			$geopportal_firsttime_cb_bool = true;
+
     // Validity check for the content box URL.
-		if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content'])){
+		if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content']) && $geopportal_firsttime_cb_bool){
 	  	$geopportal_firsttime_out_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_firsttime_out_content' ]);
 	  	if (is_numeric($geopportal_firsttime_out_temp_url))
 	    	$geopportal_firsttime_out_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_firsttime_out_temp_url . "&action=edit";

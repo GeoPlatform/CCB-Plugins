@@ -6,7 +6,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_cornerstones_widget', // Base ID
 			esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Cornerstones widget for the front page, with title, text, and hotlink customization. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform cornerstones widget for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -125,13 +125,21 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 	// The admin side of the widget
 	public function form( $instance ) {
 
+		// Checks if the Content Boxes plugin is installed.
+		$geopportal_corn_cb_bool = false;
+		$geopportal_corn_cb_message = "Content Blocks plugin not found.";
+		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
+			$geopportal_corn_cb_bool = true;
+			$geopportal_corn_cb_message = "Click here to edit the content block";
+		}
+
 		// Top-left input boxes.
 		$geopportal_corn_topleft_title = ! empty( $instance['geopportal_corn_topleft_title'] ) ? $instance['geopportal_corn_topleft_title'] : 'GeoPlatform Communities';
 		$geopportal_corn_topleft_link = ! empty( $instance['geopportal_corn_topleft_link'] ) ? $instance['geopportal_corn_topleft_link'] : 'https://www.geoplatform.gov/communities/';
 		$geopportal_corn_topleft_content = ! empty( $instance['geopportal_corn_topleft_content'] ) ? $instance['geopportal_corn_topleft_content'] : '';
 
 		// Sets up the top-left content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_corn_topleft_content', $instance) && isset($instance['geopportal_corn_topleft_content']) && !empty($instance['geopportal_corn_topleft_content'])){
+		if (array_key_exists('geopportal_corn_topleft_content', $instance) && isset($instance['geopportal_corn_topleft_content']) && !empty($instance['geopportal_corn_topleft_content']) && $geopportal_corn_cb_bool){
     	$geopportal_corn_topleft_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_topleft_content' ]);
     	if (is_numeric($geopportal_corn_topleft_temp_url))
       	$geopportal_corn_topleft_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_topleft_temp_url . "&action=edit";
@@ -147,7 +155,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		$geopportal_corn_topright_content = ! empty( $instance['geopportal_corn_topright_content'] ) ? $instance['geopportal_corn_topright_content'] : '';
 
 		// Sets up the top-right content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_corn_topright_content', $instance) && isset($instance['geopportal_corn_topright_content']) && !empty($instance['geopportal_corn_topright_content'])){
+		if (array_key_exists('geopportal_corn_topright_content', $instance) && isset($instance['geopportal_corn_topright_content']) && !empty($instance['geopportal_corn_topright_content']) && $geopportal_corn_cb_bool){
     	$geopportal_corn_topright_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_topright_content' ]);
     	if (is_numeric($geopportal_corn_topright_temp_url))
       	$geopportal_corn_topright_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_topright_temp_url . "&action=edit";
@@ -163,7 +171,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		$geopportal_corn_botleft_content = ! empty( $instance['geopportal_corn_botleft_content'] ) ? $instance['geopportal_corn_botleft_content'] : '';
 
 		// Sets up the bottom-left content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_corn_botleft_content', $instance) && isset($instance['geopportal_corn_botleft_content']) && !empty($instance['geopportal_corn_botleft_content'])){
+		if (array_key_exists('geopportal_corn_botleft_content', $instance) && isset($instance['geopportal_corn_botleft_content']) && !empty($instance['geopportal_corn_botleft_content']) && $geopportal_corn_cb_bool){
     	$geopportal_corn_botleft_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_botleft_content' ]);
     	if (is_numeric($geopportal_corn_botleft_temp_url))
       	$geopportal_corn_botleft_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_botleft_temp_url . "&action=edit";
@@ -179,7 +187,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		$geopportal_corn_botright_content = ! empty( $instance['geopportal_corn_botright_content'] ) ? $instance['geopportal_corn_botright_content'] : '';
 
 		// Sets up the bottom-right content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_corn_botright_content', $instance) && isset($instance['geopportal_corn_botright_content']) && !empty($instance['geopportal_corn_botright_content'])){
+		if (array_key_exists('geopportal_corn_botright_content', $instance) && isset($instance['geopportal_corn_botright_content']) && !empty($instance['geopportal_corn_botright_content']) && $geopportal_corn_cb_bool){
     	$geopportal_corn_botright_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_botright_content' ]);
     	if (is_numeric($geopportal_corn_botright_temp_url))
       	$geopportal_corn_botright_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_botright_temp_url . "&action=edit";
@@ -202,7 +210,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_corn_topleft_content' ); ?>">Top-Left Content Block Shortcode:</label><br>
       <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_corn_topleft_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_corn_topleft_content' ); ?>" value="<?php echo esc_attr($geopportal_corn_topleft_content); ?>" />
-      <a href="<?php echo esc_url($geopportal_corn_topleft_url); ?>" target="_blank">Click here to edit the content block</a><br>
+      <a href="<?php echo esc_url($geopportal_corn_topleft_url); ?>" target="_blank"><?php _e($geopportal_corn_cb_message, 'geoplatform-ccb') ?></a><br>
     </p>
 		<hr>
 		<p>
@@ -216,7 +224,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_corn_topright_content' ); ?>">Top-Right Content Block Shortcode:</label><br>
       <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_corn_topright_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_corn_topright_content' ); ?>" value="<?php echo esc_attr($geopportal_corn_topright_content); ?>" />
-      <a href="<?php echo esc_url($geopportal_corn_topright_url); ?>" target="_blank">Click here to edit the content block</a><br>
+      <a href="<?php echo esc_url($geopportal_corn_topright_url); ?>" target="_blank"><?php _e($geopportal_corn_cb_message, 'geoplatform-ccb') ?></a><br>
     </p>
 		<hr>
 		<p>
@@ -230,7 +238,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_corn_botleft_content' ); ?>">Bottom-Left Content Block Shortcode:</label><br>
       <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_corn_botleft_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_corn_botleft_content' ); ?>" value="<?php echo esc_attr($geopportal_corn_botleft_content); ?>" />
-      <a href="<?php echo esc_url($geopportal_corn_botleft_url); ?>" target="_blank">Click here to edit the content block</a><br>
+      <a href="<?php echo esc_url($geopportal_corn_botleft_url); ?>" target="_blank"><?php _e($geopportal_corn_cb_message, 'geoplatform-ccb') ?></a><br>
     </p>
 		<hr>
 		<p>
@@ -244,7 +252,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_corn_botright_content' ); ?>">Bottom-Right Content Block Shortcode:</label><br>
       <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_corn_botright_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_corn_botright_content' ); ?>" value="<?php echo esc_attr($geopportal_corn_botright_content); ?>" />
-      <a href="<?php echo esc_url($geopportal_corn_botright_url); ?>" target="_blank">Click here to edit the content block</a><br>
+      <a href="<?php echo esc_url($geopportal_corn_botright_url); ?>" target="_blank"><?php _e($geopportal_corn_cb_message, 'geoplatform-ccb') ?></a><br>
     </p>
 
 		<?php
@@ -252,13 +260,19 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
+
+		// Checks if the Content Boxes plugin is installed.
+		$geopportal_corn_cb_bool = false;
+		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
+			$geopportal_corn_cb_bool = true;
+
 		$instance[ 'geopportal_corn_topleft_title' ] = strip_tags( $new_instance[ 'geopportal_corn_topleft_title' ] );
 	  $instance[ 'geopportal_corn_topleft_link' ] = strip_tags( $new_instance[ 'geopportal_corn_topleft_link' ] );
 	  $instance[ 'geopportal_corn_topleft_content' ] = strip_tags( $new_instance[ 'geopportal_corn_topleft_content' ] );
 		$instance[ 'geopportal_corn_topleft_url' ] = strip_tags( $new_instance[ 'geopportal_corn_topleft_url' ] );
 
 	  // Validity check for the content box URL.
-		if (array_key_exists('geopportal_corn_topleft_content', $instance) && isset($instance['geopportal_corn_topleft_content']) && !empty($instance['geopportal_corn_topleft_content'])){
+		if (array_key_exists('geopportal_corn_topleft_content', $instance) && isset($instance['geopportal_corn_topleft_content']) && !empty($instance['geopportal_corn_topleft_content']) && $geopportal_corn_cb_bool){
 	  	$geopportal_corn_topleft_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_topleft_content' ]);
 	  	if (is_numeric($geopportal_corn_topleft_temp_url))
 	    	$geopportal_corn_topleft_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_topleft_temp_url . "&action=edit";
@@ -274,7 +288,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		$instance[ 'geopportal_corn_topright_url' ] = strip_tags( $new_instance[ 'geopportal_corn_topright_url' ] );
 
 	  // Validity check for the content box URL.
-		if (array_key_exists('geopportal_corn_topright_content', $instance) && isset($instance['geopportal_corn_topright_content']) && !empty($instance['geopportal_corn_topright_content'])){
+		if (array_key_exists('geopportal_corn_topright_content', $instance) && isset($instance['geopportal_corn_topright_content']) && !empty($instance['geopportal_corn_topright_content']) && $geopportal_corn_cb_bool){
 	  	$geopportal_corn_topright_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_topright_content' ]);
 	  	if (is_numeric($geopportal_corn_topright_temp_url))
 	    	$geopportal_corn_topright_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_topright_temp_url . "&action=edit";
@@ -290,7 +304,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		$instance[ 'geopportal_corn_botleft_url' ] = strip_tags( $new_instance[ 'geopportal_corn_botleft_url' ] );
 
 	  // Validity check for the content box URL.
-		if (array_key_exists('geopportal_corn_botleft_content', $instance) && isset($instance['geopportal_corn_botleft_content']) && !empty($instance['geopportal_corn_botleft_content'])){
+		if (array_key_exists('geopportal_corn_botleft_content', $instance) && isset($instance['geopportal_corn_botleft_content']) && !empty($instance['geopportal_corn_botleft_content']) && $geopportal_corn_cb_bool){
 	  	$geopportal_corn_botleft_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_botleft_content' ]);
 	  	if (is_numeric($geopportal_corn_botleft_temp_url))
 	    	$geopportal_corn_botleft_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_botleft_temp_url . "&action=edit";
@@ -306,7 +320,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		$instance[ 'geopportal_corn_botright_url' ] = strip_tags( $new_instance[ 'geopportal_corn_botright_url' ] );
 
 	  // Validity check for the content box URL.
-		if (array_key_exists('geopportal_corn_botright_content', $instance) && isset($instance['geopportal_corn_botright_content']) && !empty($instance['geopportal_corn_botright_content'])){
+		if (array_key_exists('geopportal_corn_botright_content', $instance) && isset($instance['geopportal_corn_botright_content']) && !empty($instance['geopportal_corn_botright_content']) && $geopportal_corn_cb_bool){
 	  	$geopportal_corn_botright_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_corn_botright_content' ]);
 	  	if (is_numeric($geopportal_corn_botright_temp_url))
 	    	$geopportal_corn_botright_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_corn_botright_temp_url . "&action=edit";

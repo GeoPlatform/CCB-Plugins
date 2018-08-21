@@ -6,8 +6,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_mainpage_widget', // Base ID
 			esc_html__( 'GeoPlatform Features & Announcements', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Features & Announcements widget for the front page. There will be extensive customization 
-			in a future update, but as of now it only permits title modification', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform features & announcements widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

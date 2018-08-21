@@ -77,7 +77,7 @@ if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
 		array(
 			'id' => 'geoplatform-widgetized-page',
 			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-child' ),
-			'description' => __( 'Widgets that go on the portal front page can be added here', 'geoplatform-portal-child' ),
+			'description' => __( 'Widgets that go on the portal front page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -122,10 +122,9 @@ class Geopportal_Account_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = "Account Management";
 		?>
 		<p>
-		  The GeoPlatform theme Account Management widget for the sidebar. There are no options to customize here.
+		  <?php _e("This is the GeoPlatform theme account management widget for the sidebar. There are no options to customize here.", "geoplatform-ccb"); ?>
 		</p>
 		<?php
 	}
@@ -179,10 +178,9 @@ class Geopportal_Contact_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = "Contact Information";
 		?>
 		<p>
-		  The GeoPlatform theme contact information widget for the sidebar. There are no options to customize here.
+		  <?php _e("This is the GeoPlatform theme contact information widget for the sidebar. There are no options to customize here.", "geoplatform-ccb"); ?>
 		</p>
 		<?php
 	}
@@ -200,35 +198,6 @@ class Geopportal_Contact_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {}
 }
 
-
-/**
- * Adds main-page front-page widget.
- */
-// class Geopportal_MainPage_Widget extends WP_Widget {
-//
-// 	function __construct() {
-// 		parent::__construct(
-// 			'geopportal_mainpage_widget', // Base ID
-// 			esc_html__( 'GeoPlatform Features & Announcements', 'geoplatform-ccb' ), // Name
-// 			array( 'description' => esc_html__( 'GeoPlatform Features & Announcements', 'geoplatform-ccb' ), ) // Args
-// 		);
-// 	}
-//
-// 	public function widget( $args, $instance ) {
-// 		get_template_part( 'main-page', get_post_format() );
-// 	}
-//
-// 	public function form( $instance ) {
-// 		$title = "Features and Announcements";
-// 		<p>
-// 		  The GeoPlatform theme Features and Announcements widget.
-// 		</p>
-// 	}
-//
-// 	public function update( $new_instance, $old_instance ) {}
-// }
-
-
 /**
  * Adds gpsearch front-page widget.
  */
@@ -238,8 +207,7 @@ class Geopportal_GPSearch_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_gpsearch_widget', // Base ID
 			esc_html__( 'GeoPlatform Search', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform search bar widget for the front page. Once added, the search bar will only appear
-			if its associated plugin is installed and activated.', 'geoplatform-ccb' ), ) // Args
+			array( 'description' => esc_html__( 'GeoPlatform search bar widget for the front page. Requires the GeoPlatform Search plugin.', 'geoplatform-ccb' ), ) // Args
 		);
 	}
 
@@ -252,7 +220,7 @@ class Geopportal_GPSearch_Widget extends WP_Widget {
 		$title = "GeoPlatform Search";
 		?>
 		<p>
-		  The GeoPlatform theme Search bar widget. Will only display if the plugin is active. There are no settings involved with this widget.
+		  <?php _e("This is the GeoPlatform theme Search bar widget for the front page. It will only display if the plugin is active. There are no settings involved with this widget.", "geoplatform-ccb"); ?>
 		</p>
 		<?php
 	}
@@ -272,7 +240,7 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_gallery_widget', // Base ID
 			esc_html__( 'GeoPlatform Map Gallery', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Map Gallery', 'geoplatform-ccb' ), ) // Args
+			array( 'description' => esc_html__( 'GeoPlatform map gallery widget for the front page. See content for instructions.', 'geoplatform-ccb' ), ) // Args
 		);
 	}
 
@@ -284,7 +252,7 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 		$title = "GeoPlatform Map Gallery";
 		?>
 		<p>
-		  The GeoPlatform theme Map Gallery widget. Controls for it can be found under Customization -> Map Gallery; there are none here.
+		  <?php _e("This is the GeoPlatform theme map gallery widget for the front page. Controls for its content can be found under Customization -> Map Gallery.", "geoplatform-ccb"); ?>
 		</p>
 		<?php
 	}
