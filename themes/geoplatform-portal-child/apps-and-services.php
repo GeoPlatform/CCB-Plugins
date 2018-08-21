@@ -89,12 +89,16 @@ class Geopportal_Services_Widget extends WP_Widget {
 		$geopportal_apsrv_button_link = ! empty( $instance['geopportal_apsrv_button_link'] ) ? $instance['geopportal_apsrv_button_link'] : 'https://www.geoplatform.gov/applications-and-services/';
 
     // Sets up the content box link, or just a home link if invalid.
-    $geopportal_apsrv_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apsrv_content' ]);
-    if (is_numeric($geopportal_apsrv_temp_url)){
-      $geopportal_apsrv_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apsrv_temp_url . "&action=edit";
-    }
-    else
-      $geopportal_apsrv_url = home_url(); ?>
+		if (array_key_exists('geopportal_apsrv_content', $instance) && isset($instance['geopportal_apsrv_content']) && !empty($instance['geopportal_apsrv_content'])){
+    	$geopportal_apsrv_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apsrv_content' ]);
+    	if (is_numeric($geopportal_apsrv_temp_url))
+      	$geopportal_apsrv_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apsrv_temp_url . "&action=edit";
+    	else
+      	$geopportal_apsrv_url = home_url();
+		}
+		else
+			$geopportal_apsrv_url = home_url();
+		?>
 
 <!-- HTML for the widget control box. -->
     <p>
@@ -127,12 +131,15 @@ class Geopportal_Services_Widget extends WP_Widget {
     $instance[ 'geopportal_apsrv_url' ] = strip_tags( $new_instance[ 'geopportal_apsrv_url' ] );
 
     // Validity check for the content box URL.
-    $geopportal_apsrv_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apsrv_content' ]);
-    if (is_numeric($geopportal_apsrv_temp_url)){
-      $geopportal_apsrv_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apsrv_temp_url . "&action=edit";
-    }
-    else
-      $geopportal_apsrv_url = home_url();
+		if (array_key_exists('geopportal_apsrv_content', $instance) && isset($instance['geopportal_apsrv_content']) && !empty($instance['geopportal_apsrv_content'])){
+    	$geopportal_apsrv_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apsrv_content' ]);
+    	if (is_numeric($geopportal_apsrv_temp_url))
+      	$geopportal_apsrv_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apsrv_temp_url . "&action=edit";
+    	else
+      	$geopportal_apsrv_url = home_url();
+		}
+		else
+			$geopportal_apsrv_url = home_url();
 
     return $instance;
   }
