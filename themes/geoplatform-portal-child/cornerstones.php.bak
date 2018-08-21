@@ -1,31 +1,3 @@
-<?php
-class Geopportal_Cornerstones_Widget extends WP_Widget {
-
-	// Constructor. Simple.
-	function __construct() {
-		parent::__construct(
-			'geopportal_cornerstones_widget', // Base ID
-			esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-    get_template_part( 'cornerstones', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "GeoPlatform Cornerstones";
-		?>
-		<p>
-		  The GeoPlatform theme Cornerstones widget.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-?>
 
 <div class="cornerstones whatsNew section--linked">
     <!-- top directional lines and section heading -->
@@ -108,10 +80,3 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
     </div><!--#footing-->
 
 </div><!--#cornerstones section-linked-->
-
-
-// Registers and enqueues the widget.
-function geopportal_register_portal_cornerstones_widget() {
-		register_widget( 'Geopportal_Cornerstones_Widget' );
-}
-add_action( 'widgets_init', 'geopportal_register_portal_cornerstones_widget' );
