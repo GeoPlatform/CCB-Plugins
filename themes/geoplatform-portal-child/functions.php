@@ -261,122 +261,6 @@ class Geopportal_GPSearch_Widget extends WP_Widget {
 }
 
 
-/**
- * Adds cornerstones front-page widget.
- */
-// class Geopportal_Cornerstones_Widget extends WP_Widget {
-//
-// 	function __construct() {
-// 		parent::__construct(
-// 			'geopportal_cornerstones_widget', // Base ID
-// 			esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), // Name
-// 			array( 'description' => esc_html__( 'GeoPlatform Cornerstones', 'geoplatform-ccb' ), ) // Args
-// 		);
-// 	}
-//
-// 	public function widget( $args, $instance ) {
-//     get_template_part( 'cornerstones', get_post_format() );
-// 	}
-//
-// 	public function form( $instance ) {
-// 		$title = "GeoPlatform Cornerstones";
-// 		<p>
-// 		  The GeoPlatform theme Cornerstones widget.
-// 		</p>
-// 	}
-//
-// 	public function update( $new_instance, $old_instance ) {}
-// }
-
-
-/**
- * Adds apps and services front-page widget.
- */
-// class Geopportal_Services_Widget extends WP_Widget {
-//
-// 	function __construct() {
-// 		parent::__construct(
-// 			'geopportal_services_widget', // Base ID
-// 			esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
-// 			array( 'description' => esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), ) // Args
-// 		);
-// 	}
-//
-// 	public function widget( $args, $instance ) {
-// 		echo $args['before_widget'];
-// 		get_template_part( 'apps-and-services', get_post_format() );
-// 		echo $args['after_widget'];
-// 	}
-//
-// 	public function form( $instance ) {
-// 		$title = "Apps & Services";
-//
-// 		<p>
-// 		  The GeoPlatform theme Apps & Services widget.
-// 		</p>
-// 	}
-//
-// 	public function update( $new_instance, $old_instance ) {}
-// }
-
-
-/**
- * Adds featured applications front-page widget.
- */
-// class Geopportal_Featured_Widget extends WP_Widget {
-//
-// 	function __construct() {
-// 		parent::__construct(
-// 			'geopportal_featured_widget', // Base ID
-// 			esc_html__( 'GeoPlatform Featured Applications', 'geoplatform-ccb' ), // Name
-// 			array( 'description' => esc_html__( 'GeoPlatform Featured Applications', 'geoplatform-ccb' ), ) // Args
-// 		);
-// 	}
-//
-// 	public function widget( $args, $instance ) {
-// 		get_template_part( 'featured', get_post_format() );
-// 	}
-//
-// 	public function form( $instance ) {
-// 		$title = "Featured Applications";
-// 		<p>
-// 		  The GeoPlatform theme Featured Applications widget.
-// 		</p>
-// 	}
-//
-// 	public function update( $new_instance, $old_instance ) {}
-// }
-
-
-/**
- * Adds account front-page widget.
- */
-class Geopportal_Front_Account_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_front_account_widget', // Base ID
-			esc_html__( 'GeoPlatform Account', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Account', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		get_template_part( 'first-time', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "My Account";
-		?>
-		<p>
-		  The GeoPlatform theme widget for front-page account management.
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
 
 
 /**
@@ -400,7 +284,7 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 		$title = "GeoPlatform Map Gallery";
 		?>
 		<p>
-		  The content of the GeoPlatform theme Map Gallery widget is controlled under Customization -> Map Gallery. There are no controls for it here.
+		  The GeoPlatform theme Map Gallery widget. Controls for it can be found under Customization -> Map Gallery; there are none here.
 		</p>
 		<?php
 	}
@@ -414,7 +298,7 @@ get_template_part( 'featured-services', get_post_format() );
 get_template_part( 'main-page', get_post_format() );
 get_template_part( 'cornerstones', get_post_format() );
 get_template_part( 'featured', get_post_format() );
-
+get_template_part( 'first-time', get_post_format() );
 
 /**
  * Registers simpler widgets.
@@ -422,13 +306,7 @@ get_template_part( 'featured', get_post_format() );
 function geopportal_register_portal_widgets() {
 	register_widget( 'Geopportal_Account_Widget' );
 	register_widget( 'Geopportal_Contact_Widget' );
-
-  // register_widget( 'Geopportal_MainPage_Widget' );
 	register_widget( 'Geopportal_GPSearch_Widget' );
-	// register_widget( 'Geopportal_Cornerstones_Widget' );
-	// register_widget( 'Geopportal_Services_Widget' );
-	// register_widget( 'Geopportal_Featured_Widget' );
-	register_widget( 'Geopportal_Front_Account_Widget' );
 	register_widget( 'Geopportal_Gallery_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
