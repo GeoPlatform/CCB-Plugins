@@ -65,54 +65,54 @@ class Geopportal_Featured_Widget extends WP_Widget {
       <div class="line"></div>
       <h4 class="heading text-centered">
           <div class="line"></div>
-          <div class="title darkened"><?php echo $geopportal_featapp_disp_title ?></div>
+          <div class="title darkened"><?php _e(sanitize_text_field($geopportal_featapp_disp_title), 'geoplatform-ccb') ?></div>
       </h4>
         <div class="row">
           <div class='col-md-3 col-sm-3'>
             <div class="text--primary">
               <h5 style="margin-right:0.85em;">
-                <a href="<?php echo $geopportal_featapp_disp_one_link ?>" target="_blank"><?php echo $geopportal_featapp_disp_one_title ?></a>
+                <a href="<?php echo esc_url($geopportal_featapp_disp_one_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featapp_disp_one_title), 'geoplatform-ccb') ?></a>
               </h5>
             </div><!--#text-primary-->
                 <a class="media embed-responsive embed-responsive-16by9"
-                    href="<?php echo $geopportal_featapp_disp_one_link ?>" target="_blank" title="Open the <?php echo $geopportal_featapp_disp_one_title ?> Application">
-                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_manager.jpg"); ?>" alt="<?php echo $geopportal_featapp_disp_one_title ?>">
+                    href="<?php echo esc_url($geopportal_featapp_disp_one_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featapp_disp_one_title), 'geoplatform-ccb') ?> Application">
+                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_manager.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featapp_disp_one_title), 'geoplatform-ccb') ?>">
                 </a>
           </div><!--#col-md-3 col-sm-3-->
 
           <div class='col-md-3 col-sm-3 '>
             <div class="text--primary">
               <h5 style="margin-right:0.85em;">
-                <a href="<?php echo $geopportal_featapp_disp_two_link ?>" target="_blank"><?php echo $geopportal_featapp_disp_two_title ?></a>
+                <a href="<?php echo esc_url($geopportal_featapp_disp_two_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featapp_disp_one_title), 'geoplatform-ccb') ?></a>
               </h5>
             </div><!--#text-primary-->
                 <a class="media embed-responsive embed-responsive-16by9"
-                    href="<?php echo $geopportal_featapp_disp_two_link ?>" target="_blank" title="Open the <?php echo $geopportal_featapp_disp_two_title ?> Application">
-                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_viewer.jpg"); ?>" alt="<?php echo $geopportal_featapp_disp_two_title ?>">
+                    href="<?php echo esc_url($geopportal_featapp_disp_two_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featapp_disp_one_title), 'geoplatform-ccb') ?> Application">
+                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_viewer.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featapp_disp_one_title), 'geoplatform-ccb') ?>">
                 </a>
           </div><!--#col-md-3 col-sm-3-->
 
           <div class='col-md-3 col-sm-3 '>
             <div class="text--primary">
               <h5 style="margin-right:0.85em;">
-                <a href="<?php echo $geopportal_featapp_disp_three_link ?>" target="_blank"><?php echo $geopportal_featapp_disp_three_title ?></a>
+                <a href="<?php echo esc_url($geopportal_featapp_disp_three_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featapp_disp_three_title), 'geoplatform-ccb') ?></a>
               </h5>
             </div><!--#text-primary-->
                 <a class="media embed-responsive embed-responsive-16by9"
-                    href="<?php echo $geopportal_featapp_disp_three_link ?>" target="_blank" title="Open the <?php echo $geopportal_featapp_disp_three_title ?> Application">
-                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/marketplace_preview.jpg"); ?>" alt="<?php echo $geopportal_featapp_disp_three_title ?>">
+                    href="<?php echo esc_url($geopportal_featapp_disp_three_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featapp_disp_three_title), 'geoplatform-ccb') ?> Application">
+                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/marketplace_preview.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featapp_disp_three_title), 'geoplatform-ccb') ?>">
                 </a>
           </div><!--#col-md-3 col-sm-3-->
 
           <div class='col-md-3 col-sm-3 '>
             <div class="text--primary">
               <h5 style="margin-right:0.85em;">
-                <a href="<?php echo $geopportal_featapp_disp_four_link ?>" target="_blank"><?php echo $geopportal_featapp_disp_four_title ?></a>
+                <a href="<?php echo esc_url($geopportal_featapp_disp_four_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featapp_disp_four_title), 'geoplatform-ccb') ?></a>
               </h5>
             </div><!--#text-primary-->
                 <a class="media embed-responsive embed-responsive-16by9"
-                    href="<?php echo $geopportal_featapp_disp_four_link ?>" target="_blank" title="Open the <?php echo $geopportal_featapp_disp_four_title ?> Application">
-                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/performance_dashboard.jpg"); ?>" alt="<?php echo $geopportal_featapp_disp_four_title ?>">
+                    href="<?php echo esc_url($geopportal_featapp_disp_four_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featapp_disp_four_title), 'geoplatform-ccb') ?> Application">
+                    <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/performance_dashboard.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featapp_disp_four_title), 'geoplatform-ccb') ?>">
                 </a>
             </div><!--#col-md-3 col-sm-3-->
           </div><!--#row-->

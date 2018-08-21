@@ -29,7 +29,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
         <div class="col-lg-10 col-lg-offset-1">
           <h4 class="heading text-centered">
             <div class="title darkened">
-              <?php echo $geopportal_mainpage_disp_title ?>
+              <?php _e(sanitize_text_field($geopportal_mainpage_disp_title), 'geoplatform-ccb') ?>
             </div>
           </h4>
           <div class="row">
@@ -77,7 +77,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_title' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_title ); ?>" />
     </p>
 		<p>
-		  There are numerous changes to this widget planned for a future release, including resource sorting, prioritizing, exclusion and inclusion. For now, an editable title is the only feature.
+		  <?php _e('There are numerous changes to this widget planned for a future release, including resource sorting, prioritizing, exclusion and inclusion. For now, an editable title is the only feature.', 'geoplatform-ccb'); ?>
 		</p>
 		<?php
 	}

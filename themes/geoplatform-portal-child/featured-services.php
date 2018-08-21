@@ -62,52 +62,52 @@ class Geopportal_Featured_Sidebar_Widget extends WP_Widget {
 
     <div class="card">
 
-      <h4 class="card-title"><span class="glyphicon glyphicon-star"></span><?php echo $geopportal_featserve_disp_title ?></h4>
+      <h4 class="card-title"><span class="glyphicon glyphicon-star"></span><?php _e(sanitize_text_field($geopportal_featserve_disp_title), 'geoplatform-ccb') ?></h4>
 
       <div class="gp-ui-card" style="box-shadow:0 1px 3px rgba(0, 0, 0, .25)!important;">
           <a class="media embed-responsive embed-responsive-16by9"
-              href="<?php echo $geopportal_featserve_disp_one_link ?>" target="_blank" title="Open the <?php echo $geopportal_featserve_disp_one_title ?> Application">
-              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_manager.jpg"); ?>" alt="<?php echo $geopportal_featserve_disp_one_title ?>">
+              href="<?php echo esc_url($geopportal_featserve_disp_one_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featserve_disp_one_title), 'geoplatform-ccb') ?> Application">
+              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_manager.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featserve_disp_one_title), 'geoplatform-ccb') ?>">
           </a>
           <div class="gp-ui-card__body">
               <div class="text--primary">
-                  <a href="<?php echo $geopportal_featserve_disp_one_link ?>" target="_blank"><?php echo $geopportal_featserve_disp_one_title ?></a>
+                  <a href="<?php echo esc_url($geopportal_featserve_disp_one_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featserve_disp_one_title), 'geoplatform-ccb') ?></a>
               </div><!--#text-primary-->
           </div><!--#gp-ui-card__body-->
       </div><!--#gp-ui-card-->
 
       <div class="gp-ui-card" style="box-shadow:0 1px 3px rgba(0, 0, 0, .25)!important;">
           <a class="media embed-responsive embed-responsive-16by9"
-              href="<?php echo $geopportal_featserve_disp_two_link ?>" target="_blank" title="Open the <?php echo $geopportal_featserve_disp_two_title ?> Application">
-              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_viewer.jpg"); ?>" alt="<?php echo $geopportal_featserve_disp_two_title ?>">
+              href="<?php echo esc_url($geopportal_featserve_disp_two_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featserve_disp_two_title), 'geoplatform-ccb') ?> Application">
+              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/map_viewer.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featserve_disp_two_title), 'geoplatform-ccb') ?>">
           </a>
           <div class="gp-ui-card__body">
               <div class="text--primary">
-                  <a href="<?php echo $geopportal_featserve_disp_two_link ?>" target="_blank"><?php echo $geopportal_featserve_disp_two_title ?></a>
+                  <a href="<?php echo esc_url($geopportal_featserve_disp_two_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featserve_disp_two_title), 'geoplatform-ccb') ?></a>
               </div><!--#text-primary-->
           </div><!--#gp-ui-card__body-->
       </div><!--#gp-ui-card-->
 
       <div class="gp-ui-card" style="box-shadow:0 1px 3px rgba(0, 0, 0, .25)!important;">
           <a class="media embed-responsive embed-responsive-16by9"
-              href="<?php echo $geopportal_featserve_disp_three_link ?>" target="_blank" title="Open the <?php echo $geopportal_featserve_disp_three_title ?> Application">
-              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/marketplace_preview.jpg"); ?>" alt="<?php echo $geopportal_featserve_disp_three_title ?>">
+              href="<?php echo esc_url($geopportal_featserve_disp_three_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featserve_disp_three_title), 'geoplatform-ccb') ?> Application">
+              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/marketplace_preview.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featserve_disp_three_title), 'geoplatform-ccb') ?>">
           </a>
           <div class="gp-ui-card__body">
               <div class="text--primary">
-                  <a href="<?php echo $geopportal_featserve_disp_three_link ?>" target="_blank"><?php echo $geopportal_featserve_disp_three_title ?></a>
+                  <a href="<?php echo esc_url($geopportal_featserve_disp_three_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featserve_disp_three_title), 'geoplatform-ccb') ?></a>
               </div><!--#text-primary-->
           </div><!--#gp-ui-card__body-->
       </div><!--#gp-ui-card-->
 
       <div class="gp-ui-card" style="box-shadow:0 1px 3px rgba(0, 0, 0, .25)!important;">
           <a class="media embed-responsive embed-responsive-16by9"
-              href="<?php echo $geopportal_featserve_disp_four_link ?>" target="_blank" title="Open the <?php echo $geopportal_featserve_disp_four_title ?> Application">
-              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/performance_dashboard.jpg"); ?>" alt="<?php echo $geopportal_featserve_disp_four_title ?>">
+              href="<?php echo esc_url($geopportal_featserve_disp_four_link) ?>" target="_blank" title="Open the <?php _e(sanitize_text_field($geopportal_featserve_disp_four_title), 'geoplatform-ccb') ?> Application">
+              <img class="embed-responsive-item" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/performance_dashboard.jpg"); ?>" alt="<?php _e(sanitize_text_field($geopportal_featserve_disp_four_title), 'geoplatform-ccb') ?>">
           </a>
           <div class="gp-ui-card__body">
               <div class="text--primary">
-                  <a href="<?php echo $geopportal_featserve_disp_four_link ?>" target="_blank"><?php echo $geopportal_featserve_disp_four_title ?></a>
+                  <a href="<?php echo esc_url($geopportal_featserve_disp_four_link) ?>" target="_blank"><?php _e(sanitize_text_field($geopportal_featserve_disp_four_title), 'geoplatform-ccb') ?></a>
               </div><!--#text-primary-->
           </div><!--#gp-ui-card__body-->
       </div><!--#gp-ui-card-->

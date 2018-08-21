@@ -84,11 +84,11 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
                 <img alt="Communicate and Contribute" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/social_md.jpeg"); ?>" class="img--prominent">
               </div><!--#col-xs-12 col-sm-4 col-sm-push-4-->
               <div class="col-xs-12 col-sm-4 col-sm-pull-4">
-                <h5><a href="<?php echo $geopportal_corn_disp_topleft_link ?>" target="_blank"><?php echo $geopportal_corn_disp_topleft_title ?></a></h5>
+                <h5><a href="<?php echo esc_url($geopportal_corn_disp_topleft_link) ?>" target="_blank"><?php echo sanitize_text_field($geopportal_corn_disp_topleft_title) ?></a></h5>
                 <p><?php echo do_shortcode($geopportal_corn_disp_topleft_content) ?></p>
               </div><!--#col-xs-12 col-sm-4 col-sm-pull-4-->
               <div class="col-xs-12 col-sm-4">
-                <h5><a href="<?php echo $geopportal_corn_disp_topright_link ?>" target="_blank"><?php echo $geopportal_corn_disp_topright_title ?></a></h5>
+                <h5><a href="<?php echo esc_url($geopportal_corn_disp_topright_link) ?>" target="_blank"><?php echo sanitize_text_field($geopportal_corn_disp_topright_title) ?></a></h5>
                 <p><?php echo do_shortcode($geopportal_corn_disp_topright_content) ?></p>
             	</div><!--#col-xs-12 col-sm-4-->
             </div><!--#row-->
@@ -100,11 +100,11 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
                 <img alt="Search" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/search_md.jpeg"); ?>" class="img--prominent">
               </div><!--#col-xs-12 col-sm-4 col-sm-push-4-->
               <div class="col-xs-12 col-sm-4 col-sm-pull-4">
-								<h5><a href="<?php echo $geopportal_corn_disp_botleft_link ?>" target="_blank"><?php echo $geopportal_corn_disp_botleft_title ?></a></h5>
+								<h5><a href="<?php echo esc_url($geopportal_corn_disp_botleft_link) ?>" target="_blank"><?php echo sanitize_text_field($geopportal_corn_disp_botleft_title) ?></a></h5>
                 <p><?php echo do_shortcode($geopportal_corn_disp_botleft_content) ?></p>
             	</div><!--#col-xs-12 col-sm-4 col-sm-pull-4-->
               <div class="col-xs-12 col-sm-4">
-								<h5><a href="<?php echo $geopportal_corn_disp_botright_link ?>" target="_blank"><?php echo $geopportal_corn_disp_botright_title ?></a></h5>
+								<h5><a href="<?php echo esc_url($geopportal_corn_disp_botright_link) ?>" target="_blank"><?php echo sanitize_text_field($geopportal_corn_disp_botright_title) ?></a></h5>
                 <p><?php echo do_shortcode($geopportal_corn_disp_botright_content) ?></p>
               </div><!--#col-xs-12 col-sm-4-->
             </div><!--#row-->
@@ -130,7 +130,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		$geopportal_corn_cb_message = "Content Blocks plugin not found.";
 		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
 			$geopportal_corn_cb_bool = true;
-			$geopportal_corn_cb_message = "Click here to edit the content block";
+			$geopportal_corn_cb_message = "Click here to edit this content block";
 		}
 
 		// Top-left input boxes.

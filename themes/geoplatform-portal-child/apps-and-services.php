@@ -46,7 +46,7 @@ class Geopportal_Services_Widget extends WP_Widget {
       <div class="container">
         <h4 class="heading text-centered">
           <div class="line"></div>
-          <div class="title darkened"><?php echo $geopportal_apsrv_disp_title ?></div>
+          <div class="title darkened"><?php echo sanitize_text_field($geopportal_apsrv_disp_title) ?></div>
         </h4>
         <br><br>
         <div class="row">
@@ -55,16 +55,8 @@ class Geopportal_Services_Widget extends WP_Widget {
           </div><!--#col-sm-6-->
           <div class="col-sm-6">
             <?php echo do_shortcode($geopportal_apsrv_disp_content); ?>
-
-            <!-- <p>Web services play a key role in any open platform experience. GeoPlatform.gov provides this experience in two ways:<p>
-            <ul>
-              <li>Application services (tools) that run in your browser, which you can use to perform useful tasks</li>
-              <li>Web services that a developer integrates into their own application, through standards-based application program interfaces (APIs).</li>
-            </ul><br><br>
-            <p>There are many apps and services already available for use and many more to come in the future!</p> -->
-
             <div class="text-centered">
-              <a class="btn btn-info" href="<?php echo $geopportal_apsrv_disp_button_link ?>"><?php echo $geopportal_apsrv_disp_button_text ?></a>
+              <a class="btn btn-info" href="<?php echo esc_url($geopportal_apsrv_disp_button_link) ?>"><?php echo sanitize_text_field($geopportal_apsrv_disp_button_text) ?></a>
             </div><!--#text-centered-->
           </div><!--#col-sm-6-->
         </div><!--#row-->
@@ -87,7 +79,7 @@ class Geopportal_Services_Widget extends WP_Widget {
 		$geopportal_apsrv_cb_message = "Content Blocks plugin not found.";
 		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
 			$geopportal_apsrv_cb_bool = true;
-			$geopportal_apsrv_cb_message = "Click here to edit the content block";
+			$geopportal_apsrv_cb_message = "Click here to edit this content block";
 		}
 
     // Checks for entries in the widget admin boxes and provides defaults if empty.

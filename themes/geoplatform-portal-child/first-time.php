@@ -25,7 +25,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
     if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content']))
       $geopportal_firsttime_disp_out_content = apply_filters('widget_title', $instance['geopportal_firsttime_out_content']);
     else
-      $geopportal_firsttime_disp_out_content = "Sign up to access thousands of datasets uploaded by others and contribute your own data to the world! You can also share your expertise and find experts to help with your geospatial data needs by joining one of our <a href='" . home_url() . "/social'>Communities</a>. Submit your metadata to <a href='http://www.data.gov' targetr='_blank'>Data.gov <span class='glyphicon glyphicon-new-window'></span></a> and we’ll add it to GeoPlatform so others can use it.";
+      $geopportal_firsttime_disp_out_content = "Sign up to access thousands of datasets uploaded by others and contribute your own data to the world! You can also share your expertise and find experts to help with your geospatial data needs by joining one of our <a href='" . home_url() . "/communities/'>Communities</a>. Submit your metadata to <a href='http://www.data.gov' targetr='_blank'>Data.gov <span class='glyphicon glyphicon-new-window'></span></a> and we’ll add it to GeoPlatform so others can use it.";
 		echo $args['before_widget'];
 
     /* This file is for the main page account widget. For the sidebar widget in posts, see account.php.
@@ -44,7 +44,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
             <div class="row">
                 <div class="col-md-8">
 
-                    <h3><?php echo $geopportal_firsttime_disp_out_title ?></h3>
+                    <h3><?php _e(sanitize_text_field($geopportal_firsttime_disp_out_title), 'geoplatform-ccb') ?></h3>
 
                     <picture class="pull-right inline-figure">
                         <source srcset="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/register_sm.jpeg"); ?>" media="(min-width: 768px)">
@@ -87,7 +87,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
       	  <h4 class="heading">
       	      <div class="line"></div>
       	      <div class="line-arrow"></div>
-      	      <div class="title"><?php echo $geopportal_firsttime_disp_in_title ?></div>
+      	      <div class="title"><?php echo sanitize_text_field($geopportal_firsttime_disp_in_title) ?></div>
       	  </h4>
       	  <br>
       	    <div class="row">
@@ -188,7 +188,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
 		$geopportal_firsttime_cb_message = "Content Blocks plugin not found.";
 		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
 			$geopportal_firsttime_cb_bool = true;
-			$geopportal_firsttime_cb_message = "Click here to edit the content block";
+			$geopportal_firsttime_cb_message = "Click here to edit this content block";
 		}
 
     // Top-left input boxes.
