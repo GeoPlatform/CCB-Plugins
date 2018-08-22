@@ -36,7 +36,7 @@ zip -r $name $name
 echo "==========================="
 
 # Push to S3 (cp for single asset)
-aws s3 cp $name.zip s3://geoplatform-cdn/CCB/$type/$name/$version/$name.zip
+aws s3 cp --acl public-read $name.zip s3://geoplatform-cdn/CCB/$type/$name/$version/$name.zip
 echo "==========================="
 
 # Print out full URL to resource
