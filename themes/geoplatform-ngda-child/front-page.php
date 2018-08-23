@@ -13,13 +13,8 @@
   }
   else {
     get_template_part( 'ngda_main-page', get_post_format() );
-    get_template_part( 'featured-posts', get_post_format() );    
+    get_template_part( 'featured-posts', get_post_format() );
   }
-
-
-
-
-
 
   $geopccb_customizerLink = get_theme_mod('map_gallery_link_box_setting', $geopccb_theme_options['map_gallery_link_box_setting']);
   if($geopccb_customizerLink){

@@ -29,7 +29,11 @@
               <div class="services">
                 <div class="col-md-6 col-lg-4 col-sm-12">
                   <figure class="snip1174 green col-md-4">
-                    <img src="<?php the_post_thumbnail_url();?>" class="centered" alt="<?php the_title(); ?>" />
+                    <?php if (has_post_thumbnail($post->ID)){?>
+                      <img src="<?php the_post_thumbnail_url();?>" class="centered" alt="<?php the_title(); ?>" />
+                    <?php } else { ?>
+                      <img src="<?php echo get_stylesheet_directory_uri() . '/pixel.png' ?>" class="centered" alt="<?php the_title(); ?>" />
+                    <?php }?>
                     <figcaption>
                       <h2><?php the_title(); ?></h2>
                       <h4><?php echo get_post_meta($post->ID, 'custom_wysiwyg', true); ?></h4>
