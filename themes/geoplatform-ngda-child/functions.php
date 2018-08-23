@@ -41,8 +41,8 @@ function geop_ngda_customize_register( $wp_customize )
 {
 					//Community Info section, settings, and controls
 				$wp_customize->add_section( 'community_info_section' , array(
-						'title'    => __( 'Community Info Sidebar', 'geoplatform-ngda' ),
-						'priority' => 70
+						'title'    => __( 'Community Info Sidebar', 'geoplatform-ccb' ),
+						'priority' => 65
 				) );
 						$wp_customize->add_setting( 'Community_Name_box' , array(
 								'default'   => 'Insert Community Name here',
@@ -110,6 +110,29 @@ function geop_ngda_customize_register( $wp_customize )
 								'type' => 'text',
 								'priority' => 60
 							) );
+
+
+
+							//NGDA/NCC visual format toggle section, settings, and controls
+							//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+							$wp_customize->add_section( 'ngda_format' , array(
+									'title'    => __( 'NGDA Format', 'geoplatform-ccb' ),
+									'priority' => 66
+							) );
+
+							$wp_customize->add_setting('ngda_appearance',array(
+					        'default' => 'ngda',
+					  	));
+
+							$wp_customize->add_control('ngda_appearance',array(
+					        'type' => 'radio',
+					        'label' => 'Choose the display format',
+					        'section' => 'ngda_format',
+					        'choices' => array(
+					            'ngda' => __('NGDA', 'geoplatform-ccb'),
+					            'ncc' => __('NCC',  'geoplatform-ccb')
+										),
+							));
 
 
 }
