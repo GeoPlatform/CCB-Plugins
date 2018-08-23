@@ -112,6 +112,11 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
 
+= 3.1.4 =
+* Released August 23, 2018
+
+- Various tweaks and bug fixes.
+
 = 3.1.3 =
 * Released August 2, 2018
 
