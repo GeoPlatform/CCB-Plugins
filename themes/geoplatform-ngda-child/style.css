@@ -84,3 +84,110 @@ limitations under the License.
     background-color: rgba(255, 255, 255, 0.2)!important;
     text-decoration: none
 }
+
+/*--------------------------------------------------------------
+#NCC-Main-page styling
+/*From https://bootsnipp.com/snippets/E701l*/
+--------------------------------------------------------------*/
+
+.services{
+    margin: 20px auto;
+    }
+figure.snip1174 {
+  color: #fff;
+  position: relative;
+  float: left;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  text-align: left;
+  margin: 10px;
+  width: 90%;
+  border-radius: 0px;
+  height:20em;
+}
+figure.snip1174 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+}
+figure.snip1174 img {
+  max-width: 100%;
+  -webkit-transform: scale(1.0);
+  transform: scale(1.0);
+  vertical-align: top;
+  opacity: 0.7;
+  padding: 3em;
+  background: white;
+  height: 100%;
+  width: 35%;
+  object-fit: contain;
+}
+figure.snip1174 figcaption {
+  position: absolute;
+  padding: 40px 25px;
+  top: 0;
+  right: 0;
+  text-align:right;
+  margin-left: 40%;
+}
+figure.snip1174 h2,
+figure.snip1174 p {
+  margin: 0;
+  padding: 0;
+}
+figure.snip1174 h2 {
+  margin-bottom: 10px;
+  display: inline-block;
+  font-weight: 100;
+  font-size: 1.8em;
+}
+figure.snip1174 p {
+  font-weight: 300;
+  margin-bottom: 20px;
+  line-height: 1.4em;
+}
+figure.snip1174 a {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #ffffff;
+  text-decoration: none;
+  color: #ffffff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  -webkit-transform: translateY(50%);
+  transform: translateY(50%);
+  opacity: 0;
+}
+figure.snip1174 a:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+figure.snip1174.blue {
+  background-color: #20638f;
+}
+figure.snip1174.yellow {
+  background-color: #c87f0a;
+}
+figure.snip1174.green {
+  background-color: #135521;
+}
+figure.snip1174.navy {
+  background-color: #222f3d;
+}
+figure.snip1174.red {
+  background-color: #962d22;
+}
+figure.snip1174:hover img,
+figure.snip1174.hover img {
+  opacity: 0;
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+figure.snip1174:hover a,
+figure.snip1174.hover a {
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  opacity: 1;
+}

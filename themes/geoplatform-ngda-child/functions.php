@@ -122,6 +122,7 @@ function geop_ngda_customize_register( $wp_customize )
 
 							$wp_customize->add_setting('ngda_appearance',array(
 					        'default' => 'ngda',
+									'sanitize_callback' => 'geop_ngda_sanitize_format'
 					  	));
 
 							$wp_customize->add_control('ngda_appearance',array(
@@ -309,6 +310,21 @@ function save_extra_category_fileds( $term_id ) {
 if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
+
+/**
+ * Sanitization callback functions for theme check
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+function geop_ngda_sanitize_format( $geop_ngda_value ) {
+	if ( ! in_array( $geop_ngda_value, array( 'ngda', 'ncc' ) ) )
+  	$geop_ngda_value = 'ngda';
+	return $geop_ngda_value;
+}
+
+
 
 /**
  * CDN Distribution handler

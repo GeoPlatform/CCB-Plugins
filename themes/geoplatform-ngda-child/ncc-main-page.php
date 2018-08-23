@@ -37,51 +37,18 @@
                     </figcaption>
                   </figure>
                 </div>
-              </div>
-      <?php }
+              </div> <?php
+            }
             /* Restore original Post Data */
             wp_reset_postdata();
-          } else {
-            // no posts found
-          } ?>
-
-          <!-- <div class="col-sm-6 col-md-6 col-lg-3 col-xlg-3">
-          <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
-
-                  <?php echo sprintf( esc_html__( '%s', 'textdomain' ), $category_link ); ?>
-
-               </a>
-
+            } ?>
           <br style="clear: both;">
-
-
-</div>
-</div> -->
-<!-- <?php// } ?> -->
-
-              </div>
-
-
-
-          <!-- </div> -->
-
-          <div class="card-footer card-footer-right"><!--<a class="btn btn-accent" title="A-16 NDGA Portfolio" href="http://www.fgdc.gov/initiatives/portfolio-management" target="_blank">
-          Learn More</a>--></div>
-          </div>
-          </div>
-
         </div>
-        <br>
-
-        <div class="footing">
-                <div class="line-cap"></div>
-                <div class="line"></div>
-            </div>
-
+      </div>
+      <div class="footing">
+        <div class="line-cap"></div>
+        <div class="line"></div>
+      </div>
     </div>
-
-</div>
-
-</div>
-
+  </div>
 </div>
