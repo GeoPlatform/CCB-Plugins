@@ -7,8 +7,8 @@
   get_template_part( 'mega-menu', get_post_format() );
   get_template_part( 'gp_intro', get_post_format() );
 
-  $geopccb_display_format = get_theme_mod('ngda_appearance', 'ngda');
-  if ($geopccb_display_format == 'ncc'){
+  $geopngda_display_format = get_theme_mod('ngda_appearance', 'ngda');
+  if ($geopngda_display_format == 'ncc'){
     get_template_part( 'ncc-main-page', get_post_format() );
   }
   else {

@@ -49,8 +49,39 @@
                   'paged'     => $geopccb_paged,
                   'offset'    => $geopccb_paged_offset
               ) );
+
+              // Checks the theme sorting setting and switches be default date or the custom method.
+              $geopccb_categories_trimmed = array();
+              $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
+              if ($geopccb_featured_sort_format == 'date'){
+                $geopccb_categories_trimmed = $geopccb_categories;
+              }
+              else {
+                // Removes categories to be excluded from the featured output array.
+                foreach($geopccb_categories as $geopccb_category){
+                  if (get_term_meta($geopccb_category->cat_ID, 'cat_priority', true) > 0)
+                    array_push($geopccb_categories_trimmed, $geopccb_category);
+                }
+
+                // Bubble sorts the remaining array by cat_priority value.
+                $geopccb_categories_size = count($geopccb_categories_trimmed)-1;
+                for ($i = 0; $i < $geopccb_categories_size; $i++) {
+                  for ($j = 0; $j < $geopccb_categories_size - $i; $j++) {
+                    $k = $j + 1;
+                    $geopccb_test_left = get_term_meta($geopccb_categories_trimmed[$j]->cat_ID, 'cat_priority', true);
+                    $geopccb_test_right = get_term_meta($geopccb_categories_trimmed[$k]->cat_ID, 'cat_priority', true);
+                    if ($geopccb_test_left > $geopccb_test_right) {
+                      // Swap elements at indices: $j, $k
+                      list($geopccb_categories_trimmed[$j], $geopccb_categories_trimmed[$k]) = array($geopccb_categories_trimmed[$k], $geopccb_categories_trimmed[$j]);
+                    }
+                  }
+                }
+              }
+
+
+
               //List categories and descriptions
-              foreach( $geopccb_categories as $geopccb_category ) {
+              foreach( $geopccb_categories_trimmed as $geopccb_category ) {
                     if (get_term_meta($geopccb_category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull
                       $geopccb_class_category_image = get_term_meta($geopccb_category->cat_ID, 'category-image-id', true); //Get that ID
                       $geopccb_category_image = wp_get_attachment_image_src($geopccb_class_category_image, 'full')[0]; //get and set the URL

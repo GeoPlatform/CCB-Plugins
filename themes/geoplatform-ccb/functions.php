@@ -1253,12 +1253,16 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 */
 if ( ! function_exists ( 'geop_ccb_category_mod_interface' ) ){
   function geop_ccb_category_mod_interface( $tag ){
-    $cat_title = get_term_meta( $tag->term_id, '_pagetitle', true ); ?>
+    //$cat_vis = get_term_meta( $tag->term_id, 'cat_visible', true );
+    $cat_pri = get_term_meta( $tag->term_id, 'cat_priority', true ); ?>
     <tr class='form-field'>
-      <th scope='row'><label for='cat_page_title'><?php _e('Category Order Priority', 'geoplatform-ccb'); ?></label></th>
+      <th scope='row'><label for='cat_page_visible'><?php _e('Category Display Order', 'geoplatform-ccb'); ?></label></th>
       <td>
-        <input type='text' name='cat_title' id='cat_title' value='<?php echo $cat_title ?>'>
-        <p class='description'><?php _e('Title for the Category ', 'geoplatform-ccb'); ?></p>
+        <!-- <label class='description'><?php _e('Visible?&nbsp', 'geoplatform-ccb'); ?></label>
+        <input type='checkbox' name='cat_vis' id='cat_vis' value='<?php echo $cat_vis ?>'> -->
+        <!-- <label class='description'><?php _e('Priority value', 'geoplatform-ccb'); ?></label> -->
+        <input type='number' name='cat_pri' id='cat_pri' value='<?php echo $cat_pri ?>' style='width:30%;'>
+        <p class='description'><?php _e('Categories are displayed from lowest value to highest.<br>Set to a negative number or zero to make it not appear.', 'geoplatform-ccb'); ?></p>
       </td>
     </tr> <?php
   }
@@ -1267,8 +1271,10 @@ if ( ! function_exists ( 'geop_ccb_category_mod_interface' ) ){
 
 if ( ! function_exists ( 'geop_ccb_category_mod_update' ) ){
   function geop_ccb_category_mod_update() {
-    if ( isset( $_POST['cat_title'] ) )
-      update_term_meta( $_POST['tag_ID'], '_pagetitle', $_POST['cat_title'] );
+//    if ( isset( $_POST['cat_vis'] ) )
+//    update_term_meta( $_POST['tag_ID'], 'cat_visible', $_POST['cat_vis'] );
+    if ( isset( $_POST['cat_pri'] ) )
+      update_term_meta( $_POST['tag_ID'], 'cat_priority', $_POST['cat_pri'] );
   }
   add_action ( 'edited_category', 'geop_ccb_category_mod_update');
 }
@@ -1288,6 +1294,9 @@ if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
   function geopccb_category_column_filter_two( $geopccb_columns ) {
     $geopccb_new_columns = array();
     $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    $geopccb_new_columns['posts'] = $geopccb_columns['posts'];
+    unset( $geopccb_columns['posts'] );
+
     return array_merge( $geopccb_columns, $geopccb_new_columns );
   }
 }
@@ -1306,15 +1315,61 @@ if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
  */
 if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
   function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {
-    $geopccb_class_category_priority = get_term_meta($geopccb_id, '_pagetitle', true);//Get the image ID
+    $geopccb_class_category_visibility = get_term_meta($geopccb_id, 'cat_visible', true);
+    $geopccb_class_category_priority = get_term_meta($geopccb_id, 'cat_priority', true);
       if ( $geopccb_column == 'priority' ){
-        $geopccb_temp_img = $geopccb_class_category_priority;
-        if (!$geopccb_temp_img)
-          $geopccb_temp_img = "N/A";
-        $geopccb_columns = '<p>' . $geopccb_temp_img . '</p>';
+        $geopccb_vis_check = $geopccb_class_category_visibility;
+        $geopccb_pri = $geopccb_class_category_priority;
+        if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+          $geopccb_pri = "N/A";
+        $geopccb_columns = '<p>' . $geopccb_pri . '</p>';
       }
     return $geopccb_columns;
   }
+}
+
+//---------------------------------------
+//Supporting Theme Customizer editing
+//https://codex.wordpress.org/Theme_Customization_API
+//--------------------------------------
+function geop_ccb_sorting_register( $wp_customize ){
+							//Featured Image by date/custom visual format toggle section, settings, and controls
+							//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+							$wp_customize->add_section( 'featured_format' , array(
+									'title'    => __( 'Featured Sorting', 'geoplatform-ccb' ),
+									'priority' => 40
+							) );
+
+							$wp_customize->add_setting('featured_appearance',array(
+					        'default' => 'date',
+									'sanitize_callback' => 'geop_ccb_sanitize_feature_sort_format'
+					  	));
+
+							$wp_customize->add_control('featured_appearance',array(
+					        'type' => 'radio',
+					        'label' => 'Choose the sorting method',
+					        'section' => 'featured_format',
+                  'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+					        'choices' => array(
+					            'custom' => __('Custom', 'geoplatform-ccb'),
+					            'date' => __('Date',  'geoplatform-ccb')
+										),
+							));
+
+}
+add_action( 'customize_register', 'geop_ccb_sorting_register');
+
+/**
+ * Sanitization callback functions for sort check
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+function geop_ccb_sanitize_feature_sort_format( $geop_ccb_value ) {
+	if ( ! in_array( $geop_ccb_value, array( 'custom', 'date' ) ) )
+  	$geop_ccb_value = 'date';
+	return $geop_ccb_value;
 }
 
 /**

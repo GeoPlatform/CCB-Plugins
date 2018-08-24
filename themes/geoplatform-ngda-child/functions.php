@@ -129,6 +129,7 @@ function geop_ngda_customize_register( $wp_customize )
 					        'type' => 'radio',
 					        'label' => 'Choose the display format',
 					        'section' => 'ngda_format',
+									'description' => 'Use NGDA for the default NGDA appearnce, or NCC for the NCC web page appearance.',
 					        'choices' => array(
 					            'ngda' => __('NGDA', 'geoplatform-ccb'),
 					            'ncc' => __('NCC',  'geoplatform-ccb')
