@@ -6,16 +6,13 @@
  *
  * @since 3.0.0
  */
-// $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_array[$x]);
-// echo $geopportal_mainpage_disp_array[$x];
+// $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_array[$geopportal_counter]);
+// echo $geopportal_mainpage_disp_array[$geopportal_counter];
 // echo "  ";
 // echo get_the_title($geopportal_mainpage_feat_page);
 // echo "<br>"
 
-$geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_post_array[$x], OBJECT, 'post');
-echo $geopportal_mainpage_disp_post_array[$x] . " ";
-echo apply_filters('the_excerpt', get_post_field('post_excerpt', $geopportal_mainpage_feat_page->ID)) . " ";
-echo "<br>"
+$geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_post_array[$geopportal_counter], OBJECT, 'post');
 ?>
 
 <div class="col-sm-6 col-md-4">
@@ -31,7 +28,7 @@ echo "<br>"
         <div class="text--primary"><?php echo get_the_title($geopportal_mainpage_feat_page); ?></div>
         <div class="text--secondary"></div>
         <div class="text--supporting">
-            <?php echo do_shortcode($geopportal_mainpage_disp_content_array[$x]); ?>
+            <?php echo do_shortcode($geopportal_mainpage_disp_content_array[$geopportal_counter]); ?>
         </div>
     </div>
 
@@ -46,7 +43,7 @@ echo "<br>"
           <div class="text--primary"><?php echo get_the_title($geopportal_mainpage_feat_page); ?></div>
           <div class="text--secondary"></div>
           <div class="text--supporting">
-              <?php echo do_shortcode($geopportal_mainpage_disp_content_array[$x]); ?>
+              <?php echo do_shortcode($geopportal_mainpage_disp_content_array[$geopportal_counter]); ?>
           </div>
       </div>
       <div class="gp-ui-card__footer">
