@@ -1332,30 +1332,31 @@ if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
 //Supporting Theme Customizer editing
 //https://codex.wordpress.org/Theme_Customization_API
 //--------------------------------------
-function geop_ccb_sorting_register( $wp_customize ){
-							//Featured Image by date/custom visual format toggle section, settings, and controls
-							//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
-							$wp_customize->add_section( 'featured_format' , array(
-									'title'    => __( 'Featured Sorting', 'geoplatform-ccb' ),
-									'priority' => 40
-							) );
+if ( ! function_exists ( 'geop_ccb_sorting_register' ) ) {
+  function geop_ccb_sorting_register( $wp_customize ){
+		//Featured Image by date/custom visual format toggle section, settings, and controls
+		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+		$wp_customize->add_section( 'featured_format' , array(
+			'title'    => __( 'Featured Sorting', 'geoplatform-ccb' ),
+			'priority' => 40
+		) );
 
-							$wp_customize->add_setting('featured_appearance',array(
-					        'default' => 'date',
-									'sanitize_callback' => 'geop_ccb_sanitize_feature_sort_format'
-					  	));
+	  $wp_customize->add_setting('featured_appearance',array(
+		  'default' => 'date',
+		  'sanitize_callback' => 'geop_ccb_sanitize_feature_sort_format'
+		));
 
-							$wp_customize->add_control('featured_appearance',array(
-					        'type' => 'radio',
-					        'label' => 'Choose the sorting method',
-					        'section' => 'featured_format',
-                  'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
-					        'choices' => array(
-					            'custom' => __('Custom', 'geoplatform-ccb'),
-					            'date' => __('Date',  'geoplatform-ccb')
-										),
-							));
-
+		$wp_customize->add_control('featured_appearance',array(
+		  'type' => 'radio',
+		  'label' => 'Choose the sorting method',
+		  'section' => 'featured_format',
+      'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+			'choices' => array(
+			  'custom' => __('Custom', 'geoplatform-ccb'),
+				'date' => __('Date',  'geoplatform-ccb')
+			),
+		));
+  }
 }
 add_action( 'customize_register', 'geop_ccb_sorting_register');
 

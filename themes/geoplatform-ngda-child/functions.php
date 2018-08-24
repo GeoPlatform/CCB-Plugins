@@ -325,6 +325,12 @@ function geop_ngda_sanitize_format( $geop_ngda_value ) {
 	return $geop_ngda_value;
 }
 
+// Bumping out functions not needed from parent theme.
+function geop_ccb_sorting_register( $wp_customize ){};
+function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
+function geopccb_category_column_filter_two( $geopccb_columns ) {};
+function geop_ccb_category_mod_update() {};
+function geop_ccb_category_mod_interface( $tag ){};
 
 
 /**

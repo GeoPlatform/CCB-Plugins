@@ -480,6 +480,13 @@ if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
 
+// Bumping out functions not needed from parent theme.
+function geop_ccb_sorting_register( $wp_customize ){};
+function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
+function geopccb_category_column_filter_two( $geopccb_columns ) {};
+function geop_ccb_category_mod_update() {};
+function geop_ccb_category_mod_interface( $tag ){};
+
 /**
  * CDN Distribution handler
  *
