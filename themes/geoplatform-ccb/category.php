@@ -47,7 +47,6 @@ get_template_part( 'cat-banner', get_post_format() );
        if ( $geopccb_the_query->have_posts() ) {
          while ( $geopccb_the_query->have_posts() ) {
            $geopccb_the_query->the_post();
-           //echo $geopccb_category;
            get_template_part('cat-body', get_post_format());
          }
        }

@@ -1017,6 +1017,10 @@ class GP_TAX_META {
    add_action( 'admin_footer', array ( $this, 'add_script' ) );
    add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter' );
    add_filter( 'manage_category_custom_column', 'geopccb_category_column_action', 10, 3 );
+   if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
+    add_filter( 'manage_category_custom_column', 'geopccb_category_column_action_two', 10, 3 );
+  if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
+    add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter_two' );
  }
 
 public function load_media() {
@@ -1243,6 +1247,77 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 }
 
 /**
+ * Adds Category priority and display toggle aspects to category.
+ *
+ * @link https://wordpress.stackexchange.com/questions/8736/add-custom-field-to-category
+*/
+if ( ! function_exists ( 'geop_ccb_category_mod_interface' ) ){
+  function geop_ccb_category_mod_interface( $tag ){
+    $cat_title = get_term_meta( $tag->term_id, '_pagetitle', true ); ?>
+    <tr class='form-field'>
+      <th scope='row'><label for='cat_page_title'><?php _e('Category Order Priority', 'geoplatform-ccb'); ?></label></th>
+      <td>
+        <input type='text' name='cat_title' id='cat_title' value='<?php echo $cat_title ?>'>
+        <p class='description'><?php _e('Title for the Category ', 'geoplatform-ccb'); ?></p>
+      </td>
+    </tr> <?php
+  }
+  add_action ( 'edit_category_form_fields', 'geop_ccb_category_mod_interface');
+}
+
+if ( ! function_exists ( 'geop_ccb_category_mod_update' ) ){
+  function geop_ccb_category_mod_update() {
+    if ( isset( $_POST['cat_title'] ) )
+      update_term_meta( $_POST['tag_ID'], '_pagetitle', $_POST['cat_title'] );
+  }
+  add_action ( 'edited_category', 'geop_ccb_category_mod_update');
+}
+
+/**
+ * Priority column added to category admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://wordpress.org/plugins/categories-images/
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
+  function geopccb_category_column_filter_two( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    return array_merge( $geopccb_columns, $geopccb_new_columns );
+  }
+}
+
+/**
+ * Data added to category admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://wordpress.org/plugins/categories-images/
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
+  function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {
+    $geopccb_class_category_priority = get_term_meta($geopccb_id, '_pagetitle', true);//Get the image ID
+      if ( $geopccb_column == 'priority' ){
+        $geopccb_temp_img = $geopccb_class_category_priority;
+        if (!$geopccb_temp_img)
+          $geopccb_temp_img = "N/A";
+        $geopccb_columns = '<p>' . $geopccb_temp_img . '</p>';
+      }
+    return $geopccb_columns;
+  }
+}
+
+/**
  * CDN Distribution handler
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
@@ -1264,13 +1339,13 @@ if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
  *
  * @link https://github.com/voceconnect/multi-post-thumbnails/wiki
  */
- if (class_exists('geop_ccb_MultiPostThumbnails')) {
-     new geop_ccb_MultiPostThumbnails(
-         array(
-             // Replace [YOUR THEME TEXT DOMAIN] below with the text domain of your theme (found in the theme's `style.css`).
-             'label' => __( 'Banner Image', 'geoplatform-ccb'),
-             'id' => 'geop-ccb-banner-image',
-             'post_type' => 'post'
-         )
-     );
- }
+ // if (class_exists('geop_ccb_MultiPostThumbnails')) {
+ //     new geop_ccb_MultiPostThumbnails(
+ //         array(
+ //             // Replace [YOUR THEME TEXT DOMAIN] below with the text domain of your theme (found in the theme's `style.css`).
+ //             'label' => __( 'Banner Image', 'geoplatform-ccb'),
+ //             'id' => 'geop-ccb-banner-image',
+ //             'post_type' => 'post'
+ //         )
+ //     );
+ // }
