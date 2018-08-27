@@ -1253,14 +1253,10 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 */
 if ( ! function_exists ( 'geop_ccb_category_mod_interface' ) ){
   function geop_ccb_category_mod_interface( $tag ){
-    //$cat_vis = get_term_meta( $tag->term_id, 'cat_visible', true );
     $cat_pri = get_term_meta( $tag->term_id, 'cat_priority', true ); ?>
     <tr class='form-field'>
       <th scope='row'><label for='cat_page_visible'><?php _e('Category Display Order', 'geoplatform-ccb'); ?></label></th>
       <td>
-        <!-- <label class='description'><?php _e('Visible?&nbsp', 'geoplatform-ccb'); ?></label>
-        <input type='checkbox' name='cat_vis' id='cat_vis' value='<?php echo $cat_vis ?>'> -->
-        <!-- <label class='description'><?php _e('Priority value', 'geoplatform-ccb'); ?></label> -->
         <input type='number' name='cat_pri' id='cat_pri' value='<?php echo $cat_pri ?>' style='width:30%;'>
         <p class='description'><?php _e('Categories are displayed from lowest value to highest.<br>Set to a negative number or zero to make it not appear.', 'geoplatform-ccb'); ?></p>
       </td>
@@ -1271,8 +1267,6 @@ if ( ! function_exists ( 'geop_ccb_category_mod_interface' ) ){
 
 if ( ! function_exists ( 'geop_ccb_category_mod_update' ) ){
   function geop_ccb_category_mod_update() {
-//    if ( isset( $_POST['cat_vis'] ) )
-//    update_term_meta( $_POST['tag_ID'], 'cat_visible', $_POST['cat_vis'] );
     if ( isset( $_POST['cat_pri'] ) )
       update_term_meta( $_POST['tag_ID'], 'cat_priority', $_POST['cat_pri'] );
   }
@@ -1315,7 +1309,6 @@ if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
  */
 if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
   function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {
-    $geopccb_class_category_visibility = get_term_meta($geopccb_id, 'cat_visible', true);
     $geopccb_class_category_priority = get_term_meta($geopccb_id, 'cat_priority', true);
       if ( $geopccb_column == 'priority' ){
         $geopccb_vis_check = $geopccb_class_category_visibility;
@@ -1329,12 +1322,12 @@ if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
 }
 
 //---------------------------------------
-//Supporting Theme Customizer editing
+//Supporting Sort Toggle between old date system and new custom system.
 //https://codex.wordpress.org/Theme_Customization_API
 //--------------------------------------
 if ( ! function_exists ( 'geop_ccb_sorting_register' ) ) {
   function geop_ccb_sorting_register( $wp_customize ){
-		//Featured Image by date/custom visual format toggle section, settings, and controls
+
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'featured_format' , array(
 			'title'    => __( 'Featured Sorting', 'geoplatform-ccb' ),

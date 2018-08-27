@@ -129,7 +129,7 @@ function geop_ngda_customize_register( $wp_customize )
 					        'type' => 'radio',
 					        'label' => 'Choose the display format',
 					        'section' => 'ngda_format',
-									'description' => 'Use NGDA for the default NGDA appearnce, or NCC for the NCC web page appearance.',
+									'description' => 'Toggle between the default NGDA and specialized NCC section output formats for the Featured section.<br>NGDA permits 6 featured pages and 8 featured posts.<br>NCC permits 6 cards, combining pages and posts.',
 					        'choices' => array(
 					            'ngda' => __('NGDA', 'geoplatform-ccb'),
 					            'ncc' => __('NCC',  'geoplatform-ccb')
@@ -326,11 +326,133 @@ function geop_ngda_sanitize_format( $geop_ngda_value ) {
 }
 
 // Bumping out functions not needed from parent theme.
-function geop_ccb_sorting_register( $wp_customize ){};
 function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
 function geopccb_category_column_filter_two( $geopccb_columns ) {};
 function geop_ccb_category_mod_update() {};
 function geop_ccb_category_mod_interface( $tag ){};
+
+	//---------------------------------------
+	//Supporting Sort Toggle between old date system and new custom system. Overwrites the CCB version.
+	//https://codex.wordpress.org/Theme_Customization_API
+	//--------------------------------------
+function geop_ccb_sorting_register( $wp_customize ){
+
+	//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+	$wp_customize->add_section( 'featured_format' , array(
+		'title'    => __( 'Featured Sorting', 'geoplatform-ccb' ),
+		'priority' => 40
+	) );
+
+  $wp_customize->add_setting('featured_appearance',array(
+	  'default' => 'date',
+	  'sanitize_callback' => 'geop_ccb_sanitize_feature_sort_format'
+	));
+
+	$wp_customize->add_control('featured_appearance',array(
+	  'type' => 'radio',
+	  'label' => 'Choose the sorting method',
+	  'section' => 'featured_format',
+    'description' => 'You can make use of custom sorting from your Page and Post admin pages. Each page or post can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+		'choices' => array(
+		  'custom' => __('Custom', 'geoplatform-ccb'),
+			'date' => __('Date',  'geoplatform-ccb')
+		),
+	));
+}
+add_action( 'customize_register', 'geop_ccb_sorting_register');
+
+
+
+
+
+
+
+
+// register the meta box
+add_action( 'add_meta_boxes', 'geop_ngda_custom_field_post_checkboxes' );
+function geop_ngda_custom_field_post_checkboxes() {
+    add_meta_box(
+        'geop_ngda_sorting_post_id',          // this is HTML id of the box on edit screen
+        'Featured Display Priority',    // title of the box
+        'geop_ngda_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'post',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+}
+
+// display the metabox
+function geop_ngda_custom_field_post_box_content($post) {
+		echo "<input type='number' name='my_plugin_paid_content' id='my_plugin_paid_content' value='" . $post->my_plugin_paid_content . "' style='width:30%;'>";
+ 		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
+
+}
+
+// save data from checkboxes
+add_action( 'save_post', 'geop_ngda_custom_field_post_data' );
+function geop_ngda_custom_field_post_data($post_id) {
+    if ( !isset( $_POST['my_plugin_paid_content'] ) || is_null( $_POST['my_plugin_paid_content'] || empty( $_POST['my_plugin_paid_content'] )))
+      update_post_meta( $post_id, 'my_plugin_paid_content', 0 );
+    else
+  		update_post_meta( $post_id, 'my_plugin_paid_content', $_POST['my_plugin_paid_content'] );
+}
+
+
+
+/**
+ * Priority column added to category admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://wordpress.org/plugins/categories-images/
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+function geopngda_post_column_filter( $geopccb_columns ) {
+  $geopccb_new_columns = array();
+  $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+  $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
+	$geopccb_new_columns['date'] = $geopccb_columns['date'];
+	unset( $geopccb_columns['date'] );
+  unset( $geopccb_columns['comments'] );
+
+  return array_merge( $geopccb_columns, $geopccb_new_columns );
+}
+
+/**
+ * Data added to category admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://wordpress.org/plugins/categories-images/
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+function geopngda_post_column_action( $geopccb_column, $geopccb_id ) {
+    if ( $geopccb_column == 'priority' ){
+			$geopccb_pri = get_post($geopccb_id)->my_plugin_paid_content;
+      if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+        $geopccb_pri = "N/A";
+      echo '<p>' . $geopccb_pri . '</p>';
+    }
+}
+
+
+add_filter('manage_post_posts_columns', 'geopngda_post_column_filter');
+add_action('manage_post_posts_custom_column', 'geopngda_post_column_action', 10, 2);
+
+
+
+
+
+
+
+
 
 
 /**
