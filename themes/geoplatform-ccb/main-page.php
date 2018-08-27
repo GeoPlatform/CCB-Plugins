@@ -78,7 +78,7 @@
                 }
               }
 
-
+              var_dump($geopccb_categories_trimmed);
 
               //List categories and descriptions
               foreach( $geopccb_categories_trimmed as $geopccb_category ) {

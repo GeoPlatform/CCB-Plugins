@@ -352,7 +352,7 @@ function geop_ccb_sorting_register( $wp_customize ){
 	  'type' => 'radio',
 	  'label' => 'Choose the sorting method',
 	  'section' => 'featured_format',
-    'description' => 'You can make use of custom sorting from your Page and Post admin pages. Each page or post can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+    'description' => 'Date sorting displays the six most recent posts and pages within the Front Page category.<br><br>Custom sorting makes use of values you assign your content in the Page and Post admin pages. Each page or post can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
 		'choices' => array(
 		  'custom' => __('Custom', 'geoplatform-ccb'),
 			'date' => __('Date',  'geoplatform-ccb')
