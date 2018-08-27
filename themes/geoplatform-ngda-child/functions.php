@@ -383,7 +383,7 @@ function geop_ngda_custom_field_post_checkboxes() {
 
 // display the metabox
 function geop_ngda_custom_field_post_box_content($post) {
-		echo "<input type='number' name='my_plugin_paid_content' id='my_plugin_paid_content' value='" . $post->my_plugin_paid_content . "' style='width:30%;'>";
+		echo "<input type='number' name='geop_ngda_post_priority' id='geop_ngda_post_priority' value='" . $post->geop_ngda_post_priority . "' style='width:30%;'>";
  		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
 
 }
@@ -391,10 +391,10 @@ function geop_ngda_custom_field_post_box_content($post) {
 // save data from checkboxes
 add_action( 'save_post', 'geop_ngda_custom_field_post_data' );
 function geop_ngda_custom_field_post_data($post_id) {
-    if ( !isset( $_POST['my_plugin_paid_content'] ) || is_null( $_POST['my_plugin_paid_content'] || empty( $_POST['my_plugin_paid_content'] )))
-      update_post_meta( $post_id, 'my_plugin_paid_content', 0 );
+    if ( !isset( $_POST['geop_ngda_post_priority'] ) || is_null( $_POST['geop_ngda_post_priority'] || empty( $_POST['geop_ngda_post_priority'] )))
+      update_post_meta( $post_id, 'geop_ngda_post_priority', 0 );
     else
-  		update_post_meta( $post_id, 'my_plugin_paid_content', $_POST['my_plugin_paid_content'] );
+  		update_post_meta( $post_id, 'geop_ngda_post_priority', $_POST['geop_ngda_post_priority'] );
 }
 
 
@@ -435,7 +435,7 @@ function geopngda_post_column_filter( $geopccb_columns ) {
  */
 function geopngda_post_column_action( $geopccb_column, $geopccb_id ) {
     if ( $geopccb_column == 'priority' ){
-			$geopccb_pri = get_post($geopccb_id)->my_plugin_paid_content;
+			$geopccb_pri = get_post($geopccb_id)->geop_ngda_post_priority;
       if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
         $geopccb_pri = "N/A";
       echo '<p>' . $geopccb_pri . '</p>';
