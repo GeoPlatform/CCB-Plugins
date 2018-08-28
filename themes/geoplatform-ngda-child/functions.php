@@ -366,7 +366,9 @@ add_action( 'customize_register', 'geop_ccb_sorting_register');
 
 
 
-
+/**
+ * Post priority incorporation
+ */
 
 // register the meta box
 add_action( 'add_meta_boxes', 'geop_ngda_custom_field_post_checkboxes' );
@@ -397,14 +399,12 @@ function geop_ngda_custom_field_post_data($post_id) {
   		update_post_meta( $post_id, 'geop_ngda_post_priority', $_POST['geop_ngda_post_priority'] );
 }
 
-
-
 /**
- * Priority column added to category admin.
+ * Priority column added to posts admin.
  *
  * Functionality inspired by categories-images plugin.
  *
- * @link https://wordpress.org/plugins/categories-images/
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
  *
  * @access public
  * @param mixed $columns
@@ -425,7 +425,7 @@ function geopngda_post_column_filter( $geopccb_columns ) {
  * Data added to category admin column, or N/A if not applicable.
  *
  * Functionality inspired by categories-images plugin.
- * @link https://wordpress.org/plugins/categories-images/
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
  *
  * @access public
  * @param mixed $columns
@@ -445,6 +445,96 @@ function geopngda_post_column_action( $geopccb_column, $geopccb_id ) {
 
 add_filter('manage_post_posts_columns', 'geopngda_post_column_filter');
 add_action('manage_post_posts_custom_column', 'geopngda_post_column_action', 10, 2);
+
+
+
+
+
+/**
+ * Page priority incorporation
+ */
+
+// register the meta box
+add_action( 'add_meta_boxes', 'geop_ngda_custom_field_page_checkboxes' );
+function geop_ngda_custom_field_page_checkboxes() {
+    add_meta_box(
+        'geop_ngda_sorting_page_id',          // this is HTML id of the box on edit screen
+        'Featured Display Priority',    // title of the box
+        'geop_ngda_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'page',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+}
+
+// display the metabox
+// function geop_ngda_custom_field_page_box_content($page) {
+// 		echo "<input type='number' name='geop_ngda_page_priority' id='geop_ngda_page_priority' value='" . $page->geop_ngda_page_priority . "' style='width:30%;'>";
+//  		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
+//
+// }
+
+// save data from checkboxes
+// add_action( 'save_post', 'geop_ngda_custom_field_post_data' );
+// function geop_ngda_custom_field_page_data($page_id) {
+//     if ( !isset( $_POST['geop_ngda_page_priority'] ) || is_null( $_POST['geop_ngda_page_priority'] || empty( $_POST['geop_ngda_page_priority'] )))
+//       update_post_meta( $page_id, 'geop_ngda_page_priority', 0 );
+//     else
+//   		update_post_meta( $page_id, 'geop_ngda_page_priority', $_POST['geop_ngda_page_priority'] );
+// }
+
+/**
+ * Priority column added to posts admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+function geopngda_page_column_filter( $geopccb_columns ) {
+  $geopccb_new_columns = array();
+  $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+  $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
+	$geopccb_new_columns['date'] = $geopccb_columns['date'];
+	unset( $geopccb_columns['date'] );
+  unset( $geopccb_columns['comments'] );
+
+  return array_merge( $geopccb_columns, $geopccb_new_columns );
+}
+
+/**
+ * Data added to category admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+function geopngda_page_column_action( $geopccb_column, $geopccb_id ) {
+    if ( $geopccb_column == 'priority' ){
+			$geopccb_pri = get_post($geopccb_id)->geop_ngda_post_priority;
+//			var_dump(get_post($geopccb_id));
+      if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+        $geopccb_pri = "N/A";
+      echo '<p>' . $geopccb_pri . '</p>';
+    }
+}
+
+
+add_filter('manage_pages_columns', 'geopngda_page_column_filter');
+add_action('manage_pages_custom_column', 'geopngda_page_column_action', 10, 2);
+
+
+
+
+
 
 
 
