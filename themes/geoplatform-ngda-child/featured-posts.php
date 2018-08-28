@@ -19,13 +19,21 @@
 
                 // Populates the trimmed posts array the old-fashioned way by date with first 8 results.
                 if ($geopccb_featured_sort_format == 'date'){
-                  $geopngda_posts_final = get_posts( array(
+                  $geopngda_posts = get_posts( array(
                     'post_type' => 'post',
-                    'category_name'=> 'Front Page',
                     'orderby' => 'date',
                     'order' => 'DSC',
-                    'numberposts' => 8
+                    'numberposts' => -1
                   ) );
+
+                  // This list is then filtered for all posts in the Front Page category,
+                  // ending the loop after 8 results.
+                  foreach($geopngda_posts as $geopngda_post){
+                    if (in_category("Front Page", $geopngda_post))
+                      array_push($geopngda_posts_final, $geopngda_post);
+                    if (count($geopngda_posts_final) >= 8)
+                      break;
+                  }
                 }
                 else {
 
