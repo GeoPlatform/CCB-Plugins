@@ -14,7 +14,7 @@
 
           // Sets up ability to read published and private posts.
           $geop_ngda_private_perm = array('publish');
-          if (!current_user_can('read_private_pages'))
+          if (current_user_can('read_private_pages'))
             $geop_ngda_private_perm = array('publish', 'private');
 
           //Grabs the featured_appearance value and declares the trimmed post array.
