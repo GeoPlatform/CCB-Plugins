@@ -76,8 +76,6 @@
             $geopccb_invalid_bool = true;
             $geopccb_error_report = 'This is not a gallery ID. Please check your your input and try again.';
           }
-          //if map gallery env radio is different than current env
-          $geopccb_gallery_link_env = get_theme_mod('map_gallery_env_choice_setting', $geopccb_theme_options['map_gallery_env_choice_setting']);
         }
 
         // Further operations continue only if all validity checks pass.
@@ -86,20 +84,7 @@
             try {
               //set map ID
               $geopccb_map_id = $geopccb_map['asset']['id'];
-              switch ($geopccb_gallery_link_env) {
-                case 'sit':
-                  $geopccb_single_map = wp_remote_get( 'https://sit-ual.geoplatform.us/api/maps/'.$geopccb_map_id.'');
-                  break;
-                case 'stg':
-                  $geopccb_single_map = wp_remote_get( 'https://stg-ual.geoplatform.gov/api/maps/'.$geopccb_map_id.'');
-                  break;
-                case 'prod':
-                  $geopccb_single_map = wp_remote_get( 'https://ual.geoplatform.gov/api/maps/'.$geopccb_map_id . '');
-                  break;
-                default:
-                  $geopccb_single_map = wp_remote_get( $GLOBALS['ual_url'] .'/api/maps/'.$geopccb_map_id.'');
-                  break;
-              }
+              $geopccb_single_map = wp_remote_get( $GLOBALS['geopccb_ual_url'] .'/api/maps/'.$geopccb_map_id.'');
 
               if( is_wp_error( $geopccb_single_map ) ) {
                 return false; // Bail early
@@ -118,22 +103,8 @@
               }
               //for MM maps
               elseif (isset($geopccb_single_result['thumbnail'])) {
-                switch ($geopccb_gallery_link_env) {
-                  case 'sit':
-                    $geopccb_thumbnail = 'https://sit-ual.geoplatform.us/api/maps/'. $geopccb_map_id . "/thumbnail";
-                    break;
-                  case 'stg':
-                    $geopccb_thumbnail = 'https://stg-ual.geoplatform.gov/api/maps/'. $geopccb_map_id . "/thumbnail";
-                    break;
-                  case 'prod':
-                    $geopccb_thumbnail = 'https://ual.geoplatform.gov/api/maps/'. $geopccb_map_id . "/thumbnail";
-                    break;
-                  default:
-                    $geopccb_thumbnail = $GLOBALS['ual_url'] . '/api/maps/' . $geopccb_map_id . "/thumbnail";
-                    break;
-                }
+                $geopccb_thumbnail = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $geopccb_map_id . "/thumbnail";
               }
-
               //if the map doesn't have a thumbnail
               else {
                 $geopccb_thumbnail = __( 'Could not find image.', 'geoplatform-ccb');
@@ -160,20 +131,7 @@
                   <?php  if($geopccb_href){ ?>
                     <a class="embed-responsive embed-responsive-16by9" title="<?php echo esc_html($geopccb_label); ?>" href="<?php echo esc_url($geopccb_href);?>" target="_blank">
                   <?php } else{
-                    switch ($geopccb_gallery_link_env) {
-                      case 'sit':
-                        $geopccb_href = 'https://sit-viewer.geoplatform.us/?id=' . $geopccb_map_id;
-                        break;
-                      case 'stg':
-                        $geopccb_href = 'https://stg-viewer.geoplatform.gov/?id=' . $geopccb_map_id;
-                        break;
-                      case 'prod':
-                        $geopccb_href = 'https://viewer.geoplatform.gov/?id=' . $geopccb_map_id;
-                        break;
-                      default:
-                        $geopccb_href = $GLOBALS['viewer_url'] . '/?id=' . $geopccb_map_id;
-                        break;
-                      }
+                      $geopccb_href = $GLOBALS['geopccb_viewer_url'] . '/?id=' . $geopccb_map_id;
                     ?>
                     <a class="embed-responsive embed-responsive-16by9" title="<?php echo esc_html($geopccb_label); ?>" href=" <?php echo esc_url($geopccb_href);?>" target="_blank">
                     <?php } ?>

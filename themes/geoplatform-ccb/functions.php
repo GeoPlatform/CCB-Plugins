@@ -463,27 +463,6 @@ function geop_ccb_customize_register( $wp_customize ) {
 					'priority' => 10
 				) );
 
-				//Add radio button to choose link style between envs (sit, stg, or prod)
-				$wp_customize->add_setting( 'map_gallery_env_choice_setting' , array(
-						'default'   => $geopccb_theme_options['map_gallery_env_choice_setting'],
-						'transport' => 'refresh',
-						'sanitize_callback' => 'geop_ccb_sanitize_mapchoice'
-					) );
-				$wp_customize->add_control( 'map_gallery_env_choice_control', array(
-						'section' => 'map_gallery_section',
-						'label' => 'Map Gallery Environment',
-						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
-						'type' => 'radio',
-						'settings' => 'map_gallery_env_choice_setting',
-						'priority' => 20,
-						'choices' => array(
-								'match'=>'My gallery link matches my site enviroment',
-								'sit' => 'sit (sit-ual.geoplatform.us)',
-								'stg' => 'stg (stg-ual.geoplatform.gov)',
-								'prod' => 'prod (ual.geoplatform.gov)'
-								)
-					) );
-
 				//remove default colors section as Header Color Section does this job better
 				 $wp_customize->remove_section( 'colors' );
 
@@ -1223,7 +1202,6 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'call2action_url_setting' => 'https://geoplatform.gov/about',
 			'call2action_text_setting' => 'Learn More',
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
-			'map_gallery_env_choice_setting' => 'prod',
       'font_choice' => 'lato',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
