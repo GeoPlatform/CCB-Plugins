@@ -23,7 +23,7 @@
                     'post_type' => 'post',
                     'category_name'=> 'Front Page',
                     'orderby' => 'date',
-                    'order' => 'ASC',
+                    'order' => 'DSC',
                     'numberposts' => 8
                   ) );
                 }
@@ -56,6 +56,7 @@
                     }
                   }
 
+                  // Removes all posts after the first 8.
                   $geopngda_posts_final = array_slice($geopngda_posts_trimmed, 0, 8);
 
                 }
