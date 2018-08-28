@@ -467,22 +467,6 @@ function geop_ngda_custom_field_page_checkboxes() {
     );
 }
 
-// display the metabox
-// function geop_ngda_custom_field_page_box_content($page) {
-// 		echo "<input type='number' name='geop_ngda_page_priority' id='geop_ngda_page_priority' value='" . $page->geop_ngda_page_priority . "' style='width:30%;'>";
-//  		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
-//
-// }
-
-// save data from checkboxes
-// add_action( 'save_post', 'geop_ngda_custom_field_post_data' );
-// function geop_ngda_custom_field_page_data($page_id) {
-//     if ( !isset( $_POST['geop_ngda_page_priority'] ) || is_null( $_POST['geop_ngda_page_priority'] || empty( $_POST['geop_ngda_page_priority'] )))
-//       update_post_meta( $page_id, 'geop_ngda_page_priority', 0 );
-//     else
-//   		update_post_meta( $page_id, 'geop_ngda_page_priority', $_POST['geop_ngda_page_priority'] );
-// }
-
 /**
  * Priority column added to posts admin.
  *
