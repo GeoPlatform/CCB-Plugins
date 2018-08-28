@@ -129,7 +129,7 @@ function geop_ngda_customize_register( $wp_customize )
 					        'type' => 'radio',
 					        'label' => 'Choose the display format',
 					        'section' => 'ngda_format',
-									'description' => 'Toggle between the default NGDA and specialized NCC section output formats for the Featured section.<br>NGDA permits 6 featured pages and 8 featured posts.<br>NCC permits 6 cards, combining pages and posts.',
+									'description' => 'Toggle between the default NGDA and specialized NCC section output formats for the Featured section.<br>NGDA permits 6 featured pages and 8 featured posts.<br>NCC permits 6 cards of pages only.',
 					        'choices' => array(
 					            'ngda' => __('NGDA', 'geoplatform-ccb'),
 					            'ncc' => __('NCC',  'geoplatform-ccb')

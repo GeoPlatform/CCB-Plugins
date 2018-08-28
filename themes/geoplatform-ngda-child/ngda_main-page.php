@@ -21,7 +21,7 @@
           $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
           $geopngda_pages_final = array();
 
-            // Mimics the old way of populating, but functional. Grabs all pages.
+          // Mimics the old way of populating, but functional. Grabs all pages.
           if ($geopccb_featured_sort_format == 'date'){
             $geopngda_pages = get_posts(array(
               'post_type' => 'page',
