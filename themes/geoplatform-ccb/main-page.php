@@ -78,8 +78,6 @@
                 }
               }
 
-              var_dump($geopccb_categories_trimmed);
-
               //List categories and descriptions
               foreach( $geopccb_categories_trimmed as $geopccb_category ) {
                     if (get_term_meta($geopccb_category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull
