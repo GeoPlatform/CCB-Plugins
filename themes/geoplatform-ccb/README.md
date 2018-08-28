@@ -112,6 +112,11 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
+### 3.1.5
+* Release August 28, 2018
+
+ - Added full customization option for Featured categories.
+
 ### 3.1.4
 * Released August 23, 2018
 
