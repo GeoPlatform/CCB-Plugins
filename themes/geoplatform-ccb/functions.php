@@ -1311,7 +1311,6 @@ if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
   function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {
     $geopccb_class_category_priority = get_term_meta($geopccb_id, 'cat_priority', true);
       if ( $geopccb_column == 'priority' ){
-        $geopccb_vis_check = $geopccb_class_category_visibility;
         $geopccb_pri = $geopccb_class_category_priority;
         if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
           $geopccb_pri = "N/A";
