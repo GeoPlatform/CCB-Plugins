@@ -3,8 +3,8 @@
 -Contributors: imagemattersllc, kevins713, lheazel
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.6
--Stable tag: 3.0.5
--Version: 3.1.4
+-Stable tag: 3.1.0
+-Version: 3.1.0
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -112,44 +112,16 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
 
-= 3.1.5 =
-* Released August 28, 2018
+= 3.1.0 =
+* Released August 29, 2018
 
-- Categories can be assigned numeric priority values on their edit pages.
-- Customization option added to toggle Featured card sorting between legacy by date and new by priority system.
-- Removed deprecated environment variables for the front page map gallery.
+ - The front page has been fully widgetized.
+ - Deprecated environment options from Map Gallery sidebar option removed.
 
-= 3.1.4 =
-* Released August 23, 2018
+= 3.0.0 =
+* Release pending.
 
-- Various tweaks and bug fixes.
-
-= 3.1.3 =
-* Released August 2, 2018
-
-- Update checking allows user to update the theme.
-- Google Analytics incorporated.
-- Numerous back-end improvements and bug fixes.
-
- = 3.1.2 =
-* Released June 29, 2018
-
-Updated per requirements listed in [Wordpress Theme requirements](https://make.wordpress.org/themes/handbook/review/required/)
-
-* Notable Changes
- - Removed Category links
- - Integrated Category images
- - Now Child theme ready
- - Front page template added
- - Custom logo enabled
- - Editor style enabled
- - Theme now translatable
- - Significant code refactoring, security updates, and bug fixes
-
- =  3.1.0 =
-* Released: June 5, 2018
-
-Initial submission on Wordpress.org. Previous versions were developed privately for GeoPlatform.gov customers.
+ - Initial release.
 
 <br>
 
