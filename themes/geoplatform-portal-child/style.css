@@ -24,3 +24,101 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+.m-featured { padding: 0 1em; }
+.m-featured__main { }
+.m-featured__side { padding-bottom: 1em; }
+
+.m-featured__primary, .m-featured__secondary {
+    margin-top:    0em;
+    margin-bottom: 2em;
+}
+
+.m-featured__thumb { width: 100%; }
+
+.m-featured__primary .m-featured__heading {
+    font-size:      1.35em;
+    font-weight:    700;
+    text-transform: uppercase;
+}
+.m-featured__primary img { }
+.m-featured__primary .m-featured__sub-heading {
+    font-weight: 700;
+}
+
+.m-featured__secondary { }
+.m-featured__secondary .m-featured__heading {
+    font-size:   1em;
+    font-weight: 700;
+}
+
+.m-featured__desc {
+    text-align: justify;
+    margin: 0.25em 0;
+}
+
+
+.m-featured__side .m-featured__secondary {
+    display: none;
+}
+
+
+@media(min-width:768px) {
+    .m-featured__main {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .m-featured__primary {
+        flex: 100%;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 2em;
+        margin-bottom: 2em;
+    }
+    .m-featured__primary .m-featured__thumb {
+        width: 350px;
+        float: left;
+        margin-right: 1em;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    }
+    .m-featured__primary:after { clear: left; }
+
+    .m-featured__secondary {
+        flex:         1 0;
+        margin-right: 1em;
+    }
+    .m-featured__secondary:last-child {
+        margin-right: 0;
+    }
+    .m-featured__secondary .m-featured__thumb {
+        width: 150px;
+        float: left;
+        margin-right: 1em;
+        box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    }
+    .m-featured__secondary:after { clear: left; }
+
+}
+
+@media(min-width:992px) {
+    .m-featured {
+        display:         flex;
+        justify-content: space-between;
+        align-items:     stretch;
+        padding:         0;
+    }
+    .m-featured__main {
+        flex:    3;
+        padding: 2em;
+    }
+    .m-featured__side {
+        flex:        1;
+        padding:     2em;
+        border-left: 1px solid #bbb;
+    }
+    .m-featured__side .m-featured__secondary {
+        display: block;
+    }
+}

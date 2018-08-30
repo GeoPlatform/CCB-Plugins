@@ -65,7 +65,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 						$geopportal_mainpage_disp_post_array = array($geopportal_mainpage_disp_first_link, $geopportal_mainpage_disp_second_link, $geopportal_mainpage_disp_third_link);
 						$geopportal_mainpage_disp_content_array = array($geopportal_mainpage_disp_first_content, $geopportal_mainpage_disp_second_content, $geopportal_mainpage_disp_third_content);
 						for ($geopportal_counter = 0; $geopportal_counter <= 2; $geopportal_counter++){
-							include( locate_template('post-card.php', false, false));
+							include( locate_template('post-display.php', false, false));
 						}
             ?>
             <div class="clearfix"></div>
