@@ -264,6 +264,7 @@ class Geopportal_Gallery_Widget extends WP_Widget {
 get_template_part( 'apps-and-services', get_post_format() );
 get_template_part( 'featured-services', get_post_format() );
 get_template_part( 'main-page', get_post_format() );
+get_template_part( 'main-page-two', get_post_format() );
 get_template_part( 'cornerstones', get_post_format() );
 get_template_part( 'featured', get_post_format() );
 get_template_part( 'first-time', get_post_format() );
