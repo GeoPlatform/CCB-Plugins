@@ -6,7 +6,7 @@
  *
  * @package GeoPlatform CCB
  *
- * Template Name: Archives
+ * Template Name
  *
  * @since 3.0.0
  */

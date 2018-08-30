@@ -51,6 +51,11 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		else
 			$geopportal_mainpagetwo_disp_third_content = "";
 
+		if (array_key_exists('geopportal_mainpagetwo_browse_link', $instance) && isset($instance['geopportal_mainpagetwo_browse_link']) && !empty($instance['geopportal_mainpagetwo_browse_link']))
+			$geopportal_mainpagetwo_disp_browse_link = apply_filters('widget_title', $instance['geopportal_mainpagetwo_browse_link']);
+		else
+			$geopportal_mainpagetwo_disp_browse_link = "#";
+
 		// Turns the slugs into pages.
 		$geopportal_mainpagetwo_disp_first_page = get_page_by_path($geopportal_mainpagetwo_disp_first_link, OBJECT, 'post');
 		$geopportal_mainpagetwo_disp_second_page = get_page_by_path($geopportal_mainpagetwo_disp_second_link, OBJECT, 'post');
@@ -165,7 +170,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 					}
 
 					?>
-		      <a class="btn btn-light" href="#">Browse All</a>
+		      <a class="btn btn-light" href="<?php echo esc_url($geopportal_mainpagetwo_disp_browse_link); ?>">Browse All</a>
 		    </div>
 		</div>
 
@@ -193,6 +198,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		$geopportal_mainpagetwo_second_content = ! empty( $instance['geopportal_mainpagetwo_second_content'] ) ? $instance['geopportal_mainpagetwo_second_content'] : '';
 		$geopportal_mainpagetwo_third_link = ! empty( $instance['geopportal_mainpagetwo_third_link'] ) ? $instance['geopportal_mainpagetwo_third_link'] : '';
 		$geopportal_mainpagetwo_third_content = ! empty( $instance['geopportal_mainpagetwo_third_content'] ) ? $instance['geopportal_mainpagetwo_third_content'] : '';
+		$geopportal_mainpagetwo_browse_link = ! empty( $instance['geopportal_mainpagetwo_browse_link'] ) ? $instance['geopportal_mainpagetwo_browse_link'] : '';
 
 		// Sets up the first content box link, or just a home link if invalid.
 		if (array_key_exists('geopportal_mainpagetwo_first_content', $instance) && isset($instance['geopportal_mainpagetwo_first_content']) && !empty($instance['geopportal_mainpagetwo_first_content']) && $geopportal_mainpagetwo_cb_bool){
@@ -265,6 +271,14 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_third_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_third_content' ); ?>" value="<?php echo esc_attr($geopportal_mainpagetwo_third_content); ?>" />
 			<a href="<?php echo esc_url($geopportal_mainpagetwo_third_url); ?>" target="_blank"><?php _e($geopportal_mainpagetwo_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
+		<hr>
+		<p>
+			<p>
+				<label for="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_browse_link' ); ?>">Browse All URL:</label><br>
+				<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_browse_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_browse_link' ); ?>" value="<?php echo esc_attr($geopportal_mainpagetwo_browse_link); ?>" />
+			</p>
+		</p>
+		<hr>
 		<p>
 			<?php _e('Tertiary content is controlled by the post priority settings. Navigate to the admin post panel to set these.', 'geoplatform-ccb'); ?>
 		</p>
@@ -287,6 +301,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		$instance[ 'geopportal_mainpagetwo_second_content' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_second_content' ] );
 		$instance[ 'geopportal_mainpagetwo_third_link' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_third_link' ] );
 		$instance[ 'geopportal_mainpagetwo_third_content' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_third_content' ] );
+		$instance[ 'geopportal_mainpagetwo_browse_link' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_browse_link' ] );
 
 		// Validity check for the content box URL.
 		if (array_key_exists('geopportal_mainpagetwo_first_content', $instance) && isset($instance['geopportal_mainpagetwo_first_content']) && !empty($instance['geopportal_mainpagetwo_first_content']) && $geopportal_mainpagetwo_cb_bool){
