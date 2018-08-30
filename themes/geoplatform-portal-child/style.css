@@ -30,7 +30,7 @@ limitations under the License.
 .m-featured__side { padding-bottom: 1em; }
 
 .m-featured__primary, .m-featured__secondary {
-    margin-top:    1em;
+    margin-top:    0em;
     margin-bottom: 2em;
 }
 

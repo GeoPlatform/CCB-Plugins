@@ -5,7 +5,9 @@
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package GeoPlatform CCB
- * 
+ *
+ * Template Name: Archives
+ *
  * @since 3.0.0
  */
 

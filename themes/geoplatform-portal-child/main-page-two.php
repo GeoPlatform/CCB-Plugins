@@ -51,21 +51,6 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		else
 			$geopportal_mainpagetwo_disp_third_content = "";
 
-		if (array_key_exists('geopportal_mainpagetwo_sorting_date', $instance) && isset($instance['geopportal_mainpagetwo_sorting_date']) && !empty($instance['geopportal_mainpagetwo_sorting_date']))
-			$geopportal_mainpagetwo_disp_sorting_date = apply_filters('widget_title', $instance['geopportal_mainpagetwo_sorting_date']);
-		else
-			$geopportal_mainpagetwo_disp_sorting_date = "BOO!!!";
-		if (array_key_exists('geopportal_mainpagetwo_sorting_custom', $instance) && isset($instance['geopportal_mainpagetwo_sorting_custom']) && !empty($instance['geopportal_mainpagetwo_sorting_custom']))
-			$geopportal_mainpagetwo_disp_sorting_custom = apply_filters('widget_title', $instance['geopportal_mainpagetwo_sorting_custom']);
-		else
-			$geopportal_mainpagetwo_disp_sorting_custom = "NOPE!!!";
-		if (array_key_exists('geopportal_mainpagetwo_sorting_group', $instance) && isset($instance['geopportal_mainpagetwo_sorting_group']) && !empty($instance['geopportal_mainpagetwo_sorting_group']))
-			$geopportal_mainpagetwo_disp_sorting_group = apply_filters('widget_title', $instance['geopportal_mainpagetwo_sorting_group']);
-		else
-			$geopportal_mainpagetwo_disp_sorting_group = "OOF!!!";
-
-    $geopportal_mainpagetwo_disp_sorting_group = isset( $instance['geopportal_mainpagetwo_sorting_group'] ) ? $instance['geopportal_mainpagetwo_sorting_group'] : 'sorting_dte';
-
 		// Turns the slugs into pages.
 		$geopportal_mainpagetwo_disp_first_page = get_page_by_path($geopportal_mainpagetwo_disp_first_link, OBJECT, 'post');
 		$geopportal_mainpagetwo_disp_second_page = get_page_by_path($geopportal_mainpagetwo_disp_second_link, OBJECT, 'post');
@@ -105,7 +90,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		    <div class="m-featured__main">
 
 		        <div class="m-featured__primary">
-		            <a href="<?php echo get_the_permalink($geopportal_mainpagetwo_disp_first_page); ?>" class="m-featured__heading"><?php echo get_the_title($geopportal_mainpagetwo_disp_first_page); ?></a>
+		            <div style="margin-bottom:0.25em"><a href="<?php echo get_the_permalink($geopportal_mainpagetwo_disp_first_page); ?>" class="m-featured__heading"><?php echo get_the_title($geopportal_mainpagetwo_disp_first_page); ?></a></div>
 		            <img class="m-featured__thumb" src="<?php echo $geopportal_mainpagetwo_disp_first_thumb; ?>">
 		            <div class="m-featured__sub-heading"><?php _e(sanitize_text_field($geopportal_mainpagetwo_disp_first_subtitle), 'geoplatform-ccb') ?></div>
 		            <div><?php echo $geopportal_mainpagetwo_disp_first_date; ?></div>
@@ -167,7 +152,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 					}
 
 					// Removes all posts after the first 8.
-					$geopportal_posts_final = array_slice($geopportal_posts_trimmed, 0, 8);
+					$geopportal_posts_final = array_slice($geopportal_posts_trimmed, 0, 6);
 
 					// Outputs posts.
 					foreach ($geopportal_posts_final as $geopccb_post){
@@ -208,11 +193,6 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		$geopportal_mainpagetwo_second_content = ! empty( $instance['geopportal_mainpagetwo_second_content'] ) ? $instance['geopportal_mainpagetwo_second_content'] : '';
 		$geopportal_mainpagetwo_third_link = ! empty( $instance['geopportal_mainpagetwo_third_link'] ) ? $instance['geopportal_mainpagetwo_third_link'] : '';
 		$geopportal_mainpagetwo_third_content = ! empty( $instance['geopportal_mainpagetwo_third_content'] ) ? $instance['geopportal_mainpagetwo_third_content'] : '';
-		$geopportal_mainpagetwo_sorting_date = ! empty( $instance['geopportal_mainpagetwo_sorting_date'] ) ? $instance['geopportal_mainpagetwo_sorting_date'] : true;
-		$geopportal_mainpagetwo_sorting_custom = ! empty( $instance['geopportal_mainpagetwo_sorting_custom'] ) ? $instance['geopportal_mainpagetwo_sorting_custom'] : false;
-		$geopportal_mainpagetwo_sorting_group = ! empty( $instance['geopportal_mainpagetwo_sorting_group'] ) ? $instance['geopportal_mainpagetwo_sorting_group'] : 'date';
-
-//		$geopportal_mainpagetwo_sorting = ! empty( $instance['geopportal_mainpagetwo_third_content'] ) ? $instance['geopportal_mainpagetwo_third_content'] : '';
 
 		// Sets up the first content box link, or just a home link if invalid.
 		if (array_key_exists('geopportal_mainpagetwo_first_content', $instance) && isset($instance['geopportal_mainpagetwo_first_content']) && !empty($instance['geopportal_mainpagetwo_first_content']) && $geopportal_mainpagetwo_cb_bool){
@@ -249,13 +229,8 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		?>
 
 <!-- HTML for the widget control box. -->
-    <!-- <p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_title' ); ?>">Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_title' ); ?>" value="<?php echo esc_attr( $geopportal_mainpagetwo_title ); ?>" />
-    </p>
-		<hr> -->
 		<p>
-			<?php _e('The boxes below accept the slugs of the linked post or page. Please ensure that any input slugs are valid.', 'geoplatform-ccb'); ?>
+			<?php _e('The boxes below accept the slugs of the linked post. Please ensure that any input slugs are valid.', 'geoplatform-ccb'); ?>
 		</p>
 		<p>
       <label for="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_first_link' ); ?>">Primary Post Slug:</label>
@@ -290,14 +265,8 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_third_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_third_content' ); ?>" value="<?php echo esc_attr($geopportal_mainpagetwo_third_content); ?>" />
 			<a href="<?php echo esc_url($geopportal_mainpagetwo_third_url); ?>" target="_blank"><?php _e($geopportal_mainpagetwo_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
-		<hr>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpagetwo_sorting' ); ?>">Sort tertiary articles by date or priority value:</label><br>
-			<input type="radio" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_group' ); ?>" id="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_custom' ); ?>" value="custom">Custom<br>
-			<input type="radio" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_group' ); ?>" id="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_date' ); ?>" value="date">Date<br>
-			<!-- <input type="radio" class="radio" <?php checked( $instance['geopportal_mainpagetwo_sorting_group'], 'choice_custom'); ?> id="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_custom' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_group' ); ?>" value="choice_custom" />
-			<input type="radio" class="radio" <?php checked( $instance['geopportal_mainpagetwo_sorting_group'], 'choice_date'); ?> id="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_date' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpagetwo_sorting_group' ); ?>" value="choice_date" /> -->
-			<a href="<?php echo esc_url(home_url() . '/wp-admin/edit.php'); ?>" target="_blank"><?php _e('Review posts and priority values', 'geoplatform-ccb') ?></a><br>
+			<?php _e('Tertiary content is controlled by the post priority settings. Navigate to the admin post panel to set these.', 'geoplatform-ccb'); ?>
 		</p>
 		<?php
 	}
@@ -310,7 +279,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
 			$geopportal_mainpagetwo_cb_bool = true;
 
-    $instance[ 'geopportal_mainpagetwo_title' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_title' ] );
+    // $instance[ 'geopportal_mainpagetwo_title' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_title' ] );
 		$instance[ 'geopportal_mainpagetwo_first_link' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_first_link' ] );
 		$instance[ 'geopportal_mainpagetwo_first_subtitle' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_first_subtitle' ] );
 		$instance[ 'geopportal_mainpagetwo_first_content' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_first_content' ] );
@@ -318,9 +287,6 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		$instance[ 'geopportal_mainpagetwo_second_content' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_second_content' ] );
 		$instance[ 'geopportal_mainpagetwo_third_link' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_third_link' ] );
 		$instance[ 'geopportal_mainpagetwo_third_content' ] = strip_tags( $new_instance[ 'geopportal_mainpagetwo_third_content' ] );
-		$instance[ '$geopportal_mainpagetwo_sorting_date' ] = strip_tags( $new_instance[ '$geopportal_mainpagetwo_sorting_date' ] );
-		$instance[ '$geopportal_mainpagetwo_sorting_custom' ] = strip_tags( $new_instance[ '$geopportal_mainpagetwo_sorting_custom' ] );
-		$instance[ '$geopportal_mainpagetwo_sorting_group' ] = strip_tags( $new_instance[ '$geopportal_mainpagetwo_sorting_group' ] );
 
 		// Validity check for the content box URL.
 		if (array_key_exists('geopportal_mainpagetwo_first_content', $instance) && isset($instance['geopportal_mainpagetwo_first_content']) && !empty($instance['geopportal_mainpagetwo_first_content']) && $geopportal_mainpagetwo_cb_bool){
