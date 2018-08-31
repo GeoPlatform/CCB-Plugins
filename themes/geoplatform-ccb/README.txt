@@ -4,7 +4,7 @@
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.6
 -Stable tag: 3.0.5
--Version: 3.1.4
+-Version: 3.1.6
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -111,6 +111,12 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
+
+= 3.1.6 =
+* Released August 31, 2018
+
+ - Added Bootstrap inclusion toggle as a temporary fix for conflicts with multiple versions loading.
+ - Rebuilt the Archives template.
 
 = 3.1.5 =
 * Released August 28, 2018
