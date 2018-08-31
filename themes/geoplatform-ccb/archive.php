@@ -20,35 +20,57 @@ get_template_part( 'single-banner', get_post_format() );
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main">
-		</br>
-		<?php
-		if ( have_posts() ) : ?>
-			<div class="row">
+			<br>
 			<?php
-			/* Start the Loop */
-			while ( have_posts() ) : the_post();
 
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'post-card', get_post_format() );
+			$geopccb_posts = get_posts(array(
+				'post_type' => 'post',
+				'orderby' => 'date',
+				'order' => 'DSC',
+				'numberposts' => -1,
+			) );
 
-			endwhile; ?>
+			foreach($geopccb_posts as $geopccb_post){
+				$geopccb_excerpt = substr(esc_attr($geopccb_post->post_content), 0, 55);
+				?>
+				<div class="col-sm-6 col-md-4">
+				<div class="gp-ui-card gp-ui-card--md gp-ui-card">
+				<?php if ( has_post_thumbnail($geopccb_post) ) {?>
+				  <a class="media embed-responsive embed-responsive-16by9" href="<?php echo get_the_permalink($geopccb_post); ?>"
+				      title="<?php _e( 'Register for the Geospatial Platform Workshop', 'geoplatform-ccb') ?> ">
 
-			</div><!--#row-->
+				      <img class="embed-responsive-item" src="<?php echo get_the_post_thumbnail_url($geopccb_post); ?>" >
+				  </a>
+				  <div class="gp-ui-card__body">
+				    <div class="text--primary"><?php echo get_the_title($geopccb_post); ?></div>
+				    <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post); ?></div>
+				    <div class="text--supporting">
+				      <?php echo $geopccb_post->post_content; ?>
+				    </div>
+				  </div>
+		    	<div class="gp-ui-card__footer">
+				    <div class="pull-right">
+				        <a href="<?php echo get_the_permalink($geopccb_post); ?>" class="btn btn-link pull-right"><?php _e( 'Learn More', 'geoplatform-ccb'); ?></a>
+				    </div>
+				  </div>
 
-			<?php
-			the_posts_navigation();
-			echo "</br>";
-
-			else :
-
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif; ?>
-
+				<?php } else {?>
+				  <div class="gp-ui-card__body">
+				    <div class="text--primary"><?php echo get_the_title($geopccb_post); ?></div>
+				    <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post); ?></div>
+				    <div class="text--supporting">
+				      <?php echo $geopccb_post->post_content; ?>
+				    </div>
+				  </div>
+				  <div class="gp-ui-card__footer">
+				    <div class="pull-right">
+				      <a href="<?php echo get_the_permalink($geopccb_post); ?>" class="btn btn-link pull-right"><?php _e( 'Learn More', 'geoplatform-ccb'); ?></a>
+				    </div>
+				  </div>
+				<?php } ?>
+				</div>
+			</div>
+		  <?php } ?>
 		</main><!-- #main -->
 	</div><!-- #primary -->
 </div><!-- #container -->
