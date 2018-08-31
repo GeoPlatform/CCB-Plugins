@@ -38,8 +38,12 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
   	wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
   	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
-  	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
-	  wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
+    wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
+
+    $geop_ccb_options = geop_ccb_get_theme_mods();
+    if (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on'){
+  	   wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
+    }
   }
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 }
@@ -357,7 +361,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 		//Fonts section, settings, and controls
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
+				'title'    => __( 'Font Selection', 'geoplatform-ccb' ),
 				'priority' => 50
 		) );
 
@@ -463,6 +467,28 @@ function geop_ccb_customize_register( $wp_customize ) {
 					'priority' => 10
 				) );
 
+      // Bootstrap control.
+      $wp_customize->add_section( 'bootstrap_toggle' , array(
+          'title'    => __( 'Bootstrap Controls', 'geoplatform-ccb' ),
+          'priority' => 99
+      ) );
+
+      $wp_customize->add_setting('bootstrap_controls',array(
+          'default' => 'on',
+          'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
+      ));
+
+      $wp_customize->add_control('bootstrap_controls',array(
+          'type' => 'radio',
+          'label' => 'Bootstrap Toggle',
+          'section' => 'bootstrap_toggle',
+          'description' => "he GeoPlatform CCB themes utilize Bootstrap in their operations, but so do some plugins. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or using this option for the theme.",
+          'choices' => array(
+              'on' => __('On', 'geoplatform-ccb'),
+              'off' => __('Off',  'geoplatform-ccb')
+            ),
+      ));
+
 				//remove default colors section as Header Color Section does this job better
 				 $wp_customize->remove_section( 'colors' );
 
@@ -494,16 +520,16 @@ if ( ! function_exists ( 'geop_ccb_sanitize_fonts' ) ) {
 }
 
 /**
- * Sanitization callback functions for customizer mapchoice
+ * Sanitization callback functions for customizer bootstrap
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
  * @param [type] $geop_ccb_value
  * @return void
  */
-if ( ! function_exists ( 'geop_ccb_sanitize_mapchoice' ) ) {
-	function geop_ccb_sanitize_mapchoice( $geop_ccb_value ) {
-		if ( ! in_array( $geop_ccb_value, array( 'match', 'sit', 'stg', 'prod' ) ) )
-			$geop_ccb_value = 'match';
+if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
+	function geop_ccb_sanitize_bootstrap( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
+			$geop_ccb_value = 'on';
 		return $geop_ccb_value;
 	}
 }
@@ -1203,6 +1229,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'call2action_text_setting' => 'Learn More',
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
       'font_choice' => 'lato',
+      'bootstrap_controls' => 'on',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
 	}
