@@ -1022,10 +1022,10 @@ class GP_TAX_META {
    add_action( 'admin_footer', array ( $this, 'add_script' ) );
    add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter' );
    add_filter( 'manage_category_custom_column', 'geopccb_category_column_action', 10, 3 );
-   if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
-    add_filter( 'manage_category_custom_column', 'geopccb_category_column_action_two', 10, 3 );
-  if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
-    add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter_two' );
+  //  if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
+  //   add_filter( 'manage_category_custom_column', 'geopccb_category_column_action_two', 10, 3 );
+  // if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
+  //   add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter_two' );
  }
 
 public function load_media() {
@@ -1307,6 +1307,8 @@ function geop_ccb_sanitize_feature_sort_format( $geop_ccb_value ) {
 
 
 
+
+
 /**
  * Adds Category priority and display toggle aspects to category.
  *
@@ -1354,6 +1356,7 @@ if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
 
     return array_merge( $geopccb_columns, $geopccb_new_columns );
   }
+  add_filter('manage_edit-category_columns', 'geopccb_category_column_filter_two');
 }
 
 /**
@@ -1379,7 +1382,10 @@ if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
       }
     return $geopccb_columns;
   }
+  add_filter( 'manage_category_custom_column', 'geopccb_category_column_action_two', 10, 3 );
 }
+
+
 
 
 
@@ -1388,32 +1394,37 @@ if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
  */
 
 // register the meta box
-add_action( 'add_meta_boxes', 'geop_ngda_custom_field_post_checkboxes' );
-function geop_ngda_custom_field_post_checkboxes() {
-    add_meta_box(
-        'geop_ngda_sorting_post_id',          // this is HTML id of the box on edit screen
-        'Featured Display Priority',    // title of the box
-        'geop_ngda_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
-        'post',        // on which edit screen the box should appear
-        'normal',      // part of page where the box should appear
-        'default'      // priority of the box
+if ( ! function_exists ( 'geop_ccb_custom_field_post_checkboxes' ) ) {
+  function geop_ccb_custom_field_post_checkboxes() {
+      add_meta_box(
+          'geop_ccb_sorting_post_id',          // this is HTML id of the box on edit screen
+          'Featured Display Priority',    // title of the box
+          'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+          'post',        // on which edit screen the box should appear
+          'normal',      // part of page where the box should appear
+          'default'      // priority of the box
     );
+  }
+  add_action( 'add_meta_boxes', 'geop_ccb_custom_field_post_checkboxes' );
 }
 
 // display the metabox
-function geop_ngda_custom_field_post_box_content($post) {
-		echo "<input type='number' name='geop_ngda_post_priority' id='geop_ngda_post_priority' value='" . $post->geop_ngda_post_priority . "' style='width:30%;'>";
+if ( ! function_exists ( 'geop_ccb_custom_field_post_box_content' ) ) {
+  function geop_ccb_custom_field_post_box_content($post) {
+		echo "<input type='number' name='geop_ccb_post_priority' id='geop_ccb_post_priority' value='" . $post->geop_ccb_post_priority . "' style='width:30%;'>";
  		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
-
+  }
 }
 
 // save data from checkboxes
-add_action( 'save_post', 'geop_ngda_custom_field_post_data' );
-function geop_ngda_custom_field_post_data($post_id) {
-    if ( !isset( $_POST['geop_ngda_post_priority'] ) || is_null( $_POST['geop_ngda_post_priority'] || empty( $_POST['geop_ngda_post_priority'] )))
-      update_post_meta( $post_id, 'geop_ngda_post_priority', 0 );
+if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
+  function geop_ccb_custom_field_post_data($post_id) {
+    if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority'] || empty( $_POST['geop_ccb_post_priority'] )))
+      update_post_meta( $post_id, 'geop_ccb_post_priority', 0 );
     else
-  		update_post_meta( $post_id, 'geop_ngda_post_priority', $_POST['geop_ngda_post_priority'] );
+  		update_post_meta( $post_id, 'geop_ccb_post_priority', $_POST['geop_ccb_post_priority'] );
+  }
+  add_action( 'save_post', 'geop_ccb_custom_field_post_data' );
 }
 
 /**
@@ -1427,15 +1438,18 @@ function geop_ngda_custom_field_post_data($post_id) {
  * @param mixed $columns
  * @return void
  */
-function geopngda_post_column_filter( $geopccb_columns ) {
-  $geopccb_new_columns = array();
-  $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
-  $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
-	$geopccb_new_columns['date'] = $geopccb_columns['date'];
-	unset( $geopccb_columns['date'] );
-  unset( $geopccb_columns['comments'] );
+if ( ! function_exists ( 'geop_ccb_post_column_filter' ) ) {
+  function geop_ccb_post_column_filter( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
+  	$geopccb_new_columns['date'] = $geopccb_columns['date'];
+  	unset( $geopccb_columns['date'] );
+    unset( $geopccb_columns['comments'] );
 
-  return array_merge( $geopccb_columns, $geopccb_new_columns );
+    return array_merge( $geopccb_columns, $geopccb_new_columns );
+  }
+  add_filter('manage_post_posts_columns', 'geop_ccb_post_column_filter');
 }
 
 /**
@@ -1450,18 +1464,19 @@ function geopngda_post_column_filter( $geopccb_columns ) {
  * @param mixed $id
  * @return void
  */
-function geopngda_post_column_action( $geopccb_column, $geopccb_id ) {
+if ( ! function_exists ( 'geop_ccb_post_column_action' ) ) {
+  function geop_ccb_post_column_action( $geopccb_column, $geopccb_id ) {
     if ( $geopccb_column == 'priority' ){
-			$geopccb_pri = get_post($geopccb_id)->geop_ngda_post_priority;
+			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
       if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
         $geopccb_pri = "N/A";
       echo '<p>' . $geopccb_pri . '</p>';
     }
+  }
+  add_action('manage_post_posts_custom_column', 'geop_ccb_post_column_action', 10, 2);
 }
 
 
-add_filter('manage_post_posts_columns', 'geopngda_post_column_filter');
-add_action('manage_post_posts_custom_column', 'geopngda_post_column_action', 10, 2);
 
 
 
@@ -1472,16 +1487,18 @@ add_action('manage_post_posts_custom_column', 'geopngda_post_column_action', 10,
  */
 
 // register the meta box
-add_action( 'add_meta_boxes', 'geop_ngda_custom_field_page_checkboxes' );
-function geop_ngda_custom_field_page_checkboxes() {
+if ( ! function_exists ( 'geop_ccb_custom_field_page_checkboxes' ) ) {
+  function geop_ccb_custom_field_page_checkboxes() {
     add_meta_box(
-        'geop_ngda_sorting_page_id',          // this is HTML id of the box on edit screen
+        'geop_ccb_sorting_page_id',          // this is HTML id of the box on edit screen
         'Featured Display Priority',    // title of the box
-        'geop_ngda_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
         'page',        // on which edit screen the box should appear
         'normal',      // part of page where the box should appear
         'default'      // priority of the box
     );
+  }
+  add_action( 'add_meta_boxes', 'geop_ccb_custom_field_page_checkboxes' );
 }
 
 /**
@@ -1495,16 +1512,20 @@ function geop_ngda_custom_field_page_checkboxes() {
  * @param mixed $columns
  * @return void
  */
-function geopngda_page_column_filter( $geopccb_columns ) {
-  $geopccb_new_columns = array();
-  $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
-  $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
-	$geopccb_new_columns['date'] = $geopccb_columns['date'];
-	unset( $geopccb_columns['date'] );
-  unset( $geopccb_columns['comments'] );
+if ( ! function_exists ( 'geop_ccb_page_column_filter' ) ) {
+  function geop_ccb_page_column_filter( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
+  	$geopccb_new_columns['date'] = $geopccb_columns['date'];
+  	unset( $geopccb_columns['date'] );
+    unset( $geopccb_columns['comments'] );
 
-  return array_merge( $geopccb_columns, $geopccb_new_columns );
+    return array_merge( $geopccb_columns, $geopccb_new_columns );
+  }
+  add_filter('manage_pages_columns', 'geop_ccb_page_column_filter');
 }
+
 
 /**
  * Data added to category admin column, or N/A if not applicable.
@@ -1518,19 +1539,19 @@ function geopngda_page_column_filter( $geopccb_columns ) {
  * @param mixed $id
  * @return void
  */
-function geopngda_page_column_action( $geopccb_column, $geopccb_id ) {
+if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
+  function geop_ccb_page_column_action( $geopccb_column, $geopccb_id ) {
     if ( $geopccb_column == 'priority' ){
-			$geopccb_pri = get_post($geopccb_id)->geop_ngda_post_priority;
-//			var_dump(get_post($geopccb_id));
+			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
       if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
         $geopccb_pri = "N/A";
       echo '<p>' . $geopccb_pri . '</p>';
     }
+  }
+  add_action('manage_pages_custom_column', 'geop_ccb_page_column_action', 10, 2);
 }
 
 
-add_filter('manage_pages_columns', 'geopngda_page_column_filter');
-add_action('manage_pages_custom_column', 'geopngda_page_column_action', 10, 2);
 
 
 
