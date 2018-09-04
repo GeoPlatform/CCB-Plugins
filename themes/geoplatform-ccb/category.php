@@ -79,12 +79,6 @@ get_template_part( 'cat-banner', get_post_format() );
         $geopccb_pages_final = $geopccb_pages_trimmed;
       }
 
-
-
-
-
-
-
       foreach ($geopccb_pages_final as $geopccb_post){
         $geopccb_excerpt = esc_attr($geopccb_post->post_content);
         if (strlen($geopccb_excerpt) > 400)
