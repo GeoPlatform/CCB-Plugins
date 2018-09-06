@@ -482,10 +482,11 @@ function geop_ccb_customize_register( $wp_customize ) {
           'type' => 'radio',
           'label' => 'Bootstrap Toggle',
           'section' => 'bootstrap_toggle',
-          'description' => "he GeoPlatform CCB themes utilize Bootstrap in their operations, but so do some plugins. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or using this option for the theme.",
+          'description' => "The GeoPlatform themes utilize Bootstrap for their dropdown menus, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here. The menu can also be disabled here if problems persist.",
           'choices' => array(
-              'on' => __('On', 'geoplatform-ccb'),
-              'off' => __('Off',  'geoplatform-ccb')
+              'on' => __('Enabled', 'geoplatform-ccb'),
+              'off' => __('Disabled',  'geoplatform-ccb'),
+              'gone' => __('No Menu', 'geoplatform-ccb')
             ),
       ));
 
@@ -528,7 +529,7 @@ if ( ! function_exists ( 'geop_ccb_sanitize_fonts' ) ) {
  */
 if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
 	function geop_ccb_sanitize_bootstrap( $geop_ccb_value ) {
-		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
+		if ( ! in_array( $geop_ccb_value, array( 'on', 'off', 'gone' ) ) )
 			$geop_ccb_value = 'on';
 		return $geop_ccb_value;
 	}
@@ -1230,6 +1231,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
       'font_choice' => 'lato',
       'bootstrap_controls' => 'on',
+      'searchbar_controls' => 'wp',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
 	}
