@@ -361,7 +361,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 		//Fonts section, settings, and controls
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Selection', 'geoplatform-ccb' ),
+				'title'    => __( 'GeoPlatform Controls', 'geoplatform-ccb' ),
 				'priority' => 50
 		) );
 
@@ -371,8 +371,9 @@ function geop_ccb_customize_register( $wp_customize ) {
   	));
 
 		$wp_customize->add_control('font_choice',array(
-        'type' => 'radio',
+        'type' => 'select',
         'label' => 'Fonts',
+        'description' => "Select the font for this community.",
         'section' => 'font_section',
         'choices' => array(
             'lato' => __('Lato', 'geoplatform-ccb'),
@@ -467,12 +468,6 @@ function geop_ccb_customize_register( $wp_customize ) {
 					'priority' => 10
 				) );
 
-      // Bootstrap control.
-      $wp_customize->add_section( 'bootstrap_toggle' , array(
-          'title'    => __( 'Bootstrap Controls', 'geoplatform-ccb' ),
-          'priority' => 99
-      ) );
-
       $wp_customize->add_setting('bootstrap_controls',array(
           'default' => 'on',
           'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
@@ -480,8 +475,8 @@ function geop_ccb_customize_register( $wp_customize ) {
 
       $wp_customize->add_control('bootstrap_controls',array(
           'type' => 'radio',
-          'label' => 'Bootstrap Toggle',
-          'section' => 'bootstrap_toggle',
+          'label' => 'Bootstrap Controls',
+          'section' => 'font_section',
           'description' => "The GeoPlatform themes utilize Bootstrap for their dropdown menus, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here. The menu can also be disabled here if problems persist.",
           'choices' => array(
               'on' => __('Enabled', 'geoplatform-ccb'),
@@ -489,6 +484,9 @@ function geop_ccb_customize_register( $wp_customize ) {
               'gone' => __('No Menu', 'geoplatform-ccb')
             ),
       ));
+
+
+
 
 				//remove default colors section as Header Color Section does this job better
 				 $wp_customize->remove_section( 'colors' );
@@ -531,6 +529,23 @@ if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
 	function geop_ccb_sanitize_bootstrap( $geop_ccb_value ) {
 		if ( ! in_array( $geop_ccb_value, array( 'on', 'off', 'gone' ) ) )
 			$geop_ccb_value = 'on';
+		return $geop_ccb_value;
+	}
+}
+
+/**
+ * Sanitization callback functions for customizer searchbar
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_searchbar' ) ) {
+	function geop_ccb_sanitize_searchbar( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'wp', 'gp', 'none' ) ) )
+			$geop_ccb_value = 'wp';
+    if (!in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())) && $geop_ccb_value == 'gp')
+      $geop_ccb_value = 'wp';
 		return $geop_ccb_value;
 	}
 }
@@ -1555,10 +1570,38 @@ if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
 
 
 
+if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
+  function geop_ccb_search_register($wp_customize){
 
+    $wp_customize->add_setting('searchbar_controls',array(
+        'default' => 'wp',
+        'sanitize_callback' => 'geop_ccb_sanitize_searchbar',
+    ));
 
+    $geop_ccb_gpsearch_array = array(
+        'wp' => __('Enabled', 'geoplatform-ccb'),
+        'none' => __('Disabled',  'geoplatform-ccb'),
+    );
+    $geop_ccb_gpsearch_description = "The search bar in the header is used to search assets on this community site. It can be toggled on or off here.";
+    if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) )){
+      $geop_ccb_gpsearch_array = array(
+          'wp' => __('Site Search', 'geoplatform-ccb'),
+          'gp' => __('GeoPlatform Search',  'geoplatform-ccb'),
+          'none' => __('Disabled',  'geoplatform-ccb'),
+      );
+      $geop_ccb_gpsearch_description = "The search bar in the header can be used to search assets on this community site, or leverage the GeoPlatform Search plugin here. It can also be turned off.";
+    }
 
-
+    $wp_customize->add_control('searchbar_controls',array(
+        'type' => 'radio',
+        'label' => 'Search Bar Controls',
+        'section' => 'font_section',
+        'description' => $geop_ccb_gpsearch_description,
+        'choices' => $geop_ccb_gpsearch_array,
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_search_register');
+}
 
 
 
