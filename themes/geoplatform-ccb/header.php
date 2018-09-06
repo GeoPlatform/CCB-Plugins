@@ -36,18 +36,36 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
         <div class="row">
             <div class="col-md-12">
 
-          <!-- Checks for a lack of mega-menu button and adjusts height to keep it consistant. -->  
+          <!-- Checks for a lack of mega-menu button and adjusts height to keep it consistant. -->
               <?php
               if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone'){
                 ?>
                 <ul role="menu" class="header__menu">
               <?php
-              } else { ?>
+              } else {
+                ?>
                 <ul role="menu" class="header__menu" style="margin-top:0.5em;">
-              <?php } ?>
+                <?php
+              }
 
-                <!-- <ul role="menu" class="header__menu"> -->
-                    <li><?php get_search_form(); ?></li>
+              $geopccb_search_format = get_theme_mod('searchbar_controls', $geopccb_theme_options['searchbar_controls']);
+              if ($geopccb_search_format == 'gp' && !in_array('geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())))
+                $geopccb_search_format = 'wp';
+
+              // Checks the search bar settings and switches them out as needed.
+              if ($geopccb_search_format == 'wp'){
+                ?>
+                <li><?php get_search_form(); ?></li>
+                <?php
+              } elseif ($geopccb_search_format == 'gp'){
+                ?>
+                <li><?php get_template_part( 'gpsearch', get_post_format() ); ?></li>
+                <?php
+              } ?>
+
+
+
+
                     <?php
                     if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone'){
                       ?>

@@ -460,12 +460,12 @@ function geop_ccb_customize_register( $wp_customize ) {
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
 			$wp_customize->add_control( 'map_gallery_link_box_control', array(
-					'section' => 'map_gallery_section',
+					'section' => 'font_section',
 					'label' => 'Map Gallery link',
 					'settings' => 'map_gallery_link_box_setting',
 					'description' => 'Make sure you use a full UAL link. Example: https://ual.geoplatform.gov/api/galleries/{your map gallery ID}',
 					'type' => 'url',
-					'priority' => 10
+					'priority' => 60
 				) );
 
       $wp_customize->add_setting('bootstrap_controls',array(
