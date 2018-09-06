@@ -1,3 +1,7 @@
+<?php
+// Getting theme mods for search bar and mega-menu hiding checks.
+$geopccb_theme_options = geop_ccb_get_theme_mods();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,17 +57,34 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <ul role="menu" class="header__menu">
+
+              <!-- Checks for a lack of mega-menu button and adjusts height to keep it consistant. -->
+                  <?php
+                  if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone'){
+                    ?>
+                    <ul role="menu" class="header__menu">
+                  <?php
+                  } else {
+                    ?>
+                    <ul role="menu" class="header__menu" style="margin-top:0.5em;">
+                    <?php
+                  }
+
+                  if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone'){
+                    ?>
                     <li>
-                        <!-- mega menu toggle -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-link header__btn dropdown-toggle"
-                                    data-toggle="dropdown" data-target="#megamenu" aria-expanded="false">
-                                <span class="icon-hamburger-menu t-light"></span>
-                                <span class="hidden-xs">Menu <span class="caret"></span></span>
-                            </button>
-                        </div>
+                    <!-- mega menu toggle -->
+                      <div class="btn-group">
+                        <button type="button" class="btn btn-link header__btn dropdown-toggle"
+                              data-toggle="dropdown" data-target="#megamenu" aria-expanded="false">
+                          <span class="icon-hamburger-menu t-light"></span>
+                          <span class="hidden-xs"><?php _e( 'Menu', 'geoplatform-ccb'); ?><span class="caret"></span></span>
+                        </button>
+                      </div>
                     </li>
+                  <?php } ?>
+
+
 
                     <!-- login button toggle -->
                     <!-- Disable for now, re-enable for authentication -->

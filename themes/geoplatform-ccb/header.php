@@ -61,12 +61,8 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                 ?>
                 <li><?php get_template_part( 'gpsearch', get_post_format() ); ?></li>
                 <?php
-              } ?>
+              }
 
-
-
-
-                    <?php
                     if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone'){
                       ?>
                       <li>

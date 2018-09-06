@@ -567,6 +567,7 @@ function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, 
 function geopccb_category_column_filter_two( $geopccb_columns ) {};
 function geop_ccb_category_mod_update() {};
 function geop_ccb_category_mod_interface( $tag ){};
+function geop_ccb_search_register(){};
 
 /**
  * CDN Distribution handler

@@ -115,10 +115,10 @@ function geop_ngda_customize_register( $wp_customize )
 
 							//NGDA/NCC visual format toggle section, settings, and controls
 							//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
-							$wp_customize->add_section( 'ngda_format' , array(
-									'title'    => __( 'NGDA Format', 'geoplatform-ccb' ),
-									'priority' => 66
-							) );
+							// $wp_customize->add_section( 'ngda_format' , array(
+							// 		'title'    => __( 'NGDA Format', 'geoplatform-ccb' ),
+							// 		'priority' => 66
+							// ) );
 
 							$wp_customize->add_setting('ngda_appearance',array(
 					        'default' => 'ngda',
@@ -128,8 +128,9 @@ function geop_ngda_customize_register( $wp_customize )
 							$wp_customize->add_control('ngda_appearance',array(
 					        'type' => 'radio',
 					        'label' => 'Choose the display format',
-					        'section' => 'ngda_format',
+					        'section' => 'font_section',
 									'description' => 'Toggle between the default NGDA and specialized NCC section output formats for the Featured section.<br>NGDA permits 6 featured pages and 8 featured posts.<br>NCC permits 6 cards of pages only.',
+									'priority' => 60,
 					        'choices' => array(
 					            'ngda' => __('NGDA', 'geoplatform-ccb'),
 					            'ncc' => __('NCC',  'geoplatform-ccb')
@@ -518,6 +519,10 @@ add_action('manage_pages_custom_column', 'geopngda_page_column_action', 10, 2);
 
 
 
+
+// Killing functions from CCB that have no use in NGDA.
+function geop_ccb_search_register(){};
+function geop_ccb_bootstrap_register(){};
 
 
 

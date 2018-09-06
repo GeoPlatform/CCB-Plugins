@@ -37,7 +37,7 @@
         // gallery ID portion of the URI, and if that URI is of valid format.
         if ( empty($geopccb_customizerLink) ){
           $geopccb_invalid_bool = true;
-          $geopccb_error_report = 'The Map Gallery Link in Customizer->Custom Links Section is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery.';
+          $geopccb_error_report = 'The Map Gallery Link in Customizer->GeoPlatform Controls is blank. Please fill in the link according to the CCB Cookbook, to see your Map Gallery.';
         }
         elseif (!array_key_exists(2, $geopccb_customizerLink_array)){
           $geopccb_invalid_bool = true;

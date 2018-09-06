@@ -468,22 +468,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 					'priority' => 60
 				) );
 
-      $wp_customize->add_setting('bootstrap_controls',array(
-          'default' => 'on',
-          'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
-      ));
 
-      $wp_customize->add_control('bootstrap_controls',array(
-          'type' => 'radio',
-          'label' => 'Bootstrap Controls',
-          'section' => 'font_section',
-          'description' => "The GeoPlatform themes utilize Bootstrap for their dropdown menus, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here. The menu can also be disabled here if problems persist.",
-          'choices' => array(
-              'on' => __('Enabled', 'geoplatform-ccb'),
-              'off' => __('Disabled',  'geoplatform-ccb'),
-              'gone' => __('No Menu', 'geoplatform-ccb')
-            ),
-      ));
 
 
 
@@ -1566,6 +1551,30 @@ if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
     }
   }
   add_action('manage_pages_custom_column', 'geop_ccb_page_column_action', 10, 2);
+}
+
+
+if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
+  function geop_ccb_bootstrap_register($wp_customize){
+
+    $wp_customize->add_setting('bootstrap_controls',array(
+        'default' => 'on',
+        'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
+    ));
+
+    $wp_customize->add_control('bootstrap_controls',array(
+        'type' => 'radio',
+        'label' => 'Bootstrap Controls',
+        'section' => 'font_section',
+        'description' => "The GeoPlatform themes utilize Bootstrap for their dropdown menus, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here. The menu can also be disabled here if problems persist.",
+        'choices' => array(
+            'on' => __('Enabled', 'geoplatform-ccb'),
+            'off' => __('Disabled',  'geoplatform-ccb'),
+            'gone' => __('No Menu', 'geoplatform-ccb')
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_bootstrap_register');
 }
 
 

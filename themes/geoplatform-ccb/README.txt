@@ -49,7 +49,7 @@ Using the Customizer, you can add a Map Gallery, created with the GeoPlatform "M
  1. Create a Map Gallery with the Map Manager application (https://maps.geoplatform.gov).
  2. When viewing the gallery, the URL will have the Gallery ID at the end of it. Example https://maps.geoplatform.gov/galleries/ **[your Gallery ID]**.
  3. Copy the ID of the gallery.
- 4. Sign into your WordPress site as an Administrator or Editor user, open the Customizer, and go to the **Map Gallery** section.
+ 4. Sign into your WordPress site as an Administrator or Editor user, open the Customizer, and go to the **Map Gallery** section under *GeoPlatform Controls**.
  5. Paste your Gallery ID in the text box, and add a fully resolvable URL link to the front of it. Example: https://ual.geoplatform.gov/api/galleries/ **[your Gallery ID]**.
 
  If your gallery doesn't show up, try hitting "Publish" in the Customizer. If it still does not, make sure the you've got the correct Gallery ID or otherwise please contact us at servicedesk@geoplatform.gov to troubleshoot the issue.
