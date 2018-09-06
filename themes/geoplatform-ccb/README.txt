@@ -4,7 +4,7 @@
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.6
 -Stable tag: 3.0.5
--Version: 3.1.6
+-Version: 3.2.0
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -111,6 +111,15 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
+
+= 3.2.0 =
+* Released September 6, 2018
+
+ - Posts and pages can be assigned numeric priority values on their edit pages. This will determine their ordering within Categories.
+ - Added header search bar controls that permit toggling off or on.
+ - If the GeoPlatform Search plugin is installed, the search bar can also be changed to leverage it instead.
+ - Added disabling the header menu to the Bootstrap inclusion options.
+ - Fonts, Map Gallery link, Search Bar Controls, and Bootstrap Controls have been consolidated under GeoPlatform Controls in the customizer.
 
 = 3.1.6 =
 * Released August 31, 2018
