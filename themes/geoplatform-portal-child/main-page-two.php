@@ -138,7 +138,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 					// Assigns posts with valid priority values to the trimmed array.
 					$geopportal_posts_trimmed = array();
 					foreach($geopportal_posts as $geopportal_post){
-						if ($geopportal_post->geop_portal_post_priority > 0)
+						if ($geopportal_post->geop_ccb_post_priority > 0)
 							array_push($geopportal_posts_trimmed, $geopportal_post);
 					}
 
@@ -147,8 +147,8 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 					for ($i = 0; $i < $geopportal_posts_size; $i++) {
 						for ($j = 0; $j < $geopportal_posts_size - $i; $j++) {
 							$k = $j + 1;
-							$geopportal_test_left = $geopportal_posts_trimmed[$j]->geop_portal_post_priority;
-							$geopportal_test_right = $geopportal_posts_trimmed[$k]->geop_portal_post_priority;
+							$geopportal_test_left = $geopportal_posts_trimmed[$j]->geop_ccb_post_priority;
+							$geopportal_test_right = $geopportal_posts_trimmed[$k]->geop_ccb_post_priority;
 							if ($geopportal_test_left > $geopportal_test_right) {
 								// Swap elements at indices: $j, $k
 								list($geopportal_posts_trimmed[$j], $geopportal_posts_trimmed[$k]) = array($geopportal_posts_trimmed[$k], $geopportal_posts_trimmed[$j]);
