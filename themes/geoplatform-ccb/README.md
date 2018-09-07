@@ -4,7 +4,7 @@
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
 **Stable tag:** 3.0.5   
-**Version:**
+**Version:** 3.1.7
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -112,7 +112,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
-###  ###
+### 3.1.7 ###
 * Released September 6, 2018
 
  - Posts and pages can be assigned numeric priority values on their edit pages. This will determine their ordering within Categories.
