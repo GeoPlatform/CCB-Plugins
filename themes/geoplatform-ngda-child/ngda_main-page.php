@@ -52,7 +52,7 @@
             // Assigns pages with valid priority values to the trimmed array.
             $geopngda_pages_trimmed = array();
             foreach($geopngda_pages as $geopngda_page){
-              if ($geopngda_page->geop_ngda_post_priority > 0)
+              if ($geopngda_page->geop_ccb_post_priority > 0)
                 array_push($geopngda_pages_trimmed, $geopngda_page);
             }
 
@@ -61,8 +61,8 @@
             for ($i = 0; $i < $geopngda_pages_size; $i++) {
               for ($j = 0; $j < $geopngda_pages_size - $i; $j++) {
                 $k = $j + 1;
-                $geopngda_test_left = $geopngda_pages_trimmed[$j]->geop_ngda_post_priority;
-                $geopngda_test_right = $geopngda_pages_trimmed[$k]->geop_ngda_post_priority;
+                $geopngda_test_left = $geopngda_pages_trimmed[$j]->geop_ccb_post_priority;
+                $geopngda_test_right = $geopngda_pages_trimmed[$k]->geop_ccb_post_priority;
                 if ($geopngda_test_left > $geopngda_test_right) {
                   // Swap elements at indices: $j, $k
                   list($geopngda_pages_trimmed[$j], $geopngda_pages_trimmed[$k]) = array($geopngda_pages_trimmed[$k], $geopngda_pages_trimmed[$j]);

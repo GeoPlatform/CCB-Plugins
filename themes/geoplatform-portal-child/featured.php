@@ -5,7 +5,7 @@ class Geopportal_Featured_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'geopportal_featured_widget', // Base ID
-			esc_html__( 'GeoPlatform Featured Applications', 'geoplatform-ccb' ), // Name
+			esc_html__( 'GeoPlatform Featured Apps', 'geoplatform-ccb' ), // Name
 			array( 'description' => esc_html__( 'GeoPlatform featured applications widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true ) // Args
 		);
 	}

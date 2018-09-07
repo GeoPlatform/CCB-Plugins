@@ -1455,7 +1455,7 @@ if ( ! function_exists ( 'geop_ccb_post_column_filter' ) ) {
 }
 
 /**
- * Data added to category admin column, or N/A if not applicable.
+ * Data added to posts admin column, or N/A if not applicable.
  *
  * Functionality inspired by categories-images plugin.
  * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
@@ -1504,7 +1504,7 @@ if ( ! function_exists ( 'geop_ccb_custom_field_page_checkboxes' ) ) {
 }
 
 /**
- * Priority column added to posts admin.
+ * Priority column added to pages admin.
  *
  * Functionality inspired by categories-images plugin.
  *
@@ -1530,7 +1530,7 @@ if ( ! function_exists ( 'geop_ccb_page_column_filter' ) ) {
 
 
 /**
- * Data added to category admin column, or N/A if not applicable.
+ * Data added to pages admin column, or N/A if not applicable.
  *
  * Functionality inspired by categories-images plugin.
  * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
@@ -1552,6 +1552,13 @@ if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
   }
   add_action('manage_pages_custom_column', 'geop_ccb_page_column_action', 10, 2);
 }
+
+
+
+
+
+
+
 
 
 if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
