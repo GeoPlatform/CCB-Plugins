@@ -112,6 +112,11 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
 
+= 3.1.2 =
+* Released September 7, 2018
+
+ - Removed sorting functions within this theme that have been moved to its parent.
+
 = 3.1.1 =
 * Released September 6, 2018
 
