@@ -13,6 +13,12 @@
             <br>
               <div class="row">
               <?php
+
+                // Sets up ability to read published and private posts.
+                $geop_ngda_private_perm = array('publish');
+                if (current_user_can('read_private_pages'))
+                  $geop_ngda_private_perm = array('publish', 'private');
+
                 //Grabs the featured_appearance value and declares the trimmed post array.
                 $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
                 $geopngda_posts_final = array();
@@ -23,7 +29,8 @@
                     'post_type' => 'post',
                     'orderby' => 'date',
                     'order' => 'DSC',
-                    'numberposts' => -1
+                    'numberposts' => -1,
+                    'post_status' => $geop_ngda_private_perm
                   ) );
 
                   // This list is then filtered for all posts in the Front Page category,
@@ -40,7 +47,8 @@
                   // Custom sorting method. Begins by getting all of the posts.
                   $geopngda_posts = get_posts( array(
                       'post_type'   => 'post',
-                      'numberposts' => -1
+                      'numberposts' => -1,
+                      'post_status' => $geop_ngda_private_perm
                   ) );
 
                   // Assigns posts with valid priority values to the trimmed array.
