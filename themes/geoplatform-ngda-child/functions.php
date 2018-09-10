@@ -26,6 +26,15 @@ function geopngda_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'geopngda_enqueue_scripts' );
 
+// Removes private post and page perms for subscribers, in case it's goofed up from another source otherwise.
+function geop_ngda_add_theme_caps(){
+	$subRole = get_role('subscriber');
+
+	$subRole->remove_cap('read_private_pages');
+	$subRole->remove_cap('read_private_posts');
+}
+add_action( 'admin_init', 'geop_ngda_add_theme_caps' );
+
 
 //-------------------------------
 // Diabling auto formatting and adding <p> tags to copy/pasted HTML in pages
@@ -140,7 +149,6 @@ function geop_ngda_customize_register( $wp_customize )
 
 }
 add_action( 'customize_register', 'geop_ngda_customize_register');
-
 
 
 /**
