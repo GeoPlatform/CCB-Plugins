@@ -11,8 +11,8 @@ $geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
 ?>
 
 <div class='wrap gp-search-admin'>
-  <h2>GeoPlatform Search Plugin</h2>
-  <h4>These settings are the default values of the plugin when added to the page.  Any values are added via shortcode will take precedence.</h4>
+  <h2>GeoPlatform Community Search Plugin Settings Page</h2>
+  <h4>Use the Community Search plugin to create and embed filtered lists of GeoPlatform Portfolio assets within your community content. These settings are the default values of the plugin when added to the page. Any values added using shortcodes will take precedence.</h4>
 
   <form method='post' action='options.php'>
     <?php settings_fields('geopcomsearch'); ?>

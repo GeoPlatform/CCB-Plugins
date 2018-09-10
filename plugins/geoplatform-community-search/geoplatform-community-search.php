@@ -137,7 +137,7 @@ add_action( 'admin_enqueue_scripts', 'geopcomsearch_add_admin_script' );
 
 // add to settings menu
 function geopcomsearch__plugin_admin_menu(){
-  add_options_page( 'GeoPlatform Search Plugin Settings Page', GP_SEARCH_NAME, 'edit_others_posts', GP_SEARCH_NAME, 'geopcomsearch__plugin_display_admin_page');
+  add_options_page( 'GeoPlatform Community Search Plugin Settings Page', GP_SEARCH_NAME, 'edit_others_posts', GP_SEARCH_NAME, 'geopcomsearch__plugin_display_admin_page');
 }
 add_action('admin_menu', 'geopcomsearch__plugin_admin_menu');
 
