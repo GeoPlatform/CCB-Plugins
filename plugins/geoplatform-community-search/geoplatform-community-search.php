@@ -30,6 +30,20 @@ define('GP_SEARCH_URL', plugin_dir_url(__FILE__));
 define('GP_SEARCH_NAME', "GeoPlatform Community Search");
 define('GP_SEARCH_VERSION', "1.0.5");
 
+
+/**
+* Add settings action link to the plugins page.
+*
+* @since    1.0.0
+*/
+function plugin_add_settings_link( $links ) {
+    $settings_link = array('<a href="options-general.php?page=GeoPlatform+Community+Search">' . __( 'Settings' ) . '</a>');
+      return array_merge(  $settings_link, $links );
+}
+$plugin = plugin_basename( __FILE__ );
+add_filter( "plugin_action_links_" . $plugin, 'plugin_add_settings_link' );
+
+
 function geopcomsearch_add_stylesheet() {
   wp_register_style('geopcomsearch', GP_SEARCH_URL . 'assets/css/geoplatform-community-search-core.css', array(), false, 'all');
   wp_enqueue_style('geopcomsearch');
