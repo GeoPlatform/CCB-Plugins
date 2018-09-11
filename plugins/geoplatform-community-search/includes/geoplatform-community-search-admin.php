@@ -90,14 +90,14 @@ $geopcomsearch_theme = $geopcomsearch_fields['geopcomsearch_theme'];
         <td class='gp-search-options-cell'>A valid Community id</td>
         <td class='gp-search-options-cell'>[geopcomsearch community=c798ba17574f8caf0da0e409e0e7726a]</td>
         <td class='gp-search-options-cell'>any</td>
-        <td class='gp-search-options-cell'></td>
+        <td class='gp-search-options-cell'>Requires a valid community ID, community names will not work.</td>
       </tr>
       <tr class='gp-search-options-row'>
         <td class='gp-search-options-cell'>title</td>
         <td class='gp-search-options-cell'>The title text</td>
         <td class='gp-search-options-cell'>[geopcomsearch title=GeoObjects]</td>
         <td class='gp-search-options-cell'>Community Items</td>
-        <td class='gp-search-options-cell'>Single word only, no spaces allowed</td>
+        <td class='gp-search-options-cell'>For multiple words, surround your entry with quotation marks.</td>
       </tr>
       <tr class='gp-search-options-row'>
         <td class='gp-search-options-cell'>objtype</td>
@@ -111,14 +111,14 @@ $geopcomsearch_theme = $geopcomsearch_fields['geopcomsearch_theme'];
         <td class='gp-search-options-cell'>Flag to display paging control</td>
         <td class='gp-search-options-cell'>[geopcomsearch showpaging=false]</td>
         <td class='gp-search-options-cell'>true</td>
-        <td class='gp-search-options-cell'></td>
+        <td class='gp-search-options-cell'>An input of either true or false is required.</td>
       </tr>
       <tr class='gp-search-options-row'>
         <td class='gp-search-options-cell'>showsearch</td>
         <td class='gp-search-options-cell'>Flag to display search control</td>
         <td class='gp-search-options-cell'>[geopcomsearch showsearch=false]</td>
         <td class='gp-search-options-cell'>true</td>
-        <td class='gp-search-options-cell'></td>
+        <td class='gp-search-options-cell'>An input of either true or false is required.</td>
       </tr>
       <tr class='gp-search-options-row'>
         <td class='gp-search-options-cell'>sort</td>
@@ -132,21 +132,21 @@ $geopcomsearch_theme = $geopcomsearch_fields['geopcomsearch_theme'];
         <td class='gp-search-options-cell'>Number of results per page</td>
         <td class='gp-search-options-cell'>[geopcomsearch maxresults=13]</td>
         <td class='gp-search-options-cell'>10</td>
-        <td class='gp-search-options-cell'></td>
+        <td class='gp-search-options-cell'>An integer input is required.</td>
       </tr>
       <tr class='gp-search-options-row'>
         <td class='gp-search-options-cell'>keyword</td>
         <td class='gp-search-options-cell'>Filter results by keywords</td>
         <td class='gp-search-options-cell'>[geopcomsearch keyword=water,volcanos]</td>
         <td class='gp-search-options-cell'>null</td>
-        <td class='gp-search-options-cell'>Use commas to seperate terms, no spaces allowed</td>
+        <td class='gp-search-options-cell'>Use commas to seperate terms, place multi-word input in quotation marks.</td>
       </tr>
       <tr class='gp-search-options-row'>
         <td class='gp-search-options-cell'>theme</td>
         <td class='gp-search-options-cell'>Valid Theme ids</td>
         <td class='gp-search-options-cell'>[geopcomsearch theme=f3f68256ba597e753829239d2f78dae4]</td>
         <td class='gp-search-options-cell'>any</td>
-        <td class='gp-search-options-cell'>Use commas to seperate ids, no spaces allowed</td>
+        <td class='gp-search-options-cell'>Requires valid theme IDs, theme names will not work.</td>
       </tr>
     </tbody>
   </table>
