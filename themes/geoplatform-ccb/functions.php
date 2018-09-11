@@ -218,29 +218,47 @@ if ( ! function_exists ( 'geop_ccb_custom_logo_setup' ) ) {
 }
 
 /**
- * Support adding Menus for header and footer
+ * Support adding Menus for the three menu types, segregated by location.
  *
  * @link https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
  *
  * @return void
  */
-if ( ! function_exists ( 'geop_ccb_register_menus' ) ) {
-	function geop_ccb_register_menus() {
-	register_nav_menus(
-		array(
-			'community-links' => 'Community Links',
-			'header-left' => 'Header Menu - Left Column',
-			'header-center' => 'Header Menu - Center Column',
-			'header-right-col1' => 'Header Menu - Right Column 1',
-			'header-right-col2' => 'Header Menu - Right Column 2',
-			'footer-left' => 'Footer Menu - Left Column',
-			'footer-center' => 'Footer Menu - Center Column',
-			'footer-right-col1' => 'Footer Menu - Right Column 1',
-			'footer-right-col2' => 'Footer Menu - Right Column 2'
-		)
-	);
+if ( ! function_exists ( 'geop_ccb_register_comlink_menus' ) ) {
+ 	function geop_ccb_register_comlink_menus() {
+ 	  register_nav_menus(
+   		array('community-links' => 'Community Links')
+ 	  );
 	}
-	add_action( 'init', 'geop_ccb_register_menus' );
+  add_action( 'init', 'geop_ccb_register_comlink_menus' );
+}
+
+if ( ! function_exists ( 'geop_ccb_register_header_menus' ) ) {
+ 	function geop_ccb_register_header_menus() {
+ 	  register_nav_menus(
+   		array(
+   			'header-left' => 'Header Menu - Left Column',
+   			'header-center' => 'Header Menu - Center Column',
+   			'header-right-col1' => 'Header Menu - Right Column 1',
+   			'header-right-col2' => 'Header Menu - Right Column 2',
+   		)
+ 	  );
+	}
+  add_action( 'init', 'geop_ccb_register_header_menus' );
+}
+
+if ( ! function_exists ( 'geop_ccb_register_footer_menus' ) ) {
+	function geop_ccb_register_footer_menus() {
+  	register_nav_menus(
+  		array(
+  			'footer-left' => 'Footer Menu - Left Column',
+  			'footer-center' => 'Footer Menu - Center Column',
+  			'footer-right-col1' => 'Footer Menu - Right Column 1',
+  			'footer-right-col2' => 'Footer Menu - Right Column 2'
+  		)
+  	);
+	}
+	add_action( 'init', 'geop_ccb_register_footer_menus' );
 }
 
 /**

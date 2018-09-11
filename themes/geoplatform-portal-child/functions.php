@@ -493,7 +493,11 @@ function geop_ccb_page_column_action( $geopccb_column, $geopccb_id ){};
 function geop_ccb_custom_field_page_checkboxes(){};
 function geop_ccb_page_column_filter( $geopccb_columns ){};
 
+// Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};
+
+// Killing commmunity links menu creation due to lack of community links section.
+function geop_ccb_register_header_menus(){};
 
 /**
  * CDN Distribution handler

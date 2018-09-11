@@ -45,7 +45,8 @@
             'theme_location' => 'community-links',
             'menu_class' => 'text-white nav navbar-nav navbar-right navbar-fixed-bottom',
             'items_wrap' => '%3$s',
-            'container' => 'li'
+            'container' => 'li',
+            'fallback_cb' => false
            ) ); ?>
          </ul>
          <br />

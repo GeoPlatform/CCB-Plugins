@@ -377,7 +377,8 @@ function geop_ccb_category_mod_interface( $tag ){};
 function geop_ccb_search_register(){};
 function geop_ccb_bootstrap_register(){};
 
-
+// Killing header menu creation due to lack of menu button.
+function geop_ccb_register_header_menus(){};
 
 /**
  * CDN Distribution handler
