@@ -4,7 +4,7 @@
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
 **Stable tag:** 3.1.0
-**Version:** 3.1.2
+**Version:** 3.1.3
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -111,6 +111,11 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
+
+= 3.1.3 =
+* Released September 11, 2018
+
+ - Removed option to assign menus to the mega-menu which does do not exist in this theme.
 
 = 3.1.2 =
 * Released September 7, 2018

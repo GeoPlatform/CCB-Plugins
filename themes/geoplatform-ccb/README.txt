@@ -4,7 +4,7 @@
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.6
 -Stable tag: 3.0.5
--Version: 3.1.7
+-Version: 3.1.8
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -111,6 +111,12 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
+
+= 3.1.8 =
+* Released September 11, 2018
+
+ - Added Community Links functionality. A new menu can now exists in the header for all pages featuring one.
+ - Minor background code modifications for child theme use.
 
 = 3.1.7 =
 * Released September 6, 2018

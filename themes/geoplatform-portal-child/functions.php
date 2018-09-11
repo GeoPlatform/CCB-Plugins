@@ -40,11 +40,12 @@ function geop_ccb_register_menus() {
     array(
       'headfoot-featured' => __( 'HF - Featured' ),
       'headfoot-getInvolved' => __( 'HF - Get Involved' ),
-      'headfoot-appservices' => __( 'HF - Apps and Services' ),
+			// 'headfoot-exploreData' => __(' HF - Explore Data'),
+      // 'headfoot-appservices' => __( 'HF - Apps and Services' ),
       'headfoot-aboutL' => __( 'HF - About Left' ),
       'headfoot-aboutR' => __( 'HF - About Right' ),
-      'headfoot-help' => __( 'HF - Help' ),
-      'headfoot-themes' => __( 'HF - Themes')
+      // 'headfoot-help' => __( 'HF - Help' ),
+      // 'headfoot-themes' => __( 'HF - Themes')
     )
   );
 }
@@ -496,8 +497,10 @@ function geop_ccb_page_column_filter( $geopccb_columns ){};
 // Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};
 
-// Killing commmunity links menu creation due to lack of community links section.
+// Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
+function geop_ccb_register_comlink_menus(){};
+function geop_ccb_register_footer_menus(){};
 
 /**
  * CDN Distribution handler
