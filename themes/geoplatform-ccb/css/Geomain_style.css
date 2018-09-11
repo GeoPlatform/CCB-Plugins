@@ -2415,7 +2415,7 @@ header.primary .btn-account:hover>.btn {
 }
 
 .header__menu>li>button, .header__menu>li>a, .header__menu>li>a:visited, .header__menu>li>.btn-link, .header__menu>li>a.btn-link, .header__menu>li>.btn-group>button, .header__menu>li>.btn-group>a, .header__menu>li>.btn-group>a:visited, .header__menu>li>.btn-group>.btn-link, .header__menu>li>.btn-group>a.btn-link, .header__menu .header__btn, .header__menu a.header__btn, .header__menu a.header__btn:visited {
-    color: #777;
+    color: white;
     padding: 1em .75em;
     border: none;
     text-decoration: none;
