@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.5
+ * @since             1.0.6
  * @package           GP_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Community Search
  * Plugin URI:        https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-community-search
  * Description:       Search for geoplatform community objects.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Author:            Image Matters LLC
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -78,6 +78,7 @@ function geopcomsearch__shortcode_creation($geopcomsearch_atts){
     'geopcomsearch_checkbox_show_search' => 1,
     'geopcomsearch_select_sort' => 'modified',
     'geopcomsearch_text_keyword' => '',
+    'geopcomsearch_theme' => 'any',
     'geopcomsearch_select_perpage' => 10));
 
   // populate via shortcode, using settings api values as defaults
@@ -90,6 +91,7 @@ function geopcomsearch__shortcode_creation($geopcomsearch_atts){
     'sort' => $geopcomsearch_options['geopcomsearch_select_sort'],
     'maxresults' => $geopcomsearch_options['geopcomsearch_select_perpage'],
     'keyword' => $geopcomsearch_options['geopcomsearch_text_keyword'],
+    'theme' => $geopcomsearch_options['geopcomsearch_theme'],
     'geopcomsearch_uuid' => $geopcomsearch_uuid
   ), $geopcomsearch_atts);
 
@@ -159,6 +161,7 @@ function geopcomsearch_settings_init() {
   add_settings_field('geopcomsearch_select_sort', __( 'Sort Field:', 'wordpress' ), 'geopcomsearch_select_sort_render', 'geopcomsearch', 'geopcomsearch_section' );
 	add_settings_field('geopcomsearch_select_perpage', __( 'Records Per Page:', 'wordpress' ), 'geopcomsearch_select_perpage_render', 'geopcomsearch', 'geopcomsearch_section' );
   add_settings_field('geopcomsearch_text_keyword', __( 'Default Keywords:', 'wordpress' ), 'geopcomsearch_text_keyword_render', 'geopcomsearch', 'geopcomsearch_section' );
+  add_settings_field('geopcomsearch_theme', __( 'Default Themes:', 'wordpress' ), 'geopcomsearch_theme_render', 'geopcomsearch', 'geopcomsearch_section' );
 }
 
 function geopcomsearch_settings_section_callback(  ) {	echo __( '', 'wordpress' ); } // don't display anything for settings title
@@ -259,5 +262,14 @@ function geopcomsearch_text_keyword_render(  ) {
 	<input type='text' class='gp-form-control' name='geopcomsearch_settings[geopcomsearch_text_keyword]' value='<?php echo $geopcomsearch_keywordVal; ?>'>
 	<?php
 }
+
+function geopcomsearch_theme_render(  ) {
+  $geopcomsearch_options = get_option( 'geopcomsearch_settings', array( 'geopcomsearch_theme' => 'any' ));
+  $geopcomsearch_themeVal = $geopcomsearch_options['geopcomsearch_theme'];
+	?>
+	<input type='text' class='gp-form-control' name='geopcomsearch_settings[geopcomsearch_theme]' value='<?php echo $geopcomsearch_themeVal; ?>'>
+	<?php
+}
+
 
  ?>

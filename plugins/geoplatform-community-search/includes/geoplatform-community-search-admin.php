@@ -8,6 +8,7 @@ $geopcomsearch_search = $geopcomsearch_fields['geopcomsearch_checkbox_show_searc
 $geopcomsearch_sort = $geopcomsearch_fields['geopcomsearch_select_sort'];
 $geopcomsearch_perpage = $geopcomsearch_fields['geopcomsearch_select_perpage'];
 $geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
+$geopcomsearch_theme = $geopcomsearch_fields['geopcomsearch_theme'];
 ?>
 
 <div class='wrap gp-search-admin'>
@@ -27,8 +28,8 @@ $geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
            <div class='content'><?php call_user_func($geopcomsearch_title['callback'], $geopcomsearch_title['args']); ?></div>
         </div>
         <div class='gp-section'>
-           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_paging['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_paging['title']); ?></label></div>
-           <div class='content'><?php call_user_func($geopcomsearch_paging['callback'], $geopcomsearch_paging['args']); ?></div>
+           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_theme['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_theme['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_theme['callback'], $geopcomsearch_theme['args']); ?></div>
         </div>
       </div>
       <div class='gp-search-form-container-row'>
@@ -41,8 +42,8 @@ $geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
            <div class='content'><?php call_user_func($geopcomsearch_sort['callback'], $geopcomsearch_sort['args']); ?></div>
         </div>
         <div class='gp-section'>
-           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_search['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_search['title']); ?></label></div>
-           <div class='content'><?php call_user_func($geopcomsearch_search['callback'], $geopcomsearch_search['args']); ?></div>
+           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_paging['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_paging['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_paging['callback'], $geopcomsearch_paging['args']); ?></div>
         </div>
       </div>
       <div class='gp-search-form-container-row'>
@@ -53,6 +54,10 @@ $geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
         <div class='gp-section'>
            <div class='label'><label for="<?php echo esc_attr($geopcomsearch_keyword['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_keyword['title']); ?></label></div>
            <div class='content'><?php call_user_func($geopcomsearch_keyword['callback'], $geopcomsearch_keyword['args']); ?></div>
+        </div>
+        <div class='gp-section'>
+           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_search['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_search['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_search['callback'], $geopcomsearch_search['args']); ?></div>
         </div>
       </div>
       <div class='submit'>
@@ -91,7 +96,7 @@ $geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
         <td class='gp-search-options-cell'>title</td>
         <td class='gp-search-options-cell'>The title text</td>
         <td class='gp-search-options-cell'>[geopcomsearch title=GeoObjects]</td>
-        <td class='gp-search-options-cell'></td>
+        <td class='gp-search-options-cell'>Community Items</td>
         <td class='gp-search-options-cell'>Single word only, no spaces allowed</td>
       </tr>
       <tr class='gp-search-options-row'>
@@ -133,8 +138,15 @@ $geopcomsearch_keyword = $geopcomsearch_fields['geopcomsearch_text_keyword'];
         <td class='gp-search-options-cell'>keyword</td>
         <td class='gp-search-options-cell'>Filter results by keywords</td>
         <td class='gp-search-options-cell'>[geopcomsearch keyword=water,volcanos]</td>
-        <td class='gp-search-options-cell'>any</td>
+        <td class='gp-search-options-cell'>null</td>
         <td class='gp-search-options-cell'>Use commas to seperate terms, no spaces allowed</td>
+      </tr>
+      <tr class='gp-search-options-row'>
+        <td class='gp-search-options-cell'>theme</td>
+        <td class='gp-search-options-cell'>Valid Theme ids</td>
+        <td class='gp-search-options-cell'>[geopcomsearch theme=f3f68256ba597e753829239d2f78dae4]</td>
+        <td class='gp-search-options-cell'>any</td>
+        <td class='gp-search-options-cell'>Use commas to seperate ids, no spaces allowed</td>
       </tr>
     </tbody>
   </table>
