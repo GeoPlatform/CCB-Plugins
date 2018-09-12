@@ -36,8 +36,8 @@
             foreach($geopngda_pages as $geopngda_page){
               if (in_category("Front Page", $geopngda_page))
                 array_push($geopngda_pages_final, $geopngda_page);
-              if (count($geopngda_pages_final) >= 6)
-                break;
+              // if (count($geopngda_pages_final) >= 6)
+              //   break;
             }
           }
           else {
@@ -70,7 +70,8 @@
               }
             }
             // Removes all pages after the first 6.
-            $geopngda_pages_final = array_slice($geopngda_pages_trimmed, 0, 6);
+            // $geopngda_pages_final = array_slice($geopngda_pages_trimmed, 0, 6);
+            $geopngda_pages_final = $geopngda_pages_trimmed;
           }
 
           // Outputs the pages.

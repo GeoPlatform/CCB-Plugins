@@ -70,7 +70,8 @@
               }
             }
             // Removes all pages after the first 6.
-            $geopngda_pages_final = array_slice($geopngda_pages_trimmed, 0, 6);
+            // $geopngda_pages_final = array_slice($geopngda_pages_trimmed, 0, 6);
+            $geopngda_pages_final = $geopngda_pages_trimmed;
           }
 
           // Outputs the pages.

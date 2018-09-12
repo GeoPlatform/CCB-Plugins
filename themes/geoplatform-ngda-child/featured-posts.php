@@ -38,8 +38,8 @@
                   foreach($geopngda_posts as $geopngda_post){
                     if (in_category("Front Page", $geopngda_post))
                       array_push($geopngda_posts_final, $geopngda_post);
-                    if (count($geopngda_posts_final) >= 8)
-                      break;
+                    // if (count($geopngda_posts_final) >= 8)
+                    //   break;
                   }
                 }
                 else {
@@ -73,8 +73,8 @@
                   }
 
                   // Removes all posts after the first 8.
-                  $geopngda_posts_final = array_slice($geopngda_posts_trimmed, 0, 8);
-
+                  // $geopngda_posts_final = array_slice($geopngda_posts_trimmed, 0, 8);
+                  $geopngda_posts_final = $geopngda_posts_trimmed;
                 }
 
                 // Outputs posts.

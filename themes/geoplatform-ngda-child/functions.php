@@ -357,7 +357,7 @@ function geop_ccb_sorting_register( $wp_customize ){
 	  'type' => 'radio',
 	  'label' => 'Choose the sorting method',
 	  'section' => 'featured_format',
-    'description' => 'Date sorting displays the six most recent posts and pages within the Front Page category.<br><br>Custom sorting makes use of values you assign your content in the Page and Post admin pages. Each page or post can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+    'description' => 'Date sorting displays the most recent posts and pages within the Front Page category.<br><br>Custom sorting makes use of values you assign your content in the Page and Post admin pages. Each page or post can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
 		'choices' => array(
 		  'custom' => __('Custom', 'geoplatform-ccb'),
 			'date' => __('Date',  'geoplatform-ccb')
@@ -366,6 +366,19 @@ function geop_ccb_sorting_register( $wp_customize ){
 }
 add_action( 'customize_register', 'geop_ccb_sorting_register');
 
+// Overriding the footer menu setup in CCB for the sake of clarification considering
+// the different layout of NGDA's footer.
+function geop_ccb_register_footer_menus() {
+	register_nav_menus(
+		array(
+			'footer-left' => 'Footer Menu - Left Column 1',
+			'footer-center' => 'Footer Menu - Left Column 2',
+			'footer-right-col1' => 'Footer Menu - Right Column 1',
+			'footer-right-col2' => 'Footer Menu - Right Column 2'
+		)
+	);
+}
+add_action( 'init', 'geop_ccb_register_footer_menus' );
 
 // Bumping out category functions not needed from parent theme.
 function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};

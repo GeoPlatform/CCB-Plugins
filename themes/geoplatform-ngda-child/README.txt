@@ -4,7 +4,7 @@
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.6
 -Stable tag: 3.1.0
--Version: 3.1.3
+-Version: 3.1.4
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -111,6 +111,13 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
+
+= 3.1.4 =
+* Released September 12, 2018
+
+ - Removed page and post output caps for the front page.
+ - Fixed legacy functionality of the footer menus, pointing menu assignments where they should be and removing output clutter.
+ - Modified interface text for menus which held the potential to cause user confusion.
 
 = 3.1.3 =
 * Released September 11, 2018

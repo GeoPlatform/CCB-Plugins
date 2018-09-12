@@ -66,9 +66,13 @@
           }
           else{
             $geopccb_invalid_bool = true;
-            $geopccb_error_report = 'Invalid gallery ID. Please check your your input and try again.' . $geopccb_customizerLink;
+            $geopccb_error_report = 'Invalid gallery ID. Please check your your input and try again.';
           }
-          if (!$geopccb_invalid_bool && array_key_exists('statusCode', $geopccb_result) && $geopccb_result['statusCode'] == "404"){
+          if (!$geopccb_invalid_bool && !is_array($geopccb_result)){
+            $geopccb_invalid_bool = true;
+            $geopccb_error_report = 'Invalid gallery link provided. Please check your input and try again.';
+          }
+          elseif (!$geopccb_invalid_bool && array_key_exists('statusCode', $geopccb_result) && $geopccb_result['statusCode'] == "404"){
             $geopccb_invalid_bool = true;
             $geopccb_error_report = 'Invalid gallery ID. Please check your your input and try again.';
           }
