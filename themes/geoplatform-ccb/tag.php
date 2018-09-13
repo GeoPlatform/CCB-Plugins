@@ -3,9 +3,9 @@
  * The template for displaying Tag archive
  *
  * @package GeoPlatform CCB
- * 
+ *
  * @link https://codex.wordpress.org/Tag_Templates
- * 
+ *
  * @since 3.0.0
  */
 

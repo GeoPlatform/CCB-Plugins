@@ -43,15 +43,6 @@ get_template_part( 'cat-banner', get_post_format() );
       // Mimics the old way of populating, but functional. Grabs all pages.
       if ($geopccb_featured_sort_format == 'date'){
         $geopccb_pages_final = $geopccb_pages;
-
-        // This list is then filtered for all pages in the Front Page category,
-        // ending the loop after 6 results.
-        // foreach($geopccb_pages as $geopccb_page){
-        //   if (in_category("Front Page", $geopccb_page))
-        //     array_push($geopccb_pages_final, $geopccb_page);
-        //   if (count($geopccb_pages_final) >= 6)
-        //     break;
-        // }
       }
       else {
         // Assigns pages with valid priority values to the trimmed array.
@@ -74,15 +65,20 @@ get_template_part( 'cat-banner', get_post_format() );
             }
           }
         }
-        // Removes all pages after the first 6.
-        // $geopccb_pages_final = array_slice($geopccb_pages_trimmed, 0, 6);
         $geopccb_pages_final = $geopccb_pages_trimmed;
       }
 
       foreach ($geopccb_pages_final as $geopccb_post){
-        $geopccb_excerpt = esc_attr($geopccb_post->post_content);
-        if (strlen($geopccb_excerpt) > 400)
-          $geopccb_excerpt = substr($geopccb_excerpt, 0, 400) . '...';
+
+        // Checks if there's data in the excerpt and, if so, assigns it to be displayed.
+        // If not, grabs post content and clips it at 400 characters.
+        if (!empty($geopccb_post->post_excerpt))
+          $geopccb_excerpt = esc_attr($geopccb_post->post_excerpt);
+        else{
+          $geopccb_excerpt = esc_attr($geopccb_post->post_content);
+          if (strlen($geopccb_excerpt) > 400)
+            $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 400) . '...');
+        }
 
         ?>
         <br/>

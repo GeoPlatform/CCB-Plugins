@@ -31,7 +31,17 @@ get_template_part( 'single-banner', get_post_format() );
 			) );
 
 			foreach($geopccb_posts as $geopccb_post){
-				$geopccb_excerpt = substr(esc_attr($geopccb_post->post_content), 0, 55);
+
+				// Checks if there's data in the excerpt and, if so, assigns it to be displayed.
+        // If not, grabs post content and clips it at 90 characters.
+        if (!empty($geopccb_post->post_excerpt))
+          $geopccb_excerpt = esc_attr($geopccb_post->post_excerpt);
+        else{
+          $geopccb_excerpt = esc_attr($geopccb_post->post_content);
+          if (strlen($geopccb_excerpt) > 90)
+            $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 90) . '...');
+        }
+
 				?>
 				<div class="col-sm-6 col-md-4">
 				<div class="gp-ui-card gp-ui-card--md gp-ui-card">
@@ -45,7 +55,7 @@ get_template_part( 'single-banner', get_post_format() );
 				    <div class="text--primary"><?php echo get_the_title($geopccb_post); ?></div>
 				    <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post); ?></div>
 				    <div class="text--supporting">
-				      <?php echo $geopccb_post->post_content; ?>
+				      <?php echo $geopccb_excerpt; ?>
 				    </div>
 				  </div>
 		    	<div class="gp-ui-card__footer">
@@ -59,7 +69,7 @@ get_template_part( 'single-banner', get_post_format() );
 				    <div class="text--primary"><?php echo get_the_title($geopccb_post); ?></div>
 				    <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post); ?></div>
 				    <div class="text--supporting">
-				      <?php echo $geopccb_post->post_content; ?>
+				      <?php echo $geopccb_excerpt; ?>
 				    </div>
 				  </div>
 				  <div class="gp-ui-card__footer">

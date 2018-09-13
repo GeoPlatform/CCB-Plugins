@@ -79,6 +79,17 @@
 
                 // Outputs posts.
                 foreach ($geopngda_posts_final as $geopccb_post){
+
+                  // Checks if there's data in the excerpt and, if so, assigns it to be displayed.
+                  // If not, grabs post content and clips it at 90 characters.
+                  if (!empty($geopccb_post->post_excerpt))
+                    $geopccb_excerpt = esc_attr($geopccb_post->post_excerpt);
+                  else{
+                    $geopccb_excerpt = esc_attr($geopccb_post->post_content);
+                    if (strlen($geopccb_excerpt) > 90)
+                      $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 90) . '...');
+                  }
+
                   ?>
                   <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                   <div class="gp-ui-card gp-ui-card--md gp-ui-card">
@@ -92,7 +103,7 @@
                           <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></div>
 
                           <div class="text--supporting">
-                              <?php echo substr($geopccb_post->post_content, 0, 55); ?>
+                              <?php echo $geopccb_excerpt; ?>
                           </div>
                       </div><!--gp-ui-card__body w/image-->
 
@@ -107,7 +118,7 @@
                             <div class="text--primary"><?php echo get_the_title($geopccb_post); ?></div>
                             <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></div>
                             <div class="text--supporting">
-                                <?php echo substr($geopccb_post->post_content, 0, 55); ?>
+                                <?php echo $geopccb_excerpt; ?>
                             </div>
                         </div><!--gp-ui-card__body-->
                         <div class="gp-ui-card__footer">
