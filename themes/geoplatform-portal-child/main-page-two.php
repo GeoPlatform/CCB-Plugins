@@ -62,9 +62,9 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 			$geopportal_mainpagetwo_disp_third_thumb = get_the_post_thumbnail_url($geopportal_mainpagetwo_disp_third_page);
 
 		// Sets up invalid post notices for dates and overwrites if the associated post is valid with an actual date.
-		$geopportal_mainpagetwo_disp_first_date = "Invalid Post";
-		$geopportal_mainpagetwo_disp_second_date = "Invalid Post";
-		$geopportal_mainpagetwo_disp_third_date = "Invalid Post";
+		$geopportal_mainpagetwo_disp_first_date = "";
+		$geopportal_mainpagetwo_disp_second_date = "";
+		$geopportal_mainpagetwo_disp_third_date = "";
 
 		if ( isset($geopportal_mainpagetwo_disp_first_page->ID) )
 			$geopportal_mainpagetwo_disp_first_date = get_the_date("F j, Y", $geopportal_mainpagetwo_disp_first_page->ID);
@@ -75,9 +75,13 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 
 		// Checks if there's data in the excerpt and, if so, assigns it to be displayed.
 		// If not, grabs post content and clips it at 200 characters.
+		$geopportal_mainpagetwo_disp_first_excerpt = "";
+		$geopportal_mainpagetwo_disp_second_excerpt = "";
+		$geopportal_mainpagetwo_disp_third_excerpt = "";
+
 		if (!empty($geopportal_mainpagetwo_disp_first_page->post_excerpt))
 		  $geopportal_mainpagetwo_disp_first_excerpt = esc_attr($geopportal_mainpagetwo_disp_first_page->post_excerpt);
-		else{
+		else if (!empty($geopportal_mainpagetwo_disp_first_page->post_content)){
 		  $geopportal_mainpagetwo_disp_first_excerpt = esc_attr($geopportal_mainpagetwo_disp_first_page->post_content);
 		  if (strlen($geopportal_mainpagetwo_disp_first_excerpt) > 200)
 		    $geopportal_mainpagetwo_disp_first_excerpt = esc_attr(substr($geopportal_mainpagetwo_disp_first_excerpt, 0, 200) . '...');
@@ -85,7 +89,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 
 		if (!empty($geopportal_mainpagetwo_disp_second_page->post_excerpt))
 		  $geopportal_mainpagetwo_disp_second_excerpt = esc_attr($geopportal_mainpagetwo_disp_second_page->post_excerpt);
-		else{
+			else if (!empty($geopportal_mainpagetwo_disp_second_page->post_content)){
 		  $geopportal_mainpagetwo_disp_second_excerpt = esc_attr($geopportal_mainpagetwo_disp_second_page->post_content);
 		  if (strlen($geopportal_mainpagetwo_disp_second_excerpt) > 200)
 		    $geopportal_mainpagetwo_disp_second_excerpt = esc_attr(substr($geopportal_mainpagetwo_disp_second_excerpt, 0, 200) . '...');
@@ -93,7 +97,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 
 		if (!empty($geopportal_mainpagetwo_disp_third_page->post_excerpt))
 		  $geopportal_mainpagetwo_disp_third_excerpt = esc_attr($geopportal_mainpagetwo_disp_third_page->post_excerpt);
-		else{
+			else if (!empty($geopportal_mainpagetwo_disp_third_page->post_content)){
 		  $geopportal_mainpagetwo_disp_third_excerpt = esc_attr($geopportal_mainpagetwo_disp_third_page->post_content);
 		  if (strlen($geopportal_mainpagetwo_disp_third_excerpt) > 200)
 		    $geopportal_mainpagetwo_disp_third_excerpt = esc_attr(substr($geopportal_mainpagetwo_disp_third_excerpt, 0, 200) . '...');
