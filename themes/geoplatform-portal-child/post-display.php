@@ -13,6 +13,17 @@
 // echo "<br>"
 
 $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_post_array[$geopportal_counter], OBJECT, 'post');
+
+// Checks if there's data in the excerpt and, if so, assigns it to be displayed.
+// If not, grabs post content and clips it at 200 characters.
+$geopportal_post = get_post($geopportal_mainpage_feat_page);
+if (!empty($geopportal_post->post_excerpt))
+  $geopccb_excerpt = esc_attr($geopportal_post->post_excerpt);
+else{
+  $geopccb_excerpt = esc_attr($geopportal_post->post_content);
+  if (strlen($geopccb_excerpt) > 200)
+    $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 200) . '...');
+}
 ?>
 
 <div class="col-sm-6 col-md-4">
@@ -28,7 +39,7 @@ $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_post
         <div class="text--primary"><?php echo get_the_title($geopportal_mainpage_feat_page); ?></div>
         <div class="text--secondary"></div>
         <div class="text--supporting">
-            <?php echo do_shortcode($geopportal_mainpage_disp_content_array[$geopportal_counter]); ?>
+            <?php echo $geopccb_excerpt; ?>
         </div>
     </div>
 
@@ -43,7 +54,7 @@ $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_post
           <div class="text--primary"><?php echo get_the_title($geopportal_mainpage_feat_page); ?></div>
           <div class="text--secondary"></div>
           <div class="text--supporting">
-              <?php echo do_shortcode($geopportal_mainpage_disp_content_array[$geopportal_counter]); ?>
+              <?php echo $geopccb_excerpt; ?>
           </div>
       </div>
       <div class="gp-ui-card__footer">
