@@ -4,7 +4,7 @@
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
 **Stable tag:** 3.0.5   
-**Version:** 3.1.9
+**Version:** 3.1.10
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -112,8 +112,13 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
+### 3.1.10 ###
+* Released September 13, 2018
+
+- Replaced display of trimmed content for posts and pages in categories with excerpts. Trimmed content will still be presented if the excerpt is not set.
+
 ### 3.1.9 ###
- * Release September 12, 2018
+* Released September 12, 2018
 
  - Fixed bugs and added additional validity checks to the Map Gallery Link function back-end.
 
