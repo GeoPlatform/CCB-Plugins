@@ -1571,7 +1571,6 @@ if ( ! function_exists ( 'geop_ccb_page_column_filter' ) ) {
   add_filter('manage_pages_columns', 'geop_ccb_page_column_filter');
 }
 
-
 /**
  * Data added to pages admin column, or N/A if not applicable.
  *
@@ -1595,6 +1594,127 @@ if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
   }
   add_action('manage_pages_custom_column', 'geop_ccb_page_column_action', 10, 2);
 }
+
+
+
+
+/**
+ * Creates the category post custom post type.
+ */
+if ( ! function_exists ( 'geop_ccb_create_category_post' ) ) {
+  function geop_ccb_create_category_post() {
+    register_post_type( 'geopccb_catlink',
+      array(
+        'labels' => array(
+          'name' => 'Category Links',
+          'singular_name' => 'Category Link'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'category'),
+        'taxonomies' => array('category'),
+        'publicly_queryable'  => false,
+      )
+    );
+  }
+  add_action( 'init', 'geop_ccb_create_category_post' );
+}
+
+/**
+ * Category Link priority incorporation
+ */
+// register the meta box for priority AND URL.
+if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) ) {
+  function geop_ccb_custom_field_catlink_checkboxes() {
+    add_meta_box(
+        'geop_ccb_sorting_catlink_id',          // this is HTML id of the box on edit screen
+        'Featured Display Priority',    // title of the box
+        'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'geopccb_catlink',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+    add_meta_box(
+        'geop_ccb_sorting_catlink_url',          // this is HTML id of the box on edit screen
+        'Redirect URL',    // title of the box
+        'geop_ccb_custom_field_external_url_content',   // function to be called to display the checkboxes, see the function below
+        'geopccb_catlink',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+  }
+  add_action( 'add_meta_boxes', 'geop_ccb_custom_field_catlink_checkboxes' );
+}
+
+/**
+ * Priority column added to category link admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) ) {
+  function geop_ccb_catlink_column_filter( $geopccb_columns ) {
+    $geopccb_columns = array(
+      'cb' => '<input type="checkbox" />',
+      'title' => 'Title',
+      'author' => 'Author',
+      'categories' => 'Categories',
+      'priority' => 'Priority',
+      'Date' => 'Date',
+    );
+    return $geopccb_columns;
+  }
+  add_filter( "manage_geopccb_catlink_posts_columns", "geop_ccb_catlink_column_filter" );
+}
+
+/**
+ * Data added to category link admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) ) {
+  function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {
+    if ( $geopccb_column == 'priority' ){
+			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
+      if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+        $geopccb_pri = "N/A";
+      echo '<p>' . $geopccb_pri . '</p>';
+    }
+  }
+  add_action('manage_geopccb_catlink_posts_custom_column', 'geop_ccb_catlink_column_action', 10, 2);
+}
+
+// display the metabox for cat_link URL
+if ( ! function_exists ( 'geop_ccb_custom_field_external_url_content' ) ) {
+  function geop_ccb_custom_field_external_url_content($post) {
+		echo "<input type='text' name='geop_ccb_cat_link_url' id='geop_ccb_cat_link_url' value='" . $post->geop_ccb_cat_link_url . "' style='width:30%;'>";
+ 		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
+  }
+}
+
+// save data from the cat_link URL box
+if ( ! function_exists ( 'geop_ccb_custom_field_catlink_data' ) ) {
+  function geop_ccb_custom_field_catlink_data($post_id) {
+    if ( !isset( $_POST['geop_ccb_cat_link_url'] ) || is_null( $_POST['geop_ccb_cat_link_url'] || empty( $_POST['geop_ccb_cat_link_url'] )))
+      update_post_meta( $post_id, 'geop_ccb_cat_link_url', '' );
+    else
+  		update_post_meta( $post_id, 'geop_ccb_cat_link_url', $_POST['geop_ccb_cat_link_url'] );
+  }
+  add_action( 'save_post', 'geop_ccb_custom_field_catlink_data' );
+}
+
 
 
 

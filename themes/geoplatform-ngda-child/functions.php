@@ -393,6 +393,14 @@ function geop_ccb_bootstrap_register(){};
 // Killing header menu creation due to lack of menu button.
 function geop_ccb_register_header_menus(){};
 
+// Killing Category Links custom post type and supporting functionality from CCB theme
+function geop_ccb_create_category_post() {};
+function geop_ccb_custom_field_catlink_checkboxes() {};
+function geop_ccb_catlink_column_filter( $geopccb_columns ) {};
+function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {};
+function geop_ccb_custom_field_external_url_content($post) {};
+function geop_ccb_custom_field_catlink_data($post_id) {};
+
 /**
  * CDN Distribution handler
  *
