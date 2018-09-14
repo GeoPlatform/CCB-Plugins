@@ -1546,7 +1546,6 @@ if ( ! function_exists ( 'geop_ccb_page_column_filter' ) ) {
   add_filter('manage_pages_columns', 'geop_ccb_page_column_filter');
 }
 
-
 /**
  * Data added to pages admin column, or N/A if not applicable.
  *
@@ -1574,16 +1573,33 @@ if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
 
 
 
-
-
-
+/**
+ * Creates the category post custom post type.
+ */
+if ( ! function_exists ( 'geop_ccb_create_category_post' ) ) {
+  function geop_ccb_create_category_post() {
+    register_post_type( 'geopccb_catlink',
+      array(
+        'labels' => array(
+          'name' => 'Category Links',
+          'singular_name' => 'Category Link'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'category'),
+        'taxonomies' => array('category'),
+        'publicly_queryable'  => false,
+      )
+    );
+  }
+  add_action( 'init', 'geop_ccb_create_category_post' );
+}
 
 /**
  * Category Link priority incorporation
  */
-
 // register the meta box for priority AND URL.
-if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
+if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) ) {
   function geop_ccb_custom_field_catlink_checkboxes() {
     add_meta_box(
         'geop_ccb_sorting_catlink_id',          // this is HTML id of the box on edit screen
@@ -1616,7 +1632,7 @@ if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) && in_arra
  * @param mixed $columns
  * @return void
  */
-if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
+if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) ) {
   function geop_ccb_catlink_column_filter( $geopccb_columns ) {
     $geopccb_columns = array(
       'cb' => '<input type="checkbox" />',
@@ -1631,7 +1647,6 @@ if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) && in_array( 'geopla
   add_filter( "manage_geopccb_catlink_posts_columns", "geop_ccb_catlink_column_filter" );
 }
 
-
 /**
  * Data added to category link admin column, or N/A if not applicable.
  *
@@ -1644,7 +1659,7 @@ if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) && in_array( 'geopla
  * @param mixed $id
  * @return void
  */
-if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
+if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) ) {
   function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {
     if ( $geopccb_column == 'priority' ){
 			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;

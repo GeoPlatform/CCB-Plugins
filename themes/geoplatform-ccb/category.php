@@ -28,11 +28,16 @@ get_template_part( 'cat-banner', get_post_format() );
       if (current_user_can('read_private_pages'))
         $geop_ccb_private_perm = array('publish', 'private');
 
+      // Sets the result types to post and page, including cat links if not a child theme
+      $geop_ccb_post_types = array('post','page');
+      if (!is_child_theme())
+        $geop_ccb_post_types = array('post','page','geopccb_catlink');
+
       $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
       $geopccb_pages_final = array();
 
       $geopccb_pages = get_posts(array(
-        'post_type' => array('post','page'),
+        'post_type' => $geop_ccb_post_types,
         'orderby' => 'date',
         'order' => 'DESC',
         'numberposts' => -1,
@@ -80,6 +85,12 @@ get_template_part( 'cat-banner', get_post_format() );
             $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 400) . '...');
         }
 
+        // Sets the More Information link to point to the post or page, but replaces
+        // it with the cat link's URL custom value if it is a cat link.
+        $geopccb_link_url = get_the_permalink($geopccb_post);
+        if (get_post_type($geopccb_post) == 'geopccb_catlink')
+          $geopccb_link_url = esc_attr($geopccb_post->geop_ccb_cat_link_url);
+
         ?>
         <br/>
         <?php if (has_post_thumbnail($geopccb_post)){ ?>
@@ -93,7 +104,7 @@ get_template_part( 'cat-banner', get_post_format() );
                     <?php echo $geopccb_excerpt;?>
                 </p>
               <br/>
-              <a class="btn btn-info" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
+              <a class="btn btn-info" href="<?php echo $geopccb_link_url; ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
           </div><!--#svc-card__body-->
         </div><!--#svc-card-->
         <br />
@@ -106,7 +117,7 @@ get_template_part( 'cat-banner', get_post_format() );
                     <?php echo $geopccb_excerpt;?>
                 </p>
               <br>
-              <a class="btn btn-info" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
+              <a class="btn btn-info" href="<?php echo $geopccb_link_url; ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
           </div><!--#svc-card__body-->
         </div><!--#svc-card-->
         <br /><?php
