@@ -1472,6 +1472,31 @@ if ( ! function_exists ( 'geop_ccb_post_column_filter' ) ) {
   add_filter('manage_post_posts_columns', 'geop_ccb_post_column_filter');
 }
 
+
+// Experiments with sortation.
+// if ( ! function_exists ( 'geop_ccb_post_column_sorter' ) ) {
+//   function geop_ccb_post_column_sorter($geopccb_columns) {
+//     return array('priority' => 'priority');
+//   }
+//   add_filter('manage_edit-post_sortable_columns', 'geop_ccb_post_column_sorter');
+// }
+
+// if ( ! function_exists ( 'geop_ccb_post_column_sort_think' ) ) {
+//   function geop_ccb_post_column_sort_think( $query ) {
+//     if( ! is_admin() )
+//       return;
+//
+//     $orderby = $query->get( 'orderby');
+//
+//     if( 'priority' == $orderby ) {
+//       $query->set('meta_key','priority');
+//       $query->set('orderby','meta_value_num');
+//     }
+//   }
+//   add_action( 'pre_get_posts', 'geop_ccb_post_column_sort_think' );
+// }
+
+
 /**
  * Data added to posts admin column, or N/A if not applicable.
  *
