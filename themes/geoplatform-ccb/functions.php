@@ -1582,13 +1582,21 @@ if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
  * Category Link priority incorporation
  */
 
-// register the meta box
+// register the meta box for priority AND URL.
 if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
   function geop_ccb_custom_field_catlink_checkboxes() {
     add_meta_box(
         'geop_ccb_sorting_catlink_id',          // this is HTML id of the box on edit screen
         'Featured Display Priority',    // title of the box
         'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'geopccb_catlink',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+    add_meta_box(
+        'geop_ccb_sorting_catlink_url',          // this is HTML id of the box on edit screen
+        'Redirect URL',    // title of the box
+        'geop_ccb_custom_field_external_url_content',   // function to be called to display the checkboxes, see the function below
         'geopccb_catlink',        // on which edit screen the box should appear
         'normal',      // part of page where the box should appear
         'default'      // priority of the box
@@ -1648,6 +1656,24 @@ if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) && in_array( 'geopla
   add_action('manage_geopccb_catlink_posts_custom_column', 'geop_ccb_catlink_column_action', 10, 2);
 }
 
+// display the metabox for cat_link URL
+if ( ! function_exists ( 'geop_ccb_custom_field_external_url_content' ) ) {
+  function geop_ccb_custom_field_external_url_content($post) {
+		echo "<input type='text' name='geop_ccb_cat_link_url' id='geop_ccb_cat_link_url' value='" . $post->geop_ccb_cat_link_url . "' style='width:30%;'>";
+ 		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
+  }
+}
+
+// save data from the cat_link URL box
+if ( ! function_exists ( 'geop_ccb_custom_field_catlink_data' ) ) {
+  function geop_ccb_custom_field_catlink_data($post_id) {
+    if ( !isset( $_POST['geop_ccb_cat_link_url'] ) || is_null( $_POST['geop_ccb_cat_link_url'] || empty( $_POST['geop_ccb_cat_link_url'] )))
+      update_post_meta( $post_id, 'geop_ccb_cat_link_url', '' );
+    else
+  		update_post_meta( $post_id, 'geop_ccb_cat_link_url', $_POST['geop_ccb_cat_link_url'] );
+  }
+  add_action( 'save_post', 'geop_ccb_custom_field_catlink_data' );
+}
 
 
 
