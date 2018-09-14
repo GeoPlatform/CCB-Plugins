@@ -25,21 +25,21 @@
 */
 
 
-if ( ! function_exists ( 'geop_ccb_create_category_post' ) ) {
-  function geop_ccb_create_category_post() {
-    register_post_type( 'geopccb_catlink',
-      array(
-        'labels' => array(
-          'name' => 'Category Link',
-          'singular_name' => 'Category Links'
-        ),
-        'public' => true,
-        'has_archive' => true,
-        'supports' => array( 'title', 'author', 'thumbnail', 'excerpt'),
-      )
-    );
-  }
-  add_action( 'init', 'geop_ccb_create_category_post' );
+function geop_ccb_create_category_post() {
+  register_post_type( 'geopccb_catlink',
+    array(
+      'labels' => array(
+        'name' => 'Category Link',
+        'singular_name' => 'Category Links'
+      ),
+      'public' => true,
+      'has_archive' => true,
+      'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'category'),
+      'taxonomies' => array('category'),
+    )
+  );
 }
+add_action( 'init', 'geop_ccb_create_category_post' );
+
 
  ?>

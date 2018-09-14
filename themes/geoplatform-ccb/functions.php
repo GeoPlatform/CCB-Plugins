@@ -1597,20 +1597,6 @@ if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) && in_arra
   add_action( 'add_meta_boxes', 'geop_ccb_custom_field_catlink_checkboxes' );
 }
 
-// Change the columns for the edit CPT screen
-function change_columns( $cols ) {
-  $cols = array(
-    'cb'       => '<input type="checkbox" />',
-    'url'      => __( 'URL',      'trans' ),
-    'referrer' => __( 'Referrer', 'trans' ),
-    'host'     => __( 'Host', 'trans' ),
-  );
-  return $cols;
-}
-add_filter( "manage_geopccb_catlink_posts_columns", "change_columns" );
-
-
-
 /**
  * Priority column added to category link admin.
  *
@@ -1624,21 +1610,22 @@ add_filter( "manage_geopccb_catlink_posts_columns", "change_columns" );
  */
 if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
   function geop_ccb_catlink_column_filter( $geopccb_columns ) {
-    $geopccb_new_columns = array();
-    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
-    $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
-  	$geopccb_new_columns['date'] = $geopccb_columns['date'];
-  	unset( $geopccb_columns['date'] );
-    unset( $geopccb_columns['comments'] );
-
-    return array_merge( $geopccb_columns, $geopccb_new_columns );
+    $geopccb_columns = array(
+      'cb' => '<input type="checkbox" />',
+      'title' => 'Title',
+      'author' => 'Author',
+      'categories' => 'Categories',
+      'priority' => 'Priority',
+      'Date' => 'Date',
+    );
+    return $geopccb_columns;
   }
-  add_filter('manage_pages_columns', 'geop_ccb_catlink_column_filter');
+  add_filter( "manage_geopccb_catlink_posts_columns", "geop_ccb_catlink_column_filter" );
 }
 
 
 /**
- * Data added to pages admin column, or N/A if not applicable.
+ * Data added to category link admin column, or N/A if not applicable.
  *
  * Functionality inspired by categories-images plugin.
  * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
@@ -1658,7 +1645,7 @@ if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) && in_array( 'geopla
       echo '<p>' . $geopccb_pri . '</p>';
     }
   }
-  add_action('manage_pages_custom_column', 'geop_ccb_catlink_column_action', 10, 2);
+  add_action('manage_geopccb_catlink_posts_custom_column', 'geop_ccb_catlink_column_action', 10, 2);
 }
 
 
