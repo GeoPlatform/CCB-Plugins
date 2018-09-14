@@ -1578,6 +1578,98 @@ if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
 
 
 
+/**
+ * Category Link priority incorporation
+ */
+
+// register the meta box
+if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
+  function geop_ccb_custom_field_catlink_checkboxes() {
+    add_meta_box(
+        'geop_ccb_sorting_catlink_id',          // this is HTML id of the box on edit screen
+        'Featured Display Priority',    // title of the box
+        'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'geopccb_catlink',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+  }
+  add_action( 'add_meta_boxes', 'geop_ccb_custom_field_catlink_checkboxes' );
+}
+
+// Change the columns for the edit CPT screen
+function change_columns( $cols ) {
+  $cols = array(
+    'cb'       => '<input type="checkbox" />',
+    'url'      => __( 'URL',      'trans' ),
+    'referrer' => __( 'Referrer', 'trans' ),
+    'host'     => __( 'Host', 'trans' ),
+  );
+  return $cols;
+}
+add_filter( "manage_geopccb_catlink_posts_columns", "change_columns" );
+
+
+
+/**
+ * Priority column added to category link admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
+  function geop_ccb_catlink_column_filter( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
+  	$geopccb_new_columns['date'] = $geopccb_columns['date'];
+  	unset( $geopccb_columns['date'] );
+    unset( $geopccb_columns['comments'] );
+
+    return array_merge( $geopccb_columns, $geopccb_new_columns );
+  }
+  add_filter('manage_pages_columns', 'geop_ccb_catlink_column_filter');
+}
+
+
+/**
+ * Data added to pages admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) && in_array( 'geoplatform-category-insert/geoplatform-category-insert.php', (array) get_option( 'active_plugins', array() ) ) ) {
+  function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {
+    if ( $geopccb_column == 'priority' ){
+			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
+      if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+        $geopccb_pri = "N/A";
+      echo '<p>' . $geopccb_pri . '</p>';
+    }
+  }
+  add_action('manage_pages_custom_column', 'geop_ccb_catlink_column_action', 10, 2);
+}
+
+
+
+
+
+
+
+
+
+
 
 if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
   function geop_ccb_bootstrap_register($wp_customize){
