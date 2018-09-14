@@ -89,7 +89,7 @@ get_template_part( 'cat-banner', get_post_format() );
         // it with the cat link's URL custom value if it is a cat link.
         $geopccb_link_url = get_the_permalink($geopccb_post);
         if (get_post_type($geopccb_post) == 'geopccb_catlink')
-          $geopccb_link_url = esc_attr($geopccb_post->geop_ccb_cat_link_url);
+          $geopccb_link_url = esc_url($geopccb_post->geop_ccb_cat_link_url);
 
         ?>
         <br/>
