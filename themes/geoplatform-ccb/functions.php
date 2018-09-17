@@ -1379,29 +1379,6 @@ if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
   add_filter('manage_edit-category_columns', 'geopccb_category_column_filter_two');
 }
 
-//
-if ( ! function_exists ( 'geop_ccb_category_column_sorter' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
-  function geop_ccb_category_column_sorter($geopccb_columns) {
-    $geopccb_columns['priority'] = 'cat_priority';
-    return $geopccb_columns;
-  }
-  add_filter('manage_edit-category_sortable_columns', 'geop_ccb_category_column_sorter');
-}
-
-if ( ! function_exists ( 'geop_ccb_category_column_thinker' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
-  function geop_ccb_category_column_thinker( $query ) {
-    if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
-      switch( $orderby ) {
-        case 'cat_priority':
-        $query->set( 'meta_key', 'cat_priority' );
-				$query->set( 'orderby', 'meta_value_num' );
-      break;
-      }
-    }
-  }
-  add_action( 'pre_get_posts', 'geop_ccb_category_column_thinker');
-}
-
 /**
  * Data added to category admin column, or N/A if not applicable.
  *
