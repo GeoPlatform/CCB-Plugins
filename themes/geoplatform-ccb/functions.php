@@ -1382,7 +1382,8 @@ if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
 //
 if ( ! function_exists ( 'geop_ccb_category_column_sorter' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
   function geop_ccb_category_column_sorter($geopccb_columns) {
-    return array('priority' => 'cat_pri');
+    $geopccb_columns['priority'] = 'cat_priority';
+    return $geopccb_columns;
   }
   add_filter('manage_edit-category_sortable_columns', 'geop_ccb_category_column_sorter');
 }
@@ -1398,9 +1399,8 @@ if ( ! function_exists ( 'geop_ccb_category_column_thinker' ) && get_theme_mod('
       }
     }
   }
-  add_action( 'pre_get_posts', 'geop_ccb_category_column_thinker', 1 );
+  add_action( 'pre_get_posts', 'geop_ccb_category_column_thinker');
 }
-
 
 /**
  * Data added to category admin column, or N/A if not applicable.
@@ -1732,27 +1732,14 @@ if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) ) {
   add_action('manage_geopccb_catlink_posts_custom_column', 'geop_ccb_catlink_column_action', 10, 2);
 }
 
-
 // Adding sortation, handled functionally by the posts function.
 if ( ! function_exists ( 'geop_ccb_catlink_column_sorter' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
-  add_filter('manage_edit-catlink_sortable_columns', 'geop_ccb_catlink_column_sorter');
   function geop_ccb_catlink_column_sorter($geopccb_columns) {
     $geopccb_columns['priority'] = 'geop_ccb_post_priority';
     return $geopccb_columns;
   }
+  add_filter('manage_edit-geopccb_catlink_sortable_columns', 'geop_ccb_catlink_column_sorter');
 }
-
-// Adding sortation, handled functionally by the posts function.
-// if ( ! function_exists ( 'geop_ccb_catlink_column_sorter' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
-//   function geop_ccb_catlink_column_sorter($geopccb_columns) {
-//     $geopccb_columns['title'] = 'post_title';
-//     $geopccb_columns['author'] = 'post_author';
-//     $geopccb_columns['priority'] = 'geop_ccb_post_priority';
-//     return $geopccb_columns;
-//     // return array('priority' => 'geop_ccb_post_priority');
-//   }
-//   add_filter('manage_edit-catlink_sortable_columns', 'geop_ccb_catlink_column_sorter');
-// }
 
 // display the metabox for cat_link URL
 if ( ! function_exists ( 'geop_ccb_custom_field_external_url_content' ) ) {

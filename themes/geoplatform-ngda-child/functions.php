@@ -400,6 +400,8 @@ function geop_ccb_catlink_column_filter( $geopccb_columns ) {};
 function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {};
 function geop_ccb_custom_field_external_url_content($post) {};
 function geop_ccb_custom_field_catlink_data($post_id) {};
+function geop_ccb_catlink_column_sorter($geopccb_columns) {};
+
 
 /**
  * CDN Distribution handler
