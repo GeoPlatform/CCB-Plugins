@@ -1488,35 +1488,10 @@ if ( ! function_exists ( 'geop_ccb_post_column_sorter' ) ) {
 }
 
 // Powers the priority column sorts.
-// if ( ! function_exists ( 'geop_ccb_post_column_thinker' ) {
-//   function geop_ccb_post_column_thinker( $query ) {
-//     if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
-//       if( $orderby == 'geop_ccb_post_priority') {
-//         $query->set( 'meta_key', 'geop_ccb_post_priority' );
-// 			  $query->set( 'orderby', 'meta_value_num' );
-//       }
-//     }
-//   }
-//   add_action( 'pre_get_posts', 'geop_ccb_post_column_thinker', 1 );
-// }
-
-
 if ( ! function_exists ( 'geop_ccb_post_column_thinker' ) ) {
   function geop_ccb_post_column_thinker( $query ) {
     if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
       if( $orderby == 'geop_ccb_post_priority') {
-        $meta_query = array(
-          'relation' => 'OR',
-          array(
-            'key' => 'geop_ccb_post_priority',
-            'compare' => 'EXISTS'
-          ),
-          array(
-            'key' => 'geop_ccb_post_priority',
-            'compare' => 'NOT EXISTS'
-          )
-        );
-        $query->set( 'meta_query', $meta_query );
         $query->set( 'meta_key', 'geop_ccb_post_priority' );
 			  $query->set( 'orderby', 'meta_value_num' );
       }
