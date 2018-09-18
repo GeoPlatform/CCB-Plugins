@@ -1439,8 +1439,8 @@ if ( ! function_exists ( 'geop_ccb_custom_field_post_box_content' ) ) {
 // save data from checkboxes
 if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
   function geop_ccb_custom_field_post_data($post_id) {
-    if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority'] || empty( $_POST['geop_ccb_post_priority'] )))
-      update_post_meta( $post_id, 'geop_ccb_post_priority', 0 );
+    if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority']) || empty( $_POST['geop_ccb_post_priority'] ))
+      update_post_meta( $post_id, 'geop_ccb_post_priority', '0' );
     else
   		update_post_meta( $post_id, 'geop_ccb_post_priority', $_POST['geop_ccb_post_priority'] );
   }
@@ -1473,13 +1473,13 @@ if ( ! function_exists ( 'geop_ccb_post_column_filter' ) ) {
 }
 
 /**
- * Makes posts sortable by priority.
+ * Makes priority column sortable for posts.
  *
  * Functionality inspired by categories-images plugin.
  *
  * @link https://wpdreamer.com/2014/04/how-to-make-your-wordpress-admin-columns-sortable/#register-sortable-columns
  */
-if ( ! function_exists ( 'geop_ccb_post_column_sorter' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
+if ( ! function_exists ( 'geop_ccb_post_column_sorter' ) ) {
   function geop_ccb_post_column_sorter($geopccb_columns) {
     $geopccb_columns['priority'] = 'geop_ccb_post_priority';
     return $geopccb_columns;
@@ -1487,18 +1487,65 @@ if ( ! function_exists ( 'geop_ccb_post_column_sorter' ) && get_theme_mod('featu
   add_filter('manage_edit-post_sortable_columns', 'geop_ccb_post_column_sorter');
 }
 
-if ( ! function_exists ( 'geop_ccb_post_column_thinker' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
+// Powers the priority column sorts.
+// if ( ! function_exists ( 'geop_ccb_post_column_thinker' ) {
+//   function geop_ccb_post_column_thinker( $query ) {
+//     if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
+//       if( $orderby == 'geop_ccb_post_priority') {
+//         $query->set( 'meta_key', 'geop_ccb_post_priority' );
+// 			  $query->set( 'orderby', 'meta_value_num' );
+//       }
+//     }
+//   }
+//   add_action( 'pre_get_posts', 'geop_ccb_post_column_thinker', 1 );
+// }
+
+
+if ( ! function_exists ( 'geop_ccb_post_column_thinker' ) ) {
   function geop_ccb_post_column_thinker( $query ) {
     if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
-      switch( $orderby ) {
-        case 'geop_ccb_post_priority':
+      if( $orderby == 'geop_ccb_post_priority') {
+        $meta_query = array(
+          'relation' => 'OR',
+          array(
+            'key' => 'geop_ccb_post_priority',
+            'compare' => 'EXISTS'
+          ),
+          array(
+            'key' => 'geop_ccb_post_priority',
+            'compare' => 'NOT EXISTS'
+          )
+        );
+        $query->set( 'meta_query', $meta_query );
         $query->set( 'meta_key', 'geop_ccb_post_priority' );
-				$query->set( 'orderby', 'meta_value_num' );
-      break;
+			  $query->set( 'orderby', 'meta_value_num' );
       }
     }
   }
   add_action( 'pre_get_posts', 'geop_ccb_post_column_thinker', 1 );
+}
+
+/**
+ * Metadata null-buster. Only really needs to be run once to de-null posts and pages
+ * without priority values for the sake of sortation. Should be removed in a future
+ * release.
+ *
+ * https://wordpress.stackexchange.com/questions/270472/assign-update-the-custom-field-value-for-all-posts
+**/
+if ( ! function_exists ( 'geop_ccb_post_nullbreaker' ) ) {
+  function geop_ccb_post_nullbreaker(){
+    $args = array(
+      'post_type' => array('post', 'page'), // Affects posts and pages; category_links came after this metadata was incorporated.
+      'post_status' => array('publish', 'private', 'future', 'draft', 'pending', 'trash', 'auto-draft'),
+      'posts_per_page'   => -1 // Get every post
+    );
+    $posts = get_posts($args);
+    foreach ( $posts as $post ) {
+      if ( !isset( $post->geop_ccb_post_priority ) || is_null($post->geop_ccb_post_priority) || empty($post->geop_ccb_post_priority ))
+        update_post_meta( $post->ID, 'geop_ccb_post_priority', '0' );
+    }
+  }
+  add_action('init','geop_ccb_post_nullbreaker');
 }
 
 /**
@@ -1729,7 +1776,7 @@ if ( ! function_exists ( 'geop_ccb_custom_field_external_url_content' ) ) {
 // save data from the cat_link URL box
 if ( ! function_exists ( 'geop_ccb_custom_field_catlink_data' ) ) {
   function geop_ccb_custom_field_catlink_data($post_id) {
-    if ( !isset( $_POST['geop_ccb_cat_link_url'] ) || is_null( $_POST['geop_ccb_cat_link_url'] || empty( $_POST['geop_ccb_cat_link_url'] )))
+    if ( !isset( $_POST['geop_ccb_cat_link_url'] ) || is_null( $_POST['geop_ccb_cat_link_url']) || empty( $_POST['geop_ccb_cat_link_url'] ))
       update_post_meta( $post_id, 'geop_ccb_cat_link_url', '' );
     else
   		update_post_meta( $post_id, 'geop_ccb_cat_link_url', $_POST['geop_ccb_cat_link_url'] );
@@ -1807,6 +1854,15 @@ if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
 
 
 
+if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
+  function geop_ccb_custom_field_post_data($post_id) {
+    if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority']) || empty( $_POST['geop_ccb_post_priority'] ))
+      update_post_meta( $post_id, 'geop_ccb_post_priority', '0' );
+    else
+  		update_post_meta( $post_id, 'geop_ccb_post_priority', $_POST['geop_ccb_post_priority'] );
+  }
+  add_action( 'save_post', 'geop_ccb_custom_field_post_data' );
+}
 
 
 
