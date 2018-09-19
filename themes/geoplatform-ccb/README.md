@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release September 17, 2018
 
  - Added the ability to sort posts, pages, and category links by their priority values in their admin pages.
+ - Added additional validity checks for Map Gallery URIs. These changes trickle down to child themes as well.
 
 ### 3.2.0 ###
 * Release September 14, 2018

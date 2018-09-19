@@ -76,9 +76,17 @@
             $geopccb_invalid_bool = true;
             $geopccb_error_report = 'Invalid gallery ID. Please check your your input and try again.';
           }
+          elseif (!$geopccb_invalid_bool && array_key_exists('statusCode', $geopccb_result) && $geopccb_result['statusCode'] >= "500" && $geopccb_result['statusCode'] < "600"){
+            $geopccb_invalid_bool = true;
+            $geopccb_error_report = 'The map service provider could not be contacted. Please try again later.';
+          }
           elseif (!$geopccb_invalid_bool && array_key_exists('type', $geopccb_result) && $geopccb_result['type'] != "Gallery"){
             $geopccb_invalid_bool = true;
             $geopccb_error_report = 'This is not a gallery ID. Please check your your input and try again.';
+          }
+          elseif (!$geopccb_invalid_bool && empty($geopccb_result['items'])){
+            $geopccb_invalid_bool = true;
+            $geopccb_error_report = 'There are no items in this gallery, or the map service could not otherwise be contacted.';
           }
         }
 
