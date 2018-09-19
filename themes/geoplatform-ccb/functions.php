@@ -1432,7 +1432,7 @@ if ( ! function_exists ( 'geop_ccb_custom_field_post_checkboxes' ) ) {
 if ( ! function_exists ( 'geop_ccb_custom_field_post_box_content' ) ) {
   function geop_ccb_custom_field_post_box_content($post) {
 		echo "<input type='number' name='geop_ccb_post_priority' id='geop_ccb_post_priority' value='" . $post->geop_ccb_post_priority . "' style='width:30%;'>";
- 		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
+ 		echo "<p class='description'>Featured content is output in order from lowest value to highest.<br>It can also be set to any negative number or zero to make it not appear.<br>These settings will not take effect unless Featured Sorting is set to Custom.</p>";
   }
 }
 
@@ -1744,7 +1744,7 @@ if ( ! function_exists ( 'geop_ccb_catlink_column_sorter' ) && get_theme_mod('fe
 if ( ! function_exists ( 'geop_ccb_custom_field_external_url_content' ) ) {
   function geop_ccb_custom_field_external_url_content($post) {
 		echo "<input type='text' name='geop_ccb_cat_link_url' id='geop_ccb_cat_link_url' value='" . $post->geop_ccb_cat_link_url . "' style='width:30%;'>";
- 		echo "<p class='description'>Featured content is displayed from lowest value to highest. Set to a negative number or zero to make it not appear.</p>";
+ 		echo "<p class='description'>Clicking on the More Information button for this Category Link will redirect the user to the URL input here.</p>";
   }
 }
 
