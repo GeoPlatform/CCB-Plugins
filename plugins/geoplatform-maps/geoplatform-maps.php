@@ -151,6 +151,10 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// add text to $geopmap_error_text, which will be used for error reporting later.
 	if (array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] == "404")
 	  $geopmap_error_text .= "Your map ID could not be found on the GeoPlatform server. Please check your map ID and try again.<BR>";
+	if (array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] >= "500" && $geopmap_result['statusCode'] < "600")
+	  $geopmap_error_text .= "The map service provider could not be contacted. Please try again later.<BR>";
+
+
 
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, the landing page value is pulled from the JSON and the process
