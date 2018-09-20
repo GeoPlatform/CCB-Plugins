@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.6
+ * @since             1.0.7
  * @package           GP_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Community Search
  * Plugin URI:        https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-community-search
  * Description:       Search for geoplatform community objects.
- * Version:           1.0.6
+ * Version:           1.0.7
  * Author:            Image Matters LLC
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0

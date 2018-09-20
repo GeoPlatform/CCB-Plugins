@@ -28,8 +28,8 @@ $geopcomsearch_theme = $geopcomsearch_fields['geopcomsearch_theme'];
            <div class='content'><?php call_user_func($geopcomsearch_title['callback'], $geopcomsearch_title['args']); ?></div>
         </div>
         <div class='gp-section'>
-           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_theme['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_theme['title']); ?></label></div>
-           <div class='content'><?php call_user_func($geopcomsearch_theme['callback'], $geopcomsearch_theme['args']); ?></div>
+           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_paging['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_paging['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_paging['callback'], $geopcomsearch_paging['args']); ?></div>
         </div>
       </div>
       <div class='gp-search-form-container-row'>
@@ -38,26 +38,26 @@ $geopcomsearch_theme = $geopcomsearch_fields['geopcomsearch_theme'];
            <div class='content'><?php call_user_func($geopcomsearch_objtype['callback'], $geopcomsearch_objtype['args']); ?></div>
         </div>
         <div class='gp-section'>
-           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_sort['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_sort['title']); ?></label></div>
-           <div class='content'><?php call_user_func($geopcomsearch_sort['callback'], $geopcomsearch_sort['args']); ?></div>
+           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_theme['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_theme['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_theme['callback'], $geopcomsearch_theme['args']); ?></div>
         </div>
         <div class='gp-section'>
-           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_paging['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_paging['title']); ?></label></div>
-           <div class='content'><?php call_user_func($geopcomsearch_paging['callback'], $geopcomsearch_paging['args']); ?></div>
+           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_search['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_search['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_search['callback'], $geopcomsearch_search['args']); ?></div>
         </div>
       </div>
       <div class='gp-search-form-container-row'>
         <div class='gp-section'>
-           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_perpage['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_perpage['title']); ?></label></div>
-           <div class='content'><?php call_user_func($geopcomsearch_perpage['callback'], $geopcomsearch_perpage['args']); ?></div>
+           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_sort['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_sort['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_sort['callback'], $geopcomsearch_sort['args']); ?></div>
         </div>
         <div class='gp-section'>
            <div class='label'><label for="<?php echo esc_attr($geopcomsearch_keyword['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_keyword['title']); ?></label></div>
            <div class='content'><?php call_user_func($geopcomsearch_keyword['callback'], $geopcomsearch_keyword['args']); ?></div>
         </div>
         <div class='gp-section'>
-           <div class='label label-long'><label for="<?php echo esc_attr($geopcomsearch_search['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_search['title']); ?></label></div>
-           <div class='content'><?php call_user_func($geopcomsearch_search['callback'], $geopcomsearch_search['args']); ?></div>
+           <div class='label'><label for="<?php echo esc_attr($geopcomsearch_perpage['args']['label_for']) ?>"><?php echo esc_attr($geopcomsearch_perpage['title']); ?></label></div>
+           <div class='content'><?php call_user_func($geopcomsearch_perpage['callback'], $geopcomsearch_perpage['args']); ?></div>
         </div>
       </div>
       <div class='submit'>
