@@ -31,7 +31,7 @@ services:
       cms_url: https://www.geoplatform.gov/geoplatform-resources/
       idp_url: https://idp.geoplatform.gov
       oe_url: https://oe.geoplatform.gov
-      accounts_url: https://accounts.geoplatform.gov
+      accounts_url: https://sit-accounts.geoplatform.us
       comm_url: https://www.geoplatform.gov/communities
       sd_url: servicedesk@geoplatform.gov
       ga_code: UA-42040723-1
