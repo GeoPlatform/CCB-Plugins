@@ -1740,21 +1740,31 @@ if ( ! function_exists ( 'geop_ccb_catlink_column_sorter' ) && get_theme_mod('fe
   add_filter('manage_edit-geopccb_catlink_sortable_columns', 'geop_ccb_catlink_column_sorter');
 }
 
-// display the metabox for cat_link URL
+// display the metabox for cat_link URL and checkbox
 if ( ! function_exists ( 'geop_ccb_custom_field_external_url_content' ) ) {
   function geop_ccb_custom_field_external_url_content($post) {
 		echo "<input type='text' name='geop_ccb_cat_link_url' id='geop_ccb_cat_link_url' value='" . $post->geop_ccb_cat_link_url . "' style='width:30%;'>";
+    // echo "<label class='description'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspOpen the link in a new tab: </label>";
+    // if ( $post->geop_ccb_cat_link_window )
+    //   echo "<input type='checkbox' name='geop_ccb_cat_link_window' id='geop_ccb_cat_link_window' value='1" . $post->geop_ccb_cat_link_window . "' checked>";
+    // else
+    //   echo "<input type='checkbox' name='geop_ccb_cat_link_window' id='geop_ccb_cat_link_window' value='1" . $post->geop_ccb_cat_link_window . "'>";
  		echo "<p class='description'>Clicking on the More Information button for this Category Link will redirect the user to the URL input here.</p>";
   }
 }
 
-// save data from the cat_link URL box
+// save data from the cat_link URL box and checkbox
 if ( ! function_exists ( 'geop_ccb_custom_field_catlink_data' ) ) {
   function geop_ccb_custom_field_catlink_data($post_id) {
     if ( !isset( $_POST['geop_ccb_cat_link_url'] ) || is_null( $_POST['geop_ccb_cat_link_url']) || empty( $_POST['geop_ccb_cat_link_url'] ))
       update_post_meta( $post_id, 'geop_ccb_cat_link_url', '' );
     else
   		update_post_meta( $post_id, 'geop_ccb_cat_link_url', $_POST['geop_ccb_cat_link_url'] );
+
+    // if ( isset( $_POST['geop_ccb_cat_link_window'] ) )
+    //   update_post_meta( $post_id, 'geop_ccb_cat_link_window', true );
+    // else
+  	// 	update_post_meta( $post_id, 'geop_ccb_cat_link_window', false );
   }
   add_action( 'save_post', 'geop_ccb_custom_field_catlink_data' );
 }
