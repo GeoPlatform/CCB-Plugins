@@ -104,7 +104,7 @@ get_template_part( 'cat-banner', get_post_format() );
                     <?php echo $geopccb_excerpt;?>
                 </p>
               <br/>
-              <a class="btn btn-info" href="<?php echo $geopccb_link_url; ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
+              <a class="btn btn-info" href="<?php echo $geopccb_link_url; ?>" target="_blank"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
           </div><!--#svc-card__body-->
         </div><!--#svc-card-->
         <br />
