@@ -306,7 +306,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 		) );
 
 		$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'header_link_color_control', array(
-				'label'    => __( 'Header1 Color', 'geoplatform-ccb' ),
+				'label'    => __( 'Header 1 Color', 'geoplatform-ccb' ),
 				'section'  => 'header_color_section',
 				'settings' => 'header_color_setting',
 		) ) );
