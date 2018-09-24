@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.9
+ * @since             1.0.10
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.0.9
+ * Version:           1.0.10
  * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.0.9' );
+define( 'GEOPMAP_PLUGIN', '1.0.10' );
 
 /**
  * The code that runs during plugin activation.
@@ -151,6 +151,10 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// add text to $geopmap_error_text, which will be used for error reporting later.
 	if (array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] == "404")
 	  $geopmap_error_text .= "Your map ID could not be found on the GeoPlatform server. Please check your map ID and try again.<BR>";
+	if (array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] >= "500" && $geopmap_result['statusCode'] < "600")
+	  $geopmap_error_text .= "The map service provider could not be contacted. Please try again later.<BR>";
+
+
 
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, the landing page value is pulled from the JSON and the process

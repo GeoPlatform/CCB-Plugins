@@ -89,7 +89,7 @@
                     </div>
                     <br class="hidden-xs">
                     <!-- <h5>Themes</h5>
-			<?php wp_nav_menu( array( 'theme_location' => 'headfoot-themes','fallback_cb' => '') ); ?> -->
+			                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-themes','fallback_cb' => '') ); ?> -->
                 </div>
             </div>
         </div>

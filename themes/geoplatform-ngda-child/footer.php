@@ -39,13 +39,13 @@
         <div class="row">
             <div class="col-md-4 col-sm-4 col-xs-12">
               <!--Featured location-->
-                <h4 style="color:white">Featured</h4>
-                    <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
+                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : _e( 'Featured', 'geoplatform-ccb'); ?></h4>
+                    <?php wp_nav_menu( array( 'theme_location' => 'footer-left' ) ); ?>
 
 
                 <br class="hidden-xs">
-                <h4 style="color:white">Get Involved</h4>
-                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
+                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : _e( 'Get Involved', 'geoplatform-ccb'); ?></h4>
+                <?php wp_nav_menu( array( 'theme_location' => 'footer-center' ) ); ?>
                 <ul>
 
             </div>
@@ -100,15 +100,15 @@
 
             </div>
             <div class="col-md-4 col-sm-4 col-xs-12">
-                <h4 style="color:white">About</h4>
+                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : _e( 'About', 'geoplatform-ccb'); ?></h4>
                 <div class="row">
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                      <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutL' ) ); ?>
+                      <?php wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) ); ?>
 
 
                     </div>
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                      <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutR' ) ); ?>
+                      <?php wp_nav_menu( array( 'theme_location' => 'footer-right-col2' ) ); ?>
 
                     </div>
                 </div>

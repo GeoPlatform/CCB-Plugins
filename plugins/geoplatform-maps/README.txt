@@ -6,7 +6,7 @@ Tags: map, maps, Open Map, GeoPlatform, Geoplatform, geoplatform, Shortcode, sho
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 4.9.5
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -78,6 +78,9 @@ If you were able to successfully add a map to your shortcode collection but not 
 
 = 1.0.9 =
 * Initial release.
+
+= 1.0.10 =
+* Added gallery retention upon plugin deactivation.
 
 == Upgrade Notice ==
 

@@ -246,10 +246,15 @@
     query.setPage(page - 1);
     query.setPageSize(perPage);
 
+    // Grabs the 'community' value and filters query results by ID value if set.
     let community = '<?php echo $geopmap_shortcode_array['community'] ?>';
-
     if (community !== undefined && community.length > 0 && community !== 'any')
       query.usedBy(community);
+
+    // Grabs the 'theme' value and filters querry results by theme ID values if set. Multiple values are accecpted.
+    let theme = '<?php echo $geopmap_shortcode_array['theme'] ?>';
+    if (theme !== undefined && theme.length > 0 && theme !== 'any')
+      query.themes(theme);
 
     retrieveObjects(query)
       .then(function (response) { displayObjects(response.results, response.totalResults); })

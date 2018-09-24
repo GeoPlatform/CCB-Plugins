@@ -50,7 +50,8 @@ $geop_ccb_theme_mods = geop_ccb_get_theme_mods();
           'menu_class' => 'text-white nav navbar-nav navbar-right',
           'menu_class'=> 'header__menu',
           'items_wrap' => '%3$s',
-          'container' => 'li'
+          'container' => 'li',
+          'fallback_cb' => false
          ) ); ?>
           </ul>
           <br/>

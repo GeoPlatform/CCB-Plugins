@@ -1,12 +1,12 @@
 <?php
 /**
- * The template for default search form 
- * 
+ * The template for default search form
+ *
  * HTML5 basic search form. Used for reference
  * @link http://buildwpyourself.com/wordpress-search-form-template/
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 3.1.0
  */
 ?>
@@ -15,7 +15,7 @@
 <form role="search" method="get" id="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 <div class="input-group-slick">
       <span class="glyphicon glyphicon-search"></span>
-      <input type="search" class="form-control" placeholder="<?php echo esc_attr( 'Search...', 'geoplatform-ccb' ); ?>"
+      <input type="search" class="form-control" placeholder="<?php echo esc_attr( 'Search Site...', 'geoplatform-ccb' ); ?>"
       name="s" id="search-input" value="<?php echo esc_attr( get_search_query() ); ?>"/>
       <button type="submit" class="btn btn-default" id="search-submit"><?php _e( 'Search', 'geoplatform-ccb'); ?></button>
   </div>

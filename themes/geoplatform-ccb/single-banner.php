@@ -53,4 +53,22 @@
           </div><!--#row-->
       </div><!--#container-->
   </div><!--#content-->
+  <div class="container-fluid" style="margin-top:-4em;">
+    <div class="row text-white">
+      <div class="col-md-offset-3 text-white" style="color:white;">
+        <ul role="menu" class="header__menu text-white" style="color:white!important; margin-right:1em;">
+          <?php
+          wp_nav_menu( array(
+            'theme_location' => 'community-links',
+            'container' => 'li',
+            'container_class' => 'text-white nav navbar-nav navbar-right navbar-fixed-bottom',
+            'items_wrap' => '%3$s',
+            'fallback_cb' => false
+           ) );
+           ?>
+        </ul>
+      <br />
+      </div><!--#col-md-offset-3-->
+    </div><!--#row-->
+  </div><!--#container-fluid-->
 </div> <!--#banner banner-fixed-height-->

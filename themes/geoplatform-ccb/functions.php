@@ -38,8 +38,12 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
   	wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
   	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
-  	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
-	  wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
+    wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
+
+    $geop_ccb_options = geop_ccb_get_theme_mods();
+    if (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on'){
+  	   wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
+    }
   }
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 }
@@ -214,29 +218,47 @@ if ( ! function_exists ( 'geop_ccb_custom_logo_setup' ) ) {
 }
 
 /**
- * Support adding Menus for header and footer
+ * Support adding Menus for the three menu types, segregated by location.
  *
  * @link https://premium.wpmudev.org/blog/add-menus-to-wordpress/?utm_expid=3606929-97.J2zL7V7mQbSNQDPrXwvBgQ.0&utm_referrer=https%3A%2F%2Fwww.google.com%2F
  *
  * @return void
  */
-if ( ! function_exists ( 'geop_ccb_register_menus' ) ) {
-	function geop_ccb_register_menus() {
-	register_nav_menus(
-		array(
-			'community-links' => 'Community Links',
-			'header-left' => 'Header Menu - Left Column',
-			'header-center' => 'Header Menu - Center Column',
-			'header-right-col1' => 'Header Menu - Right Column 1',
-			'header-right-col2' => 'Header Menu - Right Column 2',
-			'footer-left' => 'Footer Menu - Left Column',
-			'footer-center' => 'Footer Menu - Center Column',
-			'footer-right-col1' => 'Footer Menu - Right Column 1',
-			'footer-right-col2' => 'Footer Menu - Right Column 2'
-		)
-	);
+if ( ! function_exists ( 'geop_ccb_register_comlink_menus' ) ) {
+ 	function geop_ccb_register_comlink_menus() {
+ 	  register_nav_menus(
+   		array('community-links' => 'Community Links')
+ 	  );
 	}
-	add_action( 'init', 'geop_ccb_register_menus' );
+  add_action( 'init', 'geop_ccb_register_comlink_menus' );
+}
+
+if ( ! function_exists ( 'geop_ccb_register_header_menus' ) ) {
+ 	function geop_ccb_register_header_menus() {
+ 	  register_nav_menus(
+   		array(
+   			'header-left' => 'Header Menu - Left Column',
+   			'header-center' => 'Header Menu - Center Column',
+   			'header-right-col1' => 'Header Menu - Right Column 1',
+   			'header-right-col2' => 'Header Menu - Right Column 2',
+   		)
+ 	  );
+	}
+  add_action( 'init', 'geop_ccb_register_header_menus' );
+}
+
+if ( ! function_exists ( 'geop_ccb_register_footer_menus' ) ) {
+	function geop_ccb_register_footer_menus() {
+  	register_nav_menus(
+  		array(
+  			'footer-left' => 'Footer Menu - Left Column',
+  			'footer-center' => 'Footer Menu - Center Column',
+  			'footer-right-col1' => 'Footer Menu - Right Column 1',
+  			'footer-right-col2' => 'Footer Menu - Right Column 2'
+  		)
+  	);
+	}
+	add_action( 'init', 'geop_ccb_register_footer_menus' );
 }
 
 /**
@@ -357,7 +379,7 @@ function geop_ccb_customize_register( $wp_customize ) {
 		//Fonts section, settings, and controls
 		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 		$wp_customize->add_section( 'font_section' , array(
-				'title'    => __( 'Font Section', 'geoplatform-ccb' ),
+				'title'    => __( 'GeoPlatform Controls', 'geoplatform-ccb' ),
 				'priority' => 50
 		) );
 
@@ -367,8 +389,9 @@ function geop_ccb_customize_register( $wp_customize ) {
   	));
 
 		$wp_customize->add_control('font_choice',array(
-        'type' => 'radio',
+        'type' => 'select',
         'label' => 'Fonts',
+        'description' => "Select the font for this community.",
         'section' => 'font_section',
         'choices' => array(
             'lato' => __('Lato', 'geoplatform-ccb'),
@@ -455,34 +478,18 @@ function geop_ccb_customize_register( $wp_customize ) {
 					'sanitize_callback' => 'sanitize_text_field'
 				) );
 			$wp_customize->add_control( 'map_gallery_link_box_control', array(
-					'section' => 'map_gallery_section',
+					'section' => 'font_section',
 					'label' => 'Map Gallery link',
 					'settings' => 'map_gallery_link_box_setting',
 					'description' => 'Make sure you use a full UAL link. Example: https://ual.geoplatform.gov/api/galleries/{your map gallery ID}',
 					'type' => 'url',
-					'priority' => 10
+					'priority' => 60
 				) );
 
-				//Add radio button to choose link style between envs (sit, stg, or prod)
-				$wp_customize->add_setting( 'map_gallery_env_choice_setting' , array(
-						'default'   => $geopccb_theme_options['map_gallery_env_choice_setting'],
-						'transport' => 'refresh',
-						'sanitize_callback' => 'geop_ccb_sanitize_mapchoice'
-					) );
-				$wp_customize->add_control( 'map_gallery_env_choice_control', array(
-						'section' => 'map_gallery_section',
-						'label' => 'Map Gallery Environment',
-						'description' => 'If your gallery link above does not match the enviroment (sit, stg, or prod) the site is currently in, please change this setting to match.',
-						'type' => 'radio',
-						'settings' => 'map_gallery_env_choice_setting',
-						'priority' => 20,
-						'choices' => array(
-								'match'=>'My gallery link matches my site enviroment',
-								'sit' => 'sit (sit-ual.geoplatform.us)',
-								'stg' => 'stg (stg-ual.geoplatform.gov)',
-								'prod' => 'prod (ual.geoplatform.gov)'
-								)
-					) );
+
+
+
+
 
 				//remove default colors section as Header Color Section does this job better
 				 $wp_customize->remove_section( 'colors' );
@@ -515,16 +522,33 @@ if ( ! function_exists ( 'geop_ccb_sanitize_fonts' ) ) {
 }
 
 /**
- * Sanitization callback functions for customizer mapchoice
+ * Sanitization callback functions for customizer bootstrap
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
  * @param [type] $geop_ccb_value
  * @return void
  */
-if ( ! function_exists ( 'geop_ccb_sanitize_mapchoice' ) ) {
-	function geop_ccb_sanitize_mapchoice( $geop_ccb_value ) {
-		if ( ! in_array( $geop_ccb_value, array( 'match', 'sit', 'stg', 'prod' ) ) )
-			$geop_ccb_value = 'match';
+if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
+	function geop_ccb_sanitize_bootstrap( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'on', 'off', 'gone' ) ) )
+			$geop_ccb_value = 'on';
+		return $geop_ccb_value;
+	}
+}
+
+/**
+ * Sanitization callback functions for customizer searchbar
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_searchbar' ) ) {
+	function geop_ccb_sanitize_searchbar( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'wp', 'gp', 'none' ) ) )
+			$geop_ccb_value = 'wp';
+    if (!in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())) && $geop_ccb_value == 'gp')
+      $geop_ccb_value = 'wp';
 		return $geop_ccb_value;
 	}
 }
@@ -1017,6 +1041,10 @@ class GP_TAX_META {
    add_action( 'admin_footer', array ( $this, 'add_script' ) );
    add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter' );
    add_filter( 'manage_category_custom_column', 'geopccb_category_column_action', 10, 3 );
+  //  if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
+  //   add_filter( 'manage_category_custom_column', 'geopccb_category_column_action_two', 10, 3 );
+  // if ( ! function_exists ( 'geopccb_category_column_action_two' ) )
+  //   add_filter( 'manage_edit-category_columns', 'geopccb_category_column_filter_two' );
  }
 
 public function load_media() {
@@ -1219,8 +1247,9 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'call2action_url_setting' => 'https://geoplatform.gov/about',
 			'call2action_text_setting' => 'Learn More',
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
-			'map_gallery_env_choice_setting' => 'prod',
       'font_choice' => 'lato',
+      'bootstrap_controls' => 'on',
+      'searchbar_controls' => 'wp',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
 	}
@@ -1241,6 +1270,589 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 		);
 	}
 }
+
+
+
+
+
+
+
+
+
+//---------------------------------------
+//Supporting Sort Toggle between old date system and new custom system.
+//https://codex.wordpress.org/Theme_Customization_API
+//--------------------------------------
+if ( ! function_exists ( 'geop_ccb_sorting_register' ) ) {
+  function geop_ccb_sorting_register( $wp_customize ){
+
+		//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+		$wp_customize->add_section( 'featured_format' , array(
+			'title'    => __( 'Featured Sorting', 'geoplatform-ccb' ),
+			'priority' => 40
+		) );
+
+	  $wp_customize->add_setting('featured_appearance',array(
+		  'default' => 'date',
+		  'sanitize_callback' => 'geop_ccb_sanitize_feature_sort_format'
+		));
+
+		$wp_customize->add_control('featured_appearance',array(
+		  'type' => 'radio',
+		  'label' => 'Choose the sorting method',
+		  'section' => 'featured_format',
+      'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+			'choices' => array(
+			  'custom' => __('Custom', 'geoplatform-ccb'),
+				'date' => __('Date',  'geoplatform-ccb')
+			),
+		));
+  }
+}
+add_action( 'customize_register', 'geop_ccb_sorting_register');
+
+/**
+ * Sanitization callback functions for sort check
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+function geop_ccb_sanitize_feature_sort_format( $geop_ccb_value ) {
+	if ( ! in_array( $geop_ccb_value, array( 'custom', 'date' ) ) )
+  	$geop_ccb_value = 'date';
+	return $geop_ccb_value;
+}
+
+
+
+
+
+
+/**
+ * Adds Category priority and display toggle aspects to category.
+ *
+ * @link https://wordpress.stackexchange.com/questions/8736/add-custom-field-to-category
+*/
+if ( ! function_exists ( 'geop_ccb_category_mod_interface' ) ){
+  function geop_ccb_category_mod_interface( $tag ){
+    $cat_pri = get_term_meta( $tag->term_id, 'cat_priority', true ); ?>
+    <tr class='form-field'>
+      <th scope='row'><label for='cat_page_visible'><?php _e('Category Display Order', 'geoplatform-ccb'); ?></label></th>
+      <td>
+        <input type='number' name='cat_pri' id='cat_pri' value='<?php echo $cat_pri ?>' style='width:30%;'>
+        <p class='description'><?php _e('Categories are displayed from lowest value to highest.<br>Set to a negative number or zero to make it not appear.', 'geoplatform-ccb'); ?></p>
+      </td>
+    </tr> <?php
+  }
+  add_action ( 'edit_category_form_fields', 'geop_ccb_category_mod_interface');
+}
+
+if ( ! function_exists ( 'geop_ccb_category_mod_update' ) ){
+  function geop_ccb_category_mod_update() {
+    if ( isset( $_POST['cat_pri'] ) )
+      update_term_meta( $_POST['tag_ID'], 'cat_priority', $_POST['cat_pri'] );
+  }
+  add_action ( 'edited_category', 'geop_ccb_category_mod_update');
+}
+
+/**
+ * Priority column added to category admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://wordpress.org/plugins/categories-images/
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+if ( ! function_exists ( 'geopccb_category_column_filter_two' ) ) {
+  function geopccb_category_column_filter_two( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    $geopccb_new_columns['posts'] = $geopccb_columns['posts'];
+    unset( $geopccb_columns['posts'] );
+
+    return array_merge( $geopccb_columns, $geopccb_new_columns );
+  }
+  add_filter('manage_edit-category_columns', 'geopccb_category_column_filter_two');
+}
+
+/**
+ * Data added to category admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://wordpress.org/plugins/categories-images/
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+if ( ! function_exists ( 'geopccb_category_column_action_two' ) ) {
+  function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {
+    $geopccb_class_category_priority = get_term_meta($geopccb_id, 'cat_priority', true);
+      if ( $geopccb_column == 'priority' ){
+        $geopccb_pri = $geopccb_class_category_priority;
+        if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+          $geopccb_pri = "N/A";
+        $geopccb_columns = '<p>' . $geopccb_pri . '</p>';
+      }
+    return $geopccb_columns;
+  }
+  add_filter( 'manage_category_custom_column', 'geopccb_category_column_action_two', 10, 3 );
+}
+
+
+
+
+
+/**
+ * Post priority incorporation
+ */
+
+// register the meta box
+if ( ! function_exists ( 'geop_ccb_custom_field_post_checkboxes' ) ) {
+  function geop_ccb_custom_field_post_checkboxes() {
+      add_meta_box(
+          'geop_ccb_sorting_post_id',          // this is HTML id of the box on edit screen
+          'Featured Display Priority',    // title of the box
+          'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+          'post',        // on which edit screen the box should appear
+          'normal',      // part of page where the box should appear
+          'default'      // priority of the box
+    );
+  }
+  add_action( 'add_meta_boxes', 'geop_ccb_custom_field_post_checkboxes' );
+}
+
+// display the metabox
+if ( ! function_exists ( 'geop_ccb_custom_field_post_box_content' ) ) {
+  function geop_ccb_custom_field_post_box_content($post) {
+		echo "<input type='number' name='geop_ccb_post_priority' id='geop_ccb_post_priority' value='" . $post->geop_ccb_post_priority . "' style='width:30%;'>";
+ 		echo "<p class='description'>Featured content is output in order from lowest value to highest.<br>It can also be set to any negative number or zero to make it not appear.<br>These settings will not take effect unless Featured Sorting is set to Custom.</p>";
+  }
+}
+
+// save data from checkboxes
+if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
+  function geop_ccb_custom_field_post_data($post_id) {
+    if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority']) || empty( $_POST['geop_ccb_post_priority'] ))
+      update_post_meta( $post_id, 'geop_ccb_post_priority', '0' );
+    else
+  		update_post_meta( $post_id, 'geop_ccb_post_priority', $_POST['geop_ccb_post_priority'] );
+  }
+  add_action( 'save_post', 'geop_ccb_custom_field_post_data' );
+}
+
+/**
+ * Priority column added to posts admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_post_column_filter' ) ) {
+  function geop_ccb_post_column_filter( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
+  	$geopccb_new_columns['date'] = $geopccb_columns['date'];
+  	unset( $geopccb_columns['date'] );
+    unset( $geopccb_columns['comments'] );
+
+    return array_merge( $geopccb_columns, $geopccb_new_columns );
+  }
+  add_filter('manage_post_posts_columns', 'geop_ccb_post_column_filter');
+}
+
+/**
+ * Makes priority column sortable for posts.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://wpdreamer.com/2014/04/how-to-make-your-wordpress-admin-columns-sortable/#register-sortable-columns
+ */
+if ( ! function_exists ( 'geop_ccb_post_column_sorter' ) ) {
+  function geop_ccb_post_column_sorter($geopccb_columns) {
+    $geopccb_columns['priority'] = 'geop_ccb_post_priority';
+    return $geopccb_columns;
+  }
+  add_filter('manage_edit-post_sortable_columns', 'geop_ccb_post_column_sorter');
+}
+
+// Powers the priority column sorts.
+if ( ! function_exists ( 'geop_ccb_post_column_thinker' ) ) {
+  function geop_ccb_post_column_thinker( $query ) {
+    if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
+      if( $orderby == 'geop_ccb_post_priority') {
+        $query->set( 'meta_key', 'geop_ccb_post_priority' );
+			  $query->set( 'orderby', 'meta_value_num' );
+      }
+    }
+  }
+  add_action( 'pre_get_posts', 'geop_ccb_post_column_thinker', 1 );
+}
+
+/**
+ * Metadata null-buster. Only really needs to be run once to de-null posts and pages
+ * without priority values for the sake of sortation. Should be removed in a future
+ * release.
+ *
+ * https://wordpress.stackexchange.com/questions/270472/assign-update-the-custom-field-value-for-all-posts
+**/
+if ( ! function_exists ( 'geop_ccb_post_nullbreaker' ) ) {
+  function geop_ccb_post_nullbreaker(){
+    $args = array(
+      'post_type' => array('post', 'page'), // Affects posts and pages; category_links came after this metadata was incorporated.
+      'post_status' => array('publish', 'private', 'future', 'draft', 'pending', 'trash', 'auto-draft'),
+      'posts_per_page'   => -1 // Get every post
+    );
+    $posts = get_posts($args);
+    foreach ( $posts as $post ) {
+      if ( !isset( $post->geop_ccb_post_priority ) || is_null($post->geop_ccb_post_priority) || empty($post->geop_ccb_post_priority ))
+        update_post_meta( $post->ID, 'geop_ccb_post_priority', '0' );
+    }
+  }
+  add_action('init','geop_ccb_post_nullbreaker');
+}
+
+/**
+ * Data added to posts admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_post_column_action' ) ) {
+  function geop_ccb_post_column_action( $geopccb_column, $geopccb_id ) {
+    if ( $geopccb_column == 'priority' ){
+			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
+      if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+        $geopccb_pri = "N/A";
+      echo '<p>' . $geopccb_pri . '</p>';
+    }
+  }
+  add_action('manage_post_posts_custom_column', 'geop_ccb_post_column_action', 10, 2);
+}
+
+
+
+
+
+
+
+/**
+ * Page priority incorporation
+ */
+
+// register the meta box
+if ( ! function_exists ( 'geop_ccb_custom_field_page_checkboxes' ) ) {
+  function geop_ccb_custom_field_page_checkboxes() {
+    add_meta_box(
+        'geop_ccb_sorting_page_id',          // this is HTML id of the box on edit screen
+        'Featured Display Priority',    // title of the box
+        'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'page',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+  }
+  add_action( 'add_meta_boxes', 'geop_ccb_custom_field_page_checkboxes' );
+}
+
+/**
+ * Priority column added to pages admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_page_column_filter' ) ) {
+  function geop_ccb_page_column_filter( $geopccb_columns ) {
+    $geopccb_new_columns = array();
+    $geopccb_new_columns['priority'] = __('Priority', 'geoplatform-ccb');
+    $geopccb_new_columns['comments'] = $geopccb_columns['comments'];
+  	$geopccb_new_columns['date'] = $geopccb_columns['date'];
+  	unset( $geopccb_columns['date'] );
+    unset( $geopccb_columns['comments'] );
+
+    return array_merge( $geopccb_columns, $geopccb_new_columns );
+  }
+  add_filter('manage_pages_columns', 'geop_ccb_page_column_filter');
+}
+
+// Adding sortation, handled functionally by the posts function.
+if ( ! function_exists ( 'geop_ccb_page_column_sorter' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
+  function geop_ccb_page_column_sorter($geopccb_columns) {
+    $geopccb_columns['priority'] = 'geop_ccb_post_priority';
+    return $geopccb_columns;
+  }
+  add_filter('manage_edit-page_sortable_columns', 'geop_ccb_page_column_sorter');
+}
+
+/**
+ * Data added to pages admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_page_column_action' ) ) {
+  function geop_ccb_page_column_action( $geopccb_column, $geopccb_id ) {
+    if ( $geopccb_column == 'priority' ){
+			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
+      if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+        $geopccb_pri = "N/A";
+      echo '<p>' . $geopccb_pri . '</p>';
+    }
+  }
+  add_action('manage_pages_custom_column', 'geop_ccb_page_column_action', 10, 2);
+}
+
+
+
+
+/**
+ * Creates the category post custom post type.
+ */
+if ( ! function_exists ( 'geop_ccb_create_category_post' ) ) {
+  function geop_ccb_create_category_post() {
+    register_post_type( 'geopccb_catlink',
+      array(
+        'labels' => array(
+          'name' => 'Category Links',
+          'singular_name' => 'Category Link'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'supports' => array( 'title', 'author', 'thumbnail', 'excerpt', 'category'),
+        'taxonomies' => array('category'),
+        'publicly_queryable'  => false,
+      )
+    );
+  }
+  add_action( 'init', 'geop_ccb_create_category_post' );
+}
+
+/**
+ * Category Link priority incorporation
+ */
+// register the meta box for priority AND URL.
+if ( ! function_exists ( 'geop_ccb_custom_field_catlink_checkboxes' ) ) {
+  function geop_ccb_custom_field_catlink_checkboxes() {
+    add_meta_box(
+        'geop_ccb_sorting_catlink_id',          // this is HTML id of the box on edit screen
+        'Featured Display Priority',    // title of the box
+        'geop_ccb_custom_field_post_box_content',   // function to be called to display the checkboxes, see the function below
+        'geopccb_catlink',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+    add_meta_box(
+        'geop_ccb_sorting_catlink_url',          // this is HTML id of the box on edit screen
+        'Redirect URL',    // title of the box
+        'geop_ccb_custom_field_external_url_content',   // function to be called to display the checkboxes, see the function below
+        'geopccb_catlink',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+    );
+  }
+  add_action( 'add_meta_boxes', 'geop_ccb_custom_field_catlink_checkboxes' );
+}
+
+/**
+ * Priority column added to category link admin.
+ *
+ * Functionality inspired by categories-images plugin.
+ *
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_catlink_column_filter' ) ) {
+  function geop_ccb_catlink_column_filter( $geopccb_columns ) {
+    $geopccb_columns = array(
+      'cb' => '<input type="checkbox" />',
+      'title' => 'Title',
+      'author' => 'Author',
+      'categories' => 'Categories',
+      'priority' => 'Priority',
+      'Date' => 'Date',
+    );
+    return $geopccb_columns;
+  }
+  add_filter( "manage_geopccb_catlink_posts_columns", "geop_ccb_catlink_column_filter" );
+}
+
+/**
+ * Data added to category link admin column, or N/A if not applicable.
+ *
+ * Functionality inspired by categories-images plugin.
+ * @link https://code.tutsplus.com/articles/add-a-custom-column-in-posts-and-custom-post-types-admin-screen--wp-24934
+ *
+ * @access public
+ * @param mixed $columns
+ * @param mixed $column
+ * @param mixed $id
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_catlink_column_action' ) ) {
+  function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {
+    if ( $geopccb_column == 'priority' ){
+			$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
+      if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+        $geopccb_pri = "N/A";
+      echo '<p>' . $geopccb_pri . '</p>';
+    }
+  }
+  add_action('manage_geopccb_catlink_posts_custom_column', 'geop_ccb_catlink_column_action', 10, 2);
+}
+
+// Adding sortation, handled functionally by the posts function.
+if ( ! function_exists ( 'geop_ccb_catlink_column_sorter' ) && get_theme_mod('featured_appearance', 'date') == 'custom') {
+  function geop_ccb_catlink_column_sorter($geopccb_columns) {
+    $geopccb_columns['priority'] = 'geop_ccb_post_priority';
+    return $geopccb_columns;
+  }
+  add_filter('manage_edit-geopccb_catlink_sortable_columns', 'geop_ccb_catlink_column_sorter');
+}
+
+// display the metabox for cat_link URL and checkbox
+if ( ! function_exists ( 'geop_ccb_custom_field_external_url_content' ) ) {
+  function geop_ccb_custom_field_external_url_content($post) {
+		echo "<input type='text' name='geop_ccb_cat_link_url' id='geop_ccb_cat_link_url' value='" . $post->geop_ccb_cat_link_url . "' style='width:30%;'>";
+    // echo "<label class='description'>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspOpen the link in a new tab: </label>";
+    // if ( $post->geop_ccb_cat_link_window )
+    //   echo "<input type='checkbox' name='geop_ccb_cat_link_window' id='geop_ccb_cat_link_window' value='1" . $post->geop_ccb_cat_link_window . "' checked>";
+    // else
+    //   echo "<input type='checkbox' name='geop_ccb_cat_link_window' id='geop_ccb_cat_link_window' value='1" . $post->geop_ccb_cat_link_window . "'>";
+ 		echo "<p class='description'>Clicking on the More Information button for this Category Link will redirect the user to the URL input here.</p>";
+  }
+}
+
+// save data from the cat_link URL box and checkbox
+if ( ! function_exists ( 'geop_ccb_custom_field_catlink_data' ) ) {
+  function geop_ccb_custom_field_catlink_data($post_id) {
+    if ( !isset( $_POST['geop_ccb_cat_link_url'] ) || is_null( $_POST['geop_ccb_cat_link_url']) || empty( $_POST['geop_ccb_cat_link_url'] ))
+      update_post_meta( $post_id, 'geop_ccb_cat_link_url', '' );
+    else
+  		update_post_meta( $post_id, 'geop_ccb_cat_link_url', $_POST['geop_ccb_cat_link_url'] );
+
+    // if ( isset( $_POST['geop_ccb_cat_link_window'] ) )
+    //   update_post_meta( $post_id, 'geop_ccb_cat_link_window', true );
+    // else
+  	// 	update_post_meta( $post_id, 'geop_ccb_cat_link_window', false );
+  }
+  add_action( 'save_post', 'geop_ccb_custom_field_catlink_data' );
+}
+
+
+
+
+
+
+
+
+
+
+if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
+  function geop_ccb_bootstrap_register($wp_customize){
+
+    $wp_customize->add_setting('bootstrap_controls',array(
+        'default' => 'on',
+        'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
+    ));
+
+    $wp_customize->add_control('bootstrap_controls',array(
+        'type' => 'radio',
+        'label' => 'Bootstrap Controls',
+        'section' => 'font_section',
+        'description' => "The GeoPlatform themes utilize Bootstrap for their dropdown menus, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here. The menu can also be disabled here if problems persist.",
+        'choices' => array(
+            'on' => __('Enabled', 'geoplatform-ccb'),
+            'off' => __('Disabled',  'geoplatform-ccb'),
+            'gone' => __('No Menu', 'geoplatform-ccb')
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_bootstrap_register');
+}
+
+
+
+if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
+  function geop_ccb_search_register($wp_customize){
+
+    $wp_customize->add_setting('searchbar_controls',array(
+        'default' => 'wp',
+        'sanitize_callback' => 'geop_ccb_sanitize_searchbar',
+    ));
+
+    $geop_ccb_gpsearch_array = array(
+        'wp' => __('Enabled', 'geoplatform-ccb'),
+        'none' => __('Disabled',  'geoplatform-ccb'),
+    );
+    $geop_ccb_gpsearch_description = "The search bar in the header is used to search assets on this community site. It can be toggled on or off here.";
+    if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) )){
+      $geop_ccb_gpsearch_array = array(
+          'wp' => __('Site Search', 'geoplatform-ccb'),
+          'gp' => __('GeoPlatform Search',  'geoplatform-ccb'),
+          'none' => __('Disabled',  'geoplatform-ccb'),
+      );
+      $geop_ccb_gpsearch_description = "The search bar in the header can be used to search assets on this community site, or leverage the GeoPlatform Search plugin here. It can also be turned off.";
+    }
+
+    $wp_customize->add_control('searchbar_controls',array(
+        'type' => 'radio',
+        'label' => 'Search Bar Controls',
+        'section' => 'font_section',
+        'description' => $geop_ccb_gpsearch_description,
+        'choices' => $geop_ccb_gpsearch_array,
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_search_register');
+}
+
+
+
+
+if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
+  function geop_ccb_custom_field_post_data($post_id) {
+    if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority']) || empty( $_POST['geop_ccb_post_priority'] ))
+      update_post_meta( $post_id, 'geop_ccb_post_priority', '0' );
+    else
+  		update_post_meta( $post_id, 'geop_ccb_post_priority', $_POST['geop_ccb_post_priority'] );
+  }
+  add_action( 'save_post', 'geop_ccb_custom_field_post_data' );
+}
+
+
+
+
+
 
 /**
  * CDN Distribution handler
@@ -1264,13 +1876,13 @@ if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
  *
  * @link https://github.com/voceconnect/multi-post-thumbnails/wiki
  */
- if (class_exists('geop_ccb_MultiPostThumbnails')) {
-     new geop_ccb_MultiPostThumbnails(
-         array(
-             // Replace [YOUR THEME TEXT DOMAIN] below with the text domain of your theme (found in the theme's `style.css`).
-             'label' => __( 'Banner Image', 'geoplatform-ccb'),
-             'id' => 'geop-ccb-banner-image',
-             'post_type' => 'post'
-         )
-     );
- }
+ // if (class_exists('geop_ccb_MultiPostThumbnails')) {
+ //     new geop_ccb_MultiPostThumbnails(
+ //         array(
+ //             // Replace [YOUR THEME TEXT DOMAIN] below with the text domain of your theme (found in the theme's `style.css`).
+ //             'label' => __( 'Banner Image', 'geoplatform-ccb'),
+ //             'id' => 'geop-ccb-banner-image',
+ //             'post_type' => 'post'
+ //         )
+ //     );
+ // }

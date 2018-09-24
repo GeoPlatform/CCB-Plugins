@@ -26,6 +26,15 @@ function geopngda_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'geopngda_enqueue_scripts' );
 
+// Removes private post and page perms for subscribers, in case it's goofed up from another source otherwise.
+function geop_ngda_add_theme_caps(){
+	$subRole = get_role('subscriber');
+
+	$subRole->remove_cap('read_private_pages');
+	$subRole->remove_cap('read_private_posts');
+}
+add_action( 'admin_init', 'geop_ngda_add_theme_caps' );
+
 
 //-------------------------------
 // Diabling auto formatting and adding <p> tags to copy/pasted HTML in pages
@@ -41,8 +50,8 @@ function geop_ngda_customize_register( $wp_customize )
 {
 					//Community Info section, settings, and controls
 				$wp_customize->add_section( 'community_info_section' , array(
-						'title'    => __( 'Community Info Sidebar', 'geoplatform-ngda' ),
-						'priority' => 70
+						'title'    => __( 'Community Info Sidebar', 'geoplatform-ccb' ),
+						'priority' => 65
 				) );
 						$wp_customize->add_setting( 'Community_Name_box' , array(
 								'default'   => 'Insert Community Name here',
@@ -112,9 +121,34 @@ function geop_ngda_customize_register( $wp_customize )
 							) );
 
 
+
+							//NGDA/NCC visual format toggle section, settings, and controls
+							//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+							// $wp_customize->add_section( 'ngda_format' , array(
+							// 		'title'    => __( 'NGDA Format', 'geoplatform-ccb' ),
+							// 		'priority' => 66
+							// ) );
+
+							$wp_customize->add_setting('ngda_appearance',array(
+					        'default' => 'ngda',
+									'sanitize_callback' => 'geop_ngda_sanitize_format'
+					  	));
+
+							$wp_customize->add_control('ngda_appearance',array(
+					        'type' => 'radio',
+					        'label' => 'Choose the display format',
+					        'section' => 'font_section',
+									'description' => 'Toggle between the default NGDA and specialized NCC section output formats for the Featured section.<br>NGDA permits 6 featured pages and 8 featured posts.<br>NCC permits 6 cards of pages only.',
+									'priority' => 60,
+					        'choices' => array(
+					            'ngda' => __('NGDA', 'geoplatform-ccb'),
+					            'ncc' => __('NCC',  'geoplatform-ccb')
+										),
+							));
+
+
 }
 add_action( 'customize_register', 'geop_ngda_customize_register');
-
 
 
 /**
@@ -286,6 +320,88 @@ function save_extra_category_fileds( $term_id ) {
 if ( ! isset( $content_width ) ) {
 	$content_width = 900;
 }
+
+/**
+ * Sanitization callback functions for theme check
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+function geop_ngda_sanitize_format( $geop_ngda_value ) {
+	if ( ! in_array( $geop_ngda_value, array( 'ngda', 'ncc' ) ) )
+  	$geop_ngda_value = 'ngda';
+	return $geop_ngda_value;
+}
+
+
+
+//---------------------------------------
+//Supporting Sort Toggle between old date system and new custom system. Overwrites the CCB version. Only real difference is description.
+//https://codex.wordpress.org/Theme_Customization_API
+//--------------------------------------
+function geop_ccb_sorting_register( $wp_customize ){
+
+	//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+	$wp_customize->add_section( 'featured_format' , array(
+		'title'    => __( 'Featured Sorting', 'geoplatform-ccb' ),
+		'priority' => 40
+	) );
+
+  $wp_customize->add_setting('featured_appearance',array(
+	  'default' => 'date',
+	  'sanitize_callback' => 'geop_ccb_sanitize_feature_sort_format'
+	));
+
+	$wp_customize->add_control('featured_appearance',array(
+	  'type' => 'radio',
+	  'label' => 'Choose the sorting method',
+	  'section' => 'featured_format',
+    'description' => 'Date sorting displays the most recent posts and pages within the Front Page category.<br><br>Custom sorting makes use of values you assign your content in the Page and Post admin pages. Each page or post can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+		'choices' => array(
+		  'custom' => __('Custom', 'geoplatform-ccb'),
+			'date' => __('Date',  'geoplatform-ccb')
+		),
+	));
+}
+add_action( 'customize_register', 'geop_ccb_sorting_register');
+
+// Overriding the footer menu setup in CCB for the sake of clarification considering
+// the different layout of NGDA's footer.
+function geop_ccb_register_footer_menus() {
+	register_nav_menus(
+		array(
+			'footer-left' => 'Footer Menu - Left Column 1',
+			'footer-center' => 'Footer Menu - Left Column 2',
+			'footer-right-col1' => 'Footer Menu - Right Column 1',
+			'footer-right-col2' => 'Footer Menu - Right Column 2'
+		)
+	);
+}
+add_action( 'init', 'geop_ccb_register_footer_menus' );
+
+// Bumping out category functions not needed from parent theme.
+function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
+function geopccb_category_column_filter_two( $geopccb_columns ) {};
+function geop_ccb_category_mod_update() {};
+function geop_ccb_category_mod_interface( $tag ){};
+
+// Killing search register functions from CCB that have no use in NGDA.
+function geop_ccb_search_register(){};
+function geop_ccb_bootstrap_register(){};
+
+// Killing header menu creation due to lack of menu button.
+function geop_ccb_register_header_menus(){};
+
+// Killing Category Links custom post type and supporting functionality from CCB theme
+function geop_ccb_create_category_post() {};
+function geop_ccb_custom_field_catlink_checkboxes() {};
+function geop_ccb_catlink_column_filter( $geopccb_columns ) {};
+function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {};
+function geop_ccb_custom_field_external_url_content($post) {};
+function geop_ccb_custom_field_catlink_data($post_id) {};
+function geop_ccb_catlink_column_sorter($geopccb_columns) {};
+
 
 /**
  * CDN Distribution handler

@@ -23,18 +23,6 @@
 class Geop_Maps_Deactivator {
 
 	/**
-	 * Destroys the table. Here for testing, should be moved to uninstall later.
-	*/
-	private static function geopmap_database_remove() {
-	     global $wpdb;
-	     $geopmap_table_name = $wpdb->prefix . 'geop_maps_db';
-	     $geopmap_sql = "DROP TABLE IF EXISTS $geopmap_table_name;";
-	     $wpdb->query($geopmap_sql);
-	     delete_option("geop_maps_db_version");
-	}
-
-
-	/**
 	 * Short Description. (use period)
 	 *
 	 * Long Description.
@@ -42,8 +30,7 @@ class Geop_Maps_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
-		global $wpdb;
-		self::geopmap_database_remove();
+
 	}
 
 }

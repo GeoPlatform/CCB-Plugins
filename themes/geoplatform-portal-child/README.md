@@ -3,8 +3,8 @@
 **Contributors:** imagemattersllc, kevins713, lheazel
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
-**Stable tag:** 3.0.5   
-**Version:** 3.2.1
+**Stable tag:** 3.1.0
+**Version:** 3.1.7
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -112,89 +112,56 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
-### 3.2.1 ###
-* Release September 17, 2018
+## 3.1.7
+* Released September 20, 2018
 
- - Added the ability to sort posts, pages, and category links by their priority values in their admin pages.
- - Added additional validity checks for Map Gallery URIs. These changes trickle down to child themes as well.
- - Modified instructional verbiage for Priority inputs and Category Links.
+ - Added feature to Announcements V2 to set "More Featured Content" post count in Widget controls.
 
-### 3.2.0 ###
-* Release September 14, 2018
+## 3.1.6
+* Released September 14, 2018
 
- - Added Category Links to the theme. This new post type can be inserted into Categories to provide links to external web sites.
- - Category Links support excerpts, categories, and featured images. They also leverage priority sorting and accept a redirect URL input.
- - When assigned to a category, a Category Link will appear like a post, but the More Information button will redirect to the assigned external website.
+ - Added override functions for Category Links incorporation from parent theme.
 
-### 3.1.10 ###
+## 3.1.5
 * Released September 13, 2018
 
-- Replaced display of trimmed content for posts and pages in categories with excerpts. Trimmed content will still be presented if the excerpt is not set.
+ - Replaced display of trimmed content for posts in the Features and Announcements widgets with excerpts.
+ - Trimmed content will still be presented if the excerpt is not set.
+ - The Content Block shortcode input sections for both Features and Announcement widgets controls have been removed.
 
-### 3.1.9 ###
-* Released September 12, 2018
-
- - Fixed bugs and added additional validity checks to the Map Gallery Link function back-end.
-
-### 3.1.8 ###
+## 3.1.4
 * Released September 11, 2018
 
- - Added Community Links functionality. A new menu can now exists in the header for all pages featuring one.
- - Minor background code modifications for child theme use.
-
-### 3.1.7 ###
-* Released September 6, 2018
-
- - Posts and pages can be assigned numeric priority values on their edit pages. This will determine their ordering within Categories.
- - Added header search bar controls that permit toggling off or on.
- - If the GeoPlatform Search plugin is installed, the search bar can also be changed to leverage it instead.
- - Added disabling the header menu to the Bootstrap inclusion options.
- - Fonts, Map Gallery link, Search Bar Controls, and Bootstrap Controls have been consolidated under GeoPlatform Controls in the customizer.
-
-### 3.1.6 ###
-* Released August 31, 2018
-
- - Added Bootstrap inclusion toggle as a temporary fix for conflicts with multiple versions loading.
- - Rebuilt the Archives template.
-
-### 3.1.5
-* Release August 28, 2018
-
- - Categories can be assigned numeric priority values on their edit pages.
- - Customization option added to toggle Featured card sorting between legacy by date and new by priority system.
- - Removed deprecated environment variables for the front page map gallery.
-
-### 3.1.4
-* Released August 23, 2018
-
- - Various tweaks and bug fixes.
+ - Removed option to assign menus to the content links which does do not exist in this theme.
+ - Removed deprecated and obsolete menu locations.
 
 ### 3.1.3
-* Released August 2, 2018
+* Released September 7, 2018
 
- - Update checking allows user to update the theme.
- - Google Analytics incorporated.
- - Numerous back-end improvements and bug fixes.
+ - Removed sorting functions within this theme that have been moved to its parent.
 
 ### 3.1.2
-* Released June 29, 2018
+* Released September 6, 2018
 
-Updated per requirements listed in [Wordpress Theme requirements](https://make.wordpress.org/themes/handbook/review/required/)
+ - Added disabling the header menu to the Bootstrap inclusion options.
+ - Fonts, Map Gallery link, and Bootstrap Controls have been consolidated under GeoPlatform Controls in the customizer.
 
-#### Notable Changes
- - Removed Category links
- - Integrated Category images
- - Now Child theme ready
- - Front page template added
- - Custom logo enabled
- - Editor style enabled
- - Theme now translatable
- - Significant code refactoring, security updates, and bug fixes
+### 3.1.1
+* Released August 30, 2018
+
+ - Features and Announcements V2 widget added.
+ - Added Priority ordering system to Pages.
 
 ### 3.1.0
-* Released: June 5, 2018
+* Released August 29, 2018
 
-Initial submission on Wordpress.org. Previous versions were developed privately for GeoPlatform.gov customers.
+ - The front page has been fully widgetized.
+ - Deprecated environment options from Map Gallery sidebar option removed.
+
+### 3.0.0
+* Release pending.
+
+ - Initial release.
 
 <br>
 

@@ -419,7 +419,7 @@ function geo_customize_register( $wp_customize )
 				 $wp_customize->remove_section( 'colors' );
 
 				 //Remove default Menus and Static Front page sections as this theme doesn't utilize them at this time
-				 $wp_customize->remove_panel( 'nav_menus');
+				 //$wp_customize->remove_panel( 'nav_menus');
 				 $wp_customize->remove_section( 'static_front_page' );
 
 				 //remove site tagline and checkbox for showing site title and tagline from Site Identity section
