@@ -76,11 +76,11 @@ If you were able to successfully add a map to your shortcode collection but not 
 
 == Changelog ==
 
-= 1.0.9 =
-* Initial release.
-
 = 1.0.10 =
 * Added gallery retention upon plugin deactivation.
+
+= 1.0.9 =
+* Initial release.
 
 == Upgrade Notice ==
 
