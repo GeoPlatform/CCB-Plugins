@@ -3,10 +3,27 @@ This repo holds the work of CCB themes and plugins.
 
 ### Getting Started
 
-To run the CCB container simply run
-> docker-compose up -d ccb
+The GeoPlatform Community Core Bundle is an open source codebase under an Apache 2 license. Use of this package requires both docker and git to be installed on the user’s machine. Once these requirements are met, the user need only navigate to their working folder in the command line and make a clone of the repository. This can be done using either of the two methods:
 
-This will create and run a new CCB install inside a docker container.
+```git init
+git clone https://github.com/GeoPlatform/CCB-Plugins.git
+```
+
+or
+
+```git init
+git clone git@github.com:GeoPlatform/CCB-Plugins.git
+```
+
+Alternatively, the user may choose to download a zip file of the repository and deploy it where they require.
+
+From this point the user need only deploy the package from the working directory by inputting the following on the command line:
+
+```docker-compose up -d ccb```
+
+This will create a working container on their computer, which can be accessed through a web browser by simply navigating to “localhost”.
+
+Please see the full documentation for the CCB Repo here: https://github.com/GeoPlatform/CCB-Plugins
 
 <br>
 
