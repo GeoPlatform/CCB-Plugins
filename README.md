@@ -5,13 +5,15 @@ This repo holds the work of CCB themes and plugins.
 
 The GeoPlatform Community Core Bundle is an open source codebase under an Apache 2 license. Use of this package requires both docker and git to be installed on the user’s machine. Once these requirements are met, the user need only navigate to their working folder in the command line and make a clone of the repository. This can be done using either of the two methods:
 
-```git init
+```shell
+git init
 git clone https://github.com/GeoPlatform/CCB-Plugins.git
 ```
 
 or
 
-```git init
+```shell
+git init
 git clone git@github.com:GeoPlatform/CCB-Plugins.git
 ```
 
