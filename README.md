@@ -22,7 +22,8 @@ Alternatively, the user may choose to download a zip file of the repository and 
 From this point the user need only deploy the package from the working directory by inputting the following on the command line:
 
 ```shell
-docker-compose up -d ccb```
+docker-compose up -d ccb
+```
 
 This will create a working container on their computer, which can be accessed through a web browser by simply navigating to “localhost”.
 
