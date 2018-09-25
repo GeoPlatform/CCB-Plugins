@@ -28,7 +28,7 @@ if ( $geopccb_class_category_image ) {
                 <!--Insert any banner info or things you'd like here-->
                   <div>
                     <h3 style="color:white"><?php esc_html(single_cat_title()); ?></h3>
-                    <?php echo esc_html(category_description()); ?>
+                    <p><?php echo category_description(); ?></p>
                   </div>
               </div><!--#col-md-12 col-sm-12 col-xs-12-->
           </div><!--#row-->
