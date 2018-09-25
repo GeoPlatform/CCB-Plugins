@@ -18,11 +18,11 @@ $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_post
 // If not, grabs post content and clips it at 200 characters.
 $geopportal_post = get_post($geopportal_mainpage_feat_page);
 if (!empty($geopportal_post->post_excerpt))
-  $geopccb_excerpt = esc_attr($geopportal_post->post_excerpt);
+  $geopccb_excerpt = $geopportal_post->post_excerpt;
 else{
-  $geopccb_excerpt = esc_attr($geopportal_post->post_content);
+  $geopccb_excerpt = $geopportal_post->post_content;
   if (strlen($geopccb_excerpt) > 200)
-    $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 200) . '...');
+    $geopccb_excerpt = substr($geopccb_excerpt, 0, 200) . '...';
 }
 ?>
 
