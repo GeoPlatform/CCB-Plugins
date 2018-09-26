@@ -1850,8 +1850,8 @@ if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
 }
 
 
-
-
+// Excerpt option added to Pages
+add_post_type_support( 'page', 'excerpt' );
 
 
 /**
