@@ -29,7 +29,7 @@ function geopportal_enqueue_scripts() {
 add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
 
 //Disable admin bar (un-comment for prod sites)
-//add_filter('show_admin_bar', '__return_false');
+add_filter('show_admin_bar', '__return_false');
 
 //--------------------------
 //Support adding Menus for header and footer
