@@ -1,0 +1,82 @@
+/* === GENERIC ELEMENTS == */
+
+
+
+
+/* === DEMO SPECIFIC TWEAKS AND LAYOUT === */
+.demo h2 {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  margin: 0 0 1em 0;
+}
+.demo {
+  padding: 2em 0 1.5em 0;
+}
+
+.demo div.ui-toggle-switch {
+  display: block;
+  padding: 0.65em 0;
+}
+#radio {
+  padding: 1em 0;
+}
+#modal {
+  display: none;
+}
+.modalDemo p {
+  color: #777;
+  width: 50%;
+}
+.modalDemo p a {
+  color: #1584DE;
+}
+#eq > span {
+  margin-right: 13px;
+  width: 7px;
+}
+.demo .ui-button {
+  vertical-align: top;
+}
+
+
+
+
+
+/* === DARK MODE === */
+body.dark {
+  background-image: url(../img/dark_wall.png);
+}
+.dark h1 {
+  color: #EEE;
+  border-bottom: 1px solid #444;
+}
+.dark h2 {
+  color: #EEE;
+}
+.dark .ui-toggle-switch label {
+  color: #FFF;
+}
+.dark .ui-toggle-switch .ui-state-active {
+  background: transparent;
+  color: #FFF;
+}
+.dark .modalDemo p {
+  color: #AAA;
+}
+  .dark .modalDemo p a {
+    color: #50b1ff;
+  }
+
+
+/* css for timepicker */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear:left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 45%; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+.ui-timepicker-rtl dl dt{ float: right; clear: right; }
+.ui-timepicker-rtl dl dd { margin: 0 45% 10px 10px; }
