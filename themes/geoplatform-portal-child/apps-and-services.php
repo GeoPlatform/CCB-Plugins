@@ -38,7 +38,7 @@ class Geopportal_Services_Widget extends WP_Widget {
 		else
       $geopportal_apsrv_disp_button_link = "https://www.geoplatform.gov/applications-and-services/";
 
-		echo $args['before_widget'];?>
+		?>
 
 
     <!-- All the HTML output that the widget generates -->
@@ -68,7 +68,6 @@ class Geopportal_Services_Widget extends WP_Widget {
       </div><!--#footing-->
     </div><!--#apps-and-services section-linked-->
     <?php
-    echo $args['after_widget'];
   }
 
   // The admin side of the widget.

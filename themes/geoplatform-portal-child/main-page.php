@@ -35,7 +35,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		else
       $geopportal_mainpage_disp_third_link = "";
 
-    echo $args['before_widget'];?>
+    ?>
 
     <div class="whatsNew section--linked">
       <div class="container-fluid">
@@ -66,7 +66,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
       </div><!--#footing-->
     </div><!--#whatsNew section-linked-->
     <?php
-    echo $args['after_widget'];
 	}
 
   // The admin side of the widget.

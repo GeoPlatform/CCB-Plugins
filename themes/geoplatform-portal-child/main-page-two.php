@@ -112,8 +112,7 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		if (!is_numeric($geopportal_mainpagetwo_disp_more_count) || $geopportal_mainpagetwo_disp_more_count <= 0)
 			$geopportal_mainpagetwo_disp_more_count = 6;
 
-
-    echo $args['before_widget'];?>
+		?>
 
 		<div class="m-featured">
 
@@ -200,7 +199,6 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		</div>
 
     <?php
-    echo $args['after_widget'];
 	}
 
   // The admin side of the widget.
