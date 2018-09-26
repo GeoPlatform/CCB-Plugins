@@ -67,7 +67,7 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 		else
       $geopportal_corn_disp_botright_content = "The Marketplace facilitates collaboration on the planned acquisition and production of geospatial data, such as elevation and bathymetric datasets. You can use this filtered catalog search to determine whether a potential partner is already planning to invest in data for which you have a requirement.";
 
-		echo $args['before_widget'];?>
+		?>
 
 		<div class="cornerstones whatsNew section--linked">
 	    <!-- top directional lines and section heading -->
@@ -119,7 +119,6 @@ class Geopportal_Cornerstones_Widget extends WP_Widget {
 	    </div><!--#footing-->
 		</div><!--#cornerstones section-linked-->
 		<?php
-    echo $args['after_widget'];
 	}
 
 	// The admin side of the widget
