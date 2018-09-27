@@ -48,6 +48,13 @@ RUN curl -L -o /usr/src/custom-sidebars.zip \
 					/usr/src/custom-sidebars.zip; \
 		rm /usr/src/custom-sidebars.zip
 
+# download-manager:
+RUN curl -L -o /usr/src/download-manager.zip \
+					https://downloads.wordpress.org/plugin/download-manager.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/download-manager.zip; \
+		rm /usr/src/download-manager.zip
+
 ########### Install Developer Dependencies #############
 # theme check:
 RUN curl -L -o /usr/src/theme-check.zip \
