@@ -215,31 +215,38 @@ There is no additional configuration needed for this plugin. Just activate as do
 ## Themes
 Most GeoPlatform themes utilize Bootstrap in their operation, and conflicting Bootstrap resources potentially included in 3rd-party plugins can potentially disable these operations. Current release themes provide an option to disable Bootstrap to permit smooth operation, but note should be taken.
 
-### Geoplatform CCB - */themes/geoplatform-ccb* v3.2.1
+### Geoplatform CCB - */themes/geoplatform-ccb*
+v3.2.1
  - Main theme for communities and new wordpress instances. This is the current community standard and backbone of the Portal 3 and NGDA 3 child themes.
  - Tested and updated against Wordpress Standards.
 
-### Geoplatform NGDA 3 - */themes/geoplatform-ngda-child* v3.1.6
+### Geoplatform NGDA 3 - */themes/geoplatform-ngda-child*
+v3.1.6
  - Theme for exclusive use with the GeoPlatform NGDA communities, including the NCC site.
  - Child theme of GeoPlatform CCB.
 
-### Geoplatform Portal 3 - */themes/geoplatform-portal-child* v3.1.7
+### Geoplatform Portal 3 - */themes/geoplatform-portal-child*
+v3.1.7
  - Theme for the [Main Geoplatform website](https://www.geoplatform.gov).
  - Not for public use.
 
-### Geoplatform Portal - */themes/geoplatform-portal* deprecated
+### Geoplatform Portal - */themes/geoplatform-portal*
+deprecated
  - Theme for the [Main Geoplatform website](https://www.geoplatform.gov).
  - Tested and updated against Wordpress Standards, but not on Wordpress marketplace or publicly available
 
-### Geoplatform NGDA  - */themes/geoplatform-ngda* deprecated
+### Geoplatform NGDA  - */themes/geoplatform-ngda*
+deprecated
  - Theme exclusively for use with Geoplatform NGDA communities.
  - Currently standalone theme, but will soon be refactored as a Child theme of the Geoplatform CCB theme to better incorporate and stay up to date with the latest features.
 
-### NGDA Imagery  - */themes/ngda-imagery-2017* deprecated
+### NGDA Imagery  - */themes/ngda-imagery-2017*
+deprecated
  - Theme exclusively for use with the NGDA Imagery site.
  - Currently standalone theme, but will soon be refactored as a Child theme of the Geoplatform CCB theme to better incorporate and stay up to date with the latest features.
 
-### NGDA NCC - */themes/ngda-ncc-21017* deprecated
+### NGDA NCC - */themes/ngda-ncc-21017*
+deprecated
  - Theme exclusively for use with NGDA NCC site.
  - Currently standalone theme, but will soon be refactored as a Child theme of the Geoplatform CCB theme to better incorporate and stay up to date with the latest features.
 
