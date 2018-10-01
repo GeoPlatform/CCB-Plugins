@@ -78,46 +78,34 @@ RUN curl -L -o /usr/src/plugin.zip [URL to plugin download]; \
 
 <br><br>
 
-## Development Plugins
-There are currently 2 plugin dependencies built in to verify if the theme you have or want to use is working properly. They are **Theme Check** and **Theme Sniffer**.
-### [Theme Check](https://wordpress.org/plugins/theme-check/)
--  a standard for checking Themes against WordPress requirements, and can be used to double check Theme Sniffer
-### [Theme Sniffer](https://github.com/WPTRT/theme-sniffer)
+## Development and Supplemental Plugins
+There are currently 2 plugins used to verify if the theme you have or want to use is working properly: **Theme Check** and **Theme Sniffer**. Additionally, the Portal 3 theme makes use of **Content Blocks** in the control of its widget content. These plugins are not bundled with this package, but are still very useful for theme development and and use.
+
+### [Theme Check](https://wordpress.org/plugins/theme-check/) v20160523.1
+-  a standard for checking Themes against WordPress requirements, and can be used to double check Theme Sniffer.
+
+### [Theme Sniffer](https://github.com/WPTRT/theme-sniffer) v0.1.5
 - checks any theme installed against the [Wordpress Coding Standards](https://github.com/WPTRT/WordPress-Coding-Standards) for theme development. Make sure in development that your theme does not have any errors. Notices should be dealt with accordingly but aren't critical to the site working.
+
+### [Content Blocks (Custom Post Widget)](https://wordpress.org/plugins/custom-post-widget/) v3.0.3
+- Establishes a custom post type that can be evoked as shortcode. This essentially allows the embedding of a post into any form of content where shortcode is permitted.
 
 To use the plugins, navigate to the __Plugins->Installed Plugins__ area of the Wordpress Dashboard, and simply click the __Activate__ button under the plugin you want to use.
 
-When activated, run and manage them from the __Appearance->Theme Check__ or __Appearance->Theme Sniffer__ areas of the Dashboard.
+When activated, run and manage them from the __Appearance->Theme Check__ or __Appearance->Theme Sniffer__ areas of the Dashboard. Content Blocks creates its own section in the Dashboard for all of it functionality.
 
-## Bundled Plugins
 
-### [TinyMCE Advanced](https://wordpress.org/plugins/tinymce-advanced/)
-Used to address issues presented in [DT-1628](https://geoplatform.atlassian.net/browse/DT-1628), this plugin upgrades the built in WYSIWYG editor for all areas it is present in the WordPress instance. These would be primarily in Posts and Pages in a normal Wordpress instance, as well as the Category and Banner areas in the Geoplatform CCB Theme.
+## First-Party Plugins
 
-There is no additional configuration needed for this plugin. Just activate as documented below and it works out of the box.
+### GeoPlatform Community Search v1.0.7
+-  Use to input searchable community asset interfaces into posts and pages using shortcode.
+-  Global customization is achieved through controls in the settings page.
+-  Individual customization is achieved through modifications to the shortcode itself.
 
-### [Easy WP SMTP](https://wordpress.org/plugins/easy-wp-smtp/)
-Since the Wordpress instances are Dockerized, they need a plugin to handle setting up Email notifications for our users. This plugin handles setting up the SMTP connection for that.
-
-To configure, follow these steps:
-1. Activate plugin
-2. Go to plugin settings (Settings->Easy WP SMTP)
-3. In the **SMTP Settings** tab, set the **From Email Address** to : sit-smtp@geoplatform.us
-4. Set the **SMTP Host** to : email-smtp.us-east-1.amazonaws.com
-5. **Type of Encryption** should be set to **TLS**.
-6. Set the **SMTP Port** to **25**.
-7. Make sure **SMTP Authentication** is set to **YES**.
-8. Contact the **Geoplatform Tech Team** for the **SMTP Username** and **SMTP Password**.
-9. Once those are configured, go to the **Test Email** tab and send a test email to whichever email you are using to make sure the connection is setup successfully.
-10. Once finished, move on to setting up and configuring the **Email Subcsribers** plugin
-
-### [Email Subscribers](https://wordpress.org/plugins/email-subscribers/)
-Used to address issues presented in [DT-1365](https://geoplatform.atlassian.net/browse/DT-1365), the Email Subscribers plugin is used to help site admins stay notified and also help their users stay notified of what goes on in the site.
-
-To configure, follow these steps:
-1. Make sure the **Easy WP SMTP** plugin is activated and configured
-2. Activate this plugin
-3. Go to the Settings page **(Email Subscribers->Settings)**, and set up the sites configuration settings for email as desired in the **Admin** tab.
+### GeoPlatform Maps v1.0.10
+-  Used to reference data from the GeoPlatform map databases into Wordpress instances and evoke interactive maps in pages and posts.
+-  The user can create a gallery of maps in their Wordpress instance, which come with individual shortcodes.
+-  These shortcodes can be placed into any location supporting them to evoke that map in an interactive interface.
 
 ### [Custom Sidebars](https://wordpress.org/plugins/custom-sidebars/)
 This plugin replaces and enhances functionality originally featured in the Geoplatform CCB theme, in order to make custom menus and links show up in the sidebar of specifiic category pages. This plugin does that, as well as allows custom sidebars of any post and/or page on the site as well.
@@ -176,9 +164,58 @@ To configure, follow these steps:
 4. Once you have verified this works properly, you may go back to the plugin settings and set the **Login type** to **Auto Login - SSO**. Make sure you save the changes again.
 5.  Your plugin is now configured.
 
+### [TinyMCE Advanced](https://wordpress.org/plugins/tinymce-advanced/) v4.7.11
+Used to address issues presented in [DT-1628](https://geoplatform.atlassian.net/browse/DT-1628), this plugin upgrades the built in WYSIWYG editor for all areas it is present in the WordPress instance. These would be primarily in Posts and Pages in a normal Wordpress instance, as well as the Category and Banner areas in the Geoplatform CCB Theme.
+
+There is no additional configuration needed for this plugin. Just activate as documented below and it works out of the box.
+
+### [Easy WP SMTP](https://wordpress.org/plugins/easy-wp-smtp/) v1.3.7
+Since the Wordpress instances are Dockerized, they need a plugin to handle setting up Email notifications for our users. This plugin handles setting up the SMTP connection for that.
+
+To configure, follow these steps:
+1. Activate plugin
+2. Go to plugin settings (Settings->Easy WP SMTP)
+3. In the **SMTP Settings** tab, set the **From Email Address** to : sit-smtp@geoplatform.us
+4. Set the **SMTP Host** to : email-smtp.us-east-1.amazonaws.com
+5. **Type of Encryption** should be set to **TLS**.
+6. Set the **SMTP Port** to **25**.
+7. Make sure **SMTP Authentication** is set to **YES**.
+8. Contact the **Geoplatform Tech Team** for the **SMTP Username** and **SMTP Password**.
+9. Once those are configured, go to the **Test Email** tab and send a test email to whichever email you are using to make sure the connection is setup successfully.
+10. Once finished, move on to setting up and configuring the **Email Subcsribers** plugin
+
+### [Email Subscribers](https://wordpress.org/plugins/email-subscribers/) v3.5.3
+Used to address issues presented in [DT-1365](https://geoplatform.atlassian.net/browse/DT-1365), the Email Subscribers plugin is used to help site admins stay notified and also help their users stay notified of what goes on in the site.
+
+To configure, follow these steps:
+1. Make sure the **Easy WP SMTP** plugin is activated and configured
+2. Activate this plugin
+3. Go to the Settings page **(Email Subscribers->Settings)**, and set up the sites configuration settings for email as desired in the **Admin** tab.
+
+### [Custom Sidebars](https://wordpress.org/plugins/custom-sidebars/) v3.1.6
+This plugin replaces and enhances functionality originally featured in the Geoplatform CCB theme, in order to make custom menus and links show up in the sidebar of specifiic category pages. This plugin does that, as well as allows custom sidebars of any post and/or page on the site as well.
+
+The plugin does not override any default functionality of the sidebars in your theme until you enable it. Each theme will have differently located and named sidebars, so for setup configuration we will act as if you're using the **Geoplatform CCB theme**.
+
+To configure in Geoplatform CCB, follow these steps:
+1. Activate the plugin
+2. Go to the Widgets area (Appearance-> Widgets)
+3. In the Sidebars area on the right, make sure the **Theme Sidebars**' "*Sidebar Widgets*" area has the **Allow this sidebar to be replaced** option checked.
+4. Click **Create a new Sidebar**, and give it an appropriate name and description
+5. You can now add any widget to this area as you normallly would to the sidebar. The difference here is you can set that sidebar's location to specific areas. For this example, we'll set it to a specific category page in Geoplatform CCB so it shows up after you click on a front page category
+6. In you new sidebar, click **Sidebar Location**.
+7. Click on the **For Archives** tab and set it to the specific category you want. It will now show up in your desired category page.
+
+### [Download Manager](https://wordpress.org/plugins/download-manager/) v2.9.81
+This plugin is used to enact much wider control over Wordpress content management. This is very useful for the handling and presentation of content, and controlling the upload and download permissions of various user roles. This plugin would primarily be used for content control, but can be further implemented in the categorization and sharing of documents or other uploaded content.
+
+There is no additional configuration needed for this plugin. Just activate as documented below and it works out of the box.
+
+
 <br>
 
 ## Themes
+Most GeoPlatform themes utilize Bootstrap in their operation, and conflicting Bootstrap resources potentially included in 3rd-party plugins can potentially disable these operations. Current release themes provide an option to disable Bootstrap to permit smooth operation, but note should be taken.
 
 ### Geoplatform CCB - */themes/geoplatform-ccb*
  - Main theme for communities and new wordpress instances. Also submitted to Wordpress marketplace for commercial and worldwide usage.

@@ -1836,9 +1836,6 @@ if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
   add_action( 'customize_register', 'geop_ccb_search_register');
 }
 
-
-
-
 if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
   function geop_ccb_custom_field_post_data($post_id) {
     if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority']) || empty( $_POST['geop_ccb_post_priority'] ))

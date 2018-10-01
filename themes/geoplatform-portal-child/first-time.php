@@ -54,7 +54,7 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
 
                     <br>
                       <div class="first-time-buttons">
-                          <a href="<?php echo $GLOBALS['geopccb_accounts_url'] ?>/register" class="btn btn-lg btn-accent">Register</a>
+                          <a href="<?php echo $GLOBALS['geopccb_accounts_url'] ?>/register" class="btn btn-accent">Register</a>
                           <!-- &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp;
                           <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>" class="btn btn-lg btn-primary">Sign In</a> -->
                       </div><!--#firstTime first-time-buttons-->

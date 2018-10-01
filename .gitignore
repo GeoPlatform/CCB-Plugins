@@ -10,6 +10,8 @@ plugins/tinymce-advanced
 plugins/custom-sidebars
 plugins/debug-bar
 plugins/email-subscribers
+plugins/download-manager
+plugins/custom-post-widget
 
 
 # Ignore default themes files

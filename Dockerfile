@@ -48,21 +48,28 @@ RUN curl -L -o /usr/src/custom-sidebars.zip \
 					/usr/src/custom-sidebars.zip; \
 		rm /usr/src/custom-sidebars.zip
 
+# download-manager:
+RUN curl -L -o /usr/src/download-manager.zip \
+					https://downloads.wordpress.org/plugin/download-manager.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/download-manager.zip; \
+		rm /usr/src/download-manager.zip
+
 ########### Install Developer Dependencies #############
 # theme check:
-RUN curl -L -o /usr/src/theme-check.zip \
-					https://downloads.wordpress.org/plugin/theme-check.20160523.1.zip; \
-	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
-					/usr/src/theme-check.zip; \
-		rm /usr/src/theme-check.zip
+#RUN curl -L -o /usr/src/theme-check.zip \
+#					https://downloads.wordpress.org/plugin/theme-check.20160523.1.zip; \
+#	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+#					/usr/src/theme-check.zip; \
+#		rm /usr/src/theme-check.zip
 
 # theme sniffer:
-RUN curl -L -o /usr/src/theme-sniffer.zip \
-					https://github.com/WPTRT/theme-sniffer/releases/download/0.1.5/theme-sniffer.0.1.5.zip; \
-	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
-					/usr/src/theme-sniffer.zip; \
-		rm /usr/src/theme-sniffer.zip; \
-		rm -rf /usr/src/wordpress/wp-content/plugins/__MACOSX/;
+#RUN curl -L -o /usr/src/theme-sniffer.zip \
+#					https://github.com/WPTRT/theme-sniffer/releases/download/0.1.5/theme-sniffer.0.1.5.zip; \
+#	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+#					/usr/src/theme-sniffer.zip; \
+#		rm /usr/src/theme-sniffer.zip; \
+#		rm -rf /usr/src/wordpress/wp-content/plugins/__MACOSX/;
 
 # Open ID Connect - OAUTH :
 RUN curl -L -o /usr/src/open-id-generic-master.zip \
