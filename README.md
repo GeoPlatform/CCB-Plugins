@@ -107,22 +107,20 @@ When activated, run and manage them from the __Appearance->Theme Check__ or __Ap
 -  The user can create a gallery of maps in their Wordpress instance, which come with individual shortcodes.
 -  These shortcodes can be placed into any location supporting them to evoke that map in an interactive interface.
 
-### [Custom Sidebars](https://wordpress.org/plugins/custom-sidebars/)
-This plugin replaces and enhances functionality originally featured in the Geoplatform CCB theme, in order to make custom menus and links show up in the sidebar of specifiic category pages. This plugin does that, as well as allows custom sidebars of any post and/or page on the site as well.
+### GeoPlatform Search v1.0.3
+-  Creates a dedicated page hosting a fully-featured interface for perusing all GeoPlatform assets.
+-  Possesses rudienmtiary controls for page recreation.
+-  Provides a shortcode that evokes a search bar, which navigates to the page and initiates a search using the input keywords.
 
-The plugin does not override any default functionality of the sidebars in your theme until you enable it. Each theme will have differently located and named sidebars, so for setup configuration we will act as if you're using the **Geoplatform CCB theme**.
+To use the plugins, navigate to the __Plugins->Installed Plugins__ area of the Wordpress Dashboard, and simply click the __Activate__ button under the plugin you want to use.
 
-To configure in Geoplatform CCB, follow these steps:
-1. Activate the plugin
-2. Go to the Widgets area (Appearance-> Widgets)
-3. In the Sidebars area on the right, make sure the **Theme Sidebars**' "*Sidebar Widgets*" area has the **Allow this sidebar to be replaced** option checked.
-4. Click **Create a new Sidebar**, and give it an appropriate name and description
-5. You can now add any widget to this area as you normallly would to the sidebar. The difference here is you can set that sidebar's location to specific areas. For this example, we'll set it to a specific category page in Geoplatform CCB so it shows up after you click on a front page category
-6. In you new sidebar, click **Sidebar Location**.
-7. Click on the **For Archives** tab and set it to the specific category you want. It will now show up in your desired category page.
+When activated, run and manage them from the __Settings->GeoPlatform Community Search__, __Settings->GeoPlatform Maps__, or __Settings->GeoPlatform Search__ areas of the Dashboard. These can also be accessed by selecting __Settings__ in the box for the desired plugin in __Plugins->Installed Plugins__.
 
-### [Open ID Connect Generic](https://github.com/daggerhart/openid-connect-generic)
-Used to connect to Geoplatform's Oauth2 IDP system.
+
+## Bundled Plugins
+
+### [Open ID Connect Generic](https://github.com/daggerhart/openid-connect-generic) v3.4.0
+Used to connect to Geoplatform's Oauth2 IDP system. This plugin is mandatory for all CTK environments.
 
 To configure, follow these steps:
 
@@ -218,22 +216,37 @@ There is no additional configuration needed for this plugin. Just activate as do
 Most GeoPlatform themes utilize Bootstrap in their operation, and conflicting Bootstrap resources potentially included in 3rd-party plugins can potentially disable these operations. Current release themes provide an option to disable Bootstrap to permit smooth operation, but note should be taken.
 
 ### Geoplatform CCB - */themes/geoplatform-ccb*
- - Main theme for communities and new wordpress instances. Also submitted to Wordpress marketplace for commercial and worldwide usage.
+v3.2.1
+ - Main theme for communities and new wordpress instances. This is the current community standard and backbone of the Portal 3 and NGDA 3 child themes.
  - Tested and updated against Wordpress Standards.
 
+### Geoplatform NGDA 3 - */themes/geoplatform-ngda-child*
+v3.1.6
+ - Theme for exclusive use with the GeoPlatform NGDA communities, including the NCC site.
+ - Child theme of GeoPlatform CCB.
+
+### Geoplatform Portal 3 - */themes/geoplatform-portal-child*
+v3.1.7
+ - Theme for the [Main Geoplatform website](https://www.geoplatform.gov).
+ - Not for public use.
+
 ### Geoplatform Portal - */themes/geoplatform-portal*
+deprecated
  - Theme for the [Main Geoplatform website](https://www.geoplatform.gov).
  - Tested and updated against Wordpress Standards, but not on Wordpress marketplace or publicly available
 
 ### Geoplatform NGDA  - */themes/geoplatform-ngda*
+deprecated
  - Theme exclusively for use with Geoplatform NGDA communities.
  - Currently standalone theme, but will soon be refactored as a Child theme of the Geoplatform CCB theme to better incorporate and stay up to date with the latest features.
 
 ### NGDA Imagery  - */themes/ngda-imagery-2017*
+deprecated
  - Theme exclusively for use with the NGDA Imagery site.
  - Currently standalone theme, but will soon be refactored as a Child theme of the Geoplatform CCB theme to better incorporate and stay up to date with the latest features.
 
 ### NGDA NCC - */themes/ngda-ncc-21017*
+deprecated
  - Theme exclusively for use with NGDA NCC site.
  - Currently standalone theme, but will soon be refactored as a Child theme of the Geoplatform CCB theme to better incorporate and stay up to date with the latest features.
 
