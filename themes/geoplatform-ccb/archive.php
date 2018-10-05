@@ -35,9 +35,9 @@ get_template_part( 'single-banner', get_post_format() );
 				// Checks if there's data in the excerpt and, if so, assigns it to be displayed.
         // If not, grabs post content and clips it at 90 characters.
         if (!empty($geopccb_post->post_excerpt))
-          $geopccb_excerpt = esc_attr($geopccb_post->post_excerpt);
+          $geopccb_excerpt = esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt));
         else{
-          $geopccb_excerpt = esc_attr($geopccb_post->post_content);
+          $geopccb_excerpt = esc_attr(wp_strip_all_tags($geopccb_post->post_content));
           if (strlen($geopccb_excerpt) > 90)
             $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 90) . '...');
         }

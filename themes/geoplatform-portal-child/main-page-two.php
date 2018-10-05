@@ -85,27 +85,27 @@ class Geopportal_MainPageTwo_Widget extends WP_Widget {
 		$geopportal_mainpagetwo_disp_third_excerpt = "";
 
 		if (!empty($geopportal_mainpagetwo_disp_first_page->post_excerpt))
-		  $geopportal_mainpagetwo_disp_first_excerpt = esc_attr($geopportal_mainpagetwo_disp_first_page->post_excerpt);
+		  $geopportal_mainpagetwo_disp_first_excerpt = esc_attr(wp_strip_all_tags($geopportal_mainpagetwo_disp_first_page->post_excerpt));
 		else if (!empty($geopportal_mainpagetwo_disp_first_page->post_content)){
-		  $geopportal_mainpagetwo_disp_first_excerpt = esc_attr($geopportal_mainpagetwo_disp_first_page->post_content);
+		  $geopportal_mainpagetwo_disp_first_excerpt = esc_attr(wp_strip_all_tags($geopportal_mainpagetwo_disp_first_page->post_content));
 		  if (strlen($geopportal_mainpagetwo_disp_first_excerpt) > 200)
-		    $geopportal_mainpagetwo_disp_first_excerpt = esc_attr(substr($geopportal_mainpagetwo_disp_first_excerpt, 0, 200) . '...');
+		    $geopportal_mainpagetwo_disp_first_excerpt = esc_attr(wp_strip_all_tags(substr($geopportal_mainpagetwo_disp_first_excerpt, 0, 200) . '...'));
 		}
 
 		if (!empty($geopportal_mainpagetwo_disp_second_page->post_excerpt))
-		  $geopportal_mainpagetwo_disp_second_excerpt = esc_attr($geopportal_mainpagetwo_disp_second_page->post_excerpt);
+		  $geopportal_mainpagetwo_disp_second_excerpt = esc_attr(wp_strip_all_tags($geopportal_mainpagetwo_disp_second_page->post_excerpt));
 			else if (!empty($geopportal_mainpagetwo_disp_second_page->post_content)){
-		  $geopportal_mainpagetwo_disp_second_excerpt = esc_attr($geopportal_mainpagetwo_disp_second_page->post_content);
+		  $geopportal_mainpagetwo_disp_second_excerpt = esc_attr(wp_strip_all_tags($geopportal_mainpagetwo_disp_second_page->post_content));
 		  if (strlen($geopportal_mainpagetwo_disp_second_excerpt) > 200)
-		    $geopportal_mainpagetwo_disp_second_excerpt = esc_attr(substr($geopportal_mainpagetwo_disp_second_excerpt, 0, 200) . '...');
+		    $geopportal_mainpagetwo_disp_second_excerpt = esc_attr(wp_strip_all_tags(substr($geopportal_mainpagetwo_disp_second_excerpt, 0, 200) . '...'));
 		}
 
 		if (!empty($geopportal_mainpagetwo_disp_third_page->post_excerpt))
-		  $geopportal_mainpagetwo_disp_third_excerpt = esc_attr($geopportal_mainpagetwo_disp_third_page->post_excerpt);
+		  $geopportal_mainpagetwo_disp_third_excerpt = esc_attr(wp_strip_all_tags($geopportal_mainpagetwo_disp_third_page->post_excerpt));
 			else if (!empty($geopportal_mainpagetwo_disp_third_page->post_content)){
-		  $geopportal_mainpagetwo_disp_third_excerpt = esc_attr($geopportal_mainpagetwo_disp_third_page->post_content);
+		  $geopportal_mainpagetwo_disp_third_excerpt = esc_attr(wp_strip_all_tags($geopportal_mainpagetwo_disp_third_page->post_content));
 		  if (strlen($geopportal_mainpagetwo_disp_third_excerpt) > 200)
-		    $geopportal_mainpagetwo_disp_third_excerpt = esc_attr(substr($geopportal_mainpagetwo_disp_third_excerpt, 0, 200) . '...');
+		    $geopportal_mainpagetwo_disp_third_excerpt = esc_attr(wp_strip_all_tags(substr($geopportal_mainpagetwo_disp_third_excerpt, 0, 200) . '...'));
 		}
 
 		// Makes sure count is a number.
