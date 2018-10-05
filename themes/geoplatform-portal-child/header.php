@@ -93,18 +93,25 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
                         <div class="btn-account btn-group">
 
-                            <!-- <% if(!authenticated) { %> -->
-                            <!-- <?php if (!is_user_logged_in()){?>
-                              <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>">
-                                  <button style="color:white;" type="button" class="btn btn-link">Sign In</button>
-                                </a>
-                          <?php  } else {
-	                        $current_user = wp_get_current_user(); ?>
-                            <a href="<?php echo wp_logout_url( home_url() ); ?>">
-                                <button style="color:white;" type="button" class="btn btn-link">Sign out</button>
-                              </a>
-                            <?php } ?> -->
-                            <a href="<?php echo esc_url($GLOBALS['geopccb_accounts_url']);?>">My Account</a>
+                          <?php
+                          $geopportal_current_user = wp_get_current_user();
+                          $geopportal_text = "Sign In";
+                          $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+                          if($geopportal_current_user->ID != 0) {
+                            if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+                              $geopportal_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;
+                            elseif (!empty($geopportal_current_user->user_firstname) && empty($geopportal_current_user->user_lastname))
+                              $geopportal_text = $geopportal_current_user->user_firstname;
+                            elseif (empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+                              $geopportal_text = $geopportal_current_user->user_lastname;
+                            else
+                              $geopportal_text = $geopportal_current_user->user_login;
+
+                            $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']) . "/profile";
+                          }
+                          ?>
+
+                          <a href="<?php echo $geopportal_redirect ?>"><?php echo $geopportal_text ?></a>
                         </div>
                     </li>
                 </ul>
