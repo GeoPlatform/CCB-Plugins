@@ -107,7 +107,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                             else
                               $geopportal_text = $geopportal_current_user->user_login;
 
-                            $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']) . "/profile";
+                            $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
                           }
                           ?>
 
