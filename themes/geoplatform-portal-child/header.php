@@ -96,7 +96,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                           <?php
                           $geopportal_current_user = wp_get_current_user();
                           $geopportal_text = "Sign In";
-                          $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+                          $geopportal_redirect = esc_url( wp_login_url( home_url() ) );
                           if($geopportal_current_user->ID != 0) {
                             if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
                               $geopportal_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;

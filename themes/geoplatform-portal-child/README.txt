@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Released pending additions
 
  - The "My Account" button in the header now reflects the user's name if set, username if not, or "Sign In" if not signed in.
+ - The sign-in button at the top right redirected to a location that did not return a sign-in token.
 
 ## 3.1.7
 * Released September 20, 2018
