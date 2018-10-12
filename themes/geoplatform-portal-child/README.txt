@@ -113,7 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 == Changelog ==
 
 ## 3.1.8
-* Released pending additions
+* Released October 12, 2018
 
  - The "My Account" button in the header now reflects the user's name if set, username if not, or "Sign In" if not signed in.
 
