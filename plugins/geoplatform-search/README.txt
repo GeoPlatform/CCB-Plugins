@@ -5,7 +5,7 @@ Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-search
 Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
-Tested up to: 4.9.5
+Tested up to: 4.9.8
 Stable tag: 1.0.3
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
@@ -18,7 +18,7 @@ The GeoPlatform Search plugin is used to browse, search, and access the portfoli
 
 The plugin can be used to embed search bars into your pages and posts for searching the GeoPlatform portfolio. Just generate and include a shortcode found in the settings page to integrate a search bar anywhere.
 
-With the GeoPlatform Search plugin installed, activation will create a new page on your site called "GeoPlatform Search." This new page acts as a dedicated search application, with full-sized UI, providing full access to the entire portfolio of GeoPlatform assets. 
+With the GeoPlatform Search plugin installed, activation will create a new page on your site called "GeoPlatform Search." This new page acts as a dedicated search application, with full-sized UI, providing full access to the entire portfolio of GeoPlatform assets.
 
 Using the GeoPlatform Search plugin, you can browse the entire portfolio of GeoPlatform assets using a wide array of criteria (below) and standard search functionality such as paging and sorting:
 
@@ -111,4 +111,3 @@ USA
 
 Technical Support:
 servicedesk@geoplatform.gov
-
