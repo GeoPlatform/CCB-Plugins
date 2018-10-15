@@ -64,7 +64,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                   }
                   else{
                     echo '<h4 class="brand"><a href="';
-                    echo esc_url($GLOBALS['wpp_url']);
+                    echo esc_url('https://www.geoplatform.gov');
                     echo '" title="Go to the Geoplatform Home Page"><span class="icon-gp"></span>GeoPlatform</a>';
                   }?>
                   <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
