@@ -23,6 +23,80 @@ get_template_part( 'cat-banner', get_post_format() );
       //gets id of current category
       $geopccb_category = $wp_query->get_queried_object_id();
 
+
+      // Grabs all child categories of the parent one.
+      $geopccb_categories = get_categories( array(
+          'parent'     => $geopccb_category,
+          'orderby'   => 'name',
+          'order'     => 'ASC',
+          'hide_empty'=> 0,
+      ) );
+
+      // Checks the theme sorting setting and switches be default date or the custom method.
+      $geopccb_categories_trimmed = array();
+      $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
+      if ($geopccb_featured_sort_format == 'date'){
+        $geopccb_categories_trimmed = $geopccb_categories;
+      }
+      else {
+        // Removes categories to be excluded from the featured output array.
+        foreach($geopccb_categories as $geopccb_cat_iter){
+          if (get_term_meta($geopccb_cat_iter->cat_ID, 'cat_priority', true) > 0)
+            array_push($geopccb_categories_trimmed, $geopccb_cat_iter);
+        }
+
+        // Bubble sorts the remaining array by cat_priority value.
+        $geopccb_categories_size = count($geopccb_categories_trimmed)-1;
+        for ($i = 0; $i < $geopccb_categories_size; $i++) {
+          for ($j = 0; $j < $geopccb_categories_size - $i; $j++) {
+            $k = $j + 1;
+            $geopccb_test_left = get_term_meta($geopccb_categories_trimmed[$j]->cat_ID, 'cat_priority', true);
+            $geopccb_test_right = get_term_meta($geopccb_categories_trimmed[$k]->cat_ID, 'cat_priority', true);
+            if ($geopccb_test_left > $geopccb_test_right) {
+              // Swap elements at indices: $j, $k
+              list($geopccb_categories_trimmed[$j], $geopccb_categories_trimmed[$k]) = array($geopccb_categories_trimmed[$k], $geopccb_categories_trimmed[$j]);
+            }
+          }
+        }
+      }
+
+      // Outputs the categories in the same format as the posts.
+      foreach ($geopccb_categories_trimmed as $geopccb_cat_iter){
+        ?>
+        <br/>
+        <?php if (get_term_meta($geopccb_cat_iter->cat_ID, 'category-image-id', true)){ ?>
+        <div class="svc-card">
+          <a title="<?php echo esc_attr($geopccb_cat_iter->name) ?>" class="svc-card__img">
+              <img src="<?php echo wp_get_attachment_image_src(get_term_meta($geopccb_cat_iter->cat_ID, 'category-image-id', true), 'full')[0]; ?>">
+          </a>
+          <div class="svc-card__body">
+              <div class="svc-card__title"><?php echo esc_attr($geopccb_cat_iter->name); ?></div><!--#svc-card__title-->
+                <p>
+                    <?php echo esc_attr($geopccb_cat_iter->description);?>
+                </p>
+              <br/>
+              <a class="btn btn-info" href="<?php echo esc_url( get_category_link( $geopccb_cat_iter->term_id ) ); ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
+          </div><!--#svc-card__body-->
+        </div><!--#svc-card-->
+        <br />
+
+        <?php } else {?>
+        <div class="svc-card" style="padding:inherit; margin-right:-1em;">
+          <div class="svc-card__body" style="flex-basis:102%;">
+              <div class="svc-card__title"><?php echo esc_attr($geopccb_cat_iter->name); ?></div><!--#svc-card__title-->
+                <p>
+                    <?php echo esc_attr($geopccb_cat_iter->description);?>
+                </p>
+              <br>
+              <a class="btn btn-info" href="<?php echo esc_url( get_category_link( $geopccb_cat_iter->term_id ) ); ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
+          </div><!--#svc-card__body-->
+        </div><!--#svc-card-->
+        <br /><?php
+        }
+      }
+
+
+      // Time for posts, pages, and cat links.
       // Get view perms.
       $geop_ccb_private_perm = array('publish');
       if (current_user_can('read_private_pages'))
