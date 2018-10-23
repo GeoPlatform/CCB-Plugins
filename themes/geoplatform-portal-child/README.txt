@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Released October 22, 2018
 
  - Enabled category priority assignment and sorting just like posts.
+ - Returned the style page template.
 
 ## 3.1.8
 * Released October 12, 2018

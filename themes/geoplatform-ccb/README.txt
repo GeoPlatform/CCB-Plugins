@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release October 22, 2018
 
  - Added the appearance of sub-categories in a parent category's page. This feature trickles down to child themes.
+ - Added the blog template.
 
  = 3.2.1 =
 * Release September 17, 2018
