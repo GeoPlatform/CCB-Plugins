@@ -26,7 +26,7 @@
     "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
-    "geoplatform.client": "git+http://github.com/GeoPlatform/client-api.git#develop",
+    "geoplatform.client": "git+http://github.com/GeoPlatform/client-api.git#0.2.0",
     "jquery": "^3.0.0",
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.13",
