@@ -28,6 +28,8 @@ export class TypeCodec implements Codec {
         // ]);
     }
 
+    getKey() : string { return QueryParameters.TYPES; };
+
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let constraint : Constraint = null;
         let types = params.types;

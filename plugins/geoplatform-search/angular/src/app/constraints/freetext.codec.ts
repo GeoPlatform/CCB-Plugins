@@ -10,6 +10,8 @@ import { Codec } from '../models/codec';
  */
 export class FreeTextCodec implements Codec {
 
+    getKey() : string { return QueryParameters.QUERY; };
+
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let constraint : Constraint = null;
         let text = params.q;

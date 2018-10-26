@@ -15,6 +15,14 @@
 
         <div class="c-constraint-options" *ngIf="inPickerMode">
 
+            <div class="u-text--sm">
+                For information about the following constraint options and
+                how they can be used to refine search results, please visit the
+                <a href="{{helpBaseUrl}}#constraints" target="_blank">Search Help Page</a>.
+                <br><br>
+            </div>
+
+
             <div *ngFor="let opt of options"
                 class="c-constraint__option"
                 (click)="activateConstraint(opt)">

@@ -3,6 +3,8 @@ import { Constraint, Constraints } from '../models/constraint';
 
 export interface Codec {
 
+    getKey() : string;
+
     parseParams(params: Params, constraints?: Constraints) : Constraint;
 
     setParam(params: Params, constraints: Constraints);
