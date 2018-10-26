@@ -78,7 +78,7 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
     @Input() constraints : Constraints;
     @Output() onConstraintEvent : EventEmitter<Constraint> = new EventEmitter<Constraint>();
 
-    private codec : Codec = new SemanticCodec();
+    private codec : Codec;
     // private service : KGService;
     public service : HttpTypeaheadService;
     public totalResults : number = 0;
@@ -99,6 +99,7 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
 
     constructor(private _ngZone: NgZone, private http: HttpClient) {
         this.service = new RecommenderTypeaheadService(http);
+        this.codec = new SemanticCodec(http);
     }
 
     ngOnInit() {

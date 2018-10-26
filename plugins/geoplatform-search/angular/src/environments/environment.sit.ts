@@ -8,6 +8,7 @@ export const environment = {
     env: 'sit',
     ualUrl: 'https://sit-ual.geoplatform.us',
     wpUrl: '',
+    helpUrl: 'https://sit.geoplatform.us/help/geoplatform-search-help/',
     root: 'wp-content/plugins/geoplatform-search/',
     assets: 'wp-content/plugins/geoplatform-search/assets/'
 };

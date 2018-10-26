@@ -72,28 +72,35 @@ SearchEditorRegistry.registerEditor( "semantic", "Semantic Concepts", SemanticCo
  */
 class CodecFactory {
 
-    private codecs : [Codec] = [] as [Codec];
+    private codecs : {key:string,value:Codec} = {} as { key: string; value: Codec; };
 
     constructor(private http : HttpClient) {
-        this.codecs.push(new FreeTextCodec());
-        this.codecs.push(new TypeCodec());
-        this.codecs.push(new KeywordCodec());
-        this.codecs.push(new ThemeCodec(http));
-        this.codecs.push(new PublisherCodec(http));
-        this.codecs.push(new CommunityCodec(http));
-        this.codecs.push(new CreatorCodec());
-        this.codecs.push(new ExtentCodec());
-        this.codecs.push(new TemporalCodec());
-        this.codecs.push(new SemanticCodec());
-        this.codecs.push(new SimilarityCodec(http));
+        this.registerCodec(new FreeTextCodec());
+        this.registerCodec(new TypeCodec());
+        this.registerCodec(new KeywordCodec());
+        this.registerCodec(new ThemeCodec(http));
+        this.registerCodec(new PublisherCodec(http));
+        this.registerCodec(new CommunityCodec(http));
+        this.registerCodec(new CreatorCodec());
+        this.registerCodec(new ExtentCodec());
+        this.registerCodec(new TemporalCodec());
+        this.registerCodec(new SemanticCodec(http));
+        this.registerCodec(new SimilarityCodec(http));
     }
 
-    get () : Codec {
+    registerCodec(codec : Codec) {
+        let key = codec.getKey();
+        this.codecs[key] = codec;
+    }
+
+    get (key : string) : Codec {
+        if(this.codecs[key])
+            return this.codecs[key];
         return null;
     }
 
     list () : [Codec] {
-        return this.codecs;
+        return Object.keys(this.codecs).map(k=>this.codecs[k]) as [Codec];
     }
 
 };
