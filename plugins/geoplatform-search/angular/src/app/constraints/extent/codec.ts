@@ -10,6 +10,8 @@ export class ExtentCodec implements Codec {
     constructor() {
     }
 
+    getKey() : string { return QueryParameters.EXTENT; };
+
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let constraint : Constraint = null;
         let bbox = params.bbox;

@@ -21,7 +21,6 @@ fi
 
 
 # Setup the URL rewriting
-# sed -i "s/%%sitename%%/$sitename/g" /etc/apache2/apache2.conf
 sed -i "s/%%sitename%%/$sitename/g" .htaccess
 
 # Set proper ownership and permissions of .htaccess for WP

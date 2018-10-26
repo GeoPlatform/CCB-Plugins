@@ -13,6 +13,8 @@ export class PublisherCodec implements Codec {
         this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
     }
 
+    getKey() : string { return QueryParameters.PUBLISHERS_ID; };
+
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let constraint : Constraint = null;
         if(params && params.publishers) {

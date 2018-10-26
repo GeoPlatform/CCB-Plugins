@@ -15,6 +15,8 @@ export class TemporalCodec implements Codec {
 
     constructor() { }
 
+    getKey() : string { return Constants.KEY; };
+
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let start = params[Constants.BEGINS];
         let end = params[Constants.ENDS];

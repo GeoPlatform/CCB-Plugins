@@ -47,7 +47,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     constructor( private http : HttpClient ) {
         this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
         this.defaultQuery = new Query().pageSize(this.pageSize);
-        this.sortField = this.defaultQuery.getSort();
+        this.sortField = '_score,desc';
+        this.defaultQuery.sort(this.sortField);
         this.defaultQuery.setFields(
             this.defaultQuery.getFields().concat([
                 QueryFields.THUMBNAIL,

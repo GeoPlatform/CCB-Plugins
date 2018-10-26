@@ -58,6 +58,7 @@ class Geopportal_Featured_Widget extends WP_Widget {
       $geopportal_featapp_disp_four_link = apply_filters('widget_title', $instance['geopportal_featapp_four_link']);
     else
       $geopportal_featapp_disp_four_link = "https://dashboard.geoplatform.gov/";
+
 		?>
 
     <div class="section--linked">

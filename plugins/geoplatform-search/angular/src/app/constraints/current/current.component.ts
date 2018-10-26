@@ -65,6 +65,12 @@ export class CurrentComponent implements OnInit {
 
         } else if(QueryParameters.USED_BY_ID === constraint.name) {
             return value.label || value.title || "Un-titled Community";
+
+        } else if("concepts" === constraint.name) {
+            return '<div>' +
+                (value.label || value.prefLabel || "Un-titled Concept") +
+                '<div class="u-break--all u-text--sm">' + value.uri + '</div>' +
+                '</div>';
         }
 
         return value.label ? value.label : value;

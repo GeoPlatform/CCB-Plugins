@@ -10,6 +10,8 @@ export class KeywordCodec implements Codec {
     constructor() {
     }
 
+    getKey() : string { return QueryParameters.KEYWORDS; };
+
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let constraint : Constraint = null;
         let keywords = params.keywords||params.keyword;

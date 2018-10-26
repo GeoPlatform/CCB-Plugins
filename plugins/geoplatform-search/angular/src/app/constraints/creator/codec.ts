@@ -10,6 +10,8 @@ export class CreatorCodec implements Codec {
     constructor() {
     }
 
+    getKey() : string { return QueryParameters.CREATED_BY; };
+
     parseParams(params: Params, constraints?: Constraints) : Constraint {
         let constraint : Constraint = null;
         let createdBy = params.createdBy;

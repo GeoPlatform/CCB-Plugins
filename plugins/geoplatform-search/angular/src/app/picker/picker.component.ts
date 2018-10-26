@@ -8,6 +8,9 @@ import { ConstraintEditor } from '../models/constraint';
 
 import { EditorRegistry } from '../constraints/';
 
+import { environment } from '../../environments/environment';
+
+
 export const ConstraintProviderService = {
     listeners: { 'create': [], 'destroy': [] },
 
@@ -58,6 +61,7 @@ export class PickerComponent implements OnInit, OnDestroy {
     public inPickerMode: boolean = true;
     private activeConstraint : any = null;
     private listener : ISubscription;
+    public helpBaseUrl : string = environment.helpUrl;
 
     private options = EditorRegistry.getEditors().sort((
         a: { key: string; label: string; component: any; },
