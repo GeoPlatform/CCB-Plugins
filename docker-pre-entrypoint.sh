@@ -7,18 +7,19 @@
 #
 # Wordpress:latest script found here:
 # https://github.com/docker-library/wordpress/blob/master/php7.2/apache/docker-entrypoint.sh
-
+set -x
 # Check env vars set in docker-compose.yml and propogate as needed
 if [[ -z ${root_url+x} ]] ; then
-  echo "ERROR: Required ENV variable 'root_url' is missing. Please add it to your docker-compose.yml file."
-  exit 1
+  echo "YEET: Required ENV variable 'root_url' is missing. Please add it to your docker-compose.yml file."
+  #exit 1
 fi
 if [[ ! $root_url =~ ^https?://.+  ]]; then
-  echo "ERROR: Invalid root_url given. Is must match ^https?://.+ "
+  echo "YEET: Invalid root_url given. Is must match ^https?://.+ "
   echo "Given value: $root_url"
-  exit 1
+  #exit 1
 fi
-
+echo $sitename
+echo "YEET!!"
 
 # Setup the URL rewriting
 sed -i "s/%%sitename%%/$sitename/g" .htaccess
