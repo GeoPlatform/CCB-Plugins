@@ -17,8 +17,8 @@ services:
       - ./uploads:/var/www/html/wp-content/uploads:rw
     environment:
       # Site specifics
-      #root_url: http://localhost
-      # sitename: my-test-site
+      root_url: http://localhost
+      sitename: my-test-site
       # URLs
       maps_url: https://maps.geoplatform.gov
       viewer_url: https://viewer.geoplatform.gov
