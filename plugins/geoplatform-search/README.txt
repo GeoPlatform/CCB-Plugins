@@ -6,7 +6,11 @@ Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, i
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 4.9.8
+<<<<<<< HEAD
 Stable tag: 1.0.7
+=======
+Stable tag: 1.0.8
+>>>>>>> develop
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -82,6 +86,9 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 2. Use shortcode to place search bar access to the Search application anywhere in your site.
 
 == Changelog ==
+
+= 1.0.8 =
+* Fixed discrepancy in environmental searching.
 
 = 1.0.7 =
 * Default sort set to Relevance.

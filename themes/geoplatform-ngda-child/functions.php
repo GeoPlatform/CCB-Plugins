@@ -381,10 +381,10 @@ function geop_ccb_register_footer_menus() {
 add_action( 'init', 'geop_ccb_register_footer_menus' );
 
 // Bumping out category functions not needed from parent theme.
-function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
-function geopccb_category_column_filter_two( $geopccb_columns ) {};
-function geop_ccb_category_mod_update() {};
-function geop_ccb_category_mod_interface( $tag ){};
+// function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
+// function geopccb_category_column_filter_two( $geopccb_columns ) {};
+// function geop_ccb_category_mod_update() {};
+// function geop_ccb_category_mod_interface( $tag ){};
 
 // Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};

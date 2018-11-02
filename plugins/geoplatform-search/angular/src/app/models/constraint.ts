@@ -36,7 +36,14 @@ export class Constraint {
 
     apply(query: Query) {
         let value = null;
-        if(this.value) value = this.value.id ? this.value.id : this.value;
+        if(this.value) {
+            if('object' === typeof(this.value)) {
+                //      asset obj     or  suggested concept
+                value = this.value.id || this.value.uri || null;
+            } else {
+                value = this.value;
+            }
+        }
         query.setParameter(this.name, value);
     }
 }
@@ -69,10 +76,21 @@ export class MultiValueConstraint extends Constraint {
         this.set(constraint.value);
     }
     apply(query: Query) {
+        let value = null;
         if(this.value) {
-            let value = this.value.map(v=>v.id?v.id:v);
-            query.setParameter(this.name, value);
+            value = this.value.map( v => {
+                if('object' === typeof(v)) {
+                    //      asset obj     or  suggested concept
+                    return v.id || v.uri || null;
+                }
+                return v;
+            });
         }
+        // if(this.value) {
+        //     let value = this.value.map(v=>v.id?v.id:v);
+        //     query.setParameter(this.name, value);
+        // }
+        query.setParameter(this.name, value);
     }
 }
 

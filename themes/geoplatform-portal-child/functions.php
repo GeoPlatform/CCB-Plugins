@@ -483,11 +483,11 @@ if ( ! isset( $content_width ) ) {
 }
 
 // Bumping out category functions not needed from parent theme.
-function geop_ccb_sorting_register( $wp_customize ){};
-function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
-function geopccb_category_column_filter_two( $geopccb_columns ) {};
-function geop_ccb_category_mod_update() {};
-function geop_ccb_category_mod_interface( $tag ){};
+// function geop_ccb_sorting_register( $wp_customize ){};
+// function geopccb_category_column_action_two( $geopccb_columns, $geopccb_column, $geopccb_id ) {};
+// function geopccb_category_column_filter_two( $geopccb_columns ) {};
+// function geop_ccb_category_mod_update() {};
+// function geop_ccb_category_mod_interface( $tag ){};
 
 // Bumping out page functions not needed from parent theme.
 function geop_ccb_page_column_action( $geopccb_column, $geopccb_id ){};
