@@ -36,22 +36,11 @@ if [ $root_find == 'F' ] && [ $site_find == 'F' ] ; then
 fi
 if [ $root_find == 'T' ] && [ $site_find == 'T' ] ; then
   echo "NOTICE: ENV variables confirmed."
-  writerule='<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteRule ^%%sitename%%(.*) $1 [L]
-
-  RewriteBase /%%sitename%%/
-  RewriteRule ^index\.php$ - [L]
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /%%sitename%%/index.php [L]
-</IfModule>'
-  echo "$writerule"
+  writerule="<IfModule mod_rewrite.c>\n  RewriteEngine On\n  RewriteRule ^$sitename(.*) "'$1'" [L]\n\n  RewriteBase \/$sitename\/\n  RewriteRule ^index"'\\'".php$ - [L]\n  RewriteCond %{REQUEST_FILENAME} !-f\n  RewriteCond %{REQUEST_FILENAME} !-d\n  RewriteRule . \/$sitename\/index.php [L]\n<\/IfModule>"
 fi
 
-
 # Setup the URL rewriting
-sed -i "s/%%sitename%%/$sitename/g" .htaccess
+sed -i "s/%%writerule%%/${writerule}/g" .htaccess
 
 # Set proper ownership and permissions of .htaccess for WP
 chmod 644 .htaccess
