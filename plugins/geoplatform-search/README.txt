@@ -6,7 +6,7 @@ Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, i
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 4.9.8
-Stable tag: 1.0.6
+Stable tag: 1.0.8
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
