@@ -83,6 +83,13 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 
 == Changelog ==
 
+= 1.0.8 =
+* Fixed discrepancy in environmental searching.
+
+= 1.0.7 =
+* Default sort set to Relevance.
+* Semantic sorts now include concept label when a concept is selected.
+
 = 1.0.6 =
 * Fixed error with html redirects.
 
