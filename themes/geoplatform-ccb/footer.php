@@ -22,7 +22,7 @@
             <div class="col-md-6">
                 <h3>
                     <!--<img src="/img/GeoPlatform_logo_sm.png" alt="GeoPlatform Logo" style="height: 1.5rem; vertical-align: bottom;">-->
-                    <a href="<?php echo esc_url($GLOBALS['wpp_url']); ?>" title="<?php _e( 'Go to the Geoplatform Home Page', 'geoplatform-ccb'); ?>">
+                    <a href="<?php echo esc_url($GLOBALS['geopccb_wpp_url']); ?>" title="<?php _e( 'Go to the Geoplatform Home Page', 'geoplatform-ccb'); ?>">
                         <span class="icon-gp"></span>
                         <?php _e( 'GeoPlatform', 'geoplatform-ccb'); ?>
                     </a>

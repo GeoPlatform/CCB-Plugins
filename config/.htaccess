@@ -18,22 +18,32 @@ php_value max_input_time 1000
 # The docker-pre-entry.sh script will replace %%sitename%% with the passed
 # in environemnt variable.
 
+#<IfModule mod_rewrite.c>
+#  RewriteEngine On
+#  RewriteRule ^%%sitename%%(.*) $1 [L]
+#
+#
+#  RewriteBase /%%sitename%%/
+#  RewriteRule ^index\.php$ - [L]
+#  RewriteCond %{REQUEST_FILENAME} !-f
+#  RewriteCond %{REQUEST_FILENAME} !-d
+#  RewriteRule . /%%sitename%%/index.php [L]
+#</IfModule>
+
+%%writerule%%
+
+# Wordpress updates everything in between these blocks below. Our custom rules
+# above will stay put. Once Permalink settings are changed in WordPress, the
+# block below will automatically be updated with Wordpress specific RewriteRules
+# that fit the permalink convention that was chosen.
+
+# BEGIN WordPress
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteRule ^%%sitename%%(.*) $1 [L]
-
-  RewriteBase /%%sitename%%/
+  RewriteBase /
   RewriteRule ^index\.php$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /%%sitename%%/index.php [L]
+  RewriteRule . /index.php [L]
 </IfModule>
-
-# Wordpress updates everything in between these blocks below. Our custom rules 
-# above will stay put. Once Permalink settings are changed in WordPress, the 
-# block below will automatically be updated with Wordpress specific RewriteRules 
-# that fit the permalink convention that was chosen. 
-
-# BEGIN WordPress
-
 # END WordPress

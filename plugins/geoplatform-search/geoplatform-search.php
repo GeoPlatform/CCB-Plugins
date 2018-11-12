@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              http://www.imagemattersllc.com/
- * @since             1.0.6
+ * @since             1.0.8
  * @package           Geop_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Search
  * Plugin URI:        www.geoplatform.gov
  * Description:       Browse, search, and filter GeoPlatform service objects.
- * Version:           1.0.6
+ * Version:           1.0.8
  * Author:            Image Matters LLC: Patrick Neal, Lee Heazel
  * Author URI:        http://www.imagemattersllc.com/
  * License:           Apache 2.0

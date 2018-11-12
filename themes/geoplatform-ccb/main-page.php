@@ -58,9 +58,14 @@
               }
               else {
                 // Removes categories to be excluded from the featured output array.
+                // These include categories with negative/zero/no priority value and child categories.
                 foreach($geopccb_categories as $geopccb_category){
-                  if (get_term_meta($geopccb_category->cat_ID, 'cat_priority', true) > 0)
-                    array_push($geopccb_categories_trimmed, $geopccb_category);
+                  if (get_term_meta($geopccb_category->cat_ID, 'cat_priority', true) > 0){
+                    $geopccb_cat_parent_grab = get_category_parents( $geopccb_category->cat_ID );
+                    $geopccb_cat_parent_array = explode("/", $geopccb_cat_parent_grab);
+                    if (count($geopccb_cat_parent_array) <= 2)
+                      array_push($geopccb_categories_trimmed, $geopccb_category);
+                  }
                 }
 
                 // Bubble sorts the remaining array by cat_priority value.
