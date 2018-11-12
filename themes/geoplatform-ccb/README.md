@@ -113,9 +113,10 @@ Source: (https://getbootstrap.com/docs/3.3/)
 ## Changelog
 
 ### 3.2.2 ###
-* Release October 22, 2018
+* Release November 12, 2018
 
 - Added the appearance of sub-categories in a parent category's page. This feature trickles down to child themes.
+- Child categories no longer appear on the front page when the theme is in custom sorting mode.
 - Added the blog template.
 
 ### 3.2.1 ###
