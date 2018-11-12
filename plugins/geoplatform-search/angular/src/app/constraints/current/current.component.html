@@ -4,7 +4,7 @@
             <span *ngIf="isClosed" class="far fa-plus-square"></span>
             <span *ngIf="!isClosed" class="far fa-minus-square"></span>
         </button>
-        <span>Current Constraints</span>
+        <span>Current Filters</span>
         <button type="button" class="btn btn-outline-danger btn-sm"
             title="Remove all constraints"
             (click)="clear()">
@@ -12,10 +12,10 @@
         </button>
     </h4>
     <div *ngIf="isClosed" (click)="isClosed=!isClosed">
-        <em>Expand to see current constraints</em>
+        <em>Expand to see current filters</em>
     </div>
     <div *ngIf="isEmpty() && !isClosed">
-        <em>Add constraints using the options above</em>
+        <em>Add filters using the options above</em>
     </div>
     <div class="c-constraints">
 

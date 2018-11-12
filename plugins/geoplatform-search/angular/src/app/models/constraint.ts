@@ -1,5 +1,5 @@
 
-import { Query } from "geoplatform.client";
+import { Query, QueryParameters } from "geoplatform.client";
 import { Codec } from './codec';
 
 
@@ -46,6 +46,7 @@ export class Constraint {
         }
         query.setParameter(this.name, value);
     }
+
 }
 
 
@@ -178,6 +179,27 @@ export class Constraints {
 
     toString() {
         return JSON.stringify(this.list());
+    }
+
+
+    updateFacetCounts( facets : any[] ) {
+        // if(facets && facets.length) {
+        //     facets.forEach( facet => {
+        //         let key = facet.name;
+        //         let counts = facet.buckets;
+        //
+        //         let constraint = null;
+        //         switch(key) {
+        //             case 'types':
+        //                 constraint = this.get(QueryParameters.TYPES);
+        //                 break;
+        //         }
+        //
+        //         if(constraint) {
+        //             constraint.updateFacetCounts(counts);
+        //         }
+        //     });
+        // }
     }
 
 }

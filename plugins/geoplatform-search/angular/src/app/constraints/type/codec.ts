@@ -13,12 +13,14 @@ export class TypeCodec implements Codec {
         this.typeOptions = Object.keys(ItemTypes)
         .filter(k=> {
             let t = ItemTypes[k];
-            return  t !== ItemTypes.CONTACT && t !== ItemTypes.CONCEPT &&
-                    t !== ItemTypes.CONCEPT_SCHEME && t !== ItemTypes.STANDARD;
+            return  t !== ItemTypes.CONCEPT &&
+                    t !== ItemTypes.CONCEPT_SCHEME &&
+                    t !== ItemTypes.STANDARD;
         })
         .map(k=>{
             let v = ItemTypes[k], label = v;
             if(~label.indexOf(":")) label = label.split(':')[1];
+            if("VCard" === label) label = 'Contact';
             return {label: label, id: v};
         });
         // .concat([

@@ -66,7 +66,13 @@ export class PickerComponent implements OnInit, OnDestroy {
     private options = EditorRegistry.getEditors().sort((
         a: { key: string; label: string; component: any; },
         b: { key: string; label: string; component: any; }
-    )=>{ return a.label < b.label ? -1 : 1 });
+    )=>{
+        //DT-2166 ensure 'types' filter is always at top
+        if('Types' === a.label) return -1;
+        if('Types' === b.label) return 1;
+
+        return a.label < b.label ? -1 : 1
+    });
 
     constructor() { }
 

@@ -536,7 +536,7 @@ a.list-item.selected,
     max-width: 4em;
     max-height: 4em;
 }
-.svg-icon svg path { color: #333; }
+.svg-icon svg path { color: #bbb; }
 
 .svg-icon.t-fg--accent svg path { color: #393; }
 /* .svg-icon.t-fg--active svg path { color: #393; }
@@ -554,11 +554,13 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 .c-results-item--community .svg-icon svg path { fill: #909064; }
 .c-results-item--skos-concept .svg-icon svg path { fill: #ddd; }
 .c-results-item--skos-conceptscheme .svg-icon svg path { fill: #bbb; }
-.c-results-item--org-organization .svg-icon svg path { fill: #777; }
-.c-results-item--vcard-vcard .svg-icon svg path { fill: #333; }
-.c-results-item--page .svg-icon svg path { fill: #777; }
-.c-results-item--post .svg-icon svg path { fill: #777; }
-.c-results-item--attachment .svg-icon svg path { stroke: #777; }
+.c-results-item--org-organization .svg-icon svg path { fill: #bbb; }
+.c-results-item--vcard-vcard .svg-icon svg path { fill: #bbb; }
+.c-results-item--dct-linguisticsystem .svg-icon svg path { fill: #bbb; }
+.c-results-item--page .svg-icon svg path { fill: #bbb; }
+.c-results-item--post .svg-icon svg path { fill: #bbb; }
+.c-results-item--attachment .svg-icon svg path { stroke: #bbb; }
+
 
 
 .gp-dcat-dataset .svg-icon svg path { fill: darkblue; }
@@ -569,11 +571,12 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 .gp-community .svg-icon svg path { fill: #909064; }
 .gp-skos-concept .svg-icon svg path { fill: #ddd; }
 .gp-skos-conceptscheme .svg-icon svg path { fill: #bbb; }
-.gp-org-organization .svg-icon svg path { fill: #777; }
-.gp-vcard-vcard .svg-icon svg path { fill: #333; }
-.gp-page .svg-icon svg path { fill: #777; }
-.gp-post .svg-icon svg path { fill: #777; }
-.gp-attachment .svg-icon svg path { stroke: #777; }
+.gp-org-organization .svg-icon svg path { fill: #bbb; }
+.gp-vcard-vcard .svg-icon svg path { fill: #bbb; }
+.gp-dct-linguisticsystem .svg-icon svg path { fill: #bbb; }
+.gp-page .svg-icon svg path { fill: #bbb; }
+.gp-post .svg-icon svg path { fill: #bbb; }
+.gp-attachment .svg-icon svg path { stroke: #bbb; }
 
 
 

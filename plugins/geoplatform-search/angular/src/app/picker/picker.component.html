@@ -6,17 +6,17 @@
                 <span *ngIf="isClosed" class="far fa-plus-square"></span>
                 <span *ngIf="!isClosed" class="far fa-minus-square"></span>
             </button>
-            <span>Add Constraints...</span>
+            <span>Add Filters...</span>
         </h4>
 
         <div *ngIf="isClosed" (click)="toggle()">
-            <em>Expand to see available constraint options</em>
+            <em>Expand to see available filtering options</em>
         </div>
 
         <div class="c-constraint-options" *ngIf="inPickerMode">
 
             <div class="u-text--sm">
-                For information about the following constraint options and
+                For information about the following filter options and
                 how they can be used to refine search results, please visit the
                 <a href="{{helpBaseUrl}}#constraints" target="_blank">Search Help Page</a>.
                 <br><br>

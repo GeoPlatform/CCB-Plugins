@@ -56,6 +56,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
                 QueryFields.LANDING_PAGE
             ])
         );
+        this.defaultQuery.setFacets('type');
 
         //use a subject so we can debounce query execution events
         this.queryChange
@@ -115,6 +116,9 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             this.isLoading = false;
             this.totalResults = response.totalResults;
             this.results = response;
+            
+            //TODO show facet counts in picker filters...
+            // this.constraints.updateFacetCounts(response.facets);
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
@@ -178,10 +182,11 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.MAP:             type =  'map'; break;
             case ItemTypes.GALLERY:         type =  'gallery'; break;
             case ItemTypes.ORGANIZATION:    type =  'organization'; break;
-            case ItemTypes.VCARD:           type =  'vcard'; break;
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
             case ItemTypes.COMMUNITY:       type =  'community'; break;
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+            default: type = 'post';
         }
         // return `../${ServerRoutes.ASSETS}${type}.svg`;
         return `../${environment.assets}${type}.svg`;
@@ -217,7 +222,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
             case ItemTypes.LAYER:
             case ItemTypes.ORGANIZATION:
-            case ItemTypes.VCARD:
+            case ItemTypes.CONTACT:
             case ItemTypes.COMMUNITY:
             case ItemTypes.CONCEPT:
             case ItemTypes.CONCEPT_SCHEME:
