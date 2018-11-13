@@ -1,4 +1,4 @@
-FROM wordpress:php7.2-fpm
+FROM wordpress:latest
 MAINTAINER ImageMatters admin@imagemattersllc.com
 
 # NOTE:
