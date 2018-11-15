@@ -2,66 +2,73 @@ version: '2'
 services:
 
 # NGINX
+  web:
+    image: nginx:latest
+    ports:
+     - "8080:80"
+    volumes:
+     - ./html:/usr/share/nginx/html:rw
+     - ./site.conf:/etc/nginx/conf.d/site.conf
 
 
 # Wordpress
-  ccb:
-    build: .
-    depends_on:
-      - mysql
-    links:
-      - mysql:mysql
-    ports:
-      - "80:80"
-      - "81:80"
+#  ccb:
+#    build: .
+#    depends_on:
+#      - mysql
+#    links:
+#      - mysql:mysql
+#    ports:
+#      - "80:80"
+#      - "81:80"
 #    volumes:
 #      - ./plugins:/var/www/html/wp-content/plugins:rw
 #      - ./themes:/var/www/html/wp-content/themes:rw
 #      - ./uploads:/var/www/html/wp-content/uploads:rw
-    environment:
-      # Site specifics
-      root_url: http://localhost
-      sitename: my-test-site
-      # URLs
-      maps_url: https://maps.geoplatform.gov
-      viewer_url: https://viewer.geoplatform.gov
-      marketplace_url: https://marketplace.geoplatform.gov
-      dashboard_url: https://dashboard.geoplatform.gov/
-      wpp_url: https://www.geoplatform.gov
-      ual_url: https://ual.geoplatform.gov
-      ckan_mp_url: https://marketplace.geoplatform.gov/
-      ckan_url: https://data.geoplatform.gov/
-      cms_url: https://www.geoplatform.gov/geoplatform-resources/
-      idp_url: https://idp.geoplatform.gov
-      oe_url: https://oe.geoplatform.gov
-      accounts_url: https://accounts.geoplatform.gov
-      comm_url: https://www.geoplatform.gov/communities
-      sd_url: servicedesk@geoplatform.gov
-      ga_code: UA-42040723-1
-      # Datebase
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: root
-      WORDPRESS_DB_PASSWORD: imroot:012!
+#    environment:
+#      # Site specifics
+#      root_url: http://localhost
+#      sitename: my-test-site
+#      # URLs
+#      maps_url: https://maps.geoplatform.gov
+#      viewer_url: https://viewer.geoplatform.gov
+#      marketplace_url: https://marketplace.geoplatform.gov
+#      dashboard_url: https://dashboard.geoplatform.gov/
+#      wpp_url: https://www.geoplatform.gov
+#      ual_url: https://ual.geoplatform.gov
+#      ckan_mp_url: https://marketplace.geoplatform.gov/
+#      ckan_url: https://data.geoplatform.gov/
+#      cms_url: https://www.geoplatform.gov/geoplatform-resources/
+#      idp_url: https://idp.geoplatform.gov
+#      oe_url: https://oe.geoplatform.gov
+#      accounts_url: https://accounts.geoplatform.gov
+#      comm_url: https://www.geoplatform.gov/communities
+#      sd_url: servicedesk@geoplatform.gov
+#      ga_code: UA-42040723-1
+#      # Datebase
+#      WORDPRESS_DB_NAME: wordpress
+#      WORDPRESS_DB_USER: root
+#      WORDPRESS_DB_PASSWORD: imroot:012!
 
 # MYSQL
-  mysql:
-    image: mysql:5.6
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: wordpress
-      MYSQL_ROOT_PASSWORD: imroot:012!
-    volumes:
-       - /var/lib/mysql
+#  mysql:
+#    image: mysql:5.6
+#    ports:
+#      - "3306:3306"
+#    environment:
+#      MYSQL_DATABASE: wordpress
+#      MYSQL_ROOT_PASSWORD: imroot:012!
+#    volumes:
+#       - /var/lib/mysql
 
-  phpadmin:
-    image: phpmyadmin/phpmyadmin
-    depends_on:
-      - mysql
-    links:
-      - mysql:db
-    ports:
-      - "8888:80"
-    environment:
-      PMA_USER: root
-      PMA_PASSWORD: imroot:012!
+#  phpadmin:
+#    image: phpmyadmin/phpmyadmin
+#    depends_on:
+#      - mysql
+#    links:
+#      - mysql:db
+#    ports:
+#      - "8888:80"
+#    environment:
+#      PMA_USER: root
+#      PMA_PASSWORD: imroot:012!
