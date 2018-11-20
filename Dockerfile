@@ -20,11 +20,18 @@ COPY docker-pre-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-pre-entrypoint.sh
 
 # Remove the default plugins and themes.
-RUN rm -rf /usr/share/nginx/html/wp-content/plugins/hello.php
-RUN rm -rf /usr/share/nginx/html/wp-content/plugins/__MACOSX/;
-RUN rm -rf /usr/share/nginx/html/wp-content/themes/*
+# RUN rm -rf /usr/share/nginx/html/wp-content/plugins/hello.php
+# RUN rm -rf /usr/share/nginx/html/wp-content/plugins/__MACOSX/;
+# RUN rm -rf /usr/share/nginx/html/wp-content/themes/*
 
-########### Install common dependencies ################
+########### Download common dependencies ################
+
+# Make temp folders
+# RUN mkdir /var/www/html/plugins
+# RUN mkdir /var/www/html/plugins
+
+
+
 # tinymce-advanced:
 RUN curl -L -o /usr/src/tinymce-advanced.zip \
 					https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip; \
