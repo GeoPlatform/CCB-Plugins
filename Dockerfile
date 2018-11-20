@@ -15,13 +15,14 @@ RUN tar -xzf wordpress.tar.gz
 RUN mv wordpress/* /usr/share/nginx/html
 RUN rm -r wordpress
 
-# Sets file and folder perms
-RUN find /usr/share/nginx/html -type d -exec chmod 755 {} \;
-RUN find /usr/share/nginx/html -type f -exec chmod 644 {} \;
-
 # Run our custom entrypoint first
 COPY docker-pre-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-pre-entrypoint.sh
+
+# Remove the default plugins and themes.
+RUN rm -rf /usr/share/nginx/html/wp-content/plugins/hello.php
+RUN rm -rf /usr/share/nginx/html/wp-content/plugins/__MACOSX/;
+RUN rm -rf /usr/share/nginx/html/wp-content/themes/*
 
 ########### Install common dependencies ################
 # tinymce-advanced:
@@ -82,12 +83,13 @@ RUN curl -L -o /usr/src/open-id-generic-master.zip \
 		rm /usr/src/open-id-generic-master.zip;
 #########################################################
 
-# Remove the default plugins and themes, then add mounted containers.
-RUN rm -rf /usr/share/nginx/html/wp-content/plugins/hello.php
-RUN rm -rf /usr/share/nginx/html/wp-content/plugins/__MACOSX/;
-RUN rm -rf /usr/share/nginx/html/wp-content/themes/*
+
 ADD ./plugins /usr/share/nginx/html/wp-content/plugins/
 ADD ./themes  /usr/share/nginx/html/wp-content/themes/
+
+# Sets file and folder perms
+RUN find /usr/share/nginx/html -type d -exec chmod 755 {} \;
+RUN find /usr/share/nginx/html -type f -exec chmod 644 {} \;
 
 # Gets this show on the road.
 ENTRYPOINT [ "docker-pre-entrypoint.sh","-db" ]

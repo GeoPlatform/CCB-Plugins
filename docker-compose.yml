@@ -8,7 +8,8 @@ services:
      - "80:80"
     volumes:
      - ./default.conf:/etc/nginx/conf.d/default.conf:rw
-#     - ./plugins:/usr/share/nginx/html/wp-content/plugins:rw
+     - ./wp-config.php:/usr/share/nginx/html/wp-config.php:rw
+     - ./plugins:/usr/share/nginx/html/wp-content/plugins:rw
      - ./themes:/usr/share/nginx/html/wp-content/themes:rw
      - ./uploads:/usr/share/nginx/html/wp-content/uploads:rw
     networks:
