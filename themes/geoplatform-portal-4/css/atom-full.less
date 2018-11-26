@@ -1,0 +1,1340 @@
+// FROM BADGE.LESS
+
+.a-badge {
+    display: inline-block;
+    font-size: 1em;
+    border-radius: 0.75em;
+    padding: 0.25em 0.75em;
+    margin: 0 0.25em 0.5em 0;
+
+    &.a-badge--sm {
+        font-size: 0.875em;
+    }
+}
+
+.a-badge--primary {
+    .a-badge;
+    background-color: @color-primary;
+    color: #fff;
+}
+.a-badge--secondary {
+    .a-badge;
+    background-color: @color-gray-md;
+    color: #fff;
+}
+.a-badge--light {
+    .a-badge;
+    background-color: @color-gray-xlt;
+    color: @color-gray-md;
+}
+.a-badge--info {
+    .a-badge;
+    background-color: @color-info;
+    color: #fff;
+}
+.a-badge--accent {
+    .a-badge;
+    background-color: @color-accent;
+    color: #fff;
+}
+.a-badge--danger {
+    .a-badge;
+    background-color: @color-danger;
+    color: #fff;
+}
+
+
+// FROM BUTTON.LESS
+
+/* override default font size */
+.btn {
+    font-size: @sz-md !important;
+
+    &.btn-xlg, &.btn--xlg {
+        font-size: @text-xlg !important;
+        padding: .75em 1em;
+        line-height: 1.333333;
+    }
+
+    &.btn-lg, &.btn--lg {
+        font-size: @text-lg !important;
+        padding: .75em 1em;
+        line-height: 1.333333;
+    }
+
+    &.btn-sm, &.btn--sm {
+        font-size:  @text-sm !important;
+        padding:    .25em .75em;
+        line-height: 1.5;
+    }
+
+    &.btn-xs, &.btn--xs {
+        font-size:  @text-xs !important;
+        padding:    .0625em .3125em;
+        line-height: 1.5;
+    }
+}
+
+
+
+
+.btn-group > .btn, .btn { font-size: @text-md; }
+.btn-group-xs > .btn,
+.btn-group--xs > .btn,
+.btn-xs, .btn--xs { font-size: @text-xs; }
+.btn-group-sm > .btn,
+.btn-group--sm > .btn,
+.btn-sm, .btn--sm { font-size: @text-sm; }
+.btn-group-lg > .btn,
+.btn-group--lg > .btn,
+.btn-lg, .btn--lg { font-size: @text-lg; }
+.btn-group-xlg > .btn,
+.btn-group--xlg > .btn,
+.btn-xlg, .btn--xlg { font-size: @text-xlg; }
+
+
+
+
+
+
+/* ---------------------------- *\
+    Bootstrap Button Overrides
+    & extensions
+\* ---------------------------- */
+
+.btn {
+
+    &.btn-square {
+        border-radius: 0;
+    }
+
+    &.btn-primary, a&.btn-primary,
+    &.btn-danger, a&.btn-danger,
+    &.btn-info, a&.btn-info,
+    &.btn-success, a&.btn-success,
+    &.btn-warning, a&.btn-warning,
+    &.btn-wild, a&.btn-wild {
+        .text-white();
+    }
+
+    &.btn-accent, a&.btn-accent {
+        .accented();
+
+        &:hover, &:focus, &.active {
+            background-color: darken(@color-accent, 5%);
+            border-color: darken(@color-accent, 10%);
+            .text-white()
+        }
+    }
+
+    &.btn-wild, a&.btn-wild {
+        background-color: desaturate(@color-wild, 20%);
+        border-color: darken(desaturate(@color-wild, 20%), 5%);
+
+        &:hover, &:focus, &.active {
+            background-color: darken(desaturate(@color-wild, 20%), 5%);
+            border-color: darken(desaturate(@color-wild, 20%), 10%);
+        }
+    }
+
+    &.btn-pink, a&.btn-pink {
+        background-color: desaturate(@color-pink, 20%);
+        border-color: darken(desaturate(@color-pink, 20%), 5%);
+
+        &:hover, &:focus, &.active {
+            background-color: darken(desaturate(@color-pink, 20%), 5%);
+            border-color: darken(desaturate(@color-pink, 20%), 10%);
+        }
+    }
+
+    &.btn-white, a&.btn-white {
+        background-color: #fff;
+        border-color: #eaeaea;
+        color: @color-gray-dk;
+
+        &:hover, &:focus, &.active {
+            background-color: #eaeaea;
+            border-color: #dedede;
+        }
+    }
+
+    &.btn-default-outline,
+    &.btn-secondary-outline {
+        background-color: transparent;
+        border-color: @color-gray-md;
+        color: @color-gray-md;
+
+        &:hover {
+            background-color: @color-gray-xlt;
+        }
+    }
+    &.btn-primary-outline {
+        background-color: transparent;
+        border-color: #337ab7;
+        color: #337ab7;
+
+        &:hover {
+            background-color: #337ab7;
+            color: #fff;
+        }
+    }
+    &.btn-accent-outline {
+        background-color: transparent;
+        border-color: @color-accent;
+        color: @color-accent;
+
+        &:hover {
+            background-color: @color-accent;
+            color: #fff;
+        }
+    }
+    &.btn-info-outline {
+        background-color: transparent;
+        border-color: @color-info;
+        color: @color-info;
+
+        &:hover {
+            background-color: @color-info;
+            color: #fff;
+        }
+    }
+    &.btn-warning-outline {
+        background-color: transparent;
+        border-color: @color-warning;
+        color: @color-warning;
+
+        &:hover {
+            background-color: @color-warning;
+            color: #fff;
+        }
+    }
+    &.btn-danger-outline {
+        background-color: transparent;
+        border-color: @color-danger;
+        color: @color-danger;
+
+        &:hover {
+            background-color: @color-danger;
+            color: #fff;
+        }
+    }
+    &.btn-wild-outline {
+        background-color: transparent;
+        border-color: @color-wild;
+        color: @color-wild;
+
+        &:hover {
+            background-color: @color-wild;
+            color: #fff;
+        }
+    }
+    &.btn-pink-outline {
+        background-color: transparent;
+        border-color: @color-pink;
+        color: @color-pink;
+
+        &:hover {
+            background-color: @color-pink;
+            color: #fff;
+        }
+    }
+    &.btn-white-outline {
+        background-color: transparent;
+        border-color: #fff;
+        color: #fff;
+
+        &:hover {
+            background-color: #fff;
+            color: @color-gray-dk;
+        }
+    }
+}
+
+.btn.btn-link.active {
+    //override .active style for link buttons
+    background-color: transparent;
+    border-color: transparent;
+}
+
+
+
+.btn .hidden-on-active {
+    display: inline-block;
+    .active& { display: none; }
+}
+.btn .visible-on-active {
+    display: none;
+    .active& { display: inline-block; }
+}
+
+
+
+
+
+/* ---------------------------- *\
+    Account Button
+    aka, "sign in" / details
+\* ---------------------------- */
+.btn-account {
+
+    header .pull-right & { padding: 0; }
+
+    & > button, & > .btn {
+        color:          @color-gray-md;
+        padding:        @sz-xlg @sz-lg;
+        border:         none;
+        text-decoration: none;
+        font-size:      inherit;
+        background:     transparent;
+        transition:     background .2s ease;
+
+        & > .glyphicon {
+            background-color:   @color-gray-md;
+            padding:            @sz-sm;
+            border-radius:      @sz-xlg;
+            .text-white;
+            vertical-align: bottom;
+            transition:     background .3s ease;
+        }
+
+    }
+
+    &:hover > .btn {
+        background-color:   lighten(@color-gray-xlt, 5%);
+        text-decoration:    none;
+
+        & > .glyphicon, & > .fa, & > .far, & > .fas {
+            background-color: @color-accent;
+        }
+    }
+
+    .account-details {
+        color:   @color-gray-md;
+        padding: 0 @sz-xlg;
+
+        .media-heading { font-weight: 700; }
+        .glyphicon, .fa, .fas, .far { font-size: 6em; }
+    }
+
+}
+header .pull-right .btn-account > .btn,
+.header__menu li > .btn-group.btn-account > .btn {
+
+    & > .glyphicon,
+    & > .fa,
+    & > .far,
+    & > .fas {
+        vertical-align: top;
+        font-size: 0.75em;
+    }
+}
+
+
+
+
+
+
+
+
+/*  ---------------------------
+    Buttons that don't show backgrounds
+    until on hover
+    --------------------------- */
+
+.btn.btn-hoverable,
+.btn.btn-info.btn-hoverable,
+.btn.btn-success.btn-hoverable,
+.btn.btn-primary.btn-hoverable,
+.btn.btn-danger.btn-hoverable {
+    background:     transparent;
+    border-color:   transparent;
+}
+
+.btn.btn-info.btn-hoverable {
+    color: @color-info;
+    &:hover {
+        color: #fff;
+        background: @color-info;
+        border-color: @color-info;
+    }
+}
+.btn.btn-success.btn-hoverable {
+    color: @color-success;
+    &:hover {
+        color: #fff;
+        background: @color-success;
+        border-color: @color-success;
+    }
+}
+.btn.btn-primary.btn-hoverable {
+    color: @color-primary;
+
+    &:hover {
+        color: #fff;
+        background: @color-primary;
+        border-color: @color-primary;
+    }
+}
+.btn.btn-danger.btn-hoverable {
+    color: @color-danger;
+
+    &:hover {
+        color: #fff;
+        background: @color-danger;
+        border-color: @color-danger;
+    }
+}
+
+
+
+
+
+
+
+//rounded outline buttons (like used for CARD FABs)
+
+.btn.btn-outline-blue,
+.btn.btn-default.btn-outline-blue {
+    color: @color-active;
+    border: 2px solid @color-active;
+
+    &:hover {
+        color:        saturate(@color-active,50%);
+        border-color: saturate(@color-active,50%);
+        background-color: #fff;
+    }
+
+    &.active {
+        color: #fff;
+        background: @color-active;
+
+        &:hover {
+            color: #fff;
+            border-color:     saturate(@color-active,50%);
+            background-color: saturate(@color-active,50%);
+        }
+    }
+}
+
+
+.btn.btn-outline-pink,
+.btn.btn-default.btn-outline-pink {
+
+    border: 2px solid fadeOut(#e25284, 50%);
+    color: fadeOut(#e25284, 50%);
+    background-color: #fff;
+    box-shadow: none;
+
+    &:hover {
+        color: #e25284;
+        border-color: #e25284;
+        background-color: #fff;
+    }
+
+    &.active {
+        color: #fff;
+        border-color: #e25284;
+        background-color: #e25284;
+    }
+}
+
+
+
+
+.btn.btn-outline-accent,
+.btn.btn-default.btn-outline-accent {
+    border: 2px solid @color-accent;
+    color:  @color-accent;
+
+    &:hover {
+        border-color: saturate(@color-accent,25%);
+        color:        saturate(@color-accent,25%);
+        background-color: #fff;
+    }
+
+    &.active {
+        background: @color-accent;
+        color:      #fff;
+        box-shadow: none;   //prevent boostrap default
+
+        &:hover {
+            border-color:     saturate(@color-accent,25%);
+            background-color: saturate(@color-accent,25%);
+            color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    }
+}
+
+
+
+
+
+
+.btn-faded { opacity: 0.3; }
+
+.btn.btn-pink {
+    background-color: #e25284;
+    border-color: darken(#e25284,5%);
+    color: #fff;
+
+    &:hover {
+        background-color: darken(#e25284,5%);
+        border-color: darken(#e25284,10%);
+    }
+
+    &.btn-link {
+        color: #e25284;
+        background-color: transparent;
+        border-color: transparent;
+        &:hover { color: darken(#e25284, 5%); }
+    }
+}
+
+
+
+
+
+/*
+ * A UI element to look similar to a .btn.btn-link but without being one
+ */
+.faux-btn {
+
+    display:        inline-block;
+    line-height:    1.42857143;
+    font-size:      @sz-md;
+    padding:        .267em .75em;
+    text-align:     center;
+    white-space:    nowrap;
+    vertical-align: middle;
+    user-select:    none;
+    border:         1px solid transparent;
+    border-radius:  4px;
+    cursor:         pointer;
+
+    &:hover { border: 1px solid @color-gray-xlt; }
+
+    &.disabled {
+        cursor: default;
+        &:hover { border: 1px solid transparent; }
+    }
+
+    &.btn-sm {
+        font-size:  .75em;
+        padding:    .417em .83em;
+    }
+
+}
+
+
+// FROM FORMS.LESS
+
+/* override bootstrap 3 button font sizes to use rems */
+.input-group {
+    font-size: @sz-md;
+    .input-group-sm { font-size: @sz-sm; }
+}
+.input-group-addon { font-size: @sz-md; }
+
+//force form-controls to use rem/ems for sizing and padding
+.form-control {
+    font-size:  @sz-md;
+    height:     2.25em;
+    padding:    0.375em 0.75em;
+}
+textarea.form-control { height: auto; }
+
+
+
+.form-control.input-sm,
+.input-group-slick > input.form-control.input-sm,
+.input-group-slick > textarea.form-control.input-sm,
+.input-group-slick > select.form-control.input-sm {
+    font-size: @sz-sm;
+}
+
+body .input-group-lg > .form-control,
+body .input-group-lg > .input-group-addon,
+body .input-group-lg > .input-group-btn > .btn {
+    font-size: @sz-lg;
+    height: 2.5em;
+    padding: 0.556em 0.889em;
+}
+
+
+
+
+//multiple .btn elements within .input-group-btn
+.input-group-btn:last-child {
+
+    & >.btn:last-child:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    & >.btn:not(:last-child) {
+        border-radius: 0;
+        margin-left: -1px;
+    }
+}
+
+
+
+/* ================================ *\
+    Input Group "Slick"
+    custom input group that inlines
+    the icons without borders and
+    background color differences
+\* ================================ */
+.input-group-slick {
+
+    position: relative;
+    font-size: @sz-md;
+
+    &.active { background-color: transparent; }
+
+    .input-group-lg & { font-size: @sz-lg; }
+
+    &.input-group-slick--lg {
+
+        & > .glyphicon,
+        & > .fa, & > .far, & > .fas { top: 0.875em; }
+
+        & > .form-control {
+            font-size: @sz-lg;
+            height:    2.25em;
+        }
+    }
+
+    &.input-group-slick--sm {
+
+        font-size: @sz-sm;
+
+        & > .glyphicon,
+        & > .fa, & > .far, & > .fas { top: 0.575em; }
+
+        & > .form-control {
+            height: 2.125em;
+            font-size: @sz-sm;
+        }
+    }
+
+
+    & > .btn {
+        position: absolute;
+        top:    1px;
+        bottom: 1px;
+
+        &.active { border-color: transparent; }
+
+        &:first-child {
+            left: 1px;
+            border-style: none solid none none;
+            border-radius: 0.25em 0 0 0.25em;
+        }
+        &:last-child {
+            right: 1px;
+            border-style: none none none solid;
+            border-radius: 0 0.25em 0.25em 0;
+        }
+    }
+
+    & > .glyphicon,
+    & > .fa, & > .far, & > .fas {
+        position: absolute;
+        top: @sz-sm;
+        color: lighten(@color-gray-md, 5%);
+
+        &:first-child { left: @sz-sm; }
+        &:last-child {  right: @sz-sm; }
+
+    }
+
+    & > input.form-control {
+
+        height:         2.25em;    //36px
+        padding-left:   2.5em;
+        padding-right:  2.5em;
+
+        //pad form control without a sibling on an end
+        &:first-child { padding-left: @sz-md; }
+        &:last-child {  padding-right: @sz-md; }
+
+        //hide ie10+ auto-added clear button from the input
+        &::-ms-clear { display: none; }
+    }
+
+
+    /* SELECT FORM CONTROLS */
+
+    & > select.form-control:first-child {
+        text-indent: 0!important;
+    }
+
+    //only indent select content if not first child
+    & > select.form-control:not(:first-child) {
+        text-indent: 2em;
+    }
+
+    //indent select content over a bit more if following a button
+    & > .btn + select.form-control {
+        text-indent: 2.5em;
+    }
+
+}
+
+
+
+
+
+/* ---------------------------------- *\
+    Wrapped by .input-group
+\* ---------------------------------- */
+
+.input-group .input-group-slick {
+    display: table-cell;
+
+    //ensure icons always render above the form control, even when focused
+    & > .glyphicon,
+    & > .fa, & > .far, & > .fas { z-index: 3000;  }
+
+    .input-group-btn .btn { padding: 0.375em 0.75em; }
+}
+.input-group .input-group-slick {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.input-group .input-group-slick:first-child > .form-control {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.input-group .input-group-slick:last-child > .form-control {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+
+.input-group > select { height: 2.25em; }
+
+
+//apply angular-based validation css classes to angular-ui bootstrap datepicker
+// This should probably go inside ng-common but could be used in a project without
+// having ng-common as a dependency
+[uib-datepicker].ng-valid {
+    padding: 0.25em;
+    border: 2px solid transparent;
+}
+[uib-datepicker].ng-invalid {
+    padding: 0.25em;
+    border: 2px solid @color-danger;
+}
+
+
+// FROM ICONS.LESS
+.a-icon {
+    height: 1em;
+    max-width: 1em;
+}
+
+
+// FROM UTILITY.LESS
+
+
+.d-grid {
+    display: grid;
+}
+
+
+
+/* padding helper classes */
+
+.u-mg--xxxlg    { margin: @sz-xxxlg !important;}
+.u-mg--xxlg     { margin: @sz-xxlg !important; }
+.u-mg--xlg      { margin: @sz-xlg !important;  }
+.u-mg--lg       { margin: @sz-lg !important;   }
+.u-mg--md       { margin: @sz-md !important;   }
+.u-mg--sm       { margin: @sz-sm !important;   }
+.u-mg--xs       { margin: @sz-xs !important;   }
+.u-mg--xxs      { margin: @sz-xxs !important;  }
+.u-mg-top--xxxlg    { margin-top: @sz-xxxlg !important;}
+.u-mg-top--xxlg     { margin-top: @sz-xxlg !important; }
+.u-mg-top--xlg      { margin-top: @sz-xlg !important;  }
+.u-mg-top--lg       { margin-top: @sz-lg !important;   }
+.u-mg-top--md       { margin-top: @sz-md !important;   }
+.u-mg-top--sm       { margin-top: @sz-sm !important;   }
+.u-mg-top--xs       { margin-top: @sz-xs !important;   }
+.u-mg-top--xxs      { margin-top: @sz-xxs !important;  }
+.u-mg-bottom--xxxlg    { margin-bottom: @sz-xxxlg !important;}
+.u-mg-bottom--xxlg     { margin-bottom: @sz-xxlg !important; }
+.u-mg-bottom--xlg      { margin-bottom: @sz-xlg !important;  }
+.u-mg-bottom--lg       { margin-bottom: @sz-lg !important;   }
+.u-mg-bottom--md       { margin-bottom: @sz-md !important;   }
+.u-mg-bottom--sm       { margin-bottom: @sz-sm !important;   }
+.u-mg-bottom--xs       { margin-bottom: @sz-xs !important;   }
+.u-mg-bottom--xxs      { margin-bottom: @sz-xxs !important;  }
+.u-mg-left--xxxlg    { margin-left: @sz-xxxlg !important;}
+.u-mg-left--xxlg     { margin-left: @sz-xxlg !important; }
+.u-mg-left--xlg      { margin-left: @sz-xlg !important;  }
+.u-mg-left--lg       { margin-left: @sz-lg !important;   }
+.u-mg-left--md       { margin-left: @sz-md !important;   }
+.u-mg-left--sm       { margin-left: @sz-sm !important;   }
+.u-mg-left--xs       { margin-left: @sz-xs !important;   }
+.u-mg-left--xxs      { margin-left: @sz-xxs !important;  }
+.u-mg-right--xxxlg    { margin-right: @sz-xxxlg !important;}
+.u-mg-right--xxlg     { margin-right: @sz-xxlg !important; }
+.u-mg-right--xlg      { margin-right: @sz-xlg !important;  }
+.u-mg-right--lg       { margin-right: @sz-lg !important;   }
+.u-mg-right--md       { margin-right: @sz-md !important;   }
+.u-mg-right--sm       { margin-right: @sz-sm !important;   }
+.u-mg-right--xs       { margin-right: @sz-xs !important;   }
+.u-mg-right--xxs      { margin-right: @sz-xxs !important;  }
+
+.u-pd--xxxlg    { padding: @sz-xxxlg !important;}
+.u-pd--xxlg     { padding: @sz-xxlg !important; }
+.u-pd--xlg      { padding: @sz-xlg !important;  }
+.u-pd--lg       { padding: @sz-lg !important;   }
+.u-pd--md       { padding: @sz-md !important;   }
+.u-pd--sm       { padding: @sz-sm !important;   }
+.u-pd--xs       { padding: @sz-xs !important;   }
+.u-pd--xxs      { padding: @sz-xxs !important;  }
+.u-pd-top--xxxlg    { padding-top: @sz-xxxlg !important;}
+.u-pd-top--xxlg     { padding-top: @sz-xxlg !important; }
+.u-pd-top--xlg      { padding-top: @sz-xlg !important;  }
+.u-pd-top--lg       { padding-top: @sz-lg !important;   }
+.u-pd-top--md       { padding-top: @sz-md !important;   }
+.u-pd-top--sm       { padding-top: @sz-sm !important;   }
+.u-pd-top--xs       { padding-top: @sz-xs !important;   }
+.u-pd-top--xxs      { padding-top: @sz-xxs !important;  }
+.u-pd-bottom--xxxlg    { padding-bottom: @sz-xxxlg !important;}
+.u-pd-bottom--xxlg     { padding-bottom: @sz-xxlg !important; }
+.u-pd-bottom--xlg      { padding-bottom: @sz-xlg !important;  }
+.u-pd-bottom--lg       { padding-bottom: @sz-lg !important;   }
+.u-pd-bottom--md       { padding-bottom: @sz-md !important;   }
+.u-pd-bottom--sm       { padding-bottom: @sz-sm !important;   }
+.u-pd-bottom--xs       { padding-bottom: @sz-xs !important;   }
+.u-pd-bottom--xxs      { padding-bottom: @sz-xxs !important;  }
+.u-pd-left--xxxlg    { padding-left: @sz-xxxlg !important;}
+.u-pd-left--xxlg     { padding-left: @sz-xxlg !important; }
+.u-pd-left--xlg      { padding-left: @sz-xlg !important;  }
+.u-pd-left--lg       { padding-left: @sz-lg !important;   }
+.u-pd-left--md       { padding-left: @sz-md !important;   }
+.u-pd-left--sm       { padding-left: @sz-sm !important;   }
+.u-pd-left--xs       { padding-left: @sz-xs !important;   }
+.u-pd-left--xxs      { padding-left: @sz-xxs !important;  }
+.u-pd-right--xxxlg    { padding-right: @sz-xxxlg !important;}
+.u-pd-right--xxlg     { padding-right: @sz-xxlg !important; }
+.u-pd-right--xlg      { padding-right: @sz-xlg !important;  }
+.u-pd-right--lg       { padding-right: @sz-lg !important;   }
+.u-pd-right--md       { padding-right: @sz-md !important;   }
+.u-pd-right--sm       { padding-right: @sz-sm !important;   }
+.u-pd-right--xs       { padding-right: @sz-xs !important;   }
+.u-pd-right--xxs      { padding-right: @sz-xxs !important;  }
+
+
+//update margins on headings
+h1.u-mg--none,  h2.u-mg--none,  h3.u-mg--none,
+h4.u-mg--none,  h5.u-mg--none,  h6.u-mg--none   { margin: 0;        }
+h1.u-mg--xs,    h2.u-mg--xs,    h3.u-mg--xs,
+h4.u-mg--xs,    h5.u-mg--xs,    h6.u-mg--xs     { margin: @sz-xs;   }
+h1.u-mg--sm,    h2.u-mg--sm,    h3.u-mg--sm,
+h4.u-mg--sm,    h5.u-mg--sm,    h6.u-mg--sm     { margin: @sz-sm;   }
+h1.u-mg--md,    h2.u-mg--md,    h3.u-mg--md,
+h4.u-mg--md,    h5.u-mg--md,    h6.u-mg--md     { margin: @sz-md;   }
+h1.u-mg--lg,    h2.u-mg--lg,    h3.u-mg--lg,
+h4.u-mg--lg,    h5.u-mg--lg,    h6.u-mg--lg     { margin: @sz-lg;   }
+h1.u-mg--xlg,   h2.u-mg--xlg,   h3.u-mg--xlg,
+h4.u-mg--xlg,   h5.u-mg--xlg,   h6.u-mg--xlg    { margin: @sz-xlg;  }
+h1.u-mg--xxlg,  h2.u-mg--xxlg,  h3.u-mg--xxlg,
+h4.u-mg--xxlg,  h5.u-mg--xxlg,  h6.u-mg--xxlg   { margin: @sz-xxlg; }
+
+
+
+
+/* text sizing helper classes */
+.u-text--xs, .text--xs { font-size: @text-xs; }
+.u-text--sm, .text--sm, .small-text, .text-small { font-size: @text-sm; }
+.u-text--lg, .text--lg { font-size: @text-lg; }
+.u-text--xlg, .text--xlg { font-size: @text-xlg; }
+.u-text--xxlg, .text--xxlg { font-size: @text-xxlg; }
+.u-text--xxxlg, .text--xxxlg { font-size: @text-xxxlg; }
+.u-text--huge, .text--huge { font-size: @text-huge; }
+.u-text--gargantuan, .text--gargantuan { font-size: @text-gargantuan; }
+
+//limit text to a specific height
+.u-text-max--sm {
+    line-height: 1.4em;
+    max-height:  3em;
+    overflow:    hidden;
+}
+
+.u-text--no-wrap {
+    white-space: nowrap;
+    overflow:hidden;
+}
+
+
+/* alignment helper classes */
+.u-text--center,
+.u-text--centered,
+.text--centered,
+.text-centered { text-align: center; }
+
+.u-text--left,
+.u-text--lefted,
+.text--lefted,
+.text-lefted,
+.lefted { text-align: left; }
+
+.u-text--right,
+.u-text--righted,
+.text--righted,
+.text-righted,
+.righted { text-align: right; }
+
+.u-text--justify,
+.u-text--justified,
+.text--justified,
+.text-justified,
+.justified { text-align: justify; }
+
+.t-text--bold,
+.t-text--strong { font-weight: 700; }
+
+.t-text--em,
+.t-text--italic,
+.t-text--italics { font-style: italic; }
+
+
+.u-text--uc { text-transform: uppercase; }
+.u-text--lc { text-transform: lowercase; }
+
+.u-break--all { word-break: break-all!important; }
+
+.u-float--right { float: right; }
+.u-float--left { float: left; }
+
+.url, .is-url {
+    word-break: break-all;
+    font-style: italic;
+}
+
+
+.child-centered-horizontal { margin: 0 auto; }
+
+
+
+.t-fg-over-primary,
+.t-fg-over-accent,
+.t-fg-over-selected { color: #fff!important; }
+
+.is-hidden {
+    display: none!important;
+}
+@media (max-width:767px) {
+    .is-hidden--xs { display: none !important; }
+}
+@media (min-width:768px) and (max-width:991px) {
+    .is-hidden--sm { display: none !important; }
+}
+@media (min-width:992px) and (max-width:1199px) {
+    .is-hidden--md { display: none !important; }
+}
+@media (min-width:1200px) {
+    .is-hidden--lg { display: none !important; }
+}
+
+
+
+a.is-linkless:not([href]):not([tabindex]) {
+    color: @color-active;
+    cursor: pointer;
+}
+
+
+
+
+.faded {
+    opacity: 0.5;
+}
+
+
+
+.is-hoverable {
+    .on-out { display: inline-block; }
+    .on-over { display: none; }
+
+    &:hover:not(.disabled) {
+        .on-over { display: inline-block; }
+        .on-out { display: none; }
+    }
+}
+
+
+.collapsible, .is-collapsible {
+
+    height: auto;
+    opacity: 1;
+    transition: all ease-in-out 0.5s;
+
+    &.is-collapsed {
+        height: 0;
+        opacity: 0;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+
+
+.maskable, .has-mask {
+    position: relative;
+
+    .mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .mask--white {
+        background: rgba(255,255,255,0.75);
+    }
+}
+
+
+
+/*
+ Embedded items (images, iframes, videos, etc) with aspect ratios preserved
+
+ ex: <div class="a-embed u-16x9">
+       <img src="...">
+     </div>
+ */
+.a-embed {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+
+    &::before {
+        display: block;
+        content: "";
+        padding-top: 100%;
+    }
+
+    &.u-16x9::before { padding-top: 56.25%; }
+    &.u-4x3::before { padding-top: 75%; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*  ================================
+    ANIMATIONS
+    ================================ */
+
+
+.rotate-90 {
+    transform: rotate(90deg);
+}
+
+.rotate90 {
+    -o-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -o-transition-property: -o-transform;
+    transition-property: transform;
+    -o-transform:rotate(0deg);
+    transform:rotate(0deg);
+
+    &.active {
+        color: @color-gray-dk;
+        -o-transform:rotate(90deg);
+        transform:rotate(90deg);
+    }
+}
+
+
+.spin {
+    animation: spin .5s infinite linear;
+    -ms-animation: spin .5s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+
+
+
+.flip-horizontal {
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
+.fadein {
+    transition: .3s linear all;
+    -o-transition: .3s linear all;
+
+    &.ng-enter { opacity: 0; }
+    &.ng-enter.ng-enter-active { opacity: 1; }
+    &.ng-leave { opacity: 1; }
+    &.ng-leave.ng-leave-active { opacity: 0; }
+}
+
+.slide-left, .slide-left-full {
+    transition: .3s linear all;
+    -o-transition: .3s linear all;
+}
+.slide-left.ng-enter { right: -500px; }
+.slide-left.ng-enter.ng-enter-active { right: 0px; }
+.slide-left.ng-leave { right: 0px; }
+.slide-left.ng-leave-active { right: -500px; }
+
+.slide-left-full.ng-enter { left:100%; }
+.slide-left-full.ng-enter.ng-enter-active { left: 0px; }
+.slide-left-full.ng-leave { left: 0px; }
+.slide-left-full.ng-leave-active { left: 100%; }
+
+@media (min-width: 768px) {
+    .slide-left.ng-enter,
+    .slide-left.ng-leave-active { right: -400px; }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .slide-left.ng-enter,
+    .slide-left.ng-leave-active { width: 400px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+@-webkit-keyframes rippleOn {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+@-o-keyframes rippleOn {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+@keyframes rippleOn {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+@-webkit-keyframes rippleOff {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+@-o-keyframes rippleOff {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+@keyframes rippleOff {
+  0% { opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
+
+
+
+
+
+
+
+.t-fade-out--fast { animation: .3s linear .6s 1 forwards fadeOut; }
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+
+/*  -------------------------------------
+    helper classes to set transition
+    property and duration (speed)
+    ------------------------------------- */
+.u-transition--width {
+    transition-property: width;
+    transition-timing-function: ease-in-out;
+}
+.u-transition--fast { transition-duration: 0.3s; }
+.u-transition--med { transition-duration:  0.6s; }
+.u-transition--slow { transition-duration: 1s; }
+
+
+
+/*  -------------------------------------
+    Animation for ng-if affecting opacity
+    ------------------------------------- */
+.u-animated-if--opacity {
+    opacity: 1;
+
+    &.ng-enter,
+    &.ng-leave { transition: opacity 0.3s linear; }
+
+    &.ng-enter,
+    &.ng-leave.ng-leave-active { opacity:0; }
+
+    &.ng-leave,
+    &.ng-enter.ng-enter-active { opacity:1; }
+}
+
+
+
+
+/* Will only fade IN, not out */
+.u-animated-fade { opacity: 1; }
+.u-animated-fade.ng-enter {
+    transition:0.3s linear opacity;
+    opacity: 0;
+}
+.u-animated-fade.ng-enter.ng-enter-active { opacity:1; }
+
+
+
+
+
+/* */
+.u-animated-show {
+    transition: all linear 0.5s;
+    opacity: 1;
+    &.ng-hide { opacity: 0; }
+}
+
+
+
+
+
+/*  ==================================
+    Borders
+    ================================== */
+
+//Mixins
+
+.border-color(@color) { border-color: @color; }
+.border(@thickness:1px; @color:@color-gray-xlt) {
+    border-style: solid;
+    border-width: @thickness;
+    .border-color(@color);
+}
+.border(@top:1px; @right:1px; @bottom:1px; @left:1px; @color:@color-gray-lt) {
+    border-style: solid;
+    border-top-width: @top;
+    border-right-width: @right;
+    border-bottom-width: @bottom;
+    border-left-width: @left;
+    .border-color(@color);
+}
+.border-top(@thickness:1px; @color:@color-gray-lt) {
+    .border(@thickness;0;0;0;@color);
+}
+.border-right(@thickness:1px; @color:@color-gray-lt) {
+    .border(0;@thickness;0;0;@color);
+}
+.border-bottom(@thickness:1px; @color:@color-gray-lt) {
+    .border(0;0;@thickness;0;@color);
+}
+.border-left(@thickness:1px; @color:@color-gray-lt) {
+    .border(0;0;0;@thickness;@color);
+}
+
+.bordered         { .border(1px); }
+.border-primary   { .border-color(@color-primary); }
+.border-accented  { .border-color(@color-accent); }
+.border-wild      { .border-color(@color-wild);  }
+.border-gray-dk   { .border-color(@color-gray-dk); }
+.border-gray-md   { .border-color(@color-gray-md); }
+.border-gray-lt   { .border-color(@color-gray-lt); }
+.border-gray-xlt  { .border-color(@color-gray-xlt); }
+
+.bordered-left { border-left-width: 1px; }
+.bordered-right { border-right-width: 1px; }
+.bordered-top { border-top-width: 1px; }
+.bordered-bottom { border-bottom-width: 1px; }
+
+.bordered-left-thick { border-left-width: 3px; }
+.bordered-right-thick { border-right-width: 3px; }
+.bordered-top-thick { border-top-width: 3px; }
+.bordered-bottom-thick { border-bottom-width: 3px; }
+
+
+
+
+
+
+
+
+.is-hidden { display: none; }
+@media(max-width: @screen-xs-min) {
+    .is-hidden--xs { display: none; }
+}
+@media(min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+    .is-hidden--sm { display: none; }
+}
+@media(min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    .is-hidden--md { display: none; }
+}
+@media(min-width: @screen-lg-min) {
+    .is-hidden--lg { display: none; }
+}
+
+
+
+// FROM LINKS.LESS
+
+a[target="_blank"]:after {
+    content: "\f35d";
+    font-family: "Font Awesome 5 Free";
+    margin-left: 0.25em;
+    font-size: 0.875em;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    /* https://stackoverflow.com/questions/47712987/font-awesome-5-on-pseudo-elements */
+    font-weight: 900;
+}
+
+a.is-image[target="_blank"] {
+    position: relative;
+    display: inline-block;
+
+    &:after {
+        background: rgba(220, 220, 220, 0.75);
+        position: absolute;
+        top:   0;
+        right: 0;
+        vertical-align: top;
+        padding: 0.3em 0.75em;
+        border-radius: 0 0 0 4px;
+    }
+}

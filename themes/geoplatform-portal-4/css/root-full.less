@@ -1,0 +1,299 @@
+// OVERRIDES.LESS
+
+html, body { font-size: @default_font_size; }
+
+/* font size resets */
+h1, h2, h3, h4, h5, h6 { font-weight: 700!important; }
+h1 { font-size: @sz-xxxlg; }
+h2 { font-size: @sz-xxlg; }
+h3 { font-size: @sz-xlg; }
+h4 { font-size: @sz-lg; }
+h5 { font-size: @sz-md; }
+h6 { font-size: @sz-sm; }
+
+
+
+
+
+/* -------- ANCHORS ------------------ */
+
+a:not(.btn), a:visited:not(.btn) { color: @color-active; }
+a.selected:not(.btn) { color: #fff; }
+
+a.btn.btn-dark, a.btn.btn-dark:visited { color: #fff; }
+
+//ensure pointer cursor over ng-click anchors without hrefs
+a[ng-click], [onclick], [ng-click], a[ui-sref] { cursor: pointer; }
+
+
+
+/* -------- FORMS ------------------ */
+
+body .form-control.form-control-lg {
+    padding:        0.65em 1em;
+    font-size:      1.25em;
+    line-height:    1.5;
+    border-radius:  0.3em;
+    height:         auto;
+}
+
+
+/* ------- INPUT GROUP ------------- */
+.input-group .input-group-btn {
+    font-size: 1em; //fix 'font-size: 0' rule ?!?!?!
+}
+.input-group-slick > .icon:first-child { left: .75em; }
+.input-group-slick > .icon {
+    position: absolute;
+    top:      .625em;
+    color:    #848484;
+    height:   1em;
+    width:    1em;
+}
+
+.input-group-slick.input-group-slick--lg { font-size: 1.2875em; }
+.input-group-slick.input-group-slick--lg > .icon { top: 0.9em; }
+
+
+/* -------- BOOTSTRAP DROPDOWNS -------- */
+/*
+ * Hack necessary to enable bootstrap dropdown-contained links work on touch devices
+ * http://stackoverflow.com/questions/17579750/drop-down-menu-not-working-on-mobile-devices
+ */
+.dropdown-backdrop{
+    position: static;
+}
+
+
+/* -------- BOOTSTRAP TABS -------- */
+//don't let .active background color seep into nav-tabs
+ul.nav.nav-tabs > li.active { background: transparent; }
+.tab-pane.active {
+    background: none;
+    color:      inherit;
+}
+
+
+/* -------- BUTTONS --------------- */
+.btn.btn-primary {
+    background-color: @color-active; //#006ee4;
+    border-color: @color-active; //#006ee4;
+}
+.btn.btn-info {
+    background-color: @color-info;
+    border-color: @color-info;
+}
+
+
+
+// STYLE.LESS
+
+@import "variables.less";
+
+@import "normalize.css"; //v8.0.0
+@import "overrides.less";
+
+@import "atoms/utility.less";
+@import "atoms/links.less";
+@import "atoms/button.less";
+@import "atoms/forms.less";
+@import "atoms/badge.less";
+@import "atoms/icons.less";
+
+@import "molecules/lists.less";
+@import "molecules/article.less";
+@import "molecules/overview.less";
+@import "molecules/warnings.less";
+@import "molecules/result-item.less";
+@import "molecules/card.less";
+@import "molecules/form-group.less";
+@import "molecules/notation.less";
+@import "molecules/megamenu.less";
+@import "molecules/breadcrumbs.less";
+@import "molecules/tiles.less";
+@import "molecules/errors.less";
+
+@import "organisms/header.less";
+@import "organisms/footer.less";
+@import "organisms/groups.less";
+@import "organisms/featured.less";
+@import "organisms/filter.less";
+@import "organisms/pagination.less";
+
+@import "templates/layout.less";
+
+@import "pages/default.less";
+@import "pages/landing-page.less";
+@import "pages/data-registration.less";
+@import "pages/item.less";
+@import "pages/style-guide.less";
+
+@import "flex.less";
+@import "theme.less";
+
+
+
+// THEME.LESS
+
+
+//Mixin for colorizing
+.colorize(@color; @fontColor) {
+    background-color: @color;
+    border-color: darken(@color, 5%);
+    color: @fontColor;
+}
+
+
+/* deprecated, use .t-fg--<name> instead */
+.text-primary, a.text-primary,
+a.text-primary:visited  { color: @color-primary; }
+.text-accented, a.text-accented,
+a.text-accented:visited { color: @color-accent; }
+.text-selected, .text-active,
+a:not(.btn), a:not(.btn):visited   { color: @color-active; }
+.text-gray-dk  { color: @color-gray-dk; }
+.text-gray-md  { color: @color-gray-md; }
+.text-gray-lt  { color: @color-gray-lt; }
+.text-gray-xlt { color: @color-gray-xlt; }
+.text-white    { color: @color-white; }
+.text-danger   { color: @color-danger; }
+
+/* deprecated, use .t-bg--<name> instead */
+.primary    { .colorize(@color-primary; #fff);  }
+.accented   { .colorize(@color-accent; #fff);   }
+.selected, .is-selected, .is-active  { .colorize(@color-active; #fff);   }
+.success    { .colorize(@color-success; #333);  }
+.info       { .colorize(@color-info; #333);     }
+.warning    { .colorize(@color-warning; #333);  }
+.danger     { .colorize(@color-danger; #333);   }
+.gray-dk    { .colorize(@color-gray-dk; #fff);  }
+.gray-md    { .colorize(@color-gray-md; #fff);  }
+.gray-lt    { .colorize(@color-gray-lt; #333);  }
+.gray-xlt   { .colorize(@color-gray-xlt; #333); }
+
+
+
+
+
+.t-bg-transparent { background-color: transparent; }
+
+.t-bg--white { background-color: #fff; }
+.t-fg--white { color: #fff; }
+
+.t-bg--accent { background-color: @color-accent; }
+.t-fg--accent { color: @color-accent; }
+
+.t-bg--primary { background-color: @color-primary; }
+.t-fg--primary { color: @color-primary; }
+
+.t-bg--danger { background-color: @color-danger; }
+.t-fg--danger { color: @color-danger; }
+
+.t-bg--success { background-color: @color-success; }
+.t-fg--success { color: @color-success; }
+
+.t-bg--warning { background-color: @color-warning; }
+.t-fg--warning { color: @color-warning; }
+
+.t-bg--info { background-color: @color-info; }
+.t-fg--info { color: @color-info; }
+
+.t-bg--selected { background-color: @color-active; }
+.t-fg--selected { color: @color-active; }
+
+.t-bg--wild { background-color: @color-wild; }
+.t-fg--wild { color: @color-wild; }
+
+.t-bg--gray-dk { background-color: @color-gray-dk; }
+.t-fg--gray-dk { color: @color-gray-dk; }
+
+.t-bg--gray-md { background-color: @color-gray-md; }
+.t-fg--gray-md { color: @color-gray-md; }
+
+.t-bg--gray-lt { background-color: @color-gray-lt; }
+.t-fg--gray-lt { color: @color-gray-lt; }
+
+.t-bg--gray-xlt { background-color: @color-gray-xlt; }
+.t-fg--gray-xlt { color: @color-gray-xlt; }
+
+.t-bg--pink { background-color: @color-pink; }
+.t-fg--pink { color: @color-pink; }
+
+
+
+.badge.badge-accented { background-color: @color-accent; }
+.badge.badge-primary  { background-color: @color-active; }
+.badge.badge-danger   { background-color: @color-danger; }
+.badge.badge-info     { background-color: @color-info; }
+
+
+
+// VARIABLES.LESS
+
+/*
+    USED TEMPORARILY
+ */
+
+
+//core colors
+@color-primary:  #112158;
+@color-accent:   #283;
+@color-active:   #2079c5; //#0073d5; //#428bca;
+                //337ab7
+
+//utility colors
+@color-gray-dk:  #333;
+@color-gray-md:  #747474;
+@color-gray-lt:  #bbb;
+@color-gray-xlt: #ddd;
+@color-gray-xxlt: #efefef;
+@color-gray-xxxlt: #f5f5f5;
+@color-white:    #fff;
+
+//bootstrap colors
+@color-success:  #5cb85c;
+@color-info:     #007fa4; //#007285; //#5bc0de;
+@color-warning:  #b35d29;
+@color-danger:   #d53c37;
+
+//misc colors
+@color-wild:     #ff009a;
+@color-pink:     #e25284;
+
+//blue colors
+@color-blue-dk: #102A46;
+@color-blue-md: #185b8a;
+@color-blue-lt: #3176a7;
+@color-blue-xlt: #3a78a5;//#4b96cc;
+
+
+@default_font_size: 16px;
+
+@sz-xxxlg : 2em;
+@sz-xxlg  : 1.75em;
+@sz-xlg   : 1.5em;
+@sz-lg    : 1.25em;
+@sz-md    : 1em;
+@sz-sm    : 0.75em;
+@sz-xs    : 0.5em;
+@sz-xxs   : 0.25em;
+
+@text-gargantuan: 4em;
+@text-huge  : 3em;
+@text-xxxlg : 2em;
+@text-xxlg  : 1.75em;
+@text-xlg   : 1.5em;
+@text-lg    : 1.25em;
+@text-md    : 1em;
+@text-sm    : 0.875em;
+@text-xs    : 0.75em;
+
+
+
+@screen-xs-min: 480px;  //phone
+@screen-xs-max: 767px;
+@screen-sm-min: 768px;  //tablet
+@screen-sm-max: 991px;
+@screen-md-min: 992px;  //desktop
+@screen-md-max: 1199px;
+@screen-lg-min: 1200px; //large desktop
