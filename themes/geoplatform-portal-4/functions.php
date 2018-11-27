@@ -36,17 +36,11 @@ function geop_ccb_scripts() {
 	wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
 //  wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/css/bootstrap.css');
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
-	wp_enqueue_style( 'geop-atom-less', get_stylesheet_directory_uri() . '/css/atom-full.less');
-	wp_enqueue_style( 'geop-molecule-less', get_stylesheet_directory_uri() . '/css/molecule-full.less');
-	wp_enqueue_style( 'geop-organic-less', get_stylesheet_directory_uri() . '/css/organic-full.less');
-	wp_enqueue_style( 'geop-pages-less', get_stylesheet_directory_uri() . '/css/pages-full.less');
-	wp_enqueue_style( 'geop-root-less', get_stylesheet_directory_uri() . '/css/root-full.less');
-	wp_enqueue_style( 'geop-template-less', get_stylesheet_directory_uri() . '/css/template-full.less');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
 	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/platform.min.css');
-	wp_enqueue_script( 'geop-less', 'https://cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js');
+	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/style.css');
+	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/styleguide.css');
 
-//	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 	wp_enqueue_script( 'geop-prism-js', get_stylesheet_directory_uri() . '/js/prism.js' );
 
@@ -56,6 +50,10 @@ function geop_ccb_scripts() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
+
+function geop_ccb_header_image_method() {}
+add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
+
 
 //Disable admin bar (un-comment for prod sites)
 add_filter('show_admin_bar', '__return_false');
@@ -259,45 +257,48 @@ class Geopportal_GPSearch_Widget extends WP_Widget {
 }
 
 
-
-
 /**
- * Adds account sign-up and learn more front-page widget.
+ * Adds gpsearch front-page widget.
  */
-// class Geopportal_Onboarding_Widget extends WP_Widget {
-//
-// 	function __construct() {
-// 		parent::__construct(
-// 			'geopportal_onboarding_widget', // Base ID
-// 			esc_html__( 'GeoPlatform Onboarding', 'geoplatform-ccb' ), // Name
-// 			array( 'description' => esc_html__( 'GeoPlatform onboarding widget.', 'geoplatform-ccb' ), ) // Args
-// 		);
-// 	}
-//
-// 	public function widget( $args, $instance ) {
-//     get_template_part( 'onboarding', get_post_format() );
-// 	}
-//
-// 	public function form( $instance ) {
-// 		$title = "GeoPlatform Onboarding";
+class Geopportal_Graph_Widget extends WP_Widget {
 
-// 	}
-//
-// 	public function update( $new_instance, $old_instance ) {}
-// }
+	function __construct() {
+		parent::__construct(
+			'geopportal_graph_widget', // Base ID
+			esc_html__( 'GeoPlatform Graph', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform asset graph widget for the front page. Requires the GeoPlatform Search plugin.', 'geoplatform-ccb' ), ) // Args
+		);
+	}
 
+	public function widget( $args, $instance ) {
+		get_template_part( 'graph', get_post_format() );
+	}
+
+	public function form( $instance ) {
+		$title = "GeoPlatform Graph";
+		?>
+		<p>
+		  <?php _e("This is the GeoPlatform Graph and Search Bar widget for the front page. It will only display the search bar if the plugin is active. There are no settings involved with this widget.", "geoplatform-ccb"); ?>
+		</p>
+		<?php
+	}
+
+	public function update( $new_instance, $old_instance ) {}
+}
 
 
 
 // Includes complex widgets which regester themselves.
 // get_template_part( 'apps-and-services', get_post_format() );
-get_template_part( 'featured-services', get_post_format() );
 get_template_part( 'main-page', get_post_format() );
-get_template_part( 'main-page-two', get_post_format() );
+get_template_part( 'onboarding', get_post_format() );
+//get_template_part( 'graph', get_post_format() );
+
 get_template_part( 'cornerstones', get_post_format() );
 get_template_part( 'featured', get_post_format() );
 get_template_part( 'first-time', get_post_format() );
-get_template_part( 'onboarding', get_post_format() );
+get_template_part( 'featured-services', get_post_format() );
+
 
 /**
  * Registers simpler widgets.
@@ -306,7 +307,7 @@ function geopportal_register_portal_widgets() {
 	register_widget( 'Geopportal_Account_Widget' );
 	register_widget( 'Geopportal_Contact_Widget' );
 	register_widget( 'Geopportal_GPSearch_Widget' );
-//	register_widget( 'Geopportal_Onboarding_Widget' );
+	register_widget( 'Geopportal_Graph_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 
