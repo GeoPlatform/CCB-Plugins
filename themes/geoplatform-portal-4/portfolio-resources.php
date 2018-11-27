@@ -100,16 +100,20 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 								</a>
 						</li>
 						<li class="nav-item">
-								<a class="nav-link" id="datasets-tab" data-toggle="tab" href="#pr-ov-datasets" role="tab" aria-controls="pr-ov-datasets" aria-selected="false"><?php echo sanitize_text_field($geopportal_port_res_first_title) ?></a>
+								<!-- <a class="nav-link" id="datasets-tab" data-toggle="tab" href="#pr-ov-datasets" role="tab" aria-controls="pr-ov-datasets" aria-selected="false"><?php //echo sanitize_text_field($geopportal_port_res_first_title) ?></a> -->
+								<a class="btn nav-link" id="datasets-tab"><?php echo sanitize_text_field($geopportal_port_res_first_title) ?></a>
 						</li>
 						<li class="nav-item">
-								<a class="nav-link" id="services-tab" data-toggle="tab" href="#pr-ov-services" role="tab" aria-controls="pr-ov-services" aria-selected="false"><?php echo sanitize_text_field($geopportal_port_res_second_title) ?></a>
+								<!-- <a class="nav-link" id="services-tab" data-toggle="tab" href="#pr-ov-services" role="tab" aria-controls="pr-ov-services" aria-selected="false"><?php //echo sanitize_text_field($geopportal_port_res_second_title) ?></a> -->
+								<a class="btn nav-link" id="services-tab"><?php echo sanitize_text_field($geopportal_port_res_second_title) ?></a>
 						</li>
 						<li class="nav-item">
-								<a class="nav-link active" id="maps-tab" data-toggle="tab" href="#pr-ov-maps" role="tab" aria-controls="pr-ov-maps" aria-selected="true"><?php echo sanitize_text_field($geopportal_port_res_third_title) ?></a>
+								<!-- <a class="nav-link active" id="maps-tab" data-toggle="tab" href="#pr-ov-maps" role="tab" aria-controls="pr-ov-maps" aria-selected="true"><?php //echo sanitize_text_field($geopportal_port_res_third_title) ?></a> -->
+								<a class="btn nav-link active" id="maps-tab"><?php echo sanitize_text_field($geopportal_port_res_third_title) ?></a>
 						</li>
 						<li class="nav-item">
-								<a class="nav-link" id="galleries-tab" data-toggle="tab" href="#pr-ov-galleries" role="tab" aria-controls="pr-ov-galleries" aria-selected="false"><?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?></a>
+								<!-- <a class="nav-link" id="galleries-tab" data-toggle="tab" href="#pr-ov-galleries" role="tab" aria-controls="pr-ov-galleries" aria-selected="false"><?php //echo sanitize_text_field($geopportal_port_res_fourth_title) ?></a> -->
+								<a class="btn nav-link" id="galleries-tab"><?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?></a>
 						</li>
 				</ul>
 				<div class="a-portfolio__overview tab-content">
@@ -179,6 +183,69 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 						</div>
 				</div>
 		</div>
+
+
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+				    jQuery("#datasets-tab").click(function(e){
+							jQuery("#pr-ov-maps").removeClass("show active");
+							jQuery("#maps-tab").removeClass("active");
+
+							jQuery("#pr-ov-datasets").addClass("show active");
+							jQuery("#datasets-tab").addClass("active");
+							jQuery("#pr-ov-datasets").fadeIn();
+
+							jQuery("#pr-ov-services").removeClass("show active");
+							jQuery("#services-tab").removeClass("active");
+
+							jQuery("#pr-ov-galleries").removeClass("show active");
+							jQuery("#galleries-tab").removeClass("active");
+						});
+						jQuery("#maps-tab").click(function(e){
+							jQuery("#pr-ov-maps").addClass("show active");
+							jQuery("#maps-tab").addClass("active");
+							jQuery("#pr-ov-maps").fadeIn();
+
+							jQuery("#pr-ov-datasets").removeClass("show active");
+							jQuery("#datasets-tab").removeClass("active");
+
+							jQuery("#pr-ov-services").removeClass("show active");
+							jQuery("#services-tab").removeClass("active");
+
+							jQuery("#pr-ov-galleries").removeClass("show active");
+							jQuery("#galleries-tab").removeClass("active");
+						});
+						jQuery("#services-tab").click(function(e){
+							jQuery("#pr-ov-maps").removeClass("show active");
+							jQuery("#maps-tab").removeClass("active");
+
+							jQuery("#pr-ov-datasets").removeClass("show active");
+							jQuery("#datasets-tab").removeClass("active");
+
+							jQuery("#pr-ov-services").addClass("show active");
+							jQuery("#services-tab").addClass("active");
+
+							jQuery("#pr-ov-galleries").removeClass("show active");
+							jQuery("#galleries-tab").removeClass("active");
+						});
+						jQuery("#galleries-tab").click(function(e){
+							jQuery("#pr-ov-maps").removeClass("show active");
+							jQuery("#maps-tab").removeClass("active");
+
+							jQuery("#pr-ov-datasets").removeClass("show active");
+							jQuery("#datasets-tab").removeClass("active");
+
+							jQuery("#pr-ov-services").removeClass("show active");
+							jQuery("#services-tab").removeClass("active");
+
+							jQuery("#pr-ov-galleries").addClass("show active");
+							jQuery("#galleries-tab").addClass("active");
+						});
+			    });
+				</script>
+
+
+
 		<?php
 	}
 

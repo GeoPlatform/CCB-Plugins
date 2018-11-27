@@ -125,7 +125,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 								<a class="is-linkless o-featured__heading" href="<?php echo get_the_permalink($geopportal_mainpage_disp_first_page); ?>"><?php echo get_the_title($geopportal_mainpage_disp_first_page); ?></a>
 								<!-- <img alt="Article Heading" class="o-featured__thumb" src="/img/img.png"> -->
 								<div class="o-featured__thumb" id="deck-container" style="width: 50%; height: 300px; background-color: #abc8dc;">
-									<img src="<?php echo $geopportal_mainpage_disp_first_thumb; ?>">
+									<img src="<?php echo $geopportal_mainpage_disp_first_thumb; ?>" style="width:100%; height:100%">
 								</div>
 								<div class="o-featured__sub-heading"><?php _e(sanitize_text_field($geopportal_mainpage_disp_first_subtitle), 'geoplatform-ccb') ?></div>
 								<div><?php echo $geopportal_mainpage_disp_first_date; ?></div>

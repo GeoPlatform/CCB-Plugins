@@ -50,7 +50,6 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
             <a role="menuitem" class="is-hidden--xs" href="/">Home</a>
-            <span>|</span>
             <!-- <div class="a-nav__collapsible-menu"> -->
                 <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="/secondary.html">Pages</a>
                 <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="/items/dataset.html">Portfolio</a>
