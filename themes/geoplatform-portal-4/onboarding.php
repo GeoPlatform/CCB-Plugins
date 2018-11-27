@@ -43,14 +43,14 @@ class Geopportal_Onboarding_Widget extends WP_Widget {
 		        <img alt="Sign Up" src="<?php echo get_stylesheet_directory_uri() . '/img/register.svg' ?>">
 		        <div>
 		            <?php _e(sanitize_text_field($geopportal_onboarding_first_text), 'geoplatform-ccb') ?>
-								<a class="btn btn-white" href="<?php echo esc_url($geopportal_onboarding_first_link) ?>">Sign up!</a>
+								<a class="btn btn-white" href="<?php echo esc_url($geopportal_onboarding_first_link) ?>  "><span style="color:#000">Sign up!</span></a>
 		            <!-- <button type="button" class="btn btn-white">Sign up!</button> -->
 		        </div>
 		    </div>
 		    <div class="u-text--center">
 		        <img alt="Learn more" src="<?php echo get_stylesheet_directory_uri() . '/img/learn.svg' ?>">
 		        <div>
-							<a class="btn btn-white" href="<?php echo esc_url($geopportal_onboarding_second_link) ?>">Learn more</a>
+							<a class="btn btn-white" href="<?php echo esc_url($geopportal_onboarding_second_link) ?>"><span style="color:#000">Learn more</span></a>
 		            <!-- <button type="button" class="btn btn-white">Learn more</button> -->
 								<?php _e(sanitize_text_field($geopportal_onboarding_second_text), 'geoplatform-ccb') ?>
 		        </div>
