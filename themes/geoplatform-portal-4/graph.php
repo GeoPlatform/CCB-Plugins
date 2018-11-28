@@ -127,13 +127,27 @@
 			</div>
 
 		</div>
-		<div class="m-get-started__search">
+		<form id="geoplatformsearchform">
+			<div class="m-get-started__search">
 				<div class="input-group-slick input-group-slick--lg">
-						<span class="icon fas fa-search"></span>
-						<input type="text" class="form-control"
-								aria-label="Search the GeoPlatform"
-								placeholder="SEARCH THE GEOPLATFORM">
+					<span class="icon fas fa-search"></span>
+					<input type="text" class="form-control" id="geoplatformsearchfield"	aria-label="Search the GeoPlatform"	placeholder="SEARCH THE GEOPLATFORM">
 				</div>
-				<button type="button" class="btn btn-lg btn-primary">SEARCH</button>
-		</div>
+				<button type="button" class="btn btn-lg btn-primary" id="geoplatformsearchbutton">SEARCH</button>
+			</div>
+		</form>
+
+		<script>
+		// Code section. First jQuery triggers off of form submission (enter button) and
+		// navigates to the geoplatform-search page with the search field params.
+		  jQuery( "#geoplatformsearchform" ).submit(function( event ) {
+		    event.preventDefault();
+		    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+		  });
+
+		// Functionally identical to above, triggered by submit button press.
+		  jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
+		    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+		  });
+		</script>
 </article>
