@@ -5,8 +5,8 @@ class Geopportal_Communities_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'geopportal_communities_widget', // Base ID
-			esc_html__( 'GeoPlatform Featured', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform featured articles widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			esc_html__( 'GeoPlatform Communities', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform Communities widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -27,7 +27,7 @@ class Geopportal_Communities_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_communities_main_content', $instance) && isset($instance['geopportal_communities_main_content']) && !empty($instance['geopportal_communities_main_content']))
       $geopportal_communities_main_content = apply_filters('widget_title', $instance['geopportal_communities_main_content']);
 		else
-      $geopportal_communities_main_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+      $geopportal_communities_main_content = "";
 		if (array_key_exists('geopportal_communities_sub_title_one', $instance) && isset($instance['geopportal_communities_sub_title_one']) && !empty($instance['geopportal_communities_sub_title_one']))
       $geopportal_communities_sub_title_one = apply_filters('widget_title', $instance['geopportal_communities_sub_title_one']);
 		else
@@ -72,14 +72,15 @@ class Geopportal_Communities_Widget extends WP_Widget {
 	    $geopportal_communities_new_fourth_link = home_url();
 
 		// Turns the slugs into pages.
-		$geopportal_communities_trend_first_page = get_page_by_path($geopportal_communities_trend_first_link, OBJECT, 'post');
-		$geopportal_communities_trend_second_page = get_page_by_path($geopportal_communities_trend_second_link, OBJECT, 'post');
-		$geopportal_communities_trend_third_page = get_page_by_path($geopportal_communities_trend_third_link, OBJECT, 'post');
-		$geopportal_communities_trend_fourth_page = get_page_by_path($geopportal_communities_trend_fourth_link, OBJECT, 'post');
-		$geopportal_communities_new_first_page = get_page_by_path($geopportal_communities_new_first_link, OBJECT, 'post');
-		$geopportal_communities_new_second_page = get_page_by_path($geopportal_communities_new_second_link, OBJECT, 'post');
-		$geopportal_communities_new_third_page = get_page_by_path($geopportal_communities_new_third_link, OBJECT, 'post');
-		$geopportal_communities_new_fourth_page = get_page_by_path($geopportal_communities_new_fourth_link, OBJECT, 'post');
+		$geopportal_communities_get_page_params = array('post', 'page', 'geopccb_catlink');
+		$geopportal_communities_trend_first_page = get_page_by_path($geopportal_communities_trend_first_link, OBJECT, $geopportal_communities_get_page_params);
+		$geopportal_communities_trend_second_page = get_page_by_path($geopportal_communities_trend_second_link, OBJECT, $geopportal_communities_get_page_params);
+		$geopportal_communities_trend_third_page = get_page_by_path($geopportal_communities_trend_third_link, OBJECT, $geopportal_communities_get_page_params);
+		$geopportal_communities_trend_fourth_page = get_page_by_path($geopportal_communities_trend_fourth_link, OBJECT, $geopportal_communities_get_page_params);
+		$geopportal_communities_new_first_page = get_page_by_path($geopportal_communities_new_first_link, OBJECT, $geopportal_communities_get_page_params);
+		$geopportal_communities_new_second_page = get_page_by_path($geopportal_communities_new_second_link, OBJECT, $geopportal_communities_get_page_params);
+		$geopportal_communities_new_third_page = get_page_by_path($geopportal_communities_new_third_link, OBJECT, $geopportal_communities_get_page_params);
+		$geopportal_communities_new_fourth_page = get_page_by_path($geopportal_communities_new_fourth_link, OBJECT, $geopportal_communities_get_page_params);
 
 		// Groups pages into an array and creates 3 support arrays for relevant info.
 		$geopportal_communities_page_array = array($geopportal_communities_trend_first_page, $geopportal_communities_trend_second_page, $geopportal_communities_trend_third_page, $geopportal_communities_trend_fourth_page,
@@ -102,11 +103,6 @@ class Geopportal_Communities_Widget extends WP_Widget {
 
 			array_push($geopportal_communities_title_array, get_the_title($geopportal_communities_page));
 		}
-
-		// Sets up default thumbnails and overwrites if post has one.
-		// $geopportal_communities_iter_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
-		// $geopportal_communities_iter_link = home_url();
-		// $geopportal_communities_iter_title = "Community Name";
 		?>
 
 		<!--
@@ -123,19 +119,19 @@ class Geopportal_Communities_Widget extends WP_Widget {
 			        <div>
 			            <div class="a-heading"><?php _e(sanitize_text_field($geopportal_communities_sub_title_one), 'geoplatform-ccb') ?></div>
 			            <div class="d-grid">
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[0] ?>" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[0] ?>">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[0] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[0] ?></div>
 			                </a>
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[1] ?>" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[1] ?>" target="">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[1] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[1] ?></div>
 			                </a>
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[2] ?>l" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[2] ?>l" target="">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[2] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[2] ?></div>
 			                </a>
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[3] ?>" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[3] ?>" target="">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[3] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[3] ?></div>
 			                </a>
@@ -144,19 +140,19 @@ class Geopportal_Communities_Widget extends WP_Widget {
 			        <div>
 			            <div class="a-heading"><?php _e(sanitize_text_field($geopportal_communities_sub_title_two), 'geoplatform-ccb') ?></div>
 			            <div class="d-grid">
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[4] ?>" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[4] ?>" target="">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[4] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[4] ?></div>
 			                </a>
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[5] ?>" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[5] ?>" target="">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[5] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[5] ?></div>
 			                </a>
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[6] ?>" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[6] ?>" target="">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[6] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[6] ?></div>
 			                </a>
-			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[7] ?>" target="_blank">
+			                <a class="m-card--simple" href="<?php echo $geopportal_communities_link_array[7] ?>" target="">
 			                    <img alt="Community Name" class="m-card__thumb" src="<?php echo $geopportal_communities_thumb_array[7] ?>">
 			                    <div class="m-card__label"><?php echo $geopportal_communities_title_array[7] ?></div>
 			                </a>
@@ -196,45 +192,75 @@ class Geopportal_Communities_Widget extends WP_Widget {
     $geopportal_communities_new_third_link = ! empty( $instance['geopportal_communities_new_third_link'] ) ? $instance['geopportal_communities_new_third_link'] : '';
     $geopportal_communities_new_fourth_link = ! empty( $instance['geopportal_communities_new_fourth_link'] ) ? $instance['geopportal_communities_new_fourth_link'] : '';
 
-    // Checks for entries in the widget admin boxes and provides defaults if empty.
-    // $geopportal_communities_title = ! empty( $instance['geopportal_communities_title'] ) ? $instance['geopportal_communities_title'] : 'Features &amp; Announcements';
-
+		// Sets up the content box link, or just a home link if invalid.
+		if (array_key_exists('geopportal_communities_main_content', $instance) && isset($instance['geopportal_communities_main_content']) && !empty($instance['geopportal_communities_main_content']) && $geopportal_communities_cb_bool){
+    	$geopportal_communities_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_communities_main_content' ]);
+    	if (is_numeric($geopportal_communities_temp_url))
+      	$geopportal_communities_cb_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_communities_temp_url . "&action=edit";
+    	else
+      	$geopportal_communities_cb_url = home_url();
+		}
+		else
+			$geopportal_communities_cb_url = home_url();
 
 		?>
 
 <!-- HTML for the widget control box. -->
 		<p>
-			<?php _e('The boxes below accept the slugs of the linked post. Please ensure that any input slugs are valid.', 'geoplatform-ccb'); ?>
+			<?php _e('The boxes below accept text, slugs, and a Content Block. The Content Blocks plugin is required for the descriptive area. Please ensure that any input slugs are valid. If the slug points to a Category Link post type, the external URL will be used instead.', 'geoplatform-ccb'); ?>
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_communities_first_link' ); ?>">Primary Post Slug:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_first_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_first_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_first_link ); ?>" />
+      <label for="<?php echo $this->get_field_id( 'geopportal_communities_main_title' ); ?>">Main Title:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_main_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_main_title' ); ?>" value="<?php echo esc_attr( $geopportal_communities_main_title ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_communities_first_subtitle' ); ?>">Primary Post Sub-Heading:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_first_subtitle' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_first_subtitle' ); ?>" value="<?php echo esc_attr( $geopportal_communities_first_subtitle ); ?>" />
-    </p>
-		<hr>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_communities_second_link' ); ?>">First Sub-Feature Post Slug:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_second_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_second_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_second_link ); ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_communities_third_link' ); ?>">Second Sub-Feature Post Slug:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_third_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_third_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_third_link ); ?>" />
+      <label for="<?php echo $this->get_field_id( 'geopportal_communities_main_content' ); ?>">Discriptive Content Block Shortcode:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_main_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_main_content' ); ?>" value="<?php echo esc_attr( $geopportal_communities_main_content ); ?>" />
+			<a href="<?php echo esc_url($geopportal_communities_cb_url); ?>" target="_blank"><?php _e($geopportal_communities_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
 		<hr>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_communities_more_count' ); ?>">Featured Content Count:</label><br>
-			<input type="number"  id="<?php echo $this->get_field_id( 'geopportal_communities_more_count' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_more_count' ); ?>" value="<?php echo esc_attr($geopportal_communities_more_count); ?>" />
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_sub_title_one' ); ?>">Left Section Title:</label>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_sub_title_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_sub_title_one' ); ?>" value="<?php echo esc_attr( $geopportal_communities_sub_title_one ); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_communities_browse_link' ); ?>">Browse All URL:</label><br>
-			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_communities_browse_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_browse_link' ); ?>" value="<?php echo esc_attr($geopportal_communities_browse_link); ?>" />
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_trend_first_link' ); ?>">Left Section 1st Post Slug:</label>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_trend_first_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_trend_first_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_trend_first_link ); ?>" />
 		</p>
 		<p>
-			<?php _e('Tertiary content is controlled by the post priority settings. Navigate to the admin post panel to set these.', 'geoplatform-ccb'); ?>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_trend_second_link' ); ?>">Left Section 2nd Post Slug:</label><br>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_trend_second_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_trend_second_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_trend_second_link ); ?>" />
 		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_trend_third_link' ); ?>">Left Section 3rd Post Slug:</label><br>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_trend_third_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_trend_third_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_trend_third_link ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_trend_fourth_link' ); ?>">Left Section 4th Post Slug:</label><br>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_trend_fourth_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_trend_fourth_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_trend_fourth_link ); ?>" />
+		</p>
+		<hr>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_sub_title_two' ); ?>">Right Section Title:</label>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_sub_title_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_sub_title_two' ); ?>" value="<?php echo esc_attr( $geopportal_communities_sub_title_two ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_new_first_link' ); ?>">Right Section 1st Post Slug:</label>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_new_first_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_new_first_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_new_first_link ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_new_second_link' ); ?>">Right Section 2nd Post Slug:</label><br>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_new_second_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_new_second_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_new_second_link ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_new_third_link' ); ?>">Right Section 3rd Post Slug:</label><br>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_new_third_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_new_third_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_new_third_link ); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_communities_new_fourth_link' ); ?>">Right Section 4th Post Slug:</label><br>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_communities_new_fourth_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_communities_new_fourth_link' ); ?>" value="<?php echo esc_attr( $geopportal_communities_new_fourth_link ); ?>" />
+		</p>
+
 		<?php
 	}
 
@@ -246,13 +272,29 @@ class Geopportal_Communities_Widget extends WP_Widget {
 		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
 			$geopportal_communities_cb_bool = true;
 
-    // $instance[ 'geopportal_communities_title' ] = strip_tags( $new_instance[ 'geopportal_communities_title' ] );
-		$instance[ 'geopportal_communities_first_link' ] = strip_tags( $new_instance[ 'geopportal_communities_first_link' ] );
-		$instance[ 'geopportal_communities_first_subtitle' ] = strip_tags( $new_instance[ 'geopportal_communities_first_subtitle' ] );
-		$instance[ 'geopportal_communities_second_link' ] = strip_tags( $new_instance[ 'geopportal_communities_second_link' ] );
-		$instance[ 'geopportal_communities_third_link' ] = strip_tags( $new_instance[ 'geopportal_communities_third_link' ] );
-		$instance[ 'geopportal_communities_more_count' ] = strip_tags( $new_instance[ 'geopportal_communities_more_count' ] );
-		$instance[ 'geopportal_communities_browse_link' ] = strip_tags( $new_instance[ 'geopportal_communities_browse_link' ] );
+		$instance[ 'geopportal_communities_main_title' ] = strip_tags( $new_instance[ 'geopportal_communities_main_title' ] );
+		$instance[ 'geopportal_communities_main_content' ] = strip_tags( $new_instance[ 'geopportal_communities_main_content' ] );
+		$instance[ 'geopportal_communities_sub_title_one' ] = strip_tags( $new_instance[ 'geopportal_communities_sub_title_one' ] );
+		$instance[ 'geopportal_communities_sub_title_two' ] = strip_tags( $new_instance[ 'geopportal_communities_sub_title_two' ] );
+		$instance[ 'geopportal_communities_trend_first_link' ] = strip_tags( $new_instance[ 'geopportal_communities_trend_first_link' ] );
+		$instance[ 'geopportal_communities_trend_second_link' ] = strip_tags( $new_instance[ 'geopportal_communities_trend_second_link' ] );
+		$instance[ 'geopportal_communities_trend_third_link' ] = strip_tags( $new_instance[ 'geopportal_communities_trend_third_link' ] );
+		$instance[ 'geopportal_communities_trend_fourth_link' ] = strip_tags( $new_instance[ 'geopportal_communities_trend_fourth_link' ] );
+		$instance[ 'geopportal_communities_new_first_link' ] = strip_tags( $new_instance[ 'geopportal_communities_new_first_link' ] );
+		$instance[ 'geopportal_communities_new_second_link' ] = strip_tags( $new_instance[ 'geopportal_communities_new_second_link' ] );
+		$instance[ 'geopportal_communities_new_third_link' ] = strip_tags( $new_instance[ 'geopportal_communities_new_third_link' ] );
+		$instance[ 'geopportal_communities_new_fourth_link' ] = strip_tags( $new_instance[ 'geopportal_communities_new_fourth_link' ] );
+
+		// Sets up the content box link, or just a home link if invalid.
+		if (array_key_exists('geopportal_communities_main_content', $instance) && isset($instance['geopportal_communities_main_content']) && !empty($instance['geopportal_communities_main_content']) && $geopportal_communities_cb_bool){
+    	$geopportal_communities_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_communities_main_content' ]);
+    	if (is_numeric($geopportal_communities_temp_url))
+      	$geopportal_communities_cb_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_communities_temp_url . "&action=edit";
+    	else
+      	$geopportal_communities_cb_url = home_url();
+		}
+		else
+			$geopportal_communities_cb_url = home_url();
 
 		return $instance;
 	}
