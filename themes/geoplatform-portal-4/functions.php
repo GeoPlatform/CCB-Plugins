@@ -306,7 +306,7 @@ get_template_part( 'featured-services', get_post_format() );
 function geopportal_register_portal_widgets() {
 	register_widget( 'Geopportal_Account_Widget' );
 	register_widget( 'Geopportal_Contact_Widget' );
-	register_widget( 'Geopportal_GPSearch_Widget' );
+//	register_widget( 'Geopportal_GPSearch_Widget' );
 	register_widget( 'Geopportal_Graph_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
@@ -534,13 +534,13 @@ function geop_ccb_register_comlink_menus(){};
 function geop_ccb_register_footer_menus(){};
 
 // Killing Category Links custom post type and supporting functionality from CCB theme
-function geop_ccb_create_category_post() {};
-function geop_ccb_custom_field_catlink_checkboxes() {};
-function geop_ccb_catlink_column_filter( $geopccb_columns ) {};
-function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {};
-function geop_ccb_custom_field_external_url_content($post) {};
-function geop_ccb_custom_field_catlink_data($post_id) {};
-function geop_ccb_catlink_column_sorter($geopccb_columns) {};
+// function geop_ccb_create_category_post() {};
+// function geop_ccb_custom_field_catlink_checkboxes() {};
+// function geop_ccb_catlink_column_filter( $geopccb_columns ) {};
+// function geop_ccb_catlink_column_action( $geopccb_column, $geopccb_id ) {};
+// function geop_ccb_custom_field_external_url_content($post) {};
+// function geop_ccb_custom_field_catlink_data($post_id) {};
+// function geop_ccb_catlink_column_sorter($geopccb_columns) {};
 
 
 
