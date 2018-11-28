@@ -60,7 +60,7 @@
 			                legend: { position: 'right', alignment: 'center' }
 			            };
 			            let data = google.visualization.arrayToDataTable(counts);
-			            let el = $('#portfolio-breakdown-graph')[0];
+			            let el = jQuery('#portfolio-breakdown-graph')[0];
 			            let chart = new google.visualization.PieChart(el);
 			            chart.draw(data, options);
 
@@ -75,11 +75,11 @@
 			            });
 			        }
 
-			        $(document).ready( waitForGoogle );
+			        jQuery(document).ready( waitForGoogle );
 
 			        function loadData() {
 
-			            $.getJSON('https://ual.geoplatform.gov/api/items?size=1&facets=types')
+			            jQuery.getJSON('https://ual.geoplatform.gov/api/items?size=1&facets=types')
 			            .done( (data, textStatus, jqXHR) => {
 			                let counts = [ ['Type', 'Occurrences', 'id'] ], others = 0, total = 0;
 			                data.facets[0].buckets.forEach( bkt => {
@@ -93,7 +93,7 @@
 			                });
 			                counts.push(['Others (' + others + ')', others, null]);
 
-			                $('#portfolio-total-count').text( -Math.round(-total / 1000) * 1000 );
+			                jQuery('#portfolio-total-count').text( -Math.round(-total / 1000) * 1000 );
 
 			                google.charts.load('current', {'packages':['corechart']});
 			                google.charts.setOnLoadCallback(() => { drawChart(counts) });

@@ -29,7 +29,7 @@ function logout() {
 
     var current = window.location.href;
     window.location = 'https://sp.geoplatform.gov/module.php/core/as_logout.php?AuthId=geosaml&ReturnTo=' + encodeURIComponent(current);
-    
+
 }
 
 /**
@@ -47,8 +47,8 @@ function checkAuthenticated(callback) {
     // if(hostname === 'localhost') {
     //    callback({username: "test", name: "John Doe", org: "Acme, Inc.", email: "test@geoplatform.us"});
     //    return;
-    // }       
-    
+    // }
+
     $.ajax({
         url: 'https://sp.geoplatform.gov/authenticategeosaml.php?as=geosaml',
         method: 'GET',
@@ -65,9 +65,9 @@ function checkAuthenticated(callback) {
 
                 var user = {};
                 for(var k in result) {
-                    if(typeof(result[k].push) != 'undefined') 
+                    if(typeof(result[k].push) != 'undefined')
                         user[k] = result[k][0];
-                    else 
+                    else
                         user[k] = result[k];
                 }
 
@@ -93,9 +93,9 @@ function checkAuthenticated(callback) {
 
 function userDataLoad(user) {
 
-    var url = $('#userInfoSection [data-load-url]').data('load-url');
+    var url = jQuery('#userInfoSection [data-load-url]').data('load-url');
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var section = $('#userInfoSection');
+    var section = jQuery('#userInfoSection');
 
     var html = [];
     $.getJSON(url)
@@ -143,6 +143,3 @@ function userDataLoad(user) {
             //do we need to do anything here?
         });
 };
-
-
-

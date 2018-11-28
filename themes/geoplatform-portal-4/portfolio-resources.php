@@ -127,7 +127,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 												<br>
 												<div class="l-flex-container flex-justify-between">
 													<a class="btn btn-info" href="<?php echo esc_url($geopportal_port_res_third_link_one) ?>">Explore Open Maps</a>
-													<a class="btn btn-dark" href="<?php echo esc_url($geopportal_port_res_third_link_two) ?>">Create an Open Map<span class="fas fa-external-link-alt"></span></a>
+													<a class="btn btn-dark" href="<?php echo esc_url($geopportal_port_res_third_link_two) ?>">Create an Open Map <span class="fas fa-external-link-alt"></span></a>
 												</div>
 										</div>
 										<img alt="Maps" src="<?php echo get_stylesheet_directory_uri() . '/img/map.svg' ?>">
@@ -175,7 +175,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 												<br>
 												<div class="l-flex-container flex-justify-between">
 													<a class="btn btn-info" href="<?php echo esc_url($geopportal_port_res_fourth_link_one) ?>">Explore Galleries</a>
-													<a class="btn btn-dark" href="<?php echo esc_url($geopportal_port_res_fourth_link_two) ?>">Create a Gallery<span class="fas fa-external-link-alt"></span></a>
+													<a class="btn btn-dark" href="<?php echo esc_url($geopportal_port_res_fourth_link_two) ?>">Create a Gallery <span class="fas fa-external-link-alt"></span></a>
 												</div>
 										</div>
 										<img alt="Collections" src="<?php echo get_stylesheet_directory_uri() . '/img/collect.svg' ?>">

@@ -43,6 +43,7 @@ function geop_ccb_scripts() {
 
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 	wp_enqueue_script( 'geop-prism-js', get_stylesheet_directory_uri() . '/js/prism.js' );
+	wp_enqueue_script( 'geop-styleguide-js', get_stylesheet_directory_uri() . '/js/styleguide.js' );
 
 	$geop_ccb_options = geop_ccb_get_theme_mods();
 	if (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on'){
@@ -53,6 +54,10 @@ add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 
 function geop_ccb_header_image_method() {}
 add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
+
+
+function geop_ccb_header_customize_css(){}
+add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
 
 //Disable admin bar (un-comment for prod sites)

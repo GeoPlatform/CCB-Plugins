@@ -1,128 +1,172 @@
-<footer>
-    <div class="container-fluid top-link-row">
-        <div class="row">
-            <div class="col-md-12">
-                <a class="pull-right" href="#"> &#8593; top</a>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>
-                    <!--<img src="/img/GeoPlatform_logo_sm.png" alt="GeoPlatform Logo" style="height: 1.5rem; vertical-align: bottom;">-->
-                    <a href="<?php echo site_url(); ?>" target="_blank" title="Go to the Geoplatform Home Page">
-                        <span class="icon-gp"></span>
-                        GeoPlatform
-                    </a>
-                    <a href="/" title="Go to the <?php echo get_bloginfo( 'name' ); ?> Home Page">
-                    <?php echo get_bloginfo( 'name' ); ?>
-                  </a>
-                </h3>
-            </div>
-            <div class="col-md-6">
-                <div class="pull-right" style="margin-top: 2rem;">
-                    <!--
-                    <a title="Follow us on Twitter"><span class="fa fa-facebook text-white"></span></a> &nbsp;&nbsp;
-                    <a alt="Like us on Facebook"><span class="fa fa-twitter text-white"></span></a> &nbsp;&nbsp;
-                    <a alt="Follow us on Instagram"><span class="fa fa-instagram text-white"></span></a>
-                    -->
-                </div>
-            </div>
-        </div>
-        <hr/>
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-12">
-              <!--Featured location-->
-                <h4 style="color:white">Featured</h4>
-                    <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
+<div>
+  <footer class="o-footer">
+
+      <a class="u-float--right" href="#">
+          <span class="fas fa-arrow-up"></span>
+          to top
+      </a>
+
+      <div>
+          <a onClick="toggleClass('#footer-megamenu','is-collapsed')">
+              <span class="fas fa-angle-down"></span>
+              Menu
+          </a>
+          <hr>
+      </div>
+
+      <nav class="m-megamenu is-collapsed" id="footer-megamenu">
+
+          <div class="m-megamenu__content">
+
+              <div class="col">
+                  <div class="m-megamenu__heading">Featured</div>
+                  <ul class="menu" role="menu">
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/release-overview/">Release Overview</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/map-collaboration/">Map Collaboration</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/arcgis-online-support/">ArcGIS Online Support</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/cloud-hosting-services/">Cloud Hosting Services</a></li>
+                      <li role="menuitem"><a target="_blank" href="https://www.youtube.com/watch?v=rgd8vCLnvfo&amp;list=PLMCNwMDgTQxB-yC5xy20dtEoXCRfG3M63">GeoPlatform on YouTube <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
+                  </ul>
+                  <br>
+                  <div class="m-megamenu__heading">Get Involved</div>
+                  <ul class="menu" role="menu">
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/share-geospatial-resources/">Share GeoSpatial Resources</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/data-acquisition-services/">Data Acquisition Services</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/communities/">Communities</a></li>
+                  </ul>
+              </div>
 
 
-                <br class="hidden-xs">
-                <h4 style="color:white">Get Involved</h4>
-                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
-                <ul>
-
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <h4 style="color:white">Explore Data</h4>
-                <ul>
-                    <li><a href="<?php echo $GLOBALS['geopccb_oe_url']; ?>" target="_blank">Object Editor
-                      <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                      </a>
+              <div class="col">
+                  <div class="m-megamenu__heading">Explore Data</div>
+                  <ul class="menu" role="menu">
+                      <li role="menuitem">
+                          <a href="https://sit-oe.geoplatform.us" target="_blank">
+                              Object Editor
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
                     </li>
-                    <li>
-                        <a href="<?php echo esc_url("https://geoplatform.maps.arcgis.com/home/"); ?>" target="_blank">
-                            GeoPlatform ArcGIS Organization<sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                    <li role="menuitem">
+                        <a href="https://geoplatform.maps.arcgis.com/home/" target="_blank">
+                            GeoPlatform ArcGIS Organization
+                            <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
-                    <li>
-                        <a href="<?php echo $GLOBALS['geopccb_ckan_url']; ?>" target="_blank">
+                    <li role="menuitem">
+                        <a href="https://sit-data.geoplatform.us/" target="_blank">
                             Search Data.gov
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
-                    <li>
-                        <a href="<?php echo $GLOBALS['geopccb_ckan_mp_url']; ?>" target="_blank">Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
-                    <li><a href="<?php echo $GLOBALS['geopccb_cms_url']; ?>" target="_blank">Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
-                </ul>
-                <br class="hidden-xs">
-                <h4 style="color:white">Apps &amp; Services</h4>
-                <ul>
-                  <li><a href="<?php echo $GLOBALS['geopccb_viewer_url']; ?>" target="_blank">Map Viewer
-                    <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                    </a>
-                  </li>
-                  <li><a href="<?php echo $GLOBALS['geopccb_maps_url']; ?>" target="_blank">Map Manager
-                    <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                    </a>
-                  </li>
-                  <li><a href="<?php echo $GLOBALS['geopccb_marketplace_url']; ?>" target="_blank">Marketplace Preview
-                    <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                    </a>
-                  </li>
-                  <li><a href="<?php echo $GLOBALS['geopccb_dashboard_url']; ?>" target="_blank">Performance Dashboard
-                    <sup><span class="glyphicon glyphicon-new-window"></span></sup>
-                    </a>
-                  </li>
-                    <li>
-                        <a href="<?php echo esc_url("http://statuschecker.fgdc.gov"); ?>" target="_blank">
-                            FGDC Service Status Checker
-                            <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                    <li role="menuitem">
+                        <a href="https://sit-marketplace.geoplatform.us/" target="_blank">
+                            Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
-                     </li>
-                </ul>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <h4 style="color:white">About</h4>
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutL' ) ); ?>
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <?php wp_nav_menu( array( 'theme_location' => 'headfoot-aboutR' ) ); ?>
+                    </li>
+                    <li role="menuitem">
+                        <a href="https://sit.geoplatform.us/geoplatform-resources/" target="_blank">
+                            Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                        </a>
+                    </li>
+                  </ul>
+                  <br>
+                  <a class="m-megamenu__heading" href="/apps.html">Apps &amp; Services</a>
+                  <ul class="menu" role="menu">
+                      <li role="menuitem">
+                          <a href="https://sit-viewer.geoplatform.us" target="_blank">
+                              Map Viewer
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://sit-maps.geoplatform.us" target="_blank">
+                              Map Manager
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://sit-marketplace.geoplatform.us" target="_blank">
+                              Marketplace Preview
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://sit-dashboard.geoplatform.us/#/lma?surveyId=8&amp;page=0&amp;size=500&amp;sortElement=title&amp;sortOrder=asc&amp;colorTheme=green" target="_blank">
+                              Performance Dashboard
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="http://statuschecker.fgdc.gov" target="_blank">
+                              FGDC Service Status Checker
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                       </li>
+                  </ul>
+              </div>
 
-                    </div>
-                </div>
-                <br class="hidden-xs">
-            </div>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="col-md-8 col-sm-7 col-xs-12">
-                <p>Implementation of the GeoPlatform embodies the principles and spirit of Open Government, emphasizing government-to-citizen communication, accountability, and transparency. The GeoPlatform supports open formats, data standards, and common core and extensible metadata. The portfolio of data, applications, and services provided here is stewarded through the use of open licenses and careful review and hosted on an infrastructure that maximizes interoperability. Increased sharing and reuse of resources facilitated by the GeoPlatform will reduce costs, result in savings and wise investments, and stimulate innovation and entrepreneurship. On balance, the integrated approach of the GeoPlatform means that the federal portfolio of geospatial data is better managed, serves a broader audience, and is easier to use.</p>
-                <p>
-                The GeoPlatform was developed by the member agencies of the Federal Geographic Data Committee (FGDC) through collaboration with partners and stakeholders. The target audience for the GeoPlatform includes Federal agencies, State, local, and Tribal governments, private sector, academia, and the general public.
-                </p>
-            </div>
-            <div class="col-md-4 col-sm-5 col-xs-12">
-                <a href="<?php echo esc_url("http://www.fgdc.gov"); ?>" target="_blank">
-                    <img src="<?php echo esc_url("" . get_template_directory_uri() . "/img/fgdc_logo_dkbg.png"); ?>" target="_blank" alt="FGDC Logo">
-                </a>
-            </div>
-        </div>
-    </div>
-</footer>
+
+
+              <div class="col">
+                  <div class="m-megamenu__heading">About</div>
+                  <ul class="menu" role="menu">
+                      <li role="menuitem"><a href="/help.html">Help</a></li>
+                      <li role="menuitem"><a href="/faq.html">FAQ</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/glossary-of-terms/">Glossary of Terms</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/contact-us/">Contact Us</a></li>
+                      <li role="menuitem"><a href="/styleguide">Style Guide</a></li>
+                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-965">
+                          <a href="https://sit-ccb.geoplatform.us/">Dynamic Communities</a>
+                      </li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/data-policies/">Data Policy</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/privacy-policy/">Privacy Policy</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/accessibility/">Accessibility</a></li>
+                      <li role="menuitem"><a href="https://sit.geoplatform.us/news/">News</a></li>
+                      <li role="menuitem">
+                          <a href="https://gira.geoplatform.gov/">
+                              GIRA-
+                              <span class="u-text--sm">Geospatial Interoperability Reference Architecture</span>
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+
+          </div>
+
+          <hr>
+
+      </nav>
+
+      <div class="l-flex-container flex-justify-between flex-align-center">
+          <div class="a-brand u-mg-right--xlg">
+              <img alt="GP" src="<?php echo get_stylesheet_directory_uri() . '/img/logo.svg' ?>" style="width:1em">
+              <a href="/">GeoPlatform.gov</a>
+          </div>
+
+          <div>
+              <a href="#" target="_blank">Terms of Use</a>
+              &nbsp;|&nbsp;
+              <a href="#" target="_blank">Link</a>
+              &nbsp;|&nbsp;
+              <a href="#" target="_blank">Link</a>
+          </div>
+      </div>
+
+      <br>
+
+      <small>
+          The GeoPlatform was developed by the member agencies of the
+          Federal Geographic Data Committee (FGDC) through collaboration
+          with partners and stakeholders. The target audience for the
+          GeoPlatform includes Federal agencies, State, local, and
+          Tribal governments, private sector, academia, and the general
+          public.
+      </small>
+
+  </footer>
+
+</div>
+
 
 <?php wp_footer();?>
 </body>
