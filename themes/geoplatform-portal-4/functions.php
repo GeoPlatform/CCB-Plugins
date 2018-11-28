@@ -56,7 +56,7 @@ add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 
 
 //Disable admin bar (un-comment for prod sites)
-add_filter('show_admin_bar', '__return_false');
+//add_filter('show_admin_bar', '__return_false');
 
 //--------------------------
 //Support adding Menus for header and footer
@@ -295,9 +295,9 @@ get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );
 get_template_part( 'communities', get_post_format() );
 get_template_part( 'apps-and-services', get_post_format() );
+get_template_part( 'partners', get_post_format() );
 
 
-get_template_part( 'featured', get_post_format() );
 get_template_part( 'first-time', get_post_format() );
 get_template_part( 'featured-services', get_post_format() );
 
