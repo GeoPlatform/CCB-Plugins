@@ -294,6 +294,8 @@ get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );
 get_template_part( 'communities', get_post_format() );
+get_template_part( 'apps-and-services', get_post_format() );
+
 
 get_template_part( 'featured', get_post_format() );
 get_template_part( 'first-time', get_post_format() );

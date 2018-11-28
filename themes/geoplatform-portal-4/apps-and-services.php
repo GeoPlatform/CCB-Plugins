@@ -1,12 +1,12 @@
 <?php
-class Geopportal_Front_Account_Widget extends WP_Widget {
+class Geopportal_Apps_Services_Widget extends WP_Widget {
 
   // Constructor, simple.
 	function __construct() {
 	   parent::__construct(
-  		'geopportal_front_account_widget', // Base ID
-  		esc_html__( 'GeoPlatform Account', 'geoplatform-ccb' ), // Name
-  		array( 'description' => esc_html__( 'GeoPlatform account widget for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true ) // Args
+  		'geopportal_apps_services_widget', // Base ID
+  		esc_html__( 'GeoPlatform Apps & Services', 'geoplatform-ccb' ), // Name
+  		array( 'description' => esc_html__( 'GeoPlatform Apps & Services widget for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true ) // Args
   	);
   }
 
@@ -14,167 +14,35 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
 	public function widget( $args, $instance ) {
     // Checks to see if the widget admin boxes are empty. If so, uses default
     // values. If not, pulls the values from the boxes.
-    if (array_key_exists('geopportal_firsttime_in_title', $instance) && isset($instance['geopportal_firsttime_in_title']) && !empty($instance['geopportal_firsttime_in_title']))
-      $geopportal_firsttime_disp_in_title = apply_filters('widget_title', $instance['geopportal_firsttime_in_title']);
+    if (array_key_exists('geopportal_apps_service_title', $instance) && isset($instance['geopportal_apps_service_title']) && !empty($instance['geopportal_apps_service_title']))
+      $geopportal_apps_service_title = apply_filters('widget_title', $instance['geopportal_apps_service_title']);
     else
-      $geopportal_firsttime_disp_in_title = "My Account";
-    if (array_key_exists('geopportal_firsttime_out_title', $instance) && isset($instance['geopportal_firsttime_out_title']) && !empty($instance['geopportal_firsttime_out_title']))
-      $geopportal_firsttime_disp_out_title = apply_filters('widget_title', $instance['geopportal_firsttime_out_title']);
+      $geopportal_apps_service_title = "Apps & Services";
+    if (array_key_exists('geopportal_apps_service_content', $instance) && isset($instance['geopportal_apps_service_content']) && !empty($instance['geopportal_apps_service_content']))
+      $geopportal_apps_service_content = apply_filters('widget_title', $instance['geopportal_apps_service_content']);
     else
-      $geopportal_firsttime_disp_out_title = "First Time Here?";
-    if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content']))
-      $geopportal_firsttime_disp_out_content = apply_filters('widget_title', $instance['geopportal_firsttime_out_content']);
+      $geopportal_apps_service_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+		if (array_key_exists('geopportal_apps_service_link', $instance) && isset($instance['geopportal_apps_service_link']) && !empty($instance['geopportal_apps_service_link']))
+      $geopportal_apps_service_link = apply_filters('widget_title', $instance['geopportal_apps_service_link']);
     else
-      $geopportal_firsttime_disp_out_content = "Sign up to access thousands of datasets uploaded by others and contribute your own data to the world! You can also share your expertise and find experts to help with your geospatial data needs by joining one of our <a href='" . home_url() . "/communities/'>Communities</a>. Submit your metadata to <a href='http://www.data.gov' targetr='_blank'>Data.gov <span class='glyphicon glyphicon-new-window'></span></a> and we’ll add it to GeoPlatform so others can use it.";
+      $geopportal_apps_service_link = home_url();
 
-    /* This file is for the main page account widget. For the sidebar widget in posts, see account.php.
-     */
-    $current_user = wp_get_current_user();
-    if($current_user->ID == 0) {
-    ?>
-    <div class="firstTime section--linked">
+		// This file is for the main page account widget. For the sidebar widget in posts, see account.php.
 
-        <h4 class="heading">
-            <div class="line"></div>
-            <div class="line-arrow"></div>
-        </h4>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-
-                    <h3><?php _e(sanitize_text_field($geopportal_firsttime_disp_out_title), 'geoplatform-ccb') ?></h3>
-
-                    <picture class="pull-right inline-figure">
-                        <source srcset="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/register_sm.jpeg"); ?>" media="(min-width: 768px)">
-                        <img alt="Register for a GeoPlatform Account" src="<?php echo esc_url("" . get_stylesheet_directory_uri() . "/img/register_sm.jpeg"); ?>">
-                    </picture>
-
-                    <p><?php echo do_shortcode($geopportal_firsttime_disp_out_content) ?></p>
-
-                    <br>
-                      <div class="first-time-buttons">
-                          <a href="<?php echo $GLOBALS['geopccb_accounts_url'] ?>/register" class="btn btn-accent">Register</a>
-                          <!-- &nbsp;&nbsp;&nbsp; or &nbsp;&nbsp;&nbsp;
-                          <a href="<?php echo wp_login_url( get_option('siteurl') ); ?>" class="btn btn-lg btn-primary">Sign In</a> -->
-                      </div><!--#firstTime first-time-buttons-->
-
-                    <br>
-                    <br>
-
-                </div><!--#firstTime col-md-8-->
-            </div> <!--#firstTime row-->
-        </div> <!--#firstTime container-->
-    <?php } else {
-    	$ch = curl_init();
-      $url = $GLOBALS['geopccb_ual_url'] . "/api/items?createdBy=" . $current_user->user_login . "&size=3&sort=_modified,desc&type=Map&fields=*";
-    	curl_setopt($ch, CURLOPT_URL, $url);
-    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    	$response = curl_exec($ch);
-
-    	curl_close($ch);
-
-    	if(!empty($response)){
-    		$result = json_decode($response, true);
-    	}else{
-    		$result = "No recent activity";
-    	}
-    ?>
-
-      <div class="whatsNew section--linked">
-      	<div class="container">
-      	  <h4 class="heading">
-      	      <div class="line"></div>
-      	      <div class="line-arrow"></div>
-      	      <div class="title"><?php echo sanitize_text_field($geopportal_firsttime_disp_in_title) ?></div>
-      	  </h4>
-      	  <br>
-      	    <div class="row">
-
-      	        <div class="col-xs-12 col-sm-4">
-
-      	            <span class="glyphicon glyphicon-user text--xxxlg"></span>
-      	            <h4><?php echo $current_user->user_firstname . ' ' . $current_user->user_lastname?> <small>(<?php echo $current_user->user_login ?>)</small></h4>
-
-      	            <br>
-
-      	            <?php //var_dump($current_user); ?>
-
-                  <a class="btn btn-info" href="<?php echo $GLOBALS['geopccb_accounts_url'];?>/profile" title="Edit Account Details">
-                      <span class="glyphicon glyphicon-wrench"></span>
-                      Edit
-                  </a>
-                  &nbsp;&nbsp;&nbsp;
-
-      				      <a class="btn btn-default" href="<?php echo wp_logout_url( home_url() ); ?>" title="Sign Out">
-      	                <span class="glyphicon glyphicon-off"></span>
-      	                Sign Out
-      	            </a>
-
-      	       </div> <!--#col-xs-12 col-sm-4 -->
-
-      	        <div class="col-xs-12 col-sm-8">
-      	            <h5>My Recent Items</h5>
-      	            <div id="recent_items" class="my-account__items--recent">
-      	              <div class="row">
-
-      	                <?php
-                        if (array_key_exists('results', $result) && isset($result['results'])){
-    					            $user_activity = $result['results'];
-
-                          if(count($user_activity) > 0){
-                  					foreach($user_activity as $item){
-                              $map_reference_url = "";
-                              $agol_url = $item['landingPage'];
-
-                              //incorporate for AGOL maps
-                              if (empty($agol_url))
-                                $map_reference_url = $GLOBALS['geopccb_viewer_url'] . '/?id=' . $item['id'];
-                              else
-                                $map_reference_url = $agol_url;
-
-                							$thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
-
-                              if(empty($thumb))
-                                $thumb =  $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
-                							else if(!(strpos($thumb, 'http') == 0 ))
-                                $thumb =  $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
-                							$map_activity_date = gmdate("M d Y", $item['updated'] / 1000);
-      					          ?>
-
-      							    <div class="col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0">
-      								    <div class="gp-ui-card gp-ui-card--minimal">
-      							  		  <a class="media embed-responsive embed-responsive-16by9" href="<?php echo $map_reference_url; ?>">
-      							    		  <img class="embed-responsive-item" src="<?php echo $thumb; ?>" alt="<?php echo $item['label']; ?>" >
-      							  		  </a>
-      							  		  <div class="gp-ui-card__body">
-      							    		  <div class="text--primary">
-      											    <a href="<?php echo $map_reference_url; ?>"> <?php echo $item['label']; ?> </a>
-      							  			  </div><!--gp-ui-card__body-->
-      									    </div><!--gp-ui-card gp-ui-card-minimal-->
-      								    </div><!--#col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0-->
-      							    </div><!--#col-xs-10 col-xs-offset-1 col-sm-4 col-sm-offset-0-->
-
-      					        <?php
-                            } //foreach
-      					          } else
-      						          echo '<em>You have no recent items. You should create some content!</em>';
-                        } else
-                          echo '<em>You have no recent items. You should create some content!</em>';
-                ?>
-                    </div><!--#My Recent Items row-->
-    	            </div><!--#id "recent_items"-->
-    	        </div><!--#whatsNew col-xs-12 col-sm-8-->
-    	    </div><!--#whatsNew row-->
-    	</div><!--#whatsNew container-->
-
-    <?php } ?>
-        <!-- bottom directional lines -->
-        <div class="footing">
-            <div class="line-cap"></div>
-            <div class="line"></div>
-        </div><!--#footing-->
-    </div> <!--#first-time or whatsNew, depending on if statment-->
+		?>
+		<article class="p-landing-page__apps" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-green.svg' ?>')">
+				<div class="m-article__heading m-article__heading--front-page"><?php _e(sanitize_text_field($geopportal_apps_service_title), 'geoplatform-ccb') ?></div>
+				<div class="m-apps__content">
+						<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/apps.svg' ?>">
+						<div class="flex-1">
+								<div class="a-summary">
+									<?php echo do_shortcode($geopportal_apps_service_content) ?>
+								</div>
+								<br>
+								<a class="btn btn-info" href="<?php echo esc_url($geopportal_apps_service_link); ?>">Learn More</a>
+						</div>
+				</div>
+		</article>
     <?php
 	}
 
@@ -182,75 +50,74 @@ class Geopportal_Front_Account_Widget extends WP_Widget {
 	public function form( $instance ) {
 
 		// Checks if the Content Boxes plugin is installed.
-		$geopportal_firsttime_cb_bool = false;
-		$geopportal_firsttime_cb_message = "Content Blocks plugin not found.";
+		$geopportal_apps_service_cb_bool = false;
+		$geopportal_apps_service_cb_message = "Content Blocks plugin not found.";
 		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
-			$geopportal_firsttime_cb_bool = true;
-			$geopportal_firsttime_cb_message = "Click here to edit this content block";
+			$geopportal_apps_service_cb_bool = true;
+			$geopportal_apps_service_cb_message = "Click here to edit this content block";
 		}
 
-    // Top-left input boxes.
-		$geopportal_firsttime_in_title = ! empty( $instance['geopportal_firsttime_in_title'] ) ? $instance['geopportal_firsttime_in_title'] : 'My Account';
-		$geopportal_firsttime_out_title = ! empty( $instance['geopportal_firsttime_out_title'] ) ? $instance['geopportal_firsttime_out_title'] : 'First Time Here?';
-    $geopportal_firsttime_out_content = ! empty( $instance['geopportal_firsttime_out_content'] ) ? $instance['geopportal_firsttime_out_content'] : '';
+    // Input boxes and defaults.
+		$geopportal_apps_service_title = ! empty( $instance['geopportal_apps_service_title'] ) ? $instance['geopportal_apps_service_title'] : 'Apps & Services';
+		$geopportal_apps_service_content = ! empty( $instance['geopportal_apps_service_content'] ) ? $instance['geopportal_apps_service_content'] : '';
+    $geopportal_apps_service_link = ! empty( $instance['geopportal_apps_service_link'] ) ? $instance['geopportal_apps_service_link'] : '';
 
-		// Sets up the top-left content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content']) && $geopportal_firsttime_cb_bool){
-    	$geopportal_firsttime_out_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_firsttime_out_content' ]);
-    	if (is_numeric($geopportal_firsttime_out_temp_url))
-      	$geopportal_firsttime_out_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_firsttime_out_temp_url . "&action=edit";
+		// Sets up the content box link, or just a home link if invalid.
+		if (array_key_exists('geopportal_apps_service_content', $instance) && isset($instance['geopportal_apps_service_content']) && !empty($instance['geopportal_apps_service_content']) && $geopportal_apps_service_cb_bool){
+    	$geopportal_apps_service_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apps_service_content' ]);
+    	if (is_numeric($geopportal_apps_service_temp_url))
+      	$geopportal_apps_service_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apps_service_temp_url . "&action=edit";
     	else
-      	$geopportal_firsttime_out_url = home_url();
+      	$geopportal_apps_service_url = home_url();
 		}
 		else
-			$geopportal_firsttime_out_url = home_url();?>
+			$geopportal_apps_service_url = home_url();?>
 
-<!-- HTML for the widget control box. -->
+		<!-- HTML for the widget control box. -->
     <p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_firsttime_in_title' ); ?>">Logged-In Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_firsttime_in_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_firsttime_in_title' ); ?>" value="<?php echo esc_attr( $geopportal_firsttime_in_title ); ?>" />
+      <label for="<?php echo $this->get_field_id( 'geopportal_apps_service_title' ); ?>">Title:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_apps_service_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_apps_service_title' ); ?>" value="<?php echo esc_attr( $geopportal_apps_service_title ); ?>" />
     </p>
-    <hr>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_firsttime_out_title' ); ?>">Logged-Out Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_firsttime_out_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_firsttime_out_title' ); ?>" value="<?php echo esc_attr( $geopportal_firsttime_out_title ); ?>" />
+      <label for="<?php echo $this->get_field_id( 'geopportal_apps_service_content' ); ?>">Content Blocks Shortcode:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_apps_service_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_apps_service_content' ); ?>" value="<?php echo esc_attr( $geopportal_apps_service_content ); ?>" />
+			<a href="<?php echo esc_url($geopportal_apps_service_url); ?>" target="_blank"><?php _e($geopportal_apps_service_cb_message, 'geoplatform-ccb') ?></a><br>
     </p>
     <p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_firsttime_out_content' ); ?>">Logged-Out Content Block Shortcode:</label><br>
-      <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_firsttime_out_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_firsttime_out_content' ); ?>" value="<?php echo esc_attr($geopportal_firsttime_out_content); ?>" />
-      <a href="<?php echo esc_url($geopportal_firsttime_out_url); ?>" target="_blank"><?php _e($geopportal_firsttime_cb_message, 'geoplatform-ccb') ?></a><br>
+      <label for="<?php echo $this->get_field_id( 'geopportal_apps_service_link' ); ?>">Learn More URL:</label><br>
+      <input type="text"  id="<?php echo $this->get_field_id( 'geopportal_apps_service_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_apps_service_link' ); ?>" value="<?php echo esc_attr($geopportal_apps_service_link); ?>" />
     </p>
     <?php
 	}
 
 	public function update( $new_instance, $old_instance ) {
     $instance = $old_instance;
-		$instance[ 'geopportal_firsttime_in_title' ] = strip_tags( $new_instance[ 'geopportal_firsttime_in_title' ] );
-	  $instance[ 'geopportal_firsttime_out_title' ] = strip_tags( $new_instance[ 'geopportal_firsttime_out_title' ] );
-	  $instance[ 'geopportal_firsttime_out_content' ] = strip_tags( $new_instance[ 'geopportal_firsttime_out_content' ] );
+		$instance[ 'geopportal_apps_service_title' ] = strip_tags( $new_instance[ 'geopportal_apps_service_title' ] );
+	  $instance[ 'geopportal_apps_service_content' ] = strip_tags( $new_instance[ 'geopportal_apps_service_content' ] );
+	  $instance[ 'geopportal_apps_service_link' ] = strip_tags( $new_instance[ 'geopportal_apps_service_link' ] );
 
 		// Checks if the Content Boxes plugin is installed.
-		$geopportal_firsttime_cb_bool = false;
+		$geopportal_apps_service_cb_bool = false;
 		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
-			$geopportal_firsttime_cb_bool = true;
+			$geopportal_apps_service_cb_bool = true;
 
     // Validity check for the content box URL.
-		if (array_key_exists('geopportal_firsttime_out_content', $instance) && isset($instance['geopportal_firsttime_out_content']) && !empty($instance['geopportal_firsttime_out_content']) && $geopportal_firsttime_cb_bool){
-	  	$geopportal_firsttime_out_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_firsttime_out_content' ]);
-	  	if (is_numeric($geopportal_firsttime_out_temp_url))
-	    	$geopportal_firsttime_out_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_firsttime_out_temp_url . "&action=edit";
+		if (array_key_exists('geopportal_apps_service_content', $instance) && isset($instance['geopportal_apps_service_content']) && !empty($instance['geopportal_apps_service_content']) && $geopportal_apps_service_cb_bool){
+	  	$geopportal_apps_service_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_apps_service_content' ]);
+	  	if (is_numeric($geopportal_apps_service_temp_url))
+	    	$geopportal_apps_service_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_apps_service_temp_url . "&action=edit";
 	  	else
-	    	$geopportal_firsttime_out_url = home_url();
+	    	$geopportal_apps_service_url = home_url();
 		}
 		else
-			$geopportal_firsttime_out_url = home_url();
+			$geopportal_apps_service_url = home_url();
 
 	  return $instance;
   }
 }
 
 // Registers and enqueues the widget.
-function geopportal_register_portal_account_frontpage_widget() {
-  register_widget( 'Geopportal_Front_Account_Widget' );
+function geopportal_register_portal_apps_services_widget() {
+  register_widget( 'Geopportal_Apps_Services_Widget' );
 }
-add_action( 'widgets_init', 'geopportal_register_portal_account_frontpage_widget' );
+add_action( 'widgets_init', 'geopportal_register_portal_apps_services_widget' );
