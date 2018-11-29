@@ -1,8 +1,10 @@
 <!-- STILL NEEDS UPDATE -->
 
 <?php get_header(); ?>
-<?php get_template_part( 'mega-menu', get_post_format() ); ?>
-<?php get_template_part( 'single-banner', get_post_format() ); ?>
+<?php get_template_part( 'sub-header-post', get_post_format() ); ?>
+
+<?php //get_template_part( 'mega-menu', get_post_format() ); ?>
+<?php //get_template_part( 'single-banner', get_post_format() ); ?>
 
 <div class="container">
     <div class="row">

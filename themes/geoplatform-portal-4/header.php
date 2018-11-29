@@ -34,10 +34,10 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
             <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() ?>/">Home</a>
             <div class="a-nav__collapsible-menu">
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_pages'); ?>">Pages</a>
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_portfolio'); ?>">Portfolio</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_pages')); ?>">Pages</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_portfolio')); ?>">Portfolio</a>
             </div>
-            <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() . '/' . get_theme_mod('headlink_help'); ?>">Help</a>
+            <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url(get_theme_mod('headlink_help')); ?>">Help</a>
             <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
                 <span class="is-hidden--xs">More</span>
                 <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
@@ -71,10 +71,13 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
     <div class="o-header__secondary">
 
-        <div class="a-page__title">Page Title</div>
-
-
         <?php
+        if (is_front_page()){ ?>
+          <div class="a-page__title">Welcome to the GeoPlatform!</div>
+        <?php } else { ?>
+          <div class="a-page__title"><?php the_title(); ?></div>
+        <?php }
+
         // Search works but currently breaks CSS if the form is used. Uncomment when CSS for it is ready.
 
         // Ensures that the search bar will only appear if the associated plugin is active.
@@ -152,7 +155,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                   </li>
                 </ul>
                 <br>
-                <a class="m-megamenu__heading" href="<?php echo home_url() . '/' . get_theme_mod('headlink_apps'); ?>">Apps &amp; Services</a>
+                <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_apps')); ?>">Apps &amp; Services</a>
                 <ul class="menu" role="menu">
                     <li role="menuitem">
                         <a href="<?php echo $GLOBALS['geopccb_viewer_url']; ?>" target="_blank">

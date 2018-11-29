@@ -72,7 +72,7 @@
                     </li>
                   </ul>
                   <br>
-                  <a class="m-megamenu__heading" href="<?php echo home_url() . '/' . get_theme_mod('headlink_apps'); ?>">Apps &amp; Services</a>
+                  <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_apps')); ?>">Apps &amp; Services</a>
                   <ul class="menu" role="menu">
                       <li role="menuitem">
                           <a href="<?php echo $GLOBALS['geopccb_viewer_url']; ?>" target="_blank">
@@ -147,11 +147,11 @@
           </div>
 
           <div>
-              <a href="<?php echo home_url() . '/' . get_theme_mod('footlink_terms'); ?>" target="_blank">Terms of Use</a>
+              <a href="<?php echo home_url(get_theme_mod('footlink_terms')); ?>" target="_blank">Terms of Use</a>
               &nbsp;|&nbsp;
-              <a href="<?php echo home_url() . '/' . get_theme_mod('footlink_two'); ?>" target="_blank">Link</a>
+              <a href="<?php echo home_url(get_theme_mod('footlink_two')); ?>" target="_blank">Link</a>
               &nbsp;|&nbsp;
-              <a href="<?php echo home_url() . '/' . get_theme_mod('footlink_three'); ?>" target="_blank">Link</a>
+              <a href="<?php echo home_url(get_theme_mod('footlink_three')); ?>" target="_blank">Link</a>
           </div>
       </div>
 
