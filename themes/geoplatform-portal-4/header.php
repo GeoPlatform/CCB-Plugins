@@ -12,25 +12,8 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <title>GP Theme v2</title>
   <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
 
-  <?php
-  // $font_choice = get_theme_mod( 'font_choice' );
-  // if( $font_choice != '' ) {
-  //   switch ( $font_choice ) {
-  //     case 'lato':
-  //       echo '<style type="text/css">';
-  //       echo "body { font-family: 'Lato', sans-serif !important;}";
-  //       echo '</style>';
-  //       break;
-  //     case 'slabo':
-  //       echo '<style type="text/css">';
-  //       echo "body { font-family: 'Slabo 27px', serif !important; }";
-  //       echo '</style>';
-  //       break;
-  //       //add more cases for more fonts later
-  //   }
-  // }
+  <?php wp_head();?>
 
-  wp_head();?>
 </head>
 <header class="o-header" role="banner">
 
@@ -51,10 +34,10 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
             <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() ?>/">Home</a>
             <div class="a-nav__collapsible-menu">
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_pages', home_url()); ?>">Pages</a>
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_portfolio', home_url()); ?>">Portfolio</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_pages'); ?>">Pages</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_portfolio'); ?>">Portfolio</a>
             </div>
-            <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() . '/' . get_theme_mod('headlink_help', home_url()); ?>">Help</a>
+            <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() . '/' . get_theme_mod('headlink_help'); ?>">Help</a>
             <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
                 <span class="is-hidden--xs">More</span>
                 <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
@@ -101,12 +84,12 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <!-- <form id="geoplatform_header_searchfield"> -->
           <div class="a-search">
             <div class="icon fas fa-search"></div>
-            <div class="m-search-box">
+            <form class="m-search-box" id="geoplatform_header_searchfield">
                 <div class="input-group-slick">
                     <span class="icon fas fa-search"></span>
                     <input type="text" class="form-control" id="geoplatform_header_searchform" placeholder="SEARCH THE GEOPLATFORM">
                 </div>
-            </div>
+            </form>
           </div>
         <!-- </form> -->
         <?php
@@ -129,20 +112,10 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
             <div class="col">
                 <div class="m-megamenu__heading">Featured</div>
-                <ul class="menu" role="menu">
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/release-overview/">Release Overview</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/map-collaboration/">Map Collaboration</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/arcgis-online-support/">ArcGIS Online Support</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/cloud-hosting-services/">Cloud Hosting Services</a></li>
-                    <li role="menuitem"><a target="_blank" href="https://www.youtube.com/watch?v=rgd8vCLnvfo&amp;list=PLMCNwMDgTQxB-yC5xy20dtEoXCRfG3M63">GeoPlatform on YouTube <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
-                </ul>
+                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
                 <br>
                 <div class="m-megamenu__heading">Get Involved</div>
-                <ul class="menu" role="menu">
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/share-geospatial-resources/">Share GeoSpatial Resources</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/data-acquisition-services/">Data Acquisition Services</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/communities/">Communities</a></li>
-                </ul>
+                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
             </div>
 
 
@@ -150,63 +123,63 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                 <div class="m-megamenu__heading">Explore Data</div>
                 <ul class="menu" role="menu">
                     <li role="menuitem">
-                        <a href="https://sit-oe.geoplatform.us" target="_blank">
+                        <a href="<?php echo $GLOBALS['geopccb_oe_url']; ?>" target="_blank">
                             Object Editor
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                   </li>
                   <li role="menuitem">
-                      <a href="https://geoplatform.maps.arcgis.com/home/" target="_blank">
+                      <a href="<?php echo esc_url('https://geoplatform.maps.arcgis.com/home/'); ?>" target="_blank">
                           GeoPlatform ArcGIS Organization
                           <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                       </a>
                   </li>
                   <li role="menuitem">
-                      <a href="https://sit-data.geoplatform.us/" target="_blank">
+                      <a href="<?php echo $GLOBALS['geopccb_ckan_url']; ?>" target="_blank">
                           Search Data.gov
                           <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                       </a>
                   </li>
                   <li role="menuitem">
-                      <a href="https://sit-marketplace.geoplatform.us/" target="_blank">
+                      <a href="<?php echo $GLOBALS['geopccb_ckan_mp_url']; ?>" target="_blank">
                           Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                       </a>
                   </li>
                   <li role="menuitem">
-                      <a href="https://sit.geoplatform.us/geoplatform-resources/" target="_blank">
+                      <a href="<?php echo $GLOBALS['geopccb_cms_url']; ?>" target="_blank">
                           Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                       </a>
                   </li>
                 </ul>
                 <br>
-                <a class="m-megamenu__heading" href="/apps.html">Apps &amp; Services</a>
+                <a class="m-megamenu__heading" href="<?php echo home_url() . '/' . get_theme_mod('headlink_apps'); ?>">Apps &amp; Services</a>
                 <ul class="menu" role="menu">
                     <li role="menuitem">
-                        <a href="https://sit-viewer.geoplatform.us" target="_blank">
+                        <a href="<?php echo $GLOBALS['geopccb_viewer_url']; ?>" target="_blank">
                             Map Viewer
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li role="menuitem">
-                        <a href="https://sit-maps.geoplatform.us" target="_blank">
+                        <a href="<?php echo $GLOBALS['geopccb_maps_url']; ?>" target="_blank">
                             Map Manager
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li role="menuitem">
-                        <a href="https://sit-marketplace.geoplatform.us" target="_blank">
+                        <a href="<?php echo $GLOBALS['geopccb_marketplace_url']; ?>" target="_blank">
                             Marketplace Preview
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li role="menuitem">
-                        <a href="https://sit-dashboard.geoplatform.us/#/lma?surveyId=8&amp;page=0&amp;size=500&amp;sortElement=title&amp;sortOrder=asc&amp;colorTheme=green" target="_blank">
+                        <a href="<?php echo $GLOBALS['geopccb_dashboard_url'] . '#/lma?surveyId=8&amp;page=0&amp;size=500&amp;sortElement=title&amp;sortOrder=asc&amp;colorTheme=green'; ?>" target="_blank">
                             Performance Dashboard
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li role="menuitem">
-                        <a href="http://statuschecker.fgdc.gov" target="_blank">
+                        <a href="<?php echo esc_url('http://statuschecker.fgdc.gov'); ?>" target="_blank">
                             FGDC Service Status Checker
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
@@ -217,26 +190,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
             <div class="col">
                 <div class="m-megamenu__heading">About</div>
-                <ul class="menu" role="menu">
-                    <li role="menuitem"><a href="/help.html">Help</a></li>
-                    <li role="menuitem"><a href="/faq.html">FAQ</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/glossary-of-terms/">Glossary of Terms</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/contact-us/">Contact Us</a></li>
-                    <li role="menuitem"><a href="/styleguide">Style Guide</a></li>
-                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-965">
-                        <a href="https://sit-ccb.geoplatform.us/">Dynamic Communities</a>
-                    </li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/data-policies/">Data Policy</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/privacy-policy/">Privacy Policy</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/accessibility/">Accessibility</a></li>
-                    <li role="menuitem"><a href="https://sit.geoplatform.us/news/">News</a></li>
-                    <li role="menuitem">
-                        <a href="https://gira.geoplatform.gov/">
-                            GIRA-
-                            <span class="u-text--sm">Geospatial Interoperability Reference Architecture</span>
-                        </a>
-                    </li>
-                </ul>
+                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-about' ) ); ?>
             </div>
 
         </div>

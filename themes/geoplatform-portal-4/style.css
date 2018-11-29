@@ -3597,6 +3597,7 @@ nav.a-nav a:last-child {
   font-size: 1.125em;
   color: #fff;
 }
+form { margin: 0; }
 .o-header__secondary .a-search {
   flex: 0 0 auto;
   max-width: 500px;
