@@ -13,22 +13,22 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
 
   <?php
-  $font_choice = get_theme_mod( 'font_choice' );
-  if( $font_choice != '' ) {
-    switch ( $font_choice ) {
-      case 'lato':
-        echo '<style type="text/css">';
-        echo "body { font-family: 'Lato', sans-serif !important;}";
-        echo '</style>';
-        break;
-      case 'slabo':
-        echo '<style type="text/css">';
-        echo "body { font-family: 'Slabo 27px', serif !important; }";
-        echo '</style>';
-        break;
-        //add more cases for more fonts later
-    }
-  }
+  // $font_choice = get_theme_mod( 'font_choice' );
+  // if( $font_choice != '' ) {
+  //   switch ( $font_choice ) {
+  //     case 'lato':
+  //       echo '<style type="text/css">';
+  //       echo "body { font-family: 'Lato', sans-serif !important;}";
+  //       echo '</style>';
+  //       break;
+  //     case 'slabo':
+  //       echo '<style type="text/css">';
+  //       echo "body { font-family: 'Slabo 27px', serif !important; }";
+  //       echo '</style>';
+  //       break;
+  //       //add more cases for more fonts later
+  //   }
+  // }
 
   wp_head();?>
 </head>
@@ -49,19 +49,38 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         </h1>
 
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
-            <a role="menuitem" class="is-hidden--xs" href="/">Home</a>
+            <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() ?>/">Home</a>
             <div class="a-nav__collapsible-menu">
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="/secondary.html">Pages</a>
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="/items/dataset.html">Portfolio</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_pages', home_url()); ?>">Pages</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url() . '/' . get_theme_mod('headlink_portfolio', home_url()); ?>">Portfolio</a>
             </div>
-            <a role="menuitem" class="is-hidden--xs" href="/help.html">Help</a>
+            <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() . '/' . get_theme_mod('headlink_help', home_url()); ?>">Help</a>
             <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
                 <span class="is-hidden--xs">More</span>
                 <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
             </a>
-            <a role="menuitem" href="#">
+
+            <?php
+            $geopportal_current_user = wp_get_current_user();
+            $geopportal_text = "Sign In";
+            $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+            if($geopportal_current_user->ID != 0) {
+              if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+                $geopportal_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;
+              elseif (!empty($geopportal_current_user->user_firstname) && empty($geopportal_current_user->user_lastname))
+                $geopportal_text = $geopportal_current_user->user_firstname;
+              elseif (empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+                $geopportal_text = $geopportal_current_user->user_lastname;
+              else
+                $geopportal_text = $geopportal_current_user->user_login;
+
+              $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+            }
+            ?>
+
+            <a role="menuitem" href="<?php echo $geopportal_redirect ?>">
                 <span class="fas fa-user"></span>
-                <span class="is-hidden--xs">Sign In</span>
+                <span class="is-hidden--xs"><?php echo $geopportal_text ?></span>
             </a>
         </nav>
 
@@ -71,20 +90,38 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
         <div class="a-page__title">Page Title</div>
 
-        <div class="a-search">
+
+        <?php
+        // Search works but currently breaks CSS if the form is used. Uncomment when CSS for it is ready.
+
+        // Ensures that the search bar will only appear if the associated plugin is active.
+    		if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) )){
+    		?>
+
+        <!-- <form id="geoplatform_header_searchfield"> -->
+          <div class="a-search">
             <div class="icon fas fa-search"></div>
             <div class="m-search-box">
                 <div class="input-group-slick">
                     <span class="icon fas fa-search"></span>
-                    <input type="text" class="form-control"
-                        placeholder="SEARCH THE GEOPLATFORM"
-                        aria-label="Search the GeoPlatform"
-                        onKeyUp="if(arguments[0].keyCode===13)window.location.href='/search.html'">
+                    <input type="text" class="form-control" id="geoplatform_header_searchform" placeholder="SEARCH THE GEOPLATFORM">
                 </div>
             </div>
-        </div>
-
+          </div>
+        <!-- </form> -->
+        <?php
+        }
+        ?>
     </div>
+
+    <script>
+		// Triggers off of form submission and navigates to the geoplatform-search page with the search field params.
+		  jQuery( "#geoplatform_header_searchfield" ).submit(function( event ) {
+		    event.preventDefault();
+		    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatform_header_searchform').val();
+		  });
+		</script>
+
 
     <nav class="m-megamenu" id="header-megamenu">
 

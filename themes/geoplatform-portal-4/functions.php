@@ -304,6 +304,95 @@ function geop_ccb_customize_register( $wp_customize ) {
 add_action( 'customize_register', 'geop_ccb_customize_register');
 
 
+function geop_ccb_header_link_register( $wp_customize ){
+
+	//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
+	$wp_customize->add_section( 'headlink_format' , array(
+		'title'    => __( 'Header Links', 'geoplatform-ccb' ),
+		'priority' => 40
+	) );
+
+	$wp_customize->add_setting('headlink_pages',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_pages',array(
+		'type' => 'text',
+		'label' => 'Pages',
+		'section' => 'headlink_format',
+		'priority' => 1,
+	));
+
+	$wp_customize->add_setting('headlink_portfolio',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_portfolio',array(
+		'type' => 'text',
+		'label' => 'Portfolio',
+		'section' => 'headlink_format',
+		'priority' => 2,
+	));
+
+	$wp_customize->add_setting('headlink_help',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_help',array(
+		'type' => 'text',
+		'label' => 'Help',
+		'section' => 'headlink_format',
+		'priority' => 3,
+	));
+
+	$wp_customize->add_setting('headlink_default',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_default',array(
+		'type' => 'text',
+		'label' => 'Default',
+		'section' => 'headlink_format',
+		'priority' => 4,
+	));
+
+	$wp_customize->add_setting('headlink_data',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_data',array(
+		'type' => 'text',
+		'label' => 'Data',
+		'section' => 'headlink_format',
+		'priority' => 5,
+	));
+
+	$wp_customize->add_setting('headlink_new',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_new',array(
+		'type' => 'text',
+		'label' => "I'm New",
+		'section' => 'headlink_format',
+		'priority' => 6,
+	));
+
+}
+add_action( 'customize_register', 'geop_ccb_header_link_register');
+
+function geop_ccb_sanitize_fonts( $geop_portal_value ) {
+  if ( $geop_portal_value == '' )
+    $geop_portal_value = home_url();
+  return home_url() . '/' . $geop_portal_value . $geop_portal_value;
+}
+
 // Bootstrap controls are removed due to irrelevance.
 function geop_ccb_bootstrap_register($wp_customize){}
 

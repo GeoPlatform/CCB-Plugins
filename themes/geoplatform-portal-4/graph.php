@@ -127,6 +127,11 @@
 			</div>
 
 		</div>
+
+		<?php
+		// Ensures that the search bar will only appear if the associated plugin is active.
+		if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) )){
+		?>
 		<form id="geoplatformsearchform">
 			<div class="m-get-started__search">
 				<div class="input-group-slick input-group-slick--lg">
@@ -136,10 +141,13 @@
 				<button type="button" class="btn btn-lg btn-primary" id="geoplatformsearchbutton">SEARCH</button>
 			</div>
 		</form>
-
+		<?php
+		}
+		?>
 		<script>
 		// Code section. First jQuery triggers off of form submission (enter button) and
 		// navigates to the geoplatform-search page with the search field params.
+		jQuery(document).ready( function() {
 		  jQuery( "#geoplatformsearchform" ).submit(function( event ) {
 		    event.preventDefault();
 		    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
@@ -149,5 +157,6 @@
 		  jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
 		    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
 		  });
+		});
 		</script>
 </article>
