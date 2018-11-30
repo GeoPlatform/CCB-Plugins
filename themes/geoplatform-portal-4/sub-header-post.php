@@ -12,23 +12,20 @@ elseif (is_page_template("page-templates/new_template.php"))
 else
   $geop_portal_subhead_home_active = "active";
 
-//$geop_portal_subhead_home_url = home_url() . "/" . get_theme_mod('headlink_default', '/');
-//$geop_portal_subhead_data_url = home_url() . "/" . get_theme_mod('headlink_data', '/');
 global $wp;
 
+// Excerpt grabber and size-checker for header. Not complex, but makes me feel clever.
+// If the exceprt is larger than 300 characters, breaks it in half while making
+// sure that the first half is as close to 300 as possible without going over.
 $geop_portal_excerpt_one = get_the_excerpt();
 $geop_portal_excerpt_two = "";
 
 if (strlen($geop_portal_excerpt_one) > 300){
   $geop_portal_exploded_array = explode('.', $geop_portal_excerpt_one);
-  $geop_portal_excerpt_one = array_shift($geop_portal_exploded_array);
-  if (count($geop_portal_exploded_array) > 0)
-    $geop_portal_excerpt_two = implode('.', $geop_portal_exploded_array);
-  // $geop_portal_temp_string = $geop_portal_exploded_array[0];
-  // for ($i = 0; $i < 4; $i++){
-  //   $geop_portal_temp_string =
-  //   if ($geop_portal_excerpt_one)
-  // }
+  $geop_portal_excerpt_one = array_shift($geop_portal_exploded_array) . '.';
+  while (count($geop_portal_exploded_array) > 0 && (strlen($geop_portal_excerpt_one) + strlen($geop_portal_exploded_array[0]) < 300))
+    $geop_portal_excerpt_one = $geop_portal_excerpt_one . array_shift($geop_portal_exploded_array) . '.';
+  $geop_portal_excerpt_two = implode('.', $geop_portal_exploded_array);
 }
 
 ?>
@@ -39,6 +36,7 @@ if (strlen($geop_portal_excerpt_one) > 300){
     <li><a href="<?php echo home_url($wp->request); ?>"><?php the_title(); ?></a></li>
 </ul>
 
+<!-- Second part of excerpt will only show if the second excerpt string is populated. -->
 <div class="m-page-overview">
   <?php
   echo $geop_portal_excerpt_one;
@@ -52,11 +50,3 @@ if (strlen($geop_portal_excerpt_one) > 300){
     </div>
   <?php } ?>
 </div>
-
-
-<!-- <ul class="p-landing-page__role-nav" role="menu">
-    <li role="menuitem">What is your focus?</li>
-    <li role="menuitem" class="<?php echo $geop_portal_subhead_home_active ?>"><a href="<?php echo home_url() . '/' . get_theme_mod('headlink_default'); ?>">None (default)</a></li>
-    <li role="menuitem" class="<?php echo $geop_portal_subhead_data_active ?>"><a href="<?php echo home_url() . '/' . get_theme_mod('headlink_data'); ?>">Data</a></li>
-    <li role="menuitem" class="<?php echo $geop_portal_subhead_new_active ?>"><a href="<?php echo home_url() . '/' . get_theme_mod('headlink_new'); ?>">I'm new</a></li>
-</ul> -->
