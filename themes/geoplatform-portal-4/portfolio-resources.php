@@ -260,8 +260,9 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 			$geopportal_port_res_cb_message = "Click here to edit this content block";
 		}
 
-		// Main title
+		// Main title and color settings
 		$geopportal_port_res_main_title = ! empty( $instance['geopportal_port_res_main_title'] ) ? $instance['geopportal_port_res_main_title'] : 'PORTFOLIO RESOURCES';
+		// $geopportal_port_res_color = ! empty( $instance['geopportal_port_res_main_title'] ) ? $instance['geopportal_port_res_main_title'] : 'PORTFOLIO RESOURCES';
 
 		// First input boxes.
 		$geopportal_port_res_first_title = ! empty( $instance['geopportal_port_res_first_title'] ) ? $instance['geopportal_port_res_first_title'] : 'Datasets';
@@ -339,6 +340,14 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 <!-- HTML for the widget control box. -->
     <p>
       <label for="<?php echo $this->get_field_id( 'geopportal_port_res_main_title' ); ?>">Main Title:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_main_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_main_title' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_main_title ); ?>" />
+    </p>
+		<p>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_color' ); ?>">Widget Color:</label>
+			<select id="<?php echo $this->get_field_id( 'geopportal_port_res_color' ); ?>" name="<?php echo $this->get_field_name('geopportal_port_res_color'); ?>">
+    		<option <?php selected( $instance['posttype'], 'Option 1'); ?> value="Option 1">Option 1</option>
+    		<option <?php selected( $instance['posttype'], 'Option 2'); ?> value="Option 2">Option 2</option>
+			</select>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_main_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_main_title' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_main_title ); ?>" />
     </p>
 		<hr>
