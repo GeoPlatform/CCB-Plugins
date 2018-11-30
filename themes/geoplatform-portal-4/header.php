@@ -74,6 +74,8 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <?php
         if (is_front_page()){ ?>
           <div class="a-page__title">Welcome to the GeoPlatform!</div>
+        <?php } elseif (is_404()) { ?>
+          <div class="a-page__title">Page Not Found</div>
         <?php } else { ?>
           <div class="a-page__title"><?php the_title(); ?></div>
         <?php }
