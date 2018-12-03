@@ -5,8 +5,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'geopportal_portfolio_resources_widget', // Base ID
-			esc_html__( 'GeoPlatform Portfolio Resources', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform portfolio resources widget for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			esc_html__( 'GeoPlatform Portfolio (Light)', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform portfolio resources widget with a light theme for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -19,10 +19,10 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
       $geopportal_port_res_main_title = apply_filters('widget_title', $instance['geopportal_port_res_main_title']);
 		else
       $geopportal_port_res_main_title = "Explore Portfolio Resources";
-		// if (array_key_exists('geopportal_port_res_color', $instance) && isset($instance['geopportal_port_res_color']) && !empty($instance['geopportal_port_res_color']))
-		// 	$geopportal_port_res_color = $instance[ 'geopportal_port_res_color' ] ? 'true' : 'false';
-		// else
-		// 	$geopportal_port_res_color = 'true';
+		if (array_key_exists('geopportal_port_res_color', $instance) && isset($instance['geopportal_port_res_color']) && !empty($instance['geopportal_port_res_color']))
+			$geopportal_port_res_color = $instance[ 'geopportal_port_res_color' ] ? 'true' : 'false';
+		else
+			$geopportal_port_res_color = 'true';
 
 
     if (array_key_exists('geopportal_port_res_first_title', $instance) && isset($instance['geopportal_port_res_first_title']) && !empty($instance['geopportal_port_res_first_title']))
@@ -128,7 +128,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_fifth_title', $instance) && isset($instance['geopportal_port_res_fifth_title']) && !empty($instance['geopportal_port_res_fifth_title']))
       $geopportal_port_res_fifth_title = apply_filters('widget_title', $instance['geopportal_port_res_fifth_title']);
 		else
-      $geopportal_port_res_fifth_title = "Galleries";
+      $geopportal_port_res_fifth_title = "Communities";
 		if (array_key_exists('geopportal_port_res_fifth_content', $instance) && isset($instance['geopportal_port_res_fifth_content']) && !empty($instance['geopportal_port_res_fifth_content']))
       $geopportal_port_res_fifth_content = apply_filters('widget_title', $instance['geopportal_port_res_fifth_content']);
 		else
@@ -160,23 +160,23 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 			<div class="p-landing-page__portfolio-wrapper t-light" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
 
-		<!-- <div class="p-landing-page__portfolio-wrapper t-light"> -->
+		<!-- <div class="p-landing-page__portfolio-wrapper t-dark"> -->
 
 		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false" id="portfolioCarousel">
 
 		        <ol class="carousel-indicators">
-		            <li data-target="#portfolioCarousel" data-slide-to="0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>"></li>
-		            <li data-target="#portfolioCarousel" data-slide-to="1" title="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>"></li>
-		            <li data-target="#portfolioCarousel" data-slide-to="2" title="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>"></li>
-		            <li data-target="#portfolioCarousel" data-slide-to="3" title="<?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?>"></li>
-		            <li data-target="#portfolioCarousel" data-slide-to="4" title="<?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?>"></li>
+		            <li id="geopport_carousel_ind_0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>"></li>
+		            <li id="geopport_carousel_ind_1" title="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>"></li>
+		            <li id="geopport_carousel_ind_2" title="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>"></li>
+		            <li id="geopport_carousel_ind_3" title="<?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?>"></li>
+		            <li id="geopport_carousel_ind_4" title="<?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?>"></li>
 		        </ol>
 
 		        <div class="m-article__heading m-article__heading--front-page"><?php echo sanitize_text_field($geopportal_port_res_main_title) ?></div>
 
 		        <div class="carousel-inner">
 
-		            <div class="carousel-item active">
+		            <div class="carousel-item active" id="geopport_carousel_div_0">
 		                <div class="p-landing-page__portfolio__pane">
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/map.svg' ?>">
 		                    <div>
@@ -202,7 +202,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                </div>
 		            </div>
 
-		            <div class="carousel-item">
+		            <div class="carousel-item" id="geopport_carousel_div_1">
 		                <div class="p-landing-page__portfolio__pane">
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/data.svg' ?>">
 		                    <div>
@@ -225,7 +225,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                </div>
 		            </div>
 
-		            <div class="carousel-item">
+		            <div class="carousel-item" id="geopport_carousel_div_2">
 		                <div class="p-landing-page__portfolio__pane">
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/service.svg' ?>">
 		                    <div>
@@ -248,7 +248,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                </div>
 		            </div>
 
-								<div class="carousel-item">
+								<div class="carousel-item" id="geopport_carousel_div_3">
 		                <div class="p-landing-page__portfolio__pane">
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/collect.svg' ?>">
 		                    <div>
@@ -271,7 +271,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                </div>
 		            </div>
 
-								<div class="carousel-item">
+								<div class="carousel-item" id="geopport_carousel_div_4">
 		                <div class="p-landing-page__portfolio__pane">
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/community2.svg' ?>">
 		                    <div>
@@ -296,12 +296,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		        </div>
 
-		        <a class="carousel-control-prev" href="#portfolioCarousel" role="button" data-slide="prev">
+		        <a class="carousel-control-prev" href="#portfolioCarousel" role="button" id="geopport_carousel_left">
 		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		            <span class="sr-only">Previous</span>
 		        </a>
 
-		        <a class="carousel-control-next" href="#portfolioCarousel" role="button" data-slide="next">
+		        <a class="carousel-control-next" href="#portfolioCarousel" role="button" id="geopport_carousel_right">
 		            <span class="carousel-control-next-icon" aria-hidden="true"></span>
 		            <span class="sr-only">Next</span>
 		        </a>
@@ -309,65 +309,50 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		    </div>
 		</div>
 
-<!--
+
 				<script type="text/javascript">
+
+					var geopportal_port_res_div_array = ['0', '1', '2', '3', '4'];
+					var geopportal_port_res_car_index = 0;
+
 					jQuery(document).ready(function() {
-				    jQuery("#datasets-tab").click(function(e){
-							jQuery("#pr-ov-maps").removeClass("show active");
-							jQuery("#maps-tab").removeClass("active");
+						jQuery("#geopport_carousel_left").click(function(e){
+							var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+							var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
 
-							jQuery("#pr-ov-datasets").addClass("show active");
-							jQuery("#datasets-tab").addClass("active");
-							jQuery("#pr-ov-datasets").fadeIn();
+							jQuery(geopportal_port_res_check_ind).removeClass("active");
+							jQuery(geopportal_port_res_check_div).removeClass("active");
 
-							jQuery("#pr-ov-services").removeClass("show active");
-							jQuery("#services-tab").removeClass("active");
+							geopportal_port_res_car_index--;
+							if (geopportal_port_res_car_index < 0)
+								geopportal_port_res_car_index = 4;
 
-							jQuery("#pr-ov-galleries").removeClass("show active");
-							jQuery("#galleries-tab").removeClass("active");
+							var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+							var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+
+							jQuery(geopportal_port_res_check_ind).addClass("active");
+							jQuery(geopportal_port_res_check_div).addClass("active");
 						});
-						jQuery("#maps-tab").click(function(e){
-							jQuery("#pr-ov-maps").addClass("show active");
-							jQuery("#maps-tab").addClass("active");
-							jQuery("#pr-ov-maps").fadeIn();
 
-							jQuery("#pr-ov-datasets").removeClass("show active");
-							jQuery("#datasets-tab").removeClass("active");
+						jQuery("#geopport_carousel_right").click(function(e){
+							var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+							var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
 
-							jQuery("#pr-ov-services").removeClass("show active");
-							jQuery("#services-tab").removeClass("active");
+							jQuery(geopportal_port_res_check_ind).removeClass("active");
+							jQuery(geopportal_port_res_check_div).removeClass("active");
 
-							jQuery("#pr-ov-galleries").removeClass("show active");
-							jQuery("#galleries-tab").removeClass("active");
-						});
-						jQuery("#services-tab").click(function(e){
-							jQuery("#pr-ov-maps").removeClass("show active");
-							jQuery("#maps-tab").removeClass("active");
+							geopportal_port_res_car_index++;
+							if (geopportal_port_res_car_index > 4)
+								geopportal_port_res_car_index = 0;
 
-							jQuery("#pr-ov-datasets").removeClass("show active");
-							jQuery("#datasets-tab").removeClass("active");
+							var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+							var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
 
-							jQuery("#pr-ov-services").addClass("show active");
-							jQuery("#services-tab").addClass("active");
-
-							jQuery("#pr-ov-galleries").removeClass("show active");
-							jQuery("#galleries-tab").removeClass("active");
-						});
-						jQuery("#galleries-tab").click(function(e){
-							jQuery("#pr-ov-maps").removeClass("show active");
-							jQuery("#maps-tab").removeClass("active");
-
-							jQuery("#pr-ov-datasets").removeClass("show active");
-							jQuery("#datasets-tab").removeClass("active");
-
-							jQuery("#pr-ov-services").removeClass("show active");
-							jQuery("#services-tab").removeClass("active");
-
-							jQuery("#pr-ov-galleries").addClass("show active");
-							jQuery("#galleries-tab").addClass("active");
+							jQuery(geopportal_port_res_check_ind).addClass("active");
+							jQuery(geopportal_port_res_check_div).addClass("active");
 						});
 			    });
-				</script> -->
+				</script>
 
 
 
@@ -651,6 +636,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		$instance[ 'geopportal_port_res_first_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_title' ] );
 	  $instance[ 'geopportal_port_res_first_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_content' ] );
+		$instance[ 'geopportal_port_res_first_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_button_one' ] );
+		$instance[ 'geopportal_port_res_first_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_button_two' ] );
 		$instance[ 'geopportal_port_res_first_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_link_one' ] );
 		$instance[ 'geopportal_port_res_first_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_link_two' ] );
 		$instance[ 'geopportal_port_res_first_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_url' ] );
@@ -669,6 +656,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		$instance[ 'geopportal_port_res_second_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_title' ] );
 	  $instance[ 'geopportal_port_res_second_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_content' ] );
+		$instance[ 'geopportal_port_res_second_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_button_one' ] );
+		$instance[ 'geopportal_port_res_second_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_button_two' ] );
 		$instance[ 'geopportal_port_res_second_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_link_one' ] );
 		$instance[ 'geopportal_port_res_second_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_link_two' ] );
 		$instance[ 'geopportal_port_res_second_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_url' ] );
@@ -687,6 +676,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		$instance[ 'geopportal_port_res_third_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_title' ] );
 	  $instance[ 'geopportal_port_res_third_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_content' ] );
+		$instance[ 'geopportal_port_res_third_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_button_one' ] );
+		$instance[ 'geopportal_port_res_third_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_button_two' ] );
 		$instance[ 'geopportal_port_res_third_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_link_one' ] );
 		$instance[ 'geopportal_port_res_third_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_link_two' ] );
 		$instance[ 'geopportal_port_res_third_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_url' ] );
@@ -704,6 +695,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		$instance[ 'geopportal_port_res_fourth_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_title' ] );
 	  $instance[ 'geopportal_port_res_fourth_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_content' ] );
+		$instance[ 'geopportal_port_res_fourth_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_button_one' ] );
+		$instance[ 'geopportal_port_res_fourth_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_button_two' ] );
 		$instance[ 'geopportal_port_res_fourth_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_link_one' ] );
 		$instance[ 'geopportal_port_res_fourth_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_link_two' ] );
 		$instance[ 'geopportal_port_res_fourth_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_url' ] );
@@ -721,6 +714,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		$instance[ 'geopportal_port_res_fifth_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_title' ] );
 	  $instance[ 'geopportal_port_res_fifth_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_content' ] );
+		$instance[ 'geopportal_port_res_fifth_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_button_one' ] );
+		$instance[ 'geopportal_port_res_fifth_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_button_two' ] );
 		$instance[ 'geopportal_port_res_fifth_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_link_one' ] );
 		$instance[ 'geopportal_port_res_fifth_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_link_two' ] );
 		$instance[ 'geopportal_port_res_fifth_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_url' ] );

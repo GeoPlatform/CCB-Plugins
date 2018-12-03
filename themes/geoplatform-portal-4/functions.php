@@ -37,7 +37,7 @@ function geop_ccb_scripts() {
 //  wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/css/bootstrap.css');
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
-	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/platform.min.css');
+//	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/platform.min.css');
 	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/style.css');
 	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/styleguide.css');
 
@@ -507,6 +507,7 @@ class Geopportal_Graph_Widget extends WP_Widget {
 get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );
+get_template_part( 'portfolio-resources-dark', get_post_format() );
 get_template_part( 'portfolio-resources-old', get_post_format() );
 get_template_part( 'communities', get_post_format() );
 get_template_part( 'apps-and-services', get_post_format() );
