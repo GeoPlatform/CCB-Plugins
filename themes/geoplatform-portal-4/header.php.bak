@@ -28,86 +28,46 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         -->
         <h1 class="a-brand">
             <img alt="GP" src="<?php echo get_stylesheet_directory_uri() . '/img/logo.svg' ?>" style="width:1em">
-            <a href="<?php echo home_url() ?>/" title="Home">GeoPlatform.gov</a>
+            <span>GeoPlatform.gov</span>
         </h1>
 
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
+            <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url() ?>/">Home</a>
             <div class="a-nav__collapsible-menu">
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Data</a>
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_search')); ?>">Search</a>
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_new')); ?>">New to GeoPlatform</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_pages')); ?>">Pages</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_portfolio')); ?>">Portfolio</a>
             </div>
             <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url(get_theme_mod('headlink_help')); ?>">Help</a>
             <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
                 <span class="is-hidden--xs">More</span>
                 <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
             </a>
+
+            <?php
+            $geopportal_current_user = wp_get_current_user();
+            $geopportal_text = "Sign In";
+            $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+            if($geopportal_current_user->ID != 0) {
+              if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+                $geopportal_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;
+              elseif (!empty($geopportal_current_user->user_firstname) && empty($geopportal_current_user->user_lastname))
+                $geopportal_text = $geopportal_current_user->user_firstname;
+              elseif (empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+                $geopportal_text = $geopportal_current_user->user_lastname;
+              else
+                $geopportal_text = $geopportal_current_user->user_login;
+
+              $geopportal_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+            }
+            ?>
+
+            <a role="menuitem" href="<?php echo $geopportal_redirect ?>">
+                <span class="fas fa-user"></span>
+                <span class="is-hidden--xs"><?php echo $geopportal_text ?></span>
+            </a>
         </nav>
 
-        <?php
-        $geopportal_current_user = wp_get_current_user();
-        $geopportal_front_username_text = "Sign In";
-        $geopportal_front_loginname_text = "";
-        $geopportal_front_user_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
-        if($geopportal_current_user->ID != 0) {
-          if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
-            $geopportal_front_username_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;
-          elseif (!empty($geopportal_current_user->user_firstname) && empty($geopportal_current_user->user_lastname))
-            $geopportal_front_username_text = $geopportal_current_user->user_firstname;
-          elseif (empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
-            $geopportal_front_username_text = $geopportal_current_user->user_lastname;
-          else
-            $geopportal_front_username_text = $geopportal_current_user->user_login;
-
-          $geopportal_front_loginname_text = $geopportal_current_user->user_login;
-          $geopportal_front_user_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
-        }
-        ?>
-
-        <div class="dropdown" id="geopportal_header_user_dropdown_parent">
-            <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="fas fa-user"></span>
-                <span class="is-hidden--xs"><?php echo $geopportal_front_username_text ?></span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" id="geopportal_header_user_dropdown_child" aria-labelledby="userSignInButton">
-                <div class="d-flex">
-                    <div class="col u-text--center">
-                        <span class="fas fa-user fa-5x"></span>
-                        <br>
-                        <div><strong><?php echo $geopportal_front_username_text ?></strong></div>
-                        <div class="u-text--sm"><em><?php echo $geopportal_front_loginname_text ?></em></div>
-                    </div>
-                    <div class="col">
-                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>">Edit Profile</a>
-                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>">Change Password</a>
-                        <div class="dropdown-item">
-                            <strong>Focus:</strong>
-                            <em>Data</em>
-                            <a href="<?php echo $geopportal_front_user_redirect ?>">[change]</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a> -->
-            </div>
-        </div>
     </div>
-
-    <script>
-      jQuery(document).ready(function() {
-        jQuery("#userSignInButton").click(function(e){
-          if (jQuery("#geopportal_header_user_dropdown_parent").hasClass("show")){
-            jQuery("#geopportal_header_user_dropdown_parent").removeClass("show");
-            jQuery("#geopportal_header_user_dropdown_child").removeClass("show");
-          }
-          else {
-            jQuery("#geopportal_header_user_dropdown_parent").addClass("show");
-            jQuery("#geopportal_header_user_dropdown_child").addClass("show");
-          }
-        });
-      });
-    </script>
 
     <div class="o-header__secondary">
 
@@ -127,7 +87,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
     		?>
 
         <!-- <form id="geoplatform_header_searchfield"> -->
-          <!-- <div class="a-search">
+          <div class="a-search">
             <div class="icon fas fa-search"></div>
             <form class="m-search-box" id="geoplatform_header_searchfield">
                 <div class="input-group-slick">
@@ -135,20 +95,20 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                     <input type="text" class="form-control" id="geoplatform_header_searchform" placeholder="SEARCH THE GEOPLATFORM">
                 </div>
             </form>
-          </div> -->
+          </div>
         <!-- </form> -->
         <?php
         }
         ?>
     </div>
 
-    <!-- <script>
+    <script>
 		// Triggers off of form submission and navigates to the geoplatform-search page with the search field params.
 		  jQuery( "#geoplatform_header_searchfield" ).submit(function( event ) {
 		    event.preventDefault();
 		    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatform_header_searchform').val();
 		  });
-		</script> -->
+		</script>
 
 
     <nav class="m-megamenu" id="header-megamenu">

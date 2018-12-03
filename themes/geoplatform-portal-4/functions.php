@@ -127,54 +127,6 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'priority' => 5,
 	));
 
-	$wp_customize->add_setting('headlink_pages',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('headlink_pages',array(
-		'type' => 'text',
-		'label' => 'Pages',
-		'section' => 'headlink_format',
-		'priority' => 10,
-	));
-
-	$wp_customize->add_setting('headlink_portfolio',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('headlink_portfolio',array(
-		'type' => 'text',
-		'label' => 'Portfolio',
-		'section' => 'headlink_format',
-		'priority' => 15,
-	));
-
-	$wp_customize->add_setting('headlink_help',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('headlink_help',array(
-		'type' => 'text',
-		'label' => 'Help',
-		'section' => 'headlink_format',
-		'priority' => 20,
-	));
-
-	$wp_customize->add_setting('headlink_default',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('headlink_default',array(
-		'type' => 'text',
-		'label' => 'Default',
-		'section' => 'headlink_format',
-		'priority' => 25,
-	));
-
 	$wp_customize->add_setting('headlink_data',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
@@ -184,7 +136,19 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => 'Data',
 		'section' => 'headlink_format',
-		'priority' => 30,
+		'priority' => 20,
+	));
+
+	$wp_customize->add_setting('headlink_search',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_search',array(
+		'type' => 'text',
+		'label' => 'Pages',
+		'section' => 'headlink_format',
+		'priority' => 25,
 	));
 
 	$wp_customize->add_setting('headlink_new',array(
@@ -196,8 +160,46 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => "I'm New",
 		'section' => 'headlink_format',
+		'priority' => 30,
+	));
+
+	$wp_customize->add_setting('headlink_help',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_help',array(
+		'type' => 'text',
+		'label' => 'Help',
+		'section' => 'headlink_format',
 		'priority' => 35,
 	));
+
+
+
+	// $wp_customize->add_setting('headlink_portfolio',array(
+	// 	'default' => '',
+	// 	'sanitize_callback' => 'sanitize_text_field'
+	// ));
+	//
+	// $wp_customize->add_control('headlink_portfolio',array(
+	// 	'type' => 'text',
+	// 	'label' => 'Portfolio',
+	// 	'section' => 'headlink_format',
+	// 	'priority' => 15,
+	// ));
+
+	// $wp_customize->add_setting('headlink_default',array(
+	// 	'default' => '',
+	// 	'sanitize_callback' => 'sanitize_text_field'
+	// ));
+	//
+	// $wp_customize->add_control('headlink_default',array(
+	// 	'type' => 'text',
+	// 	'label' => 'Default',
+	// 	'section' => 'headlink_format',
+	// 	'priority' => 25,
+	// ));
 
 	$wp_customize->add_setting('headlink_apps',array(
 		'default' => '',
