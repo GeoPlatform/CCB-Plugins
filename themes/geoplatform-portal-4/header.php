@@ -15,9 +15,9 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <?php wp_head();?>
 
 </head>
-<header class="o-header" role="banner">
+<header class="o-header o-header--sticky" role="banner">
 
-    <div class="o-header__primary">
+    <div class="o-header__primary" data-page-title="Welcome to the GeoPlatform!">
 
         <!--
             REMOVE THIS COMMENT WHEN IMPLEMENTING...
