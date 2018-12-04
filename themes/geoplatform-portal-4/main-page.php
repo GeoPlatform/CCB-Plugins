@@ -117,7 +117,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		<!--
 		FEATURED ITEMS SECTION
 		-->
-		<div class="o-featured">
+		<div class="o-featured" id="geopportal_anchor_featured" title="Featured Articles">
 
 				<div class="o-featured__main">
 

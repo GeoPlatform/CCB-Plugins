@@ -108,7 +108,7 @@ class Geopportal_Communities_Widget extends WP_Widget {
 		<!--
 		COMMUNITIES SECTION
 		-->
-		<div>
+		<div id="geopportal_anchor_communities" title="Explore Communities">
 			<article class="p-landing-page__communities">
 			    <div class="m-article__heading m-article__heading--front-page"><?php _e(sanitize_text_field($geopportal_communities_main_title), 'geoplatform-ccb') ?></div>
 			    <div class="m-article__desc">

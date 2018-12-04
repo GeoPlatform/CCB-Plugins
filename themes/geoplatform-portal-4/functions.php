@@ -320,7 +320,7 @@ if ( ! function_exists ( 'geop_ccb_newpage' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-widgetized-page-new',
-			'name' => __( 'Data Page Widgets', 'geoplatform-portal-four' ),
+			'name' => __( 'New Page Widgets', 'geoplatform-portal-four' ),
 			'description' => __( "Widgets that go on the portal I'm New page can be added here.", 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)

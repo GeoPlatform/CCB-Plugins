@@ -93,7 +93,7 @@ class Geopportal_Portfolio_Resources_Old_Widget extends WP_Widget {
 		PORTFOLIO RESOURCES SECTION
 		-->
 		<div class="a-portfolio" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
-				<ul class="nav nav-tabs a-portfolio__tabs" role="tablist">
+				<ul class="nav nav-tabs a-portfolio__tabs" role="tablist" id="geopportal_anchor_carousel_old" title="Explore Resources">
 						<li class="nav-item">
 								<a class="nav-link disabled" role="tab">
 										<strong><?php echo sanitize_text_field($geopportal_port_res_old_main_title) ?></strong>

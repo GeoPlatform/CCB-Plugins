@@ -1,5 +1,5 @@
 <article class="p-landing-page__get-started">
-		<div class="m-article__heading m-article__heading--front-page">Get Started</div>
+		<div class="m-article__heading m-article__heading--front-page" id="geopportal_anchor_graph" title="Get Started">Get Started</div>
 		<div>
 			<div class="d-flex flex-align-center">
 			    <div class="col-4">

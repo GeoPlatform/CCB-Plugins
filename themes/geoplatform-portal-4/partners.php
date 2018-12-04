@@ -76,7 +76,7 @@ class Geopportal_Partners_Widget extends WP_Widget {
 		}
 		?>
 
-		<div>
+		<div id="geopportal_anchor_partners" title="Explore Partners">
 			<article class="p-landing-page__partners">
 		    <div class="m-article__heading m-article__heading--front-page"><?php _e(sanitize_text_field($geopportal_partners_main_title), 'geoplatform-ccb') ?></div>
 		    <div class="m-partners__content">
