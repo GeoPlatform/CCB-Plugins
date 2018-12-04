@@ -329,6 +329,24 @@ if ( ! function_exists ( 'geop_ccb_newpage' ) ) {
 	add_action( 'widgets_init', 'geop_ccb_newpage' );
 }
 
+/**
+ * Widgetizing the sidebar
+ */
+if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
+	function geop_ccb_sidebar() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-widgetized-page-sidebar',
+			'name' => __( 'Sidebar Widgets', 'geoplatform-portal-four' ),
+			'description' => __( "Widgets that go in the sidebar can be added here.", 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_sidebar' );
+}
+
+
 
 /**
  * Adds sidebar accounts widget.

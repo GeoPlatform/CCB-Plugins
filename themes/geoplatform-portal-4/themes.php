@@ -83,7 +83,7 @@ class Geopportal_Themes_Widget extends WP_Widget {
           <div class="d-grid">
 						<?php
 						foreach ($geopportal_pages_final as $geopportal_post){
-							$geopportal_themes_disp_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
+							$geopportal_themes_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
 							if ( has_post_thumbnail($geopportal_post) )
 								$geopportal_themes_disp_thumb = get_the_post_thumbnail_url($geopportal_post);
 							?>
