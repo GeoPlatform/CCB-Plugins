@@ -6,8 +6,9 @@
 <?php //get_template_part( 'mega-menu', get_post_format() ); ?>
 <?php //get_template_part( 'single-banner', get_post_format() ); ?>
 
-<div class="l-body l-body--two-column">
-  <div class="l-body__main-column">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
           <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
 
         get_template_part( 'post-single', get_post_format() );
@@ -18,7 +19,10 @@
         //	endif;
       endwhile; endif;
       ?>
+    </div>
+    <div class="col-md-4 col-sm-4">
+      <?php get_template_part( 'sidebar', get_post_format() ); ?>
+    </div>
   </div>
-  <?php get_template_part( 'sidebar', get_post_format() ); ?>
 </div>
 <?php get_footer(); ?>
