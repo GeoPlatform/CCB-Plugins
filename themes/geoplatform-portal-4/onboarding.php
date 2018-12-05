@@ -38,7 +38,7 @@ class Geopportal_Onboarding_Widget extends WP_Widget {
 
     ?>
 
-		<div class="p-landing-page__onboarding" id="geopportal_anchor_onboard" title="Sign Up">
+		<div class="p-landing-page__onboarding" id="neg_geopportal_anchor_onboard" title="Sign Up">
 		    <div class="u-text--center">
 		        <img alt="Sign Up" src="<?php echo get_stylesheet_directory_uri() . '/img/register.svg' ?>">
 		        <div>

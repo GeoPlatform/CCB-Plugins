@@ -346,18 +346,7 @@ if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
 	add_action( 'widgets_init', 'geop_ccb_sidebar' );
 }
 
-	/**
-	 * Sanitize widget form values as they are saved.
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {}
-}
+
 
 /**
  * Adds sidebar contact form widget.
@@ -447,7 +436,6 @@ class Geopportal_Graph_Widget extends WP_Widget {
 
 
 // Includes complex widgets which regester themselves.
-// get_template_part( 'apps-and-services', get_post_format() );
 get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );

@@ -31,7 +31,7 @@ class Geopportal_Apps_Services_Widget extends WP_Widget {
 
 		?>
 		<article class="p-landing-page__apps" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-green.svg' ?>')">
-				<div class="m-article__heading m-article__heading--front-page" id="geopportal_anchor_apps" title="Apps & Services"><?php _e(sanitize_text_field($geopportal_apps_service_title), 'geoplatform-ccb') ?></div>
+				<div class="m-article__heading m-article__heading--front-page" id="neg_geopportal_anchor_apps" title="Apps & Services"><?php _e(sanitize_text_field($geopportal_apps_service_title), 'geoplatform-ccb') ?></div>
 				<div class="m-apps__content">
 						<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/apps.svg' ?>">
 						<div class="flex-1">
