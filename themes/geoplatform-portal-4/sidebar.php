@@ -31,7 +31,7 @@
       </div>
       <div class="m-article__desc">
         For questions about the federal government not related to GeoPlatform, visit
-        <a href="https://usa.gov">USA.gov</a> or call
+        <a href="https://wwwusa.gov">USA.gov</a> or call
         <a href="tel:18003334636">1-800-FED-INFO</a>
         (<em>1-800-333-4636</em>), 8am - 8pm ET Monday through Friday.
       </div>

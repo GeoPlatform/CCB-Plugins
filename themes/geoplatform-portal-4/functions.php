@@ -532,17 +532,17 @@ get_template_part( 'portfolio-resources-old', get_post_format() );
 get_template_part( 'communities', get_post_format() );
 get_template_part( 'apps-and-services', get_post_format() );
 get_template_part( 'partners', get_post_format() );
-
-
 get_template_part( 'themes', get_post_format() );
-get_template_part( 'featured-services', get_post_format() );
+get_template_part( 'side-content-text', get_post_format() );
+
+//get_template_part( 'featured-services', get_post_format() );
 
 
 /**
  * Registers simpler widgets.
  */
 function geopportal_register_portal_widgets() {
-	register_widget( 'Geopportal_Account_Widget' );
+//	register_widget( 'Geopportal_Account_Widget' );
 	register_widget( 'Geopportal_Contact_Widget' );
 //	register_widget( 'Geopportal_GPSearch_Widget' );
 	register_widget( 'Geopportal_Graph_Widget' );

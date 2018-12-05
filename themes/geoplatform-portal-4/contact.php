@@ -1,12 +1,21 @@
-<div class="card">
-    <h4 class="card-title"><span class="glyphicon glyphicon-phone-alt"></span> Contact Us</h4>
-    <p>
-        Please check out our <a href="<?php echo esc_url("/geoplatform-help"); ?>">Help</a> and <a href="<?php echo esc_url("/frequently-asked-questions"); ?>">FAQ</a> pages in case your question or issue has already been addressed.  If you still need help or want to report an issue, please send us an email at:
-    </p>
-    <br/>
-    <p style="text-align:center"><a href="<?php echo "mailto:". get_bloginfo("admin_email"); ?>"><?php echo get_bloginfo('admin_email');?></a></p>
-    <hr/>
-    <p>
-        For questions about the federal government not related to GeoPlatform, visit <a href="<?php echo esc_url("http://www.usa.gov"); ?>" target="_blank">USA.gov</a> or call 1 (800) FED INFO (1-800-333-4636) (8am - 8 pm ET Monday - Friday).
-    </p>
-</div><!--#card-->
+<article class="m-article">
+  <div class="m-article__heading">Have Other Questions?</div>
+  <div class="m-article__desc">
+    Please check out our <a href="/faq.html">FAQ page</a> in case your
+    question has already been addressed. If you still need help or want
+    to report an issue, please send us an email at
+    <a href="mailto:servicedesk@geoplatform.gov">servicedesk@geoplatform.gov</a>.
+  </div>
+  <div class="u-text--center t-text--strong u-mg-top--md u-mg-bottom--md">
+    <a class="btn btn-info" href="mailto:servicedesk@geoplatform.gov">
+      <span class="far fa-envelope"></span>
+      Contact Us
+    </a>
+  </div>
+  <div class="m-article__desc">
+    For questions about the federal government not related to GeoPlatform, visit
+    <a href="https://wwwusa.gov">USA.gov</a> or call
+    <a href="tel:18003334636">1-800-FED-INFO</a>
+    (<em>1-800-333-4636</em>), 8am - 8pm ET Monday through Friday.
+  </div>
+</article>
