@@ -534,6 +534,7 @@ get_template_part( 'apps-and-services', get_post_format() );
 get_template_part( 'partners', get_post_format() );
 get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );
+get_template_part( 'side-content-links', get_post_format() );
 
 //get_template_part( 'featured-services', get_post_format() );
 
