@@ -346,51 +346,6 @@ if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
 	add_action( 'widgets_init', 'geop_ccb_sidebar' );
 }
 
-
-
-/**
- * Adds sidebar accounts widget.
- */
-class Geopportal_Account_Widget extends WP_Widget {
-
-	/**
-	 * Register widget with WordPress.
-	 */
-	function __construct() {
-		parent::__construct(
-			'geopportal_account_widget', // Base ID
-			esc_html__( 'GeoPlatform Sidebar Account', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform account management widget for the sidebar.', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	/**
-	 * Front-end display of widget. Just gets account template.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */
-	public function widget( $args, $instance ) {
-		get_template_part( 'account', get_post_format() );
-	}
-
-	/**
-	 * Back-end widget form. Just gives text.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
-	 */
-	public function form( $instance ) {
-		?>
-		<p>
-		  <?php _e("This is the GeoPlatform theme account management widget for the sidebar. There are no options to customize here.", "geoplatform-ccb"); ?>
-		</p>
-		<?php
-	}
-
 	/**
 	 * Sanitize widget form values as they are saved.
 	 *
@@ -463,37 +418,6 @@ class Geopportal_Contact_Widget extends WP_Widget {
 /**
  * Adds gpsearch front-page widget.
  */
-class Geopportal_GPSearch_Widget extends WP_Widget {
-
-	function __construct() {
-		parent::__construct(
-			'geopportal_gpsearch_widget', // Base ID
-			esc_html__( 'GeoPlatform Search', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform search bar widget for the front page. Requires the GeoPlatform Search plugin.', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	public function widget( $args, $instance ) {
-		if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) ))
-	    get_template_part( 'gpsearch', get_post_format() );
-	}
-
-	public function form( $instance ) {
-		$title = "GeoPlatform Search";
-		?>
-		<p>
-		  <?php _e("This is the GeoPlatform theme Search bar widget for the front page. It will only display if the plugin is active. There are no settings involved with this widget.", "geoplatform-ccb"); ?>
-		</p>
-		<?php
-	}
-
-	public function update( $new_instance, $old_instance ) {}
-}
-
-
-/**
- * Adds gpsearch front-page widget.
- */
 class Geopportal_Graph_Widget extends WP_Widget {
 
 	function __construct() {
@@ -535,17 +459,13 @@ get_template_part( 'partners', get_post_format() );
 get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );
 get_template_part( 'side-content-links', get_post_format() );
-
-//get_template_part( 'featured-services', get_post_format() );
-
+get_template_part( 'side-content-preview', get_post_format() );
 
 /**
  * Registers simpler widgets.
  */
 function geopportal_register_portal_widgets() {
-//	register_widget( 'Geopportal_Account_Widget' );
 	register_widget( 'Geopportal_Contact_Widget' );
-//	register_widget( 'Geopportal_GPSearch_Widget' );
 	register_widget( 'Geopportal_Graph_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );

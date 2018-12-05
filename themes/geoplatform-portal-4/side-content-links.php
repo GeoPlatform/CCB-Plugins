@@ -18,7 +18,7 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_side_cont_link_title', $instance) && isset($instance['geopportal_side_cont_link_title']) && !empty($instance['geopportal_side_cont_link_title']))
       $geopportal_side_cont_link_title = apply_filters('widget_title', $instance['geopportal_side_cont_link_title']);
 		else
-      $geopportal_side_cont_link_title = "Themes";
+      $geopportal_side_cont_link_title = "Side Content";
 		if (array_key_exists('geopportal_side_cont_link_content', $instance) && isset($instance['geopportal_side_cont_link_content']) && !empty($instance['geopportal_side_cont_link_content']))
       $geopportal_side_cont_link_content = apply_filters('widget_title', $instance['geopportal_side_cont_link_content']);
 		else
