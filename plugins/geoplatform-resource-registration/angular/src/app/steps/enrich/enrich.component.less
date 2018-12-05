@@ -1,0 +1,26 @@
+
+
+.enrich__container {
+    display: block;
+}
+.enrich__section {
+    display: block;
+}
+
+@media(min-width: 768px) {
+    .enrich__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .enrich__section {
+        flex: 0 0 50%;
+
+        &:first-child {
+            margin-right: 1.5em;
+        }
+        &:last-child:not(:first-child) {
+            margin-left: 1.5em;
+        }
+    }
+}

@@ -1,0 +1,25 @@
+
+.type__container {
+    display: block;
+}
+.type__section {
+    display: block;
+}
+
+@media(min-width: 768px) {
+    .type__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .type__section {
+        flex: 1;
+
+        &:first-child {
+            margin-right: 1.5em;
+        }
+        &:last-child:not(:first-child) {
+            margin-left: 1.5em;
+        }
+    }
+}

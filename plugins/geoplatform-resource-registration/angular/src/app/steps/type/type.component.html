@@ -1,0 +1,128 @@
+<mat-card>
+
+    <mat-card-subtitle>
+        First, you must specify the type of resource to register with the GeoPlatform and
+        provide some minimal information needed to get started.
+    </mat-card-subtitle>
+
+    <form [formGroup]="formGroup">
+
+        <div class="type__container">
+
+            <!-- Left-hand side -->
+            <div class="type__section">
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>Resource Type</mat-label>
+                    <mat-select placeholder="Select Type" formControlName="type" required>
+                        <mat-option [value]="'dcat:Dataset'">Dataset</mat-option>
+                        <mat-option [value]="'regp:Service'">Service</mat-option>
+                    </mat-select>
+                    <mat-hint>You must specify a resource type before proceeding</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>Resource Name</mat-label>
+                    <input matInput formControlName="title" placeholder="Name the resource" required>
+                    <mat-hint>You must provide a name for the resource</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>Resource Description</mat-label>
+                    <textarea matInput formControlName="description"
+                        placeholder="Provide a description of the resource">
+                    </textarea>
+                    <mat-hint>A rich description helps others discover your resource</mat-hint>
+                </mat-form-field>
+
+            </div>
+
+
+            <!-- \\\\\\\\\\\\\\\\\\\\\\\
+                 Right-hand side options
+                 /////////////////////// -->
+
+            <!-- spacer until user has selected a type -->
+            <div class="type__section" *ngIf="!currentType"> &nbsp; </div>
+
+            <div class="type__section" *ngIf="currentType">
+
+                <!-- if user selects Dataset type -->
+                <div *ngIf="currentType==='dcat:Dataset'">
+
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Distribution URL</mat-label>
+                        <mat-icon matPrefix>link</mat-icon>
+                        <input matInput formControlName="accessURL" placeholder="Specify a distribution URL">
+                        <mat-hint>If the dataset is distributable via a web-accessible URL</mat-hint>
+                    </mat-form-field>
+
+                </div>
+
+                <!-- if user selects Service type -->
+                <div *ngIf="currentType==='regp:Service'">
+
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Service URL</mat-label>
+                        <mat-icon matPrefix>link</mat-icon>
+                        <input matInput formControlName="accessURL" placeholder="Provide the service's URL" required>
+                        <mat-hint>The web-accessible URL to the service's API</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Service Type</mat-label>
+                        <mat-select placeholder="Select Type" formControlName="serviceType" required>
+                            <mat-option *ngFor="let type of serviceTypes" [value]="type">{{type.label}}</mat-option>
+                        </mat-select>
+                        <mat-hint>The type of web service</mat-hint>
+                    </mat-form-field>
+
+                    <div>
+                        <p>
+                            Once a URL and Service Type is specified, you may
+                            fetch metadata from the web service to pre-populate
+                            information about the service.
+                        </p>
+                        <button mat-raised-button color="accent" (click)="fetchServiceInfo()">
+                            <span *ngIf="!status.isFetchingServiceInfo">Fetch Service Info</span>
+                            <mat-progress-spinner mode="indeterminate"
+                                [diameter]="32" *ngIf="status.isFetchingServiceInfo"></mat-progress-spinner>
+                        </button>
+                        <br>
+                    </div>
+
+                </div>
+
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>Home Page</mat-label>
+                    <mat-icon matPrefix>link</mat-icon>
+                    <input matInput formControlName="landingPage" placeholder="Specify the home page of the dataset">
+                    <mat-hint>A home page where more information can be gathered</mat-hint>
+                </mat-form-field>
+                <br>
+
+
+            </div>
+
+        </div>
+
+        <div class="m-message m-message--error" *ngIf="hasError">
+            <div class="m-message__heading">
+                <mat-icon class="m-message__icon">error</mat-icon>
+                {{hasError.label||"An Error Occurred"}}
+            </div>
+            <div class="m-message__body">
+                {{hasError.message||"Something unexpected happened and an unknonwn error has occurred."}}
+            </div>
+        </div>
+
+    </form>
+
+    <mat-card-actions>
+        <div class="m-step__buttons">
+            <button mat-raised-button color="primary" matStepperNext>Continue</button>
+        </div>
+    </mat-card-actions>
+
+</mat-card>

@@ -1,0 +1,159 @@
+import {
+    Component, OnInit, OnChanges, SimpleChanges,
+    Input, Output, EventEmitter, ViewChild, ElementRef
+} from '@angular/core';
+import {
+    HttpClient, HttpRequest, HttpHeaders, HttpParams,
+    HttpResponse, HttpEvent, HttpErrorResponse
+} from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import {
+    MatAutocompleteSelectedEvent,
+    MatChipInputEvent,
+    MatAutocomplete
+} from '@angular/material';
+
+import {Observable} from 'rxjs';
+import {map, flatMap, startWith} from 'rxjs/operators';
+import {
+    Config, ItemService, ItemTypes
+} from 'geoplatform.client';
+
+import { StepComponent, StepEvent, StepError } from '../step.component';
+import { environment } from '../../../environments/environment';
+import { NG2HttpClient } from '../../http-client';
+
+
+
+@Component({
+  selector: 'wizard-step-review',
+  templateUrl: './review.component.html',
+  styleUrls: ['./review.component.less']
+})
+export class ReviewComponent implements OnInit, OnChanges, StepComponent {
+
+    @Input() data : any;
+    @Output() onEvent : EventEmitter<StepEvent> = new EventEmitter<StepEvent>();
+
+    public formGroup: FormGroup;
+
+    //display final item for review
+    public preview : string;
+
+    public hasError : StepError;
+
+    public status : any = {
+        isSaving : false,
+        isSaved : false
+    };
+
+
+    httpClient : NG2HttpClient;
+
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private http: HttpClient
+    ) {
+        this.formGroup = this.formBuilder.group({
+            done: ['']
+        });
+
+        this.httpClient = new NG2HttpClient(http);
+    }
+
+    ngOnInit() {
+
+    }
+
+    ngOnChanges( changes : SimpleChanges ) {
+
+        //pre-populate data if the parent component injected values in
+        if(changes.data) {
+
+            let data = changes.data.currentValue;
+            if(!data) {
+                this.preview = null;
+                return;
+            }
+
+            this.preview = JSON.stringify(data, null, '    ');
+        }
+    }
+
+
+    startOver() {
+        //reset all forms
+        this.onEvent.emit( { type:'app.reset', value:true } );
+    }
+
+
+
+    createAndStartOver() {
+
+        //save resource and then start fresh in wizard...
+
+        let func = (persisted) => {
+            //wait a few seconds before sending back to the start
+            setTimeout( () => {
+                this.onEvent.emit( { type:'app.reset', value:true } );
+            }, 5000);
+        };
+
+        this.registerResource(func);
+    }
+
+    createAndLeave() {
+
+        //save resource and then navigate to resource's home page (OE for now)
+
+        let func = (persisted) => {
+            let url = Config.ualUrl.replace('ual', 'oe') + '/view/' + persisted.id;
+            setTimeout( () => { window.location.href = url; }, 2000);
+        };
+
+        this.registerResource(func);
+
+    }
+
+
+    private registerResource( callback : Function ) {
+
+        this.generateURI().then( item => {
+            return new ItemService(Config.ualUrl, this.httpClient).save(item)
+        })
+        .then( (persisted) => {
+            this.status.isSaving = false;
+            this.status.isSaved = true;
+            callback(persisted);
+        })
+        .catch( (e:Error) => {
+            this.status.isSaving = false;
+            this.hasError = new StepError("Unable to Register Resource", e.message);
+        });
+    }
+
+    /**
+     * @return {Promise} resolving the resource with its new uri added
+     */
+    private generateURI() : Promise<any> {
+
+        if(this.data.uri) {
+            return Promise.resolve(this.data);
+        }
+
+        return new ItemService(Config.ualUrl, this.httpClient)
+        .getUri(this.data)
+        .then( uri => {
+            this.data.uri = uri;
+            return Promise.resolve(this.data);
+        })
+        .catch( (e:Error) => {
+            return Promise.reject(new Error("Unable to generate a URI for the resource"));
+            // this.hasError = new StepError("Error Generating URI", e.message);
+        });
+
+    }
+
+}

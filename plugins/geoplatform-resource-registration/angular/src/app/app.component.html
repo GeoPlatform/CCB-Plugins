@@ -1,0 +1,42 @@
+
+<div class="m-message m-message--warning" *ngIf="!isAuthenticated">
+    <div class="m-message__heading">
+        <mat-icon class="m-message__icon">warning</mat-icon>
+        Sign In Required
+    </div>
+    <div class="m-message__body">
+        You must be signed in using your GeoPlatform.gov account to register resources.
+    </div>
+</div>
+
+<mat-horizontal-stepper linear #stepper labelPosition="bottom"
+    (selectionChange)="onStepperEvent($event)">
+
+    <mat-step label="Select Resource Type" [stepControl]="stepOneForm">
+        <wizard-step-type #step1
+            [data]="item"
+            (onEvent)="onStepEvent($event)">
+        </wizard-step-type>
+    </mat-step>
+
+    <mat-step label="Provide Additional Info" [stepControl]="stepTwoForm" optional>
+        <wizard-step-additional #step2
+            [data]="item"
+            (onEvent)="onStepEvent($event)">
+        </wizard-step-additional>
+    </mat-step>
+
+    <mat-step label="Enrich Resource" [stepControl]="stepThreeForm" optional>
+        <wizard-step-enrich #step3
+            [data]="item"
+            (onEvent)="onStepEvent($event)">
+        </wizard-step-enrich>
+    </mat-step>
+
+    <mat-step label="Review Resource" [stepControl]="stepFourForm">
+        <wizard-step-review #step4
+            [data]="item"
+            (onEvent)="onStepEvent($event)"></wizard-step-review>
+    </mat-step>
+
+</mat-horizontal-stepper>

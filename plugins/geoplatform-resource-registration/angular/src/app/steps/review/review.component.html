@@ -1,0 +1,109 @@
+<mat-card>
+
+    <mat-card-subtitle>
+        Finally, review the resource you are registering to ensure it contains
+        all the information necessary.
+    </mat-card-subtitle>
+
+
+    <form [formGroup]="formGroup">
+
+
+        <!-- <pre>{{preview}}</pre>
+        <br> -->
+
+        <h5><strong>Name</strong> {{data.title}}</h5>
+        <p><strong>Type</strong> {{data.type}}</p>
+        <p><strong>Description</strong> {{data.description||"not specified"}} </p>
+        <p><strong>Home Page</strong>  {{data.landingPage||"not specified"}} </p>
+        <p>
+            <strong>Keywords</strong>
+            <span *ngIf="data.keywords">
+                <span *ngFor="let key of data.keywords">{{key}}</span>
+            </span>
+            <span *ngIf="!data.keywords||!data.keywords.length">none specified</span>
+        </p>
+        <p>
+            <strong>Publishers</strong>
+            <span *ngIf="data.publishers">
+                <span *ngFor="let pub of data.publishers">{{pub.label}}</span>
+            </span>
+            <span *ngIf="!data.publishers||!data.publishers.length">none specified</span>
+        </p>
+        <p>
+            <strong>Communites</strong>
+            <span *ngIf="data.communities">
+                <span *ngFor="let com of data.communities">{{com.label}}</span>
+            </span>
+            <span *ngIf="!data.communities||!data.communities.length">none specified</span>
+        </p>
+
+        <p *ngIf="'dcat:Dataset'===data.type">
+            <strong>Distribution</strong>
+            <span *ngIf="data.distributions && data.distributions.length">
+                {{data.distributions[0].accessURL}}
+            </span>
+            <span *ngIf="!data.distributions || !data.distributions.length">
+                Not specified
+            </span>
+        </p>
+
+        <p *ngIf="'regp:Service'===data.type">
+            <strong>Service URL</strong> {{data.href}}
+        </p>
+        <p *ngIf="'regp:Service'===data.type">
+            <strong>Service Type</strong> {{data.serviceType.label}}
+        </p>
+
+
+        <div *ngIf="'regp:Service'===data.type && data.layers">
+            <h5><strong>Service Layers</strong></h5>
+            <p *ngFor="let layer of data.layers">
+                {{layer.label}}
+            </p>
+        </div>
+
+
+    </form>
+
+
+    <div class="m-message m-message--error" *ngIf="hasError">
+        <div class="m-message__heading">
+            <mat-icon class="m-message__icon">error</mat-icon>
+            {{hasError.label||"An Error Occurred"}}
+        </div>
+        <div class="m-message__body">
+            {{hasError.message||"Something unexpected happened and an unknonwn error has occurred."}}
+        </div>
+    </div>
+
+
+    <mat-card-actions>
+        <div class="m-step__buttons">
+
+            <!-- if user wants to abort and start fresh -->
+            <button mat-raised-button matStepperPrevious
+                (click)="startOver()">
+                Cancel &amp; Start Over
+            </button>
+
+            <!-- in case user needs to go back to make changes -->
+            <button mat-raised-button matStepperPrevious>Back</button>
+
+            <!-- register resource and be done -->
+            <button mat-raised-button color="primary" matStepperNext
+                (click)="createAndLeave()">
+                Finish
+            </button>
+
+            <!-- register resource and start over to register another -->
+            <button mat-raised-button color="accent" matStepperPrevious
+                (click)="createAndStartOver()">
+                Finish &amp; Start Over
+            </button>
+
+        </div>
+    </mat-card-actions>
+
+
+</mat-card>
