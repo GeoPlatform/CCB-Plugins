@@ -116,6 +116,8 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           <div class="a-page__title">Welcome to the GeoPlatform!</div>
         <?php } elseif (is_404()) { ?>
           <div class="a-page__title">Page Not Found</div>
+        <?php } elseif (is_category()) { ?>
+          <div class="a-page__title"><?php esc_html(single_cat_title()); ?></div>
         <?php } else { ?>
           <div class="a-page__title"><?php the_title(); ?></div>
         <?php }
