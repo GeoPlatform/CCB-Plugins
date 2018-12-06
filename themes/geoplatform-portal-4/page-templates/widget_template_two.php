@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: I'm New Page
+ * Template Name: Widget Template Two
  *
  *https://developer.wordpress.org/themes/template-files-section/page-templates/
  */
@@ -16,9 +16,9 @@ https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/ -->
   <!--GeoPlatform header with intro -->
 <?php get_template_part( 'sub-header-home', get_post_format() ); ?>
 
-<?php if ( is_active_sidebar( 'geoplatform-widgetized-page-new' ) ) : ?>
+<?php if ( is_active_sidebar( 'geoplatform-widgetized-page-two' ) ) : ?>
     <div id="widgetized-page">
-      <?php dynamic_sidebar( 'geoplatform-widgetized-page-new' ); ?>
+      <?php dynamic_sidebar( 'geoplatform-widgetized-page-two' ); ?>
     </div><!-- widgetized-area -->
 <?php endif; ?>
 

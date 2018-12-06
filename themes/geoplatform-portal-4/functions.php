@@ -302,8 +302,8 @@ if ( ! function_exists ( 'geop_ccb_datapage' ) ) {
 	function geop_ccb_datapage() {
 		register_sidebar(
 		array(
-			'id' => 'geoplatform-widgetized-page-data',
-			'name' => __( 'Data Page Widgets', 'geoplatform-portal-four' ),
+			'id' => 'geoplatform-widgetized-page-two',
+			'name' => __( 'Widgetized Template Two', 'geoplatform-portal-four' ),
 			'description' => __( 'Widgets that go on the portal data page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
@@ -319,8 +319,8 @@ if ( ! function_exists ( 'geop_ccb_newpage' ) ) {
 	function geop_ccb_newpage() {
 		register_sidebar(
 		array(
-			'id' => 'geoplatform-widgetized-page-new',
-			'name' => __( 'New Page Widgets', 'geoplatform-portal-four' ),
+			'id' => 'geoplatform-widgetized-page-one',
+			'name' => __( 'Widgetized Template One', 'geoplatform-portal-four' ),
 			'description' => __( "Widgets that go on the portal I'm New page can be added here.", 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)

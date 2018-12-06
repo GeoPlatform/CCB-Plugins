@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Data Page
+ * Template Name: Widget Template One
  *
  *https://developer.wordpress.org/themes/template-files-section/page-templates/
  */
@@ -16,9 +16,9 @@ https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/ -->
   <!--GeoPlatform header with intro -->
 <?php get_template_part( 'sub-header-home', get_post_format() ); ?>
 
-<?php if ( is_active_sidebar( 'geoplatform-widgetized-page-data' ) ) : ?>
+<?php if ( is_active_sidebar( 'geoplatform-widgetized-page-one' ) ) : ?>
     <div id="widgetized-page">
-      <?php dynamic_sidebar( 'geoplatform-widgetized-page-data' ); ?>
+      <?php dynamic_sidebar( 'geoplatform-widgetized-page-one' ); ?>
     </div><!-- widgetized-area -->
 <?php endif; ?>
 

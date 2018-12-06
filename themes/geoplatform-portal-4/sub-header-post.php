@@ -23,6 +23,9 @@ while ($geopportal_breadcrumb_post->post_parent){
 </ul>
 
 <!-- Second part of excerpt will only show if the second excerpt string is populated. -->
-<div class="m-page-overview">
-  <?php echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)); ?>
-</div>
+<?php if (wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)) != '' ){
+?>
+  <div class="m-page-overview">
+    <?php echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)); ?>
+  </div>
+<?php } ?>
