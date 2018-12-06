@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, SimpleChanges,
+    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -14,13 +14,15 @@ import {
     MatAutocomplete
 } from '@angular/material';
 
-import {Observable} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 import {
     Config, ItemService, Query, QueryParameters, ItemTypes
 } from 'geoplatform.client';
 
-import { StepComponent, StepEvent } from '../step.component';
+
+import { AppEvent } from '../../app.component';
+import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
@@ -30,10 +32,11 @@ import { NG2HttpClient } from '../../http-client';
   templateUrl: './additional.component.html',
   styleUrls: ['./additional.component.less']
 })
-export class AdditionalComponent implements OnInit, StepComponent {
+export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     //for pre-populating values from the parent component
     @Input() data : any = null;
+    @Input() appEvents: Observable<AppEvent>;
 
     //for notifying parent component when necessary
     @Output() onEvent : EventEmitter<StepEvent> = new EventEmitter<StepEvent>();
@@ -45,10 +48,13 @@ export class AdditionalComponent implements OnInit, StepComponent {
     //for storing intermediate internal model values only for use within this step
     public formGroupPrivate: FormGroup;
 
+    public hasError : StepError;
+
     public filteredPublisherOptions: Observable<string[]>;
     public filteredCommunityOptions: Observable<string[]>;
 
     itemService : ItemService = null;
+    private eventsSubscription: any;
 
     @ViewChild('pubAutoComplete') pubMatAutocomplete: MatAutocomplete;
     @ViewChild('comAutoComplete') comMatAutocomplete: MatAutocomplete;
@@ -77,19 +83,33 @@ export class AdditionalComponent implements OnInit, StepComponent {
         this.itemService = new ItemService(Config.ualUrl, client);
     }
 
+    /**
+     *
+     */
     ngOnInit() {
 
         //set up filtering piping on the autocomplete fields
         this.filteredPublisherOptions = this.formGroupPrivate.get('publishers').valueChanges.pipe(
             startWith(''),
-            flatMap(value => this.filterPublishers(value))
+            flatMap(value => {
+                let result = this.filterPublishers(value);
+                return result;
+            })
         );
         this.filteredCommunityOptions = this.formGroupPrivate.get('communities').valueChanges.pipe(
             startWith(''),
             flatMap(value => this.filterCommunities(value))
         );
+
+
+        this.eventsSubscription = this.appEvents.subscribe( (event:AppEvent) => {
+            this.onAppEvent(event);
+        });
     }
 
+    /**
+     *
+     */
     ngOnChanges( changes : SimpleChanges ) {
 
         //pre-populate data if the parent component injected values in
@@ -118,15 +138,25 @@ export class AdditionalComponent implements OnInit, StepComponent {
         }
     }
 
+    /**
+     *
+     */
+    ngOnDestroy() {
+        this.eventsSubscription.unsubscribe();
+    }
+
 
 
     private filterPublishers(value: string): Promise<string[]> {
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
         let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue);
         return this.itemService.search(query)
-        .then( response => response.results )
+        .then( response => {
+            return response.results
+        })
         .catch(e => {
             //display error message indicating an issue searching...
+            this.hasError = new StepError("Error Searching Publishers", e.message);
         });
     }
     private filterCommunities(value: string): Promise<string[]> {
@@ -136,43 +166,9 @@ export class AdditionalComponent implements OnInit, StepComponent {
         .then( response => response.results )
         .catch(e => {
             //display error message indicating an issue searching...
+            this.hasError = new StepError("Error Searching Communities", e.message);
         });
     }
-
-
-
-    // addValuesWithDupes(key, value) {
-    //     let existing = this[key];
-    //
-    //     //if nothing already set...
-    //     if(!existing.length) {
-    //         if(Array.isArray(value))
-    //             existing = value;
-    //         else if(value)
-    //             existing.push(value);
-    //
-    //     } else if(value) {
-    //
-    //         if(Array.isArray(value)) {  //if adding an array of values
-    //             value.forEach( val => { this.addValuesWithDupes(key, val) });
-    //
-    //         } else if(typeof(value) === 'string') { //if adding a string
-    //             if(existing.indexOf(value) < 0) {
-    //                 existing.push(value);
-    //             }
-    //
-    //         } else if(value.id) {   //if adding an object
-    //             let idx = -1;
-    //             existing.forEach( (it, i) => { if(it.id === value.id) idx = i; });
-    //             if(idx < 0) {
-    //                 existing.push(value);
-    //             }
-    //         }
-    //     }
-    //
-    //     this[key] = existing;
-    // }
-
 
 
     addKeyword(event: MatChipInputEvent): void {
@@ -280,6 +276,18 @@ export class AdditionalComponent implements OnInit, StepComponent {
 
     get communities() {
         return this.formGroup.get("communities").value || [];
+    }
+
+
+
+    onAppEvent( event : AppEvent ) {
+        console.log("AdditionalStep: App Event: " + event.type);
+        switch(event.type) {
+            case 'reset':
+                this.hasError = null;
+                this.formGroupPrivate.reset();
+                break;
+        }
     }
 
 }

@@ -7,11 +7,18 @@ import {
     HttpResponse, HttpEvent, HttpErrorResponse
 } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ItemTypes, Config, ItemService, ServiceService, Query, QueryParameters } from 'geoplatform.client';
+import { Observable, Subject } from 'rxjs';
+import {
+    ItemTypes, Config, ItemService, ServiceService, Query, QueryParameters
+} from 'geoplatform.client';
 
+import { AppEvent } from '../../app.component';
 import { StepComponent, StepEvent, StepError } from '../step.component';
 import { NG2HttpClient } from '../../http-client';
 import { environment } from '../../../environments/environment';
+
+
+const URL_VALIDATOR = Validators.pattern("https?://.+");
 
 
 @Component({
@@ -22,6 +29,8 @@ import { environment } from '../../../environments/environment';
 export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
     @Input() data : any;
+    @Input() appEvents: Observable<AppEvent>;
+
     @Output() onEvent : EventEmitter<StepEvent> = new EventEmitter<StepEvent>();
 
     public formGroup: FormGroup;
@@ -36,6 +45,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
 
     private typeListener : any;
+    private eventsSubscription: any;
     private httpClient : NG2HttpClient;
 
     formOpts : any = {
@@ -51,7 +61,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         //maps to Dataset.distributions[ N ].accessURL
         //  OR to Service.href
-        accessURL: [''],
+        accessURL: ['', URL_VALIDATOR],
 
         //maps to Item.landingPage
         landingPage: [''],
@@ -93,7 +103,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             this.onTypeSelection(val);
         });
 
-        
+        this.eventsSubscription = this.appEvents.subscribe((event) => {
+            this.onAppEvent(event);
+        });
+
+
         // //-------------------------------------------------
         // //TEMP for dev purposes. Remove prior to push
         // setTimeout( () => {
@@ -137,6 +151,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
     ngOnDestroy() {
         this.typeListener.unsubscribe();
+        this.eventsSubscription.unsubscribe();
     }
 
 
@@ -160,7 +175,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         //update validators based upon type selected
         if(type && ItemTypes.SERVICE === type) {
-            urlField.setValidators(Validators.required);
+            urlField.setValidators([Validators.required, URL_VALIDATOR]);
             svcTypeField.setValidators(Validators.required);
 
 
@@ -170,7 +185,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
 
         } else {
-            urlField.setValidators(null);
+            urlField.setValidators(URL_VALIDATOR);
             svcTypeField.setValidators(null);
 
         }
@@ -225,6 +240,30 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
             this.hasError = new StepError("Unable to Fetch Service Info", e.message);
         });
+    }
+
+
+    isInvalid(fieldName) {
+        return this.formGroup.get(fieldName).invalid;
+    }
+
+    getErrorMessage(fieldName) {
+        if(this.formGroup.get(fieldName).hasError('required'))
+            return 'You must enter a value';
+        if(this.formGroup.get(fieldName).hasError('pattern'))
+            return 'You must provide a valid url';
+        return null;
+    }
+
+
+    onAppEvent( event : AppEvent ) {
+        console.log("TypeStep: App Event: " + event.type);
+        switch(event.type) {
+            case 'reset':
+                this.hasError = null;
+                this.status.isFetchingServiceInfo = false;
+                break;
+        }
     }
 
 }

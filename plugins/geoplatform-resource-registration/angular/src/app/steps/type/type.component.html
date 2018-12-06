@@ -19,12 +19,14 @@
                         <mat-option [value]="'regp:Service'">Service</mat-option>
                     </mat-select>
                     <mat-hint>You must specify a resource type before proceeding</mat-hint>
+                    <mat-error *ngIf="isInvalid('type')">{{getErrorMessage('type')}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field floatLabel="always">
                     <mat-label>Resource Name</mat-label>
                     <input matInput formControlName="title" placeholder="Name the resource" required>
                     <mat-hint>You must provide a name for the resource</mat-hint>
+                    <mat-error *ngIf="isInvalid('title')">{{getErrorMessage('title')}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field floatLabel="always">
@@ -53,11 +55,13 @@
                     <mat-form-field floatLabel="always">
                         <mat-label>Distribution URL</mat-label>
                         <mat-icon matPrefix>link</mat-icon>
-                        <input matInput formControlName="accessURL" placeholder="Specify a distribution URL">
+                        <input type="url" matInput formControlName="accessURL" placeholder="Specify a distribution URL">
                         <mat-hint>If the dataset is distributable via a web-accessible URL</mat-hint>
+                        <mat-error *ngIf="isInvalid('accessURL')">{{getErrorMessage('accessURL')}}</mat-error>
                     </mat-form-field>
 
                 </div>
+
 
                 <!-- if user selects Service type -->
                 <div *ngIf="currentType==='regp:Service'">
@@ -65,8 +69,9 @@
                     <mat-form-field floatLabel="always">
                         <mat-label>Service URL</mat-label>
                         <mat-icon matPrefix>link</mat-icon>
-                        <input matInput formControlName="accessURL" placeholder="Provide the service's URL" required>
+                        <input type="url" matInput formControlName="accessURL" placeholder="Provide the service's URL" required>
                         <mat-hint>The web-accessible URL to the service's API</mat-hint>
+                        <mat-error *ngIf="isInvalid('accessURL')">{{getErrorMessage('accessURL')}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field floatLabel="always">
@@ -75,6 +80,7 @@
                             <mat-option *ngFor="let type of serviceTypes" [value]="type">{{type.label}}</mat-option>
                         </mat-select>
                         <mat-hint>The type of web service</mat-hint>
+                        <mat-error *ngIf="isInvalid('serviceType')">{{getErrorMessage('serviceType')}}</mat-error>
                     </mat-form-field>
 
                     <div>
@@ -93,14 +99,12 @@
 
                 </div>
 
-
                 <mat-form-field floatLabel="always">
                     <mat-label>Home Page</mat-label>
                     <mat-icon matPrefix>link</mat-icon>
                     <input matInput formControlName="landingPage" placeholder="Specify the home page of the dataset">
                     <mat-hint>A home page where more information can be gathered</mat-hint>
                 </mat-form-field>
-                <br>
 
 
             </div>

@@ -92,7 +92,16 @@
             </div>
 
         </div>
-
+        
+        <div class="m-message m-message--error" *ngIf="hasError">
+            <div class="m-message__heading">
+                <mat-icon class="m-message__icon">error</mat-icon>
+                {{hasError.label||"An Error Occurred"}}
+            </div>
+            <div class="m-message__body">
+                {{hasError.message||"Something unexpected happened and an unknonwn error has occurred."}}
+            </div>
+        </div>
 
     </form>
 

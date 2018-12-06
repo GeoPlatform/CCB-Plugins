@@ -52,9 +52,9 @@ export class NG2HttpClient {
 
         let opts : any = {};
 
-        if(options.json === true)
-            opts.responseType = 'json';
-        else opts.responseType = 'text';
+        if(options.options && options.options.responseType) {
+            opts.responseType = options.options.responseType;
+        } else opts.responseType = 'json';  //default response type
 
         if(options.params) {
             opts.params = new HttpParams({fromObject: options.params});

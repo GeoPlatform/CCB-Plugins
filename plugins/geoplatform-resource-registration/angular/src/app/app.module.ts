@@ -33,6 +33,7 @@ export function initializeApp() {
 }
 
 
+import { AuthService } from "./auth.service";
 
 
 
@@ -88,7 +89,8 @@ export class PrettyJsonPipe implements PipeTransform {
           provide: APP_INITIALIZER,
           useFactory: initializeApp,
           multi: true
-      }
+      },
+      AuthService
   ],
   bootstrap: [AppComponent]
 })

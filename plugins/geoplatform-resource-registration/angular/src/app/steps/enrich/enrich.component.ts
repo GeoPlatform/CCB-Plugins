@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, SimpleChanges,
+    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -14,13 +14,14 @@ import {
     MatAutocomplete
 } from '@angular/material';
 
-import {Observable} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 import {
     Config, KGService, KGQuery, KGClassifiers, ItemTypes
 } from 'geoplatform.client';
 
-import { StepComponent, StepEvent } from '../step.component';
+import { AppEvent } from '../../app.component';
+import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
@@ -52,9 +53,10 @@ const Classifiers = {
   templateUrl: './enrich.component.html',
   styleUrls: ['./enrich.component.less']
 })
-export class EnrichComponent implements OnInit, StepComponent {
+export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
     @Input() data : any;
+    @Input() appEvents: Observable<AppEvent>;
     @Output() onEvent : EventEmitter<StepEvent> = new EventEmitter<StepEvent>();
 
     //for storing model values for usage in the workflow proper
@@ -63,6 +65,7 @@ export class EnrichComponent implements OnInit, StepComponent {
     //for storing intermediate internal model values only for use within this step
     public formGroupPrivate: FormGroup;
 
+    public hasError: StepError;
 
     public filteredPurposeOptions: Observable<string[]>;
     public filteredFunctionOptions: Observable<string[]>;
@@ -73,6 +76,7 @@ export class EnrichComponent implements OnInit, StepComponent {
     public filteredAudienceOptions: Observable<string[]>;
 
     kgService : KGService = null;
+    private eventsSubscription: any;
 
     @ViewChild('purposeAutoComplete') purposeMatAutocomplete: MatAutocomplete;
     @ViewChild('functionAutoComplete') functionMatAutocomplete: MatAutocomplete;
@@ -125,6 +129,11 @@ export class EnrichComponent implements OnInit, StepComponent {
         this.filteredPlaceOptions = this.setupFilteringFor('places', this.filterPlaces);
         this.filteredAudienceOptions = this.setupFilteringFor('audience', this.filterAudience);
         this.filteredCategoryOptions = this.setupFilteringFor('categories', this.filterCategories);
+
+
+        this.eventsSubscription = this.appEvents.subscribe((event:AppEvent) => {
+            this.onAppEvent(event);
+        });
     }
 
 
@@ -168,6 +177,9 @@ export class EnrichComponent implements OnInit, StepComponent {
         }
     }
 
+    ngOnDestroy() {
+        this.eventsSubscription.unsubscribe();
+    }
 
 
     private setupFilteringFor(key: string, method: Function) : Observable<string[]> {
@@ -351,4 +363,16 @@ export class EnrichComponent implements OnInit, StepComponent {
     get places() { return this.formGroup.get("places").value || []; }
     get categories() { return this.formGroup.get("categories").value || []; }
     get audience() { return this.formGroup.get("audience").value || []; }
+
+
+
+    onAppEvent( event : AppEvent ) {
+        console.log("EnrichStep: App Event: " + event.type);
+        switch(event.type) {
+            case 'reset':
+                this.hasError = null;
+                this.formGroupPrivate.reset();
+                break;
+        }
+    }
 }

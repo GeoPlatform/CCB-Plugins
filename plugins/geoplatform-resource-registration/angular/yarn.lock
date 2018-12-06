@@ -2503,9 +2503,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#0.2.0":
-  version "0.2.0"
-  resolved "git+http://github.com/GeoPlatform/client-api.git#cbec675f27dd80464a5ba90d637668796ed39728"
+"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
+  version "0.2.1"
+  resolved "git+http://github.com/GeoPlatform/client-api.git#30728ed08b146b59592cfd7ca245642d9a4d92c3"
   dependencies:
     jquery "^3.3.1"
     q "1.1.2"

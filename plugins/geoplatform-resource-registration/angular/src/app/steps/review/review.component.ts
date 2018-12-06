@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, SimpleChanges,
+    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -14,12 +14,14 @@ import {
     MatAutocomplete
 } from '@angular/material';
 
-import {Observable} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 import {
     Config, ItemService, ItemTypes
 } from 'geoplatform.client';
 
+
+import { AppEvent } from '../../app.component';
 import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
@@ -31,9 +33,10 @@ import { NG2HttpClient } from '../../http-client';
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.less']
 })
-export class ReviewComponent implements OnInit, OnChanges, StepComponent {
+export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepComponent {
 
     @Input() data : any;
+    @Input() appEvents: Observable<AppEvent>;
     @Output() onEvent : EventEmitter<StepEvent> = new EventEmitter<StepEvent>();
 
     public formGroup: FormGroup;
@@ -50,6 +53,7 @@ export class ReviewComponent implements OnInit, OnChanges, StepComponent {
 
 
     httpClient : NG2HttpClient;
+    private eventsSubscription: any;
 
 
     constructor(
@@ -65,6 +69,9 @@ export class ReviewComponent implements OnInit, OnChanges, StepComponent {
 
     ngOnInit() {
 
+        this.eventsSubscription = this.appEvents.subscribe((event:AppEvent) => {
+            this.onAppEvent(event);
+        });
     }
 
     ngOnChanges( changes : SimpleChanges ) {
@@ -80,6 +87,10 @@ export class ReviewComponent implements OnInit, OnChanges, StepComponent {
 
             this.preview = JSON.stringify(data, null, '    ');
         }
+    }
+
+    ngOnDestroy() {
+        this.eventsSubscription.unsubscribe();
     }
 
 
@@ -156,4 +167,15 @@ export class ReviewComponent implements OnInit, OnChanges, StepComponent {
 
     }
 
+
+
+
+    onAppEvent( event : AppEvent ) {
+        console.log("ReviewStep: App Event: " + event.type);
+        switch(event.type) {
+            case 'reset':
+                this.hasError = null;
+                break;
+        }
+    }
 }

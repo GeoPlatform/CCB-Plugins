@@ -1,6 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Observable, Subject } from 'rxjs';
 import { MatStepper } from '@angular/material';
 import { ItemTypes } from 'geoplatform.client';
 
@@ -11,7 +12,13 @@ import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 
+import { AuthService, GeoPlatformUser } from './auth.service';
 
+
+export interface AppEvent {
+    type   : string;
+    value ?: any;
+}
 
 
 
@@ -21,6 +28,9 @@ import { ReviewComponent } from './steps/review/review.component';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
+
+    @Output() appEvents: Subject<AppEvent>
+        = new Subject<AppEvent>();
 
     @ViewChild('stepper')           stepper: MatStepper;
     @ViewChild(TypeComponent)       step1: StepComponent;
@@ -40,10 +50,26 @@ export class AppComponent implements OnInit {
 
     //flag indicating user's signed in status
     public isAuthenticated : boolean = false;
+    public user : GeoPlatformUser = null;
 
 
-    constructor(private _formBuilder: FormBuilder) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private authService : AuthService
+    ) {
 
+        authService.getUser().then( user => {
+
+            //TEMP  ---------------------------------
+            if(!user) {
+                user = GeoPlatformUser.getTestUser();
+            }
+            //TEMP  ---------------------------------
+
+
+            this.user = user;
+            this.isAuthenticated = user !== null;
+        });
     }
 
     ngOnInit() {
@@ -182,13 +208,18 @@ export class AppComponent implements OnInit {
         switch(event.type) {
 
             case 'app.reset' :
+
+            this.stepper.reset();
+
             //clear item
             this.initItem();
             //notify each step to reset their internal form data
             // ...
             //reset stepper to first step
-            this.stepper.selectedIndex = 0;
+            // this.stepper.selectedIndex = 0;
 
+            let appEvent : AppEvent = { type:'reset', value: true };
+            this.appEvents.next(appEvent);
             break;
 
 
