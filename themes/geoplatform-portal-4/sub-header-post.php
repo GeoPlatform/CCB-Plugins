@@ -2,39 +2,27 @@
 // Secondary header, used for the home page.
 global $wp;
 
-// Excerpt grabber and size-checker for header. Not complex, but makes me feel clever.
-// If the exceprt is larger than 300 characters, breaks it in half while making
-// sure that the first half is as close to 300 as possible without going over.
-$geop_portal_excerpt_one = get_the_excerpt();
-$geop_portal_excerpt_two = "";
-
-if (strlen($geop_portal_excerpt_one) > 300){
-  $geop_portal_exploded_array = explode('.', $geop_portal_excerpt_one);
-  $geop_portal_excerpt_one = array_shift($geop_portal_exploded_array) . '.';
-  while (count($geop_portal_exploded_array) > 0 && (strlen($geop_portal_excerpt_one) + strlen($geop_portal_exploded_array[0]) < 300))
-    $geop_portal_excerpt_one = $geop_portal_excerpt_one . array_shift($geop_portal_exploded_array) . '.';
-  $geop_portal_excerpt_two = implode('.', $geop_portal_exploded_array);
+// Breadcrumb post array creation, starting with current post and added each parent in turn.
+$geopportal_breadcrumb_post = $post;
+$geopportal_breadcrumb_array = array($post);
+while ($geopportal_breadcrumb_post->post_parent){
+  $geopportal_breadcrumb_post = get_post($geopportal_breadcrumb_post->post_parent);
+  array_push($geopportal_breadcrumb_array, $geopportal_breadcrumb_post);
 }
-
 ?>
 
 <ul class="m-page-breadcrumbs">
     <li><a href="<?php echo home_url() ?>/">Home</a></li>
-    <li><a href="<?php echo home_url(get_theme_mod('headlink_archive')); ?>">Pages</a></li>
-    <li><a href="<?php echo home_url($wp->request); ?>"><?php the_title(); ?></a></li>
+
+    <?php
+    // Adds breadcrumb elements from array to sub-header, starting from end to beginning of array.
+    for ($i = count($geopportal_breadcrumb_array)-1; $i >= 0; $i--) { ?>
+      <li><a href="<?php echo get_the_permalink($geopportal_breadcrumb_array[$i]); ?>"><?php echo get_the_title($geopportal_breadcrumb_array[$i]); ?></a></li>
+    <?php } ?>
+
 </ul>
 
 <!-- Second part of excerpt will only show if the second excerpt string is populated. -->
 <div class="m-page-overview">
-  <?php
-  echo $geop_portal_excerpt_one;
-  if (strlen($geop_portal_excerpt_two) > 0){
-  ?>
-    <div class="m-page-overview__additional">
-      <?php echo $geop_portal_excerpt_two ?>
-    </div>
-    <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded')">
-      <span class="fas fa-caret-down"></span>
-    </div>
-  <?php } ?>
+  <?php echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)); ?>
 </div>
