@@ -61,7 +61,7 @@ add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
 
 //Disable admin bar (un-comment for prod sites)
-//add_filter('show_admin_bar', '__return_false');
+add_filter('show_admin_bar', '__return_false');
 
 //--------------------------
 //Support adding Menus for header and footer
