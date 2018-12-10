@@ -9,6 +9,21 @@ while ($geopportal_breadcrumb_post->post_parent){
   $geopportal_breadcrumb_post = get_post($geopportal_breadcrumb_post->post_parent);
   array_push($geopportal_breadcrumb_array, $geopportal_breadcrumb_post);
 }
+
+// Excerpt grabber and size-checker for header. Not complex, but makes me feel clever.
+// If the exceprt is larger than 300 characters, breaks it in half while making
+// sure that the first half is as close to 300 as possible without going over.
+$geop_portal_excerpt_one = wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true));
+$geop_portal_excerpt_two = "";
+
+if (strlen($geop_portal_excerpt_one) > 300){
+  $geop_portal_excerpt_two = $geop_portal_excerpt_one;
+  $geop_portal_exploded_array = explode('.', $geop_portal_excerpt_one);
+  $geop_portal_excerpt_one = array_shift($geop_portal_exploded_array) . '.';
+  while (count($geop_portal_exploded_array) > 0 && (strlen($geop_portal_excerpt_one) + strlen($geop_portal_exploded_array[0]) < 300))
+    $geop_portal_excerpt_one = $geop_portal_excerpt_one . array_shift($geop_portal_exploded_array) . '.';
+  // $geop_portal_excerpt_two = implode('.', $geop_portal_exploded_array);
+}
 ?>
 
 <ul class="m-page-breadcrumbs">
@@ -22,10 +37,18 @@ while ($geopportal_breadcrumb_post->post_parent){
 
 </ul>
 
-<!-- Second part of excerpt will only show if the second excerpt string is populated. -->
 <?php if (wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)) != '' ){
 ?>
-  <div class="m-page-overview">
-    <?php echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)); ?>
+<div class="m-page-overview">
+  <?php echo $geop_portal_excerpt_one; ?>
+  <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
+    <span class="fas fa-caret-down"></span>
   </div>
+</div>
+<div class="m-page-overview__additional">
+  <?php echo $geop_portal_excerpt_two ?>
+  <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
+    <span class="fas fa-caret-down"></span>
+  </div>
+</div>
 <?php } ?>

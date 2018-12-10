@@ -25,6 +25,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/* Lee's additions */
+.m-page-overview.is-collapsed {
+  height: 0;
+  opacity: 0;
+  padding: 0 !important;
+}
+.m-page-overview__additive {
+  background: #f6f6f6;
+  border-bottom: 1px solid #ddd;
+  padding: 1em 8em 1em 3em;
+}
+
+
+
+
+
+
+
+
 .m-featured { padding: 0 1em; }
 .m-featured__main { }
 .m-featured__side { padding-bottom: 1em; }
@@ -2297,6 +2316,9 @@ article img.article__icon.u-right,
 .m-page-overview__additional.is-expanded {
   height: auto;
   opacity: 1;
+  background: #f6f6f6;
+  /* padding: 1em; */
+  border-bottom: 1px solid #ddd;
 }
 .m-page-warning-display {
   background-color: #fff3cd;
