@@ -72,9 +72,9 @@ function deactivate_geop_search() {
 }
 
 // Applies our custom page template to the created page.
-add_filter('page_template', 'geopsearch_apply_template');
+//add_filter('page_template', 'geopsearch_apply_template');
 function geopsearch_apply_template($geopsearch_page_template) {
-    if (is_page('geoplatform-search'))
+    if (is_page('geoplatform-search') && ! is_page_template('page-templates/search_page.php'))
         $geopsearch_page_template = dirname( __FILE__ ) . '/public/partials/geoplatform-search-page-template.php';
     return $geopsearch_page_template;
 }
@@ -86,10 +86,16 @@ function geopsearch_add_interface_page() {
 	$geopsearch_interface_post = array(
 		'post_title' => 'GeoPlatform Search',
 		'post_name' => 'geoplatform-search',
-		'post_content' => '',
 		'post_status' => 'publish',
-		'post_type' => 'page'
+		'post_type' => 'page',
 	);
+	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/geop_search_page.php'))
+		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/geop_search_page.php'));
+	else if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/page_full-width.php'))
+		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/page_full-width.php'));
+	else
+		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>'));
+
 	wp_insert_post($geopsearch_interface_post);
 }
 
