@@ -2,6 +2,24 @@
 @import (reference) 'theme.less';
 
 
+/* override material form field labels to be bolder */
+label.mat-form-field-label { font-weight: 550; }
+.mat-focused label.mat-form-field-label { font-weight: 700; }
+
+
+/* override material form field */
+mat-form-field {
+    width: 100%;
+    margin-bottom: 2em;
+
+    .mat-form-field-subscript-wrapper {
+        top: auto;
+    }
+}
+
+
+
+/* Override stepper container styles */
 .mat-horizontal-stepper-header-container {
     border-bottom: 1px solid lighten(@color-gray-xlt, 5%);
     background: fadeOut(@color-gray-xlt, 82.5%);
@@ -17,7 +35,6 @@ mat-step-header.mat-horizontal-stepper-header.mat-step-header {
         }
     }
 
-
     .mat-step-label, .mat-step-label-selected {
         font-size: 1em;
     }
@@ -31,6 +48,7 @@ mat-step-header.mat-horizontal-stepper-header.mat-step-header {
 }
 
 
+/* Override material card styles */
 mat-card.mat-card {
     padding: 1em;
 
@@ -52,17 +70,9 @@ mat-card.mat-card {
     }
 }
 
-mat-form-field {
-    width: 100%;
-    margin-bottom: 2em;
-
-    .mat-form-field-subscript-wrapper {
-        top: auto;
-    }
-}
 
 
-
+/* override material stepper buttons container and children */
 .m-step__buttons,
 .mat-card-actions .m-step__buttons {
     display: flex;

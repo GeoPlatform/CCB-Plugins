@@ -17,26 +17,32 @@
     margin-bottom: 2em;
 }
 
-:host.is-collapsed .c-constraint-options,
+:host.is-collapsed .m-constraint-options,
 :host.is-collapsed .c-constraint-container {
     display: none;
 }
 
-.c-constraint-picker { }
-.c-constraint-picker .heading {
+.o-constraint-picker { }
+
+.m-constraint-selector__heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.25em;
+    font-weight: 700;
 }
-.c-constraint-picker .heading span {
+.m-constraint-selector__heading span {
     flex: 1;
 }
+.m-constraint-selector__heading button {
+    font-size: 0.675em;
+}
 
-.c-constraint-picker .c-constraint-options {
+.o-constraint-picker .m-constraint-options {
     padding-left: 1.5em;
 }
 
-.c-constraint__option {
+.m-constraint__option {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -45,7 +51,7 @@
     background-color: #fff;
     cursor: pointer;
 }
-.c-constraint__option:hover {
+.m-constraint__option:hover {
     background-color: #f5f5f5;
     font-weight: 700;
 }

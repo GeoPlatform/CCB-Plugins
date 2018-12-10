@@ -64,7 +64,19 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((query) => this.executeQuery() );
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+
+
+        /* FOR TESTING PURPOSES ONLY */
+        // setTimeout(() => {
+        //     this.error = {
+        //         label:"An Error Occurred",
+        //         message: "This is just a test",
+        //         code: 500
+        //     };
+        // }, 3000);
+
+     }
 
     ngOnChanges( changes : SimpleChanges) {
         if(changes.constraints) {
@@ -116,7 +128,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             this.isLoading = false;
             this.totalResults = response.totalResults;
             this.results = response;
-            
+
             //TODO show facet counts in picker filters...
             // this.constraints.updateFacetCounts(response.facets);
         })

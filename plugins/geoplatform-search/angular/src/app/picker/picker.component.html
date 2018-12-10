@@ -1,19 +1,19 @@
-<div class="c-constraint-picker">
+<div class="o-constraint-picker">
 
-    <div class="c-constraint-selector">
-        <h4 class="heading">
+    <div class="m-constraint-selector">
+        <div class="m-constraint-selector__heading">
             <button type="button" class="btn btn-sm btn-link closeBtn" (click)="toggle()">
                 <span *ngIf="isClosed" class="far fa-plus-square"></span>
                 <span *ngIf="!isClosed" class="far fa-minus-square"></span>
             </button>
             <span>Add Filters...</span>
-        </h4>
+        </div>
 
         <div *ngIf="isClosed" (click)="toggle()">
             <em>Expand to see available filtering options</em>
         </div>
 
-        <div class="c-constraint-options" *ngIf="inPickerMode">
+        <div class="m-constraint-options" *ngIf="inPickerMode">
 
             <div class="u-text--sm">
                 For information about the following filter options and
@@ -24,7 +24,7 @@
 
 
             <div *ngFor="let opt of options"
-                class="c-constraint__option"
+                class="m-constraint__option"
                 (click)="activateConstraint(opt)">
                 <div>{{opt.label}}</div>
                 <span class="fas fa-arrow-alt-circle-right"></span>

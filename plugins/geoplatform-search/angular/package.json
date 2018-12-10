@@ -46,6 +46,7 @@
     "@types/leaflet-draw": "^0.4.10",
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
+    "geoplatform.style": "git+http://github.com/GeoPlatform/style.git#2.0.0",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~2.0.0",

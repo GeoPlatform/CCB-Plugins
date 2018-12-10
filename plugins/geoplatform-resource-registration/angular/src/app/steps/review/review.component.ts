@@ -94,11 +94,21 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     }
 
 
+
+    getTypeDisplayValue(type : string) : string {
+        switch(type) {
+            case ItemTypes.DATASET : return 'Dataset';
+            case ItemTypes.SERVICE : return 'Web Service';
+            default: return type;
+        }
+    }
+
+
+
     startOver() {
         //reset all forms
         this.onEvent.emit( { type:'app.reset', value:true } );
     }
-
 
 
     createAndStartOver() {

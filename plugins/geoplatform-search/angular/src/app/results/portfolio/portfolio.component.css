@@ -9,7 +9,7 @@
 
 
 /* center icons / thumbnails */
-.c-results-item .c-results-item__icon {
+.m-results-item .m-results-item__icon {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,28 +18,28 @@
 
 
 
-.c-results-item--dcat-dataset .c-results-item__type:before { background: darkblue; }
-.c-results-item--regp-service .c-results-item__type:before { background: green; }
-.c-results-item--layer .c-results-item__type:before { background: lightblue; }
-.c-results-item--map .c-results-item__type:before { background: red; }
-.c-results-item--gallery .c-results-item__type:before { background: orange; }
-.c-results-item--community .c-results-item__type:before { background: yellow; }
-.c-results-item--skos-concept .c-results-item__type:before { background: #ddd; }
-.c-results-item--skos-conceptscheme .c-results-item__type:before { background: #bbb; }
-.c-results-item--org-organization .c-results-item__type:before { background: #777; }
-.c-results-item--vcard-vcard .c-results-item__type:before { background: #333; }
+.m-results-item--dcat-dataset .m-results-item__type:before { background: darkblue; }
+.m-results-item--regp-service .m-results-item__type:before { background: green; }
+.m-results-item--layer .m-results-item__type:before { background: lightblue; }
+.m-results-item--map .m-results-item__type:before { background: red; }
+.m-results-item--gallery .m-results-item__type:before { background: orange; }
+.m-results-item--community .m-results-item__type:before { background: yellow; }
+.m-results-item--skos-concept .m-results-item__type:before { background: #ddd; }
+.m-results-item--skos-conceptscheme .m-results-item__type:before { background: #bbb; }
+.m-results-item--org-organization .m-results-item__type:before { background: #777; }
+.m-results-item--vcard-vcard .m-results-item__type:before { background: #333; }
 
 
-/* .c-results-item--dcat-dataset .svg-icon svg path { fill: darkblue; }
-.c-results-item--regp-service .svg-icon svg path { fill: green; }
-.c-results-item--layer .svg-icon svg path { fill: lightblue; }
-.c-results-item--map .svg-icon svg path { fill: red; }
-.c-results-item--gallery .svg-icon svg path { fill: orange; }
-.c-results-item--community .svg-icon svg path { fill: yellow; }
-.c-results-item--skos-concept .svg-icon svg path { fill: #ddd; }
-.c-results-item--skos-conceptscheme .svg-icon svg path { fill: #bbb; }
-.c-results-item--org-organization .svg-icon svg path { fill: #777; }
-.c-results-item--vcard-vcard .svg-icon svg path { fill: #333; } */
+/* .m-results-item--dcat-dataset .svg-icon svg path { fill: darkblue; }
+.m-results-item--regp-service .svg-icon svg path { fill: green; }
+.m-results-item--layer .svg-icon svg path { fill: lightblue; }
+.m-results-item--map .svg-icon svg path { fill: red; }
+.m-results-item--gallery .svg-icon svg path { fill: orange; }
+.m-results-item--community .svg-icon svg path { fill: yellow; }
+.m-results-item--skos-concept .svg-icon svg path { fill: #ddd; }
+.m-results-item--skos-conceptscheme .svg-icon svg path { fill: #bbb; }
+.m-results-item--org-organization .svg-icon svg path { fill: #777; }
+.m-results-item--vcard-vcard .svg-icon svg path { fill: #333; } */
 
 
-.c-results-item .svg-icon { opacity: 0.75; }
+.m-results-item .svg-icon { opacity: 0.75; }

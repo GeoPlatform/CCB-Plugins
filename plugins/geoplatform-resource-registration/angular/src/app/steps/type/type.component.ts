@@ -124,8 +124,8 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 //reset content
                 this.formGroup.reset();
 
-            } else {
-                //update content
+            } else { //update content
+
                 this.formGroup.get("type").setValue(data.type||null);
                 this.formGroup.get('title').setValue(data.title||null);
                 this.formGroup.get("description").setValue(data.description||null);
@@ -140,7 +140,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 } else if(ItemTypes.SERVICE === data.type && data.href) {
                     url = data.href;
                 }
-                this.formGroup.get('accessURL').setValue(null);
+                this.formGroup.get('accessURL').setValue(url);
 
                 //trigger selection event
                 this.onTypeSelection(data.type||null);
@@ -154,6 +154,15 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.eventsSubscription.unsubscribe();
     }
 
+    /**
+     * @param {any} t1 - first service type to compare
+     * @param {any} t2 - second service type to compare
+     * @return {boolean} true if they are the same, false otherwise
+     * @see https://angular.io/api/forms/SelectControlValueAccessor#customizing-option-selection
+     */
+    compareServiceTypes(t1 : any, t2: any) : boolean {
+        return t1 && t2 && t1.uri === t2.uri;
+    }
 
     /**
      * @param {string} type - newly-selected type
@@ -180,7 +189,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
 
             //TEMP FOR DEV PURPOSES, REMOVE BEFORE DEPLOYMENT...
-            urlField.setValue('https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_ACS2016/Tracts_Blocks/MapServer');
+            // urlField.setValue('https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_ACS2016/Tracts_Blocks/MapServer');
             //==================================================
 
 

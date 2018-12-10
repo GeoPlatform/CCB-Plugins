@@ -21,10 +21,10 @@
       "styles": [
           "../node_modules/bootstrap/dist/css/bootstrap.css",
           "../node_modules/font-awesome/css/font-awesome.css",
+          "../node_modules/geoplatform.style/dist/css/platform.css",
           "flex.less",
           "theme.less",
           "material-theme.less",
-          "messages.less",
           "overrides.less",
           "styles.css"
       ],

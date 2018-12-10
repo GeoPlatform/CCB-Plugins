@@ -277,7 +277,8 @@
     <mat-card-actions>
         <div class="m-step__buttons">
             <button mat-raised-button matStepperPrevious>Back</button>
-            <button mat-raised-button color="primary" matStepperNext>Continue</button>
+            <button mat-raised-button color="primary" matStepperNext
+                [disabled]="formGroup.invalid || !data.createdBy">Continue</button>
         </div>
     </mat-card-actions>
 

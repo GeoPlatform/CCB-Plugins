@@ -1,6 +1,34 @@
 /* You can add global styles to this file, and also import other style files */
 
+@import "../node_modules/geoplatform.style/dist/css/platform.css";
 
+@import "overrides.css";
+@import "icons.css";
+
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: .375em .75em;
+    font-size: 1em;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25em;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+select:not([multiple]) {
+    height: calc(2.25rem + 2px);
+}
+
+
+
+/*
 html { font-size: 16px!important; }
 * { margin: 0; box-sizing: border-box; }
 html, body { height: 100%; width: 100%; }
@@ -41,25 +69,7 @@ body a:not([href]):not([tabindex]) {
 label[for] {
     font-weight: 700;
 }
-input[type="text"],
-input[type="number"],
-select,
-textarea {
-    display: block;
-    width: 100%;
-    padding: .375em .75em;
-    font-size: 1em;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: .25em;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-select:not([multiple]) {
-    height: calc(2.25rem + 2px);
-}
+
 
 button {
     display: inline-block;
@@ -89,23 +99,18 @@ button.btn.btn-sm {
     line-height: 1.25;
 }
 
+*/
+
 
 /* here to override Portal Theme overriding this plugin's style */
-.btn-outline-danger {
+/*.btn-outline-danger {
     color: #dc3545!important;
     background-color: transparent!important;
     background-image: none!important;
     border-color: #dc3545!important;
 }
+*/
 
-
-
-
-
-
-.input-group-slick {
-    width: 100% !important; /* override Portal Theme's usage of "width:fit-content" */
-}
 
 
 
@@ -170,7 +175,7 @@ button.btn.btn-sm {
 
 
 
-
+/*
 .d-flex {
     display: flex;
     justify-content: flex-start;
@@ -186,7 +191,7 @@ button.btn.btn-sm {
 .flex-justify-around { justify-content: space-around; }
 .flex-wrap { flex-wrap: wrap; }
 .flex-1 { flex: 1; }
-
+*/
 
 
 
@@ -221,7 +226,7 @@ a.list-item.selected,
 
 
 
-/* ---------- search results -------------- */
+/* ---------- search results --------------
 
 
 
@@ -236,10 +241,6 @@ a.list-item.selected,
     margin-top: 1em;
     background: #fff;
     clear: both;
-
-    /* border-width: 0 0 0 5px;
-    border-style: solid;
-    border-color: transparent; */
 }
 
 .c-results-item__body > *:not(.c-results-item__icon) {
@@ -253,7 +254,6 @@ a.list-item.selected,
     justify-contents: space-between;
     align-items: flex-end;
     font-weight: 700;
-    /* margin-bottom: 0.25em; */
     padding: 1em 0 0;
 }
 .c-results-item__heading a {
@@ -294,21 +294,12 @@ a.list-item.selected,
 .c-results-item__facets {
     align-items: center;
     font-size: 0.875em;
-    /* padding: 0 0 0.25em; */
 }
 .c-results-item__facets.is-url { color: #999; }
 
 .c-results-item__facet {
     margin-right: 2em;
 }
-/* .c-results-item__type:before {
-    content: " ";
-    display: inline-block;
-    background: #ddd;
-    width: 0.75em;
-    height: 0.75em;
-    border-radius: 100%;
-} */
 
 
 .c-results-item__footer {
@@ -318,7 +309,6 @@ a.list-item.selected,
     flex-wrap: wrap;
     width: 100%;
     font-size: 0.875em;
-    /* border-top: 1px solid #e7e7e7; */
     color: #999;
 }
 
@@ -347,13 +337,8 @@ a.list-item.selected,
 }
 
 .c-results-item__footer .c-results-item__stats > *:not(.btn) {
-    /*border-right: 1px solid #e7e7e7;*/
     padding: 0.5em .5em;
 }
-
-/* .c-results-item__footer .c-results-item__actions {
-    border-top: 1px solid #e7e7e7;
-} */
 
 
 @media(min-width: 768px) {
@@ -411,7 +396,7 @@ a.list-item.selected,
         align-items: center;
     }
 }
-
+*/
 
 
 
@@ -518,67 +503,6 @@ a.list-item.selected,
 
 
 
-.svg-icon { }
-.svg-icon svg {
-    max-width: 1em;
-    max-height: 1em;
-    vertical-align: middle;
-}
-.svg-icon.svg-icon--md svg {
-    max-width: 2em;
-    max-height: 2em;
-}
-.svg-icon.svg-icon--lg svg {
-    max-width: 3em;
-    max-height: 3em;
-}
-.svg-icon.svg-icon--xlg svg {
-    max-width: 4em;
-    max-height: 4em;
-}
-.svg-icon svg path { color: #bbb; }
-
-.svg-icon.t-fg--accent svg path { color: #393; }
-/* .svg-icon.t-fg--active svg path { color: #393; }
-.svg-icon.t-fg--info svg path { color: #393; } */
-
-a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
-
-
-
-.c-results-item--dcat-dataset .svg-icon svg path { fill: darkblue; }
-.c-results-item--regp-service .svg-icon svg path { fill: green; }
-.c-results-item--layer .svg-icon svg path { fill: lightblue; }
-.c-results-item--map .svg-icon svg path { fill: red; }
-.c-results-item--gallery .svg-icon svg path { fill: orange; }
-.c-results-item--community .svg-icon svg path { fill: #909064; }
-.c-results-item--skos-concept .svg-icon svg path { fill: #ddd; }
-.c-results-item--skos-conceptscheme .svg-icon svg path { fill: #bbb; }
-.c-results-item--org-organization .svg-icon svg path { fill: #bbb; }
-.c-results-item--vcard-vcard .svg-icon svg path { fill: #bbb; }
-.c-results-item--dct-linguisticsystem .svg-icon svg path { fill: #bbb; }
-.c-results-item--page .svg-icon svg path { fill: #bbb; }
-.c-results-item--post .svg-icon svg path { fill: #bbb; }
-.c-results-item--attachment .svg-icon svg path { stroke: #bbb; }
-
-
-
-.gp-dcat-dataset .svg-icon svg path { fill: darkblue; }
-.gp-regp-service .svg-icon svg path { fill: green; }
-.gp-layer .svg-icon svg path { fill: lightblue; }
-.gp-map .svg-icon svg path { fill: red; }
-.gp-gallery .svg-icon svg path { fill: orange; }
-.gp-community .svg-icon svg path { fill: #909064; }
-.gp-skos-concept .svg-icon svg path { fill: #ddd; }
-.gp-skos-conceptscheme .svg-icon svg path { fill: #bbb; }
-.gp-org-organization .svg-icon svg path { fill: #bbb; }
-.gp-vcard-vcard .svg-icon svg path { fill: #bbb; }
-.gp-dct-linguisticsystem .svg-icon svg path { fill: #bbb; }
-.gp-page .svg-icon svg path { fill: #bbb; }
-.gp-post .svg-icon svg path { fill: #bbb; }
-.gp-attachment .svg-icon svg path { stroke: #bbb; }
-
-
 
 
 
@@ -605,11 +529,6 @@ a .svg-icon svg path, .btn .svg-icon svg path { color: inherit; }
 
 
 
-
-/* hide the leaflet draw control for circle marker */
-.leaflet-draw-section a.leaflet-draw-draw-circlemarker {
-    display: none!important;
-}
 
 
 

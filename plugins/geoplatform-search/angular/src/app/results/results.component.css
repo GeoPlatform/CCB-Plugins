@@ -16,3 +16,18 @@
     width: 100%;
     padding: 1em;
 }
+
+
+.nav-tabs .nav-link,
+.nav-tabs a.nav-link {
+    font-size: 1.125em;
+    font-weight: 500;
+    cursor: pointer;
+    color: #777;
+}
+
+.nav-tabs .nav-link.active,
+.nav-tabs .nav-item.show .nav-link {
+    color: #333;
+    font-weight: 600;
+}

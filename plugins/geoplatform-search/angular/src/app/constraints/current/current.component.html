@@ -1,5 +1,5 @@
-<div class="c-current-constraints" [ngClass]="{'is-collapsed':isClosed}">
-    <h4 class="heading">
+<div class="o-current-constraints" [ngClass]="{'is-collapsed':isClosed}">
+    <div class="heading">
         <button type="button" class="btn btn-sm btn-link" (click)="isClosed=!isClosed">
             <span *ngIf="isClosed" class="far fa-plus-square"></span>
             <span *ngIf="!isClosed" class="far fa-minus-square"></span>
@@ -10,18 +10,18 @@
             (click)="clear()">
             clear all
         </button>
-    </h4>
+    </div>
     <div *ngIf="isClosed" (click)="isClosed=!isClosed">
         <em>Expand to see current filters</em>
     </div>
     <div *ngIf="isEmpty() && !isClosed">
         <em>Add filters using the options above</em>
     </div>
-    <div class="c-constraints">
+    <div class="m-constraints">
 
         <div *ngFor="let constraint of constraints.list()"
-            class="c-constraint c-constraint__{{constraint.name}}">
-            <h5 class="heading">
+            class="m-constraint m-constraint__{{constraint.name}}">
+            <div class="m-constraint__heading">
                 <span>{{constraint.label||constraint.name}}</span>
                 <button type="button" class="btn btn-outline-danger btn-sm"
                     title="Remove all values for this constraint"
@@ -29,8 +29,8 @@
                     (click)="remove(constraint)">
                     clear
                 </button>
-            </h5>
-            <div *ngIf="!isMultiValue(constraint)" class="c-constraint__value">
+            </div>
+            <div *ngIf="!isMultiValue(constraint)" class="m-constraint__value">
                 <button type="button" class="btn btn-light btn-sm"
                     title="Remove this constraint"
                     (click)="remove(constraint)">
@@ -40,7 +40,7 @@
             </div>
             <div *ngIf="isMultiValue(constraint)">
                 <div *ngFor="let value of constraint.value"
-                    class="c-constraint__value">
+                    class="m-constraint__value">
                     <button type="button" class="btn btn-light btn-sm"
                         title="Remove this value"
                         (click)="removeValue(constraint, value)">

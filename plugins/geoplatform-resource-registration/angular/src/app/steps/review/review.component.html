@@ -6,65 +6,106 @@
     </mat-card-subtitle>
 
 
+
     <form [formGroup]="formGroup">
+        <!-- any form field needed here? -->
+    </form>
 
 
-        <!-- <pre>{{preview}}</pre>
-        <br> -->
-
-        <h5><strong>Name</strong> {{data.title}}</h5>
-        <p><strong>Type</strong> {{data.type}}</p>
-        <p><strong>Description</strong> {{data.description||"not specified"}} </p>
-        <p><strong>Home Page</strong>  {{data.landingPage||"not specified"}} </p>
-        <p>
-            <strong>Keywords</strong>
-            <span *ngIf="data.keywords">
+    <div class="a-property-display">
+        <label>Type:</label>
+        <span class="a-property-value" *ngIf="data.type">{{getTypeDisplayValue(data.type)}}</span>
+    </div>
+    <div class="a-property-display">
+        <label>Name:</label>
+        <span class="a-property-value">{{data.title}}</span>
+    </div>
+    <div class="a-property-display">
+        <label>Description:</label>
+        <div class="a-property-value">
+            <span *ngIf="data.description">{{data.description}}</span>
+            <span *ngIf="!data.description"><em>not specified</em></span>
+        </div>
+    </div>
+    <div class="a-property-display">
+        <label>Home Page:</label>
+        <div class="a-property-value">
+            <a *ngIf="data.landingPage" class="u-break--all"
+                href="{{data.landingPage}}" target="_blank">
+                {{data.landingPage}}
+            </a>
+            <span *ngIf="!data.landingPage"><em>not specified</em></span>
+        </div>
+    </div>
+    <div class="a-property-display">
+        <label>Keywords:</label>
+        <div class="a-property-value">
+            <span *ngIf="data.keywords && data.keywords.length">
                 <span *ngFor="let key of data.keywords">{{key}}</span>
             </span>
-            <span *ngIf="!data.keywords||!data.keywords.length">none specified</span>
-        </p>
-        <p>
-            <strong>Publishers</strong>
+            <span *ngIf="!data.keywords||!data.keywords.length"><em>none specified</em></span>
+        </div>
+    </div>
+    <div class="a-property-display">
+        <label>Publishers:</label>
+        <div class="a-property-value">
             <span *ngIf="data.publishers">
                 <span *ngFor="let pub of data.publishers">{{pub.label}}</span>
             </span>
-            <span *ngIf="!data.publishers||!data.publishers.length">none specified</span>
-        </p>
-        <p>
-            <strong>Communites</strong>
+            <span *ngIf="!data.publishers||!data.publishers.length"><em>none specified</em></span>
+        </div>
+    </div>
+    <div class="a-property-display">
+        <label>Communites:</label>
+        <div class="a-property-value">
             <span *ngIf="data.communities">
                 <span *ngFor="let com of data.communities">{{com.label}}</span>
             </span>
-            <span *ngIf="!data.communities||!data.communities.length">none specified</span>
-        </p>
+            <span *ngIf="!data.communities||!data.communities.length"><em>none specified</em></span>
+        </div>
+    </div>
 
-        <p *ngIf="'dcat:Dataset'===data.type">
-            <strong>Distribution</strong>
+    <div class="a-property-display" *ngIf="'dcat:Dataset'===data.type">
+        <label>Distribution:</label>
+        <div class="a-property-value">
             <span *ngIf="data.distributions && data.distributions.length">
-                {{data.distributions[0].accessURL}}
+                <a href="{{data.distributions[0].accessURL}}" target="_blank"
+                     class="u-break--all">
+                    {{data.distributions[0].accessURL}}
+                </a>
             </span>
             <span *ngIf="!data.distributions || !data.distributions.length">
-                Not specified
+                <em>not specified</em>
             </span>
-        </p>
-
-        <p *ngIf="'regp:Service'===data.type">
-            <strong>Service URL</strong> {{data.href}}
-        </p>
-        <p *ngIf="'regp:Service'===data.type">
-            <strong>Service Type</strong> {{data.serviceType.label}}
-        </p>
-
-
-        <div *ngIf="'regp:Service'===data.type && data.layers">
-            <h5><strong>Service Layers</strong></h5>
-            <p *ngFor="let layer of data.layers">
-                {{layer.label}}
-            </p>
         </div>
+    </div>
+
+    <div class="a-property-display" *ngIf="'regp:Service' === data.type">
+        <label>Service URL:</label>
+        <div class="a-property-value">
+            <a href="{{data.href}}" target="_blank" class="u-break--all">{{data.href}}</a>
+        </div>
+    </div>
+    <div class="a-property-display" *ngIf="'regp:Service' === data.type">
+        <label>Service Type:</label>
+        <div class="a-property-value">
+            <span *ngIf="data.serviceType">{{data.serviceType.label}}</span>
+            <span *ngIf="!data.serviceType"><em>not specified</em></span>
+        </div>
+    </div>
 
 
-    </form>
+    <div class="a-property-display" *ngIf="'regp:Service'===data.type && data.layers">
+        <label>Service Layers</label>
+        <div class="a-property-value">
+            <span *ngIf="!data.layers || !data.layers.length"><em>none specified</em></span>
+            <div *ngIf="data.layers && data.layers.length">
+                <p *ngFor="let layer of data.layers">
+                    {{layer.label}}
+                </p>
+            </div>
+        </div>
+    </div>
 
 
     <div class="m-message m-message--error" *ngIf="hasError">
@@ -92,12 +133,14 @@
 
             <!-- register resource and be done -->
             <button mat-raised-button color="primary" matStepperNext
+                [disabled]="!data.createdBy"
                 (click)="createAndLeave()">
                 Finish
             </button>
 
             <!-- register resource and start over to register another -->
             <button mat-raised-button color="accent" matStepperPrevious
+                [disabled]="!data.createdBy"
                 (click)="createAndStartOver()">
                 Finish &amp; Start Over
             </button>

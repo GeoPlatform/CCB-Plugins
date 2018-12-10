@@ -38,14 +38,6 @@ export class AppComponent implements OnInit {
     @ViewChild(EnrichComponent)     step3: StepComponent;
     @ViewChild(ReviewComponent)     step4: StepComponent;
 
-    //cached service harvested info for pre-populating steps' forms
-    public serviceInfo : any = null;
-    public stepTwoPresetData : {
-        keywords : string[];
-        publishers : any[];
-        communities : any[];
-    };
-
     public item : any;
 
     //flag indicating user's signed in status
@@ -69,6 +61,9 @@ export class AppComponent implements OnInit {
 
             this.user = user;
             this.isAuthenticated = user !== null;
+            if(!this.item.createdBy) {  //update editable resource's createdBy property
+                this.item.createdBy = user ? user.username : null;
+            }
         });
     }
 
@@ -93,25 +88,17 @@ export class AppComponent implements OnInit {
 
         if(!data) return;
 
-        let changed = false;
-        if( data.keywords && data.keywords.length ) {
-            this.applyItemData('keywords', data.keywords);
-            changed = true;
-        }
+        Object.keys(data).forEach( key => {
+            if( typeof(data[key]) !== 'undefined' &&  data[key] !== null &&
+                'serviceType' !== key && 'href' !== key
+            ) {
 
-        if( data.publishers && data.publishers.length ) {
-            this.applyItemData('publishers', data.publishers);
-            changed = true;
-        }
+                //if user provided a title, ignore whatever the harvest returned for label
+                if('label' === key && this.item.title) return;
 
-        if( data.communities && data.communities.length ) {
-            this.applyItemData('communities', data.communities);
-            changed = true;
-        }
-
-        if( changed ) {
-            this.triggerChangeDetection();
-        }
+                this.applyItemData(key, data[key]);
+            }
+        });
     }
 
 
@@ -136,7 +123,7 @@ export class AppComponent implements OnInit {
                 this.item.href = value;
             }
 
-        } else if('title' === key) {
+        } else if( 'title' === key || 'label' === key ) {
             this.item.title = this.item.label = value;
 
         }
@@ -227,8 +214,7 @@ export class AppComponent implements OnInit {
             // console.log("Caching service harvest for steps : ");
             // console.log(event.value);
 
-
-            this.serviceInfo = event.value;
+            // this.serviceInfo = event.value;
             this.prePopulateService(event.value);
 
             break;
@@ -244,10 +230,10 @@ export class AppComponent implements OnInit {
     initItem () {
         this.item = {
             // TEMPORARY for dev purposes only...
-            type: 'dcat:Dataset',
-            title: 'test',
+            // type: 'dcat:Dataset',
+            // title: 'test',
             // ----------------------------------
-            createdBy: 'gpUser' //to be set using AuthenticationService.getUser()
+            createdBy: this.user ? this.user.username : null
         };
     }
 }

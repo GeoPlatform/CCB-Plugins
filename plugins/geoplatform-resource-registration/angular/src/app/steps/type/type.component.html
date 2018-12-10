@@ -76,14 +76,17 @@
 
                     <mat-form-field floatLabel="always">
                         <mat-label>Service Type</mat-label>
-                        <mat-select placeholder="Select Type" formControlName="serviceType" required>
+                        <mat-select placeholder="Select Type"
+                            formControlName="serviceType"
+                            [compareWith]="compareServiceTypes"
+                            required>
                             <mat-option *ngFor="let type of serviceTypes" [value]="type">{{type.label}}</mat-option>
                         </mat-select>
                         <mat-hint>The type of web service</mat-hint>
                         <mat-error *ngIf="isInvalid('serviceType')">{{getErrorMessage('serviceType')}}</mat-error>
                     </mat-form-field>
 
-                    <div>
+                    <div class="u-mg-bottom--xxxlg">
                         <p>
                             Once a URL and Service Type is specified, you may
                             fetch metadata from the web service to pre-populate
@@ -94,7 +97,6 @@
                             <mat-progress-spinner mode="indeterminate"
                                 [diameter]="32" *ngIf="status.isFetchingServiceInfo"></mat-progress-spinner>
                         </button>
-                        <br>
                     </div>
 
                 </div>
@@ -125,7 +127,8 @@
 
     <mat-card-actions>
         <div class="m-step__buttons">
-            <button mat-raised-button color="primary" matStepperNext>Continue</button>
+            <button mat-raised-button color="primary" matStepperNext
+                [disabled]="formGroup.invalid || !data.createdBy">Continue</button>
         </div>
     </mat-card-actions>
 

@@ -1,7 +1,7 @@
 <div class="c-constraint__editor">
   <p>Select one or more organizations from the list below and click "Apply"</p>
   <br>
-  
+
   <label for="pubsFilter">Find organization(s) to use in filtering search results</label>
   <div class="input-group-slick">
       <span class="fa fa-search"></span>
@@ -10,7 +10,7 @@
             placeholder="Find organization by name..."
             [(ngModel)]="listFilter"
             (keyup.enter)="refreshOptions()">
-      <button type="button" class="btn btn-default" (click)="refreshOptions()">Find</button>
+      <button type="button" class="btn btn-secondary" (click)="refreshOptions()">Find</button>
   </div>
   <hr>
 

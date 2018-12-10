@@ -92,7 +92,7 @@
             </div>
 
         </div>
-        
+
         <div class="m-message m-message--error" *ngIf="hasError">
             <div class="m-message__heading">
                 <mat-icon class="m-message__icon">error</mat-icon>
@@ -109,7 +109,8 @@
     <mat-card-actions>
         <div class="m-step__buttons">
             <button mat-raised-button matStepperPrevious class="nav-btn">Back</button>
-            <button mat-raised-button color="primary" matStepperNext class="nav-btn">Continue</button>
+            <button mat-raised-button color="primary" matStepperNext
+                [disabled]="formGroup.invalid || !data.createdBy">Continue</button>
         </div>
     </mat-card-actions>
 

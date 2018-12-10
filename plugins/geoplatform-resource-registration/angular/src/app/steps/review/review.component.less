@@ -24,3 +24,43 @@
         }
     }
 }
+
+
+
+.a-property-display {
+    padding: .5em 1em;
+    overflow: hidden;
+
+    label {
+        display: block;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .a-property-value {
+        display: block;
+    }
+}
+@media(min-width:768px) {
+    .a-property-display {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        label {
+            flex: 0 0 200px;
+        }
+
+        .a-property-value {
+            flex: 1;
+            margin-left: 2em;
+        }
+    }
+}
+@media(min-width:992px) {
+    .a-property-display {
+        padding: .5em 3em;
+
+        label { text-align: right; }
+    }
+}

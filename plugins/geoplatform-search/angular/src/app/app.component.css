@@ -31,7 +31,8 @@
     }
     .l-header {
         flex: 100%;
-        margin: 0 2em;
+        margin: 1em 2em 0.5em;
+        border-bottom: none;
     }
     .l-sidebar {
         flex: 0 0 25em;
