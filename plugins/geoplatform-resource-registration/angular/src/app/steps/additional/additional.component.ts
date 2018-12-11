@@ -251,7 +251,9 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         existing.push(event.option.value);
         this.formGroup.get("publishers").setValue(existing);
 
+        //clear input and blur so autocomplete isn't left in weird state after selection
         this.publishersField.nativeElement.value='';
+        this.publishersField.nativeElement.blur();
         this.formGroupPrivate.get("publishers").setValue(null);
     }
 
@@ -260,7 +262,9 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         existing.push(event.option.value);
         this.formGroup.get("communities").setValue(existing);
 
+        //clear input and blur so autocomplete isn't left in weird state after selection
         this.communitiesField.nativeElement.value='';
+        this.communitiesField.nativeElement.blur();
         this.formGroupPrivate.get("communities").setValue(null);
     }
 
@@ -279,7 +283,13 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     }
 
 
-
+    public getValues ( key : string ) : any[] {
+        let existing = this.formGroup.get(key).value;
+        if(!existing) return [];
+        if(!Array.isArray(existing)) return [existing];
+        return existing;
+    }
+    
     onAppEvent( event : AppEvent ) {
         console.log("AdditionalStep: App Event: " + event.type);
         switch(event.type) {

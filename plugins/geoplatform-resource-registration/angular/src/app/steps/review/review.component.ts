@@ -17,7 +17,7 @@ import {
 import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 import {
-    Config, ItemService, ItemTypes
+    Config, ItemService, ItemTypes, ServiceService
 } from 'geoplatform.client';
 
 
@@ -95,6 +95,10 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
 
 
+    /**
+     * @param {string} type
+     * @return {string} label
+     */
     getTypeDisplayValue(type : string) : string {
         switch(type) {
             case ItemTypes.DATASET : return 'Dataset';
@@ -105,12 +109,18 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
 
 
+    /**
+     *
+     */
     startOver() {
         //reset all forms
         this.onEvent.emit( { type:'app.reset', value:true } );
     }
 
 
+    /**
+     *
+     */
     createAndStartOver() {
 
         //save resource and then start fresh in wizard...
@@ -125,6 +135,9 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         this.registerResource(func);
     }
 
+    /**
+     *
+     */
     createAndLeave() {
 
         //save resource and then navigate to resource's home page (OE for now)
@@ -139,12 +152,34 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     }
 
 
+    /**
+     * @param {function} callback - method to invoke upon successful registration
+     */
     private registerResource( callback : Function ) {
 
         this.generateURI().then( item => {
             return new ItemService(Config.ualUrl, this.httpClient).save(item)
         })
         .then( (persisted) => {
+
+            if(ItemTypes.SERVICE === persisted.type) {
+                //TODO call harvest on newly persisted service
+                return new ServiceService(Config.ualUrl, this.httpClient)
+                .harvest(persisted.id)
+                .then( layers => {
+                    return persisted;   //resolve the parent service
+                })
+                .catch( e => {
+                    // this.hasError = new StepError("Unable to Register Service Layers",
+                    //     e.message);
+                });
+
+            } else {
+                return Promise.resolve(persisted);
+            }
+
+        })
+        .then( persisted => {
             this.status.isSaving = false;
             this.status.isSaved = true;
             callback(persisted);
@@ -179,9 +214,11 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
 
 
-
+    /**
+     *
+     */
     onAppEvent( event : AppEvent ) {
-        console.log("ReviewStep: App Event: " + event.type);
+        // console.log("ReviewStep: App Event: " + event.type);
         switch(event.type) {
             case 'reset':
                 this.hasError = null;

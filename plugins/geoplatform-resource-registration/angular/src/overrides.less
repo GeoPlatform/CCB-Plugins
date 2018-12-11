@@ -2,6 +2,27 @@
 @import (reference) 'theme.less';
 
 
+.mat-icon.u-xs, .mat-icon.u-text--xs,
+.mat-icon.u-sm, .mat-icon.u-text--sm,
+.mat-icon.u-md, .mat-icon.u-text--md,
+.mat-icon.u-lg, .mat-icon.u-text--lg,
+.mat-icon.u-xlg, .mat-icon.u-text--xlg,
+.mat-icon.u-xxlg, .mat-icon.u-text--xxlg,
+.mat-icon.u-xxxlg, .mat-icon.u-text--xxxlg {
+    height: 1em;
+    width: 1em;
+}
+.mat-icon.u-xs, .mat-icon.u-text--xs { font-size: 0.75em; }
+.mat-icon.u-sm, .mat-icon.u-text--sm { font-size: 0.875em; }
+.mat-icon.u-md, .mat-icon.u-text--md { font-size: 1em; }
+.mat-icon.u-lg, .mat-icon.u-text--lg { font-size: 1.125em; }
+.mat-icon.u-xlg, .mat-icon.u-text--sm { font-size: 1.25em; }
+.mat-icon.u-xxlg, .mat-icon.u-text--xxlg { font-size: 1.5em; }
+.mat-icon.u-xxxlg, .mat-icon.u-text--xxxlg { font-size: 2em; }
+
+
+
+
 /* override material form field labels to be bolder */
 label.mat-form-field-label { font-weight: 550; }
 .mat-focused label.mat-form-field-label { font-weight: 700; }
@@ -48,9 +69,17 @@ mat-step-header.mat-horizontal-stepper-header.mat-step-header {
 }
 
 
+
 /* Override material card styles */
 mat-card.mat-card {
     padding: 1em;
+
+    .mat-card-content,
+    .mat-card-title,
+    .mat-card-header .mat-card-title,
+    .mat-card-subtitle {
+        font-size: 1em;
+    }
 
     .mat-card-content > .mat-card-subtitle,
     .mat-card > .mat-card-subtitle {

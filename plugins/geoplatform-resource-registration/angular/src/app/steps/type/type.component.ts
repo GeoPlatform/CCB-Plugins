@@ -115,6 +115,9 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         // }, 3000);
         // //-------------------------------------------------
 
+
+        this.formGroup.get("type").markAsTouched();
+        this.formGroup.get("title").markAsTouched();
     }
 
     ngOnChanges(changes : SimpleChanges) {

@@ -319,30 +319,37 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     onPurposeAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         this.onAutoCompleteSelection('purposes', event);
         this.purposesField.nativeElement.value = '';
+        this.purposesField.nativeElement.blur();
     }
     onFunctionAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         this.onAutoCompleteSelection('functions', event);
         this.functionsField.nativeElement.value = '';
+        this.functionsField.nativeElement.blur();
     }
     onTopicAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         this.onAutoCompleteSelection('topics', event);
         this.topicsField.nativeElement.value = '';
+        this.topicsField.nativeElement.blur();
     }
     onSubjectAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         this.onAutoCompleteSelection('subjects', event);
         this.subjectsField.nativeElement.value = '';
+        this.subjectsField.nativeElement.blur();
     }
     onPlaceAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         this.onAutoCompleteSelection('places', event);
         this.placesField.nativeElement.value = '';
+        this.placesField.nativeElement.blur();
     }
     onCategoryAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         this.onAutoCompleteSelection('categories', event);
         this.categoriesField.nativeElement.value = '';
+        this.categoriesField.nativeElement.blur();
     }
     onAudienceAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         this.onAutoCompleteSelection('audience', event);
         this.audienceField.nativeElement.value = '';
+        this.audienceField.nativeElement.blur();
     }
 
     onAutoCompleteSelection(key: string, event: MatAutocompleteSelectedEvent) : void {
