@@ -4414,7 +4414,7 @@ body {
 .p-landing-page .p-landing-page__portfolio {
   position: relative;
   padding: 4em 2em;
-  background-image: url(/img/wave-blue.svg);
+  /* background-image: url(/img/wave-blue.svg); */
   background-size: cover;
   background-repeat: repeat-x;
   background-position: center;

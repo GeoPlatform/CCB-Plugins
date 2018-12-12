@@ -34,21 +34,18 @@ add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
  */
 function geop_ccb_scripts() {
 	wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
-//  wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/css/bootstrap.css');
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
-//	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/platform.min.css');
-	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/style.css');
-	wp_enqueue_style( 'geop-platform-css', get_stylesheet_directory_uri() . '/css/styleguide.css');
 
+	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 	wp_enqueue_script( 'geop-prism-js', get_stylesheet_directory_uri() . '/js/prism.js' );
 	wp_enqueue_script( 'geop-styleguide-js', get_stylesheet_directory_uri() . '/js/styleguide.js' );
 
 	$geop_ccb_options = geop_ccb_get_theme_mods();
-	if (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on'){
-		wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
-	}
+	// if (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on'){
+	// 	wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
+	// }
 }
 add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 

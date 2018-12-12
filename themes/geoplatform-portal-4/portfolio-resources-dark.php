@@ -157,7 +157,6 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		PORTFOLIO RESOURCES SECTION
 		-->
 
-
 			<div class="p-landing-page__portfolio-wrapper t-dark" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
 
 		<!-- <div class="p-landing-page__portfolio-wrapper t-light"> -->
@@ -165,11 +164,11 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false" id="geopportal_anchor_carousel_dark" title="Explore Resources">
 
 		        <ol class="carousel-indicators">
-		            <li id="geopport_carousel_dark_ind_0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_dark_first_title) ?>"></li>
-		            <li id="geopport_carousel_dark_ind_1" title="<?php echo sanitize_text_field($geopportal_port_res_dark_second_title) ?>"></li>
-		            <li id="geopport_carousel_dark_ind_2" title="<?php echo sanitize_text_field($geopportal_port_res_dark_third_title) ?>"></li>
-		            <li id="geopport_carousel_dark_ind_3" title="<?php echo sanitize_text_field($geopportal_port_res_dark_fourth_title) ?>"></li>
-		            <li id="geopport_carousel_dark_ind_4" title="<?php echo sanitize_text_field($geopportal_port_res_dark_fifth_title) ?>"></li>
+		            <li id="geopport_carousel_dark_ind_0" data-target="#portfolioCarousel" data-slide-to="0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_dark_first_title) ?>"></li>
+		            <li id="geopport_carousel_dark_ind_1" data-target="#portfolioCarousel" data-slide-to="1" title="<?php echo sanitize_text_field($geopportal_port_res_dark_second_title) ?>"></li>
+		            <li id="geopport_carousel_dark_ind_2" data-target="#portfolioCarousel" data-slide-to="2" title="<?php echo sanitize_text_field($geopportal_port_res_dark_third_title) ?>"></li>
+		            <li id="geopport_carousel_dark_ind_3" data-target="#portfolioCarousel" data-slide-to="3" title="<?php echo sanitize_text_field($geopportal_port_res_dark_fourth_title) ?>"></li>
+		            <li id="geopport_carousel_dark_ind_4" data-target="#portfolioCarousel" data-slide-to="4" title="<?php echo sanitize_text_field($geopportal_port_res_dark_fifth_title) ?>"></li>
 		        </ol>
 
 		        <div class="m-article__heading m-article__heading--front-page"><?php echo sanitize_text_field($geopportal_port_res_dark_main_title) ?></div>
@@ -296,12 +295,12 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 
 		        </div>
 
-		        <a class="carousel-control-prev" href="#geopportal_anchor_carousel_dark" role="button" id="geopport_carousel_dark_left">
+		        <a class="carousel-control-prev" href="#geopportal_anchor_carousel_dark" role="button" data-slide="prev" id="geopport_carousel_dark_left">
 		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		            <span class="sr-only">Previous</span>
 		        </a>
 
-		        <a class="carousel-control-next" href="#geopportal_anchor_carousel_dark" role="button" id="geopport_carousel_dark_right">
+		        <a class="carousel-control-next" href="#geopportal_anchor_carousel_dark" role="button" data-slide="next" id="geopport_carousel_dark_right">
 		            <span class="carousel-control-next-icon" aria-hidden="true"></span>
 		            <span class="sr-only">Next</span>
 		        </a>
@@ -311,47 +310,47 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 
 
 				<script type="text/javascript">
-
-					var geopportal_port_res_dark_div_array = ['0', '1', '2', '3', '4'];
-					var geopportal_port_res_dark_car_index = 0;
-
-					jQuery(document).ready(function() {
-						jQuery("#geopport_carousel_dark_left").click(function(e){
-							var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-							var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-
-							jQuery(geopportal_port_res_dark_check_ind).removeClass("active");
-							jQuery(geopportal_port_res_dark_check_div).removeClass("active");
-
-							geopportal_port_res_dark_car_index--;
-							if (geopportal_port_res_dark_car_index < 0)
-								geopportal_port_res_dark_car_index = 4;
-
-							var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-							var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-
-							jQuery(geopportal_port_res_dark_check_ind).addClass("active");
-							jQuery(geopportal_port_res_dark_check_div).addClass("active");
-						});
-
-						jQuery("#geopport_carousel_dark_right").click(function(e){
-							var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-							var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-
-							jQuery(geopportal_port_res_dark_check_ind).removeClass("active");
-							jQuery(geopportal_port_res_dark_check_div).removeClass("active");
-
-							geopportal_port_res_dark_car_index++;
-							if (geopportal_port_res_dark_car_index > 4)
-								geopportal_port_res_dark_car_index = 0;
-
-							var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-							var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
-
-							jQuery(geopportal_port_res_dark_check_ind).addClass("active");
-							jQuery(geopportal_port_res_dark_check_div).addClass("active");
-						});
-			    });
+					//
+					// var geopportal_port_res_dark_div_array = ['0', '1', '2', '3', '4'];
+					// var geopportal_port_res_dark_car_index = 0;
+					//
+					// jQuery(document).ready(function() {
+					// 	jQuery("#geopport_carousel_dark_left").click(function(e){
+					// 		var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					// 		var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					//
+					// 		jQuery(geopportal_port_res_dark_check_ind).removeClass("active");
+					// 		jQuery(geopportal_port_res_dark_check_div).removeClass("active");
+					//
+					// 		geopportal_port_res_dark_car_index--;
+					// 		if (geopportal_port_res_dark_car_index < 0)
+					// 			geopportal_port_res_dark_car_index = 4;
+					//
+					// 		var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					// 		var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					//
+					// 		jQuery(geopportal_port_res_dark_check_ind).addClass("active");
+					// 		jQuery(geopportal_port_res_dark_check_div).addClass("active");
+					// 	});
+					//
+					// 	jQuery("#geopport_carousel_dark_right").click(function(e){
+					// 		var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					// 		var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					//
+					// 		jQuery(geopportal_port_res_dark_check_ind).removeClass("active");
+					// 		jQuery(geopportal_port_res_dark_check_div).removeClass("active");
+					//
+					// 		geopportal_port_res_dark_car_index++;
+					// 		if (geopportal_port_res_dark_car_index > 4)
+					// 			geopportal_port_res_dark_car_index = 0;
+					//
+					// 		var geopportal_port_res_dark_check_ind = "#geopport_carousel_dark_ind_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					// 		var geopportal_port_res_dark_check_div = "#geopport_carousel_dark_div_".concat(geopportal_port_res_dark_div_array[geopportal_port_res_dark_car_index])
+					//
+					// 		jQuery(geopportal_port_res_dark_check_ind).addClass("active");
+					// 		jQuery(geopportal_port_res_dark_check_div).addClass("active");
+					// 	});
+			    // });
 				</script>
 
 
