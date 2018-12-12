@@ -82,7 +82,15 @@ const appRoutes: Routes = [
 // }
 export function initializeApp() {
   return () => {
+      //initial configuration via build-time environment variables
       Config.configure(environment);
+
+      //optionally, if run-time environment variables specified,
+      // add those (overwriting any duplicates)
+      if(window.GeoPlatformSearchPluginEnv) {
+          console.log("Configuring app using run-time values");
+          Config.configure(window.GeoPlatformSearchPluginEnv);
+      }
   }
 }
 
