@@ -106,23 +106,23 @@ add_action( 'customize_register', 'geop_ccb_customize_register');
 
 function geop_ccb_header_link_register( $wp_customize ){
 
-	//http://themefoundation.com/wordpress-theme-customizer/ section 5.2 Radio Buttons
 	$wp_customize->add_section( 'headlink_format' , array(
 		'title'    => __( 'Header Links', 'geoplatform-ccb' ),
 		'priority' => 40
 	) );
 
-	$wp_customize->add_setting('headlink_archive',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('headlink_archive',array(
-		'type' => 'text',
-		'label' => 'Page Listing',
-		'section' => 'headlink_format',
-		'priority' => 5,
-	));
+	// For deprecated breadcrumb attribute.
+	// $wp_customize->add_setting('headlink_archive',array(
+	// 	'default' => '',
+	// 	'sanitize_callback' => 'sanitize_text_field'
+	// ));
+	//
+	// $wp_customize->add_control('headlink_archive',array(
+	// 	'type' => 'text',
+	// 	'label' => 'Page Listing',
+	// 	'section' => 'headlink_format',
+	// 	'priority' => 5,
+	// ));
 
 	$wp_customize->add_setting('headlink_data',array(
 		'default' => '',
@@ -143,7 +143,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 
 	$wp_customize->add_control('headlink_search',array(
 		'type' => 'text',
-		'label' => 'Pages',
+		'label' => 'Search',
 		'section' => 'headlink_format',
 		'priority' => 25,
 	));

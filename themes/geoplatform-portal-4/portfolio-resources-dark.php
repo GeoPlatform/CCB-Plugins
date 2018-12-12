@@ -157,11 +157,11 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		PORTFOLIO RESOURCES SECTION
 		-->
 
-			<div class="p-landing-page__portfolio-wrapper t-dark" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
+			<div class="p-landing-page__portfolio-wrapper t-dark">
 
 		<!-- <div class="p-landing-page__portfolio-wrapper t-light"> -->
 
-		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false" id="geopportal_anchor_carousel_dark" title="Explore Resources">
+		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false" id="geopportal_anchor_carousel_dark" title="Explore Resources" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
 
 		        <ol class="carousel-indicators">
 		            <li id="geopport_carousel_dark_ind_0" data-target="#portfolioCarousel" data-slide-to="0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_dark_first_title) ?>"></li>
@@ -185,14 +185,11 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div class="l-flex-container flex-justify-between">
-		                          <button type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_first_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_first_button_one) ?></button>
+		                          <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_first_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_first_button_one) ?></a>
 															<?php
 															if (!empty($geopportal_port_res_dark_first_button_two)){
 															?>
-		                            <button type="button" class="btn btn--secondary" href="<?php echo esc_url($geopportal_port_res_dark_first_link_two) ?>">
-		                                <?php echo sanitize_text_field($geopportal_port_res_dark_first_button_two) ?>
-		                                <span class="fas fa-external-link-alt"></span>
-		                            </button>
+		                            <a class="btn btn--secondary" href="<?php echo esc_url($geopportal_port_res_dark_first_link_two) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_first_button_two) ?>    <span class="fas fa-external-link-alt"></span></a>
 															<?php
 															}
 															?>
@@ -211,7 +208,7 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div class="l-flex-container flex-justify-between">
-		                           <button type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_second_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_second_button_one) ?></button>
+		                           <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_second_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_second_button_one) ?></a>
 															<?php
 															if (!empty($geopportal_port_res_dark_second_button_two)){
 															?>
@@ -234,7 +231,7 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div class="l-flex-container flex-justify-between">
-	                            <button type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_third_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_third_button_one) ?></button>
+	                            <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_third_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_third_button_one) ?></a>
 															<?php
 															if (!empty($geopportal_port_res_dark_third_button_two)){
 															?>
@@ -257,7 +254,7 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div class="l-flex-container flex-justify-between">
-	                            <button type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_fourth_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_fourth_button_one) ?></button>
+	                            <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_fourth_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_fourth_button_one) ?></a>
 															<?php
 															if (!empty($geopportal_port_res_dark_fourth_button_two)){
 															?>
@@ -280,7 +277,7 @@ class Geopportal_Portfolio_Resources_Dark_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div class="l-flex-container flex-justify-between">
-	                            <button type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_fifth_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_fifth_button_one) ?></button>
+	                            <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_dark_fifth_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_dark_fifth_button_one) ?></a>
 															<?php
 															if (!empty($geopportal_port_res_dark_fifth_button_two)){
 															?>

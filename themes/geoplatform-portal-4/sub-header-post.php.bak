@@ -20,7 +20,7 @@ if (strlen($geop_portal_excerpt_one) > 300){
 
 <ul class="m-page-breadcrumbs">
     <li><a href="<?php echo home_url() ?>/">Home</a></li>
-    <li><a href="<?php echo home_url(get_theme_mod('headlink_archive')); ?>">Pages</a></li>
+    <!-- <li><a href="<?php //echo home_url(get_theme_mod('headlink_archive')); ?>">Pages</a></li> -->
     <li><a href="<?php echo home_url($wp->request); ?>"><?php the_title(); ?></a></li>
 </ul>
 

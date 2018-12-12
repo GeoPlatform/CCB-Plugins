@@ -70,7 +70,8 @@
 			                var selectedItem = chart.getSelection()[0];
 			                if (selectedItem) {
 			                    let type = data.getValue(selectedItem.row, 2);
-			                    window.open('https://www.geoplatform.gov/geoplatform-search/#/?types=' + type, '');
+													let get_url = "<?php echo home_url(get_theme_mod('headlink_search')) ?>" + '/#/?types=';
+			                    window.open(get_url + type, '');
 			                }
 			            });
 			        }
