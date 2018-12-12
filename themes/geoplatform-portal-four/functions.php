@@ -143,9 +143,10 @@ function geop_ccb_header_link_register( $wp_customize ){
 
 	$wp_customize->add_control('headlink_search',array(
 		'type' => 'text',
-		'label' => 'Search',
+		'label' => 'Search (GeoPlatform Search Plugin Page)',
 		'section' => 'headlink_format',
 		'priority' => 25,
+		'default' => 'geoplatform-search'
 	));
 
 	$wp_customize->add_setting('headlink_new',array(

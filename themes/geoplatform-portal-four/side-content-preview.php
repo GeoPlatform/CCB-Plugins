@@ -59,14 +59,14 @@ class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 
 <!-- HTML for the widget control box. -->
 		<p>
-			<?php _e('Ensure to use a valid page, not a slug.', 'geoplatform-ccb'); ?>
+			<?php _e('Enter the slug for a page or category link.', 'geoplatform-ccb'); ?>
 		</p>
 		<p>
       <label for="<?php echo $this->get_field_id( 'geopportal_side_cont_prev_title' ); ?>">Widget Title:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_side_cont_prev_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_side_cont_prev_title' ); ?>" value="<?php echo esc_attr( $geopportal_side_cont_prev_title ); ?>" />
     </p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_side_cont_prev_link' ); ?>">Source Page:</label>
+			<label for="<?php echo $this->get_field_id( 'geopportal_side_cont_prev_link' ); ?>">Source Page Slug:</label>
 			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_side_cont_prev_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_side_cont_prev_link' ); ?>" value="<?php echo esc_attr( $geopportal_side_cont_prev_link ); ?>" />
 		</p>
 		<?php
