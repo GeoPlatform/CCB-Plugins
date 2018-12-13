@@ -73,11 +73,11 @@ function deactivate_geop_search() {
 
 // Applies our custom page template to the created page.
 //add_filter('page_template', 'geopsearch_apply_template');
-function geopsearch_apply_template($geopsearch_page_template) {
-    if (is_page('geoplatform-search') && ! is_page_template('page-templates/search_page.php'))
-        $geopsearch_page_template = dirname( __FILE__ ) . '/public/partials/geoplatform-search-page-template.php';
-    return $geopsearch_page_template;
-}
+// function geopsearch_apply_template($geopsearch_page_template) {
+//     if (is_page('geoplatform-search') && ! is_page_template('page-templates/search_page.php'))
+//         $geopsearch_page_template = dirname( __FILE__ ) . '/public/partials/geoplatform-search-page-template.php';
+//     return $geopsearch_page_template;
+// }
 
 // Sets the parameters of and then creates the search page. It deletes any old
 // version of that page before each generation.

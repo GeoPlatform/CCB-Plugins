@@ -86,6 +86,7 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 = 1.0.9 =
 * Updated visuals.
 * Localized site configuration improvements.
+* Separated template from plugin to permit universal application.
 
 = 1.0.8 =
 * Fixed discrepancy in environmental searching.
