@@ -80,6 +80,17 @@
                 }
               }
 
+              // Determines feature card modifications.
+              $geopccb_featured_card_style = get_theme_mod('feature_controls', 'fade');
+              $geopccb_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0))";
+              $geopccb_featured_card_outline = "";
+
+              if ($geopccb_featured_card_style == 'fade' || $geopccb_featured_card_style == 'both')
+                $geopccb_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
+              if ($geopccb_featured_card_style == 'outline' || $geopccb_featured_card_style == 'both')
+                $geopccb_featured_card_outline = "-webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #000000;";
+
+
               //List categories and descriptions
               foreach( $geopccb_categories_trimmed as $geopccb_category ) {
                     if (get_term_meta($geopccb_category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull
@@ -93,19 +104,12 @@
                   ?>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
                   <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
-                    <?php
-                    echo sprintf(
-                        '<a style="background-image:linear-gradient(
-                          rgba(0, 0, 0, 0.3),
-                          rgba(0, 0, 0, 0.3)
-                          ),
-                          url(%4$s);" href="%1$s" alt="%2$s" class="media embed-responsive embed-responsive-16by9" id="module"><h3 id="mid">%3$s</h3></a>',
-                        esc_url( get_category_link( $geopccb_category->term_id ) ),
-                        esc_attr( sprintf( __( 'View all posts in %s', 'geoplatform-ccb' ), $geopccb_category->name ) ),
-                        esc_attr( sprintf( __( ' %s', 'geoplatform-ccb' ), $geopccb_category->name ) ),
-                        esc_url($geopccb_category_image)
-                    );
-                    ?>
+                    <a style="background-image:<?php echo $geopccb_featured_card_fade ?>, url(<?php echo esc_url($geopccb_category_image) ?>);"
+                      href="<?php echo esc_url( get_category_link( $geopccb_category->term_id ) ) ?>"
+                      alt="<?php echo esc_attr( sprintf( __( 'View all posts in %s', 'geoplatform-ccb' ), $geopccb_category->name ) ) ?>"
+                      class="media embed-responsive embed-responsive-16by9" id="module">
+                        <h3 id="mid"><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( sprintf( __( ' %s', 'geoplatform-ccb' ), $geopccb_category->name ) ) ?></span></h3>
+                    </a>
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
             <?php } //foreach ?>

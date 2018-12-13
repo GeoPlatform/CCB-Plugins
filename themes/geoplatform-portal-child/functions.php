@@ -494,6 +494,7 @@ function geop_ccb_page_column_action( $geopccb_column, $geopccb_id ){};
 function geop_ccb_custom_field_page_checkboxes(){};
 function geop_ccb_page_column_filter( $geopccb_columns ){};
 function geop_ccb_page_column_sorter($geopccb_columns){};
+function geop_ccb_feature_card_register($wp_customize){};
 
 // Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};

@@ -118,6 +118,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Fixed bug with feature cards not displaying categories as intended.
 - Fixed bug with GeoPlatform Search header input not functioning correctly in category pages.
 - Included GeoPlatform Search Page template.
+- Added GeoPlatform control allowing user to toggle darkening and text outline of front page featured cards.
 
  = 3.2.2 =
 * Release November 12, 2018

@@ -522,6 +522,21 @@ if ( ! function_exists ( 'geop_ccb_sanitize_fonts' ) ) {
 }
 
 /**
+ * Sanitization callback function for customizer featured cards
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_featured_card' ) ) {
+	function geop_ccb_sanitize_featured_card( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'fade', 'outline', 'none', 'both' ) ) )
+			$geop_ccb_value = 'fade';
+		return $geop_ccb_value;
+	}
+}
+
+/**
  * Sanitization callback functions for customizer bootstrap
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
@@ -1770,12 +1785,29 @@ if ( ! function_exists ( 'geop_ccb_custom_field_catlink_data' ) ) {
 }
 
 
+if ( ! function_exists ( 'geop_ccb_feature_card_register' ) ) {
+  function geop_ccb_feature_card_register($wp_customize){
 
+    $wp_customize->add_setting('feature_controls',array(
+        'default' => 'on',
+        'sanitize_callback' => 'geop_ccb_sanitize_featured_card',
+    ));
 
-
-
-
-
+    $wp_customize->add_control('feature_controls',array(
+        'type' => 'radio',
+        'label' => 'Feature Card Appearance',
+        'section' => 'font_section',
+        'description' => "To make the text on featured cards stand out you can darken the image or outline the title text.",
+        'choices' => array(
+            'fade' => __('Fade the Image', 'geoplatform-ccb'),
+            'outline' => __('Outline the Text',  'geoplatform-ccb'),
+            'both' => __('Both', 'geoplatform-ccb'),
+            'none' => __('Neither', 'geoplatform-ccb')
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_feature_card_register');
+}
 
 
 if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {

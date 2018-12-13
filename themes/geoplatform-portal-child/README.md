@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Added GeoPlatform Search Page template.
+- Prevented title card fading controls from parent theme inheritance.
 
 ## 3.1.9
 * Released October 22, 2018

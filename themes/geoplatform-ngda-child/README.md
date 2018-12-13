@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Added GeoPlatform Search Page template.
+- Added GeoPlatform control allowing user to toggle darkening and text outline of front page featured cards.
 
 = 3.1.7 =
 * Released October 22, 2018
