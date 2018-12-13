@@ -106,8 +106,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                   }?>
                   <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
                   <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
-                  <?php //echo esc_html(get_bloginfo( 'name' )); ?>
-                  <?php echo home_url('geoplatform-search'); ?>
+                  <?php echo esc_html(get_bloginfo( 'name' )); ?>
                 </a>
                 </h4>
             </div><!--#col-md-12-->
