@@ -48,6 +48,32 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 }
 
+/**
+ * Adds front page category on theme activation.
+ *
+ * @link https://wordpress.stackexchange.com/questions/87177/wordpress-theme-activation-hook
+ *
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_make_front_page_category' ) ) {
+  function geop_ccb_make_front_page_category() {
+   $geop_ccb_cat_test = term_exists('front-page', 'category');
+   if ( $geop_ccb_cat_test == 0 || $geop_ccb_cat_test == null ){
+     if (file_exists (ABSPATH.'/wp-admin/includes/taxonomy.php'))
+       require_once (ABSPATH.'/wp-admin/includes/taxonomy.php');
+      wp_insert_category( array(
+        'cat_name' => 'Front Page',
+        'category_description' => 'Place posts, pages, or other forms of posts in this category for them to appear on the front page.',
+        'category_nicename' => 'front-page',
+        'category_parent' => '',
+        'taxonomy' => 'category',
+      ));
+    }
+  }
+  add_action( 'after_switch_theme', 'geop_ccb_make_front_page_category' );
+}
+//wp_footer
+
 //-------------------------------
 // Add Google Analytics
 //http://www.wpbeginner.com/beginners-guide/how-to-install-google-analytics-in-wordpress/

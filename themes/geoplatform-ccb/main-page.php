@@ -40,6 +40,7 @@
               $geopccb_per_page = 12;
               $geopccb_paged_offset = ($geopccb_paged - 1) * $geopccb_per_page;
 
+
               //getting the categories
               $geopccb_categories = get_categories( array(
                   'orderby'   => 'name',
@@ -49,6 +50,29 @@
                   'paged'     => $geopccb_paged,
                   'offset'    => $geopccb_paged_offset
               ) );
+
+
+              //getting the posts and pages
+              // Get view perms.
+              $geop_ccb_private_perm = array('publish');
+              if (current_user_can('read_private_pages'))
+                $geop_ccb_private_perm = array('publish', 'private');
+
+              // Sets the result types to post and page, including cat links if not a child theme
+              $geop_ccb_post_types = array('post','page');
+              if (post_type_exists('geopccb_catlink'))
+                $geop_ccb_post_types = array('post','page','geopccb_catlink');
+
+              $geopccb_pages = get_posts(array(
+                'post_type' => $geop_ccb_post_types,
+                'orderby' => 'date',
+                'order' => 'DESC',
+                'numberposts' => -1,
+                'cat'=> 'front-page',
+                'post_status' => $geop_ccb_private_perm
+              ) );
+
+
 
               // Checks the theme sorting setting and switches be default date or the custom method.
               $geopccb_categories_trimmed = array();
