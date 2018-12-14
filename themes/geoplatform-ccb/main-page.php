@@ -51,10 +51,11 @@
                   'offset'    => $geopccb_paged_offset
               ) );
 
-              foreach($geopccb_categories as $geopccb_category){
-                  var_dump($geopccb_category);
-                  echo "<br><br>";
-              }
+              // Temporary category vardump.
+              // foreach($geopccb_categories as $geopccb_category){
+              //     var_dump($geopccb_category);
+              //     echo "<br><br>";
+              // }
 
               // Excludes front-page category.
               function geopccb_front_page_out ($var){
@@ -72,11 +73,12 @@
               if (current_user_can('read_private_pages'))
                 $geop_ccb_private_perm = array('publish', 'private');
 
-              // Sets the result types to post and page, including cat links if not a child theme
+              // Sets the result types to post and page, including cat links if available
               $geop_ccb_post_types = array('post','page');
               if (post_type_exists('geopccb_catlink'))
                 $geop_ccb_post_types = array('post','page','geopccb_catlink');
 
+              // Grabs the posts.
               $geopccb_pages = get_posts(array(
                 'post_type' => $geop_ccb_post_types,
                 'orderby' => 'date',
@@ -86,17 +88,53 @@
                 'post_status' => $geop_ccb_private_perm
               ) );
 
-
+              // Three card info arrays for final output loop.
+              // WILL BE REPLACED WITH A MULTI-DIMENSIONAL ARRAY.
+              $geopccb_final_objects_name = array();
+              $geopccb_final_objects_thumb = array();
+              $geopccb_final_objects_url = array();
 
               // Checks the theme sorting setting and switches be default date or the custom method.
               $geopccb_categories_trimmed = array();
               $geopccb_pages_trimmed = array();
               $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
+
               if ($geopccb_featured_sort_format == 'date'){
-                $geopccb_categories_trimmed = $geopccb_categories;
+
+                // If set to date, the key arrays are populated with data from
+                // the page array first, then category array.
+                $geopccb_categories_final = $geopccb_categories;
                 $geopccb_pages_final = $geopccb_pages;
+
+                // Pages added.
+                foreach ($geopccb_pages as $geopccb_post){
+                  array_push($geopccb_final_objects_name, get_the_title($geopccb_post));
+
+                  if (has_post_thumbnail($geopccb_post))
+                    array_push($geopccb_final_objects_thumb, get_the_post_thumbnail_url($geopccb_post));
+                  else
+                    array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
+
+                  if (get_post_type($geopccb_post) == 'geopccb_catlink')
+                    array_push($geopccb_final_objects_url, $geopccb_post->geop_ccb_cat_link_url);
+                  else
+                    array_push($geopccb_final_objects_url, get_the_permalink($geopccb_post));
+                }
+
+                // Categories added.
+                foreach ($geopccb_categories as $geopccb_cat){
+                  array_push($geopccb_final_objects_name, $geopccb_cat->name);
+
+                  if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
+                    array_push($geopccb_final_objects_thumb, wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'full')[0]);
+                  else
+                    array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
+
+                  array_push($geopccb_final_objects_url, get_category_link( $geopccb_cat->term_id ));
+                }
               }
               else {
+
                 // Removes categories to be excluded from the featured output array.
                 // These include categories with negative/zero/no priority value and child categories.
                 foreach($geopccb_categories as $geopccb_category){
@@ -125,6 +163,7 @@
                     }
                   }
                 }
+                $geopccb_categories_final = $geopccb_categories_trimmed;
 
                 // Bubble sorts the pages and posts.
                 $geopccb_pages_size = count($geopccb_pages_trimmed)-1;
@@ -140,8 +179,53 @@
                   }
                 }
                 $geopccb_pages_final = $geopccb_pages_trimmed;
-              }
 
+                // var_dump(count($geopccb_pages_trimmed) . " + " . count($geopccb_categories_trimmed));
+                // Final array construction based upon priority values.
+                // Categories lose ties.
+                while (!empty($geopccb_pages_trimmed) || !empty($geopccb_categories_trimmed)){
+                // for ($i = 0; $i < count($geopccb_pages_trimmed) + count($geopccb_categories_trimmed); $i++) {
+
+                  // Value checks and grabs.
+                  $geopccb_page_val = 0;
+                  if (!empty($geopccb_pages_trimmed))
+                    $geopccb_page_val = $geopccb_pages_trimmed[0]->geop_ccb_post_priority;
+                  $geopccb_cat_val = 0;
+                  if (!empty($geopccb_categories_trimmed))
+                    $geopccb_cat_val = get_term_meta($geopccb_categories_trimmed[0]->cat_ID, 'cat_priority', true);
+
+                  // Check and action. Page victory in first check, cats in else.
+                  if ($geopccb_cat_val == 0 || ($geopccb_page_val > 0 && ($geopccb_page_val < $geopccb_cat_val))){
+                    array_push($geopccb_final_objects_name, get_the_title($geopccb_pages_trimmed[0]));
+
+                    if (has_post_thumbnail($geopccb_pages_trimmed[0]))
+                      array_push($geopccb_final_objects_thumb, get_the_post_thumbnail_url($geopccb_pages_trimmed[0]));
+                    else
+                      array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
+
+                    if (get_post_type($geopccb_pages_trimmed[0]) == 'geopccb_catlink')
+                      array_push($geopccb_final_objects_url, $geopccb_pages_trimmed[0]->geop_ccb_cat_link_url);
+                    else
+                      array_push($geopccb_final_objects_url, get_the_permalink($geopccb_pages_trimmed[0]));
+
+                    // var_dump(get_the_title($geopccb_pages_trimmed[0]));
+                    array_shift($geopccb_pages_trimmed);
+                  }
+                  else {
+                    array_push($geopccb_final_objects_name, $geopccb_categories_trimmed[0]->name);
+
+                    if (get_term_meta($geopccb_categories_trimmed[0]->cat_ID, 'category-image-id', true))
+                      array_push($geopccb_final_objects_thumb, wp_get_attachment_image_src(get_term_meta($geopccb_categories_trimmed[0]->cat_ID, 'category-image-id', true), 'full')[0]);
+                    else
+                      array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
+
+                    array_push($geopccb_final_objects_url, get_category_link( $geopccb_categories_trimmed[0]->term_id ));
+
+                    // var_dump($geopccb_categories_trimmed[0]->name);
+                    array_shift($geopccb_categories_trimmed);
+                  }
+                }
+              }
 
               // Determines feature card modifications.
               $geopccb_featured_card_style = get_theme_mod('feature_controls', 'fade');
@@ -155,54 +239,15 @@
 
 
 
-              foreach ($geopccb_pages_final as $geopccb_post){
-
-                // Sets the More Information link to point to the post or page, but replaces
-                // it with the cat link's URL custom value if it is a cat link.
-                $geopccb_link_url = get_the_permalink($geopccb_post);
-                if (get_post_type($geopccb_post) == 'geopccb_catlink')
-                  $geopccb_link_url = esc_url($geopccb_post->geop_ccb_cat_link_url);
-
-                // Grabs or assigns a default thumbnail to the post.
-                if (has_post_thumbnail($geopccb_post)) { //if there is an image ID to pull
-                  $geopccb_category_image = get_the_post_thumbnail_url($geopccb_post); //get and set the URL
-                }
-                else { //No category image set
-                  $geopccb_category_image = $geopccb_category_image_default;
-                }
-
+              for ($i = 0; $i < count($geopccb_final_objects_name); $i++) {
                 ?>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
                   <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
-                    <a style="background-image:<?php echo $geopccb_featured_card_fade ?>, url(<?php echo esc_url($geopccb_category_image) ?>);"
-                      href="<?php echo esc_url( $geopccb_link_url ) ?>"
+                    <a style="background-image:<?php echo $geopccb_featured_card_fade ?>, url(<?php echo esc_url($geopccb_final_objects_thumb[$i]) ?>);"
+                      href="<?php echo esc_url( $geopccb_final_objects_url[$i] ) ?>"
                       alt="<?php echo esc_attr( __( 'More information', 'geoplatform-ccb' ) ) ?>"
                       class="media embed-responsive embed-responsive-16by9" id="module">
-                        <h3 id="mid"><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( __( get_the_title($geopccb_post), 'geoplatform-ccb' ) ) ?></span></h3>
-                    </a>
-                  </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
-                </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
-            <?php } //foreach
-
-
-              //List categories and descriptions
-              foreach( $geopccb_categories_trimmed as $geopccb_category ) {
-                    if (get_term_meta($geopccb_category->cat_ID, 'category-image-id', true)) { //if there is an image ID to pull
-                      $geopccb_class_category_image = get_term_meta($geopccb_category->cat_ID, 'category-image-id', true); //Get that ID
-                      $geopccb_category_image = wp_get_attachment_image_src($geopccb_class_category_image, 'full')[0]; //get and set the URL
-                      $geopccb_image_set = true; //at least one category has been changed
-                    }
-                    else { //No category image set
-                      $geopccb_category_image = $geopccb_category_image_default;
-                    }
-                  ?>
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
-                  <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
-                    <a style="background-image:<?php echo $geopccb_featured_card_fade ?>, url(<?php echo esc_url($geopccb_category_image) ?>);"
-                      href="<?php echo esc_url( get_category_link( $geopccb_category->term_id ) ) ?>"
-                      alt="<?php echo esc_attr( sprintf( __( 'View all posts in %s', 'geoplatform-ccb' ), $geopccb_category->name ) ) ?>"
-                      class="media embed-responsive embed-responsive-16by9" id="module">
-                        <h3 id="mid"><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( sprintf( __( ' %s', 'geoplatform-ccb' ), $geopccb_category->name ) ) ?></span></h3>
+                        <h3 id="mid"><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( __( $geopccb_final_objects_name[$i], 'geoplatform-ccb' ) ) ?></span></h3>
                     </a>
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
