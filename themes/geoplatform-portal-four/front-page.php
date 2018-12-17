@@ -9,7 +9,7 @@ https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/ -->
 <div class="l-body p-landing-page" role="main">
 
   <!--GeoPlatform header with intro -->
-<?php get_template_part( 'sub-header-home', get_post_format() ); ?>
+<?php //get_template_part( 'sub-header-home', get_post_format() ); ?>
 
 <?php if ( is_active_sidebar( 'geoplatform-widgetized-page' ) ) : ?>
     <div id="widgetized-page">

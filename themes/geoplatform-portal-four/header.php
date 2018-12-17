@@ -33,9 +33,22 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
             <div class="a-nav__collapsible-menu">
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Data</a>
+                <div class="dropdown" role="menuitem">
+                    <a class="btn btn-link dropdown-toggle is-hidden--xs" href="/data.html" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                        Explore Resources
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton">
+                        <a href="/resources/datasets.html">Datasets</a>
+                        <a href="/resources/services.html">Services</a>
+                        <a href="/resources/layers.html">Layers</a>
+                        <a href="/resources/maps.html">Maps</a>
+                        <a href="/resources/galleries.html">Galleries</a>
+                        <a href="/resources/communities.html">Communities</a>
+                    </div>
+                </div>
+
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_communities')); ?>">Communities</a>
                 <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_search')); ?>">Search</a>
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_new')); ?>">New to GeoPlatform</a>
             </div>
             <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url(get_theme_mod('headlink_help')); ?>">Help</a>
             <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
@@ -95,18 +108,18 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
     </div>
 
     <script>
-      jQuery(document).ready(function() {
-        jQuery("#userSignInButton").click(function(e){
-          if (jQuery("#geopportal_header_user_dropdown_parent").hasClass("show")){
-            jQuery("#geopportal_header_user_dropdown_parent").removeClass("show");
-            jQuery("#geopportal_header_user_dropdown_child").removeClass("show");
-          }
-          else {
-            jQuery("#geopportal_header_user_dropdown_parent").addClass("show");
-            jQuery("#geopportal_header_user_dropdown_child").addClass("show");
-          }
-        });
-      });
+      // jQuery(document).ready(function() {
+      //   jQuery("#userSignInButton").click(function(e){
+      //     if (jQuery("#geopportal_header_user_dropdown_parent").hasClass("show")){
+      //       jQuery("#geopportal_header_user_dropdown_parent").removeClass("show");
+      //       jQuery("#geopportal_header_user_dropdown_child").removeClass("show");
+      //     }
+      //     else {
+      //       jQuery("#geopportal_header_user_dropdown_parent").addClass("show");
+      //       jQuery("#geopportal_header_user_dropdown_child").addClass("show");
+      //     }
+      //   });
+      // });
     </script>
 
     <div class="o-header__secondary">

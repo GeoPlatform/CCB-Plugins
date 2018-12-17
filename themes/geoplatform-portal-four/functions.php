@@ -37,6 +37,7 @@ function geop_ccb_scripts() {
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
 
+	wp_enqueue_script( 'popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' );
 	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 	wp_enqueue_script( 'geop-prism-js', get_stylesheet_directory_uri() . '/js/prism.js' );
@@ -124,14 +125,27 @@ function geop_ccb_header_link_register( $wp_customize ){
 	// 	'priority' => 5,
 	// ));
 
-	$wp_customize->add_setting('headlink_data',array(
+	// $wp_customize->add_setting('headlink_data',array(
+	// 	'default' => '',
+	// 	'sanitize_callback' => 'sanitize_text_field'
+	// ));
+	//
+	// $wp_customize->add_control('headlink_data',array(
+	// 	'type' => 'text',
+	// 	'label' => 'Data',
+	// 	'section' => 'headlink_format',
+	// 	'priority' => 20,
+	// ));
+
+
+	$wp_customize->add_setting('headlink_communities',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
 	));
 
-	$wp_customize->add_control('headlink_data',array(
+	$wp_customize->add_control('headlink_communities',array(
 		'type' => 'text',
-		'label' => 'Data',
+		'label' => 'Communities',
 		'section' => 'headlink_format',
 		'priority' => 20,
 	));
@@ -175,17 +189,6 @@ function geop_ccb_header_link_register( $wp_customize ){
 
 
 
-	// $wp_customize->add_setting('headlink_portfolio',array(
-	// 	'default' => '',
-	// 	'sanitize_callback' => 'sanitize_text_field'
-	// ));
-	//
-	// $wp_customize->add_control('headlink_portfolio',array(
-	// 	'type' => 'text',
-	// 	'label' => 'Portfolio',
-	// 	'section' => 'headlink_format',
-	// 	'priority' => 15,
-	// ));
 
 	// $wp_customize->add_setting('headlink_default',array(
 	// 	'default' => '',

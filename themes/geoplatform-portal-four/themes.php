@@ -78,7 +78,7 @@ class Geopportal_Themes_Widget extends WP_Widget {
 		THEMES
 		-->
 		<article class="p-landing-page__themes">
-		  <div class="m-article__heading m-article__heading--front-page" id="neg_geopportal_anchor_themes" title="Themes"><?php _e(sanitize_text_field($geopportal_themes_title), 'geoplatform-ccb') ?></div>
+		  <div class="m-article__heading m-article__heading--front-page" id="geopportal_anchor_themes" title="Themes"><?php _e(sanitize_text_field($geopportal_themes_title), 'geoplatform-ccb') ?></div>
 		    <div class="m-article__desc">
           <div class="d-grid">
 						<?php
