@@ -40,7 +40,6 @@
               $geopccb_per_page = 12;
               $geopccb_paged_offset = ($geopccb_paged - 1) * $geopccb_per_page;
 
-
               //getting the categories
               $geopccb_categories = get_categories( array(
                   'orderby'   => 'name',
@@ -51,12 +50,6 @@
                   'offset'    => $geopccb_paged_offset
               ) );
 
-              // Temporary category vardump.
-              // foreach($geopccb_categories as $geopccb_category){
-              //     var_dump($geopccb_category);
-              //     echo "<br><br>";
-              // }
-
               // Excludes front-page category.
               function geopccb_front_page_out ($var){
                 if ($var->slug !== 'front-page')
@@ -64,8 +57,6 @@
                 return;
               }
               $geopccb_categories = array_filter($geopccb_categories, 'geopccb_front_page_out');
-
-
 
               //getting the posts and pages
               // Get view perms.
@@ -88,11 +79,44 @@
                 'post_status' => $geop_ccb_private_perm
               ) );
 
-              // Three card info arrays for final output loop.
-              // WILL BE REPLACED WITH A MULTI-DIMENSIONAL ARRAY.
-              $geopccb_final_objects_name = array();
-              $geopccb_final_objects_thumb = array();
-              $geopccb_final_objects_url = array();
+              // 2D array for final output. Also here are the post and category
+              // value grab functiosn. Feed a post/category into the respective
+              // function and it returns a 3-value array of the object values
+              // in name-thumbnail-url format.
+              $geopccb_final_objects_array = array();
+              function geopccb_add_featured_post($geopccb_post){
+                $geopccb_temp_array = array();
+
+                $geopccb_temp_array['name'] = get_the_title($geopccb_post);
+
+                if (has_post_thumbnail($geopccb_post))
+                  $geopccb_temp_array['thumb'] = get_the_post_thumbnail_url($geopccb_post);
+                else
+                  $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-category-photo.jpeg";
+
+                if (get_post_type($geopccb_post) == 'geopccb_catlink')
+                  $geopccb_temp_array['url'] = $geopccb_post->geop_ccb_cat_link_url;
+                else
+                  $geopccb_temp_array['url'] = get_the_permalink($geopccb_post);
+
+                return $geopccb_temp_array;
+              }
+
+              function geopccb_add_featured_category($geopccb_cat){
+                $geopccb_temp_array = array();
+
+                $geopccb_temp_array['name'] = $geopccb_cat->name;
+
+                if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
+                  $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'full')[0];
+                else
+                  $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-category-photo.jpeg";
+
+                $geopccb_temp_array['url'] = get_category_link( $geopccb_cat->term_id );
+
+                return $geopccb_temp_array;
+              }
+
 
               // Checks the theme sorting setting and switches be default date or the custom method.
               $geopccb_categories_trimmed = array();
@@ -107,31 +131,12 @@
                 $geopccb_pages_final = $geopccb_pages;
 
                 // Pages added.
-                foreach ($geopccb_pages as $geopccb_post){
-                  array_push($geopccb_final_objects_name, get_the_title($geopccb_post));
-
-                  if (has_post_thumbnail($geopccb_post))
-                    array_push($geopccb_final_objects_thumb, get_the_post_thumbnail_url($geopccb_post));
-                  else
-                    array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
-
-                  if (get_post_type($geopccb_post) == 'geopccb_catlink')
-                    array_push($geopccb_final_objects_url, $geopccb_post->geop_ccb_cat_link_url);
-                  else
-                    array_push($geopccb_final_objects_url, get_the_permalink($geopccb_post));
-                }
+                foreach ($geopccb_pages as $geopccb_post)
+                  array_push($geopccb_final_objects_array, geopccb_add_featured_post($geopccb_post));
 
                 // Categories added.
-                foreach ($geopccb_categories as $geopccb_cat){
-                  array_push($geopccb_final_objects_name, $geopccb_cat->name);
-
-                  if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
-                    array_push($geopccb_final_objects_thumb, wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'full')[0]);
-                  else
-                    array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
-
-                  array_push($geopccb_final_objects_url, get_category_link( $geopccb_cat->term_id ));
-                }
+                foreach ($geopccb_categories as $geopccb_cat)
+                  array_push($geopccb_final_objects_array, geopccb_add_featured_category($geopccb_cat));
               }
               else {
 
@@ -142,7 +147,6 @@
                     array_push($geopccb_categories_trimmed, $geopccb_category);
                   }
                 }
-
                 // Does the same with posts, pages, etc.
                 foreach($geopccb_pages as $geopccb_page){
                   if ($geopccb_page->geop_ccb_post_priority > 0){
@@ -195,35 +199,10 @@
                     $geopccb_cat_val = get_term_meta($geopccb_categories_trimmed[0]->cat_ID, 'cat_priority', true);
 
                   // Check and action. Page victory in first check, cats in else.
-                  if ($geopccb_cat_val == 0 || ($geopccb_page_val > 0 && ($geopccb_page_val < $geopccb_cat_val))){
-                    array_push($geopccb_final_objects_name, get_the_title($geopccb_pages_trimmed[0]));
-
-                    if (has_post_thumbnail($geopccb_pages_trimmed[0]))
-                      array_push($geopccb_final_objects_thumb, get_the_post_thumbnail_url($geopccb_pages_trimmed[0]));
-                    else
-                      array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
-
-                    if (get_post_type($geopccb_pages_trimmed[0]) == 'geopccb_catlink')
-                      array_push($geopccb_final_objects_url, $geopccb_pages_trimmed[0]->geop_ccb_cat_link_url);
-                    else
-                      array_push($geopccb_final_objects_url, get_the_permalink($geopccb_pages_trimmed[0]));
-
-                    // var_dump(get_the_title($geopccb_pages_trimmed[0]));
-                    array_shift($geopccb_pages_trimmed);
-                  }
-                  else {
-                    array_push($geopccb_final_objects_name, $geopccb_categories_trimmed[0]->name);
-
-                    if (get_term_meta($geopccb_categories_trimmed[0]->cat_ID, 'category-image-id', true))
-                      array_push($geopccb_final_objects_thumb, wp_get_attachment_image_src(get_term_meta($geopccb_categories_trimmed[0]->cat_ID, 'category-image-id', true), 'full')[0]);
-                    else
-                      array_push($geopccb_final_objects_thumb, $geopccb_category_image_default);
-
-                    array_push($geopccb_final_objects_url, get_category_link( $geopccb_categories_trimmed[0]->term_id ));
-
-                    // var_dump($geopccb_categories_trimmed[0]->name);
-                    array_shift($geopccb_categories_trimmed);
-                  }
+                  if ($geopccb_cat_val == 0 || ($geopccb_page_val > 0 && ($geopccb_page_val < $geopccb_cat_val)))
+                    array_push($geopccb_final_objects_array, geopccb_add_featured_post(array_shift($geopccb_pages_trimmed)));
+                  else
+                    array_push($geopccb_final_objects_array, geopccb_add_featured_category(array_shift($geopccb_categories_trimmed)));
                 }
               }
 
@@ -238,27 +217,28 @@
                 $geopccb_featured_card_outline = "-webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #000000;";
 
 
+              // for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
+              //   echo '<ol>';
+              //   foreach($geopccb_final_objects_array[$i] as $text){
+              //     echo '<li>' . $text . "</li>";
+              //   };
+              //   echo '</ol>';
+              // }
 
-              for ($i = 0; $i < count($geopccb_final_objects_name); $i++) {
+              // Final output.
+              for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
                 ?>
                 <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
                   <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
-                    <a style="background-image:<?php echo $geopccb_featured_card_fade ?>, url(<?php echo esc_url($geopccb_final_objects_thumb[$i]) ?>);"
-                      href="<?php echo esc_url( $geopccb_final_objects_url[$i] ) ?>"
+                    <a style="background-image:<?php echo $geopccb_featured_card_fade ?>, url(<?php echo esc_url($geopccb_final_objects_array[$i]['thumb']) ?>);"
+                      href="<?php echo esc_url( $geopccb_final_objects_array[$i]['url'] ) ?>"
                       alt="<?php echo esc_attr( __( 'More information', 'geoplatform-ccb' ) ) ?>"
                       class="media embed-responsive embed-responsive-16by9" id="module">
-                        <h3 id="mid"><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( __( $geopccb_final_objects_name[$i], 'geoplatform-ccb' ) ) ?></span></h3>
+                        <h3 id="mid"><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( __( $geopccb_final_objects_array[$i]['name'], 'geoplatform-ccb' ) ) ?></span></h3>
                     </a>
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
             <?php } //foreach ?>
-
-
-
-
-
-
-
 
             <div class="col-md-12">
               <p>

@@ -119,6 +119,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Fixed bug with GeoPlatform Search header input not functioning correctly in category pages.
 - Included GeoPlatform Search Page template.
 - Added GeoPlatform control allowing user to toggle darkening and text outline of front page featured cards.
+- The front page featured section can not support posts and pages. Place them in the Front Page category for them to appear. If using the Custom featured sorting method, they must also have priority values.
 
 ### 3.2.2 ###
 * Release November 12, 2018
