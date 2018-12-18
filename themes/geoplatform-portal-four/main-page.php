@@ -52,11 +52,11 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 			$geopportal_mainpage_disp_browse_link = "";
 
 		// Turns the slugs into pages.
-		$geopportal_mainpage_disp_first_page = get_page_by_path($geopportal_mainpage_disp_first_link, OBJECT, 'post');
-		$geopportal_mainpage_disp_second_page = get_page_by_path($geopportal_mainpage_disp_second_link, OBJECT, 'post');
-		$geopportal_mainpage_disp_third_page = get_page_by_path($geopportal_mainpage_disp_third_link, OBJECT, 'post');
-		$geopportal_mainpage_disp_fourth_page = get_page_by_path($geopportal_mainpage_disp_fourth_link, OBJECT, 'post');
-		$geopportal_mainpage_disp_fifth_page = get_page_by_path($geopportal_mainpage_disp_fifth_link, OBJECT, 'post');
+		$geopportal_mainpage_disp_first_page = get_page_by_path($geopportal_mainpage_disp_first_link, OBJECT, array('post', 'page', 'geopccb_catlink'));
+		$geopportal_mainpage_disp_second_page = get_page_by_path($geopportal_mainpage_disp_second_link, OBJECT, array('post', 'page', 'geopccb_catlink'));
+		$geopportal_mainpage_disp_third_page = get_page_by_path($geopportal_mainpage_disp_third_link, OBJECT, array('post', 'page', 'geopccb_catlink'));
+		$geopportal_mainpage_disp_fourth_page = get_page_by_path($geopportal_mainpage_disp_fourth_link, OBJECT, array('post', 'page', 'geopccb_catlink'));
+		$geopportal_mainpage_disp_fifth_page = get_page_by_path($geopportal_mainpage_disp_fifth_link, OBJECT, array('post', 'page', 'geopccb_catlink'));
 
 		// Sets up default thumbnails and overwrites if post has one.
 		$geopportal_mainpage_disp_first_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
@@ -75,6 +75,13 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 			$geopportal_mainpage_disp_fourth_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_fourth_page);
 		if ( has_post_thumbnail($geopportal_mainpage_disp_fifth_page) )
 			$geopportal_mainpage_disp_fifth_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_fifth_page);
+
+		// Checks if a post is a catlink or not, grabs appropriate URL.
+		$geopportal_mainpage_disp_first_url = get_post_type($geopportal_mainpage_disp_first_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_first_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_first_page);
+		$geopportal_mainpage_disp_second_url = get_post_type($geopportal_mainpage_disp_second_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_second_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_second_page);
+		$geopportal_mainpage_disp_third_url = get_post_type($geopportal_mainpage_disp_third_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_third_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_third_page);
+		$geopportal_mainpage_disp_fourth_url = get_post_type($geopportal_mainpage_disp_fourth_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_fourth_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_fourth_page);
+		$geopportal_mainpage_disp_fifth_url = get_post_type($geopportal_mainpage_disp_fifth_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_fifth_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_fifth_page);
 
 		// Sets up invalid post notices for dates and overwrites if the associated post is valid with an actual date.
 		$geopportal_mainpage_disp_first_date = "";
@@ -159,7 +166,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <img alt="<?php echo get_the_title($geopportal_mainpage_disp_first_page); ?>" src="<?php echo $geopportal_mainpage_disp_first_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
-		                    <a href="<?php echo get_the_permalink($geopportal_mainpage_disp_first_page); ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_first_page); ?></a>
+		                    <a href="<?php echo $geopportal_mainpage_disp_first_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_first_page); ?></a>
 		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_first_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_first_tags){
@@ -201,7 +208,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopportal_mainpage_disp_second_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
-		                    <a href="<?php echo get_the_permalink($geopportal_mainpage_disp_second_page); ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_second_page); ?></a>
+		                    <a href="<?php echo $geopportal_mainpage_disp_second_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_second_page); ?></a>
 		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_second_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_second_tags){
@@ -221,7 +228,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopportal_mainpage_disp_third_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
-		                    <a href="<?php echo get_the_permalink($geopportal_mainpage_disp_third_page); ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_third_page); ?></a>
+		                    <a href="<?php echo $geopportal_mainpage_disp_third_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_third_page); ?></a>
 		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_third_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_third_tags){
@@ -241,7 +248,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopportal_mainpage_disp_fourth_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
-		                    <a href="<?php echo get_the_permalink($geopportal_mainpage_disp_fourth_page); ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_fourth_page); ?></a>
+		                    <a href="<?php echo $geopportal_mainpage_disp_fourth_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_fourth_page); ?></a>
 		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_fourth_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_fourth_tags){
@@ -261,7 +268,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopportal_mainpage_disp_fifth_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
-		                    <a href="<?php echo get_the_permalink($geopportal_mainpage_disp_fifth_page); ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_fifth_page); ?></a>
+		                    <a href="<?php echo $geopportal_mainpage_disp_fifth_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_fifth_page); ?></a>
 		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_fifth_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_fifth_tags){
