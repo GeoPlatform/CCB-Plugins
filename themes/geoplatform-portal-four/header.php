@@ -38,12 +38,12 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                         Explore Resources
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton">
-                        <a href="/resources/datasets.html">Datasets</a>
-                        <a href="/resources/services.html">Services</a>
-                        <a href="/resources/layers.html">Layers</a>
-                        <a href="/resources/maps.html">Maps</a>
-                        <a href="/resources/galleries.html">Galleries</a>
-                        <a href="/resources/communities.html">Communities</a>
+                        <a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Datasets</a>
+                        <a href="<?php echo home_url(get_theme_mod('headlink_services')); ?>">Services</a>
+                        <a href="<?php echo home_url(get_theme_mod('headlink_layers')); ?>">Layers</a>
+                        <a href="<?php echo home_url(get_theme_mod('headlink_maps')); ?>">Maps</a>
+                        <a href="<?php echo home_url(get_theme_mod('headlink_galleries')); ?>">Galleries</a>
+                        <a href="<?php echo home_url(get_theme_mod('headlink_communities')); ?>">Communities</a>
                     </div>
                 </div>
 

@@ -1,4 +1,5 @@
 jQuery(document).ready( function() {
+
     jQuery('[data-html]').each( function(idx, el) {
         let $el = jQuery(el), src = $el.attr('data-html');
         jQuery.ajax({ url: src, dataType: "html" })
@@ -22,6 +23,24 @@ jQuery(document).ready( function() {
             }
         });
     });
+
+
+
+    //sticky header scroll hook to toggle shrunked look
+    setTimeout( function() {
+        var stickyHeader = jQuery(".o-header--sticky");
+        if(stickyHeader.length) {
+            jQuery(document).on("scroll", function() {
+                var scroll = jQuery(document).scrollTop();
+                if(scroll > 70){
+                    stickyHeader.addClass("is-shrunk");
+                } else {
+        			stickyHeader.removeClass("is-shrunk");
+        		}
+        	});
+        }
+    }, 3000);
+
 });
 
 function toggleClass(selector, className) {
@@ -44,4 +63,10 @@ function onInputFieldClear(btn) {
     var $el = jQuery(btn);
     $el.siblings('input').val('');
     $el.addClass('is-hidden');
+}
+
+
+
+function cycleCarouselTo(selector, slideNo) {
+    jQuery(selector).carousel( slideNo );
 }

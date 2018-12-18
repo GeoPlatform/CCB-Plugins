@@ -19,16 +19,11 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
       $geopportal_port_res_main_title = apply_filters('widget_title', $instance['geopportal_port_res_main_title']);
 		else
       $geopportal_port_res_main_title = "Explore Portfolio Resources";
-		if (array_key_exists('geopportal_port_res_color', $instance) && isset($instance['geopportal_port_res_color']) && !empty($instance['geopportal_port_res_color']))
-			$geopportal_port_res_color = $instance[ 'geopportal_port_res_color' ] ? 'true' : 'false';
-		else
-			$geopportal_port_res_color = 'true';
-
 
     if (array_key_exists('geopportal_port_res_first_title', $instance) && isset($instance['geopportal_port_res_first_title']) && !empty($instance['geopportal_port_res_first_title']))
       $geopportal_port_res_first_title = apply_filters('widget_title', $instance['geopportal_port_res_first_title']);
 		else
-      $geopportal_port_res_first_title = "Open Maps";
+      $geopportal_port_res_first_title = "Data";
 		if (array_key_exists('geopportal_port_res_first_content', $instance) && isset($instance['geopportal_port_res_first_content']) && !empty($instance['geopportal_port_res_first_content']))
       $geopportal_port_res_first_content = apply_filters('widget_title', $instance['geopportal_port_res_first_content']);
 		else
@@ -36,24 +31,16 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_first_button_one', $instance) && isset($instance['geopportal_port_res_first_button_one']) && !empty($instance['geopportal_port_res_first_button_one']))
       $geopportal_port_res_first_button_one = apply_filters('widget_title', $instance['geopportal_port_res_first_button_one']);
 		else
-      $geopportal_port_res_first_button_one = "Explore Open Maps";
+      $geopportal_port_res_first_button_one = "Register a Dataset";
 		if (array_key_exists('geopportal_port_res_first_link_one', $instance) && isset($instance['geopportal_port_res_first_link_one']) && !empty($instance['geopportal_port_res_first_link_one']))
       $geopportal_port_res_first_link_one = apply_filters('widget_title', $instance['geopportal_port_res_first_link_one']);
 		else
       $geopportal_port_res_first_link_one = "";
-		if (array_key_exists('geopportal_port_res_first_button_two', $instance) && isset($instance['geopportal_port_res_first_button_two']) && !empty($instance['geopportal_port_res_first_button_two']))
-      $geopportal_port_res_first_button_two = apply_filters('widget_title', $instance['geopportal_port_res_first_button_two']);
-		else
-      $geopportal_port_res_first_button_two = "Create an Open Map <span class='fas fa-external-link-alt'></span>";
-		if (array_key_exists('geopportal_port_res_first_link_two', $instance) && isset($instance['geopportal_port_res_first_link_two']) && !empty($instance['geopportal_port_res_first_link_two']))
-      $geopportal_port_res_first_link_two = apply_filters('widget_title', $instance['geopportal_port_res_first_link_two']);
-		else
-      $geopportal_port_res_first_link_two = "";
 
 		if (array_key_exists('geopportal_port_res_second_title', $instance) && isset($instance['geopportal_port_res_second_title']) && !empty($instance['geopportal_port_res_second_title']))
       $geopportal_port_res_second_title = apply_filters('widget_title', $instance['geopportal_port_res_second_title']);
 		else
-      $geopportal_port_res_second_title = "Data";
+      $geopportal_port_res_second_title = "Data Services";
 		if (array_key_exists('geopportal_port_res_second_content', $instance) && isset($instance['geopportal_port_res_second_content']) && !empty($instance['geopportal_port_res_second_content']))
       $geopportal_port_res_second_content = apply_filters('widget_title', $instance['geopportal_port_res_second_content']);
 		else
@@ -61,24 +48,16 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_second_button_one', $instance) && isset($instance['geopportal_port_res_second_button_one']) && !empty($instance['geopportal_port_res_second_button_one']))
       $geopportal_port_res_second_button_one = apply_filters('widget_title', $instance['geopportal_port_res_second_button_one']);
 		else
-      $geopportal_port_res_second_button_one = "Explore Datasets";
+      $geopportal_port_res_second_button_one = "Register a Service";
 		if (array_key_exists('geopportal_port_res_second_link_one', $instance) && isset($instance['geopportal_port_res_second_link_one']) && !empty($instance['geopportal_port_res_second_link_one']))
       $geopportal_port_res_second_link_one = apply_filters('widget_title', $instance['geopportal_port_res_second_link_one']);
 		else
       $geopportal_port_res_second_link_one = "";
-		if (array_key_exists('geopportal_port_res_second_button_two', $instance) && isset($instance['geopportal_port_res_second_button_two']) && !empty($instance['geopportal_port_res_second_button_two']))
-      $geopportal_port_res_second_button_two = apply_filters('widget_title', $instance['geopportal_port_res_second_button_two']);
-		else
-      $geopportal_port_res_second_button_two = "Register a Dataset";
-		if (array_key_exists('geopportal_port_res_second_link_two', $instance) && isset($instance['geopportal_port_res_second_link_two']) && !empty($instance['geopportal_port_res_second_link_two']))
-      $geopportal_port_res_second_link_two = apply_filters('widget_title', $instance['geopportal_port_res_second_link_two']);
-		else
-      $geopportal_port_res_second_link_two = "";
 
 		if (array_key_exists('geopportal_port_res_third_title', $instance) && isset($instance['geopportal_port_res_third_title']) && !empty($instance['geopportal_port_res_third_title']))
       $geopportal_port_res_third_title = apply_filters('widget_title', $instance['geopportal_port_res_third_title']);
 		else
-      $geopportal_port_res_third_title = "Data Services";
+      $geopportal_port_res_third_title = "Open Maps";
 		if (array_key_exists('geopportal_port_res_third_content', $instance) && isset($instance['geopportal_port_res_third_content']) && !empty($instance['geopportal_port_res_third_content']))
       $geopportal_port_res_third_content = apply_filters('widget_title', $instance['geopportal_port_res_third_content']);
 		else
@@ -86,19 +65,11 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_third_button_one', $instance) && isset($instance['geopportal_port_res_third_button_one']) && !empty($instance['geopportal_port_res_third_button_one']))
       $geopportal_port_res_third_button_one = apply_filters('widget_title', $instance['geopportal_port_res_third_button_one']);
 		else
-      $geopportal_port_res_third_button_one = "Explore Data Services";
+      $geopportal_port_res_third_button_one = "Create an Open Map";
 		if (array_key_exists('geopportal_port_res_third_link_one', $instance) && isset($instance['geopportal_port_res_third_link_one']) && !empty($instance['geopportal_port_res_third_link_one']))
       $geopportal_port_res_third_link_one = apply_filters('widget_title', $instance['geopportal_port_res_third_link_one']);
 		else
       $geopportal_port_res_third_link_one = "";
-		if (array_key_exists('geopportal_port_res_third_button_two', $instance) && isset($instance['geopportal_port_res_third_button_two']) && !empty($instance['geopportal_port_res_third_button_two']))
-      $geopportal_port_res_third_button_two = apply_filters('widget_title', $instance['geopportal_port_res_third_button_two']);
-		else
-      $geopportal_port_res_third_button_two = "Register a Service";
-		if (array_key_exists('geopportal_port_res_third_link_two', $instance) && isset($instance['geopportal_port_res_third_link_two']) && !empty($instance['geopportal_port_res_third_link_two']))
-      $geopportal_port_res_third_link_two = apply_filters('widget_title', $instance['geopportal_port_res_third_link_two']);
-		else
-      $geopportal_port_res_third_link_two = "";
 
 		if (array_key_exists('geopportal_port_res_fourth_title', $instance) && isset($instance['geopportal_port_res_fourth_title']) && !empty($instance['geopportal_port_res_fourth_title']))
       $geopportal_port_res_fourth_title = apply_filters('widget_title', $instance['geopportal_port_res_fourth_title']);
@@ -111,19 +82,11 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_fourth_button_one', $instance) && isset($instance['geopportal_port_res_fourth_button_one']) && !empty($instance['geopportal_port_res_fourth_button_one']))
       $geopportal_port_res_fourth_button_one = apply_filters('widget_title', $instance['geopportal_port_res_fourth_button_one']);
 		else
-      $geopportal_port_res_fourth_button_one = "Explore Galleries";
+      $geopportal_port_res_fourth_button_one = "Create a Gallery";
 		if (array_key_exists('geopportal_port_res_fourth_link_one', $instance) && isset($instance['geopportal_port_res_fourth_link_one']) && !empty($instance['geopportal_port_res_fourth_link_one']))
       $geopportal_port_res_fourth_link_one = apply_filters('widget_title', $instance['geopportal_port_res_fourth_link_one']);
 		else
       $geopportal_port_res_fourth_link_one = "";
-		if (array_key_exists('geopportal_port_res_fourth_button_two', $instance) && isset($instance['geopportal_port_res_fourth_button_two']) && !empty($instance['geopportal_port_res_fourth_button_two']))
-      $geopportal_port_res_fourth_button_two = apply_filters('widget_title', $instance['geopportal_port_res_fourth_button_two']);
-		else
-      $geopportal_port_res_fourth_button_two = "Create a Gallery <span class='fas fa-external-link-alt'></span>";
-		if (array_key_exists('geopportal_port_res_fourth_link_two', $instance) && isset($instance['geopportal_port_res_fourth_link_two']) && !empty($instance['geopportal_port_res_fourth_link_two']))
-      $geopportal_port_res_fourth_link_two = apply_filters('widget_title', $instance['geopportal_port_res_fourth_link_two']);
-		else
-      $geopportal_port_res_fourth_link_two = "";
 
 		if (array_key_exists('geopportal_port_res_fifth_title', $instance) && isset($instance['geopportal_port_res_fifth_title']) && !empty($instance['geopportal_port_res_fifth_title']))
       $geopportal_port_res_fifth_title = apply_filters('widget_title', $instance['geopportal_port_res_fifth_title']);
@@ -136,7 +99,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_fifth_button_one', $instance) && isset($instance['geopportal_port_res_fifth_button_one']) && !empty($instance['geopportal_port_res_fifth_button_one']))
       $geopportal_port_res_fifth_button_one = apply_filters('widget_title', $instance['geopportal_port_res_fifth_button_one']);
 		else
-      $geopportal_port_res_fifth_button_one = "Explore Communities";
+      $geopportal_port_res_fifth_button_one = "View New Communities";
 		if (array_key_exists('geopportal_port_res_fifth_link_one', $instance) && isset($instance['geopportal_port_res_fifth_link_one']) && !empty($instance['geopportal_port_res_fifth_link_one']))
       $geopportal_port_res_fifth_link_one = apply_filters('widget_title', $instance['geopportal_port_res_fifth_link_one']);
 		else
@@ -144,7 +107,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_fifth_button_two', $instance) && isset($instance['geopportal_port_res_fifth_button_two']) && !empty($instance['geopportal_port_res_fifth_button_two']))
       $geopportal_port_res_fifth_button_two = apply_filters('widget_title', $instance['geopportal_port_res_fifth_button_two']);
 		else
-      $geopportal_port_res_fifth_button_two = "";
+      $geopportal_port_res_fifth_button_two = "View Trending Communities";
 		if (array_key_exists('geopportal_port_res_fifth_link_two', $instance) && isset($instance['geopportal_port_res_fifth_link_two']) && !empty($instance['geopportal_port_res_fifth_link_two']))
       $geopportal_port_res_fifth_link_two = apply_filters('widget_title', $instance['geopportal_port_res_fifth_link_two']);
 		else
@@ -156,95 +119,108 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		<!--
 		PORTFOLIO RESOURCES SECTION
 		-->
+		<div class="p-landing-page__portfolio-wrapper t-light" id="resources">
 
-			<div class="p-landing-page__portfolio-wrapper t-light">
 
-		<!-- <div class="p-landing-page__portfolio-wrapper t-dark"> -->
-
-		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false" id="geopportal_anchor_carousel" title="Explore Resources" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
+		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false"id="geopportal_anchor_carousel" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
 
 		        <ol class="carousel-indicators">
-		            <li id="geopport_carousel_ind_0" data-target="#portfolioCarousel" data-slide-to="0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>"></li>
-		            <li id="geopport_carousel_ind_1" data-target="#portfolioCarousel" data-slide-to="1" title="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>"></li>
-		            <li id="geopport_carousel_ind_2" data-target="#portfolioCarousel" data-slide-to="2" title="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>"></li>
-		            <li id="geopport_carousel_ind_3" data-target="#portfolioCarousel" data-slide-to="3" title="<?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?>"></li>
-		            <li id="geopport_carousel_ind_4" data-target="#portfolioCarousel" data-slide-to="4" title="<?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?>"></li>
+		            <li data-target="#geopportal_anchor_carousel" data-slide-to="0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>"></li>
+		            <li data-target="#geopportal_anchor_carousel" data-slide-to="1" title="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>"></li>
+		            <li data-target="#geopportal_anchor_carousel" data-slide-to="2" title="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>"></li>
+		            <li data-target="#geopportal_anchor_carousel" data-slide-to="3" title="<?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?>"></li>
+		            <li data-target="#geopportal_anchor_carousel" data-slide-to="4" title="<?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?>"></li>
 		        </ol>
 
-		        <div class="m-article__heading m-article__heading--front-page"><?php echo sanitize_text_field($geopportal_port_res_main_title) ?></div>
+		        <div class="m-article__heading m-article__heading--front-page">
+		            <?php echo sanitize_text_field($geopportal_port_res_main_title) ?>
+		        </div>
+		        <div class="p-landing-page__portfolio__tabs">
+		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',0)">Data</a>
+		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',1)">Services</a>
+		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',2)">Maps</a>
+		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',3)">Galleries</a>
+		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',4)">Communities</a>
+		        </div>
+
 
 		        <div class="carousel-inner">
 
-		            <div class="carousel-item active" id="geopport_carousel_div_0">
+		            <div class="carousel-item active">
 		                <div class="p-landing-page__portfolio__pane">
-		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/map.svg' ?>">
+		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/data.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_first_title) ?></div>
 		                        <div class="a-summary">
 															<?php echo do_shortcode($geopportal_port_res_first_content) ?>
 		                        </div>
 		                        <br>
-		                        <div class="l-flex-container flex-justify-between">
-		                          <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_first_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_first_button_one) ?></a>
-															<?php
-															if (!empty($geopportal_port_res_first_button_two)){
-															?>
-																<a class="btn btn--secondary" href="<?php echo esc_url($geopportal_port_res_first_link_two) ?>"><?php echo sanitize_text_field($geopportal_port_res_first_button_two) ?>    <span class="fas fa-external-link-alt"></span></a>
-															<?php
-															}
-															?>
+
+		                        <div class="flex-1 d-flex flex-justify-between flex-align-center">
+		                            <form class="input-group-slick flex-1 geopportal_port_res_search_form" grabs-from="geop_carousel_lite_dataset_search">
+		                                <span class="icon fas fa-search"></span>
+		                                <input type="text" class="form-control" id="geop_carousel_lite_dataset_search" query-prefix="/#/?types=dcat:Dataset&q=" aria-label="Search GeoPlatform Datasets" placeholder="Search GeoPlatform Datasets">
+		                            </form>
+		                            <button type="button" class="btn btn-primary geopportal_port_res_search_button" grabs-from="geop_carousel_lite_dataset_search">SEARCH</button>
+		                        </div>
+		                        <br>
+		                        <div>
+		                            <a href="<?php echo esc_url($geopportal_port_res_first_link_one) ?>" class="btn btn-outline-secondary"><?php echo sanitize_text_field($geopportal_port_res_first_button_one) ?></a>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>
 
-		            <div class="carousel-item" id="geopport_carousel_div_1">
+		            <div class="carousel-item">
 		                <div class="p-landing-page__portfolio__pane">
-		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/data.svg' ?>">
+		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/service.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_second_title) ?></div>
 		                        <div class="a-summary">
-		                          <?php echo do_shortcode($geopportal_port_res_second_content) ?>
+															<?php echo do_shortcode($geopportal_port_res_second_content) ?>
 		                        </div>
 		                        <br>
-		                        <div class="l-flex-container flex-justify-between">
-		                           <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_second_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_second_button_one) ?></a>
-															<?php
-															if (!empty($geopportal_port_res_second_button_two)){
-															?>
-		                            <a class="btn btn--secondary" href="<?php echo esc_url($geopportal_port_res_second_link_two) ?>"><?php echo sanitize_text_field($geopportal_port_res_second_button_two) ?></a>
-															<?php
-															}
-															?>
+		                        <div class="flex-1 d-flex flex-justify-between flex-align-center">
+		                            <form class="input-group-slick flex-1 geopportal_port_res_search_form" grabs-from="geop_carousel_lite_service_search">
+		                                <span class="icon fas fa-search"></span>
+		                                <input type="text" class="form-control" id="geop_carousel_lite_service_search" query-prefix="/#/?types=regp:Service&q=" aria-label="Search GeoPlatform Web Services" placeholder="Search GeoPlatform Web Services">
+		                            </form>
+		                            <button type="button" class="btn btn-primary geopportal_port_res_search_button" grabs-from="geop_carousel_lite_service_search">SEARCH</button>
+		                        </div>
+		                        <br>
+		                        <div>
+		                            <a href="<?php echo esc_url($geopportal_port_res_second_link_one) ?>" class="btn btn-outline-secondary"><?php echo sanitize_text_field($geopportal_port_res_second_button_one) ?></a>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>
 
-		            <div class="carousel-item" id="geopport_carousel_div_2">
+
+		            <div class="carousel-item">
 		                <div class="p-landing-page__portfolio__pane">
-		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/service.svg' ?>">
+		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/map.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_third_title) ?></div>
 		                        <div class="a-summary">
 															<?php echo do_shortcode($geopportal_port_res_third_content) ?>
 		                        </div>
 		                        <br>
-		                        <div class="l-flex-container flex-justify-between">
-	                            <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_third_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_third_button_one) ?></a>
-															<?php
-															if (!empty($geopportal_port_res_third_button_two)){
-															?>
-		                            <a class="btn btn--secondary" href="<?php echo esc_url($geopportal_port_res_third_link_two) ?>"><?php echo sanitize_text_field($geopportal_port_res_third_button_two) ?></a>
-															<?php
-															}
-															?>
+		                        <div class="flex-1 d-flex flex-justify-between flex-align-center">
+		                            <form class="input-group-slick flex-1 geopportal_port_res_search_form" grabs-from="geop_carousel_lite_map_search">
+		                                <span class="icon fas fa-search"></span>
+		                                <input type="text" class="form-control" id="geop_carousel_lite_map_search" query-prefix="/#/?types=Map&q=" aria-label="Search GeoPlatform Maps" placeholder="Search GeoPlatform Maps">
+		                            </form>
+		                            <button type="button" class="btn btn-primary geopportal_port_res_search_button" grabs-from="geop_carousel_lite_map_search">SEARCH</button>
+		                        </div>
+		                        <br>
+		                        <div>
+															<a href="<?php echo esc_url($geopportal_port_res_third_link_one) ?>" class="btn btn-outline-secondary"><?php echo sanitize_text_field($geopportal_port_res_third_button_one) ?><span class="fas fa-external-link-alt"></span></a>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>
 
-								<div class="carousel-item" id="geopport_carousel_div_3">
+		            <div class="carousel-item">
 		                <div class="p-landing-page__portfolio__pane">
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/collect.svg' ?>">
 		                    <div>
@@ -253,21 +229,22 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 															<?php echo do_shortcode($geopportal_port_res_fourth_content) ?>
 		                        </div>
 		                        <br>
-		                        <div class="l-flex-container flex-justify-between">
-	                            <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_fourth_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_fourth_button_one) ?></a>
-															<?php
-															if (!empty($geopportal_port_res_fourth_button_two)){
-															?>
-		                            <a class="btn btn--secondary" href="<?php echo esc_url($geopportal_port_res_fourth_link_two) ?>"><?php echo sanitize_text_field($geopportal_port_res_fourth_button_two) ?></a>
-															<?php
-															}
-															?>
+		                        <div class="flex-1 d-flex flex-justify-between flex-align-center">
+		                            <form class="input-group-slick flex-1 geopportal_port_res_search_form" grabs-from="geop_carousel_lite_galleries_search">
+		                                <span class="icon fas fa-search"></span>
+		                                <input type="text" class="form-control" id="geop_carousel_lite_galleries_search" query-prefix="/#/?types=Gallery&q=" aria-label="Search GeoPlatform Galleries" placeholder="Search GeoPlatform Galleries">
+		                            </form>
+		                            <button type="button" class="btn btn-primary geopportal_port_res_search_button" grabs-from="geop_carousel_lite_galleries_search">SEARCH</button>
+		                        </div>
+		                        <br>
+		                        <div>
+															<a href="<?php echo esc_url($geopportal_port_res_fourth_link_one) ?>" class="btn btn-outline-secondary"><?php echo sanitize_text_field($geopportal_port_res_fourth_button_one) ?><span class="fas fa-external-link-alt"></span></a>
 		                        </div>
 		                    </div>
 		                </div>
 		            </div>
 
-								<div class="carousel-item" id="geopport_carousel_div_4">
+		            <div class="carousel-item">
 		                <div class="p-landing-page__portfolio__pane">
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/community2.svg' ?>">
 		                    <div>
@@ -276,15 +253,17 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 															<?php echo do_shortcode($geopportal_port_res_fifth_content) ?>
 		                        </div>
 		                        <br>
-		                        <div class="l-flex-container flex-justify-between">
-	                            <a type="button" class="btn btn--primary" href="<?php echo esc_url($geopportal_port_res_fifth_link_one) ?>"><?php echo sanitize_text_field($geopportal_port_res_fifth_button_one) ?></a>
-															<?php
-															if (!empty($geopportal_port_res_fifth_button_two)){
-															?>
-		                            <a class="btn btn--secondary" href="<?php echo esc_url($geopportal_port_res_fifth_link_two) ?>"><?php echo sanitize_text_field($geopportal_port_res_fifth_button_two) ?></a>
-															<?php
-															}
-															?>
+		                        <div class="flex-1 d-flex flex-justify-between flex-align-center">
+		                            <form class="input-group-slick flex-1 geopportal_port_res_search_form" grabs-from="geop_carousel_lite_communities_search">
+		                                <span class="icon fas fa-search"></span>
+		                                <input type="text" class="form-control" id="geop_carousel_lite_communities_search" query-prefix="/#/?types=Community&q=" aria-label="Search GeoPlatform Communities" placeholder="Search GeoPlatform Communities">
+		                            </form>
+		                            <button type="button" class="btn btn-primary geopportal_port_res_search_button" grabs-from="geop_carousel_lite_communities_search">SEARCH</button>
+		                        </div>
+		                        <br>
+		                        <div>
+															<a href="<?php echo esc_url($geopportal_port_res_fifth_link_one) ?>" class="btn btn-outline-success u-mg-right--md"><?php echo sanitize_text_field($geopportal_port_res_fifth_button_one) ?></a>
+															<a href="<?php echo esc_url($geopportal_port_res_fifth_link_two) ?>" class="btn btn-outline-info u-mg-right--md"><?php echo sanitize_text_field($geopportal_port_res_fifth_button_two) ?></a>
 		                        </div>
 		                    </div>
 		                </div>
@@ -292,12 +271,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		        </div>
 
-		        <a class="carousel-control-prev" href="#geopportal_anchor_carousel" role="button" data-slide="prev" id="geopport_carousel_left">
+		        <a class="carousel-control-prev" href="#geopportal_anchor_carousel" role="button" data-slide="prev">
 		            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 		            <span class="sr-only">Previous</span>
 		        </a>
 
-		        <a class="carousel-control-next" href="#geopportal_anchor_carousel" role="button" data-slide="next" id="geopport_carousel_right">
+		        <a class="carousel-control-next" href="#geopportal_anchor_carousel" role="button" data-slide="next">
 		            <span class="carousel-control-next-icon" aria-hidden="true"></span>
 		            <span class="sr-only">Next</span>
 		        </a>
@@ -305,49 +284,69 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		    </div>
 		</div>
 
-
 				<script type="text/javascript">
-					//
+
 					// var geopportal_port_res_div_array = ['0', '1', '2', '3', '4'];
 					// var geopportal_port_res_car_index = 0;
-					//
-					// jQuery(document).ready(function() {
-					// 	jQuery("#geopport_carousel_left").click(function(e){
-					// 		var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					// 		var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					//
-					// 		jQuery(geopportal_port_res_check_ind).removeClass("active");
-					// 		jQuery(geopportal_port_res_check_div).removeClass("active");
-					//
-					// 		geopportal_port_res_car_index--;
-					// 		if (geopportal_port_res_car_index < 0)
-					// 			geopportal_port_res_car_index = 4;
-					//
-					// 		var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					// 		var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					//
-					// 		jQuery(geopportal_port_res_check_ind).addClass("active");
-					// 		jQuery(geopportal_port_res_check_div).addClass("active");
-					// 	});
-					//
-					// 	jQuery("#geopport_carousel_right").click(function(e){
-					// 		var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					// 		var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					//
-					// 		jQuery(geopportal_port_res_check_ind).removeClass("active");
-					// 		jQuery(geopportal_port_res_check_div).removeClass("active");
-					//
-					// 		geopportal_port_res_car_index++;
-					// 		if (geopportal_port_res_car_index > 4)
-					// 			geopportal_port_res_car_index = 0;
-					//
-					// 		var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					// 		var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-					//
-					// 		jQuery(geopportal_port_res_check_ind).addClass("active");
-					// 		jQuery(geopportal_port_res_check_div).addClass("active");
-					// 	});
-			    // });
+
+
+
+					jQuery(document).ready(function() {
+
+						jQuery(".geopportal_port_res_search_button").click(function(event){
+							var temp = jQuery(this).attr("grabs-from");
+							var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+							var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+							console.log(geopportal_grabs_from);
+							console.log(geopportal_query_string);
+							window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+						});
+
+						jQuery( ".geopportal_port_res_search_form" ).submit(function(event){
+							event.preventDefault();
+							var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+							var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+							console.log(geopportal_grabs_from);
+							console.log(geopportal_query_string);
+							window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+						});
+
+						// jQuery("#geopport_carousel_left").click(function(e){
+						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						//
+						// 	jQuery(geopportal_port_res_check_ind).removeClass("active");
+						// 	jQuery(geopportal_port_res_check_div).removeClass("active");
+						//
+						// 	geopportal_port_res_car_index--;
+						// 	if (geopportal_port_res_car_index < 0)
+						// 		geopportal_port_res_car_index = 4;
+						//
+						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						//
+						// 	jQuery(geopportal_port_res_check_ind).addClass("active");
+						// 	jQuery(geopportal_port_res_check_div).addClass("active");
+						// });
+						//
+						// jQuery("#geopport_carousel_right").click(function(e){
+						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						//
+						// 	jQuery(geopportal_port_res_check_ind).removeClass("active");
+						// 	jQuery(geopportal_port_res_check_div).removeClass("active");
+						//
+						// 	geopportal_port_res_car_index++;
+						// 	if (geopportal_port_res_car_index > 4)
+						// 		geopportal_port_res_car_index = 0;
+						//
+						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
+						//
+						// 	jQuery(geopportal_port_res_check_ind).addClass("active");
+						// 	jQuery(geopportal_port_res_check_div).addClass("active");
+						// });
+			    });
 				</script>
 
 
@@ -368,15 +367,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 		// Main title and color settings
 		$geopportal_port_res_main_title = ! empty( $instance['geopportal_port_res_main_title'] ) ? $instance['geopportal_port_res_main_title'] : 'Explore Portfolio Resources';
-		// $geopportal_port_res_color = ! empty( $instance['geopportal_port_res_color'] ) ? $instance['geopportal_port_res_color'] : 'true';
 
 		// First input boxes.
-		$geopportal_port_res_first_title = ! empty( $instance['geopportal_port_res_first_title'] ) ? $instance['geopportal_port_res_first_title'] : 'Open Maps';
+		$geopportal_port_res_first_title = ! empty( $instance['geopportal_port_res_first_title'] ) ? $instance['geopportal_port_res_first_title'] : 'Data';
 		$geopportal_port_res_first_content = ! empty( $instance['geopportal_port_res_first_content'] ) ? $instance['geopportal_port_res_first_content'] : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
-		$geopportal_port_res_first_button_one = ! empty( $instance['geopportal_port_res_first_button_one'] ) ? $instance['geopportal_port_res_first_button_one'] : 'Explore Open Maps';
-		$geopportal_port_res_first_button_two = ! empty( $instance['geopportal_port_res_first_button_two'] ) ? $instance['geopportal_port_res_first_button_two'] : "Create an Open Map <span class='fas fa-external-link-alt'></span>";
+		$geopportal_port_res_first_button_one = ! empty( $instance['geopportal_port_res_first_button_one'] ) ? $instance['geopportal_port_res_first_button_one'] : 'Register a Dataset';
 		$geopportal_port_res_first_link_one = ! empty( $instance['geopportal_port_res_first_link_one'] ) ? $instance['geopportal_port_res_first_link_one'] : '';
-		$geopportal_port_res_first_link_two = ! empty( $instance['geopportal_port_res_first_link_two'] ) ? $instance['geopportal_port_res_first_link_two'] : '';
 
 		// Sets up the first content box link, or just a home link if invalid.
 		if (array_key_exists('geopportal_port_res_first_content', $instance) && isset($instance['geopportal_port_res_first_content']) && !empty($instance['geopportal_port_res_first_content']) && $geopportal_port_res_cb_bool){
@@ -391,12 +387,10 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 
 		// Second input boxes.
-		$geopportal_port_res_second_title = ! empty( $instance['geopportal_port_res_second_title'] ) ? $instance['geopportal_port_res_second_title'] : 'Data';
+		$geopportal_port_res_second_title = ! empty( $instance['geopportal_port_res_second_title'] ) ? $instance['geopportal_port_res_second_title'] : 'Data Servuces';
 		$geopportal_port_res_second_content = ! empty( $instance['geopportal_port_res_second_content'] ) ? $instance['geopportal_port_res_second_content'] : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
-		$geopportal_port_res_second_button_one = ! empty( $instance['geopportal_port_res_second_button_one'] ) ? $instance['geopportal_port_res_second_button_one'] : 'Explore Datasets';
-		$geopportal_port_res_second_button_two = ! empty( $instance['geopportal_port_res_second_button_two'] ) ? $instance['geopportal_port_res_second_button_two'] : "Register a Dataset";
+		$geopportal_port_res_second_button_one = ! empty( $instance['geopportal_port_res_second_button_one'] ) ? $instance['geopportal_port_res_second_button_one'] : 'Register a Service';
 		$geopportal_port_res_second_link_one = ! empty( $instance['geopportal_port_res_second_link_one'] ) ? $instance['geopportal_port_res_second_link_one'] : '';
-		$geopportal_port_res_second_link_two = ! empty( $instance['geopportal_port_res_second_link_two'] ) ? $instance['geopportal_port_res_second_link_two'] : '';
 
 		// Sets up the second content box link, or just a home link if invalid.
 		if (array_key_exists('geopportal_port_res_second_content', $instance) && isset($instance['geopportal_port_res_second_content']) && !empty($instance['geopportal_port_res_second_content']) && $geopportal_port_res_cb_bool){
@@ -411,12 +405,10 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 
 
 		// Third input boxes.
-		$geopportal_port_res_third_title = ! empty( $instance['geopportal_port_res_third_title'] ) ? $instance['geopportal_port_res_third_title'] : 'Data Services';
+		$geopportal_port_res_third_title = ! empty( $instance['geopportal_port_res_third_title'] ) ? $instance['geopportal_port_res_third_title'] : 'Open Maps';
 		$geopportal_port_res_third_content = ! empty( $instance['geopportal_port_res_third_content'] ) ? $instance['geopportal_port_res_third_content'] : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
-		$geopportal_port_res_third_button_one = ! empty( $instance['geopportal_port_res_third_button_one'] ) ? $instance['geopportal_port_res_third_button_one'] : 'Explore Data Services';
-		$geopportal_port_res_third_button_two = ! empty( $instance['geopportal_port_res_third_button_two'] ) ? $instance['geopportal_port_res_third_button_two'] : "Register a Service";
+		$geopportal_port_res_third_button_one = ! empty( $instance['geopportal_port_res_third_button_one'] ) ? $instance['geopportal_port_res_third_button_one'] : 'Create an Open Map';
 		$geopportal_port_res_third_link_one = ! empty( $instance['geopportal_port_res_third_link_one'] ) ? $instance['geopportal_port_res_third_link_one'] : '';
-		$geopportal_port_res_third_link_two = ! empty( $instance['geopportal_port_res_third_link_two'] ) ? $instance['geopportal_port_res_third_link_two'] : '';
 
 		// Sets up the third content box link, or just a home link if invalid.
 		if (array_key_exists('geopportal_port_res_third_content', $instance) && isset($instance['geopportal_port_res_third_content']) && !empty($instance['geopportal_port_res_third_content']) && $geopportal_port_res_cb_bool){
@@ -433,10 +425,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		// Fourth input boxes.
 		$geopportal_port_res_fourth_title = ! empty( $instance['geopportal_port_res_fourth_title'] ) ? $instance['geopportal_port_res_fourth_title'] : 'Galleries';
 		$geopportal_port_res_fourth_content = ! empty( $instance['geopportal_port_res_fourth_content'] ) ? $instance['geopportal_port_res_fourth_content'] : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
-		$geopportal_port_res_fourth_button_one = ! empty( $instance['geopportal_port_res_fourth_button_one'] ) ? $instance['geopportal_port_res_fourth_button_one'] : 'Explore Galleries';
-		$geopportal_port_res_fourth_button_two = ! empty( $instance['geopportal_port_res_fourth_button_two'] ) ? $instance['geopportal_port_res_fourth_button_two'] : "Create a Gallery <span class='fas fa-external-link-alt'></span>";
+		$geopportal_port_res_fourth_button_one = ! empty( $instance['geopportal_port_res_fourth_button_one'] ) ? $instance['geopportal_port_res_fourth_button_one'] : 'Create a Gallery';
 		$geopportal_port_res_fourth_link_one = ! empty( $instance['geopportal_port_res_fourth_link_one'] ) ? $instance['geopportal_port_res_fourth_link_one'] : '';
-		$geopportal_port_res_fourth_link_two = ! empty( $instance['geopportal_port_res_fourth_link_two'] ) ? $instance['geopportal_port_res_fourth_link_two'] : '';
 
 		// Sets up the fourth content box link, or just a home link if invalid.
 		if (array_key_exists('geopportal_port_res_fourth_content', $instance) && isset($instance['geopportal_port_res_fourth_content']) && !empty($instance['geopportal_port_res_fourth_content']) && $geopportal_port_res_cb_bool){
@@ -452,8 +442,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		// Fifth input boxes.
 		$geopportal_port_res_fifth_title = ! empty( $instance['geopportal_port_res_fifth_title'] ) ? $instance['geopportal_port_res_fifth_title'] : 'Communities';
 		$geopportal_port_res_fifth_content = ! empty( $instance['geopportal_port_res_fifth_content'] ) ? $instance['geopportal_port_res_fifth_content'] : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
-		$geopportal_port_res_fifth_button_one = ! empty( $instance['geopportal_port_res_fifth_button_one'] ) ? $instance['geopportal_port_res_fifth_button_one'] : 'Explore Communities';
-		$geopportal_port_res_fifth_button_two = ! empty( $instance['geopportal_port_res_fifth_button_two'] ) ? $instance['geopportal_port_res_fifth_button_two'] : '';
+		$geopportal_port_res_fifth_button_one = ! empty( $instance['geopportal_port_res_fifth_button_one'] ) ? $instance['geopportal_port_res_fifth_button_one'] : 'View New Communities';
+		$geopportal_port_res_fifth_button_two = ! empty( $instance['geopportal_port_res_fifth_button_two'] ) ? $instance['geopportal_port_res_fifth_button_two'] : 'View Trending Communities';
 		$geopportal_port_res_fifth_link_one = ! empty( $instance['geopportal_port_res_fifth_link_one'] ) ? $instance['geopportal_port_res_fifth_link_one'] : '';
 		$geopportal_port_res_fifth_link_two = ! empty( $instance['geopportal_port_res_fifth_link_two'] ) ? $instance['geopportal_port_res_fifth_link_two'] : '';
 
@@ -477,10 +467,6 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
       <label for="<?php echo $this->get_field_id( 'geopportal_port_res_main_title' ); ?>">Main Title:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_main_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_main_title' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_main_title ); ?>" />
     </p>
-		<!-- <p>
-      <label for="<?php //echo $this->get_field_id( 'geopportal_port_res_color' ); ?>">Widget Color:</label>
-			<input class="checkbox" type="checkbox" <?php //checked( $instance[ 'geopportal_port_res_color' ], 'on' ); ?> id="<?php //echo $this->get_field_id( 'geopportal_port_res_color' ); ?>" name="<?php //echo $this->get_field_name( 'geopportal_port_res_color' ); ?>" />
-		</p> -->
 		<hr>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'geopportal_port_res_first_title' ); ?>">First Title:</label>
@@ -492,20 +478,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 			<a href="<?php echo esc_url($geopportal_port_res_first_url); ?>" target="_blank"><?php _e($geopportal_port_res_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_first_button_one' ); ?>">First Button #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_first_button_one' ); ?>">First Button Text:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_first_button_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_first_button_one' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_first_button_one ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_first_link_one' ); ?>">First Hotlink #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_first_link_one' ); ?>">First Button URL:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_first_link_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_first_link_one' ); ?>" value="<?php echo esc_url( $geopportal_port_res_first_link_one ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_first_button_two' ); ?>">First Button #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_first_button_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_first_button_two' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_first_button_two ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_first_link_two' ); ?>">First Hotlink #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_first_link_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_first_link_two' ); ?>" value="<?php echo esc_url( $geopportal_port_res_first_link_two ); ?>" />
     </p>
 
 		<hr>
@@ -519,20 +497,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 			<a href="<?php echo esc_url($geopportal_port_res_second_url); ?>" target="_blank"><?php _e($geopportal_port_res_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_second_button_one' ); ?>">Second Button #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_second_button_one' ); ?>">Second Button Text:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_second_button_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_second_button_one' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_second_button_one ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_second_link_one' ); ?>">Second Hotlink #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_second_link_one' ); ?>">Second Button URL:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_second_link_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_second_link_one' ); ?>" value="<?php echo esc_url( $geopportal_port_res_second_link_one ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_second_button_two' ); ?>">Second Button #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_second_button_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_second_button_two' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_second_button_two ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_second_link_two' ); ?>">Second Hotlink #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_second_link_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_second_link_two' ); ?>" value="<?php echo esc_url( $geopportal_port_res_second_link_two ); ?>" />
     </p>
 
 		<hr>
@@ -546,20 +516,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 			<a href="<?php echo esc_url($geopportal_port_res_third_url); ?>" target="_blank"><?php _e($geopportal_port_res_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_third_button_one' ); ?>">Third Button #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_third_button_one' ); ?>">Third Button Text:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_third_button_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_third_button_one' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_third_button_one ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_third_link_one' ); ?>">Third Hotlink #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_third_link_one' ); ?>">Third Button URL:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_third_link_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_third_link_one' ); ?>" value="<?php echo esc_url( $geopportal_port_res_third_link_one ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_third_button_two' ); ?>">Third Button #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_third_button_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_third_button_two' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_third_button_two ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_third_link_two' ); ?>">Third Hotlink #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_third_link_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_third_link_two' ); ?>" value="<?php echo esc_url( $geopportal_port_res_third_link_two ); ?>" />
     </p>
 
 		<hr>
@@ -573,20 +535,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 			<a href="<?php echo esc_url($geopportal_port_res_fourth_url); ?>" target="_blank"><?php _e($geopportal_port_res_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_button_one' ); ?>">Fourth Button #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_button_one' ); ?>">Fourth Button Text:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_button_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fourth_button_one' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_fourth_button_one ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_link_one' ); ?>">Fourth Hotlink #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_link_one' ); ?>">Fourth Button URL:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_link_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fourth_link_one' ); ?>" value="<?php echo esc_url( $geopportal_port_res_fourth_link_one ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_button_two' ); ?>">Fourth Button #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_button_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fourth_button_two' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_fourth_button_two ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_link_two' ); ?>">Fourth Hotlink #2:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fourth_link_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fourth_link_two' ); ?>" value="<?php echo esc_url( $geopportal_port_res_fourth_link_two ); ?>" />
     </p>
 
 		<hr>
@@ -600,19 +554,19 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 			<a href="<?php echo esc_url($geopportal_port_res_fifth_url); ?>" target="_blank"><?php _e($geopportal_port_res_cb_message, 'geoplatform-ccb') ?></a><br>
 		</p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_one' ); ?>">Fifth Button #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_one' ); ?>">Fifth Button #1 Text:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_button_one' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_fifth_button_one ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_one' ); ?>">Fifth Hotlink #1:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_one' ); ?>">Fifth Button #1 URL:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_link_one' ); ?>" value="<?php echo esc_url( $geopportal_port_res_fifth_link_one ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_two' ); ?>">Fifth Button #2:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_two' ); ?>">Fifth Button #2 Text:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_button_two' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_fifth_button_two ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_two' ); ?>">Fifth Hotlink #2:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_two' ); ?>">Fifth Button #2 URL:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_link_two' ); ?>" value="<?php echo esc_url( $geopportal_port_res_fifth_link_two ); ?>" />
     </p>
 
@@ -633,9 +587,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		$instance[ 'geopportal_port_res_first_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_title' ] );
 	  $instance[ 'geopportal_port_res_first_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_content' ] );
 		$instance[ 'geopportal_port_res_first_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_button_one' ] );
-		$instance[ 'geopportal_port_res_first_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_button_two' ] );
 		$instance[ 'geopportal_port_res_first_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_link_one' ] );
-		$instance[ 'geopportal_port_res_first_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_link_two' ] );
 		$instance[ 'geopportal_port_res_first_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_first_url' ] );
 
 	  // Validity check for the content box URL.
@@ -653,9 +605,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		$instance[ 'geopportal_port_res_second_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_title' ] );
 	  $instance[ 'geopportal_port_res_second_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_content' ] );
 		$instance[ 'geopportal_port_res_second_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_button_one' ] );
-		$instance[ 'geopportal_port_res_second_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_button_two' ] );
 		$instance[ 'geopportal_port_res_second_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_link_one' ] );
-		$instance[ 'geopportal_port_res_second_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_link_two' ] );
 		$instance[ 'geopportal_port_res_second_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_second_url' ] );
 
 	  // Validity check for the content box URL.
@@ -673,9 +623,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		$instance[ 'geopportal_port_res_third_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_title' ] );
 	  $instance[ 'geopportal_port_res_third_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_content' ] );
 		$instance[ 'geopportal_port_res_third_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_button_one' ] );
-		$instance[ 'geopportal_port_res_third_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_button_two' ] );
 		$instance[ 'geopportal_port_res_third_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_link_one' ] );
-		$instance[ 'geopportal_port_res_third_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_link_two' ] );
 		$instance[ 'geopportal_port_res_third_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_third_url' ] );
 
 	  // Validity check for the content box URL.
@@ -692,9 +640,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		$instance[ 'geopportal_port_res_fourth_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_title' ] );
 	  $instance[ 'geopportal_port_res_fourth_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_content' ] );
 		$instance[ 'geopportal_port_res_fourth_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_button_one' ] );
-		$instance[ 'geopportal_port_res_fourth_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_button_two' ] );
 		$instance[ 'geopportal_port_res_fourth_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_link_one' ] );
-		$instance[ 'geopportal_port_res_fourth_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_link_two' ] );
 		$instance[ 'geopportal_port_res_fourth_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_fourth_url' ] );
 
 	  // Validity check for the content box URL.
@@ -726,7 +672,6 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		}
 		else
 			$geopportal_port_res_fifth_url = home_url();
-
 
 	  return $instance;
 	}

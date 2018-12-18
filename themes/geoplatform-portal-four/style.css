@@ -36,7 +36,7 @@ limitations under the License.
   border-bottom: 1px solid #ddd;
   padding: 1em 8em 1em 3em;
 }
-
+form { margin: 0; }
 
 
 

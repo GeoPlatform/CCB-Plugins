@@ -172,7 +172,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 												if ($geopportal_mainpage_disp_first_tags){
 													$i = 0;
 													foreach ($geopportal_mainpage_disp_first_tags as $geopportal_mainpage_disp_first_tag){?>
-														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '#/?q=' . $geopportal_mainpage_disp_first_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_first_tag->name ?></a>
+														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '/#/?q=' . $geopportal_mainpage_disp_first_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_first_tag->name ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -214,7 +214,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 												if ($geopportal_mainpage_disp_second_tags){
 													$i = 0;
 													foreach ($geopportal_mainpage_disp_second_tags as $geopportal_mainpage_disp_second_tag){?>
-														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '#/?q=' . $geopportal_mainpage_disp_second_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_second_tag->name ?></a>
+														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '/#/?q=' . $geopportal_mainpage_disp_second_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_second_tag->name ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -234,7 +234,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 												if ($geopportal_mainpage_disp_third_tags){
 													$i = 0;
 													foreach ($geopportal_mainpage_disp_third_tags as $geopportal_mainpage_disp_third_tag){?>
-														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '#/?q=' . $geopportal_mainpage_disp_third_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_third_tag->name ?></a>
+														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '/#/?q=' . $geopportal_mainpage_disp_third_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_third_tag->name ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -254,7 +254,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 												if ($geopportal_mainpage_disp_fourth_tags){
 													$i = 0;
 													foreach ($geopportal_mainpage_disp_fourth_tags as $geopportal_mainpage_disp_fourth_tag){?>
-														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '#/?q=' . $geopportal_mainpage_disp_fourth_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_fourth_tag->name ?></a>
+														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '/#/?q=' . $geopportal_mainpage_disp_fourth_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_fourth_tag->name ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -274,7 +274,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 												if ($geopportal_mainpage_disp_fifth_tags){
 													$i = 0;
 													foreach ($geopportal_mainpage_disp_fifth_tags as $geopportal_mainpage_disp_fifth_tag){?>
-														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '#/?q=' . $geopportal_mainpage_disp_fifth_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_fifth_tag->name ?></a>
+														<a href="<?php echo home_url(get_theme_mod('headlink_search')) . '/#/?q=' . $geopportal_mainpage_disp_fifth_tag->name ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo $geopportal_mainpage_disp_fifth_tag->name ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
