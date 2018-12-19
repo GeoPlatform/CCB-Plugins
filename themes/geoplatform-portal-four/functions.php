@@ -535,6 +535,138 @@ function geopportal_custom_wysiwyg_save_postdata($post_id) {
 }
 add_action('save_post', 'geopportal_custom_wysiwyg_save_postdata');
 
+
+
+
+/**********************************************************************************************************************************************
+ * Creates the community post custom post type.
+ */
+function geop_ccb_create_community_post() {
+  register_post_type( 'community-post',
+    array(
+      'labels' => array(
+        'name' => 'Community Post',
+        'singular_name' => 'Community Post',
+      ),
+			'capability_type' => 'page',
+      'public' => true,
+      'has_archive' => true,
+      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates'),
+      'taxonomies' => array('category'),
+      'publicly_queryable'  => true,
+    )
+  );
+}
+add_action( 'init', 'geop_ccb_create_community_post' );
+
+
+
+
+function geopccb_wysiwyg_register_custom_meta_box_compost(){
+	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'community-post');
+}
+add_action('admin_init', 'geopccb_wysiwyg_register_custom_meta_box_compost');
+
+
+/**
+ * Community Post input incorporation
+ */
+// register the meta box for priority AND URL.
+function geop_ccb_custom_field_compost_metaboxes() {
+  add_meta_box(
+      'geop_ccb_compost_main_data',          // this is HTML id of the box on edit screen
+      'Primary Community Data',    // title of the box
+      'geop_ccb_main_data_content',   // function to be called to display the checkboxes, see the function below
+      'community-post',        // on which edit screen the box should appear
+      'normal',      // part of page where the box should appear
+      'default'      // priority of the box
+  );
+  add_meta_box(
+      'geop_ccb_compost_add_data',          // this is HTML id of the box on edit screen
+      'Supplemental Community Data',    // title of the box
+      'geop_ccb_add_data_content',   // function to be called to display the checkboxes, see the function below
+      'community-post',        // on which edit screen the box should appear
+      'normal',      // part of page where the box should appear
+      'default'      // priority of the box
+  );
+}
+add_action( 'add_meta_boxes', 'geop_ccb_custom_field_compost_metaboxes' );
+
+// display the metabox for com_post URL and checkbox
+function geop_ccb_main_data_content($post) {
+	echo "<p>Community ID:&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_community_id' id='geopportal_compost_community_id' value='" . $post->geopportal_compost_community_id . "' style='width:30%'></p>";
+	echo "<p>Community URL: <input type='text' name='geopportal_compost_community_url' id='geopportal_compost_community_url' value='" . $post->geopportal_compost_community_url . "' style='width:30%'></p>";
+	echo "<p>Map Shortcode:&nbsp <input type='text' name='geopportal_compost_map_shortcode' id='geopportal_compost_map_shortcode' value='" . $post->geopportal_compost_map_shortcode . "' style='width:30%'></p>";
+}
+
+// display the metabox for com_post URL and checkbox
+function geop_ccb_add_data_content($post) {
+	echo "<p>Sponsor Name: <input type='text' name='geopportal_compost_sponsor_name' id='geopportal_compost_sponsor_name' value='" . $post->geopportal_compost_sponsor_name . "' style='width:30%'></p>";
+	echo "<p>Sponsor Email:&nbsp <input type='text' name='geopportal_compost_sponsor_email' id='geopportal_compost_sponsor_email' value='" . $post->geopportal_compost_sponsor_email . "' style='width:30%'></p>";
+	echo "<p>Lead Agency:&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_agency_name' id='geopportal_compost_agency_name' value='" . $post->geopportal_compost_agency_name . "' style='width:30%'></p>";
+	echo "<p>Lead Name:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_lead_name' id='geopportal_compost_lead_name' value='" . $post->geopportal_compost_lead_name . "' style='width:30%'></p>";
+}
+
+// save data from the cat_link URL box and checkbox
+function geop_ccb_custom_field_compost_data($post_id) {
+  if ( !isset( $_POST['geopportal_compost_community_id'] ) || is_null( $_POST['geopportal_compost_community_id']) || empty( $_POST['geopportal_compost_community_id'] ))
+    update_post_meta( $post_id, 'geopportal_compost_community_id', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_community_id', $_POST['geopportal_compost_community_id'] );
+
+	if ( !isset( $_POST['geopportal_compost_community_url'] ) || is_null( $_POST['geopportal_compost_community_url']) || empty( $_POST['geopportal_compost_community_url'] ))
+    update_post_meta( $post_id, 'geopportal_compost_community_url', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_community_url', $_POST['geopportal_compost_community_url'] );
+
+	if ( !isset( $_POST['geopportal_compost_map_shortcode'] ) || is_null( $_POST['geopportal_compost_map_shortcode']) || empty( $_POST['geopportal_compost_map_shortcode'] ))
+    update_post_meta( $post_id, 'geopportal_compost_map_shortcode', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_map_shortcode', $_POST['geopportal_compost_map_shortcode'] );
+
+	if ( !isset( $_POST['geopportal_compost_sponsor_name'] ) || is_null( $_POST['geopportal_compost_sponsor_name']) || empty( $_POST['geopportal_compost_sponsor_name'] ))
+    update_post_meta( $post_id, 'geopportal_compost_sponsor_name', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_sponsor_name', $_POST['geopportal_compost_sponsor_name'] );
+
+	if ( !isset( $_POST['geopportal_compost_sponsor_email'] ) || is_null( $_POST['geopportal_compost_sponsor_email']) || empty( $_POST['geopportal_compost_sponsor_email'] ))
+    update_post_meta( $post_id, 'geopportal_compost_sponsor_email', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_sponsor_email', $_POST['geopportal_compost_sponsor_email'] );
+
+	if ( !isset( $_POST['geopportal_compost_agency_name'] ) || is_null( $_POST['geopportal_compost_agency_name']) || empty( $_POST['geopportal_compost_agency_name'] ))
+    update_post_meta( $post_id, 'geopportal_compost_agency_name', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_agency_name', $_POST['geopportal_compost_agency_name'] );
+
+	if ( !isset( $_POST['geopportal_compost_lead_name'] ) || is_null( $_POST['geopportal_compost_lead_name']) || empty( $_POST['geopportal_compost_lead_name'] ))
+    update_post_meta( $post_id, 'geopportal_compost_lead_name', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_lead_name', $_POST['geopportal_compost_lead_name'] );
+}
+add_action( 'save_post', 'geop_ccb_custom_field_compost_data' );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //-------------------------------
 //Add extra boxes to Category editor
 //-------------------------------

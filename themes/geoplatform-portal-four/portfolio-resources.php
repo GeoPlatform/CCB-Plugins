@@ -285,20 +285,12 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		</div>
 
 				<script type="text/javascript">
-
-					// var geopportal_port_res_div_array = ['0', '1', '2', '3', '4'];
-					// var geopportal_port_res_car_index = 0;
-
-
-
 					jQuery(document).ready(function() {
 
 						jQuery(".geopportal_port_res_search_button").click(function(event){
 							var temp = jQuery(this).attr("grabs-from");
 							var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 							var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-							console.log(geopportal_grabs_from);
-							console.log(geopportal_query_string);
 							window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
 						});
 
@@ -306,46 +298,8 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 							event.preventDefault();
 							var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 							var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-							console.log(geopportal_grabs_from);
-							console.log(geopportal_query_string);
 							window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
 						});
-
-						// jQuery("#geopport_carousel_left").click(function(e){
-						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						//
-						// 	jQuery(geopportal_port_res_check_ind).removeClass("active");
-						// 	jQuery(geopportal_port_res_check_div).removeClass("active");
-						//
-						// 	geopportal_port_res_car_index--;
-						// 	if (geopportal_port_res_car_index < 0)
-						// 		geopportal_port_res_car_index = 4;
-						//
-						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						//
-						// 	jQuery(geopportal_port_res_check_ind).addClass("active");
-						// 	jQuery(geopportal_port_res_check_div).addClass("active");
-						// });
-						//
-						// jQuery("#geopport_carousel_right").click(function(e){
-						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						//
-						// 	jQuery(geopportal_port_res_check_ind).removeClass("active");
-						// 	jQuery(geopportal_port_res_check_div).removeClass("active");
-						//
-						// 	geopportal_port_res_car_index++;
-						// 	if (geopportal_port_res_car_index > 4)
-						// 		geopportal_port_res_car_index = 0;
-						//
-						// 	var geopportal_port_res_check_ind = "#geopport_carousel_ind_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						// 	var geopportal_port_res_check_div = "#geopport_carousel_div_".concat(geopportal_port_res_div_array[geopportal_port_res_car_index])
-						//
-						// 	jQuery(geopportal_port_res_check_ind).addClass("active");
-						// 	jQuery(geopportal_port_res_check_div).addClass("active");
-						// });
 			    });
 				</script>
 
