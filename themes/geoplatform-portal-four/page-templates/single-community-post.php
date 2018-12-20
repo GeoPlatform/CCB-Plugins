@@ -16,14 +16,18 @@ get_template_part( 'sub-header-post', get_post_format() );
 <div class="l-body l-body--two-column p-ngda-theme">
   <div class="l-body__main-column">
 
- <!-- Map section. Needs work. -->
+ <!-- Map section. Pulls apart and rebuilds map shortcode before execution. -->
+      <?php
+        $geop_portal_broken_shortcode = explode( "'", $post->geopportal_compost_map_shortcode);
+        $geop_portal_rebuilt_shortcode = "[geopmap id=" . $geop_portal_broken_shortcode[1] . " height=350 title=off]";
+      ?>
       <div class="m-section-group">
           <div class="m-article">
               <div class="m-article__heading">
                   Featured <?php echo the_title() ?> Data
               </div>
               <div class="m-map" id="themeMapContainer">
-                <?php echo do_shortcode($post->geopportal_compost_map_shortcode) ?>
+                <?php echo do_shortcode($geop_portal_rebuilt_shortcode) ?>
               </div>
           </div>
       </div>
@@ -45,7 +49,7 @@ get_template_part( 'sub-header-post', get_post_format() );
               </div>
               <div class="article__actions">
                   <div class="flex-1 d-flex flex-justify-between flex-align-center">
-                      <form class="input-group-slick flex-1">
+                      <form class="input-group-slick flex-1" id="geop_community_resources_search_form">
                         <span class="icon fas fa-search"></span>
                         <input type="text" class="form-control" id="geop_community_resources_search_input" com_id="<?php echo $post->geopportal_compost_community_id ?>" aria-label="Search for resources" placeholder="Search for resources">
                       </form>
@@ -57,15 +61,14 @@ get_template_part( 'sub-header-post', get_post_format() );
 
       <script type="text/javascript">
         jQuery(document).ready(function() {
-          jQuery("#geop_community_resources_search_button").click(function(event){
-            alert("words");
+          jQuery("#geop_community_resources_search_button").click(function(e){
             var geopportal_query_string = "/#/?communities=" + jQuery("#geop_community_resources_search_input").attr("com_id") + "&q=" + jQuery("#geop_community_resources_search_input").val();
             window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
           });
 
-          jQuery( "#geop_community_resources_search_input" ).submit(function(event){
+          jQuery("#geop_community_resources_search_form").submit(function(event){
             event.preventDefault();
-            var geopportal_query_string = "/#/?communities=" + <?php echo $post->geopportal_compost_community_id ?> + "&q=" + jQuery("geop_community_resources_search_input").val();
+            var geopportal_query_string = "/#/?communities=" + jQuery("#geop_community_resources_search_input").attr("com_id") + "&q=" + jQuery("#geop_community_resources_search_input").val();
             window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
           });
         });

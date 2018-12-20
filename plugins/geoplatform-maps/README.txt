@@ -6,7 +6,7 @@ Tags: map, maps, Open Map, GeoPlatform, Geoplatform, geoplatform, Shortcode, sho
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 4.9.8
-Stable tag: 1.0.10
+Stable tag: 1.0.11
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -75,6 +75,9 @@ If you were able to successfully add a map to your shortcode collection but not 
 3. Enjoy full pan and zoom control over your maps, toggle layers, view layer details, and launch the map in a separate application in your browser.
 
 == Changelog ==
+
+= 1.0.11 =
+* Added ability to toggle off title card and layers by adding "title=off" in shortcode.
 
 = 1.0.10 =
 * Added gallery retention upon plugin deactivation.
