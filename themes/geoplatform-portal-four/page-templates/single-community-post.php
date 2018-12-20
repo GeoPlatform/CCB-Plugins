@@ -98,12 +98,6 @@ get_template_part( 'sub-header-post', get_post_format() );
       <!-- THUMBNAIL -->
       <div class="m-article">
           <div class="m-article__desc">
-            <?php
-            $geopportal_community_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
-            if (has_post_thumbnail())
-              $geopportal_community_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
-            ?>
-
             <img src="<?php echo get_the_post_thumbnail_url() ?>" width="100%">
           </div>
       </div>
