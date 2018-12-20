@@ -41,6 +41,14 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		else
       $geopportal_mainpage_disp_fifth_link = "";
 
+		if (array_key_exists('geopportal_mainpage_map_title', $instance) && isset($instance['geopportal_mainpage_map_title']) && !empty($instance['geopportal_mainpage_map_title']))
+      $geopportal_mainpage_disp_map_title = apply_filters('widget_title', $instance['geopportal_mainpage_map_title']);
+		else
+      $geopportal_mainpage_disp_map_title = "";
+		if (array_key_exists('geopportal_mainpage_map_shortcode', $instance) && isset($instance['geopportal_mainpage_map_shortcode']) && !empty($instance['geopportal_mainpage_map_shortcode']))
+      $geopportal_mainpage_disp_map_shortcode = apply_filters('widget_title', $instance['geopportal_mainpage_map_shortcode']);
+		else
+      $geopportal_mainpage_disp_map_shortcode = "";
 		if (array_key_exists('geopportal_mainpage_more_count', $instance) && isset($instance['geopportal_mainpage_more_count']) && !empty($instance['geopportal_mainpage_more_count']))
 			$geopportal_mainpage_disp_more_count = apply_filters('widget_title', $instance['geopportal_mainpage_more_count']);
 		else
@@ -182,13 +190,19 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                </div>
 		            </div>
 		        </div>
-
-
+						<?php
+							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . $geopportal_mainpage_disp_map_shortcode . " title=main]";
+						?>
+						<!-- <script>
+							jQuery('#featuredMap').height();
+						</script> -->
 		        <div class="o-featured__map">
-		            <div class="o-featured__map__heading">Featured Data Layer</div>
-		            <div class="m-map" id="featuredMap"><!-- leaflet map container --></div>
+		            <div class="o-featured__map__heading"><?php echo esc_attr($geopportal_mainpage_disp_map_title) ?></div>
+		            <div class="m-map" id="featuredMap">
+									<?php echo do_shortcode($geopportal_mainpage_disp_map_short_final) ?>
+								</div>
 
-		            <script>
+		            <!-- <script>
 		                jQuery(document).ready( () => {
 		                    if(typeof(L) !== 'undefined') {
 		                        let baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -198,7 +212,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                        L.map('featuredMap', {layers: [baseLayer]}).setView([51.505, -0.09], 13);
 		                    }
 		                });
-		            </script>
+		            </script> -->
 		        </div>
 
 
@@ -328,13 +342,15 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_third_link = ! empty( $instance['geopportal_mainpage_third_link'] ) ? $instance['geopportal_mainpage_third_link'] : '';
 		$geopportal_mainpage_fourth_link = ! empty( $instance['geopportal_mainpage_fourth_link'] ) ? $instance['geopportal_mainpage_fourth_link'] : '';
 		$geopportal_mainpage_fifth_link = ! empty( $instance['geopportal_mainpage_fifth_link'] ) ? $instance['geopportal_mainpage_fifth_link'] : '';
+		$geopportal_mainpage_map_title = ! empty( $instance['geopportal_mainpage_map_title'] ) ? $instance['geopportal_mainpage_map_title'] : '';
+		$geopportal_mainpage_map_shortcode = ! empty( $instance['geopportal_mainpage_map_shortcode'] ) ? $instance['geopportal_mainpage_map_shortcode'] : '';
 		$geopportal_mainpage_more_count = ! empty( $instance['geopportal_mainpage_more_count'] ) ? $instance['geopportal_mainpage_more_count'] : '0';
 		$geopportal_mainpage_browse_link = ! empty( $instance['geopportal_mainpage_browse_link'] ) ? $instance['geopportal_mainpage_browse_link'] : '';
 		?>
 
 <!-- HTML for the widget control box. -->
 		<p>
-			<?php _e('The boxes below accept the slugs of the linked post. Please ensure that any input slugs are valid.', 'geoplatform-ccb'); ?>
+			<?php _e('The boxes below accept the slugs of the linked post. Please ensure that any input slugs are valid.<br>Ensure you enter a valid map ID, not shortcode. The GeoPlatform Maps plugin will construct the necessary parameters itself.', 'geoplatform-ccb'); ?>
 		</p>
 		<p>
       <label for="<?php echo $this->get_field_id( 'geopportal_mainpage_first_link' ); ?>">Primary Post Slug:</label>
@@ -357,6 +373,14 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_fifth_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_fifth_link' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_fifth_link ); ?>" />
 		</p>
 		<hr>
+		<p>
+      <label for="<?php echo $this->get_field_id( 'geopportal_mainpage_map_title' ); ?>">Map Title:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_map_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_map_title' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_map_title ); ?>" />
+    </p>
+		<p>
+      <label for="<?php echo $this->get_field_id( 'geopportal_mainpage_map_shortcode' ); ?>">Map ID:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_map_shortcode' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_map_shortcode' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_map_shortcode ); ?>" />
+    </p>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>">Featured Content Count:</label><br>
 			<input type="number"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_more_count' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_more_count); ?>" />
@@ -385,6 +409,8 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$instance[ 'geopportal_mainpage_third_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_third_link' ] );
 		$instance[ 'geopportal_mainpage_fourth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fourth_link' ] );
 		$instance[ 'geopportal_mainpage_fifth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fifth_link' ] );
+		$instance[ 'geopportal_mainpage_map_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_title' ] );
+		$instance[ 'geopportal_mainpage_map_shortcode' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_shortcode' ] );
 		$instance[ 'geopportal_mainpage_more_count' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_count' ] );
 		$instance[ 'geopportal_mainpage_browse_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_browse_link' ] );
 

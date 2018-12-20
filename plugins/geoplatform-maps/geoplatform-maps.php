@@ -348,7 +348,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
 			<?php
-			if ($geopmap_shortcode_array['title'] != 'off'){
+			if ($geopmap_shortcode_array['title'] == 'on'){
 			?>
 			<div class="geop-display-header" id="title_<?php echo $geopmap_divrand; ?>">
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
@@ -416,6 +416,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
 			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
+		}
+		if ('<?php echo esc_attr($geopmap_shortcode_array['title']); ?>' == 'main'){
+			jQuery('#container_<?php echo $geopmap_divrand; ?>').height('100%');
 		}
 		if (jQuery('#middle_<?php echo $geopmap_divrand; ?>').width() <= 400)
 			jQuery('#layer_menu_button_<?php echo $geopmap_divrand; ?>').hide();
