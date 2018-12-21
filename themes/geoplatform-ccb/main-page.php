@@ -32,22 +32,22 @@
               $geopccb_image_set = false;
 
               //pagination
-              if ( get_query_var('paged') ) {
-                       $geopccb_paged = get_query_var('paged');
-                   } else if ( get_query_var('page') ) {
-                       $geopccb_paged = get_query_var('page');
-                   } else {$geopccb_paged = 1;}
-              $geopccb_per_page = 12;
-              $geopccb_paged_offset = ($geopccb_paged - 1) * $geopccb_per_page;
+              // if ( get_query_var('paged') ) {
+              //          $geopccb_paged = get_query_var('paged');
+              //      } else if ( get_query_var('page') ) {
+              //          $geopccb_paged = get_query_var('page');
+              //      } else {$geopccb_paged = 1;}
+              // $geopccb_per_page = 12;
+              // $geopccb_paged_offset = ($geopccb_paged - 1) * $geopccb_per_page;
 
               //getting the categories
               $geopccb_categories = get_categories( array(
                   'orderby'   => 'name',
                   'order'     => 'ASC',
                   'hide_empty'=> 0,
-                  'number'    => $geopccb_per_page,
-                  'paged'     => $geopccb_paged,
-                  'offset'    => $geopccb_paged_offset
+                  // 'number'    => $geopccb_per_page,
+                  // 'paged'     => $geopccb_paged,
+                  // 'offset'    => $geopccb_paged_offset
               ) );
 
               // Excludes front-page category.
@@ -143,7 +143,7 @@
                 // Removes categories to be excluded from the featured output array.
                 // These include categories with negative/zero/no priority value and child categories.
                 foreach($geopccb_categories as $geopccb_category){
-                  if (get_term_meta($geopccb_category->cat_ID, 'cat_priority', true) > 0 &&  ! $geopccb_category->category_parent){
+                  if (get_term_meta($geopccb_category->cat_ID, 'cat_priority', true) > 0 && ! $geopccb_category->category_parent){
                     array_push($geopccb_categories_trimmed, $geopccb_category);
                   }
                 }
@@ -252,8 +252,8 @@
                 // echo wp_kses_post($geopccb_default_text); ?>
               </p>
             </div>
-            <div class="alignleft" style="margin-top: 1em;"><?php previous_posts_link('&laquo; Previous Categories') ?></div>
-            <div class="alignright" style="margin-top: 1em;"><?php next_posts_link('More Categories &raquo;') ?></div>
+            <!-- <div class="alignleft" style="margin-top: 1em;"><?php //previous_posts_link('&laquo; Previous Categories') ?></div>
+            <div class="alignright" style="margin-top: 1em;"><?php //next_posts_link('More Categories &raquo;') ?></div> -->
             </div><!--#col-md-12-->
         </div><!--#row-->
       </div><!-- #col-lg-12 -->
