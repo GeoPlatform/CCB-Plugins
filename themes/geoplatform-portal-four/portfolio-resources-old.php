@@ -5,7 +5,7 @@ class Geopportal_Portfolio_Resources_Old_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'geopportal_portfolio_resources_old_widget', // Base ID
-			esc_html__( 'GeoPlatform Portfolio (Light)', 'geoplatform-ccb' ), // Name
+			esc_html__( 'GeoPlatform Portfolio (Old)', 'geoplatform-ccb' ), // Name
 			array( 'description' => esc_html__( 'GeoPlatform portfolio resources widget with a light theme for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}

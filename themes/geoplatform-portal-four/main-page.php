@@ -193,26 +193,11 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 						<?php
 							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . $geopportal_mainpage_disp_map_shortcode . " title=main]";
 						?>
-						<!-- <script>
-							jQuery('#featuredMap').height();
-						</script> -->
 		        <div class="o-featured__map">
 		            <div class="o-featured__map__heading"><?php echo esc_attr($geopportal_mainpage_disp_map_title) ?></div>
 		            <div class="m-map" id="featuredMap">
 									<?php echo do_shortcode($geopportal_mainpage_disp_map_short_final) ?>
 								</div>
-
-		            <!-- <script>
-		                jQuery(document).ready( () => {
-		                    if(typeof(L) !== 'undefined') {
-		                        let baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		                            minZoom: 1, maxZoom: 19,
-		                            attribution: 'Map data (c) <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-		                        });
-		                        L.map('featuredMap', {layers: [baseLayer]}).setView([51.505, -0.09], 13);
-		                    }
-		                });
-		            </script> -->
 		        </div>
 
 

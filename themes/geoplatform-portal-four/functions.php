@@ -373,7 +373,175 @@ if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
 	add_action( 'widgets_init', 'geop_ccb_sidebar' );
 }
 
+/**
+ * Widgetizing Explore Resources page one
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_one' ) ) {
+	function geop_ccb_explore_resources_widgets_one() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-one',
+			'name' => __( 'Resources Template One', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page one can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_one' );
+}
 
+/**
+ * Widgetizing Explore Resources page two
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_two' ) ) {
+	function geop_ccb_explore_resources_widgets_two() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-two',
+			'name' => __( 'Resources Template Two', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page two can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_two' );
+}
+
+/**
+ * Widgetizing Explore Resources page three
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_three' ) ) {
+	function geop_ccb_explore_resources_widgets_three() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-three',
+			'name' => __( 'Resources Template Three', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page three can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_three' );
+}
+
+/**
+ * Widgetizing Explore Resources page four
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_four' ) ) {
+	function geop_ccb_explore_resources_widgets_four() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-four',
+			'name' => __( 'Resources Template Four', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page four can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_four' );
+}
+
+/**
+ * Widgetizing Explore Resources page five
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_five' ) ) {
+	function geop_ccb_explore_resources_widgets_five() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-five',
+			'name' => __( 'Resources Template Five', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page five can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_five' );
+}
+
+/**
+ * Widgetizing Explore Resources page six
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_six' ) ) {
+	function geop_ccb_explore_resources_widgets_six() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-six',
+			'name' => __( 'Resources Template Six', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page six can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_six' );
+}
+
+/**
+ * Widgetizing Explore Resources page seven
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_seven' ) ) {
+	function geop_ccb_explore_resources_widgets_seven() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-seven',
+			'name' => __( 'Resources Template Seven', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page seven can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_seven' );
+}
+
+/**
+ * Widgetizing Explore Resources page eight
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_eight' ) ) {
+	function geop_ccb_explore_resources_widgets_eight() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-eight',
+			'name' => __( 'Resources Template Eight', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page eight can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_eight' );
+}
+
+/**
+ * Widgetizing Explore Resources page nine
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_nine' ) ) {
+	function geop_ccb_explore_resources_widgets_nine() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-nine',
+			'name' => __( 'Resources Template Nine', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page nine can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_nine' );
+}
+
+/**
+ * Widgetizing Explore Resources page ten
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_ten' ) ) {
+	function geop_ccb_explore_resources_widgets_ten() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-ten',
+			'name' => __( 'Resources Template Ten', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Resources page ten can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_ten' );
+}
 
 /**
  * Adds sidebar contact form widget.
@@ -475,6 +643,10 @@ get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );
 get_template_part( 'side-content-links', get_post_format() );
 get_template_part( 'side-content-preview', get_post_format() );
+get_template_part( 'widget-resources-elements', get_post_format() );
+get_template_part( 'widget-resources-search', get_post_format() );
+get_template_part( 'widget-resources-creation', get_post_format() );
+
 
 /**
  * Registers simpler widgets.
@@ -545,7 +717,7 @@ function geop_ccb_create_community_post() {
   register_post_type( 'community-post',
     array(
       'labels' => array(
-        'name' => 'Community Post',
+        'name' => 'Community Posts',
         'singular_name' => 'Community Post',
       ),
 			'capability_type' => 'page',
@@ -554,6 +726,7 @@ function geop_ccb_create_community_post() {
       'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates'),
       'taxonomies' => array('category'),
       'publicly_queryable'  => true,
+			'menu_icon' => 'dashicons-images-alt2',
     )
   );
 }
