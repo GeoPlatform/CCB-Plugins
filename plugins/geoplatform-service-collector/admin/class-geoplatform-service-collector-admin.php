@@ -155,7 +155,7 @@ class Geoplatform_Service_Collector_Admin {
 	public function validate($input) {
 	    // All checkboxes inputs
 	    $valid = array();
-	    $valid['ual_item_id'] = sanitize_text_field($input['ual_item_id']);
+	    $valid['serve_id'] = sanitize_text_field($input['serve_id']);
 
 	    return $valid;
 	 }

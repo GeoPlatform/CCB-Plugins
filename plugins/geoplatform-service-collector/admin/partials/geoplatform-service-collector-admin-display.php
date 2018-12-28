@@ -31,7 +31,7 @@
       //Grab all options
       $geopserve_options = get_option($this->plugin_name);
       // Cleanup
-      $ual_serve_id = $geopserve_options['ual_serve_id'];
+      $ual_serve_id = $geopserve_options['serve_id'];
 
       settings_fields($this->plugin_name);
       do_settings_sections($this->plugin_name);
@@ -40,38 +40,62 @@
 <!-- Label and text field for serve ID, height, and width input. -->
     <fieldset>
       <div style="width:70%;">
-        <p>Please enter the ID of the community you wish to pull information from. You will also need to set the title of the categories that will be displayed,  you want to add into your WordPress Community Space. To find the serve ID, use the GeoPlatform Map Manager (<a href="https://serves.geoplatform.gov" target="_blank">serves.geoplatform.gov</a>)
-        to search and select the serve. Map IDs can be found as part of the URL in the displayed area shown when "Show Embed" is selected. GeoPlatform Open Map IDs can also be taken from the address bar of serves in
-        the GeoPlatform Map Viewer, but this will not work with other serve formats.<BR><BR>
-        Height and width inputs will control the serve's dimensions in shortcode form; if left blank, the generated serves will scale to fill the page.
+        <p>
+          For each carousel, you will need to provide a title, community ID, desired number of items, and at check at least one type of object to display.
         </p>
       </div>
-      <legend class="screen-reader-text"><span><?php _e('Please input a serve ID', $this->plugin_name); ?></span></legend>
-      <p>Please input a serve ID:&nbsp
-        <input type="text" class="regular-text" id="serve_id_in" name="<?php echo $this->plugin_name; ?>[ual_serve_id]" value="<?php if(!empty(esc_attr($ual_serve_id))) echo esc_attr($ual_serve_id); ?>"/>
-        &nbsp&nbsp&nbsp&nbspDesired height:
-        <input type="text" class="regular-text" id="serve_height" name="<?php echo $this->plugin_name; ?>[ual_height]" style="width:5em;"/>
-        &nbsp&nbsp&nbsp&nbspDesired width:
-        <input type="text" class="regular-text" id="serve_width" name="<?php echo $this->plugin_name; ?>[ual_width]" style="width:5em;"/>
+      <legend class="screen-reader-text"><span><?php _e('Please input a community ID', $this->plugin_name); ?></span></legend>
+      <p>Please input an output title:&nbsp
+        <input type="text" class="regular-text" id="serve_name_in" name="<?php echo $this->plugin_name; ?>[serve_name]" value="<?php if(!empty(esc_attr($serve_name))) echo esc_attr($serve_name); ?>"/>
+        &nbsp&nbsp&nbsp&nbspPlease input a community ID:&nbsp
+        <input type="text" class="regular-text" id="serve_num_in" name="<?php echo $this->plugin_name; ?>[serve_num]" value="<?php if(!empty(esc_attr($serve_num))) echo esc_attr($serve_num); ?>"/>
+        &nbsp&nbsp&nbsp&nbspResult Count:&nbsp
+        <input type="number" class="regular-text" id="serve_count" value="6" name="<?php echo $this->plugin_name; ?>[serve_count]" style="width:5em;"/>
+      </p>
+      <p>Select the items to include in the output
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_data" value="serve_cat_data">Dataset&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_serve" value="serve_cat_serve">Service&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_layer" value="serve_cat_layer">Layer&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_map" value="serve_cat_map">Map&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_gallery" value="serve_cat_gallery">Gallery&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_organ" value="serve_cat_organ">Organization&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_contact" value="serve_cat_contact">Contact&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
       </p>
     </fieldset>
 
-<!-- Add Map Button -->
-    <input type="submit" id="geopserve_add_action" value="Add Map"/>
+<!-- Add Carousel Button -->
+    <input type="submit" id="geopserve_add_action" value="Add Carousel"/>
 
- <!-- Procedural table creation block.  Here the serve collection output is set. It
+ <!-- Procedural table creation block.  Here the carousel collection output is set. It
       begins with the header of the table.-->
-      <p><strong>Map Details Table</strong></p>
+      <p><strong>Carousel Details Table</strong></p>
         <table class="widefat">
         	<thead>
         	<tr>
-        		<th class="row-title"><?php esc_attr_e( 'Map ID', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Map Format', 'geoplatform-serves' ); ?></th>
-        		<th><?php esc_attr_e( 'Map Name', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Description', 'geoplatform-serves' ); ?></th>
+        		<th class="row-title"><?php esc_attr_e( 'Title', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Community', 'geoplatform-serves' ); ?></th>
+        		<th><?php esc_attr_e( 'Output Types', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Number', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Shortcode', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Controls', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Thumbnail', 'geoplatform-serves' ); ?></th>
         	</tr>
         	</thead>
         	<tbody>
@@ -82,25 +106,22 @@
            * looped through. Each loop pulls information from a specific table
            * row and uses it to construct a page row.
           */
-          $geopserve_table_name = $wpdb->prefix . "geop_serves_db";
+          $geopserve_table_name = $wpdb->prefix . "geop_serve_db";
           $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
 
           foreach ($geopserve_retrieved_data as $geopserve_entry){
-            $geopserve_agolOut = "GeoPlatform Map";
-            if ($geopserve_entry->serve_agol == "1")
-              $geopserve_agolOut = "AGOL Web Map";
+            $geopserve_nameOut = "Temp Name";
+            $geopserve_catOut = "Temp Types";
             ?>
             <tr>
-          		<td class="row-title"><label for="tablecell"><?php echo esc_attr($geopserve_entry->serve_id); ?></label></td>
-              <td><?php echo $geopserve_agolOut; ?></td>
           		<td><?php echo esc_attr($geopserve_entry->serve_name); ?></td>
-              <td><?php echo esc_attr($geopserve_entry->serve_description); ?></td>
+              <td><?php echo $geopserve_nameOut; ?></td>
+              <td><?php echo $geopserve_catOut; ?></td>
+          		<td><?php echo esc_attr($geopserve_entry->serve_count); ?></td>
               <td><code><?php echo esc_attr($geopserve_entry->serve_shortcode); ?></code></td>
               <td>
-                <a class="button-secondary" href="<?php echo esc_url($geopserve_entry->serve_url) ?>" title="<?php echo esc_url($geopserve_entry->serve_url) ?>" target="_blank"><?php esc_attr_e( 'View in Map Viewer' ); ?></a>
-                <button class="geopserve_indiv_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_id; ?>">Remove Map</button>
+                <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_id; ?>">Remove Carousel</button>
               </td>
-              <td><a class="embed-responsive embed-responsive-16by9"><img class="embed-responsive-item" src="<?php echo $geopserve_entry->serve_thumbnail; ?>" width="200px" height="112px" alt="The thumbnail for this serve failed to load."/></a></td>
           	</tr><?php
           }?>
         </table>
