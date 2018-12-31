@@ -99,30 +99,6 @@ if (!$geopserve_invalid_bool){
   */
   if (!$geopserve_invalid_bool){
 
-
-
-    // $geopserve_title = sanitize_key($_POST["serve_name"]);
-    // $geopserve_id = sanitize_key($_POST["serve_id"]);
-    // $geopserve_count = sanitize_key($_POST["serve_count"]);
-    // $geopserve_cat_dat = sanitize_key($_POST["serve_cat_dat"]);
-    // $geopserve_cat_ser = sanitize_key($_POST["serve_cat_ser"]);
-    // $geopserve_cat_lay = sanitize_key($_POST["serve_cat_lay"]);
-    // $geopserve_cat_map = sanitize_key($_POST["serve_cat_map"]);
-    // $geopserve_cat_gal = sanitize_key($_POST["serve_cat_gal"]);
-    // $geopserve_cat_org = sanitize_key($_POST["serve_cat_org"]);
-    // $geopserve_cat_con = sanitize_key($_POST["serve_cat_con"]);
-    // $geopserve_rand = rand(0, 1000000000);
-
-
-    // serve_num varchar(255) NOT NULL,
-    // serve_id varchar(255) NOT NULL,
-    // serve_name varchar(255) NOT NULL,
-    // serve_title varchar(255) NOT NULL,
-    // serve_cat varchar(255) NOT NULL,
-    // serve_count varchar(255) NOT NULL,
-    // serve_shortcode varchar(255) NOT NULL,
-
-
     // Blank title handling.
     if (empty($geopserve_title)){
       $geopserve_title = "N/A";

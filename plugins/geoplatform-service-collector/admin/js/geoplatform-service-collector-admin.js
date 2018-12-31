@@ -62,7 +62,7 @@
     jQuery(".geopserve_indiv_car_remove_action").click(function(e){
 		  var data = {
 				action: "geopserve_remove_action",
-				map_id: jQuery(this).val()
+				serve_rand: jQuery(this).val()
 			};
 			jQuery.post(ajaxurl, data, function(response){
 				if (response)

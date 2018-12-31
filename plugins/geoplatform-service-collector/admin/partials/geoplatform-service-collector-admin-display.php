@@ -82,8 +82,8 @@
 <!-- Add Carousel Button -->
     <input type="submit" id="geopserve_add_action" value="Add Carousel"/>
 
- <!-- Procedural table creation block.  Here the carousel collection output is set. It
-      begins with the header of the table.-->
+ <!-- Procedural table creation block.  Here the carousel collection output is
+      set. It begins with the header of the table.-->
       <p><strong>Carousel Details Table</strong></p>
         <table class="widefat">
         	<thead>
@@ -108,6 +108,9 @@
           $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
 
           foreach ($geopserve_retrieved_data as $geopserve_entry){
+
+            // Most data can be pulled straight from the database for use. Cats
+            // however are translated into a string of values for output.
             $geopserve_cat_array = array();
             (substr(($geopserve_entry->serve_cat), 0, 1) == 'T') ? array_push($geopserve_cat_array, 'Datasets') : '';
             (substr(($geopserve_entry->serve_cat), 1, 1) == 'T') ? array_push($geopserve_cat_array, 'Services') : '';
@@ -125,7 +128,7 @@
           		<td><?php echo esc_attr($geopserve_entry->serve_count); ?></td>
               <td><code><?php echo esc_attr($geopserve_entry->serve_shortcode); ?></code></td>
               <td>
-                <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_rand; ?>">Remove Carousel</button>
+                <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_num; ?>">Remove Carousel</button>
               </td>
           	</tr><?php
           }?>

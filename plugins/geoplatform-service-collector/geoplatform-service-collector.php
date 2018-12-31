@@ -86,7 +86,6 @@ run_geoplatform_service_collector();
 // that perform the settings interface add and remove map operations are simply
 // included here.
 function geopserve_process_addition() {
-	include 'admin/partials/geoplatform-maps-admin-add-map.php';
 	include 'admin/partials/geoplatform-service-collector-admin-add.php';
 	wp_die();
 }

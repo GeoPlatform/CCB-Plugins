@@ -96,6 +96,7 @@ class Geoplatform_Service_Collector_Public {
 		 * class.
 		 */
 
+		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-service-collector-public.js', array( 'jquery' ), $this->version, false );
 
 	}
