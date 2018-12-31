@@ -29,9 +29,7 @@
 <!-- options collection from plugin and data cleanup -->
     <?php
       //Grab all options
-      $geopserve_options = get_option($this->plugin_name);
-      // Cleanup
-      $ual_serve_id = $geopserve_options['serve_id'];
+      // $geopserve_options = get_option($this->plugin_name);
 
       settings_fields($this->plugin_name);
       do_settings_sections($this->plugin_name);
@@ -45,10 +43,10 @@
         </p>
       </div>
       <legend class="screen-reader-text"><span><?php _e('Please input a community ID', $this->plugin_name); ?></span></legend>
-      <p>Please input an output title:&nbsp
-        <input type="text" class="regular-text" id="serve_name_in" name="<?php echo $this->plugin_name; ?>[serve_name]" value="<?php if(!empty(esc_attr($serve_name))) echo esc_attr($serve_name); ?>"/>
+      <p>Please input a title:&nbsp
+        <input type="text" class="regular-text" id="serve_name_in" name="<?php echo $this->plugin_name; ?>[serve_name]" value="<?php if(!empty($serve_name)) echo esc_attr($serve_name); ?>"/>
         &nbsp&nbsp&nbsp&nbspPlease input a community ID:&nbsp
-        <input type="text" class="regular-text" id="serve_num_in" name="<?php echo $this->plugin_name; ?>[serve_num]" value="<?php if(!empty(esc_attr($serve_num))) echo esc_attr($serve_num); ?>"/>
+        <input type="text" class="regular-text" id="serve_id_in" name="<?php echo $this->plugin_name; ?>[serve_id]" value="<?php if(!empty($serve_id)) echo esc_attr($serve_id); ?>"/>
         &nbsp&nbsp&nbsp&nbspResult Count:&nbsp
         <input type="number" class="regular-text" id="serve_count" value="6" name="<?php echo $this->plugin_name; ?>[serve_count]" style="width:5em;"/>
       </p>
@@ -93,7 +91,7 @@
         		<th class="row-title"><?php esc_attr_e( 'Title', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Community', 'geoplatform-serves' ); ?></th>
         		<th><?php esc_attr_e( 'Output Types', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Number', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Output Count', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Shortcode', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Controls', 'geoplatform-serves' ); ?></th>
         	</tr>
@@ -110,17 +108,24 @@
           $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
 
           foreach ($geopserve_retrieved_data as $geopserve_entry){
-            $geopserve_nameOut = "Temp Name";
-            $geopserve_catOut = "Temp Types";
+            $geopserve_cat_array = array();
+            (substr(($geopserve_entry->serve_cat), 0, 1) == 'T') ? array_push($geopserve_cat_array, 'Datasets') : '';
+            (substr(($geopserve_entry->serve_cat), 1, 1) == 'T') ? array_push($geopserve_cat_array, 'Services') : '';
+            (substr(($geopserve_entry->serve_cat), 2, 1) == 'T') ? array_push($geopserve_cat_array, 'Layers') : '';
+            (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
+            (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
+            (substr(($geopserve_entry->serve_cat), 5, 1) == 'T') ? array_push($geopserve_cat_array, 'Organizations') : '';
+            (substr(($geopserve_entry->serve_cat), 6, 1) == 'T') ? array_push($geopserve_cat_array, 'Contacts') : '';
+            $geopserve_cat_out = implode(", ", $geopserve_cat_array);
             ?>
             <tr>
-          		<td><?php echo esc_attr($geopserve_entry->serve_name); ?></td>
-              <td><?php echo $geopserve_nameOut; ?></td>
-              <td><?php echo $geopserve_catOut; ?></td>
+          		<td><?php echo esc_attr($geopserve_entry->serve_title); ?></td>
+              <td><?php echo esc_attr($geopserve_entry->serve_name); ?></td>
+              <td><?php echo esc_attr($geopserve_cat_out); ?></td>
           		<td><?php echo esc_attr($geopserve_entry->serve_count); ?></td>
               <td><code><?php echo esc_attr($geopserve_entry->serve_shortcode); ?></code></td>
               <td>
-                <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_id; ?>">Remove Carousel</button>
+                <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_rand; ?>">Remove Carousel</button>
               </td>
           	</tr><?php
           }?>

@@ -80,3 +80,23 @@ function run_geoplatform_service_collector() {
 
 }
 run_geoplatform_service_collector();
+
+// AJAX handling only seems to function properly if both the hooks and PHP
+// functions are placed in this file. Instead of producing clutter, the files
+// that perform the settings interface add and remove map operations are simply
+// included here.
+function geopserve_process_addition() {
+	include 'admin/partials/geoplatform-maps-admin-add-map.php';
+	include 'admin/partials/geoplatform-service-collector-admin-add.php';
+	wp_die();
+}
+
+function geopserve_process_removal() {
+	include 'admin/partials/geoplatform-service-collector-admin-remove.php';
+  wp_die();
+}
+
+// Adds ajax hooks for add and remove operations in the admin menu.
+add_action('wp_ajax_geopserve_remove_action', 'geopserve_process_removal');
+add_action('wp_ajax_geopserve_add_action', 'geopserve_process_addition');
+?>

@@ -40,6 +40,7 @@ class Geoplatform_Service_Collector_Activator {
 	      serve_num varchar(255) NOT NULL,
 				serve_id varchar(255) NOT NULL,
 	      serve_name varchar(255) NOT NULL,
+				serve_title varchar(255) NOT NULL,
 				serve_cat varchar(255) NOT NULL,
 				serve_count varchar(255) NOT NULL,
 				serve_shortcode varchar(255) NOT NULL,

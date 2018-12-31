@@ -149,10 +149,10 @@ class Geop_Maps_Admin {
 
 	public function options_update() {
 		 //register_setting(option group, option name, callback function)
-     register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
+     register_setting($this->plugin_name, $this->plugin_name, array($this, 'geopmaps_validate'));
   }
 
-	public function validate($input) {
+	public function geopmaps_validate($input) {
 	    // All checkboxes inputs
 	    $valid = array();
 
