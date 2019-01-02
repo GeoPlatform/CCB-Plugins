@@ -23,6 +23,22 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       geoplatform-service-collector
  * Domain Path:       /languages
+ *
+ *
+ *
+ * Copyright 2018 Image Matters LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 // If this file is called directly, abort.
@@ -80,6 +96,253 @@ function run_geoplatform_service_collector() {
 
 }
 run_geoplatform_service_collector();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Hook backbone for shortcode interpretation.
+function geopserve_com_shortcodes_creation($geopserve_atts){
+
+	// Establishes a base array with default values required for shortcode creation
+	// and overwrites them with values from $geoserve_atts.
+  $geoserve_shortcode_array = shortcode_atts(array(
+		'title' => '',
+    'id' => '84924e415a256ba1941d161e16f5188c',
+    'cat' => 'TFFFFFF',
+		'count' => '6',
+  ), $geopserve_atts);
+  ob_start();
+
+	// Constructs the full community URI for ual, to pull info from.
+	$geoserve_id_san = sanitize_key($geoserve_shortcode_array['id']);
+	$geoserve_ual_url = 'https://ual.geoplatform.gov/api/communities/';
+	$geoserve_ual_url .= $geoserve_id_san;
+
+
+	// Data category array format for each entry is....
+	// Button text, search bar text, search query, base uri, and temporary box text.
+	$geoserve_generation_array = array();
+	if (substr(($geoserve_shortcode_array['cat']), 0, 1) == 'T'){
+		array_push( $geoserve_generation_array, array(
+				'button' => 'Data',
+				'search' => 'Search for associated datasets',
+				'query' => '&types=dcat:Dataset&q=',
+				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
+				'box' => 'DATASET LABEL',
+			)
+		);
+	}
+	if (substr(($geoserve_shortcode_array['cat']), 1, 1) == 'T'){
+		array_push( $geoserve_generation_array, array(
+				'button' => 'Services',
+				'search' => 'Search for associated services',
+				'query' => '&types=regp:Service&q=',
+				'uri' => 'https://ual.geoplatform.gov/api/services/',
+				'box' => 'SERVICE LABEL',
+			)
+		);
+	}
+	if (substr(($geoserve_shortcode_array['cat']), 2, 1) == 'T'){
+		array_push( $geoserve_generation_array, array(
+				'button' => 'Layers',
+				'search' => 'Search for associated layers',
+				'query' => '&types=Layer&q=',
+				'uri' => 'https://ual.geoplatform.gov/api/layers/',
+				'box' => 'LAYER LABEL',
+			)
+		);
+	}
+	if (substr(($geoserve_shortcode_array['cat']), 3, 1) == 'T'){
+		array_push( $geoserve_generation_array, array(
+				'button' => 'Maps',
+				'search' => 'Search for associated maps',
+				'query' => '&types=Map&q=',
+				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
+				'box' => 'MAP LABEL',
+			)
+		);
+	}
+	if (substr(($geoserve_shortcode_array['cat']), 4, 1) == 'T'){
+		array_push( $geoserve_generation_array, array(
+				'button' => 'Galleries',
+				'search' => 'Search for associated galleries',
+				'query' => '&types=Gallery&q=',
+				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
+				'box' => 'GALLERY LABEL',
+			)
+		);
+	}
+	if (substr(($geoserve_shortcode_array['cat']), 5, 1) == 'T'){
+		array_push( $geoserve_generation_array, array(
+				'button' => 'Organizations',
+				'search' => 'Search for associated organizations',
+				'query' => '&types=org:Organization&q=',
+				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
+				'box' => 'ORGANIZATION LABEL',
+			)
+		);
+	}
+	if (substr(($geoserve_shortcode_array['cat']), 6, 1) == 'T'){
+		array_push( $geoserve_generation_array, array(
+				'button' => 'Contacts',
+				'search' => 'Search for associated contacts',
+				'query' => '&types=vcard:VCard&q=',
+				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
+				'box' => 'CONTACT LABEL',
+			)
+		);
+	}
+
+	// Default image.
+	$geopserve_disp_thumb = plugin_dir_url(__FILE__) . 'includes/img-404.png';
+	?>
+
+
+<!-- Carousel construction -->
+	<div class="m-article">
+		<?php
+
+		// Optional title display
+		if (!empty($geoserve_shortcode_array['title'])){
+			?>
+	    <div class="m-article__heading">
+	        <?php echo $geoserve_shortcode_array['title'] ?>
+	    </div>
+	    <br>
+		<?php }	?>
+
+	    <div class="carousel slide" data-ride="carousel" data-interval="false" id="geopserve_community_anchor_carousel">
+
+				<?php
+
+				// Generates the top buttons, but only if there are at least two data
+				// types to provide output for.
+				if (sizeof($geoserve_generation_array) > 1){
+					?>
+	        <ol class="geopserve-carousel-button-parent carousel-indicators">
+						<?php
+						for ($i = 0; $i < sizeof($geoserve_generation_array); $i++){
+							if ($i == 0){ ?>
+								<li data-target="#geopserve_community_anchor_carousel" data-slide-to="<?php echo $i ?>" class="geopserve-carousel-button-base geopserve-carousel-active active" title="<?php echo $geoserve_generation_array[$i]['button'] ?>"><?php echo $geoserve_generation_array[$i]['button'] ?></li>
+							<?php } else { ?>
+								<li data-target="#geopserve_community_anchor_carousel" data-slide-to="<?php echo $i ?>" class="geopserve-carousel-button-base" title="<?php echo $geoserve_generation_array[$i]['button'] ?>"><?php echo $geoserve_generation_array[$i]['button'] ?></li>
+						<?php }
+						} ?>
+	        </ol>
+				<?php } ?>
+
+	        <div class="carousel-inner">
+						<?php
+
+						// Carousel block creation. Sets the first created data type to the
+						// active status, then produces the remaining elements.
+						for ($i = 0; $i < sizeof($geoserve_generation_array); $i++){
+							if ($i == 0){ ?>
+								<div class="carousel-item active">
+							<?php } else { ?>
+								<div class="carousel-item">
+							<?php } ?>
+	                <div class="m-article">
+	                    <div class="m-article__heading" style="text-align:center;">Recent <?php echo $geoserve_generation_array[$i]['button'] ?></div>
+	                    <div class="m-article__desc">
+	                        <div class="d-grid d-grid--3-col--lg">
+	                          <?php
+	                          for ($j = 0; $j < $geoserve_shortcode_array['count']; $j++){?>
+	                            <div class="m-tile m-tile--16x9">
+	                                <div class="m-tile__thumbnail">
+	                                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopserve_disp_thumb ?>">
+	                                </div>
+	                                <div class="m-tile__body">
+	                                    <a href="/secondary.html" class="m-tile__heading"><?php echo $geoserve_generation_array[$i]['box'] ?></a>
+	                                    <div class="m-tile__timestamp">Jan 1, 2018 by Joe User</div>
+	                                </div>
+	                            </div>
+	                          <?php } ?>
+	                        </div>
+	                        <div class="u-mg-top--xlg d-flex flex-justify-between flex-align-center">
+	                            <form class="input-group-slick flex-1 geopportal_port_community_search_form" grabs-from="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search">
+	                                <span class="icon fas fa-search"></span>
+	                                <input type="text" class="form-control" id="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search"
+	                                    query-prefix="/#/?communities=<?php echo $geoserve_shortcode_array['id'] . $geoserve_generation_array[$i]['query'] ?>"
+	                                    aria-label="<?php echo $geoserve_generation_array[$i]['search'] ?>" placeholder="<?php echo $geoserve_generation_array[$i]['search'] ?>">
+	                            </form>
+	                            <button class="u-mg-left--lg btn btn-secondary geopportal_port_community_search_button" grabs-from="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search">SEARCH <?php echo strtoupper($geoserve_generation_array[$i]['button']) ?></button>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+
+						<?php } ?>
+
+	        </div>
+	    </div>
+	</div>
+
+
+	<script type="text/javascript">
+	  jQuery(document).ready(function() {
+
+			// Button color controls, because the CSS doesn't work for plugins. On
+			// click, active classes are removed from all buttons, then granted to the
+			// button that was clicked.
+			jQuery(".geopserve-carousel-button-base").click(function(event){
+				jQuery(".geopserve-carousel-button-base").removeClass("geopserve-carousel-active active");
+				jQuery(this).addClass("geopserve-carousel-active active");
+	    });
+
+			// Search functionality trigger on button click.
+	    jQuery(".geopportal_port_community_search_button").click(function(event){
+	      var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+	      var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+	      window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+	    });
+
+			// Search functionality trigger on pressing enter in search bar.
+	    jQuery( ".geopportal_port_community_search_form" ).submit(function(event){
+	      event.preventDefault();
+	      var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+	      var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+	      window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+	    });
+	  });
+	</script>
+
+<?php
+	return ob_get_clean();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Adds the shortcode hook to init.
+function geopserve_com_shortcodes_init()
+{
+    add_shortcode('geopserve', 'geopserve_com_shortcodes_creation');
+}
+add_action('init', 'geopserve_com_shortcodes_init');
 
 // AJAX handling only seems to function properly if both the hooks and PHP
 // functions are placed in this file. Instead of producing clutter, the files

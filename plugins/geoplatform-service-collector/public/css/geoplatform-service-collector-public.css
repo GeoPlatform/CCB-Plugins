@@ -2,3 +2,23 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
+ /* Lee's additions */
+.geopserve-carousel-button-parent {
+  position: relative !important;
+  bottom: unset !important;
+}
+.geopserve-carousel-button-base {
+  height: auto !important;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-indent: initial !important;
+  flex: 1 !important;
+  text-align: center;
+  color: #747474;
+  background: #fff;
+}
+.geopserve-carousel-active {
+  background-color: #2079c5 !important;
+  color: #fff;
+}
