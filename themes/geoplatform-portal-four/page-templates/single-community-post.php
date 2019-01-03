@@ -36,7 +36,10 @@ get_template_part( 'sub-header-com', get_post_format() );
  <!-- Data and search section. Needs extensive work. -->
       <div class="m-section-group t-light">
         <?php
-        get_template_part( 'community-carousel', get_post_format() );
+        if (isset($post->geopportal_compost_carousel_shortcode) && !empty($post->geopportal_compost_carousel_shortcode))
+          echo do_shortcode($post->geopportal_compost_carousel_shortcode);
+        else
+          get_template_part( 'community-carousel', get_post_format() );
         ?>
       </div>
 

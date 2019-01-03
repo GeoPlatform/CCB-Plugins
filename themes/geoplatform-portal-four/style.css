@@ -809,7 +809,7 @@ form { margin: 0; }
     text-align: left;
     display: flex;
     justify-content: space-between;
-    align-items: stretch;
+    align-items: center;
     flex-wrap: wrap;
   }
   .p-landing-page__partners .m-partners__content img {

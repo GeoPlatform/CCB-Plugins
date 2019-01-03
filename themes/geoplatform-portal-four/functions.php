@@ -767,10 +767,11 @@ add_action( 'add_meta_boxes', 'geop_ccb_custom_field_compost_metaboxes' );
 
 // display the metabox for com_post URL and checkbox
 function geop_ccb_main_data_content($post) {
-	echo "<p>Community ID:&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_community_id' id='geopportal_compost_community_id' value='" . $post->geopportal_compost_community_id . "' style='width:30%'></p>";
-	echo "<p>Community URL: <input type='text' name='geopportal_compost_community_url' id='geopportal_compost_community_url' value='" . $post->geopportal_compost_community_url . "' style='width:30%'></p>";
-	echo "<p>Map Shortcode:&nbsp <input type='text' name='geopportal_compost_map_shortcode' id='geopportal_compost_map_shortcode' value='" . $post->geopportal_compost_map_shortcode . "' style='width:30%'></p>";
-	echo "<p>Parent Slug:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_parent_slug' id='geopportal_compost_parent_slug' value='" . $post->geopportal_compost_parent_slug . "' style='width:30%'></p>";
+	echo "<p>Community ID:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_community_id' id='geopportal_compost_community_id' value='" . $post->geopportal_compost_community_id . "' style='width:30%'></p>";
+	echo "<p>Community URL:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_community_url' id='geopportal_compost_community_url' value='" . $post->geopportal_compost_community_url . "' style='width:30%'></p>";
+	echo "<p>Map Shortcode:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_map_shortcode' id='geopportal_compost_map_shortcode' value='" . $post->geopportal_compost_map_shortcode . "' style='width:30%'></p>";
+	echo "<p>Carousel Shortcode: <input type='text' name='geopportal_compost_carousel_shortcode' id='geopportal_compost_carousel_shortcode' value='" . $post->geopportal_compost_carousel_shortcode . "' style='width:30%'></p>";
+	echo "<p>Parent Slug:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_parent_slug' id='geopportal_compost_parent_slug' value='" . $post->geopportal_compost_parent_slug . "' style='width:30%'></p>";
 }
 
 // display the metabox for com_post URL and checkbox
@@ -800,6 +801,10 @@ function geop_ccb_custom_field_compost_data($post_id) {
     update_post_meta( $post_id, 'geopportal_compost_map_shortcode', '' );
   else
 		update_post_meta( $post_id, 'geopportal_compost_map_shortcode', $_POST['geopportal_compost_map_shortcode'] );
+	if ( !isset( $_POST['geopportal_compost_carousel_shortcode'] ) || is_null( $_POST['geopportal_compost_carousel_shortcode']) || empty( $_POST['geopportal_compost_carousel_shortcode'] ))
+    update_post_meta( $post_id, 'geopportal_compost_carousel_shortcode', '' );
+  else
+		update_post_meta( $post_id, 'geopportal_compost_carousel_shortcode', $_POST['geopportal_compost_carousel_shortcode'] );
 
 	if ( !isset( $_POST['geopportal_compost_sponsor_name'] ) || is_null( $_POST['geopportal_compost_sponsor_name']) || empty( $_POST['geopportal_compost_sponsor_name'] ))
     update_post_meta( $post_id, 'geopportal_compost_sponsor_name', '' );
