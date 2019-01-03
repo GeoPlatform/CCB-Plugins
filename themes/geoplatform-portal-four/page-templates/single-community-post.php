@@ -10,7 +10,7 @@
  * @since 2.0.0
  */
 get_header();
-get_template_part( 'sub-header-post', get_post_format() );
+get_template_part( 'sub-header-com', get_post_format() );
 ?>
 
 <div class="l-body l-body--two-column p-ngda-theme">
