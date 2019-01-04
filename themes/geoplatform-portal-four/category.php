@@ -69,13 +69,15 @@ get_template_part( 'sub-header-cat', get_post_format() );
  			$geopportal_archive_scaled_height = ((350 * $height) / $width) + 30;
     	?>
 
- 			<div class="o-featured__primary" style="min-height:<?php echo $geopportal_archive_scaled_height ?>px">
- 				<a class="is-linkless o-featured__heading" href="<?php echo esc_url( get_category_link( $geopportal_cat_iter->term_id ) ); ?>"><?php echo esc_attr($geopportal_cat_iter->name); ?></a>
- 				<img alt="Article Heading" class="o-featured__thumb" src="<?php echo $geopportal_archive_disp_thumb ?>">
- 				<div class="o-featured__desc">
- 					<?php echo esc_attr($geopportal_cat_iter->description); ?>
- 				</div>
- 			</div>
+			<div class="m-article m-article--flex">
+				<a class="m-article__thumbnail is-16x9" href="<?php echo esc_url( get_category_link( $geopportal_cat_iter->term_id ) ); ?>">
+					<img alt="Article Heading" src="<?php echo $geopportal_archive_disp_thumb ?>">
+				</a>
+				<div class="m-article__body">
+					<a class="m-article__heading" href="<?php echo esc_url( get_category_link( $geopportal_cat_iter->term_id ) ); ?>"><?php echo esc_attr($geopportal_cat_iter->name); ?></a>
+					<div class="m-article__desc"><?php echo esc_attr($geopportal_cat_iter->description); ?></div>
+				</div>
+			</div>
 		<?php }
 
 
@@ -143,16 +145,16 @@ get_template_part( 'sub-header-cat', get_post_format() );
 				$geopportal_link_url = esc_url($geopportal_post->geop_ccb_cat_link_url);
     	?>
 
- 			<div class="o-featured__primary" style="min-height:<?php echo $geopportal_archive_scaled_height ?>px">
- 				<a class="is-linkless o-featured__heading" href="<?php echo $geopportal_link_url; ?>"><?php echo get_the_title($geopportal_post) ?></a>
- 				<img alt="Article Heading" class="o-featured__thumb" src="<?php echo $geopportal_archive_disp_thumb ?>">
- 				<div class="o-featured__sub-heading"><?php echo wp_kses_post(get_post_meta($geopportal_post->ID, 'geop_ccb_custom_wysiwyg', true)); ?></div>
- 				<div><?php echo get_the_date("F j, Y", $geopportal_post->ID) ?></div>
- 				<div class="o-featured__desc">
- 					<?php echo esc_attr(wp_strip_all_tags($geopportal_post->post_excerpt)) ?>
- 				</div>
- 			</div>
-
+			<div class="m-article m-article--flex">
+				<a class="m-article__thumbnail is-16x9" href="<?php echo $geopportal_link_url; ?>">
+					<img alt="Article Heading" src="<?php echo $geopportal_archive_disp_thumb ?>">
+				</a>
+				<div class="m-article__body">
+					<a class="m-article__heading" href="<?php echo $geopportal_link_url; ?>"><?php echo get_the_title($geopportal_post) ?></a>
+					<div class="m-article__desc"><?php echo get_the_date("F j, Y", $geopportal_post->ID) ?></div>
+					<div class="m-article__desc"><?php echo esc_attr(wp_strip_all_tags($geopportal_post->post_excerpt)) ?></div>
+				</div>
+			</div>
  		<?php } ?>
 
   </div>
