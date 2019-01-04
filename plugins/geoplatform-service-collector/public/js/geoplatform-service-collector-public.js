@@ -66,6 +66,40 @@
 function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in){
 
 
+	const Query = GeoPlatform.Query;
+	const ItemTypes = GeoPlatform.ItemTypes;
+	const QueryParameters = GeoPlatform.QueryParameters;
+	var ItemService = GeoPlatform.ItemService;
+
+	var query = new GeoPlatform.Query();
+
+	if (geopserve_cat_in == "Data")
+		query.setTypes(ItemTypes.DATASET);
+	if (geopserve_cat_in == "Services")
+		query.setTypes(ItemTypes.SERVICE);
+	if (geopserve_cat_in == "Layers")
+		query.setTypes(ItemTypes.LAYER);
+	if (geopserve_cat_in == "Maps")
+		query.setTypes(ItemTypes.MAP);
+	if (geopserve_cat_in == "Galleries")
+		query.setTypes(ItemTypes.GALLERY);
+
+	query.setPageSize(geopserve_count_in);
+	query.setSort('modified', 'desc');
+	query.usedBy(geopserve_id_in);
+	query.setQ("");
+
+	geopserve_retrieve_objects(query)
+		.then(function (response) {
+			var geopserve_max_panes = geopserve_count_in;
+			if (response.totalResults < geopserve_count_in)
+				geopserve_max_panes = response.totalResults;
+
+			console.log(response.results);
+
+			var geopserve_results = response.results;
+
+
 
 	// Data category array format for each entry is....
 	// Button text, search bar text, search query, base uri, and temporary box text.
@@ -126,27 +160,44 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 	// 	geoserve_generation_array.push(geoserve_temp_array);
 	// }
 
-	for (var i = 0; i < geopserve_count_in; i++){
 
-		var label_text = geopserve_cat_in + " LABEL";
+		// Pane generation loop.
+		for (var i = 0; i < geopserve_max_panes; i++){
 
-		var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
-		var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
-		var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_in});
-		var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
-		var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: '/secondary.html', html: label_text});
-		var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:'Jan 1, 2018 by Joe User'});
+			var label_text = geopserve_cat_in + " LABEL";
 
-		thumb_div.appendChild(thumb_img);
-		body_div.appendChild(body_href);
-		body_div.appendChild(sub_div);
-		head_div.appendChild(thumb_div);
-		head_div.appendChild(body_div);
+			var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
+			var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
+			var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_in});
+			var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
+			var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: '/secondary.html', html: geopserve_results[i].label});
+			var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:'Jan 1, 2018 by Joe User'});
 
-		var geopserve_temp_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
-		document.getElementById(geopserve_temp_div).appendChild(head_div);
-	}
+			thumb_div.appendChild(thumb_img);
+			body_div.appendChild(body_href);
+			body_div.appendChild(sub_div);
+			head_div.appendChild(thumb_div);
+			head_div.appendChild(body_div);
+
+			var geopserve_temp_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
+			document.getElementById(geopserve_temp_div).appendChild(head_div);
+		}
+	})
+	.catch(function (error) {
+		errorSelector.show();
+		workingSelector.hide();
+		pagingSelector.hide();
+	});
 }( jQuery );
+
+function geopserve_retrieve_objects(query) {
+	var deferred = Q.defer();
+	var service = new GeoPlatform.ItemService(GeoPlatform.ualUrl, new GeoPlatform.JQueryHttpClient());
+	service.search(query)
+		.then(function (response) { deferred.resolve(response); })
+		.catch(function (e) { deferred.reject(e); });
+	return deferred.promise;
+}
 
 // Creates an HTML element and, using the arrays of string pairs passed here
 // from geop_layer_control_gen(), adds attributes to it that make it into a

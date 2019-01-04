@@ -262,6 +262,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	                    <div class="m-article__desc">
 	                        <div class="d-grid d-grid--3-col--lg" id="geopserve_carousel_gen_div_<?php echo $i ?>">
 
+												<!-- Carousel pane generation script -->
 														<script>
 															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geopserve_disp_thumb ?>");
 														</script>
