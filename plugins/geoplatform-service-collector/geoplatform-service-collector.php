@@ -246,6 +246,9 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	        <div class="carousel-inner">
 						<?php
 
+
+
+
 						// Carousel block creation. Sets the first created data type to the
 						// active status, then produces the remaining elements.
 						for ($i = 0; $i < sizeof($geoserve_generation_array); $i++){
@@ -257,19 +260,12 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	                <div class="m-article">
 	                    <div class="m-article__heading" style="text-align:center;">Recent <?php echo $geoserve_generation_array[$i]['button'] ?></div>
 	                    <div class="m-article__desc">
-	                        <div class="d-grid d-grid--3-col--lg">
-	                          <?php
-	                          for ($j = 0; $j < $geoserve_shortcode_array['count']; $j++){?>
-	                            <div class="m-tile m-tile--16x9">
-	                                <div class="m-tile__thumbnail">
-	                                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopserve_disp_thumb ?>">
-	                                </div>
-	                                <div class="m-tile__body">
-	                                    <a href="/secondary.html" class="m-tile__heading"><?php echo $geoserve_generation_array[$i]['box'] ?></a>
-	                                    <div class="m-tile__timestamp">Jan 1, 2018 by Joe User</div>
-	                                </div>
-	                            </div>
-	                          <?php } ?>
+	                        <div class="d-grid d-grid--3-col--lg" id="geopserve_carousel_gen_div_<?php echo $i ?>">
+
+														<script>
+															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geopserve_disp_thumb ?>");
+														</script>
+
 	                        </div>
 	                        <div class="u-mg-top--xlg d-flex flex-justify-between flex-align-center">
 	                            <form class="input-group-slick flex-1 geopportal_port_community_search_form" grabs-from="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search">
@@ -292,7 +288,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 	<script type="text/javascript">
 	  jQuery(document).ready(function() {
-			alert(geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_shortcode_array['cat'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>));
 	  });
 	</script>
 
