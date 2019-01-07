@@ -165,9 +165,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		FEATURED ITEMS SECTION
 		-->
 		<div class="o-featured" id="featured">
-
 		    <div class="o-featured__main">
-
 		        <div class="o-featured__primary">
 		            <div class="m-tile m-tile--16x9">
 		                <div class="m-tile__thumbnail">
@@ -287,24 +285,24 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		    </div>
 
 		    <div class="o-featured__side">
-					<?php
-					// Outputs posts.
-					$geopportal_first_bool = true;
-					foreach ($geopportal_browse_all_array as $geopccb_post){?>
-						<div class="o-featured__secondary">						<?php
-						if ($geopportal_first_bool){
-							$geopportal_first_bool = false;
-							?><h5>More Featured Content</h5><?php
+					<div class="a-heading">More Featured Content</div>
+					<div class="o-featured__tertiary">
+
+						<?php
+						// Outputs posts.
+						$geopportal_first_bool = true;
+						foreach ($geopportal_browse_all_array as $geopccb_post){?>
+							<div class="m-tile">
+		            <a class="is-linkless m-tile__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a><br>
+		            <span class="m-tile__timestamp"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
+		        	</div>
+							<?php
 						}
 						?>
-		            <a class="is-linkless" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a><br>
-		            <span><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
-		        </div>
-						<?php
-					}
-					?>
-	        <a class="btn btn-light is-linkless" href="<?php echo esc_url(home_url($geopportal_mainpage_disp_browse_link)) . '/'; ?>">Browse All</a>
-	    </div>
+					</div>
+
+	      <a class="btn btn-light is-linkless" href="<?php echo esc_url(home_url($geopportal_mainpage_disp_browse_link)) . '/'; ?>">Browse All</a>
+			</div>
 		</div>
     <?php
 	}
