@@ -1008,13 +1008,13 @@ if ( ! isset( $content_width ) ) {
 // function geop_ccb_category_mod_interface( $tag ){};
 
 // Bumping out page functions not needed from parent theme.
-function geop_ccb_page_column_action( $geopccb_column, $geopccb_id ){};
-function geop_ccb_custom_field_page_checkboxes(){};
-function geop_ccb_page_column_filter( $geopccb_columns ){};
-function geop_ccb_page_column_sorter($geopccb_columns){};
-function geop_ccb_feature_card_register($wp_customize){};
+// function geop_ccb_page_column_action( $geopccb_column, $geopccb_id ){};
+// function geop_ccb_custom_field_page_checkboxes(){};
+// function geop_ccb_page_column_filter( $geopccb_columns ){};
+// function geop_ccb_page_column_sorter($geopccb_columns){};
+// function geop_ccb_feature_card_register($wp_customize){};
 
-// Killing search register functions from CCB that have no use in NGDA.
+// Killing search register functions from CCB that have no use in Portal.
 function geop_ccb_search_register(){};
 
 // Killing all CCB menu creation due to this theme's use of its own system.

@@ -19,21 +19,28 @@ class Geopportal_Onboarding_Widget extends WP_Widget {
       $geopportal_onboarding_first_link = apply_filters('widget_title', $instance['geopportal_onboarding_first_link']);
 		else
       $geopportal_onboarding_first_link = "";
-
 		if (array_key_exists('geopportal_onboarding_second_link', $instance) && isset($instance['geopportal_onboarding_second_link']) && !empty($instance['geopportal_onboarding_second_link']))
 	    $geopportal_onboarding_second_link = apply_filters('widget_title', $instance['geopportal_onboarding_second_link']);
 		else
 	    $geopportal_onboarding_second_link = "";
+		if (array_key_exists('geopportal_onboarding_third_link', $instance) && isset($instance['geopportal_onboarding_third_link']) && !empty($instance['geopportal_onboarding_third_link']))
+	    $geopportal_onboarding_third_link = apply_filters('widget_title', $instance['geopportal_onboarding_third_link']);
+		else
+	    $geopportal_onboarding_third_link = "";
 
     ?>
 		<div class="p-landing-page__onboarding" id="geopportal_anchor_onboard" title="Sign Up">
 				<div class="d-flex flex-justify-between flex-align-center">
-						<img alt="Sign Up" src="<?php echo get_stylesheet_directory_uri() . '/img/register.svg' ?>">
-						<div class="flex-1">
-								<div class="u-text--lg t-text--bold">Don't have a GeoPlatform.gov account yet?</div>
-								<button type="button" class="btn btn-light" onclick="location.href='<?php echo esc_url($geopportal_onboarding_first_link) ?>';">SIGN UP</button>
+						<div class="u-mg-right--md">
+								<img alt="Sign Up" src="<?php echo get_stylesheet_directory_uri() . '/img/register.svg' ?>">
+						</div>
+						<div class="flex-1 u-text--sm">
+								<div class="u-text--xlg t-text--bold">Don't have a GeoPlatform.gov account yet?</div>
+								<p>Sign up to access thousands of datasets uploaded by others and contribute your own data to the world! You can also share your expertise and find experts to help with your geospatial data needs by joining one of our Communities. Submit your metadata to Data.gov  and we’ll add it to GeoPlatform so others can use it.</p>
+								<button type="button" class="btn btn-light" onclick="location.href='<?php echo esc_url($geopportal_onboarding_first_link) ?>';">Sign up!</button>&nbsp;&nbsp;
+								<a class="btn btn-outline-light" href="<?php echo esc_url($geopportal_onboarding_second_link) ?>">Learn More...</a>
 								<br><br>
-								<div>If you already have an account, <a href="<?php echo esc_url($geopportal_onboarding_second_link) ?>">sign in</a></div>
+								<div>If you already have an account, <a href="<?php echo esc_url($geopportal_onboarding_third_link) ?>">sign in</a></div>
 						</div>
 				</div>
 		</div>
@@ -46,6 +53,7 @@ class Geopportal_Onboarding_Widget extends WP_Widget {
     // Checks for entries in the widget admin boxes and provides defaults if empty.
 		$geopportal_onboarding_first_link = ! empty( $instance['geopportal_onboarding_first_link'] ) ? $instance['geopportal_onboarding_first_link'] : '';
 		$geopportal_onboarding_second_link = ! empty( $instance['geopportal_onboarding_second_link'] ) ? $instance['geopportal_onboarding_second_link'] : '';
+		$geopportal_onboarding_third_link = ! empty( $instance['geopportal_onboarding_third_link'] ) ? $instance['geopportal_onboarding_third_link'] : '';
 		?>
 
 <!-- HTML for the widget control box. -->
@@ -61,6 +69,10 @@ class Geopportal_Onboarding_Widget extends WP_Widget {
       <label for="<?php echo $this->get_field_id( 'geopportal_onboarding_second_link' ); ?>">Learn more url:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_onboarding_second_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_onboarding_second_link' ); ?>" value="<?php echo esc_attr( $geopportal_onboarding_second_link ); ?>" />
     </p>
+		<p>
+      <label for="<?php echo $this->get_field_id( 'geopportal_onboarding_third_link' ); ?>">Sign in url:</label>
+      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_onboarding_third_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_onboarding_third_link' ); ?>" value="<?php echo esc_attr( $geopportal_onboarding_third_link ); ?>" />
+    </p>
 		<?php
 	}
 
@@ -69,6 +81,7 @@ class Geopportal_Onboarding_Widget extends WP_Widget {
 
 		$instance[ 'geopportal_onboarding_first_link' ] = strip_tags( $new_instance[ 'geopportal_onboarding_first_link' ] );
 		$instance[ 'geopportal_onboarding_second_link' ] = strip_tags( $new_instance[ 'geopportal_onboarding_second_link' ] );
+		$instance[ 'geopportal_onboarding_third_link' ] = strip_tags( $new_instance[ 'geopportal_onboarding_third_link' ] );
 
 		return $instance;
 	}

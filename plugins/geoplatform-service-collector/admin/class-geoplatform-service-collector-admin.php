@@ -3,11 +3,11 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       www.geoplatform.gov
+ * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geop_Maps
- * @subpackage Geop_Maps/admin
+ * @package    Geoplatform_Service_Collector
+ * @subpackage Geoplatform_Service_Collector/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Geop_Maps
- * @subpackage Geop_Maps/admin
- * @author     Kevin Schmidt <kevins@imagemattersllc.com>
+ * @package    Geoplatform_Service_Collector
+ * @subpackage Geoplatform_Service_Collector/admin
+ * @author     Image Matters LLC <servicedesk@geoplatform.gov>
  */
-class Geop_Maps_Admin {
+class Geoplatform_Service_Collector_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -65,15 +65,15 @@ class Geop_Maps_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Geop_Maps_Loader as all of the hooks are defined
+		 * defined in Geoplatform_Service_Collector_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Geop_Maps_Loader will then create the relationship
+		 * The Geoplatform_Service_Collector_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-maps-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-service-collector-admin.css', array(), $this->version, 'all' );
 
 	}
 
@@ -88,15 +88,15 @@ class Geop_Maps_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Geop_Maps_Loader as all of the hooks are defined
+		 * defined in Geoplatform_Service_Collector_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Geop_Maps_Loader will then create the relationship
+		 * The Geoplatform_Service_Collector_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-maps-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-service-collector-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -106,7 +106,7 @@ class Geop_Maps_Admin {
 	 * @since    1.0.0
 	 */
 
-	public function geopmap_add_plugin_admin_menu() {
+	public function geopserve_add_plugin_admin_menu() {
 
 	    /*
 	     * Add a settings page for this plugin to the Settings menu.
@@ -116,7 +116,7 @@ class Geop_Maps_Admin {
 	     *        Administration Menus: http://codex.wordpress.org/Administration_Menus
 	     *
 	     */
-	    add_options_page( 'GeoPlatform Open Maps Plugin Settings Page', 'GeoPlatform Maps', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+	    add_options_page( 'GeoPlatform Service Collector Plugin Settings Page', 'GeoPlatform Service Collector', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
 	}
 
 	 /**
@@ -143,27 +143,23 @@ class Geop_Maps_Admin {
 	 */
 
 	public function display_plugin_setup_page() {
-	    include_once( 'partials/geoplatform-maps-admin-display.php' );
+	    include_once( 'partials/geoplatform-service-collector-admin-display.php' );
 	}
 
 
 	public function options_update() {
 		 //register_setting(option group, option name, callback function)
-     register_setting($this->plugin_name, $this->plugin_name, array($this, 'geopmaps_validate'));
+     register_setting($this->plugin_name, $this->plugin_name, array($this, 'geopserve_validate'));
   }
 
-	public function geopmaps_validate($input) {
+	public function geopserve_validate($input) {
 	    // All checkboxes inputs
 	    $valid = array();
-
-	    //Validate
-			//$valid['map_env'] = sanitize_text_field($input['map_env']);
-			//$valid['map_env_select'] = sanitize_option($input['map_env_select']);
-
-	    $valid['ual_map_id'] = sanitize_text_field($input['ual_map_id']);
+	    $valid['serve_id'] = sanitize_text_field($input['serve_id']);
 
 	    return $valid;
 	 }
+
 
 
 }
