@@ -247,7 +247,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 												<!-- Carousel pane generation script. Replace thumb with others as necessary. -->
 														<script>
-															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geopserve_disp_thumb ?>");
+															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb']  ?>");
 														</script>
 
 	                        </div>
