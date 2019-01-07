@@ -91,7 +91,7 @@ get_template_part( 'sub-header-cat', get_post_format() );
     $geopportal_pages_final = array();
 
     $geopportal_pages = get_posts(array(
-      'post_type' => array('post','page','geopccb_catlink'),
+      'post_type' => array('post','page','geopccb_catlink', 'community-post'),
       'orderby' => 'date',
       'order' => 'DESC',
       'numberposts' => -1,

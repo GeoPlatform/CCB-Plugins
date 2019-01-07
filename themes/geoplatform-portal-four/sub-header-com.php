@@ -3,7 +3,7 @@
 global $wp;
 
 // Breadcrumb post array determination.
-$geopportal_breadcrumb_parent = get_page_by_path($post->geopportal_compost_parent_slug, OBJECT, array('post', 'page', 'geopccb_catlink'));
+$geopportal_breadcrumb_parent = get_page_by_path($post->geopportal_compost_parent_slug, OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
 
 // Excerpt grabber and size-checker for header. Not complex, but makes me feel clever.
 // If the exceprt is larger than 300 characters, breaks it in half while making

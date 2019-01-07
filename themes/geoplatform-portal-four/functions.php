@@ -762,6 +762,14 @@ function geop_ccb_custom_field_compost_metaboxes() {
       'normal',      // part of page where the box should appear
       'default'      // priority of the box
   );
+	add_meta_box(
+			'geop_ccb_sorting_compost_id',          // this is HTML id of the box on edit screen
+			'Featured Display Priority',    // title of the box
+			'geop_ccb_priority_sort_content',   // function to be called to display the checkboxes, see the function below
+			'community-post',        // on which edit screen the box should appear
+			'normal',      // part of page where the box should appear
+			'default'      // priority of the box
+	);
 }
 add_action( 'add_meta_boxes', 'geop_ccb_custom_field_compost_metaboxes' );
 
@@ -780,6 +788,11 @@ function geop_ccb_add_data_content($post) {
 	echo "<p>Sponsor Email:&nbsp <input type='text' name='geopportal_compost_sponsor_email' id='geopportal_compost_sponsor_email' value='" . $post->geopportal_compost_sponsor_email . "' style='width:30%'></p>";
 	echo "<p>Lead Agency:&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_agency_name' id='geopportal_compost_agency_name' value='" . $post->geopportal_compost_agency_name . "' style='width:30%'></p>";
 	echo "<p>Lead Name:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp <input type='text' name='geopportal_compost_lead_name' id='geopportal_compost_lead_name' value='" . $post->geopportal_compost_lead_name . "' style='width:30%'></p>";
+}
+
+function geop_ccb_priority_sort_content($post) {
+	echo "<input type='number' name='geop_ccb_post_priority' id='geop_ccb_post_priority' value='" . $post->geop_ccb_post_priority . "' style='width:30%;'>";
+	echo "<p class='description'>Featured content is output in order from lowest value to highest.<br>It can also be set to any negative number or zero to make it not appear.<br>These settings will not take effect unless Featured Sorting is set to Custom.</p>";
 }
 
 // save data from the cat_link URL box and checkbox
@@ -825,16 +838,42 @@ function geop_ccb_custom_field_compost_data($post_id) {
     update_post_meta( $post_id, 'geopportal_compost_lead_name', '' );
   else
 		update_post_meta( $post_id, 'geopportal_compost_lead_name', $_POST['geopportal_compost_lead_name'] );
+
+	if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority']) || empty( $_POST['geop_ccb_post_priority'] ))
+    update_post_meta( $post_id, 'geop_ccb_post_priority', '0' );
+  else
+		update_post_meta( $post_id, 'geop_ccb_post_priority', $_POST['geop_ccb_post_priority'] );
 }
 add_action( 'save_post', 'geop_ccb_custom_field_compost_data' );
 
+function geop_ccb_compost_column_filter( $geopccb_columns ) {
+	$geopccb_columns = array(
+		'cb' => '<input type="checkbox" />',
+		'title' => 'Title',
+		'categories' => 'Categories',
+		'priority' => 'Priority',
+		'Date' => 'Date',
+	);
+	return $geopccb_columns;
+}
+add_filter( "manage_community-post_posts_columns", "geop_ccb_compost_column_filter" );
 
+function geop_ccb_compost_column_action( $geopccb_column, $geopccb_id ) {
+	if ( $geopccb_column == 'priority' ){
+		$geopccb_pri = get_post($geopccb_id)->geop_ccb_post_priority;
+		if (!$geopccb_pri || !isset($geopccb_pri) || !is_numeric($geopccb_pri) || $geopccb_pri <= 0)
+			$geopccb_pri = "N/A";
+		echo '<p>' . $geopccb_pri . '</p>';
+	}
+}
+add_action('manage_community-post_posts_custom_column', 'geop_ccb_compost_column_action', 10, 2);
 
-
-
-
-
-
+// Adding sortation, handled functionally by the posts function.
+function geop_ccb_compost_column_sorter($geopccb_columns) {
+	$geopccb_columns['priority'] = 'geop_ccb_post_priority';
+	return $geopccb_columns;
+}
+add_filter('manage_edit-community-post_sortable_columns', 'geop_ccb_compost_column_sorter');
 
 
 
