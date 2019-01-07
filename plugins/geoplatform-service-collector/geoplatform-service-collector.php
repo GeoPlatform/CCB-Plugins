@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Service Collector
  * Plugin URI:        https://www.geoplatform.gov
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
  * Version:           1.0.0
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
