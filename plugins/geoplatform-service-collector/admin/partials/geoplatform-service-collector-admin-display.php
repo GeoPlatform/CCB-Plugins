@@ -68,12 +68,6 @@
             <th>
               <input type="checkbox" class="regular-text" id="serve_cat_gallery" value="serve_cat_gallery">Gallery&nbsp&nbsp
             </th>
-            <th>
-              <input type="checkbox" class="regular-text" id="serve_cat_organ" value="serve_cat_organ">Organization&nbsp&nbsp
-            </th>
-            <th>
-              <input type="checkbox" class="regular-text" id="serve_cat_contact" value="serve_cat_contact">Contact&nbsp&nbsp
-            </th>
           </tr>
         </table>
       </p>
@@ -117,8 +111,6 @@
             (substr(($geopserve_entry->serve_cat), 2, 1) == 'T') ? array_push($geopserve_cat_array, 'Layers') : '';
             (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
             (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
-            (substr(($geopserve_entry->serve_cat), 5, 1) == 'T') ? array_push($geopserve_cat_array, 'Organizations') : '';
-            (substr(($geopserve_entry->serve_cat), 6, 1) == 'T') ? array_push($geopserve_cat_array, 'Contacts') : '';
             $geopserve_cat_out = implode(", ", $geopserve_cat_array);
             ?>
             <tr>

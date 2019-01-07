@@ -141,6 +141,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'query' => '&types=dcat:Dataset&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
 				'box' => 'DATASET LABEL',
+				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/dataset.svg',
 			)
 		);
 	}
@@ -151,6 +152,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'query' => '&types=regp:Service&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/services/',
 				'box' => 'SERVICE LABEL',
+				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/service.svg',
 			)
 		);
 	}
@@ -161,6 +163,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'query' => '&types=Layer&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/layers/',
 				'box' => 'LAYER LABEL',
+				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/layer.svg',
 			)
 		);
 	}
@@ -171,6 +174,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'query' => '&types=Map&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
 				'box' => 'MAP LABEL',
+				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/map.svg',
 			)
 		);
 	}
@@ -181,32 +185,13 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'query' => '&types=Gallery&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
 				'box' => 'GALLERY LABEL',
-			)
-		);
-	}
-	if (substr(($geoserve_shortcode_array['cat']), 5, 1) == 'T'){
-		array_push( $geoserve_generation_array, array(
-				'button' => 'Organizations',
-				'search' => 'Search for associated organizations',
-				'query' => '&types=org:Organization&q=',
-				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
-				'box' => 'ORGANIZATION LABEL',
-			)
-		);
-	}
-	if (substr(($geoserve_shortcode_array['cat']), 6, 1) == 'T'){
-		array_push( $geoserve_generation_array, array(
-				'button' => 'Contacts',
-				'search' => 'Search for associated contacts',
-				'query' => '&types=vcard:VCard&q=',
-				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
-				'box' => 'CONTACT LABEL',
+				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/gallery.svg',
 			)
 		);
 	}
 
 	// Default image.
-	$geopserve_disp_thumb = plugin_dir_url(__FILE__) . 'includes/img-404.png';
+	$geopserve_disp_thumb = plugin_dir_url(__FILE__) . 'public/assets/sample_1.jpg';
 	?>
 
 
@@ -246,9 +231,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	        <div class="carousel-inner">
 						<?php
 
-
-
-
 						// Carousel block creation. Sets the first created data type to the
 						// active status, then produces the remaining elements.
 						for ($i = 0; $i < sizeof($geoserve_generation_array); $i++){
@@ -262,7 +244,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	                    <div class="m-article__desc">
 	                        <div class="d-grid d-grid--3-col--lg" id="geopserve_carousel_gen_div_<?php echo $i ?>">
 
-												<!-- Carousel pane generation script -->
+
+												<!-- Carousel pane generation script. Replace thumb with others as necessary. -->
 														<script>
 															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geopserve_disp_thumb ?>");
 														</script>

@@ -22,8 +22,6 @@ $geopserve_cat_ser = sanitize_key($_POST["serve_cat_ser"]);
 $geopserve_cat_lay = sanitize_key($_POST["serve_cat_lay"]);
 $geopserve_cat_map = sanitize_key($_POST["serve_cat_map"]);
 $geopserve_cat_gal = sanitize_key($_POST["serve_cat_gal"]);
-$geopserve_cat_org = sanitize_key($_POST["serve_cat_org"]);
-$geopserve_cat_con = sanitize_key($_POST["serve_cat_con"]);
 $geopserve_rand = rand(0, 10000000000000);
 
 $geopserve_invalid_bool = false;
@@ -55,7 +53,7 @@ if (!$geopserve_invalid_bool && $geopserve_count <= 0){
 }
 
 // Category output validation, of which there must be at least one selected.
-if (!$geopserve_invalid_bool && $geopserve_cat_dat == 'false' && $geopserve_cat_ser == 'false' && $geopserve_cat_lay == 'false' && $geopserve_cat_map == 'false' && $geopserve_cat_gal == 'false' && $geopserve_cat_org == 'false' && $geopserve_cat_con == 'false'){
+if (!$geopserve_invalid_bool && $geopserve_cat_dat == 'false' && $geopserve_cat_ser == 'false' && $geopserve_cat_lay == 'false' && $geopserve_cat_map == 'false' && $geopserve_cat_gal == 'false'){
   $geopserve_invalid_bool = true;
   echo "Addition failed. At least one category must be selected for output.";
 }
@@ -112,8 +110,6 @@ if (!$geopserve_invalid_bool){
     $geopserve_cats .= ($geopserve_cat_lay == 'true') ? 'T' : 'F';
     $geopserve_cats .= ($geopserve_cat_map == 'true') ? 'T' : 'F';
     $geopserve_cats .= ($geopserve_cat_gal == 'true') ? 'T' : 'F';
-    $geopserve_cats .= ($geopserve_cat_org == 'true') ? 'T' : 'F';
-    $geopserve_cats .= ($geopserve_cat_con == 'true') ? 'T' : 'F';
 
     $geopserve_shortcode = "[geopserve ";
     if ($geopserve_title != "N/A")

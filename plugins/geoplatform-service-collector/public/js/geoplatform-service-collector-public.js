@@ -85,7 +85,7 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 		query.setTypes(ItemTypes.GALLERY);
 
 	query.setPageSize(geopserve_count_in);
-	query.setSort('modified', 'desc');
+	query.setSort('modified,desc');
 	query.usedBy(geopserve_id_in);
 	query.setQ("");
 
@@ -95,83 +95,39 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 			if (response.totalResults < geopserve_count_in)
 				geopserve_max_panes = response.totalResults;
 
-			console.log(response.results);
-
 			var geopserve_results = response.results;
-
-
-
-	// Data category array format for each entry is....
-	// Button text, search bar text, search query, base uri, and temporary box text.
-	// var geoserve_generation_array = Array();
-	// if (geopserve_cats_in.substring(0, 1) == 'T'){
-	// 	geoserve_temp_array = {
-	// 		'button': 'Data',
-	// 		'title': 'Recent Datasets',
-	// 		'search': 'Search for associated datasets',
-	// 		'query': '&types=dcat:Dataset&q=',
-	// 		'uri': 'https://ual.geoplatform.gov/api/datasets/',
-	// 		'box': 'DATASET LABEL',
-	// 	}
-	// 	geoserve_generation_array.push(geoserve_temp_array);
-	// }
-	// if (geopserve_cats_in.substring(1, 2) == 'T'){
-	// 	geoserve_temp_array = {
-	// 		'button': 'Services',
-	// 		'title': 'Recent Services',
-	// 		'search': 'Search for associated services',
-	// 		'query': '&types=regp:Service&q=',
-	// 		'uri': 'https://ual.geoplatform.gov/api/services/',
-	// 		'box': 'SERVICE LABEL',
-	// 	}
-	// 	geoserve_generation_array.push(geoserve_temp_array);
-	// }
-	// if (geopserve_cats_in.substring(2, 3) == 'T'){
-	// 	geoserve_temp_array = {
-	// 		'button': 'Layers',
-	// 		'title': 'Recent Layers',
-	// 		'search': 'Search for associated layers',
-	// 		'query': '&types=Layer&q=',
-	// 		'uri': 'https://ual.geoplatform.gov/api/layers/',
-	// 		'box': 'LAYER LABEL',
-	// 	}
-	// 	geoserve_generation_array.push(geoserve_temp_array);
-	// }
-	// if (geopserve_cats_in.substring(3, 4) == 'T'){
-	// 	geoserve_temp_array = {
-	// 		'button': 'Maps',
-	// 		'title': 'Recent Maps',
-	// 		'search': 'Search for associated maps',
-	// 		'query': '&types=Map&q=',
-	// 		'uri': 'https://ual.geoplatform.gov/api/maps/',
-	// 		'box': 'MAP LABEL',
-	// 	}
-	// 	geoserve_generation_array.push(geoserve_temp_array);
-	// }
-	// if (geopserve_cats_in.substring(4, 5) == 'T'){
-	// 	geoserve_temp_array = {
-	// 		'button': 'Galleries',
-	// 		'title': 'Recent Galleries',
-	// 		'search': 'Search for associated galleries',
-	// 		'query': '&types=Gallery&q=',
-	// 		'uri': 'https://ual.geoplatform.gov/api/galleries/',
-	// 		'box': 'GALLERY LABEL',
-	// 	}
-	// 	geoserve_generation_array.push(geoserve_temp_array);
-	// }
-
 
 		// Pane generation loop.
 		for (var i = 0; i < geopserve_max_panes; i++){
 
-			var label_text = geopserve_cat_in + " LABEL";
+			// Conditionals that attempt to grab author and date from JSON.
+			// For date, sets a default unknown, then attempts to grab the modified and,
+			// failing that, created values, translating them into date strings of the
+			// desired format.
+			var geopserve_result_time = "Unknown Time";
+			if (typeof geopserve_results[i].modified != 'undefined'){
+				var geopserve_temp_date = new Date(geopserve_results[i].modified);
+				geopserve_result_time = geopserve_temp_date.toLocaleString('en-us', { month: 'short' }) + " " + geopserve_temp_date.getDate() + ", " + geopserve_temp_date.getFullYear();
+			}
+			else if (typeof geopserve_results[i].modified === 'undefined' && typeof geopserve_results[i].created != 'undefined'){
+				var geopserve_temp_date = new Date(geopserve_results[i].created);
+				geopserve_result_time = geopserve_temp_date.toLocaleString('en-us', { month: 'short' }) + " " + geopserve_temp_date.getDate() + ", " + geopserve_temp_date.getFullYear();
+			}
+
+			// Simpler than the above, setting a default and overriding if the there is
+			// a creating user found. The two strings are then combined for output.
+			var geopserve_result_name = "Unknown User";
+			if (typeof geopserve_results[i].createdBy != 'undefined')
+				geopserve_result_name = geopserve_results[i].createdBy;
+
+			var label_text = geopserve_result_time + " by " + geopserve_result_name;
 
 			var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
 			var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
 			var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_in});
 			var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
 			var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: '/secondary.html', html: geopserve_results[i].label});
-			var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:'Jan 1, 2018 by Joe User'});
+			var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:label_text});
 
 			thumb_div.appendChild(thumb_img);
 			body_div.appendChild(body_href);
