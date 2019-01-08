@@ -27,30 +27,6 @@
 	 * Although scripts in the WordPress core, Plugins and Themes may be
 	 * practising this, we should strive to set a better example in our own work.
 	 */
-	 	jQuery(document).ready(function() {
-		 	// Button color controls, because the CSS doesn't work for plugins. On
-		 	// click, active classes are removed from all buttons, then granted to the
-		 	// button that was clicked.
-	 	jQuery(".geopserve-carousel-button-base").click(function(event){
-			jQuery(".geopserve-carousel-button-base").removeClass("geopserve-carousel-active active");
-			jQuery(this).addClass("geopserve-carousel-active active");
-		});
-
-		// Search functionality trigger on button click.
-		jQuery(".geopportal_port_community_search_button").click(function(event){
-			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
-			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
-		});
-
-		// Search functionality trigger on pressing enter in search bar.
-		jQuery( ".geopportal_port_community_search_form" ).submit(function(event){
-			event.preventDefault();
-			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
-			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
-	  });
-	});
 })( jQuery );
 
 
@@ -114,6 +90,8 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 				geopserve_result_time = geopserve_temp_date.toLocaleString('en-us', { month: 'short' }) + " " + geopserve_temp_date.getDate() + ", " + geopserve_temp_date.getFullYear();
 			}
 
+			var geopserve_asset_link = "https://oe.geoplatform.gov/view/" + geopserve_results[i].id;
+
 			// Simpler than the above, setting a default and overriding if the there is
 			// a creating user found. The two strings are then combined for output.
 			var geopserve_result_name = "Unknown User";
@@ -126,7 +104,7 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 			var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
 			var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_in});
 			var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
-			var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: '/secondary.html', html: geopserve_results[i].label});
+			var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, html: geopserve_results[i].label});
 			var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:label_text});
 
 			thumb_div.appendChild(thumb_img);

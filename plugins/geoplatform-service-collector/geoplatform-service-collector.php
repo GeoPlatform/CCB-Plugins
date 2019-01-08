@@ -247,7 +247,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 												<!-- Carousel pane generation script. Replace thumb with others as necessary. -->
 														<script>
-															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb']  ?>");
+															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>");
 														</script>
 
 	                        </div>
@@ -271,8 +271,30 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	</div>
 
 	<script type="text/javascript">
-	  jQuery(document).ready(function() {
-	  });
+	jQuery(document).ready(function() {
+			// Button color controls, because the CSS doesn't work for plugins. On
+			// click, active classes are removed from all buttons, then granted to the
+			// button that was clicked.
+		jQuery(".geopserve-carousel-button-base").click(function(event){
+			jQuery(".geopserve-carousel-button-base").removeClass("geopserve-carousel-active active");
+			jQuery(this).addClass("geopserve-carousel-active active");
+		});
+
+		// Search functionality trigger on button click.
+		jQuery(".geopportal_port_community_search_button").click(function(event){
+			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+		});
+
+		// Search functionality trigger on pressing enter in search bar.
+		jQuery( ".geopportal_port_community_search_form" ).submit(function(event){
+			event.preventDefault();
+			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+		});
+	});
 	</script>
 
 <?php
