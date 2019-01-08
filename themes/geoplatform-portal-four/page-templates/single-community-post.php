@@ -82,7 +82,7 @@ get_template_part( 'sub-header-com', get_post_format() );
       the post content. -->
       <div class="m-section-group">
           <article class="m-article">
-              <div class="m-article__heading">Section Heading</div>
+              <div class="m-article__heading"><?php echo $post->geopportal_compost_content_title ?></div>
                 <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
                   ?><div class="m-article__desc"><?php
                     the_content();
