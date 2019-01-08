@@ -634,10 +634,10 @@ class Geopportal_Graph_Widget extends WP_Widget {
 get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );
-get_template_part( 'portfolio-resources-dark', get_post_format() );
-get_template_part( 'portfolio-resources-old', get_post_format() );
-get_template_part( 'communities', get_post_format() );
 get_template_part( 'apps-and-services', get_post_format() );
+// get_template_part( 'portfolio-resources-dark', get_post_format() );
+// get_template_part( 'portfolio-resources-old', get_post_format() );
+// get_template_part( 'communities', get_post_format() );
 get_template_part( 'partners', get_post_format() );
 get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );

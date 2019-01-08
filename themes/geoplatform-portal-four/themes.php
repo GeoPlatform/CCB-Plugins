@@ -5,7 +5,7 @@ class Geopportal_Themes_Widget extends WP_Widget {
 	function __construct() {
 		parent::__construct(
 			'geopportal_themes_widget', // Base ID
-			esc_html__( 'GeoPlatform Themes', 'geoplatform-ccb' ), // Name
+			esc_html__( 'GeoPlatform Category List', 'geoplatform-ccb' ), // Name
 			array( 'description' => esc_html__( 'GeoPlatform themes widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
@@ -34,7 +34,9 @@ class Geopportal_Themes_Widget extends WP_Widget {
 			'orderby' => 'date',
 			'order' => 'DSC',
 			'numberposts' => -1,
-			'post_status' => 'publish'
+			'post_status' => 'publish',
+			'post_type' => array('post','page','geopccb_catlink', 'community-post'),
+
 		) );
 
 		// This list is then filtered for all pages in the Front Page category,
