@@ -31,6 +31,8 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 			$geopportal_resource_search_prefix = "/#/?types=Layer&q=";
 		elseif ($geopportal_test_value == "map" || $geopportal_test_value == "maps")
 			$geopportal_resource_search_prefix = "/#/?types=Map&q=";
+		elseif ($geopportal_test_value == "gallery" || $geopportal_test_value == "galleries")
+			$geopportal_resource_search_prefix = "/#/?types=Gallery&q=";
 		elseif ($geopportal_test_value == "community" || $geopportal_test_value == "communities")
 			$geopportal_resource_search_prefix = "/#/?types=Community&q=";
 		elseif ($geopportal_test_value == "organization" || $geopportal_test_value == "organizations")
