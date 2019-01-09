@@ -27,11 +27,16 @@ $geop_portal_bread_title = get_the_title($post);
 if(!empty($post->geopportal_breadcrumb_title)){
   $geop_portal_bread_title = $post->geopportal_breadcrumb_title;
 }
+
+$geop_portal_bread_par_title = get_the_title($geopportal_breadcrumb_parent);
+if(!empty($geopportal_breadcrumb_parent->geopportal_breadcrumb_title)){
+  $geop_portal_bread_par_title = $geopportal_breadcrumb_parent->geopportal_breadcrumb_title;
+}
 ?>
 
 <ul class="m-page-breadcrumbs">
     <li><a href="<?php echo home_url() ?>/">Home</a></li>
-    <li><a href="<?php echo get_the_permalink($geopportal_breadcrumb_parent); ?>"><?php echo get_the_title($geopportal_breadcrumb_parent); ?></a></li>
+    <li><a href="<?php echo get_the_permalink($geopportal_breadcrumb_parent); ?>"><?php echo $geop_portal_bread_par_title; ?></a></li>
     <li><a href="<?php echo get_the_permalink($post); ?>"><?php echo $geop_portal_bread_title; ?></a></li>
 </ul>
 
