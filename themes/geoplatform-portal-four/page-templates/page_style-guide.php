@@ -17,16 +17,17 @@ get_template_part( 'sub-header-post', get_post_format() );
   <div class="l-body__side-column">
     <nav class="p-menu" role="menu">
       <div class="u-text--uc t-text--strong">Navigation</div>
-      <a href="<?php echo home_url() ?>/style/">Getting Started</a>
-      <a href="<?php echo home_url() ?>/style/guidelines/">Principles &amp; Guidelines</a>
-      <a href="<?php echo home_url() ?>/style/typography/">Typography</a>
-      <a href="<?php echo home_url() ?>/style/iconography/">Iconography</a>
-      <a href="<?php echo home_url() ?>/style/colors/">Colors</a>
-      <a href="<?php echo home_url() ?>/style/sizing/">Sizing &amp; Spacing</a>
-      <a href="<?php echo home_url() ?>/style/buttons/">Buttons</a>
-      <a href="<?php echo home_url() ?>/style/cards/">Cards</a>
-      <a href="<?php echo home_url() ?>/style/tiles/">Tiles</a>
-      <a href="<?php echo home_url() ?>/style/results/">Search Results</a>
+      <a href="<?php echo home_url() ?>/styleguide/">Getting Started</a>
+      <a href="<?php echo home_url() ?>/styleguide/guidelines/">Principles &amp; Guidelines</a>
+      <a href="<?php echo home_url() ?>/styleguide/typography/">Typography</a>
+      <a href="<?php echo home_url() ?>/styleguide/iconography/">Iconography</a>
+      <a href="<?php echo home_url() ?>/styleguide/colors/">Colors</a>
+      <a href="<?php echo home_url() ?>/styleguide/sizing/">Sizing &amp; Spacing</a>
+      <a href="<?php echo home_url() ?>/styleguide/buttons/">Buttons</a>
+      <a href="<?php echo home_url() ?>/styleguide/articles/">Articles</a>
+      <a href="<?php echo home_url() ?>/styleguide/cards/">Cards</a>
+      <a href="<?php echo home_url() ?>/styleguide/tiles/">Tiles</a>
+      <a href="<?php echo home_url() ?>/styleguide/results/">Search Results</a>
     </nav>
     <br>
     <br>

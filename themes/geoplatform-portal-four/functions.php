@@ -891,6 +891,74 @@ add_filter('manage_edit-community-post_sortable_columns', 'geop_ccb_compost_colu
 
 
 
+/**
+ * Breadcrumb Customization for posts, pages, and community posts.
+ */
+
+// register the meta box
+function geopportal_add_breadcrumb_title() {
+    add_meta_box(
+        'geopportal_breadcrumb_title_id',          // this is HTML id of the box on edit screen
+        'Breadcrumb Title',    // title of the box
+        'geopportal_breadcrumb_box_content',   // function to be called to display the checkboxes, see the function below
+				array(
+					'post',
+					'page',
+					'community-post',
+				),
+        // 'post',        // on which edit screen the box should appear
+        'normal',      // part of page where the box should appear
+        'default'      // priority of the box
+  );
+}
+add_action( 'add_meta_boxes', 'geopportal_add_breadcrumb_title' );
+
+// display the metabox
+function geopportal_breadcrumb_box_content($post) {
+	echo "<input type='text' name='geopportal_breadcrumb_title' id='geopportal_breadcrumb_title' value='" . $post->geopportal_breadcrumb_title . "' style='width:30%;'>";
+	echo "<p class='description'>Assign an optional title for the post to be displayed in the header breadcrumbs.<br>If left blank, the breadcrumbs will display the post's proper title.</p>";
+}
+
+// save data from checkboxes
+function geopportal_breadcrumb_post_data($post_id) {
+  if ( !isset( $_POST['geopportal_breadcrumb_title'] ) || is_null( $_POST['geopportal_breadcrumb_title']) || empty( $_POST['geopportal_breadcrumb_title'] ))
+    update_post_meta( $post_id, 'geopportal_breadcrumb_title', '0' );
+  else
+		update_post_meta( $post_id, 'geopportal_breadcrumb_title', $_POST['geopportal_breadcrumb_title'] );
+}
+add_action( 'save_post', 'geopportal_breadcrumb_post_data' );
+
+
+
+
+/**
+ * Breadcrumb customization for categories.
+ *
+ * @link https://wordpress.stackexchange.com/questions/8736/add-custom-field-to-category
+*/
+function geop_ccb_category_bread_interface( $tag ){
+  $cat_bread = get_term_meta( $tag->term_id, 'cat_bread', true ); ?>
+  <tr class='form-field'>
+    <th scope='row'><label for='cat_page_visible'><?php _e('Breadcrumb Title', 'geoplatform-ccb'); ?></label></th>
+    <td>
+      <input type='text' name='cat_bread' id='cat_bread' value='<?php echo $cat_bread ?>'>
+      <p class='description'><?php _e("Assign an optional title for the post to be displayed in the header breadcrumbs.<br>If left blank, the breadcrumbs will display the post's proper title.", 'geoplatform-ccb'); ?></p>
+    </td>
+  </tr> <?php
+}
+//add_action ( 'edit_category_form_fields', 'geop_ccb_category_bread_interface');
+
+function geop_ccb_category_bread_update() {
+  if ( isset( $_POST['cat_bread'] ) )
+    update_term_meta( $_POST['tag_ID'], 'cat_bread', $_POST['cat_bread'] );
+}
+//add_action ( 'edited_category', 'geop_ccb_category_bread_update');
+
+
+
+
+
+
 
 
 //-------------------------------

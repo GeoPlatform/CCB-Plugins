@@ -27,6 +27,11 @@ if (strlen($geop_portal_excerpt_one) > 300){
 else {
   $geop_portal_excerpt_one = $geop_portal_excerpt_two;
 }
+
+$geop_portal_bread_title = get_the_title($post);
+if(!empty($post->geopportal_breadcrumb_title)){
+  $geop_portal_bread_title = $post->geopportal_breadcrumb_title;
+}
 ?>
 
 <ul class="m-page-breadcrumbs">
@@ -34,8 +39,13 @@ else {
 
     <?php
     // Adds breadcrumb elements from array to sub-header, starting from end to beginning of array.
-    for ($i = count($geopportal_breadcrumb_array)-1; $i >= 0; $i--) { ?>
-      <li><a href="<?php echo get_the_permalink($geopportal_breadcrumb_array[$i]); ?>"><?php echo get_the_title($geopportal_breadcrumb_array[$i]); ?></a></li>
+    for ($i = count($geopportal_breadcrumb_array)-1; $i >= 0; $i--) {
+      $geop_portal_bread_title = get_the_title($geopportal_breadcrumb_array[$i]);
+      if(!empty($geopportal_breadcrumb_array[$i]->geopportal_breadcrumb_title)){
+        $geop_portal_bread_title = $geopportal_breadcrumb_array[$i]->geopportal_breadcrumb_title;
+      }
+      ?>
+      <li><a href="<?php echo get_the_permalink($geopportal_breadcrumb_array[$i]); ?>"><?php echo $geop_portal_bread_title; ?></a></li>
     <?php } ?>
 
 </ul>
