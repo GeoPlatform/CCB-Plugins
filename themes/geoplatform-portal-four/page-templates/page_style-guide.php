@@ -13,7 +13,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 
 
 
-<div class="l-body l-body--two-column p-style-guide">
+<div class="l-body l-body--two-column p-style-guide p-sizing">
   <div class="l-body__side-column">
     <nav class="p-menu" role="menu">
       <div class="u-text--uc t-text--strong">Navigation</div>

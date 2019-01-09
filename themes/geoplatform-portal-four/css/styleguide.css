@@ -1,0 +1,218 @@
+
+
+/* STYLEGUIDE.CSS */
+
+.p-style-guide .a-blank-square {
+  background: #fff;
+  height: 3em;
+  width: 3em;
+  border: 1px solid #000;
+}
+.p-style-guide .c-results-item {
+  margin-left: 0;
+  margin-right: 0;
+}
+.p-style-guide .p-menu a {
+  display: block;
+  padding: 0.25em 0;
+}
+.p-style-guide .t-bg--margin {
+  background: #a1eaa6;
+}
+.p-style-guide .t-bg--padding {
+  background: #77d5f2;
+}
+.p-style-guide pre {
+  border-radius: 4px;
+  background: #fafafa!important;
+  border: 1px solid #ddd;
+}
+.p-style-guide .gp-ui-card.wireframe img.embed-responsive-item {
+  font-size: .75em;
+  color: #777;
+}
+.p-style-guide .gp-ui-card.wireframe .gp-ui-card__body:after {
+  content: ".gp-ui-card__body";
+  color: #999;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #eee;
+  padding: .25em;
+  font-size: .75em;
+  border: 1px solid #ddd;
+}
+.p-style-guide .gp-ui-card.wireframe .gp-ui-card__footer:after {
+  content: ".gp-ui-card__footer";
+  color: #999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #eee;
+  padding: .25em;
+  font-size: .75em;
+  border: 1px solid #ddd;
+}
+.p-style-guide .gp-ui-card.wireframe .gp-ui-card__body,
+.p-style-guide .gp-ui-card.wireframe .gp-ui-card__footer,
+.p-style-guide .gp-ui-card.wireframe .text--primary,
+.p-style-guide .gp-ui-card.wireframe .text--secondary,
+.p-style-guide .gp-ui-card.wireframe .text--supporting {
+  position: relative;
+  margin: .25em;
+  border: 1px dashed #777;
+}
+.p-style-guide .m-article.wireframe {
+  position: relative;
+  border: 1px dashed #747474;
+  padding: 0;
+}
+.p-style-guide .m-article.wireframe .m-article__heading,
+.p-style-guide .m-article.wireframe .m-article__desc,
+.p-style-guide .m-article.wireframe .m-article__timestamp,
+.p-style-guide .m-article.wireframe .m-article__thumbnail {
+  position: relative;
+  display: block;
+  margin: 0.25em;
+  border: 1px dashed #747474;
+  padding: 0.25em;
+}
+.p-style-guide .m-article.wireframe:after,
+.p-style-guide .m-article.wireframe .m-article__heading:after,
+.p-style-guide .m-article.wireframe .m-article__desc:after,
+.p-style-guide .m-article.wireframe .m-article__timestamp:after,
+.p-style-guide .m-article.wireframe .m-article__thumbnail:after {
+  text-transform: none;
+  color: #999;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #eee;
+  padding: .25em;
+  font-size: .75em;
+  border: 1px solid #ddd;
+}
+.p-style-guide .m-article.wireframe:after {
+  content: ".m-article";
+}
+.p-style-guide .m-article.wireframe .m-article__heading:after {
+  content: ".m-article__heading";
+}
+.p-style-guide .m-article.wireframe .m-article__desc:after {
+  content: ".m-article__desc";
+}
+.p-style-guide .m-article.wireframe .m-article__timestamp:after {
+  content: ".m-article__timestamp";
+}
+.p-style-guide .m-article.wireframe .m-article__thumbnail:after {
+  content: ".m-article__thumbnail img";
+}
+.p-style-guide.p-sizing div.wireframe {
+  display: inline-block;
+  border: 1px solid #ddd;
+}
+.p-style-guide.p-sizing div.wireframe > * {
+  display: inline-block;
+  position: relative;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--xxxlg:after,
+.p-style-guide.p-sizing div.wireframe .u-mg--xxlg:after,
+.p-style-guide.p-sizing div.wireframe .u-mg--xlg:after,
+.p-style-guide.p-sizing div.wireframe .u-mg--lg:after,
+.p-style-guide.p-sizing div.wireframe .u-mg--md:after,
+.p-style-guide.p-sizing div.wireframe .u-mg--sm:after,
+.p-style-guide.p-sizing div.wireframe .u-mg--xs:after,
+.p-style-guide.p-sizing div.wireframe .u-mg--xxs:after {
+  color: #333;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(161, 234, 166, 0.31372549);
+  font-size: 0.75em;
+  white-space: nowrap;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--xxxlg:after {
+  content: ".u-mg--xxxlg";
+  top: -2.75em;
+  left: -2.75em;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--xxlg:after {
+  content: ".u-mg--xxlg";
+  top: -2.5em;
+  left: -2.5em;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--xlg:after {
+  content: ".u-mg--xlg";
+  top: -2.25em;
+  left: -2.25em;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--lg:after {
+  content: ".u-mg--lg";
+  top: -1.75em;
+  left: -1.75em;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--md:after {
+  content: ".u-mg--md";
+  top: -1.5em;
+  left: -1.5em;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--sm:after {
+  content: ".u-mg--sm";
+  top: -1.125em;
+  left: -1.125em;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--xs:after {
+  content: ".u-mg--xs";
+  top: -0.75em;
+  left: -0.75em;
+}
+.p-style-guide.p-sizing div.wireframe .u-mg--xxs:after {
+  content: ".u-mg--xxs";
+  top: -0.5em;
+  left: -0.5em;
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--xxxlg:after,
+.p-style-guide.p-sizing div.wireframe .u-pd--xxlg:after,
+.p-style-guide.p-sizing div.wireframe .u-pd--xlg:after,
+.p-style-guide.p-sizing div.wireframe .u-pd--lg:after,
+.p-style-guide.p-sizing div.wireframe .u-pd--md:after,
+.p-style-guide.p-sizing div.wireframe .u-pd--sm:after,
+.p-style-guide.p-sizing div.wireframe .u-pd--xs:after,
+.p-style-guide.p-sizing div.wireframe .u-pd--xxs:after {
+  color: #333;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(119, 213, 242, 0.31);
+  font-size: 0.75em;
+  white-space: nowrap;
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--xxxlg:after {
+  content: ".u-pd--xxxlg";
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--xxlg:after {
+  content: ".u-pd--xxlg";
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--xlg:after {
+  content: ".u-pd--xlg";
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--lg:after {
+  content: ".u-pd--lg";
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--md:after {
+  content: ".u-pd--md";
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--sm:after {
+  content: ".u-pd--sm";
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--xs:after {
+  content: ".u-pd--xs";
+}
+.p-style-guide.p-sizing div.wireframe .u-pd--xxs:after {
+  content: ".u-pd--xxs";
+}
+@media (min-width: 992px) {
+  .l-body.l-body--two-column.p-style-guide > .l-body__main-column {
+    flex: 4;
+  }
+}
