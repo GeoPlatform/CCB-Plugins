@@ -897,7 +897,7 @@ add_filter('manage_edit-community-post_sortable_columns', 'geop_ccb_compost_colu
 function geopportal_add_breadcrumb_title() {
     add_meta_box(
         'geopportal_breadcrumb_title_id',          // this is HTML id of the box on edit screen
-        'Breadcrumb Title',    // title of the box
+        'Breadcrumb and Tile Title',    // title of the box
         'geopportal_breadcrumb_box_content',   // function to be called to display the checkboxes, see the function below
 				array(
 					'post',
@@ -914,7 +914,7 @@ add_action( 'add_meta_boxes', 'geopportal_add_breadcrumb_title' );
 // display the metabox
 function geopportal_breadcrumb_box_content($post) {
 	echo "<input type='text' name='geopportal_breadcrumb_title' id='geopportal_breadcrumb_title' value='" . $post->geopportal_breadcrumb_title . "' style='width:30%;'>";
-	echo "<p class='description'>Assign an optional title for the post to be displayed in the header breadcrumbs.<br>If left blank, the breadcrumbs will display the post's proper title.</p>";
+	echo "<p class='description'>Assign an optional title for the post to be displayed in the header breadcrumbs and in Resource Elements panes.<br>If left blank, the breadcrumbs and panes will display the post's proper title.</p>";
 }
 
 // save data from checkboxes

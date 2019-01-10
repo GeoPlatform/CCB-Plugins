@@ -49,11 +49,14 @@ class Geopportal_MainPage_Widget extends WP_Widget {
       $geopportal_mainpage_disp_map_shortcode = apply_filters('widget_title', $instance['geopportal_mainpage_map_shortcode']);
 		else
       $geopportal_mainpage_disp_map_shortcode = "";
+		if (array_key_exists('geopportal_mainpage_more_cat', $instance) && isset($instance['geopportal_mainpage_more_cat']) && !empty($instance['geopportal_mainpage_more_cat']))
+			$geopportal_mainpage_more_cat = apply_filters('widget_title', $instance['geopportal_mainpage_more_cat']);
+		else
+			$geopportal_mainpage_more_cat = "";
 		if (array_key_exists('geopportal_mainpage_more_count', $instance) && isset($instance['geopportal_mainpage_more_count']) && !empty($instance['geopportal_mainpage_more_count']))
 			$geopportal_mainpage_disp_more_count = apply_filters('widget_title', $instance['geopportal_mainpage_more_count']);
 		else
 			$geopportal_mainpage_disp_more_count = "6";
-
 		if (array_key_exists('geopportal_mainpage_browse_link', $instance) && isset($instance['geopportal_mainpage_browse_link']) && !empty($instance['geopportal_mainpage_browse_link']))
 			$geopportal_mainpage_disp_browse_link = apply_filters('widget_title', $instance['geopportal_mainpage_browse_link']);
 		else
@@ -121,38 +124,57 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		if (!is_numeric($geopportal_mainpage_disp_more_count) || $geopportal_mainpage_disp_more_count <= 0)
 			$geopportal_mainpage_disp_more_count = 6;
 
-		// Browse all array for the more featured content.
-		$geopportal_browse_all_array = array();
+		$geopportal_featured_sort_format = get_theme_mod('featured_appearance', 'date');
+    $geopportal_pages_final = array();
+		$geopportal_pages_sort = array();
 
-		// Custom sorting method. Begins by getting all of the posts.
-		$geopportal_posts = get_posts( array(
-				'post_type'   => 'post',
-				'numberposts' => -1
+		$geopportal_pages = get_posts(array(
+			'orderby' => 'date',
+			'order' => 'DSC',
+			'numberposts' => -1,
+			'post_status' => 'publish',
+			'post_type' => array('post','page','geopccb_catlink', 'community-post'),
 		) );
 
-		// Assigns posts with valid priority values to the trimmed array.
-		$geopportal_posts_trimmed = array();
-		foreach($geopportal_posts as $geopportal_post){
-			if ($geopportal_post->geop_ccb_post_priority > 0)
-				array_push($geopportal_posts_trimmed, $geopportal_post);
+		// This list is then filtered for all pages in the Front Page category,
+		foreach($geopportal_pages as $geopportal_page){
+			if (in_category($geopportal_mainpage_more_cat, $geopportal_page))
+				array_push($geopportal_pages_sort, $geopportal_page);
 		}
 
-		// Bubble sorts the resulting posts.
-		$geopportal_posts_size = count($geopportal_posts_trimmed)-1;
-		for ($i = 0; $i < $geopportal_posts_size; $i++) {
-			for ($j = 0; $j < $geopportal_posts_size - $i; $j++) {
-				$k = $j + 1;
-				$geopportal_test_left = $geopportal_posts_trimmed[$j]->geop_ccb_post_priority;
-				$geopportal_test_right = $geopportal_posts_trimmed[$k]->geop_ccb_post_priority;
-				if ($geopportal_test_left > $geopportal_test_right) {
-					// Swap elements at indices: $j, $k
-					list($geopportal_posts_trimmed[$j], $geopportal_posts_trimmed[$k]) = array($geopportal_posts_trimmed[$k], $geopportal_posts_trimmed[$j]);
-				}
-			}
-		}
+		if (count($geopportal_pages_sort) > 0){
+    // Mimics the old way of populating, but functional.
+	    if ($geopportal_featured_sort_format == 'date'){
+				$geopportal_pages_final = $geopportal_pages_sort;
+	    }
+	    else {
+				$geopportal_pages_trimmed = array();
 
-		// Removes all posts after the count set by more_count.
-		$geopportal_browse_all_array = array_slice($geopportal_posts_trimmed, 0, $geopportal_mainpage_disp_more_count);
+	      // Assigns pages with valid priority values to the trimmed array.
+	      foreach($geopportal_pages_sort as $geopportal_page){
+	        if ($geopportal_page->geop_ccb_post_priority > 0)
+	        	array_push($geopportal_pages_trimmed, $geopportal_page);
+	      }
+
+	      // Bubble sorts the resulting pages.
+	      $geopportal_pages_size = count($geopportal_pages_trimmed)-1;
+	      for ($i = 0; $i < $geopportal_pages_size; $i++) {
+	        for ($j = 0; $j < $geopportal_pages_size - $i; $j++) {
+	          $k = $j + 1;
+	          $geopportal_test_left = $geopportal_pages_trimmed[$j]->geop_ccb_post_priority;
+	          $geopportal_test_right = $geopportal_pages_trimmed[$k]->geop_ccb_post_priority;
+	          if ($geopportal_test_left > $geopportal_test_right) {
+	            // Swap elements at indices: $j, $k
+	            list($geopportal_pages_trimmed[$j], $geopportal_pages_trimmed[$k]) = array($geopportal_pages_trimmed[$k], $geopportal_pages_trimmed[$j]);
+	          }
+	        }
+	      }
+	      $geopportal_pages_final = $geopportal_pages_trimmed;
+	    }
+
+			// Removes all posts after the count set by more_count.
+			$geopportal_pages_final = array_slice($geopportal_pages_final, 0, $geopportal_mainpage_disp_more_count);
+		}
 		?>
 
 		<!-- For tag reference, need extra hyphen after each 'badge' -->
@@ -290,13 +312,14 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 
 						<?php
 						// Outputs posts.
-						$geopportal_first_bool = true;
-						foreach ($geopportal_browse_all_array as $geopccb_post){?>
-							<div class="m-tile">
-		            <a class="is-linkless m-tile__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a><br>
-		            <span class="m-tile__timestamp"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
-		        	</div>
-							<?php
+						if (count($geopportal_pages_final) > 0){
+							foreach ($geopportal_pages_final as $geopccb_post){?>
+								<div class="m-tile">
+			            <a class="is-linkless m-tile__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a><br>
+			            <span class="m-tile__timestamp"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
+			        	</div>
+								<?php
+							}
 						}
 						?>
 					</div>
@@ -328,6 +351,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_map_title = ! empty( $instance['geopportal_mainpage_map_title'] ) ? $instance['geopportal_mainpage_map_title'] : '';
 		$geopportal_mainpage_map_shortcode = ! empty( $instance['geopportal_mainpage_map_shortcode'] ) ? $instance['geopportal_mainpage_map_shortcode'] : '';
 		$geopportal_mainpage_more_count = ! empty( $instance['geopportal_mainpage_more_count'] ) ? $instance['geopportal_mainpage_more_count'] : '0';
+		$geopportal_mainpage_more_cat = ! empty( $instance['geopportal_mainpage_more_cat'] ) ? $instance['geopportal_mainpage_more_cat'] : '0';
 		$geopportal_mainpage_browse_link = ! empty( $instance['geopportal_mainpage_browse_link'] ) ? $instance['geopportal_mainpage_browse_link'] : '';
 		?>
 
@@ -365,7 +389,11 @@ class Geopportal_MainPage_Widget extends WP_Widget {
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_map_shortcode' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_map_shortcode' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_map_shortcode ); ?>" />
     </p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>">Featured Content Count:</label><br>
+			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_more_cat' ); ?>">More Content Category Slug:</label><br>
+			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_more_cat' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_more_cat' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_more_cat); ?>" />
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>">More Content Count:</label><br>
 			<input type="number"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_more_count' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_more_count); ?>" />
 		</p>
 		<p>
@@ -394,6 +422,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$instance[ 'geopportal_mainpage_fifth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fifth_link' ] );
 		$instance[ 'geopportal_mainpage_map_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_title' ] );
 		$instance[ 'geopportal_mainpage_map_shortcode' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_shortcode' ] );
+		$instance[ 'geopportal_mainpage_more_cat' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_cat' ] );
 		$instance[ 'geopportal_mainpage_more_count' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_count' ] );
 		$instance[ 'geopportal_mainpage_browse_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_browse_link' ] );
 

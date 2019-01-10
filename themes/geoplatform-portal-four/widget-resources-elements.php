@@ -85,9 +85,17 @@ class Geopportal_Resource_Elements_Widget extends WP_Widget {
 
 						<?php
 						foreach ($geopportal_pages_final as $geopportal_post){
+
+							// Thumbnail handle
 							$geopportal_elements_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
 							if ( has_post_thumbnail($geopportal_post) )
 								$geopportal_elements_disp_thumb = get_the_post_thumbnail_url($geopportal_post);
+
+							// Breadcrumb handle
+							$geopportal_elements_disp_title = get_the_title($geopportal_post);
+							if(!empty($geopportal_post->geopportal_breadcrumb_title)){
+							  $geopportal_elements_disp_title = $geopportal_post->geopportal_breadcrumb_title;
+							}
 
 							$geopportal_elements_disp_url = get_post_type($geopportal_post) == 'geopccb_catlink' ? esc_url($geopportal_post->geop_ccb_cat_link_url) : get_the_permalink($geopportal_post);
 							?>
@@ -96,7 +104,7 @@ class Geopportal_Resource_Elements_Widget extends WP_Widget {
                       <img alt="<?php echo get_the_title($geopportal_post); ?>" src="<?php echo $geopportal_elements_disp_thumb ?>">
                   </div>
                   <div class="m-tile__body">
-                      <a href="<?php echo $geopportal_elements_disp_url ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_post); ?></a>
+                      <a href="<?php echo $geopportal_elements_disp_url ?>" class="m-tile__heading"><?php echo $geopportal_elements_disp_title ?></a>
                   </div>
               </div>
 						<?php	} ?>
