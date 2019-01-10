@@ -47,44 +47,38 @@ class Geopportal_Partners_Widget extends WP_Widget {
       $geopportal_partners_fifth_link = home_url();
 
 		// Turns the slugs into pages.
+
 		$geopportal_partners_get_page_params = array('post', 'page', 'geopccb_catlink');
-		$geopportal_partners_first_page = get_page_by_path($geopportal_partners_first_link, OBJECT, $geopportal_partners_get_page_params);
-		$geopportal_partners_second_page = get_page_by_path($geopportal_partners_second_link, OBJECT, $geopportal_partners_get_page_params);
-		$geopportal_partners_third_page = get_page_by_path($geopportal_partners_third_link, OBJECT, $geopportal_partners_get_page_params);
-		$geopportal_partners_fourth_page = get_page_by_path($geopportal_partners_fourth_link, OBJECT, $geopportal_partners_get_page_params);
-		$geopportal_partners_fifth_page = get_page_by_path($geopportal_partners_fifth_link, OBJECT, $geopportal_partners_get_page_params);
+		$geopportal_partners_page_array = array();
 
-		// Groups pages into an array and creates 2 support arrays for relevant info.
-		$geopportal_partners_page_array = array($geopportal_partners_first_page, $geopportal_partners_second_page, $geopportal_partners_third_page, $geopportal_partners_fourth_page, $geopportal_partners_fifth_page);
+		array_push($geopportal_partners_page_array, get_page_by_path($geopportal_partners_first_link, OBJECT, $geopportal_partners_get_page_params));
+		array_push($geopportal_partners_page_array, get_page_by_path($geopportal_partners_second_link, OBJECT, $geopportal_partners_get_page_params));
+		array_push($geopportal_partners_page_array, get_page_by_path($geopportal_partners_third_link, OBJECT, $geopportal_partners_get_page_params));
+		array_push($geopportal_partners_page_array, get_page_by_path($geopportal_partners_fourth_link, OBJECT, $geopportal_partners_get_page_params));
+		array_push($geopportal_partners_page_array, get_page_by_path($geopportal_partners_fifth_link, OBJECT, $geopportal_partners_get_page_params));
+
+		$geopportal_apps_service_title = ! empty( $instance['geopportal_apps_service_title'] ) ? $instance['geopportal_apps_service_title'] : 'Apps & Services';
+
+		// Creates an array for thumbnails and populates it.
 		$geopportal_partners_thumb_array = array();
-		$geopportal_partners_link_array = array();
-		$geopportal_partners_title_array = array();
-
-		// Determination loop that populates the support arrays with data from the page array.
 		foreach($geopportal_partners_page_array as $geopportal_partners_page){
 			if (has_post_thumbnail($geopportal_partners_page))
 				array_push($geopportal_partners_thumb_array, get_the_post_thumbnail_url($geopportal_partners_page));
-			else
-				array_push($geopportal_partners_thumb_array, get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png');
-
-		  if (get_post_type($geopportal_partners_page) == 'geopccb_catlink')
-				array_push($geopportal_partners_link_array, esc_url($geopportal_partners_page->geop_ccb_cat_link_url));
-			else
-				array_push($geopportal_partners_link_array, get_the_permalink($geopportal_partners_page));
-
-			array_push($geopportal_partners_title_array, get_the_title($geopportal_partners_page));
 		}
-		?>
 
+		// Widget output.
+		?>
 		<div id="geopportal_anchor_partners" title="Explore Partners">
 			<article class="p-landing-page__partners">
 		    <div class="m-article__heading m-article__heading--front-page"><?php _e(sanitize_text_field($geopportal_partners_main_title), 'geoplatform-ccb') ?></div>
 		    <div class="m-partners__content">
-		      <img alt="<?php echo $geopportal_partners_title_array[0] ?>" src="<?php echo $geopportal_partners_thumb_array[0] ?>">
-					<img alt="<?php echo $geopportal_partners_title_array[1] ?>" src="<?php echo $geopportal_partners_thumb_array[1] ?>">
-					<img alt="<?php echo $geopportal_partners_title_array[2] ?>" src="<?php echo $geopportal_partners_thumb_array[2] ?>">
-					<img alt="<?php echo $geopportal_partners_title_array[3] ?>" src="<?php echo $geopportal_partners_thumb_array[3] ?>">
-					<img alt="<?php echo $geopportal_partners_title_array[4] ?>" src="<?php echo $geopportal_partners_thumb_array[4] ?>">
+					<?php
+					for ($i = 0; $i < count($geopportal_partners_thumb_array); $i++){
+						?>
+		      	<img alt="Explore Partners" src="<?php echo $geopportal_partners_thumb_array[$i] ?>">
+						<?php
+					}
+					?>
 		    </div>
 			</article>
 		</div>
@@ -103,12 +97,11 @@ class Geopportal_Partners_Widget extends WP_Widget {
     $geopportal_partners_third_link = ! empty( $instance['geopportal_partners_third_link'] ) ? $instance['geopportal_partners_third_link'] : '';
     $geopportal_partners_fourth_link = ! empty( $instance['geopportal_partners_fourth_link'] ) ? $instance['geopportal_partners_fourth_link'] : '';
 		$geopportal_partners_fifth_link = ! empty( $instance['geopportal_partners_fifth_link'] ) ? $instance['geopportal_partners_fifth_link'] : '';
-
 		?>
 
 <!-- HTML for the widget control box. -->
 		<p>
-			<?php _e('The boxes below accept text and page slugs. Please ensure that any input slugs are valid. If the slug points to a Category Link post type, the external URL will be used instead.', 'geoplatform-ccb'); ?>
+			<?php _e('The boxes below accept text and page slugs. Please ensure that any input slugs are valid. Inputs that are empty, invalid, or reference posts without featured images will be ignored.', 'geoplatform-ccb'); ?>
 		</p>
 		<p>
       <label for="<?php echo $this->get_field_id( 'geopportal_partners_main_title' ); ?>">Title:</label>

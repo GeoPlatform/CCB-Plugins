@@ -18,10 +18,11 @@ get_template_part( 'sub-header-com', get_post_format() );
 
  <!-- Map section. Pulls apart and rebuilds map shortcode before execution. -->
       <?php
+      if (isset($post->geopportal_compost_map_shortcode) && !empty($post->geopportal_compost_map_shortcode)){
         $geop_portal_broken_shortcode = explode( "'", $post->geopportal_compost_map_shortcode);
         $geop_portal_rebuilt_shortcode = "[geopmap id=" . $geop_portal_broken_shortcode[1] . " height=350 title=off]";
-      ?>
-      <div class="m-section-group">
+        ?>
+        <div class="m-section-group">
           <div class="m-article">
               <div class="m-article__heading">
                   Featured <?php echo the_title() ?> Data
@@ -30,18 +31,17 @@ get_template_part( 'sub-header-com', get_post_format() );
                 <?php echo do_shortcode($geop_portal_rebuilt_shortcode) ?>
               </div>
           </div>
-      </div>
+        </div>
+      <?php } ?>
 
 
- <!-- Data and search section. Needs extensive work. -->
-      <div class="m-section-group t-light">
-        <?php
-        if (isset($post->geopportal_compost_carousel_shortcode) && !empty($post->geopportal_compost_carousel_shortcode))
-          echo do_shortcode($post->geopportal_compost_carousel_shortcode);
-        else
-          get_template_part( 'community-carousel', get_post_format() );
-        ?>
-      </div>
+ <!-- Data and search section. -->
+      <?php
+      if (isset($post->geopportal_compost_carousel_shortcode) && !empty($post->geopportal_compost_carousel_shortcode)){ ?>
+        <div class="m-section-group t-light">
+          <?php echo do_shortcode($post->geopportal_compost_carousel_shortcode); ?>
+        </div>
+      <?php } ?>
 
  <!-- Find Resources section, which redirects to the search interface. -->
       <div class="m-section-group">
