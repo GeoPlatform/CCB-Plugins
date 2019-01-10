@@ -14,7 +14,7 @@ global $wpdb;
 /* Assigns the variables stored in $_POST while instantiating blank variables
  * for conditional assignment.
 */
-$geopserve_title = sanitize_key($_POST["serve_name"]);
+$geopserve_title = $_POST["serve_name"];
 $geopserve_id = sanitize_key($_POST["serve_id"]);
 $geopserve_count = sanitize_key($_POST["serve_count"]);
 $geopserve_cat_dat = sanitize_key($_POST["serve_cat_dat"]);
