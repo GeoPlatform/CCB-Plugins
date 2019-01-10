@@ -58,9 +58,9 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		else
 			$geopportal_mainpage_disp_more_count = "6";
 		if (array_key_exists('geopportal_mainpage_browse_link', $instance) && isset($instance['geopportal_mainpage_browse_link']) && !empty($instance['geopportal_mainpage_browse_link']))
-			$geopportal_mainpage_disp_browse_link = apply_filters('widget_title', $instance['geopportal_mainpage_browse_link']);
+			$geopportal_mainpage_disp_browse_slug = apply_filters('widget_title', $instance['geopportal_mainpage_browse_link']);
 		else
-			$geopportal_mainpage_disp_browse_link = "";
+			$geopportal_mainpage_disp_browse_slug = "";
 
 		// Turns the slugs into pages.
 		$geopportal_mainpage_disp_first_page = get_page_by_path($geopportal_mainpage_disp_first_link, OBJECT, array('post', 'page', 'geopccb_catlink'));
@@ -175,13 +175,14 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 			// Removes all posts after the count set by more_count.
 			$geopportal_pages_final = array_slice($geopportal_pages_final, 0, $geopportal_mainpage_disp_more_count);
 		}
+
+		// Quality control of browse all category, sets link to home page if fails.
+		$geopportal_mainpage_browse_cat = get_category_by_slug($geopportal_mainpage_disp_browse_slug);
+		if ($geopportal_mainpage_browse_cat)
+			$geopportal_mainpage_browse_url = esc_url( get_category_link( $geopportal_mainpage_browse_cat->term_id ) );
+		else
+			$geopportal_mainpage_browse_url = home_url();
 		?>
-
-		<!-- For tag reference, need extra hyphen after each 'badge' -->
-		<!-- <a href="search.html" class="a-badge a-badge-info">tag</a>
-		<a href="search.html" class="a-badge a-badge-warning">keyword</a>
-		<a href="search.html" class="a-badge a-badge-wild">category</a> -->
-
 
 		<!--
 		FEATURED ITEMS SECTION
@@ -324,7 +325,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 						?>
 					</div>
 
-	      <a class="btn btn-light is-linkless" href="<?php echo esc_url(home_url($geopportal_mainpage_disp_browse_link)) . '/'; ?>">Browse All</a>
+	      <a class="btn btn-light is-linkless" href="<?php echo esc_url($geopportal_mainpage_browse_url); ?>">Browse All</a>
 			</div>
 		</div>
     <?php
@@ -397,7 +398,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 			<input type="number"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_more_count' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_more_count); ?>" />
 		</p>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_browse_link' ); ?>">Browse All Slug:</label><br>
+			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_browse_link' ); ?>">Browse All Category Slug:</label><br>
 			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_browse_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_browse_link' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_browse_link); ?>" />
 		</p>
 		<p>
