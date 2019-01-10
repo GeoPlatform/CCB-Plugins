@@ -65,7 +65,15 @@ function onInputFieldClear(btn) {
     $el.addClass('is-hidden');
 }
 
-
+jQuery(document).ready( function() {
+   var wpAdminbar = jQuery('#wpadminbar');
+   if(wpAdminbar.length) {   //if admin bar is present...
+      var stickyGPHeader = jQuery('.o-header--sticky .o-header__primary');
+      if(stickyGPHeader.length) {
+        stickyGPHeader.css({ top: '32px' }); //drop header by height of wp admin bar
+      }
+   }
+});
 
 function cycleCarouselTo(selector, slideNo) {
     jQuery(selector).carousel( slideNo );
