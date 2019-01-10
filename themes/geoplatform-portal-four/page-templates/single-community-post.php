@@ -38,29 +38,32 @@ get_template_part( 'sub-header-com', get_post_format() );
  <!-- Data and search section. -->
       <?php
       if (isset($post->geopportal_compost_carousel_shortcode) && !empty($post->geopportal_compost_carousel_shortcode)){ ?>
+
         <div class="m-section-group t-light">
           <?php echo do_shortcode($post->geopportal_compost_carousel_shortcode); ?>
         </div>
-      <?php } ?>
 
  <!-- Find Resources section, which redirects to the search interface. -->
-      <div class="m-section-group">
-          <article class="m-article">
-              <div class="m-article__heading">Find Resources</div>
-              <div class="m-article__desc">
-                  <p>Find resources associated with <?php echo the_title() ?> using the controls below.</p>
-              </div>
-              <div class="article__actions">
-                  <div class="flex-1 d-flex flex-justify-between flex-align-center">
-                      <form class="input-group-slick flex-1" id="geop_community_resources_search_form">
-                        <span class="icon fas fa-search"></span>
-                        <input type="text" class="form-control" id="geop_community_resources_search_input" com_id="<?php echo $post->geopportal_compost_community_id ?>" aria-label="Search for resources" placeholder="Search for resources">
-                      </form>
-                      <button class="btn btn-secondary u-mg-left--lg" id="geop_community_resources_search_button">SEARCH</button>
-                  </div>&nbsp;&nbsp;
-              </div>
-          </article>
-      </div>
+        <div class="m-section-group">
+            <article class="m-article">
+                <div class="m-article__heading">Find Resources</div>
+                <div class="m-article__desc">
+                    <p>Find resources associated with <?php echo the_title() ?> using the controls below.</p>
+                </div>
+                <div class="article__actions">
+                    <div class="flex-1 d-flex flex-justify-between flex-align-center">
+                        <form class="input-group-slick flex-1" id="geop_community_resources_search_form">
+                          <span class="icon fas fa-search"></span>
+                          <input type="text" class="form-control" id="geop_community_resources_search_input" com_id="<?php echo $post->geopportal_compost_community_id ?>" aria-label="Search for resources" placeholder="Search for resources">
+                        </form>
+                        <button class="btn btn-secondary u-mg-left--lg" id="geop_community_resources_search_button">SEARCH</button>
+                    </div>&nbsp;&nbsp;
+                </div>
+            </article>
+        </div>
+
+    <?php } ?>
+
 
       <script type="text/javascript">
         jQuery(document).ready(function() {
@@ -113,17 +116,36 @@ get_template_part( 'sub-header-com', get_post_format() );
           </div>
       </div>
 
+      <?php
+      if ((isset($post->geopportal_compost_sponsor_name) && !empty($post->geopportal_compost_sponsor_name)) ||
+          (isset($post->geopportal_compost_agency_name) && !empty($post->geopportal_compost_agency_name)) ||
+          (isset($post->geopportal_compost_lead_name) && !empty($post->geopportal_compost_lead_name) )){
+      ?>
       <div class="m-article">
           <div class="m-article__heading">Community Details</div>
           <div class="m-article__desc">
-              <div><strong>Sponsor:</strong> <?php echo esc_attr($post->geopportal_compost_sponsor_name) ?> (<a href="<?php echo esc_url($post->geopportal_compost_sponsor_email) ?>">email</a>)</div>
-              <div><strong>Theme Lead Agency:</strong> <?php echo esc_attr($post->geopportal_compost_agency_name) ?></div>
-              <div><strong>Theme Lead:</strong> <?php echo esc_attr($post->geopportal_compost_lead_name) ?></div>
-              <br>
-              Please visit the <?php echo the_title() ?> community portal at
-              <a href="<?php echo esc_url($post->geopportal_compost_community_url) ?>"><?php echo esc_url($post->geopportal_compost_community_url) ?></a>
+              <?php
+                if (isset($post->geopportal_compost_sponsor_name) && !empty($post->geopportal_compost_sponsor_name)){
+                  echo "<div><strong>Sponsor:</strong> " . esc_attr($post->geopportal_compost_sponsor_name);
+                  if (isset($post->geopportal_compost_sponsor_email) && !empty($post->geopportal_compost_sponsor_email)){
+                    echo " (<a href='" . esc_url($post->geopportal_compost_sponsor_email) . "'>email</a>)";
+                  }
+                  echo "</div>";
+                }
+                if (isset($post->geopportal_compost_agency_name) && !empty($post->geopportal_compost_agency_name)){
+                  echo "<div><strong>Theme Lead Agency:</strong> " . esc_attr($post->geopportal_compost_agency_name) . "</div>";
+                }
+                if (isset($post->geopportal_compost_lead_name) && !empty($post->geopportal_compost_lead_name)){
+                  echo "<div><strong>Theme Lead:</strong> " . esc_attr($post->geopportal_compost_lead_name) . "</div>";
+                }
+                if (isset($post->geopportal_compost_community_url) && !empty($post->geopportal_compost_community_url)){
+                  echo "<br>";
+                  echo "Please visit the " . the_title() . " community portal at <a href='" . esc_url($post->geopportal_compost_community_url) . "'>" . esc_url($post->geopportal_compost_community_url) . "</a>";
+                }
+              ?>
           </div>
       </div>
+      <?php } ?>
 
       <div class="m-article">
           <div class="m-article__heading">Additional Info</div>
