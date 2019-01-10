@@ -9,7 +9,6 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="">
   <meta name="author" content="">
-  <title>GP Theme v2</title>
   <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
 
   <?php wp_head();?>
