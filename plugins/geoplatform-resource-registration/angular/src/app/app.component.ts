@@ -12,7 +12,11 @@ import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 
-import { AuthService, GeoPlatformUser } from './auth.service';
+// <reference path="ng-gpoauth/src/AuthService" />
+
+import { ngGpoauthFactory, GeoPlatformUser, AuthService } from 'ng-gpoauth/Angular'
+
+const authService = ngGpoauthFactory();
 
 
 export interface AppEvent {
@@ -51,14 +55,6 @@ export class AppComponent implements OnInit {
     ) {
 
         authService.getUser().then( user => {
-
-            //TEMP  ---------------------------------
-            if(!user) {
-                user = GeoPlatformUser.getTestUser();
-            }
-            //TEMP  ---------------------------------
-
-
             this.user = user;
             this.isAuthenticated = user !== null;
             if(!this.item.createdBy) {  //update editable resource's createdBy property

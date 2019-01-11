@@ -32,6 +32,7 @@
     "jquery": "^3.0.0",
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.13",
+    "ng-gpoauth": "file:../../../../../ng-gpoauth",
     "ng-inline-svg": "^6.2.1",
     "popper.js": "^1.12.9",
     "q": "1.4.1",

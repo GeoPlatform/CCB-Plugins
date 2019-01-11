@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
-    NgModule, Pipe, PipeTransform, Injectable, APP_INITIALIZER
+    NgModule, Pipe, PipeTransform, Injectable, APP_INITIALIZER, InjectionToken
 } from '@angular/core';
 import {
     HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS
@@ -8,7 +8,6 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Config } from 'geoplatform.client';
-
 
 import {
     MatCardModule, MatInputModule, MatButtonModule,
@@ -21,7 +20,7 @@ import {
 import { AppComponent } from './app.component';
 
 //configure the necessary environment variables needed by GeoPlatformClient
-import { environment } from '../environments/environment';
+import { environment, authConfig } from '../environments/environment';
 import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
@@ -33,10 +32,9 @@ export function initializeApp() {
 }
 
 
-import { AuthService } from "./auth.service";
-
-
-
+// import { AuthService } from "ng-gpoauth/Angular";
+import { ngGpoauthFactory, AuthService } from 'ng-gpoauth/Angular';
+const authService = ngGpoauthFactory(authConfig);
 
 @Pipe({
     name: 'prettyJson'
@@ -90,7 +88,10 @@ export class PrettyJsonPipe implements PipeTransform {
           useFactory: initializeApp,
           multi: true
       },
-      AuthService
+      {
+        provide: AuthService,
+        useValue: authService
+      }
   ],
   bootstrap: [AppComponent]
 })

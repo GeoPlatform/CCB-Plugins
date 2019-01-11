@@ -12,3 +12,7 @@ export const environment = {
     root: '/',
     assets: 'assets/'
 };
+
+export const authConfig = {
+
+}
