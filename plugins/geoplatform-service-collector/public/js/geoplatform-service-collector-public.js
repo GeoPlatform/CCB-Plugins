@@ -62,7 +62,9 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 
 	query.setPageSize(geopserve_count_in);
 	query.setSort('modified,desc');
-	query.usedBy(geopserve_id_in);
+	if (geopserve_id_in) {
+		query.usedBy(geopserve_id_in);
+	}
 	query.setQ("");
 
 	geopserve_retrieve_objects(query)

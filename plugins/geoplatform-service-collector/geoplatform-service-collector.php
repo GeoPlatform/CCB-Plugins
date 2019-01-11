@@ -119,17 +119,12 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	// and overwrites them with values from $geoserve_atts.
   $geoserve_shortcode_array = shortcode_atts(array(
 		'title' => '',
-    'id' => '84924e415a256ba1941d161e16f5188c',
+    'id' => '',
     'cat' => 'TFFFFFF',
 		'count' => '6',
+		'hide' => 'F',
   ), $geopserve_atts);
   ob_start();
-
-	// Constructs the full community URI for ual, to pull info from.
-	$geoserve_id_san = sanitize_key($geoserve_shortcode_array['id']);
-	$geoserve_ual_url = 'https://ual.geoplatform.gov/api/communities/';
-	$geoserve_ual_url .= $geoserve_id_san;
-
 
 	// Data category array format for each entry is....
 	// Button text, search bar text, search query, base uri, and temporary box text.
@@ -196,8 +191,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 
 <!-- Carousel construction -->
-	<div class="m-article">
 		<?php
+		if ($geoserve_shortcode_array['hide'] != 'T')
+			echo "<div class='m-article'>";
+		else
+			echo "<div class='m-article' style='border-bottom:0px'>";
 
 		// Optional title display
 		if (!empty($geoserve_shortcode_array['title'])){
@@ -238,19 +236,25 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 								<div class="carousel-item active">
 							<?php } else { ?>
 								<div class="carousel-item">
-							<?php } ?>
-	                <div class="m-article">
-	                    <div class="m-article__heading" style="text-align:center;">Recent <?php echo $geoserve_generation_array[$i]['button'] ?></div>
+							<?php }
+									if ($geoserve_shortcode_array['hide'] != 'T'){ echo "<div class='m-article'>";} ?>
+										<?php
+										if ($geoserve_shortcode_array['hide'] != 'T'){?>
+											<div class="m-article__heading" style="text-align:center;">Recent <?php echo $geoserve_generation_array[$i]['button'] ?></div>
+										<?php } ?>
 	                    <div class="m-article__desc">
 	                        <div class="d-grid d-grid--3-col--lg" id="geopserve_carousel_gen_div_<?php echo $i ?>">
 
-
 												<!-- Carousel pane generation script. Replace thumb with others as necessary. -->
-														<script>
+														<script type="text/javascript">
 															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>");
 														</script>
 
 	                        </div>
+
+													<?php
+													if ($geoserve_shortcode_array['hide'] != 'T'){?>
+
 	                        <div class="u-mg-top--xlg d-flex flex-justify-between flex-align-center">
 	                            <form class="input-group-slick flex-1 geopportal_port_community_search_form" grabs-from="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search">
 	                                <span class="icon fas fa-search"></span>
@@ -260,9 +264,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	                            </form>
 	                            <button class="u-mg-left--lg btn btn-secondary geopportal_port_community_search_button" grabs-from="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search">SEARCH <?php echo strtoupper($geoserve_generation_array[$i]['button']) ?></button>
 	                        </div>
+
+												<?php } ?>
 	                    </div>
-	                </div>
-	            </div>
+											<?php if ($geoserve_shortcode_array['hide'] != 'T'){ echo "</div>"; } ?>
+	            	</div>
 
 						<?php } ?>
 
