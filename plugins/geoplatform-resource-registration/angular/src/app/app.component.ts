@@ -14,9 +14,8 @@ import { ReviewComponent } from './steps/review/review.component';
 
 // <reference path="ng-gpoauth/src/AuthService" />
 
-import { ngGpoauthFactory, GeoPlatformUser, AuthService } from 'ng-gpoauth/Angular'
+import { AuthService, GeoPlatformUser } from 'ng-gpoauth/Angular'
 
-const authService = ngGpoauthFactory();
 
 
 export interface AppEvent {
@@ -60,7 +59,8 @@ export class AppComponent implements OnInit {
             if(!this.item.createdBy) {  //update editable resource's createdBy property
                 this.item.createdBy = user ? user.username : null;
             }
-        });
+        })
+        .catch(err => console.log("error fetching user: ", err));
     }
 
     ngOnInit() {

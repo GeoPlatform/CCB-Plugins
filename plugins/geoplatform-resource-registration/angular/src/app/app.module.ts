@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
-    NgModule, Pipe, PipeTransform, Injectable, APP_INITIALIZER, InjectionToken
+    NgModule, Pipe, PipeTransform, Injectable, APP_INITIALIZER
 } from '@angular/core';
 import {
     HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS
@@ -31,8 +31,7 @@ export function initializeApp() {
   }
 }
 
-
-// import { AuthService } from "ng-gpoauth/Angular";
+// Setup auth service (pass in config)
 import { ngGpoauthFactory, AuthService } from 'ng-gpoauth/Angular';
 const authService = ngGpoauthFactory(authConfig);
 
@@ -88,6 +87,7 @@ export class PrettyJsonPipe implements PipeTransform {
           useFactory: initializeApp,
           multi: true
       },
+      // Use the service we created `authService` as `AuthService` when injecting
       {
         provide: AuthService,
         useValue: authService
