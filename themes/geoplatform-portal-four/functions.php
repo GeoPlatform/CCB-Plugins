@@ -627,7 +627,6 @@ class Geopportal_Graph_Widget extends WP_Widget {
 }
 
 
-
 // Includes complex widgets which regester themselves.
 get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
@@ -644,6 +643,7 @@ get_template_part( 'side-content-preview', get_post_format() );
 get_template_part( 'widget-resources-elements', get_post_format() );
 get_template_part( 'widget-resources-search', get_post_format() );
 get_template_part( 'widget-resources-creation', get_post_format() );
+get_template_part( 'widget-resources-community', get_post_format() );
 
 
 /**
