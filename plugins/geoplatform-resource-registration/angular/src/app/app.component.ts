@@ -5,17 +5,13 @@ import { Observable, Subject } from 'rxjs';
 import { MatStepper } from '@angular/material';
 import { ItemTypes } from 'geoplatform.client';
 
+import { AuthService, GeoPlatformUser } from 'ng-gpoauth/Angular'
 
 import { StepComponent, StepEvent } from './steps/step.component';
 import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
-
-// <reference path="ng-gpoauth/src/AuthService" />
-
-import { AuthService, GeoPlatformUser } from 'ng-gpoauth/Angular'
-
 
 
 export interface AppEvent {
@@ -52,6 +48,16 @@ export class AppComponent implements OnInit {
         private formBuilder: FormBuilder,
         private authService : AuthService
     ) {
+
+        const authMsgs = authService.getMessenger()
+        authMsgs.on('userAuthenticated', (evt, data) => {
+            // TODO: react to user authenticated even here
+            console.log('User Authenticated!')
+        })
+        authMsgs.on('userSignOut', (evt, data) => {
+            // TODO: react to user sign out event here
+            console.log('User Signed Out')
+        })
 
         authService.getUser().then( user => {
             this.user = user;
