@@ -167,7 +167,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'button' => 'Maps',
 				'search' => 'Search for associated maps',
 				'query' => '&types=Map&q=',
-				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
+				'uri' => 'https://ual.geoplatform.gov/api/maps/',
 				'box' => 'MAP LABEL',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/map.svg',
 			)
@@ -178,7 +178,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'button' => 'Galleries',
 				'search' => 'Search for associated galleries',
 				'query' => '&types=Gallery&q=',
-				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
+				'uri' => 'https://ual.geoplatform.gov/api/galleries/',
 				'box' => 'GALLERY LABEL',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/gallery.svg',
 			)
@@ -247,7 +247,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 												<!-- Carousel pane generation script. Replace thumb with others as necessary. -->
 														<script type="text/javascript">
-															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>");
+															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>", "<?php echo $geoserve_generation_array[$i]['uri'] ?>");
 														</script>
 
 	                        </div>

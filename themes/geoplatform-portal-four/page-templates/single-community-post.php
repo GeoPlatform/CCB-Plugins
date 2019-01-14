@@ -97,9 +97,6 @@ get_template_part( 'sub-header-com', get_post_format() );
                     the_content();
                   ?></div><?php
                 endwhile; endif; ?>
-              <div class="article__actions">
-                  <a href="#">Action</a>
-              </div>
           </article>
       </div>
   </div>

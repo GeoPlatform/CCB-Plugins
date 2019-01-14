@@ -39,8 +39,7 @@
 // *  #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // *  #param geopserve_thumb_in: 404 image url, in case there is no image to use.
 //
-function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in){
-
+function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in){
 
 	const Query = GeoPlatform.Query;
 	const ItemTypes = GeoPlatform.ItemTypes;
@@ -94,6 +93,16 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 
 			var geopserve_asset_link = "https://oe.geoplatform.gov/view/" + geopserve_results[i].id;
 
+			geopserve_thumb_src = geopserve_thumb_in;
+			if ("thumbnail" in geopserve_results[i]){
+				var geopserve_thumb_src = geopserve_uri_in + geopserve_results[i].id + '/thumbnail';
+			}
+			// var geopserve_thumb_src = geopserve_uri_in + geopserve_results[i].id + '/thumbnail';
+			// jQuery.get(geopserve_thumb_src).fail(function(err){
+			// 	geopserve_thumb_src = geopserve_thumb_in;
+			// })
+
+
 			// Simpler than the above, setting a default and overriding if the there is
 			// a creating user found. The two strings are then combined for output.
 			var geopserve_result_name = "Unknown User";
@@ -104,9 +113,9 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 
 			var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
 			var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
-			var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_in});
+			var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_src});
 			var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
-			var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, html: geopserve_results[i].label});
+			var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, target: '_blank', html: geopserve_results[i].label});
 			var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:label_text});
 
 			thumb_div.appendChild(thumb_img);
