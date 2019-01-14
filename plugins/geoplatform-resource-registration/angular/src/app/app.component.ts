@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
             switch(msg.name){
                 case 'userAuthenticated':
                     // do something..
-                    let user = msg.data;
+                    let user = msg.user;
                     break;
                 case 'userSignOut':
                     // do something else
@@ -85,7 +85,7 @@ export class AppComponent implements OnInit {
         const authenticated = sub.pipe(filter(msg => msg.name === 'userAuthenticated'))
 
         authenticated.subscribe(msg => {
-            let user = msg.data;
+            let user = msg.user;
         })
 
         // --- end messages ---
