@@ -229,7 +229,7 @@ function geop_ccb_footer_link_register( $wp_customize ){
 	$wp_customize->add_section( 'footlink_format' , array(
 		'title'    => __( 'Footer Links', 'geoplatform-ccb' ),
 		'description' => 'Insert the text for footer elements as well as the full URL that they will navigate to when clicked.',
-		'priority' => 40,
+		'priority' => 30,
 	) );
 
 	$wp_customize->add_setting('footlink_one_text',array(
@@ -353,6 +353,132 @@ function geop_ccb_footer_link_register( $wp_customize ){
 	));
 }
 add_action( 'customize_register', 'geop_ccb_footer_link_register');
+
+
+
+
+function geop_ccb_featured_register( $wp_customize ){
+
+	$wp_customize->add_section( 'featured_posts' , array(
+		'title'    => __( 'Featured Pages', 'geoplatform-ccb' ),
+		'description' => 'Settings here determine the behavior of any GeoPlatform Featured widgets. The boxes below accept the slugs of the linked posts. <br>Please ensure that any input slugs are valid.<br>Ensure you enter a valid map ID, not shortcode. The GeoPlatform Maps plugin will construct the necessary parameters itself.',
+		'priority' => 35,
+	) );
+
+	$wp_customize->add_setting('featured_primary_post',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_primary_post',array(
+		'type' => 'text',
+		'label' => "Primary Post Slug",
+		'section' => 'featured_posts',
+		'priority' => 10,
+	));
+
+	$wp_customize->add_setting('featured_secondary_one',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_one',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #1 Slug",
+		'section' => 'featured_posts',
+		'priority' => 15,
+	));
+
+	$wp_customize->add_setting('featured_secondary_two',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_two',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #2 Slug",
+		'section' => 'featured_posts',
+		'priority' => 20,
+	));
+
+	$wp_customize->add_setting('featured_secondary_three',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_three',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #3 Slug",
+		'section' => 'featured_posts',
+		'priority' => 25,
+	));
+
+	$wp_customize->add_setting('featured_secondary_four',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_four',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #4 Slug",
+		'section' => 'featured_posts',
+		'priority' => 30,
+	));
+
+	$wp_customize->add_setting('featured_map_title',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_map_title',array(
+		'type' => 'text',
+		'label' => "Map Title",
+		'section' => 'featured_posts',
+		'priority' => 35,
+	));
+
+	$wp_customize->add_setting('featured_map_id',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_map_id',array(
+		'type' => 'text',
+		'label' => "Map ID",
+		'section' => 'featured_posts',
+		'priority' => 40,
+	));
+
+	$wp_customize->add_setting('featured_more_count',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_more_count',array(
+		'type' => 'number',
+		'label' => "More Content Count",
+		'section' => 'featured_posts',
+		'priority' => 45,
+	));
+
+	$wp_customize->add_setting('featured_browse_slug',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_browse_slug',array(
+		'type' => 'text',
+		'label' => "Browse All Page Slug",
+		'section' => 'featured_posts',
+		'priority' => 50,
+	));
+
+
+
+
+}
+add_action( 'customize_register', 'geop_ccb_featured_register');
+
 
 
 function geop_ccb_sanitize_fonts( $geop_portal_value ) {

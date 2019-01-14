@@ -20,54 +20,54 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		// else
     //   $geopportal_mainpage_disp_title = "Features &amp; Announcements";
 
-		if (array_key_exists('geopportal_mainpage_first_link', $instance) && isset($instance['geopportal_mainpage_first_link']) && !empty($instance['geopportal_mainpage_first_link']))
-      $geopportal_mainpage_disp_first_link = apply_filters('widget_title', $instance['geopportal_mainpage_first_link']);
-		else
-      $geopportal_mainpage_disp_first_link = "";
-		if (array_key_exists('geopportal_mainpage_second_link', $instance) && isset($instance['geopportal_mainpage_second_link']) && !empty($instance['geopportal_mainpage_second_link']))
-      $geopportal_mainpage_disp_second_link = apply_filters('widget_title', $instance['geopportal_mainpage_second_link']);
-		else
-    	$geopportal_mainpage_disp_second_link = "";
-		if (array_key_exists('geopportal_mainpage_third_link', $instance) && isset($instance['geopportal_mainpage_third_link']) && !empty($instance['geopportal_mainpage_third_link']))
-      $geopportal_mainpage_disp_third_link = apply_filters('widget_title', $instance['geopportal_mainpage_third_link']);
-		else
-      $geopportal_mainpage_disp_third_link = "";
-		if (array_key_exists('geopportal_mainpage_fourth_link', $instance) && isset($instance['geopportal_mainpage_fourth_link']) && !empty($instance['geopportal_mainpage_fourth_link']))
-      $geopportal_mainpage_disp_fourth_link = apply_filters('widget_title', $instance['geopportal_mainpage_fourth_link']);
-		else
-    	$geopportal_mainpage_disp_fourth_link = "";
-		if (array_key_exists('geopportal_mainpage_fifth_link', $instance) && isset($instance['geopportal_mainpage_fifth_link']) && !empty($instance['geopportal_mainpage_fifth_link']))
-      $geopportal_mainpage_disp_fifth_link = apply_filters('widget_title', $instance['geopportal_mainpage_fifth_link']);
-		else
-      $geopportal_mainpage_disp_fifth_link = "";
-
-		if (array_key_exists('geopportal_mainpage_map_title', $instance) && isset($instance['geopportal_mainpage_map_title']) && !empty($instance['geopportal_mainpage_map_title']))
-      $geopportal_mainpage_disp_map_title = apply_filters('widget_title', $instance['geopportal_mainpage_map_title']);
-		else
-      $geopportal_mainpage_disp_map_title = "";
-		if (array_key_exists('geopportal_mainpage_map_shortcode', $instance) && isset($instance['geopportal_mainpage_map_shortcode']) && !empty($instance['geopportal_mainpage_map_shortcode']))
-      $geopportal_mainpage_disp_map_shortcode = apply_filters('widget_title', $instance['geopportal_mainpage_map_shortcode']);
-		else
-      $geopportal_mainpage_disp_map_shortcode = "";
-		if (array_key_exists('geopportal_mainpage_more_cat', $instance) && isset($instance['geopportal_mainpage_more_cat']) && !empty($instance['geopportal_mainpage_more_cat']))
-			$geopportal_mainpage_more_cat = apply_filters('widget_title', $instance['geopportal_mainpage_more_cat']);
-		else
-			$geopportal_mainpage_more_cat = "";
-		if (array_key_exists('geopportal_mainpage_more_count', $instance) && isset($instance['geopportal_mainpage_more_count']) && !empty($instance['geopportal_mainpage_more_count']))
-			$geopportal_mainpage_disp_more_count = apply_filters('widget_title', $instance['geopportal_mainpage_more_count']);
-		else
-			$geopportal_mainpage_disp_more_count = "6";
-		if (array_key_exists('geopportal_mainpage_browse_link', $instance) && isset($instance['geopportal_mainpage_browse_link']) && !empty($instance['geopportal_mainpage_browse_link']))
-			$geopportal_mainpage_disp_browse_slug = apply_filters('widget_title', $instance['geopportal_mainpage_browse_link']);
-		else
-			$geopportal_mainpage_disp_browse_slug = "";
+		// if (array_key_exists('geopportal_mainpage_first_link', $instance) && isset($instance['geopportal_mainpage_first_link']) && !empty($instance['geopportal_mainpage_first_link']))
+    //   $geopportal_mainpage_disp_first_link = apply_filters('widget_title', $instance['geopportal_mainpage_first_link']);
+		// else
+    //   $geopportal_mainpage_disp_first_link = "";
+		// if (array_key_exists('geopportal_mainpage_second_link', $instance) && isset($instance['geopportal_mainpage_second_link']) && !empty($instance['geopportal_mainpage_second_link']))
+    //   $geopportal_mainpage_disp_second_link = apply_filters('widget_title', $instance['geopportal_mainpage_second_link']);
+		// else
+    // 	$geopportal_mainpage_disp_second_link = "";
+		// if (array_key_exists('geopportal_mainpage_third_link', $instance) && isset($instance['geopportal_mainpage_third_link']) && !empty($instance['geopportal_mainpage_third_link']))
+    //   $geopportal_mainpage_disp_third_link = apply_filters('widget_title', $instance['geopportal_mainpage_third_link']);
+		// else
+    //   $geopportal_mainpage_disp_third_link = "";
+		// if (array_key_exists('geopportal_mainpage_fourth_link', $instance) && isset($instance['geopportal_mainpage_fourth_link']) && !empty($instance['geopportal_mainpage_fourth_link']))
+    //   $geopportal_mainpage_disp_fourth_link = apply_filters('widget_title', $instance['geopportal_mainpage_fourth_link']);
+		// else
+    // 	$geopportal_mainpage_disp_fourth_link = "";
+		// if (array_key_exists('geopportal_mainpage_fifth_link', $instance) && isset($instance['geopportal_mainpage_fifth_link']) && !empty($instance['geopportal_mainpage_fifth_link']))
+    //   $geopportal_mainpage_disp_fifth_link = apply_filters('widget_title', $instance['geopportal_mainpage_fifth_link']);
+		// else
+    //   $geopportal_mainpage_disp_fifth_link = "";
+		//
+		// if (array_key_exists('geopportal_mainpage_map_title', $instance) && isset($instance['geopportal_mainpage_map_title']) && !empty($instance['geopportal_mainpage_map_title']))
+    //   $geopportal_mainpage_disp_map_title = apply_filters('widget_title', $instance['geopportal_mainpage_map_title']);
+		// else
+    //   $geopportal_mainpage_disp_map_title = "";
+		// if (array_key_exists('geopportal_mainpage_map_shortcode', $instance) && isset($instance['geopportal_mainpage_map_shortcode']) && !empty($instance['geopportal_mainpage_map_shortcode']))
+    //   $geopportal_mainpage_disp_map_shortcode = apply_filters('widget_title', $instance['geopportal_mainpage_map_shortcode']);
+		// else
+    //   $geopportal_mainpage_disp_map_shortcode = "";
+		// if (array_key_exists('geopportal_mainpage_more_cat', $instance) && isset($instance['geopportal_mainpage_more_cat']) && !empty($instance['geopportal_mainpage_more_cat']))
+		// 	$geopportal_mainpage_more_cat = apply_filters('widget_title', $instance['geopportal_mainpage_more_cat']);
+		// else
+		// 	$geopportal_mainpage_more_cat = "";
+		// if (array_key_exists('geopportal_mainpage_more_count', $instance) && isset($instance['geopportal_mainpage_more_count']) && !empty($instance['geopportal_mainpage_more_count']))
+		// 	$geopportal_mainpage_disp_more_count = apply_filters('widget_title', $instance['geopportal_mainpage_more_count']);
+		// else
+		// 	$geopportal_mainpage_disp_more_count = "6";
+		// if (array_key_exists('geopportal_mainpage_browse_link', $instance) && isset($instance['geopportal_mainpage_browse_link']) && !empty($instance['geopportal_mainpage_browse_link']))
+		// 	$geopportal_mainpage_disp_browse_slug = apply_filters('widget_title', $instance['geopportal_mainpage_browse_link']);
+		// else
+		// 	$geopportal_mainpage_disp_browse_slug = "";
 
 		// Turns the slugs into pages.
-		$geopportal_mainpage_disp_first_page = get_page_by_path($geopportal_mainpage_disp_first_link, OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_second_page = get_page_by_path($geopportal_mainpage_disp_second_link, OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_third_page = get_page_by_path($geopportal_mainpage_disp_third_link, OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_fourth_page = get_page_by_path($geopportal_mainpage_disp_fourth_link, OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_fifth_page = get_page_by_path($geopportal_mainpage_disp_fifth_link, OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_disp_first_page = get_page_by_path(get_theme_mod('featured_primary_post'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_disp_second_page = get_page_by_path(get_theme_mod('featured_secondary_one'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_disp_third_page = get_page_by_path(get_theme_mod('featured_secondary_two'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_disp_fourth_page = get_page_by_path(get_theme_mod('featured_secondary_three'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_disp_fifth_page = get_page_by_path(get_theme_mod('featured_secondary_four'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
 
 		// Sets up default thumbnails and overwrites if post has one.
 		$geopportal_mainpage_disp_first_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
@@ -76,6 +76,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_disp_fourth_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
 		$geopportal_mainpage_disp_fifth_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
 
+		// Gets thumbnails
 		if ( has_post_thumbnail($geopportal_mainpage_disp_first_page) )
 			$geopportal_mainpage_disp_first_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_first_page);
 		if ( has_post_thumbnail($geopportal_mainpage_disp_second_page) )
@@ -101,6 +102,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_disp_fourth_date = "";
 		$geopportal_mainpage_disp_fifth_date = "";
 
+		// Sets dates.
 		if ( isset($geopportal_mainpage_disp_first_page->ID) )
 			$geopportal_mainpage_disp_first_date = get_the_date("F j, Y", $geopportal_mainpage_disp_first_page->ID);
 		if ( isset($geopportal_mainpage_disp_second_page->ID) )
@@ -112,7 +114,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		if ( isset($geopportal_mainpage_disp_fifth_page->ID) )
 			$geopportal_mainpage_disp_fifth_date = get_the_date("F j, Y", $geopportal_mainpage_disp_fifth_page->ID);
 
-		// Sets up tags from posts.
+		// Sets up category tags from posts.
 		$geopportal_mainpage_disp_first_tags = get_the_category($geopportal_mainpage_disp_first_page->ID);
 		$geopportal_mainpage_disp_second_tags = get_the_category($geopportal_mainpage_disp_second_page->ID);
 		$geopportal_mainpage_disp_third_tags = get_the_category($geopportal_mainpage_disp_third_page->ID);
@@ -120,65 +122,45 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_disp_fifth_tags = get_the_category($geopportal_mainpage_disp_fifth_page->ID);
 
 		// Makes sure browse all count is a number.
+		$geopportal_mainpage_disp_more_count = get_theme_mod('featured_more_count');
 		if (!is_numeric($geopportal_mainpage_disp_more_count) || $geopportal_mainpage_disp_more_count <= 0)
 			$geopportal_mainpage_disp_more_count = 6;
 
-		$geopportal_featured_sort_format = get_theme_mod('featured_appearance', 'date');
-    $geopportal_pages_final = array();
+		// Makes array of slug names for more content filtering.
+		$geopportal_mainpage_disp_slug_array = array($geopportal_mainpage_disp_first_page->post_name, $geopportal_mainpage_disp_second_page->post_name, $geopportal_mainpage_disp_third_page->post_name, $geopportal_mainpage_disp_fourth_page->post_name, $geopportal_mainpage_disp_fifth_page->post_name);
+
+		// Final sorted more content array.
 		$geopportal_pages_sort = array();
 
+		// gets posts.
 		$geopportal_pages = get_posts(array(
 			'orderby' => 'date',
 			'order' => 'DSC',
 			'numberposts' => -1,
 			'post_status' => 'publish',
-			'post_type' => array('post','page','geopccb_catlink', 'community-post'),
+			'post_type' => 'post',
 		) );
 
-		// This list is then filtered for all pages in the Front Page category,
-		foreach($geopportal_pages as $geopportal_page){
-			if (in_category($geopportal_mainpage_more_cat, $geopportal_page))
-				array_push($geopportal_pages_sort, $geopportal_page);
-		}
-
-		if (count($geopportal_pages_sort) > 0){
-    // Mimics the old way of populating, but functional.
-	    if ($geopportal_featured_sort_format == 'date'){
-				$geopportal_pages_final = $geopportal_pages_sort;
-	    }
-	    else {
-				$geopportal_pages_trimmed = array();
-
-	      // Assigns pages with valid priority values to the trimmed array.
-	      foreach($geopportal_pages_sort as $geopportal_page){
-	        if ($geopportal_page->geop_ccb_post_priority > 0)
-	        	array_push($geopportal_pages_trimmed, $geopportal_page);
-	      }
-
-	      // Bubble sorts the resulting pages.
-	      $geopportal_pages_size = count($geopportal_pages_trimmed)-1;
-	      for ($i = 0; $i < $geopportal_pages_size; $i++) {
-	        for ($j = 0; $j < $geopportal_pages_size - $i; $j++) {
-	          $k = $j + 1;
-	          $geopportal_test_left = $geopportal_pages_trimmed[$j]->geop_ccb_post_priority;
-	          $geopportal_test_right = $geopportal_pages_trimmed[$k]->geop_ccb_post_priority;
-	          if ($geopportal_test_left > $geopportal_test_right) {
-	            // Swap elements at indices: $j, $k
-	            list($geopportal_pages_trimmed[$j], $geopportal_pages_trimmed[$k]) = array($geopportal_pages_trimmed[$k], $geopportal_pages_trimmed[$j]);
-	          }
-	        }
-	      }
-	      $geopportal_pages_final = $geopportal_pages_trimmed;
-	    }
-
+		// Filters posts already featured out of the featured content array.
+		if (count($geopportal_pages) > 0){
+			foreach($geopportal_pages as $geopportal_page){
+				$geopportal_mainpage_temp_bool = true;
+				for ($i = 0; $i < count($geopportal_mainpage_disp_slug_array); $i++){
+					if ($geopportal_page->post_name == $geopportal_mainpage_disp_slug_array[$i]){
+						$geopportal_mainpage_temp_bool = false;
+					}
+				}
+				if ($geopportal_mainpage_temp_bool)
+					array_push($geopportal_pages_sort, $geopportal_page);
+			}
 			// Removes all posts after the count set by more_count.
-			$geopportal_pages_final = array_slice($geopportal_pages_final, 0, $geopportal_mainpage_disp_more_count);
+			$geopportal_pages_sort = array_slice($geopportal_pages_sort, 0, $geopportal_mainpage_disp_more_count);
 		}
 
 		// Quality control of browse all category, sets link to home page if fails.
-		$geopportal_mainpage_browse_cat = get_category_by_slug($geopportal_mainpage_disp_browse_slug);
+		$geopportal_mainpage_browse_cat = get_page_by_path(get_theme_mod('featured_browse_slug'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
 		if ($geopportal_mainpage_browse_cat)
-			$geopportal_mainpage_browse_url = esc_url( get_category_link( $geopportal_mainpage_browse_cat->term_id ) );
+			$geopportal_mainpage_browse_url = (get_post_type($geopportal_mainpage_browse_cat) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_browse_cat->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_browse_cat));
 		else
 			$geopportal_mainpage_browse_url = home_url();
 		?>
@@ -215,10 +197,10 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		            </div>
 		        </div>
 						<?php
-							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . $geopportal_mainpage_disp_map_shortcode . " title=main]";
+							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . get_theme_mod('featured_map_id') . " title=main]";
 						?>
 		        <div class="o-featured__map">
-		            <div class="o-featured__map__heading"><?php echo esc_attr($geopportal_mainpage_disp_map_title) ?></div>
+		            <div class="o-featured__map__heading"><?php echo esc_attr(get_theme_mod('featured_map_title')) ?></div>
 		            <div class="m-map" id="featuredMap">
 									<?php echo do_shortcode($geopportal_mainpage_disp_map_short_final) ?>
 								</div>
@@ -324,8 +306,8 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 
 						<?php
 						// Outputs posts.
-						if (count($geopportal_pages_final) > 0){
-							foreach ($geopportal_pages_final as $geopccb_post){?>
+						if (count($geopportal_pages_sort) > 0){
+							foreach ($geopportal_pages_sort as $geopccb_post){?>
 								<div class="m-tile">
 			            <a class="is-linkless m-tile__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a><br>
 			            <span class="m-tile__timestamp"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
