@@ -147,11 +147,18 @@
           </div>
 
           <div>
-              <a href="<?php echo home_url(get_theme_mod('footlink_terms')); ?>" target="_blank">Terms of Use</a>
-              &nbsp;|&nbsp;
-              <a href="<?php echo home_url(get_theme_mod('footlink_two')); ?>" target="_blank">Link</a>
-              &nbsp;|&nbsp;
-              <a href="<?php echo home_url(get_theme_mod('footlink_three')); ?>" target="_blank">Link</a>
+            <?php
+            if (!empty(get_theme_mod('footlink_one_text')) && !empty(get_theme_mod('footlink_one_url')))
+              echo "<a href=" . esc_url(get_theme_mod('footlink_one_url')) . " target='_blank'>" . get_theme_mod('footlink_one_text') . "</a>";
+            if (!empty(get_theme_mod('footlink_two_text')) && !empty(get_theme_mod('footlink_two_url')))
+              echo "&nbsp;|&nbsp<a href=" . esc_url(get_theme_mod('footlink_two_url')) . " target='_blank'>" . get_theme_mod('footlink_two_text') . "</a>";
+            if (!empty(get_theme_mod('footlink_three_text')) && !empty(get_theme_mod('footlink_three_url')))
+              echo "&nbsp;|&nbsp<a href=" . esc_url(get_theme_mod('footlink_three_url')) . " target='_blank'>" . get_theme_mod('footlink_three_text') . "</a>";
+            if (!empty(get_theme_mod('footlink_four_text')) && !empty(get_theme_mod('footlink_four_url')))
+              echo "&nbsp;|&nbsp<a href=" . esc_url(get_theme_mod('footlink_four_url')) . " target='_blank'>" . get_theme_mod('footlink_four_text') . "</a>";
+            if (!empty(get_theme_mod('footlink_five_text')) && !empty(get_theme_mod('footlink_five_url')))
+              echo "&nbsp;|&nbsp<a href=" . esc_url(get_theme_mod('footlink_five_url')) . " target='_blank'>" . get_theme_mod('footlink_five_text') . "</a>";
+            ?>
           </div>
       </div>
 

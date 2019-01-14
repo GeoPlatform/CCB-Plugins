@@ -108,11 +108,8 @@ function geop_ccb_header_link_register( $wp_customize ){
 	$wp_customize->add_section( 'headlink_format' , array(
 		'title'    => __( 'Header Links', 'geoplatform-ccb' ),
 		'description' => 'Insert the slugs of posts or pages that each element will navigate to when clicked.',
-		'priority' => 40
+		'priority' => 25
 	) );
-
-
-
 
 	$wp_customize->add_setting('headlink_data',array(
 		'default' => '',
@@ -211,21 +208,6 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'priority' => 50,
 	));
 
-
-
-
-	// $wp_customize->add_setting('headlink_default',array(
-	// 	'default' => '',
-	// 	'sanitize_callback' => 'sanitize_text_field'
-	// ));
-	//
-	// $wp_customize->add_control('headlink_default',array(
-	// 	'type' => 'text',
-	// 	'label' => 'Default',
-	// 	'section' => 'headlink_format',
-	// 	'priority' => 25,
-	// ));
-
 	$wp_customize->add_setting('headlink_apps',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
@@ -237,44 +219,141 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'section' => 'headlink_format',
 		'priority' => 55,
 	));
-
-	$wp_customize->add_setting('footlink_terms',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('footlink_terms',array(
-		'type' => 'text',
-		'label' => "Terms of Use (footer)",
-		'section' => 'headlink_format',
-		'priority' => 60,
-	));
-
-	$wp_customize->add_setting('footlink_two',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('footlink_two',array(
-		'type' => 'text',
-		'label' => "Footer Link #2 (footer)",
-		'section' => 'headlink_format',
-		'priority' => 65,
-	));
-
-	$wp_customize->add_setting('footlink_three',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('footlink_three',array(
-		'type' => 'text',
-		'label' => "Footer Link #3 (footer)",
-		'section' => 'headlink_format',
-		'priority' => 70,
-	));
 }
 add_action( 'customize_register', 'geop_ccb_header_link_register');
+
+
+
+function geop_ccb_footer_link_register( $wp_customize ){
+
+	$wp_customize->add_section( 'footlink_format' , array(
+		'title'    => __( 'Footer Links', 'geoplatform-ccb' ),
+		'description' => 'Insert the text for footer elements as well as the full URL that they will navigate to when clicked.',
+		'priority' => 40,
+	) );
+
+	$wp_customize->add_setting('footlink_one_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_one_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #1 text",
+		'section' => 'footlink_format',
+		'priority' => 10,
+	));
+
+	$wp_customize->add_setting('footlink_one_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_one_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #1 url",
+		'section' => 'footlink_format',
+		'priority' => 15,
+	));
+
+	$wp_customize->add_setting('footlink_two_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_two_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #2 text",
+		'section' => 'footlink_format',
+		'priority' => 20,
+	));
+
+	$wp_customize->add_setting('footlink_two_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_two_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #2 url",
+		'section' => 'footlink_format',
+		'priority' => 25,
+	));
+
+	$wp_customize->add_setting('footlink_three_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_three_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #3 text",
+		'section' => 'footlink_format',
+		'priority' => 30,
+	));
+
+	$wp_customize->add_setting('footlink_three_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_three_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #3 url",
+		'section' => 'footlink_format',
+		'priority' => 35,
+	));
+
+	$wp_customize->add_setting('footlink_four_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_four_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #4 text",
+		'section' => 'footlink_format',
+		'priority' => 40,
+	));
+
+	$wp_customize->add_setting('footlink_four_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_four_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #4 url",
+		'section' => 'footlink_format',
+		'priority' => 45,
+	));
+
+	$wp_customize->add_setting('footlink_five_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_five_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #5 text",
+		'section' => 'footlink_format',
+		'priority' => 50,
+	));
+
+	$wp_customize->add_setting('footlink_five_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_five_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #5 url",
+		'section' => 'footlink_format',
+		'priority' => 55,
+	));
+}
+add_action( 'customize_register', 'geop_ccb_footer_link_register');
+
 
 function geop_ccb_sanitize_fonts( $geop_portal_value ) {
   if ( $geop_portal_value == '' )
