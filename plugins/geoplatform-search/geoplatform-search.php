@@ -166,6 +166,15 @@ function geopsearch_shortcodes_init()
 }
 add_action('init', 'geopsearch_shortcodes_init');
 
+// AJAX handling only seems to function properly if both the hooks and PHP
+// functions are placed in this file. Instead of producing clutter, the files
+// that perform the settings interface add and remove map operations are simply
+// included here.
+function geopsearch_process_refresh() {
+	include 'admin/partials/geoplatform-search-recreate.php';
+	wp_die();
+}
+add_action('wp_ajax_geopsearch_refresh', 'geopsearch_process_refresh');
 
 /**
  * Begins execution of the plugin.
