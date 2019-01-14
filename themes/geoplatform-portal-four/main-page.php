@@ -112,13 +112,12 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		if ( isset($geopportal_mainpage_disp_fifth_page->ID) )
 			$geopportal_mainpage_disp_fifth_date = get_the_date("F j, Y", $geopportal_mainpage_disp_fifth_page->ID);
 
-		// Sets up tags from posts, as well as the tag style array.
+		// Sets up tags from posts.
 		$geopportal_mainpage_disp_first_tags = get_the_category($geopportal_mainpage_disp_first_page->ID);
 		$geopportal_mainpage_disp_second_tags = get_the_category($geopportal_mainpage_disp_second_page->ID);
 		$geopportal_mainpage_disp_third_tags = get_the_category($geopportal_mainpage_disp_third_page->ID);
 		$geopportal_mainpage_disp_fourth_tags = get_the_category($geopportal_mainpage_disp_fourth_page->ID);
 		$geopportal_mainpage_disp_fifth_tags = get_the_category($geopportal_mainpage_disp_fifth_page->ID);
-		$geopportal_mainpage_disp_tag_styles = array('a-badge a-badge--info', 'a-badge a-badge--warning', 'a-badge a-badge--wild');
 
 		// Makes sure browse all count is a number.
 		if (!is_numeric($geopportal_mainpage_disp_more_count) || $geopportal_mainpage_disp_more_count <= 0)
@@ -200,8 +199,12 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_first_tags){
 													$i = 0;
-													foreach ($geopportal_mainpage_disp_first_tags as $geopportal_mainpage_disp_first_tag){?>
-														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_first_tag->term_id ) ); ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo esc_attr($geopportal_mainpage_disp_first_tag->name); ?></a>
+													foreach ($geopportal_mainpage_disp_first_tags as $geopportal_mainpage_disp_first_tag){
+
+														// Generates our color from the name of the category.
+														$geopportal_mainpage_first_hue = floor(357 * (100000 / substr(base_convert(bin2hex($geopportal_mainpage_disp_first_tag->name . '000'), 16, 10), 0, 6)));
+														?>
+														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_first_tag->term_id ) ); ?>" class="a-badge" style="background-color:hsl(<?php echo $geopportal_mainpage_first_hue ?>, 60%, 35%);"><?php echo esc_attr($geopportal_mainpage_disp_first_tag->name) ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -233,8 +236,10 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_second_tags){
 													$i = 0;
-													foreach ($geopportal_mainpage_disp_second_tags as $geopportal_mainpage_disp_second_tag){?>
-														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_second_tag->term_id ) ); ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo esc_attr($geopportal_mainpage_disp_second_tag->name) ?></a>
+													foreach ($geopportal_mainpage_disp_second_tags as $geopportal_mainpage_disp_second_tag){
+														$geopportal_mainpage_second_hue = floor(357 * (100000 / substr(base_convert(bin2hex($geopportal_mainpage_disp_second_tag->name . '000'), 16, 10), 0, 6)));
+														?>
+														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_second_tag->term_id ) ); ?>" class="a-badge" style="background-color:hsl(<?php echo $geopportal_mainpage_second_hue ?>, 60%, 35%);"><?php echo esc_attr($geopportal_mainpage_disp_second_tag->name) ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -253,8 +258,10 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_third_tags){
 													$i = 0;
-													foreach ($geopportal_mainpage_disp_third_tags as $geopportal_mainpage_disp_third_tag){?>
-														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_third_tag->term_id ) ); ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo esc_attr($geopportal_mainpage_disp_third_tag->name); ?></a>
+													foreach ($geopportal_mainpage_disp_third_tags as $geopportal_mainpage_disp_third_tag){
+														$geopportal_mainpage_third_hue = floor(357 * (100000 / substr(base_convert(bin2hex($geopportal_mainpage_disp_third_tag->name . '000'), 16, 10), 0, 6)));
+														?>
+														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_third_tag->term_id ) ); ?>" class="a-badge" style="background-color:hsl(<?php echo $geopportal_mainpage_third_hue ?>, 60%, 35%);"><?php echo esc_attr($geopportal_mainpage_disp_third_tag->name); ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -273,8 +280,10 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_fourth_tags){
 													$i = 0;
-													foreach ($geopportal_mainpage_disp_fourth_tags as $geopportal_mainpage_disp_fourth_tag){?>
-														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_fourth_tag->term_id ) ); ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo esc_attr($geopportal_mainpage_disp_fourth_tag->name); ?></a>
+													foreach ($geopportal_mainpage_disp_fourth_tags as $geopportal_mainpage_disp_fourth_tag){
+														$geopportal_mainpage_fourth_hue = floor(357 * (100000 / substr(base_convert(bin2hex($geopportal_mainpage_disp_fourth_tag->name . '000'), 16, 10), 0, 6)));
+														?>
+														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_fourth_tag->term_id ) ); ?>" class="a-badge" style="background-color:hsl(<?php echo $geopportal_mainpage_fourth_hue ?>, 60%, 35%);"><?php echo esc_attr($geopportal_mainpage_disp_fourth_tag->name); ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
@@ -293,8 +302,10 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_fifth_tags){
 													$i = 0;
-													foreach ($geopportal_mainpage_disp_fifth_tags as $geopportal_mainpage_disp_fifth_tag){?>
-														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_fifth_tag->term_id ) ); ?>" class="a-badge <?php echo $geopportal_mainpage_disp_tag_styles[$i]?>"><?php echo esc_attr($geopportal_mainpage_disp_fifth_tag->name); ?></a>
+													foreach ($geopportal_mainpage_disp_fifth_tags as $geopportal_mainpage_disp_fifth_tag){
+														$geopportal_mainpage_fifth_hue = floor(357 * (100000 / substr(base_convert(bin2hex($geopportal_mainpage_disp_fifth_tag->name . '000'), 16, 10), 0, 6)));
+														?>
+														<a href="<?php echo esc_url( get_category_link( $geopportal_mainpage_disp_fifth_tag->term_id ) ); ?>" class="a-badge" style="background-color:hsl(<?php echo $geopportal_mainpage_fifth_hue ?>, 60%, 35%);"><?php echo esc_attr($geopportal_mainpage_disp_fifth_tag->name); ?></a>
 														<?php
 														$i >= 2 ? $i = 0 : $i++;
 													}
