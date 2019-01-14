@@ -2,6 +2,7 @@ import { Component, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators'
 import { MatStepper } from '@angular/material';
 import { ItemTypes } from 'geoplatform.client';
 
@@ -49,6 +50,8 @@ export class AppComponent implements OnInit {
         private authService : AuthService
     ) {
 
+        // Messages from ng-gpoauth
+
         const authMsgs = authService.getMessenger()
         authMsgs.on('userAuthenticated', (evt, data) => {
             // TODO: react to user authenticated even here
@@ -58,6 +61,34 @@ export class AppComponent implements OnInit {
             // TODO: react to user sign out event here
             console.log('User Signed Out')
         })
+
+        // --- or ---
+
+        const sub = authService
+                    .getMessenger()
+                    .raw();
+
+        sub.subscribe(msg => {
+            switch(msg.name){
+                case 'userAuthenticated':
+                    // do something..
+                    let user = msg.data;
+                    break;
+                case 'userSignOut':
+                    // do something else
+                    break;
+            }
+        })
+
+        // --- or ---
+
+        const authenticated = sub.pipe(filter(msg => msg.name === 'userAuthenticated'))
+
+        authenticated.subscribe(msg => {
+            let user = msg.data;
+        })
+
+        // --- end messages ---
 
         authService.getUser().then( user => {
             this.user = user;
