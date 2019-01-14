@@ -69,13 +69,19 @@ get_template_part( 'sub-header-com', get_post_format() );
         jQuery(document).ready(function() {
           jQuery("#geop_community_resources_search_button").click(function(e){
             var geopportal_query_string = "/#/?communities=" + jQuery("#geop_community_resources_search_input").attr("com_id") + "&q=" + jQuery("#geop_community_resources_search_input").val();
-            window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+            window.open(
+  						"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+  						'_blank'
+  					);
           });
 
           jQuery("#geop_community_resources_search_form").submit(function(event){
             event.preventDefault();
             var geopportal_query_string = "/#/?communities=" + jQuery("#geop_community_resources_search_input").attr("com_id") + "&q=" + jQuery("#geop_community_resources_search_input").val();
-            window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+            window.open(
+  						"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+  						'_blank'
+  					);
           });
         });
       </script>

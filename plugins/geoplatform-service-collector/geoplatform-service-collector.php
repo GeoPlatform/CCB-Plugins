@@ -290,7 +290,10 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		jQuery(".geopportal_port_community_search_button").click(function(event){
 			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+			window.open(
+				"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+				'_blank'
+			);
 		});
 
 		// Search functionality trigger on pressing enter in search bar.
@@ -298,7 +301,10 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 			event.preventDefault();
 			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+			window.open(
+				"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+				'_blank'
+			);
 		});
 	});
 	</script>
