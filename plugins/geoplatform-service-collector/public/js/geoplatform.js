@@ -21,7 +21,7 @@
       "timeout": "5000",
 
       //{env}-{id} of application deployed
-      "appId": "geopcomsearch-plugin"
+      "appId": "geopserve-plugin"
     };
   }
 })();

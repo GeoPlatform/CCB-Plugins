@@ -114,7 +114,7 @@ get_template_part( 'sub-header-com', get_post_format() );
       <div class="m-article">
           <div class="m-article__desc">
               <a class="btn btn-primary btn-block" href="<?php echo esc_url($post->geopportal_compost_community_url) ?>">
-                  Go to the <?php echo the_title() ?> Portal
+                  Go to the Community Portal
               </a>
           </div>
       </div>
