@@ -375,7 +375,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			</div>
 		<?php } else { ?>
 			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
-				<a class="geop-hidden-link" title="Visit full map of <?php echo esc_attr($geopmap_shortcode_array['name']); ?>." href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
+				<a class="geop-hidden-link" title="Visit full map" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
 					<span class="geop-redirect-icon <?php echo $geopmap_redirect ?>"></span>
 				</a>
 			</div>
