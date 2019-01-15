@@ -29,53 +29,6 @@ export class CCBService {
         let request = this.buildRequest(query, type);
         return this.execute(request);
 
-        // let reqs = [];
-        // let qry = query.clone();
-        //
-        // let types = query.getTypes();
-        // if(!types || !types.length) {
-        //     //default to all 3 types supported so far
-        //     types = ['pages','posts','media'];
-        // } else {
-        //     //remove types set on query object
-        //     qry.setTypes(null);
-        // }
-        //
-        // return Promise.all(
-        //     types.map( type => {
-        //         let request = this.buildRequest(qry, type);
-        //         return this.execute(request).catch(e=>{
-        //             return { totalResults: 0, results: [] }
-        //         });
-        //     })
-        // ).then(responses => {
-        //
-        //     //have to build unified list ordering the items by their modified date
-        //     let totalResults = 0;
-        //     let hits = [];
-        //     responses.forEach( (group:{totalResults:number;results:any[]}) => {
-        //         let total = group.totalResults || 0;
-        //         totalResults += total;
-        //         let results = group.results || [];
-        //         if(results && Array.isArray(results)) {
-        //             hits = hits.concat(results);
-        //         } //else it's an unexpected response, ignore that group
-        //     });
-        //
-        //     hits.sort( (a,b) => a.modified < b.modified ? 1 : -1 );
-        //     hits = hits.slice(0, query.getPageSize());
-        //     hits.forEach( hit => {
-        //         hit.author = { id: hit.author, label: this.usersList[hit.author] };
-        //         if(!hit.author) this.updateUserList();
-        //     });
-        //
-        //     return {
-        //         totalResults: totalResults,
-        //         results: hits
-        //     };
-        // })
-        // .catch(e => Promise.reject(e));
-
     }
 
     buildRequest(query: Query, type: string) : HttpRequest<any> {

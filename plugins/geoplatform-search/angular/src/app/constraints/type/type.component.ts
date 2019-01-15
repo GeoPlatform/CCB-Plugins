@@ -8,7 +8,11 @@ import {
 
 import { ItemTypes } from 'geoplatform.client';
 
-import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
+import { ISubscription } from "rxjs/Subscription";
+
+import {
+    Constraint, Constraints, ConstraintEditor, Facet, FacetCount
+} from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
 import { TypeCodec } from './codec';
@@ -29,24 +33,42 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
 
     public value : {label:string; id:string;}[];
     private codec : TypeCodec = new TypeCodec();
-    public options : {label:string; id:string;}[];
+    public options : { key:string; label:string; id:string; count: number; }[];
+
+    private facetListener : ISubscription;
 
     constructor() { }
 
     ngOnInit() {
         this.value = this.codec.getValue(this.constraints);
         this.options = this.codec.typeOptions;
+
+        if(this.constraints) {
+            this.updateFacetCounts(this.constraints.facets);
+            this.facetListener = this.constraints.facetEvents.subscribe( (facets : Facet[]) => {
+                this.updateFacetCounts(facets);
+            });
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if(changes.constraints) {
-            this.value = this.codec.getValue(changes.constraints.currentValue);
+            let constraints = changes.constraints.currentValue;
+
+            this.value = this.codec.getValue(constraints);
+
+            //since constraints obj changed, unsubscribe and re-subscribe
+            if(this.facetListener) this.facetListener.unsubscribe();
+            this.facetListener = constraints.facetEvents.subscribe( (facets : Facet[]) => {
+                this.updateFacetCounts(facets);
+            });
         }
     }
 
     ngOnDestroy() {
         this.options = null;
         this.value = null;
+        if(this.facetListener) this.facetListener.unsubscribe();
     }
 
     getCodec() : Codec { return this.codec; }
@@ -101,4 +123,20 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
         // return `../${ServerRoutes.ASSETS}${type}.svg`;
     }
 
+    updateFacetCounts( facets : Facet[] ) {
+        if(facets && facets.length) {
+            facets.forEach( (facet : Facet) => {
+                if(facet.name !== 'types' || !facet.buckets) return;
+                facet.buckets.forEach( bucket => {
+                    this.updateCount(bucket.key, bucket.count);
+                });
+            });
+        }
+    }
+
+    updateCount( key: string, count: number) {
+        this.options.forEach( o => {
+            if(o.key === key) o.count = count;
+        });
+    }
 }

@@ -1,0 +1,8 @@
+<div class="m-legend" [ngClass]="{'is-collapsed':isCollapsed}">
+    <div class="m-legend__items">
+        <div *ngFor="let type of types" class="m-legend__item gp-{{type.id.toLowerCase().replace(':','-')}}">
+            <span [inlineSVG]="type.icon" class="svg-icon"></span>
+            {{type.label}}
+        </div>
+    </div>
+</div>

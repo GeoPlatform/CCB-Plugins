@@ -42,6 +42,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public results : any;
     public error: {label:string, message: string, code?:number} = null;
     public isLoading : boolean = false;
+    public showLegend : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
 
     constructor( private http : HttpClient ) {
@@ -129,8 +130,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             this.totalResults = response.totalResults;
             this.results = response;
 
-            //TODO show facet counts in picker filters...
-            // this.constraints.updateFacetCounts(response.facets);
+            //show facet counts in picker filters...
+            this.constraints.updateFacetCounts(response.facets);
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
