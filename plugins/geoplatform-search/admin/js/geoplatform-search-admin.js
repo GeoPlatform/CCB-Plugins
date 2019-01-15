@@ -29,4 +29,21 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	// The only operation this page actually does is delete and recreate the search page.
+	// Checks first for the specifically-designed GeoPlatform search page template,
+	// then the full-page template with added hook text. If neither found, creates a
+	// basic page with the hook text.
+	jQuery('document').ready(function(){
+		jQuery('#geopsearch_reset').click(function(){
+      var data = {
+				action: "geopsearch_refresh",
+	    };
+			jQuery.post(ajaxurl, data, function(response){
+				if (response)
+					alert(response);
+				location.reload();
+			});
+			return false;
+    });
+	});
 })( jQuery );

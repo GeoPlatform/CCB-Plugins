@@ -5,8 +5,8 @@ Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-search
 Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
-Tested up to: 4.9.8
-Stable tag: 1.0.8
+Tested up to: 5.0.1
+Stable tag: 1.0.9
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -82,6 +82,11 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 2. Use shortcode to place search bar access to the Search application anywhere in your site.
 
 == Changelog ==
+
+= 1.0.9 =
+* Updated visuals.
+* Localized site configuration improvements.
+* Separated template from plugin to permit universal application.
 
 = 1.0.8 =
 * Fixed discrepancy in environmental searching.

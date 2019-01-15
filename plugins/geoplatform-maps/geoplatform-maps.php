@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.10
+ * @since             1.0.11
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.0.10
+ * Version:           1.0.11
  * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.0.10' );
+define( 'GEOPMAP_PLUGIN', '1.0.11' );
 
 /**
  * The code that runs during plugin activation.
@@ -107,7 +107,8 @@ function geopmap_shortcode_creation($geopmap_atts){
     'name' => '',
     'url' => '',
 		'width' => '0',
-		'height' => '0'
+		'height' => '0',
+		'title' => 'on',
   ), $geopmap_atts);
   ob_start();
 
@@ -322,6 +323,12 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		$geopmap_check_icon = 'fa-check-square';
 		$geopmap_uncheck_icon = 'fa-square';
 	}
+
+	// GeoPlatform Portal 4 theme detection, which will determine explicit output
+	// for that theme.
+	$geopportal_theme = 'F';
+	if (strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform-portal-four') !== false)
+		$geopportal_theme = 'T';
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -340,6 +347,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  <!-- Name, link, and layer control card. Provides a link to the map with the
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
+			<?php
+			if ($geopmap_shortcode_array['title'] == 'on'){
+			?>
 			<div class="geop-display-header" id="title_<?php echo $geopmap_divrand; ?>">
 				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 					<tr class="geop-no-border">
@@ -361,6 +371,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					</tr>
 				</table>
 			</div>
+		<?php } ?>
 
  <!-- The container that will hold the leaflet map. Also defines entree height. -->
 			<div class="geop-container-controls" id="container_<?php echo $geopmap_divrand; ?>" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;"></div>
@@ -405,6 +416,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
 			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
+		}
+		if ('<?php echo esc_attr($geopmap_shortcode_array['title']); ?>' == 'main'){
+			jQuery('#container_<?php echo $geopmap_divrand; ?>').height('100%');
 		}
 		if (jQuery('#middle_<?php echo $geopmap_divrand; ?>').width() <= 400)
 			jQuery('#layer_menu_button_<?php echo $geopmap_divrand; ?>').hide();

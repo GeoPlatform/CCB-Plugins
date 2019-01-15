@@ -5,7 +5,7 @@ Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-commun
 Tags: search, community, community search, geoplatform, shortcode, interactive, portfolio, client-api
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
-Tested up to: 4.9.8
+Tested up to: 5.0.1
 Stable tag: 1.0.7
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0

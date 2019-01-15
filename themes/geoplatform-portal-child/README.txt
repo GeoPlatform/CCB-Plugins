@@ -4,7 +4,7 @@
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.6
 -Stable tag: 3.1.0
--Version: 3.1.9
+-Version: 3.1.10
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -112,7 +112,13 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
 
-## 3.1.9 =
+## 3.1.10
+* Release pending
+
+- Added GeoPlatform Search Page template.
+- Prevented title card fading controls from parent theme inheritance.
+
+## 3.1.9
 * Released October 22, 2018
 
  - Enabled category priority assignment and sorting just like posts.

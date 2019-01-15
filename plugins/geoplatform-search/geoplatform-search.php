@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              http://www.imagemattersllc.com/
- * @since             1.0.8
+ * @since             1.0.9
  * @package           Geop_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Search
  * Plugin URI:        www.geoplatform.gov
  * Description:       Browse, search, and filter GeoPlatform service objects.
- * Version:           1.0.8
+ * Version:           1.0.9
  * Author:            Image Matters LLC: Patrick Neal, Lee Heazel
  * Author URI:        http://www.imagemattersllc.com/
  * License:           Apache 2.0
@@ -72,12 +72,12 @@ function deactivate_geop_search() {
 }
 
 // Applies our custom page template to the created page.
-add_filter('page_template', 'geopsearch_apply_template');
-function geopsearch_apply_template($geopsearch_page_template) {
-    if (is_page('geoplatform-search'))
-        $geopsearch_page_template = dirname( __FILE__ ) . '/public/partials/geoplatform-search-page-template.php';
-    return $geopsearch_page_template;
-}
+//add_filter('page_template', 'geopsearch_apply_template');
+// function geopsearch_apply_template($geopsearch_page_template) {
+//     if (is_page('geoplatform-search') && ! is_page_template('page-templates/search_page.php'))
+//         $geopsearch_page_template = dirname( __FILE__ ) . '/public/partials/geoplatform-search-page-template.php';
+//     return $geopsearch_page_template;
+// }
 
 // Sets the parameters of and then creates the search page. It deletes any old
 // version of that page before each generation.
@@ -86,10 +86,16 @@ function geopsearch_add_interface_page() {
 	$geopsearch_interface_post = array(
 		'post_title' => 'GeoPlatform Search',
 		'post_name' => 'geoplatform-search',
-		'post_content' => '',
 		'post_status' => 'publish',
-		'post_type' => 'page'
+		'post_type' => 'page',
 	);
+	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/geop_search_page.php'))
+		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/geop_search_page.php'));
+	else if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/page_full-width.php'))
+		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/page_full-width.php'));
+	else
+		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>'));
+
 	wp_insert_post($geopsearch_interface_post);
 }
 
@@ -160,6 +166,15 @@ function geopsearch_shortcodes_init()
 }
 add_action('init', 'geopsearch_shortcodes_init');
 
+// AJAX handling only seems to function properly if both the hooks and PHP
+// functions are placed in this file. Instead of producing clutter, the files
+// that perform the settings interface add and remove map operations are simply
+// included here.
+function geopsearch_process_refresh() {
+	include 'admin/partials/geoplatform-search-recreate.php';
+	wp_die();
+}
+add_action('wp_ajax_geopsearch_refresh', 'geopsearch_process_refresh');
 
 /**
  * Begins execution of the plugin.
