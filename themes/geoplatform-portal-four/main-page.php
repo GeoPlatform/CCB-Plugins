@@ -145,7 +145,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		if (count($geopportal_pages) > 0){
 			foreach($geopportal_pages as $geopportal_page){
 				$geopportal_mainpage_temp_bool = true;
-				for ($i = 0; $i < count($geopportal_mainpage_disp_slug_array); $i++){
+				for ($i = 0; $i < count($geopportal_mainpage_disp_slug_array) && $geopportal_mainpage_temp_bool; $i++){
 					if ($geopportal_page->post_name == $geopportal_mainpage_disp_slug_array[$i]){
 						$geopportal_mainpage_temp_bool = false;
 					}
