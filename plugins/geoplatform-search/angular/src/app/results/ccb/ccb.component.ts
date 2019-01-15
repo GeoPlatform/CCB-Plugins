@@ -37,6 +37,13 @@ export class CcbComponent implements OnInit {
 
     public mixedResults : any = {};
 
+    /*
+        list of WP object types to search
+        WP API doesn't support search all at current time, so we have to search
+        each separately
+    */
+    public wpTypes : string[] = [ 'posts', 'pages', 'media' ];
+
 
     constructor( private http : HttpClient ) {
         this.service = new CCBService(http);
@@ -82,55 +89,41 @@ export class CcbComponent implements OnInit {
         this.queryChange.next(this.query);
     }
 
+
+    /**
+     *
+     */
     executeQuery() {
-
-        this.query.types('pages');
-        this.service.search(this.query)
-        .then( response => {
-            this.mixedResults['pages'] = {
-                totalResults : response.totalResults,
-                results: response.results
-            };
-        })
-        .catch( e => {
-            console.log("An error occurred: " + e.message);
-        })
-
-        this.query.types('posts');
-        this.service.search(this.query)
-        .then( response => {
-            this.mixedResults['posts'] = {
-                totalResults : response.totalResults,
-                results: response.results
-            };
-        })
-        .catch( e => {
-            console.log("An error occurred: " + e.message);
-        })
-
-        this.query.types('media');
-        this.service.search(this.query)
-        .then( response => {
-            this.mixedResults['media'] = {
-                totalResults : response.totalResults,
-                results: response.results
-            };
-        })
-        .catch( e => {
-            console.log("An error occurred: " + e.message);
-        })
-
-
-        // this.service.search(this.query)
-        // .then( response => {
-        //     this.totalResults = response.totalResults;
-        //     this.results = response;
-        // })
-        // .catch( e => {
-        //     console.log("An error occurred: " + e.message);
-        // })
+        this.wpTypes.forEach( type => { this.doQueryType(type) });
     }
 
+
+    /**
+     *
+     */
+    doQueryType(type) {
+        this.query.types(type);
+        this.service.search(this.query)
+        .then( response => {
+            this.mixedResults[type] = {
+                totalResults : response.totalResults,
+                results: response.results
+            };
+        })
+        .catch( e => {
+            this.mixedResults[type] = {
+                totalResults: 0,
+                results: [],
+                error: e.message
+            };
+            console.log("An error occurred searching " + type + ": " + e.message);
+        })
+    }
+
+
+    /**
+     *
+     */
     onPagingEvent($event : PagingEvent) {
         // console.log("Paging Event: " + JSON.stringify($event));
         let changed = false;
@@ -146,11 +139,17 @@ export class CcbComponent implements OnInit {
         this.queryChange.next(this.query);
     }
 
+    /**
+     *
+     */
     previousPage() {
         this.query.setPage(this.query.getPage()-1);
         this.queryChange.next(this.query);
     }
 
+    /**
+     *
+     */
     nextPage() {
         this.query.setPage(this.query.getPage()+1);
         this.queryChange.next(this.query);
@@ -164,7 +163,9 @@ export class CcbComponent implements OnInit {
         this.queryChange.next(this.query);
     }
 
-
+    /**
+     *
+     */
     constrainToUser (user) {
         let constraint = new CreatorCodec().toConstraint(user);
         this.constraints.set(constraint);
@@ -178,7 +179,13 @@ export class CcbComponent implements OnInit {
         return `../${environment.assets}${item.type}.svg`;
     }
 
+    /**
+     *
+     */
     isActive(id) { return this.currentTab === id; }
 
+    /**
+     *
+     */
     setActive(id) { this.currentTab = id; }
 }

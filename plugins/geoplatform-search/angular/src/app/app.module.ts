@@ -66,6 +66,7 @@ import { DebugComponent } from './shared/debug/debug.component';
 import { PagingComponent } from './shared/paging/paging.component';
 import { TypedResultsComponent } from './results/ccb/typed-results/typed-results.component';
 import { SimilarityComponent } from './constraints/similarity/similarity.component';
+import { LegendComponent } from './results/portfolio/legend/legend.component';
 
 
 //ROUTING CONFIG
@@ -88,7 +89,7 @@ export function initializeApp() {
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
       if((<any>window).GeoPlatformSearchPluginEnv) {
-          console.log("Configuring app using run-time values");
+          // console.log("Configuring app using run-time values");
           Config.configure((<any>window).GeoPlatformSearchPluginEnv);
       }
   }
@@ -126,7 +127,8 @@ export function initializeApp() {
     PagingComponent,
     TypedResultsComponent,
     CommunityComponent,
-    SimilarityComponent
+    SimilarityComponent,
+    LegendComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { useHash: true } ),
