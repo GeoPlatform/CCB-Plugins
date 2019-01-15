@@ -351,51 +351,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 
 <!-- HTML for the widget control box. -->
 		<p>
-			<?php _e('The boxes below accept the slugs of the linked post. Please ensure that any input slugs are valid.<br>Ensure you enter a valid map ID, not shortcode. The GeoPlatform Maps plugin will construct the necessary parameters itself.', 'geoplatform-ccb'); ?>
-		</p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_mainpage_first_link' ); ?>">Primary Post Slug:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_first_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_first_link' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_first_link ); ?>" />
-    </p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_second_link' ); ?>">First Sub-Feature Post Slug:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_second_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_second_link' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_second_link ); ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_third_link' ); ?>">Second Sub-Feature Post Slug:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_third_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_third_link' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_third_link ); ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_fourth_link' ); ?>">Third Sub-Feature Post Slug:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_fourth_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_fourth_link' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_fourth_link ); ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_fifth_link' ); ?>">Fourth Sub-Feature Post Slug:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_fifth_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_fifth_link' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_fifth_link ); ?>" />
-		</p>
-		<hr>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_mainpage_map_title' ); ?>">Map Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_map_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_map_title' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_map_title ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_mainpage_map_shortcode' ); ?>">Map ID:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_mainpage_map_shortcode' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_map_shortcode' ); ?>" value="<?php echo esc_attr( $geopportal_mainpage_map_shortcode ); ?>" />
-    </p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_more_cat' ); ?>">More Content Category Slug:</label><br>
-			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_more_cat' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_more_cat' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_more_cat); ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>">More Content Count:</label><br>
-			<input type="number"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_more_count' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_more_count' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_more_count); ?>" />
-		</p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_mainpage_browse_link' ); ?>">Browse All Category Slug:</label><br>
-			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_mainpage_browse_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_mainpage_browse_link' ); ?>" value="<?php echo esc_attr($geopportal_mainpage_browse_link); ?>" />
-		</p>
-		<p>
-			<?php _e('Tertiary content is controlled by the post priority settings. Navigate to the admin post panel to set these.', 'geoplatform-ccb'); ?>
+			<?php _e('No controls are provided for this widget here. To provide data for the Featured Posts widget, please input it under the Customize->Featured Pages section.' , 'geoplatform-ccb'); ?>
 		</p>
 		<?php
 	}
@@ -403,22 +359,22 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		// Checks if the Content Boxes plugin is installed.
-		$geopportal_mainpage_cb_bool = false;
-		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
-			$geopportal_mainpage_cb_bool = true;
-
-    // $instance[ 'geopportal_mainpage_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_title' ] );
-		$instance[ 'geopportal_mainpage_first_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_first_link' ] );
-		$instance[ 'geopportal_mainpage_second_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_second_link' ] );
-		$instance[ 'geopportal_mainpage_third_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_third_link' ] );
-		$instance[ 'geopportal_mainpage_fourth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fourth_link' ] );
-		$instance[ 'geopportal_mainpage_fifth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fifth_link' ] );
-		$instance[ 'geopportal_mainpage_map_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_title' ] );
-		$instance[ 'geopportal_mainpage_map_shortcode' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_shortcode' ] );
-		$instance[ 'geopportal_mainpage_more_cat' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_cat' ] );
-		$instance[ 'geopportal_mainpage_more_count' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_count' ] );
-		$instance[ 'geopportal_mainpage_browse_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_browse_link' ] );
+		// // Checks if the Content Boxes plugin is installed.
+		// $geopportal_mainpage_cb_bool = false;
+		// if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
+		// 	$geopportal_mainpage_cb_bool = true;
+		//
+    // // $instance[ 'geopportal_mainpage_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_title' ] );
+		// $instance[ 'geopportal_mainpage_first_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_first_link' ] );
+		// $instance[ 'geopportal_mainpage_second_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_second_link' ] );
+		// $instance[ 'geopportal_mainpage_third_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_third_link' ] );
+		// $instance[ 'geopportal_mainpage_fourth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fourth_link' ] );
+		// $instance[ 'geopportal_mainpage_fifth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fifth_link' ] );
+		// $instance[ 'geopportal_mainpage_map_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_title' ] );
+		// $instance[ 'geopportal_mainpage_map_shortcode' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_shortcode' ] );
+		// $instance[ 'geopportal_mainpage_more_cat' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_cat' ] );
+		// $instance[ 'geopportal_mainpage_more_count' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_count' ] );
+		// $instance[ 'geopportal_mainpage_browse_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_browse_link' ] );
 
 		return $instance;
 	}
