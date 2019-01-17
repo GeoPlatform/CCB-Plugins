@@ -1,8 +1,8 @@
 <div class="c-constraint__editor">
   <p>Select one or more themes from the list below and click "Apply"</p>
-  <br><br>
+  <br>
 
-  <label for="themesFilter">Filter themes</label>
+  <label for="themesFilter">Find theme(s) to use in filtering search results</label>
   <div class="input-group-slick">
       <span class="fa fa-search"></span>
       <input type="text" id="themesFilter"
@@ -10,7 +10,7 @@
         placeholder="Specify themes..."
         [(ngModel)]="listFilter"
         (keyup.enter)="refreshOptions()">
-      <button type="button" class="btn btn-default" (click)="refreshOptions()">Find</button>
+      <button type="button" class="btn btn-secondary" (click)="refreshOptions()">Find</button>
   </div>
   <hr>
 

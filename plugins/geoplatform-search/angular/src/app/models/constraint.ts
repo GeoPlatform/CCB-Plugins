@@ -1,20 +1,42 @@
 
-import { Query } from "geoplatform.client";
+import { Query, QueryParameters } from "geoplatform.client";
 import { Codec } from './codec';
 
 
+/**
+ *
+ */
 export interface ConstraintEditor {
     constraints: Constraints;
     getCodec() : Codec;
 }
 
+/**
+ *
+ */
+export interface FacetCount {
+    label: string;
+    key: string;
+    count: number;
+}
+/**
+ *
+ */
+export interface Facet {
+    name: string;
+    buckets?: FacetCount[];
+}
 
 
+/**
+ *
+ */
 export class Constraint {
 
     name: string;
     label: string;
     value: any;
+    counts: FacetCount[];
 
     constructor(name: string, value?:any, label?:string) {
         this.name = name;
@@ -46,11 +68,18 @@ export class Constraint {
         }
         query.setParameter(this.name, value);
     }
+
+    updateFacetCounts( counts: FacetCount[] ) {
+        this.counts = counts;
+    }
 }
 
 
 
 
+/**
+ *
+ */
 export class MultiValueConstraint extends Constraint {
     constructor(name: string, value?:[any], label?:string) {
         super(name, value, label);
@@ -92,10 +121,14 @@ export class MultiValueConstraint extends Constraint {
         // }
         query.setParameter(this.name, value);
     }
+
 }
 
 
 
+/**
+ *
+ */
 export class CompoundConstraint extends Constraint {
     constructor(name: string, value?:Constraint[], label?:string) {
         super(name, value, label);
@@ -115,11 +148,16 @@ import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
 
+/**
+ *
+ */
 export class Constraints {
 
     events : Subject<Constraint> = new Subject<Constraint>();
+    facetEvents : Subject<Facet[]> = new Subject<Facet[]>();
 
     public constraints : [Constraint] = [] as [Constraint];
+    public facets : Facet[] = [] as Facet[];
 
     constructor() { }
 
@@ -178,6 +216,12 @@ export class Constraints {
 
     toString() {
         return JSON.stringify(this.list());
+    }
+
+
+    updateFacetCounts( facets : Facet[] ) {
+        this.facets = facets;
+        this.facetEvents.next(facets);
     }
 
 }

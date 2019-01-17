@@ -1,0 +1,117 @@
+<mat-card>
+
+    <mat-card-subtitle>
+        Optionally, specify one or more keywords, publishing agencies, and
+        associated GeoPlatform communities.
+    </mat-card-subtitle>
+
+
+    <form [formGroup]="formGroupPrivate">
+
+        <div class="additional__container">
+
+            <div class="additional__section">
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>Keywords</mat-label>
+                    <mat-chip-list #keyChipList>
+                        <mat-chip
+                            *ngFor="let key of keywords"
+                            [selectable]="true"
+                            [removable]="true"
+                            (removed)="removeKeyword(key)">
+                            {{key}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput #keywordsInput
+                            formControlName="keywords"
+                            [matChipInputFor]="keyChipList"
+                            (matChipInputTokenEnd)="addKeyword($event)">
+                    </mat-chip-list>
+                    <mat-hint>Press 'ENTER' to add each keyword</mat-hint>
+                </mat-form-field>
+
+
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>Publishers</mat-label>
+                    <mat-chip-list #pubChipList>
+                        <mat-chip
+                            *ngFor="let pub of publishers"
+                            [selectable]="true"
+                            [removable]="true"
+                            (removed)="removePublisher(pub)">
+                            {{pub.label}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput #publishersInput
+                            formControlName="publishers"
+                            [matAutocomplete]="pubAutoComplete"
+                            [matChipInputFor]="pubChipList"
+                            (matChipInputTokenEnd)="addPublisher($event)"
+                            placeholder="Associate publishing agencies">
+                    </mat-chip-list>
+                    <mat-autocomplete #pubAutoComplete="matAutocomplete"
+                        (optionSelected)="onPubAutocompleteSelection($event)">
+                        <mat-option *ngFor="let option of filteredPublisherOptions | async" [value]="option">
+                            {{ option.label }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint>Find publishers using the typeahead and select them to associate</mat-hint>
+                </mat-form-field>
+
+
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>Communities</mat-label>
+                    <mat-chip-list #comChipList>
+                        <mat-chip
+                            *ngFor="let com of communities"
+                            [selectable]="true"
+                            [removable]="true"
+                            (removed)="removeCommunity(com)">
+                            {{com.label}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput #communitiesInput
+                            formControlName="communities"
+                            [matAutocomplete]="comAutoComplete"
+                            [matChipInputFor]="comChipList"
+                            (matChipInputTokenEnd)="addCommunity($event)"
+                            placeholder="Associate communities">
+                    </mat-chip-list>
+                    <mat-autocomplete #comAutoComplete="matAutocomplete"
+                        (optionSelected)="onComAutocompleteSelection($event)">
+                        <mat-option *ngFor="let option of filteredCommunityOptions | async" [value]="option">
+                            {{ option.label }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint>Find communities using the typeahead and select them to associate</mat-hint>
+                </mat-form-field>
+
+            </div>
+
+        </div>
+
+        <div class="m-message m-message--error" *ngIf="hasError">
+            <div class="m-message__heading">
+                <mat-icon class="m-message__icon">error</mat-icon>
+                {{hasError.label||"An Error Occurred"}}
+            </div>
+            <div class="m-message__body">
+                {{hasError.message||"Something unexpected happened and an unknonwn error has occurred."}}
+            </div>
+        </div>
+
+    </form>
+
+
+    <mat-card-actions>
+        <div class="m-step__buttons">
+            <button mat-raised-button matStepperPrevious class="nav-btn">Back</button>
+            <button mat-raised-button color="primary" matStepperNext
+                [disabled]="formGroup.invalid || !data.createdBy">Continue</button>
+        </div>
+    </mat-card-actions>
+
+</mat-card>

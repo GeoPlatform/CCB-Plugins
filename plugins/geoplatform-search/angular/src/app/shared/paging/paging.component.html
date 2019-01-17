@@ -1,6 +1,6 @@
-<div class="c-pagination">
-    <div class="c-pagination__total">{{totalResults}} results</div>
-    <div class="c-pagination__pagesize">
+<div class="o-pagination">
+    <div class="o-pagination__total">{{totalResults}} results</div>
+    <div class="o-pagination__pagesize">
         <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
             <option value="5">5 per page</option>
             <option value="10">10 per page</option>
@@ -21,7 +21,7 @@
         <button type="button" class="btn btn-link disabled">
             <span style="color:#000">{{query.getPage()+1}}</span>
         </button>
-        <!-- <div class="c-pagination__current-page">
+        <!-- <div class="o-pagination__current-page">
             {{query.getPage()*query.getPageSize()+1}} -
             {{query.getPage()*query.getPageSize()+query.getPageSize()}}
         </div> -->

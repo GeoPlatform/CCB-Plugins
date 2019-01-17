@@ -42,6 +42,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public results : any;
     public error: {label:string, message: string, code?:number} = null;
     public isLoading : boolean = false;
+    public showLegend : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
 
     constructor( private http : HttpClient ) {
@@ -56,6 +57,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
                 QueryFields.LANDING_PAGE
             ])
         );
+        this.defaultQuery.setFacets('type');
 
         //use a subject so we can debounce query execution events
         this.queryChange
@@ -63,7 +65,19 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             .subscribe((query) => this.executeQuery() );
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+
+
+        /* FOR TESTING PURPOSES ONLY */
+        // setTimeout(() => {
+        //     this.error = {
+        //         label:"An Error Occurred",
+        //         message: "This is just a test",
+        //         code: 500
+        //     };
+        // }, 3000);
+
+     }
 
     ngOnChanges( changes : SimpleChanges) {
         if(changes.constraints) {
@@ -115,6 +129,9 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             this.isLoading = false;
             this.totalResults = response.totalResults;
             this.results = response;
+
+            //show facet counts in picker filters...
+            this.constraints.updateFacetCounts(response.facets);
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
@@ -178,10 +195,11 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.MAP:             type =  'map'; break;
             case ItemTypes.GALLERY:         type =  'gallery'; break;
             case ItemTypes.ORGANIZATION:    type =  'organization'; break;
-            case ItemTypes.VCARD:           type =  'vcard'; break;
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
             case ItemTypes.COMMUNITY:       type =  'community'; break;
             case ItemTypes.CONCEPT:         type =  'concept'; break;
             case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+            default: type = 'post';
         }
         // return `../${ServerRoutes.ASSETS}${type}.svg`;
         return `../${environment.assets}${type}.svg`;
@@ -217,7 +235,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
             case ItemTypes.LAYER:
             case ItemTypes.ORGANIZATION:
-            case ItemTypes.VCARD:
+            case ItemTypes.CONTACT:
             case ItemTypes.COMMUNITY:
             case ItemTypes.CONCEPT:
             case ItemTypes.CONCEPT_SCHEME:

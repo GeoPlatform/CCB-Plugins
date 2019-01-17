@@ -1,38 +1,49 @@
 
 
-.c-current-constraints .heading {
+.o-current-constraints .heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.25em;
+    font-weight: 700;
 }
-.c-current-constraints .heading span {
+.o-current-constraints .heading span {
     flex: 1;
 }
-.c-current-constraints .c-constraints {
+.o-current-constraints .heading button {
+    font-size: 0.675em;
+}
+
+.o-current-constraints .m-constraints {
     padding-left: 1.5em;
 }
 
 
-.c-current-constraints.is-collapsed .c-constraints {
+.o-current-constraints.is-collapsed .m-constraints {
     display: none;
 }
 
 
-.c-constraint {
+.m-constraint {
     margin: 1em 0;
 }
 
-.c-constraint .heading {
+.m-constraint__heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-size: 1.125em;
+    font-weight: 500;
 }
-.c-constraint .heading span {
+.m-constraint__heading span {
     flex: 1;
 }
+.m-constraint__heading button {
+    font-size: 0.675em;
+}
 
 
-.c-constraint__value {
+.m-constraint__value {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -42,4 +53,4 @@
     word-break: break-all;
 }
 
-.c-constraint__q { display: none; }
+.m-constraint__q { display: none; }

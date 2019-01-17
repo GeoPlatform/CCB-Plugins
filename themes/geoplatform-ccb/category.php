@@ -104,7 +104,7 @@ get_template_part( 'cat-banner', get_post_format() );
 
       // Sets the result types to post and page, including cat links if not a child theme
       $geop_ccb_post_types = array('post','page');
-      if (!is_child_theme())
+      if (post_type_exists('geopccb_catlink'))
         $geop_ccb_post_types = array('post','page','geopccb_catlink');
 
       $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');

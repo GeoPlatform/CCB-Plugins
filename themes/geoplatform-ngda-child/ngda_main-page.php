@@ -92,13 +92,24 @@
               <?php
             }
           } else {
+
+            // Determines feature card modifications.
+            $geopngda_featured_card_style = get_theme_mod('feature_controls', 'fade');
+            $geopngda_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0))";
+            $geopngda_featured_card_outline = "";
+
+            if ($geopngda_featured_card_style == 'fade' || $geopngda_featured_card_style == 'both')
+              $geopngda_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
+            if ($geopngda_featured_card_style == 'outline' || $geopngda_featured_card_style == 'both')
+              $geopngda_featured_card_outline = "-webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #000000;";
+
             foreach ($geopngda_pages_final as $geopccb_page){
               ?>
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                 <div class="gp-ui-card gp-ui-card--md gp-ui-card">
-                  <a style="background-image:linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-                    url(<?php echo get_the_post_thumbnail_url($geopccb_page); ?>)" href="<?php echo get_the_permalink($geopccb_page); ?>" alt="<?php echo get_the_title($geopccb_page); ?>" class="media embed-responsive embed-responsive-16by9" id="module">
-                      <h3 class="text-center" id="mid" style="font-size:1.5rem"><?php echo get_the_title($geopccb_page); ?></h3>
+                  <a style="background-image:<?php echo $geopngda_featured_card_fade ?>, url(<?php echo get_the_post_thumbnail_url($geopccb_page); ?>);"
+                    href="<?php echo get_the_permalink($geopccb_page); ?>" alt="<?php echo get_the_title($geopccb_page); ?>" class="media embed-responsive embed-responsive-16by9" id="module">
+                      <h3 class="text-center" id="mid" style="font-size:1.5rem"><span style="<?php echo $geopngda_featured_card_outline ?>"><?php echo get_the_title($geopccb_page); ?></span></h3>
                   </a>
                   <br style="clear: both;">
                 </div><!--#gp-ui-card gp-ui-card-md gp-ui-card-->

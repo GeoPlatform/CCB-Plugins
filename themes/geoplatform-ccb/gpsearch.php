@@ -15,11 +15,11 @@
 // navigates to the geoplatform-search page with the search field params.
   jQuery( "#geoplatformsearchform" ).submit(function( event ) {
     event.preventDefault();
-    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield').val();
   });
 
 // Functionally identical to above, triggered by submit button press.
   jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
-    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
+    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield').val();
   });
 </script>

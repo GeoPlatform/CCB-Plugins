@@ -1,0 +1,23 @@
+
+
+/* =====================================================
+    WordPress Theme
+   ===================================================== */
+
+/* override Portal WP Theme (v2)'s usage of "width:fit-content" */
+.input-group-slick {
+    width: 100% !important;
+}
+
+
+
+
+
+/* =====================================================
+   Leaflet JS
+   ===================================================== */
+
+/* hide the leaflet draw control for circle marker */
+.leaflet-draw-section a.leaflet-draw-draw-circlemarker {
+    display: none!important;
+}

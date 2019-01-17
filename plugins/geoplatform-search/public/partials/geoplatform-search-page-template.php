@@ -23,6 +23,7 @@ get_template_part( 'mega-menu', get_post_format() ); ?>
 
   <div class="row">
     <div class="loop" style="width:100%">
+        <script> window.GeoPlatformSearchPluginEnv = { wpUrl: "<?php bloginfo('wpurl') ?>" }; </script>
       <app-root></app-root>
     </div><!--#loop-->
   </div><!--#row-->

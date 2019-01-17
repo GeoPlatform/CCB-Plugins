@@ -33,27 +33,6 @@
       your posts.
     </p>
   </div>
-
-  <script>
-// The only operation this page actually does is delete and recreate the search page. The options here
-// will likely be expanded upon in the future, but are currently minimal.
-  jQuery('document').ready(function(){
-    jQuery('#geopsearch_reset').click(function(){
-      <?php
-      wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'geoplatform-search' ))), true);
-      $geopsearch_interface_post = array(
-        'post_title' => 'GeoPlatform Search',
-    		'post_name' => 'geoplatform-search',
-    		'post_content' => '',
-    		'post_status' => 'publish',
-    		'post_type' => 'page'
-      );
-      wp_insert_post($geopsearch_interface_post);
-      ?>
-      location.reload();
-    });
-  })
-  </script>
 </div>
 </body>
 </html>

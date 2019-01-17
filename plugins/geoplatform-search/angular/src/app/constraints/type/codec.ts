@@ -1,25 +1,29 @@
 
 import { Params } from '@angular/router';
 import { Query, QueryParameters, ItemTypes } from 'geoplatform.client';
-import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';
+import {
+    Constraint, MultiValueConstraint, Constraints, FacetCount
+} from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
 
 export class TypeCodec implements Codec {
 
-    public typeOptions : {label:string; id:string;}[];
+    public typeOptions : { key:string; label:string; id:string; count:number; }[];
 
     constructor() {
         this.typeOptions = Object.keys(ItemTypes)
         .filter(k=> {
             let t = ItemTypes[k];
-            return  t !== ItemTypes.CONTACT && t !== ItemTypes.CONCEPT &&
-                    t !== ItemTypes.CONCEPT_SCHEME && t !== ItemTypes.STANDARD;
+            return  t !== ItemTypes.CONCEPT &&
+                    t !== ItemTypes.CONCEPT_SCHEME &&
+                    t !== ItemTypes.STANDARD;
         })
         .map(k=>{
             let v = ItemTypes[k], label = v;
             if(~label.indexOf(":")) label = label.split(':')[1];
-            return {label: label, id: v};
+            if("VCard" === label) label = 'Contact';
+            return { key: v, label: label, id: v, count: 0 };
         });
         // .concat([
         //     { label: 'Page',  id: 'pages'  },
@@ -52,6 +56,16 @@ export class TypeCodec implements Codec {
             return constraint.value.slice(0);
         return null;
     }
+
+    // getCount(constraints: Constraints, value : any) : number {
+    //     if(!constraints) return null;
+    //     let constraint = constraints.get(QueryParameters.TYPES);
+    //     if(constraint && constraint.counts) {
+    //         let v : FacetCount[] = constraint.counts.filter( f => f.label === value );
+    //         if(v.length) return v[0].count;
+    //     }
+    //     return 0;
+    // }
 
     toString(constraints: Constraints) : string {
         return (this.getValue(constraints) || []).map(v=>v.id).join(', ');
