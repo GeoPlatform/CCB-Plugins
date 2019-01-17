@@ -1,14 +1,14 @@
 === Plugin Name ===
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://www.imagemattersllc.com
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 4.3
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Contributors: imagemattersllc
+Author URI: http://www.imagemattersllc.com
+Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-resource-registration
+Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
+Requires at least: 4.6.4
+Tested up to: 5.0.1
+Stable tag: 1.0.0
+Requires PHP: 7.2.0
+License: Apache 2.0
+License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
 == Description ==
 

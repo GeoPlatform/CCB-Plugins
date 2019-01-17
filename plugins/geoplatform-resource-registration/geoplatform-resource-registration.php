@@ -64,6 +64,35 @@ register_deactivation_hook( __FILE__, 'deactivate_geoplatform_resource_registrat
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-resource-registration.php';
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
  * Begins execution of the plugin.
  *
