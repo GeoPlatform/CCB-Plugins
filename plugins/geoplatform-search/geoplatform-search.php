@@ -176,6 +176,12 @@ function geopsearch_process_refresh() {
 }
 add_action('wp_ajax_geopsearch_refresh', 'geopsearch_process_refresh');
 
+function geopsearch_perform_site_search() {
+	include 'public/partials/geoplatform-search-site_search.php';
+	wp_die();
+}
+add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
+
 /**
  * Begins execution of the plugin.
  *

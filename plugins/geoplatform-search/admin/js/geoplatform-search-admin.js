@@ -34,9 +34,26 @@
 	// then the full-page template with added hook text. If neither found, creates a
 	// basic page with the hook text.
 	jQuery('document').ready(function(){
+		// jQuery('#geopsearch_reset').click(function(){
+    //   var data = {
+		// 		action: "geopsearch_refresh",
+	  //   };
+		// 	jQuery.post(ajaxurl, data, function(response){
+		// 		if (response)
+		// 			alert(response);
+		// 		location.reload();
+		// 	});
+		// 	return false;
+    // });
+
 		jQuery('#geopsearch_reset').click(function(){
       var data = {
-				action: "geopsearch_refresh",
+				action: "geopsearch_site_search",
+				key_one: 'temp_val_#1',
+				key_two: 'temp_val_#2',
+				key_three: 'temp_val_#3',
+				key_four: 'temp_val_#4',
+				key_five: 'temp_val_#5',
 	    };
 			jQuery.post(ajaxurl, data, function(response){
 				if (response)
@@ -45,5 +62,6 @@
 			});
 			return false;
     });
+
 	});
 })( jQuery );
