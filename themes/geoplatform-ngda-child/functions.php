@@ -389,6 +389,7 @@ add_action( 'init', 'geop_ccb_register_footer_menus' );
 // Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};
 function geop_ccb_bootstrap_register(){};
+function geop_ccb_linkmenu_register(){};
 
 // Killing header menu creation due to lack of menu button.
 function geop_ccb_register_header_menus(){};

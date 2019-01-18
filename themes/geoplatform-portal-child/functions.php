@@ -498,6 +498,7 @@ function geop_ccb_feature_card_register($wp_customize){};
 
 // Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};
+function geop_ccb_linkmenu_register(){};
 
 // Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
