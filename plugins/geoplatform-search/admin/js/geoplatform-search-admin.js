@@ -54,6 +54,14 @@
 				key_three: 'temp_val_#3',
 				key_four: 'temp_val_#4',
 				key_five: 'temp_val_#5',
+
+	      type: 'page',  /* 'page'|'post'|'media' */
+	      search: 'testing',
+	      author: 'Lara Duffy',  /* must be resolved to a user id */
+	      page: 1,
+	      per_page: 40,
+	      order: 'asc',
+	      orderby: 'modified'
 	    };
 			jQuery.post(ajaxurl, data, function(response){
 				if (response)

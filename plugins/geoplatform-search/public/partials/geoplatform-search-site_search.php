@@ -46,5 +46,5 @@ array_push( $geopsearch_return, $geopsearch_four);
 array_push( $geopsearch_return, $geopsearch_five);
 
 
-var_dump($geopsearch_return);
+var_dump($geopsearch_post_fetch);
 ?>

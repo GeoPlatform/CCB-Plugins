@@ -1,7 +1,7 @@
 <?php
 
 get_header('ngda');
-get_template_part( 'mega-menu', get_post_format() );
+// get_template_part( 'mega-menu', get_post_format() );
 get_template_part( 'single-banner', get_post_format() );
 
 ?>
