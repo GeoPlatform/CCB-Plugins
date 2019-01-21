@@ -59,7 +59,7 @@
 	    };
 			jQuery.post(ajaxurl, data, function(response){
 				if (response)
-					alert(response);
+					alert(JSON.stringify(response));
 				location.reload();
 			});
 			return false;
