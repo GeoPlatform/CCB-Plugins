@@ -1,50 +1,92 @@
 <?php
 
-// Post fetch
-$geopsearch_post_fetch = get_posts(array(
-  'post_type' => array('post', 'page'),
-  'orderby' => 'date',
-  'order' => 'DSC',
-  'numberposts' => -1,
-) );
-
 // JQuery input parse
-$geopsearch_one = sanitize_key($_POST["key_one"]);
-$geopsearch_two = sanitize_key($_POST["key_two"]);
-$geopsearch_three = sanitize_key($_POST["key_three"]);
-$geopsearch_four = sanitize_key($_POST["key_four"]);
-$geopsearch_five = sanitize_key($_POST["key_five"]);
+$geopsearch_content_type = sanitize_key($_POST["type"]);
+$geopsearch_content_search = sanitize_key($_POST["search"]);
+$geopsearch_content_author = sanitize_key($_POST["author"]);
+$geopsearch_content_page = sanitize_key($_POST["page"]);
+$geopsearch_content_perpage = sanitize_key($_POST["per_page"]);
+$geopsearch_content_order = sanitize_key($_POST["order"]);
+$geopsearch_content_orderby = sanitize_key($_POST["orderby"]);
 
+if ($geopsearch_content_type == 'post'){
+  $geopsearch_post_args_two = array(
+    'post_type' => 'post',
+    'numberposts' => -1,
+    'author_name' => $geopsearch_content_author,
+    'order' => $geopsearch_content_order,
+    'orderby' => $geopsearch_content_orderby,
+    'tax_query' => array(
+      'relation' => 'OR',
+      array(
+        'taxonomy' => 'category',
+        'field' => 'slug',
+        'terms' => array($geopsearch_content_search),
+      ),
+      array(
+        'taxonomy' => 'post_tag',
+        'field' => 'slug',
+        'terms' => array($geopsearch_content_search),
+      ),
+    )
+  );
 
-// media grabs
-$query_images_args = array(
-    'post_type'      => 'attachment',
-    'post_mime_type' => 'image',
-    'post_status'    => 'inherit',
-    'posts_per_page' => - 1,
-);
+  $geopsearch_post_args_one = array(
+    'post_type' => 'post',
+    'numberposts' => -1,
+    'author_name' => $geopsearch_content_author,
+    's' => $geopsearch_content_search,
+    'order' => $geopsearch_content_order,
+    'orderby' => $geopsearch_content_orderby,
+  );
 
-$query_images = new WP_Query( $query_images_args );
-$images = array();
-foreach ( $query_images->posts as $image ) {
-    $images[] = wp_get_attachment_url( $image->ID );
+  $geopsearch_post_fetch_one = new WP_Query($geopsearch_post_args_one);
+  $geopsearch_post_fetch_two = new WP_Query($geopsearch_post_args_two);
+  $geopsearch_post_fetch_final = new WP_Query();
+
+  $geopsearch_post_fetch_final->posts = array_unique( array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
+  $geopsearch_post_fetch_final->post_count = count($geopsearch_post_fetch_final->posts);
+  var_dump($geopsearch_post_fetch_final->posts);
 }
 
-// $results = "";
-// if ( count($geopsearch_term_fetch) > 0 ){
-//     foreach ( $geopsearch_term_fetch as $term ) {
-//         $results .= esc_html( $term->name ) . " ===== ";
-//     }
-// }
-// echo($results);
 
-$geopsearch_return = array();
-array_push( $geopsearch_return, $geopsearch_one);
-array_push( $geopsearch_return, $geopsearch_two);
-array_push( $geopsearch_return, $geopsearch_three);
-array_push( $geopsearch_return, $geopsearch_four);
-array_push( $geopsearch_return, $geopsearch_five);
+if ($geopsearch_content_type == 'page'){
+  $geopsearch_page_args_two = array(
+    'post_type' => 'page',
+    'numberposts' => -1,
+    'author_name' => $geopsearch_content_author,
+    'order' => $geopsearch_content_order,
+    'orderby' => $geopsearch_content_orderby,
+    'tax_query' => array(
+      'relation' => 'OR',
+      array(
+        'taxonomy' => 'category',
+        'field' => 'slug',
+        'terms' => array($geopsearch_content_search),
+      ),
+      array(
+        'taxonomy' => 'post_tag',
+        'field' => 'slug',
+        'terms' => array($geopsearch_content_search),
+      ),
+    )
+  );
 
+  $geopsearch_page_args_one = array(
+    'post_type' => 'page',
+    'numberposts' => -1,
+    'author_name' => $geopsearch_content_author,
+    's' => $geopsearch_content_search,
+    'order' => $geopsearch_content_order,
+    'orderby' => $geopsearch_content_orderby,
+  );
 
-var_dump($geopsearch_post_fetch);
+  $geopsearch_page_fetch_one = new WP_Query($geopsearch_page_args_one);
+  $geopsearch_page_fetch_two = new WP_Query($geopsearch_page_args_two);
+  $geopsearch_page_fetch_final = new WP_Query();
+
+  $geopsearch_page_fetch_final->posts = array_unique( array_merge( $geopsearch_page_fetch_one->posts, $geopsearch_page_fetch_two->posts ), SORT_REGULAR );
+  $geopsearch_page_fetch_final->post_count = count($geopsearch_page_fetch_final->posts);
+  var_dump($geopsearch_page_fetch_final->posts);
+}
 ?>

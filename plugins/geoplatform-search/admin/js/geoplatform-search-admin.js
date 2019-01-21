@@ -49,15 +49,9 @@
 		jQuery('#geopsearch_reset').click(function(){
       var data = {
 				action: "geopsearch_site_search",
-				key_one: 'temp_val_#1',
-				key_two: 'temp_val_#2',
-				key_three: 'temp_val_#3',
-				key_four: 'temp_val_#4',
-				key_five: 'temp_val_#5',
-
-	      type: 'page',  /* 'page'|'post'|'media' */
-	      search: 'testing',
-	      author: 'Lara Duffy',  /* must be resolved to a user id */
+	      type: '',  /* 'page'|'post'|'media' */
+	      search: '',
+	      author: '',  /* must be resolved to a user id */
 	      page: 1,
 	      per_page: 40,
 	      order: 'asc',
