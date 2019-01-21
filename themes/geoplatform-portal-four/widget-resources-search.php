@@ -61,7 +61,7 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 														aria-label="Search GeoPlatform <?php _e(sanitize_text_field(ucfirst($geopportal_resource_search_title)), 'geoplatform-ccb') ?>"
 														placeholder="Search GeoPlatform <?php _e(sanitize_text_field(ucfirst($geopportal_resource_search_title)), 'geoplatform-ccb') ?>">
 										</form>
-										<button type="button" class="btn btn-primary" id="geopportal_resource_search_button">SEARCH</button>
+										<button type="button" class="btn btn-secondary" id="geopportal_resource_search_button">SEARCH</button>
 								</div>&nbsp;&nbsp;
 						</div>
 				</article>
