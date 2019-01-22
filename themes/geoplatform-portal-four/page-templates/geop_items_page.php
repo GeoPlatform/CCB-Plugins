@@ -19,25 +19,29 @@ get_template_part( 'sub-header-post', get_post_format() );
 <div class="l-body l-body--one-column">
   <div class="l-body__main-column">
     <p>
-      Throw anything into the address bar after "/resources/" and it will redirect here.
+      The regex that redirects to this page will only trigger if the url is "resources/{id}".
+      <br>
+      It ASSUMES that any id input is 32 characters
+      long and in hexidecimal format.
+      <br>
+      Any other inputs will either 404 or lead to a legitimate child page of resources if it exists.
     </p>
+    <p>
       URL to a dataset with the assumed id being passed: <a href="<?php echo 'https://ual.geoplatform.gov/api/datasets/' . get_query_var('q') ?>">CLICK HERE</a>
-    <br>
+      <br>
+      The url above assumes that the ID provided is to a dataset and does not check this fact.
+    </p>
     <?php
-    echo the_permalink();
-    echo "<br>";
-    echo "id passed: " . get_query_var('q');
-    echo "<br><br>";
+    echo "id passed: " . get_query_var('q') . "<br>";
+
+    $current_url = home_url( add_query_arg( array(), $wp->request ) );
+    echo $current_url . "<br><br>";
+
+    echo "messy var_dump of all rewrite rules.<br>";
     var_dump($wp_rewrite->rules);
-    echo "<br><br><br>";
 
-    // echo 'Food : ' . $wp_query->query_vars['food'];
-    // echo '<br />';
-    // echo 'Variety : ' . $wp_query->query_vars['variety'];
-    echo "<br><br><br>";
 
-    // $current_url = home_url( add_query_arg( array(), $wp->request ) );
-    echo $current_url;
+
     ?>
   </div>
 </div>
