@@ -64,6 +64,93 @@ register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_detials' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-detials.php';
 
+
+
+
+
+add_action('generate_rewrite_rules', 'geotags_add_rewrite_rules');
+
+function geotags_add_rewrite_rules( $wp_rewrite )
+{
+  $new_rules = array( 'resources/([^\/]+)/?' => 'index.php?pagename=geoplatform-items&q=' . $wp_rewrite->preg_index(1) );
+
+  // Add the new rewrite rule into the top of the global rules array
+  $wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
+}
+
+
+
+
+
+
+
+// add_action('generate_rewrite_rules', 'geotags_add_rewrite_rules');
+//
+// function geotags_add_rewrite_rules( $wp_rewrite )
+// {
+//   $new_rules = array( 'geoplatform-items/(.+)' => 'geoplatform-items/#/?q=' . $wp_rewrite->preg_index(1) );
+//
+//   // Add the new rewrite rule into the top of the global rules array
+//   $wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
+// }
+
+
+function myplugin_rewrite_tag() {
+	add_rewrite_tag( '%q%', '([^/]+)' );
+}
+add_action('init', 'myplugin_rewrite_tag', 10, 0);
+//
+// function myplugin_rewrite_rule() {
+// 	add_rewrite_rule('^geoplatform-items/item_id/([^/]*)/?', 'index.php?pagename=geoplatform-items&item_id=$matches[1]', 'top');
+// }
+// add_action('init', 'myplugin_rewrite_rule', 10, 0);
+
+
+
+// function myplugin_rewrite_tag() {
+// 	add_rewrite_tag( '%item_id%', '([^&]+)' );
+// }
+// add_action('init', 'myplugin_rewrite_tag', 10, 0);
+//
+// function myplugin_rewrite_rule() {
+// 	add_rewrite_rule('^geoplatform-search/item_id/([^/]*)/?', 'index.php?pagename=geoplatform-search&item_id=$matches[1]', 'top');
+// }
+// add_action('init', 'myplugin_rewrite_rule', 10, 0);
+
+
+
+
+// function myplugin_rewrite_tag() {
+// 	add_rewrite_tag( '%book-author%', '([^&]+)' );
+// }
+// add_action('init', 'myplugin_rewrite_tag', 10, 0);
+//
+// function myplugin_rewrite_rule() {
+// 	add_rewrite_rule( '^book/book-author/([^/]*)/?', 'index.php?post_type=book&book-author=$matches[1]','top' );
+// }
+// add_action('init', 'myplugin_rewrite_rule', 10, 0);
+
+
+// function myplugin_register_query_vars( $vars ) {
+// 	$vars[] = 'item_id';
+// 	// $vars[] = 'key2';
+// 	return $vars;
+// }
+// add_filter( 'query_vars', 'myplugin_register_query_vars' );
+
+
+
+// localhost/my-test-site/?pagename=geoplatform-items&key1=water
+
+
+
+
+
+
+
+
+
+
 /**
  * Begins execution of the plugin.
  *

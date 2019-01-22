@@ -196,6 +196,36 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'default' => 'geoplatform-search'
 	));
 
+	$wp_customize->add_setting('headlink_register',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_register',array(
+		'type' => 'text',
+		'label' => 'Register (GeoPlatform Resource Registration Page)',
+		'section' => 'headlink_format',
+		'priority' => 46,
+		'default' => 'geoplatform-register'
+	));
+
+	$wp_customize->add_setting('headlink_items',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_items',array(
+		'type' => 'text',
+		'label' => 'Items (GeoPlatform Item Details Page)',
+		'section' => 'headlink_format',
+		'priority' => 47,
+		'default' => 'geoplatform-items'
+	));
+
+
+
+
+
 	$wp_customize->add_setting('headlink_help',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'

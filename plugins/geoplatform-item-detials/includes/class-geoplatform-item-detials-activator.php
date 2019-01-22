@@ -30,7 +30,29 @@ class Geoplatform_Item_Detials_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+	// 	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'geoplatform-items' ))), true);
+	// 	$geopitems_interface_post = array(
+	// 		'post_title' => 'GeoPlatform Items',
+	// 		'post_name' => 'geoplatform-items',
+	// 		'post_status' => 'publish',
+	// 		'post_type' => 'page',
+	// 	);
+	// 	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/geop_items_page.php'))
+	// 		$geopitems_interface_post = array_merge($geopitems_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/geop_items_page.php'));
+	// 	else if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/page_full-width.php'))
+	// 		$geopitems_interface_post = array_merge($geopitems_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/page_full-width.php'));
+	// 	else
+	// 		$geopitems_interface_post = array_merge($geopitems_interface_post, array('post_content' => '<app-root></app-root>'));
+	//
+	// 	wp_insert_post($geopitems_interface_post);
+	//
 
+
+
+    // wpdocs_custom_post_types_registration();
+		flush_rewrite_rules();
+
+
+		// add_rewrite_rule('^geoplatform-items/([^/]*)/?', 'http://localhost/my-test-site/geoplatform-search/#/?q=$matches[1]', 'top');
 	}
-
 }
