@@ -105,7 +105,7 @@ class Geoplatform_Resource_Registration_Admin {
 	 * @since    1.0.0
 	 */
 
-	public function geopsearch_add_plugin_admin_menu() {
+	public function geopresreg_add_plugin_admin_menu() {
     /*
      * Add a settings page for this plugin to the Settings menu.
 		 *
