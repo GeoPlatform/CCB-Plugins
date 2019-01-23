@@ -6,8 +6,8 @@
  * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geoplatform_Item_details
- * @subpackage Geoplatform_Item_details/admin
+ * @package    Geoplatform_Item_Details
+ * @subpackage Geoplatform_Item_Details/admin
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Geoplatform_Item_details
- * @subpackage Geoplatform_Item_details/admin
+ * @package    Geoplatform_Item_Details
+ * @subpackage Geoplatform_Item_Details/admin
  * @author     Image Matters LLC <servicedesk@geoplatform.gov>
  */
-class Geoplatform_Item_details_Admin {
+class Geoplatform_Item_Details_Admin {
 
 	/**
 	 * The ID of this plugin.
@@ -65,10 +65,10 @@ class Geoplatform_Item_details_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Geoplatform_Item_details_Loader as all of the hooks are defined
+		 * defined in Geoplatform_Item_Details_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Geoplatform_Item_details_Loader will then create the relationship
+		 * The Geoplatform_Item_Details_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -88,10 +88,10 @@ class Geoplatform_Item_details_Admin {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Geoplatform_Item_details_Loader as all of the hooks are defined
+		 * defined in Geoplatform_Item_Details_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Geoplatform_Item_details_Loader will then create the relationship
+		 * The Geoplatform_Item_Details_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -100,4 +100,61 @@ class Geoplatform_Item_details_Admin {
 
 	}
 
+
+	/**
+	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
+	 *
+	 * @since    1.0.0
+	*/
+
+	public function geopitems_add_plugin_admin_menu() {
+	  /*
+	   * Add a settings page for this plugin to the Settings menu.
+		 *
+		 * NOTE:  Alternative menu locations are available via WordPress administration menu functions.
+		 *
+		 *        Administration Menus: http://codex.wordpress.org/Administration_Menus
+		 *
+		 */
+		add_options_page( 'GeoPlatform Item Plugin Settings Page', 'GeoPlatform Item Details', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+	}
+
+	/**
+	* Add settings action link to the plugins page.
+	*
+	* @since    1.0.0
+	*/
+
+	public function add_action_links( $links ) {
+	/*
+	 *  Documentation : https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)
+	 */
+	  $settings_link = array(
+	    '<a href="' . admin_url( 'options-general.php?page=' . $this->plugin_name ) . '">' . __('Settings', $this->plugin_name) . '</a>',
+	  );
+	  return array_merge(  $settings_link, $links );
+	}
+
+	/**
+	 * Render the settings page for this plugin.
+	 *
+	 * @since    1.0.0
+	 */
+
+	public function display_plugin_setup_page() {
+	    include_once( 'partials/geoplatform-item-details-admin-display.php' );
+	}
+
+
+	public function options_update() {
+		//register_setting(option group, option name, callback function)
+	  register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
+	}
+
+	public function validate($input) {
+		// All checkboxes inputs
+		$valid = array();
+		$valid['ual_map_id'] = sanitize_text_field($input['ual_map_id']);
+		 return $valid;
+	}
 }

@@ -9,8 +9,8 @@
  * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geoplatform_Item_details
- * @subpackage Geoplatform_Item_details/includes
+ * @package    Geoplatform_Item_Details
+ * @subpackage Geoplatform_Item_Details/includes
  */
 
 /**
@@ -23,11 +23,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Geoplatform_Item_details
- * @subpackage Geoplatform_Item_details/includes
+ * @package    Geoplatform_Item_Details
+ * @subpackage Geoplatform_Item_Details/includes
  * @author     Image Matters LLC <servicedesk@geoplatform.gov>
  */
-class Geoplatform_Item_details {
+class Geoplatform_Item_Details {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +35,7 @@ class Geoplatform_Item_details {
 	 *
 	 * @since    1.0.0
 	 * @access   protected
-	 * @var      Geoplatform_Item_details_Loader    $loader    Maintains and registers all hooks for the plugin.
+	 * @var      Geoplatform_Item_Details_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
 	protected $loader;
 
@@ -86,10 +86,10 @@ class Geoplatform_Item_details {
 	 *
 	 * Include the following files that make up the plugin:
 	 *
-	 * - Geoplatform_Item_details_Loader. Orchestrates the hooks of the plugin.
-	 * - Geoplatform_Item_details_i18n. Defines internationalization functionality.
-	 * - Geoplatform_Item_details_Admin. Defines all hooks for the admin area.
-	 * - Geoplatform_Item_details_Public. Defines all hooks for the public side of the site.
+	 * - Geoplatform_Item_Details_Loader. Orchestrates the hooks of the plugin.
+	 * - Geoplatform_Item_Details_i18n. Defines internationalization functionality.
+	 * - Geoplatform_Item_Details_Admin. Defines all hooks for the admin area.
+	 * - Geoplatform_Item_Details_Public. Defines all hooks for the public side of the site.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -122,14 +122,14 @@ class Geoplatform_Item_details {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-geoplatform-item-details-public.php';
 
-		$this->loader = new Geoplatform_Item_details_Loader();
+		$this->loader = new Geoplatform_Item_Details_Loader();
 
 	}
 
 	/**
 	 * Define the locale for this plugin for internationalization.
 	 *
-	 * Uses the Geoplatform_Item_details_i18n class in order to set the domain and to register the hook
+	 * Uses the Geoplatform_Item_Details_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
@@ -137,7 +137,7 @@ class Geoplatform_Item_details {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Geoplatform_Item_details_i18n();
+		$plugin_i18n = new Geoplatform_Item_Details_i18n();
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -152,11 +152,22 @@ class Geoplatform_Item_details {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Geoplatform_Item_details_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Geoplatform_Item_Details_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		//Documentation: https://scotch.io/tutorials/how-to-build-a-wordpress-plugin-part-1#initialize-and-add-a-setting-page
+
+		// Add menu item
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'geopitems_add_plugin_admin_menu' );
+
+		// Add Settings link to the plugin
+		$plugin_basename = plugin_basename( plugin_dir_path( __DIR__ ) . $this->plugin_name . '.php' );
+		$this->loader->add_filter( 'plugin_action_links_' . $plugin_basename, $plugin_admin, 'add_action_links' );
+
+		// Save/Update our plugin options
+		$this->loader->add_action('admin_init', $plugin_admin, 'options_update');
 	}
 
 	/**
@@ -168,7 +179,7 @@ class Geoplatform_Item_details {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Geoplatform_Item_details_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Geoplatform_Item_Details_Public( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -199,7 +210,7 @@ class Geoplatform_Item_details {
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
-	 * @return    Geoplatform_Item_details_Loader    Orchestrates the hooks of the plugin.
+	 * @return    Geoplatform_Item_Details_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
 		return $this->loader;

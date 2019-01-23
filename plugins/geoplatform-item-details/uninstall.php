@@ -22,10 +22,10 @@
  * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geoplatform_Item_details
+ * @package    Geoplatform_Item_Details
  */
 
-flush_rewrite_rules(false);
+flush_rewrite_rules();
 
 // If uninstall not called from WordPress, then exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {

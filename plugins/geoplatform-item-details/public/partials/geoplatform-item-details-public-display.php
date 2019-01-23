@@ -8,8 +8,8 @@
  * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geoplatform_Item_details
- * @subpackage Geoplatform_Item_details/public/partials
+ * @package    Geoplatform_Item_Details
+ * @subpackage Geoplatform_Item_Details/public/partials
  */
 ?>
 

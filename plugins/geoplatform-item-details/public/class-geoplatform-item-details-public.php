@@ -6,8 +6,8 @@
  * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geoplatform_Item_details
- * @subpackage Geoplatform_Item_details/public
+ * @package    Geoplatform_Item_Details
+ * @subpackage Geoplatform_Item_Details/public
  */
 
 /**
@@ -16,11 +16,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Geoplatform_Item_details
- * @subpackage Geoplatform_Item_details/public
+ * @package    Geoplatform_Item_Details
+ * @subpackage Geoplatform_Item_Details/public
  * @author     Image Matters LLC <servicedesk@geoplatform.gov>
  */
-class Geoplatform_Item_details_Public {
+class Geoplatform_Item_Details_Public {
 
 	/**
 	 * The ID of this plugin.
@@ -65,10 +65,10 @@ class Geoplatform_Item_details_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Geoplatform_Item_details_Loader as all of the hooks are defined
+		 * defined in Geoplatform_Item_Details_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Geoplatform_Item_details_Loader will then create the relationship
+		 * The Geoplatform_Item_Details_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
@@ -88,10 +88,10 @@ class Geoplatform_Item_details_Public {
 		 * This function is provided for demonstration purposes only.
 		 *
 		 * An instance of this class should be passed to the run() function
-		 * defined in Geoplatform_Item_details_Loader as all of the hooks are defined
+		 * defined in Geoplatform_Item_Details_Loader as all of the hooks are defined
 		 * in that particular class.
 		 *
-		 * The Geoplatform_Item_details_Loader will then create the relationship
+		 * The Geoplatform_Item_Details_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
