@@ -45,5 +45,17 @@
  			});
  			return false;
     });
+
+		jQuery('#geopitems_flush').click(function(){
+      var data = {
+ 				action: "geopitems_flush",
+ 	    };
+ 			jQuery.post(ajaxurl, data, function(response){
+ 				if (response)
+ 					alert(response);
+ 				location.reload();
+ 			});
+ 			return false;
+    });
  	});
 })( jQuery );

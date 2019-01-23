@@ -106,7 +106,8 @@ register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_details' );
 // Rule rewrites to control the URL of the items page.
 function geotags_add_rewrite_rules( $wp_rewrite )
 {
-  $new_rules = array( 'resources/([a-f\d]{32})/?' => 'index.php?pagename=geoplatform-items&q=' . $wp_rewrite->preg_index(1) );
+  // $new_rules = array( 'resources/([a-f\d]{32})/?' => 'index.php?pagename=' . get_theme_mod('headlink_items') . '&q=' . $wp_rewrite->preg_index(1) );
+	$new_rules = array( 'resources/([a-f\d]{32})/?' => 'index.php?pagename=geoplatform-items&q=' . $wp_rewrite->preg_index(1) );
 
   // Add the new rewrite rule into the top of the global rules array
   $wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
@@ -153,6 +154,13 @@ function geopitems_process_refresh() {
 	wp_die();
 }
 add_action('wp_ajax_geopitems_refresh', 'geopitems_process_refresh');
+
+function geopitems_process_flush() {
+	flush_rewrite_rules();
+	wp_die();
+}
+add_action('wp_ajax_geopitems_flush', 'geopitems_process_flush');
+
 
 /**
  * Begins execution of the plugin.
