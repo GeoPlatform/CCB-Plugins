@@ -64,6 +64,43 @@ register_deactivation_hook( __FILE__, 'deactivate_geoplatform_wp_gpoauth' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-wp-gpoauth.php';
 
+
+
+
+
+
+
+
+
+
+function getUserAccessToken($userID){
+
+	$accessToken = NULL;
+	// if (!empty(get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token']))
+	// 	$accessToken = get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
+
+	if (!empty(get_user_meta($userID, 'wp_capabilities', true)['administrator']))
+		$accessToken = get_user_meta($userID, 'wp_capabilities', true)['administrator'];
+
+	$accessToken = get_user_meta($userID, 'wp_capabilities', true);
+
+	return $accessToken;
+}
+
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'wp-gpoauth/v1', '/get_token', array(
+        'methods'  => 'GET',
+        'callback' => function () {
+            return getUserAccessToken($userID);
+        },
+    ) );
+} );
+
+
+
+
+
+
 /**
  * Begins execution of the plugin.
  *

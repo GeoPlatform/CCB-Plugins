@@ -3,7 +3,7 @@
  * This is a list of the API endpoints that need to be exposed by WordPress
  * in order for ng-gpoauth to opporate.
  */
-class WPGpoauth {
+// class WPGpoauth {
 
     /**
      * TODO: Set authtoken in URL
@@ -16,16 +16,19 @@ class WPGpoauth {
 
 
     /**
-     * Given session information. Fetch the access token stored for the user
+     * Given session information. Fetch the access token stored for the user.
+     * The cookie variable is optional; it's not likely to see use, but may.
      */
-    public function getUserAccessToken($cookie){
+    function getUserAccessToken($cookie = NULL){
 
-        // TODO: do magic trick ( cookie -> access token! )
+        $accessToken = NULL;
+        if (!empty(get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token']))
+          $accessToken = get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
 
-        // Hint: I would start here:
-        // https://github.com/daggerhart/openid-connect-generic/blob/dev/includes/openid-connect-generic-client-wrapper.php#L417-L440
+        if (!empty(get_user_meta(get_current_user_id(), 'wp_capabilities', true)['administrator']))
+          $accessToken = get_user_meta(get_current_user_id(), 'wp_capabilities', true)['administrator'];
 
-        return $accessToken = null;
+        return $accessToken;
     }
 
 
@@ -56,4 +59,4 @@ class WPGpoauth {
     function __construct(){
         setupChecktokenEndpoint();
     }
-}
+// }

@@ -126,7 +126,7 @@ class Geoplatform_Wp_Gpoauth {
 		 * The class responsible for defining all actions that occur in processing
 		 * oauth operations.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geoplatform-wp-gpoauth-api.php';
+		// require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-geoplatform-wp-gpoauth-api.php';
 
 		$this->loader = new Geoplatform_Wp_Gpoauth_Loader();
 
