@@ -29,8 +29,8 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
-	// The only operation this page actually does is delete and recreate the search page.
- 	// Checks first for the specifically-designed GeoPlatform search page template,
+	// The only operation this page actually does is delete and recreate the item page.
+ 	// Checks first for the specifically-designed GeoPlatform Items page template,
  	// then the full-page template with added hook text. If neither found, creates a
  	// basic page with the hook text.
  	jQuery('document').ready(function(){

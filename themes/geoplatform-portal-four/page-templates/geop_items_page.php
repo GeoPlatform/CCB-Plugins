@@ -8,12 +8,11 @@
  *
  * @since 2.0.0
  */
-
+get_header();
+// get_template_part( 'sub-header-post', get_post_format() );
 
 global $wp_query;
 global $wp;
-get_header();
-get_template_part( 'sub-header-post', get_post_format() );
 ?>
 
 <div class="l-body l-body--one-column">
@@ -37,12 +36,10 @@ get_template_part( 'sub-header-post', get_post_format() );
     $current_url = home_url( add_query_arg( array(), $wp->request ) );
     echo $current_url . "<br><br>";
 
-    echo "messy var_dump of all rewrite rules.<br>";
-    var_dump($wp_rewrite->rules);
-
-
-
+    // echo "messy var_dump of all rewrite rules.<br>";
+    // var_dump($wp_rewrite->rules);
     ?>
+    <app-root></app-root>
   </div>
 </div>
 <?php get_footer(); ?>

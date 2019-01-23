@@ -77,8 +77,8 @@ function deactivate_geoplatform_item_details() {
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details.php';
 
-// Sets the parameters of and then creates the search page. It deletes any old
-// version of that page before each generation.
+// Sets the parameters of and then creates the item details page. It deletes any
+// old version of that page before each generation.
 function geopitems_add_interface_page() {
 	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'geoplatform-items' ))), true);
 	$geopitems_interface_post = array(
@@ -128,7 +128,7 @@ add_action('init', 'myplugin_rewrite_tag', 10, 0);
 
 // Additional dependency enqueues.
 function geopitems_page_enqueues(){
-	if (is_page('geoplatform-search')){
+	if (is_page('geoplatform-items')){
 		wp_enqueue_script( 'inline_bundle', plugin_dir_url( __FILE__ ) . 'public/js/inline.bundle.js', array(), false, true );
 		wp_enqueue_script( 'polyfills_bundle', plugin_dir_url( __FILE__ ) . 'public/js/polyfills.bundle.js', array(), false, true );
 		wp_enqueue_script( 'scripts_bundle', plugin_dir_url( __FILE__ ) . 'public/js/scripts.bundle.js', array(), false, true );
