@@ -6,8 +6,8 @@
  * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geoplatform_Item_Detials
- * @subpackage Geoplatform_Item_Detials/includes
+ * @package    Geoplatform_Item_details
+ * @subpackage Geoplatform_Item_details/includes
  */
 
 /**
@@ -17,11 +17,11 @@
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    Geoplatform_Item_Detials
- * @subpackage Geoplatform_Item_Detials/includes
+ * @package    Geoplatform_Item_details
+ * @subpackage Geoplatform_Item_details/includes
  * @author     Image Matters LLC <servicedesk@geoplatform.gov>
  */
-class Geoplatform_Item_Detials_Loader {
+class Geoplatform_Item_details_Loader {
 
 	/**
 	 * The array of actions registered with WordPress.

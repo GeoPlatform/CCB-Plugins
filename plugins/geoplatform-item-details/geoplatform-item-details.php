@@ -10,7 +10,7 @@
  *
  * @link              https://www.imagemattersllc.com
  * @since             1.0.0
- * @package           Geoplatform_Item_Detials
+ * @package           Geoplatform_Item_details
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Item Details
@@ -21,7 +21,7 @@
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       geoplatform-item-detials
+ * Text Domain:       geoplatform-item-details
  * Domain Path:       /languages
  */
 
@@ -39,30 +39,30 @@ define( 'PLUGIN_NAME_VERSION', '1.0.0' );
 
 /**
  * The code that runs during plugin activation.
- * This action is documented in includes/class-geoplatform-item-detials-activator.php
+ * This action is documented in includes/class-geoplatform-item-details-activator.php
  */
-function activate_geoplatform_item_detials() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-detials-activator.php';
-	Geoplatform_Item_Detials_Activator::activate();
+function activate_geoplatform_item_details() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details-activator.php';
+	Geoplatform_Item_details_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
- * This action is documented in includes/class-geoplatform-item-detials-deactivator.php
+ * This action is documented in includes/class-geoplatform-item-details-deactivator.php
  */
-function deactivate_geoplatform_item_detials() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-detials-deactivator.php';
-	Geoplatform_Item_Detials_Deactivator::deactivate();
+function deactivate_geoplatform_item_details() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details-deactivator.php';
+	Geoplatform_Item_details_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_geoplatform_item_detials' );
-register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_detials' );
+register_activation_hook( __FILE__, 'activate_geoplatform_item_details' );
+register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_details' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-detials.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details.php';
 
 
 
@@ -160,10 +160,10 @@ add_action('init', 'myplugin_rewrite_tag', 10, 0);
  *
  * @since    1.0.0
  */
-function run_geoplatform_item_detials() {
+function run_geoplatform_item_details() {
 
-	$plugin = new Geoplatform_Item_Detials();
+	$plugin = new Geoplatform_Item_details();
 	$plugin->run();
 
 }
-run_geoplatform_item_detials();
+run_geoplatform_item_details();

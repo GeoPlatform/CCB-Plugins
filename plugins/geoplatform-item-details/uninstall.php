@@ -22,7 +22,7 @@
  * @link       https://www.imagemattersllc.com
  * @since      1.0.0
  *
- * @package    Geoplatform_Item_Detials
+ * @package    Geoplatform_Item_details
  */
 
 flush_rewrite_rules(false);
