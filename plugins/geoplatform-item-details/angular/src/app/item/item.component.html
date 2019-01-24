@@ -5,7 +5,7 @@
     <li class="is-active"><a>{{item?.label}}</a></li>
 </ul>
 
-<div class="m-page-overview" (window:resize)="onResize($event)">
+<div class="m-page-overview" (window:resize)="onResize()">
     <div class="a-description__container"
         [ngClass]="{'is-collapsed':descriptionCollapsed}">
         <div class="a-description__display">

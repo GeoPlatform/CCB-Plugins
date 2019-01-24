@@ -20,7 +20,7 @@ const URL_REGEX = /resources\/([a-z0-9]+)/i;
 export class AppComponent {
 
     private itemService : ItemService;
-    private item : any;
+    public item : any;
     private template: any;
 
     constructor(http : HttpClient) {
