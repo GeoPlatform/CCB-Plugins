@@ -1,0 +1,14 @@
+<div *ngIf="item" class="dropdown">
+    <button class="btn btn-secondary btn-block dropdown-toggle"
+        type="button" id="dropdownMenuButton"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Export as
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <button type="button" class="dropdown-item"
+            *ngFor="let format of getFormats()"
+            (click)="doAction(format.value)">
+            {{format.label}}
+        </button>
+    </div>
+</div>

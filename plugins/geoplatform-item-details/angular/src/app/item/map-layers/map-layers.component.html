@@ -1,0 +1,47 @@
+<div class="m-article">
+    <div class="m-article__heading">
+        <span class="fas"
+            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+            (click)="toggleCollapsed()">
+        </span>
+        Map Layers
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
+        Expand to see layers refenced by this map
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}" *ngIf="map">
+
+        <strong>Base Layer</strong>
+
+        <div *ngIf="!map.baseLayer">
+            <em>Not specified</em>
+        </div>
+
+        <div *ngIf="map.baseLayer">
+            <a href="/resources/{{map.baseLayer.id}}">
+                {{map.baseLayer.label || "Untitled layer"}}
+            </a>
+        </div>
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}" *ngIf="map">
+
+        <strong>Overlay Layers</strong>
+
+        <div *ngIf="!map?.layers || !map?.layers.length">
+            <em>None specified</em>
+        </div>
+
+        <div *ngIf="map?.layers">
+            <div *ngFor="let layer of map?.layers">
+                <a href="/resources/{{layer.layer.id}}">
+                    {{layer.layer.label || "Untitled layer"}}
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

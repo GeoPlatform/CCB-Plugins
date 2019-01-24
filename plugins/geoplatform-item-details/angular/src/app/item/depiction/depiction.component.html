@@ -1,0 +1,14 @@
+<div class="m-thumbnail" style="position:relative">
+
+    <img src="{{fallback}}" *ngIf="isEmpty()">
+
+    <img src="{{thumbnail.url}}" *ngIf="hasURL()" fallback="{{fallback}}">
+
+    <div *ngIf="hasContentData()" class="is-16x9">
+        <img
+            [style.background-size]="'contain'"
+            [style.background-repeat]="'no-repeat'"
+            [style.background-image]="getBackgroundImage()">
+    </div>
+
+</div>

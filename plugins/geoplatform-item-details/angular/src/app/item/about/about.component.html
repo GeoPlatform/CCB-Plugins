@@ -1,0 +1,67 @@
+<article class="m-article">
+    <div class="m-article__heading">About</div>
+
+    <div *ngIf="item">
+
+        <div class="m-article__desc">
+            <strong>Created </strong>
+            {{item.created|date:'shortDate'}} by {{item.createdBy||"an unknown user"}}
+        </div>
+
+        <div class="m-article__desc">
+            <strong>Last Modified </strong>
+            {{item.modified|date:'shortDate'}} by {{item.lastModifiedBy||"an unknown user"}}
+        </div>
+
+        <div class="m-article__desc" *ngIf="item?.landingPage">
+            <strong>Home Page </strong>
+            <a href="{{item.landingPage}}" target="_blank">link</a>
+        </div>
+
+        <div class="m-article__desc" *ngIf="item?.source">
+            <strong>Source Metadata</strong>
+            <a href="{{item.source.uri}}" target="_blank" class="u-break--all">
+                {{item.source.label || "Untitled resource"}}
+            </a>
+        </div>
+
+        <div class="m-article__desc" *ngIf="isAsset()">
+            <div><strong>Publisher(s) </strong></div>
+            <div *ngIf="!item.publishers||!item.publishers.length">
+                <em>None specified</em>
+            </div>
+            <div *ngFor="let pub of item.publishers">
+                <a href="/resources/organization/{{pub.id}}" class="u-break--all">
+                    {{pub.name}}
+                </a>
+            </div>
+        </div>
+
+        <div class="m-article__desc" *ngIf="isAsset()">
+            <div><strong>Creators(s) </strong></div>
+            <div *ngIf="!item.creators||!item.creators.length">
+                <em>None specified</em>
+            </div>
+            <div *ngFor="let creator of item.creators">
+                <a href="/resources/organization/{{creator.id}}" class="u-break--all">
+                    {{creator.name}}
+                </a>
+            </div>
+        </div>
+
+        <div class="m-article__desc" *ngIf="isAsset()">
+            <div><strong>Contact(s) </strong></div>
+            <div *ngIf="!item.contacts||!item.contacts.length">
+                <em>None specified</em>
+            </div>
+            <div *ngFor="let contact of item.contacts">
+                <a href="/resources/contact/{{contact.id}}">
+                    {{contact.fullName||"Un-named contact"}}
+                    <span *ngIf="contact.orgName" class="u-break--all">
+                        ({{contact.orgName}})
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</article>

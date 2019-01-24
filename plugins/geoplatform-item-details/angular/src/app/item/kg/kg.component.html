@@ -1,0 +1,55 @@
+<div class="m-article">
+    <div class="m-article__heading">
+        <span class="fas"
+            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+            (click)="toggleDisplay()">
+        </span>
+        Knowledge Graph
+    </div>
+    <div class="m-article__desc" *ngIf="isCollapsed">
+        Expand to see knowledge enrichment of this item
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}">
+
+        <ul class="nav nav-pills" id="myTab" role="tablist">
+            <li class="nav-item" *ngFor="let key of getKeys()">
+                <a class="nav-link"
+                    [ngClass]="{active:key===activeTab}"
+                    (click)="changeTab(key)"
+                    id="kg-{{key}}-tab"
+                    role="tab"
+                    [attr.aria-controls]="key"
+                    [attr.aria-selected]="key===activeTab">
+                    {{key}}
+                </a>
+            </li>
+        </ul>
+
+
+        <div class="tab-content" id="myTabContent" style="width:100%">
+
+            <div *ngFor="let key of getKeys()"
+                class="tab-pane"
+                [ngClass]="{active:key===activeTab}"
+                role="tabpanel"
+                [attr.aria-labelledby]="'kg-' + key + '-tab'">
+
+                <div *ngIf="!classifiers || !classifiers[key]">
+                    <em>None specified</em>
+                </div>
+
+                <div *ngIf="classifiers && classifiers[key]">
+                    <div *ngFor="let val of classifiers[key]">
+                        <a title="{{val.uri}}" href="/resources/concepts/{{val.id}}">
+                            <img class="a-icon" src="/assets/icons/concept.svg">
+                            {{val.label||val.prefLabel}}
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+<div class="m-article">
+    <div class="m-article__heading">Community Members</div>
+    <div class="m-article-desc" *ngIf="!members||!members.length">
+        <em>None specified</em>
+    </div>
+    <div class="m-article-desc" *ngIf="members?.length">
+        <div *ngFor="let member of members">
+            <a href="/resources/{{member.id}}">
+                {{member.label||member.name||"Un-named member"}}
+            </a>
+        </div>
+    </div>
+</div>

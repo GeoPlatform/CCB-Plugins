@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+a[target="_blank"]:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    content: "\f35d";
+    font-size: 0.75em;
+    padding-left: 0.5em;
+    vertical-align: top;
+}
