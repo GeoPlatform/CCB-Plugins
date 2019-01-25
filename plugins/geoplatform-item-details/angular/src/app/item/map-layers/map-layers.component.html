@@ -20,9 +20,7 @@
         </div>
 
         <div *ngIf="map.baseLayer">
-            <a href="/resources/{{map.baseLayer.id}}">
-                {{map.baseLayer.label || "Untitled layer"}}
-            </a>
+            <gpid-resource-link [item]="map.baseLayer"></gpid-resource-link>
         </div>
     </div>
 
@@ -36,9 +34,7 @@
 
         <div *ngIf="map?.layers">
             <div *ngFor="let layer of map?.layers">
-                <a href="/resources/{{layer.layer.id}}">
-                    {{layer.layer.label || "Untitled layer"}}
-                </a>
+                <gpid-resource-link [item]="layer"></gpid-resource-link>
             </div>
         </div>
 

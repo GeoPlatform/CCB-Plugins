@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 
 import { GoogleCharts } from 'google-charts';
 
@@ -17,6 +17,8 @@ const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 })
 export class ServiceStatsComponent implements OnInit {
 
+    @Input() item : any;
+
     public isCollapsed : boolean = false;
 
     public activeTab : string = 'stats_weekly';
@@ -26,17 +28,37 @@ export class ServiceStatsComponent implements OnInit {
         stats_yearly : { status: false, label: "Past Year" }
     };
     private charts : any = {
-        stats_weekly : { status: true },
+        stats_weekly : { status: false, fn: () => {this.drawWeeklyChart()} },
         stats_monthly : { status: false, fn: () => {this.drawMonthlyChart()} },
         stats_yearly : { status: false, fn: () => {this.drawYearlyChart()} }
     };
+    private googleIsLoaded : boolean = false;
+    private googleWaitAttempts : number = 0;
+    private svcStatsData : any;
 
 
     constructor() { }
 
     ngOnInit() {
-        //Load the charts library with a callback
-        GoogleCharts.load(() => { this.onChartsReady() });
+        //Load the charts library
+        GoogleCharts.load(() => { this.googleIsLoaded = true; });
+    }
+
+    ngOnChanges( changes : SimpleChanges ) {
+        if(changes.item && changes.item.currentValue) {
+
+            let itemId = changes.item.currentValue.id;
+
+            //TODO fetch RPM stats...
+            // this.serviceSvc.getHistory(itemId)
+            // .then( response => {
+            //     //TODO rebuild charts
+                    this.initCharts(true);
+            // })
+            // .catch(e => {
+            //     //display error message in place of charts
+            // });
+        }
     }
 
     toggleCollapsed () {
@@ -63,11 +85,34 @@ export class ServiceStatsComponent implements OnInit {
         }
     }
 
-    onChartsReady() {
-        this.drawWeeklyChart();
-        // this.drawMonthlyChart();
-        // this.drawYearlyChart();
+    initCharts( rebuild:boolean = false ) {
+        if(!this.googleIsLoaded) {
+            if(this.googleWaitAttempts < 5) {
+                //wait just a bit more for google charts api to finish loading
+                setTimeout( () => { this.initCharts(); }, 1000);
+            } else {
+                //display error message that google api could not load...
+            }
+
+            return;
+        }
+
+        if(rebuild === true) {
+            //change in item data, so let's rebuild the charts
+            this.charts.forEach( ch => { ch.status = false; });
+        }
+
+        //draw whichever chart is currently visible
+        let chart = this.charts[this.activeTab];
+        if(!chart.status) {
+            setTimeout( () => {
+                chart.status = true;
+                chart.fn();
+            }, 100);
+        }
     }
+
+
 
     drawWeeklyChart() {
 

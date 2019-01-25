@@ -4,7 +4,7 @@
             [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
             (click)="toggleCollapsed()">
         </span>
-        Service Layers
+        Service Layers ({{layers?layers.length:0}})
     </div>
 
     <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
@@ -19,9 +19,7 @@
 
         <div *ngIf="layers">
             <div *ngFor="let layer of layers">
-                <a href="/resources/{{layer.id}}">
-                    {{layer.label || "Untitled layer"}}
-                </a>
+                <gpid-resource-link [item]="layer"></gpid-resource-link>
             </div>
         </div>
 

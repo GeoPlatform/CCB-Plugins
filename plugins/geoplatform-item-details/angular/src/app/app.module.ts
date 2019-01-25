@@ -47,6 +47,7 @@ import { CoverageMapComponent } from './item/coverage-map/coverage-map.component
 import { CommunityMembersComponent } from './item/community-members/community-members.component';
 import { PrimaryActionComponent } from './item/actions/primary-action/primary-action.component';
 import { ExportActionComponent } from './item/actions/export-action/export-action.component';
+import { ResourceLinkComponent } from './item/resource-link/resource-link.component';
 
 
 
@@ -89,7 +90,7 @@ export function initializeApp() {
         ImageFallbackDirective,
         LimitToPipe,
         FriendlyTypePipe,
-        FixLabelPipe, KeywordsComponent, ServiceLayersComponent, GalleryItemsComponent, MapLayersComponent, CoverageMapComponent, CommunityMembersComponent, PrimaryActionComponent, ExportActionComponent
+        FixLabelPipe, KeywordsComponent, ServiceLayersComponent, GalleryItemsComponent, MapLayersComponent, CoverageMapComponent, CommunityMembersComponent, PrimaryActionComponent, ExportActionComponent, ResourceLinkComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),

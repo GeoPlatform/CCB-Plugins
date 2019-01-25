@@ -1,0 +1,18 @@
+
+
+.m-message__container {
+    padding: 1em 3em;
+    text-align: center;
+}
+
+.m-message__container *[class^="m-message--"] {
+    margin: 0 auto;
+    text-align: left;
+    border-radius: 4px;
+}
+
+@media(min-width:992px) {
+    .m-message__container {
+        padding: 1em 25%;
+    }
+}

@@ -14,7 +14,10 @@
             <em>None specified</em>
         </div>
         <div *ngIf="keywords && keywords.length" class="u-text--left">
-            <span class="a-badge--light" *ngFor="let key of keywords">{{key}}</span>
+            <a *ngFor="let key of keywords"
+                href="/geoplatform-search/#?keywords={{key}}"
+                class="a-badge--light">{{key}}
+            </a>
         </div>
     </div>
 </div>

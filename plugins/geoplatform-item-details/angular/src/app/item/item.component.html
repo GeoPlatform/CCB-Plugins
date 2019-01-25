@@ -61,25 +61,21 @@
 
                 <div class="m-article__desc" *ngIf="item?.services && item?.services.length">
                     <div><strong>Service</strong></div>
-                    <a href="/resources/{{item.services[0].id}}">{{item.services[0].label}}</a>
+                    <gpid-resource-link [item]="item.services[0]"></gpid-resource-link>
                 </div>
 
 
                 <!-- Concepts -->
                 <div class="m-article__desc" *ngIf="item?.scheme">
                     <div><strong>Concept Scheme</strong></div>
-                    <a href="/resources/{{item.scheme.id}}">
-                        {{item.scheme.label||item.scheme.prefLabel||"Un-titled Scheme"}}
-                    </a>
+                    <gpid-resource-link [item]="item.scheme"></gpid-resource-link>
                 </div>
 
 
                 <!-- Organization -->
                 <div class="m-article__desc" *ngIf="item?.subOrganizationOf">
                     <div><strong>Sub Organization Of</strong></div>
-                    <a href="/resources/{{item.subOrganizationOf.id}}">
-                        {{item.subOrganizationOf.label||item.subOrganizationOf.name||"Un-titled organization"}}
-                    </a>
+                    <gpid-resource-link [item]="item.subOrganizationOf"></gpid-resource-link>
                 </div>
 
                 <!-- Contact -->
@@ -123,20 +119,31 @@
             </div>
         </div>
 
-        <gpid-coverage-map *ngIf="hasCoverage()"
-            [extent]="item?.extent"
-            [mapId]="item?.type==='Map'?item.id:null"
-            [layerId]="item?.type==='Layer'?item.id:null">
-        </gpid-coverage-map>
+
+        <div class="m-section-group">
+            <div class="m-article">
+                <div class="m-article__heading">
+                    <span *ngIf="item?.type==='Map'">Map Preview</span>
+                    <span *ngIf="item?.type==='Layer'">Layer Preview</span>
+                    <span *ngIf="item?.type!=='Map'&&item?.type!=='Layer'">Geographic Extent</span>
+                </div>
+                <br>
+                <gpid-coverage-map *ngIf="hasCoverage()"
+                    [extent]="item?.extent"
+                    [mapId]="item?.type==='Map'?item.id:null"
+                    [layerId]="item?.type==='Layer'?item.id:null">
+                </gpid-coverage-map>
+            </div>
+        </div>
 
 
         <!-- Dataset Distributions -->
         <div class="m-section-group" *ngIf="'dcat:Dataset'===item?.type">
             <div class="m-article">
                 <div class="m-article__heading">
-                    <span class="fas fa-caret-down"
+                    <!-- <span class="fas fa-caret-down"
                         onClick="toggleClass('#dataset-distributions', 'is-hidden');toggleClass('#dataset-distributions-summary', 'is-hidden')">
-                    </span>
+                    </span> -->
                     Distributions
                 </div>
                 <div class="m-article__desc" id="dataset-distributions-summary">
@@ -144,7 +151,7 @@
                 </div>
                 <div class="m-article__desc is-hidden" id="dataset-distributions">
                     <ul class="m-list--unbulleted">
-                        <li><a href="/items/service.html"><img class="a-icon" src="/assets/icons/service.svg"> Service A</a></li>
+                        <!-- <li><a href="/items/service.html"><img class="a-icon" src="/assets/icons/service.svg"> Service A</a></li> -->
                     </ul>
                 </div>
             </div>
@@ -182,12 +189,14 @@
 
 
         <!-- Service Statistics -->
-        <gpid-service-stats class="m-section-group" *ngIf="'regp:Service'===item?.type">
+        <gpid-service-stats class="m-section-group"
+            *ngIf="'regp:Service'===item?.type" [item]="item">
         </gpid-service-stats>
 
 
         <!-- RPM Usage -->
-        <gpid-usage *ngIf="isAsset()" class="m-section-group"></gpid-usage>
+        <gpid-usage *ngIf="isAsset()" class="m-section-group" [item]="item">
+        </gpid-usage>
 
 
         <!-- Knowledge Graph -->

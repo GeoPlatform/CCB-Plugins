@@ -21,9 +21,8 @@
             <div *ngFor="let item of items" class="o-gallery__item">
                 <div *ngIf="item.asset">
                     <gpid-depiction [thumbnail]="item.asset.thumbnail"></gpid-depiction>
-                    <a href="/resources/{{item.asset.id}}">
-                        {{item.label}}
-                    </a> ({{item.assetType}})
+                    <gpid-resource-link [item]="item.asset"></gpid-resource-link>
+                    ({{item.assetType}})
                 </div>
             </div>
         </div>

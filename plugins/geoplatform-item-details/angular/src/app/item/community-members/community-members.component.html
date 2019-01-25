@@ -5,9 +5,7 @@
     </div>
     <div class="m-article-desc" *ngIf="members?.length">
         <div *ngFor="let member of members">
-            <a href="/resources/{{member.id}}">
-                {{member.label||member.name||"Un-named member"}}
-            </a>
+            <gpid-resource-link [item]="member"></gpid-resource-link>
         </div>
     </div>
 </div>

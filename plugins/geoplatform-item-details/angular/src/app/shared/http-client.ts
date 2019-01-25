@@ -15,6 +15,9 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 
+import { ItemDetailsError } from './item-details-error';
+
+
 export class NG2HttpClient {
 
 
@@ -101,7 +104,7 @@ export class NG2HttpClient {
         .catch( err => {
             // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));
             if (err instanceof HttpErrorResponse) {
-                throw new Error(err.error.message);
+                throw new ItemDetailsError(err.error.message, err.status);
             }
             return {};
         });

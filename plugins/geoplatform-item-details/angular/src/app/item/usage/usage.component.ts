@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {
+    Component, OnInit, OnChanges, SimpleChanges, Input
+} from '@angular/core';
 import { GoogleCharts } from 'google-charts';
 
 const MONTHS = [
@@ -16,8 +18,9 @@ const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 })
 export class UsageComponent implements OnInit {
 
-    public isCollapsed : boolean = false;
+    @Input() item : any;
 
+    public isCollapsed : boolean = false;
     public activeTab : string = 'usage_weekly';
     private tabs : any  = {
         usage_weekly : { status: true, label: "Past Week" },
@@ -25,17 +28,37 @@ export class UsageComponent implements OnInit {
         usage_yearly : { status: false, label: "Past Year" }
     };
     private charts : any = {
-        usage_weekly : { status: true },
+        usage_weekly : { status: false, fn: () => {this.drawWeeklyChart()}  },
         usage_monthly : { status: false, fn: () => {this.drawMonthlyChart()} },
         usage_yearly : { status: false, fn: () => {this.drawYearlyChart()} }
     };
+    private googleIsLoaded : boolean = false;
+    private googleWaitAttempts : number = 0;
+    private itemUsageData : any;
 
 
     constructor() { }
 
     ngOnInit() {
-        //Load the charts library with a callback
-        GoogleCharts.load(() => { this.onChartsReady() });
+        //Load the charts library
+        GoogleCharts.load(() => { this.googleIsLoaded = true; });
+    }
+
+    ngOnChanges( changes : SimpleChanges ) {
+        if(changes.item && changes.item.currentValue) {
+
+            let itemId = changes.item.currentValue.id;
+
+            //TODO fetch RPM stats...
+            // someService.getStats(itemId)
+            // .then( response => {
+            //     //TODO rebuild charts
+                    this.initCharts(true);
+            // })
+            // .catch(e => {
+            //     //display error message in place of charts
+            // });
+        }
     }
 
     toggleCollapsed () {
@@ -62,13 +85,38 @@ export class UsageComponent implements OnInit {
         }
     }
 
-    onChartsReady() {
-        this.drawWeeklyChart();
-        // this.drawMonthlyChart();
-        // this.drawYearlyChart();
+    initCharts( rebuild:boolean = false ) {
+        if(!this.googleIsLoaded) {
+            if(this.googleWaitAttempts < 5) {
+                //wait just a bit more for google charts api to finish loading
+                setTimeout( () => { this.initCharts(); }, 1000);
+            } else {
+                //display error message that google api could not load...
+            }
+
+            return;
+        }
+
+        if(rebuild === true) {
+            //change in item data, so let's rebuild the charts
+            this.charts.forEach( ch => { ch.status = false; });
+        }
+
+        //draw whichever chart is currently visible
+        let chart = this.charts[this.activeTab];
+        if(!chart.status) {
+            setTimeout( () => {
+                chart.status = true;
+                chart.fn();
+            }, 100);
+        }
     }
 
     drawWeeklyChart() {
+
+
+        //TODO use data stored in this.itemUsageData
+
 
         var data = new GoogleCharts.api.visualization.DataTable();
         data.addColumn('string', 'Day'); // Implicit domain label col.
@@ -124,6 +172,10 @@ export class UsageComponent implements OnInit {
 
     drawMonthlyChart() {
 
+
+        //TODO use data stored in this.itemUsageData
+
+
         var data = new GoogleCharts.api.visualization.DataTable();
         data.addColumn('number', 'Day'); // Implicit domain label col.
         data.addColumn('number', 'Displayed'); // Implicit series 1 data col.
@@ -165,6 +217,10 @@ export class UsageComponent implements OnInit {
 
 
     drawYearlyChart() {
+
+
+        //TODO use data stored in this.itemUsageData
+
 
         var data = new GoogleCharts.api.visualization.DataTable();
         data.addColumn('string', 'Month'); // Implicit domain label col.
