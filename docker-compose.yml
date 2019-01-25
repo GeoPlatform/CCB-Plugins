@@ -8,6 +8,8 @@ services:
       - mysql
     links:
       - mysql:mysql
+      - gpoauth:gpoauth
+      - gpidm:gpidm
     ports:
       - "80:80"
       - "81:80"

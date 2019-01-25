@@ -1164,32 +1164,6 @@ function geop_ccb_category_bread_update() {
 
 
 
-
-
-
-
-add_action('send_headers', 'geopsearch_register_authorize');
-
-function geopsearch_register_authorize(){
-	$header = "Authorize: Bearer " . get_user_meta(get_current_user_id(), 'wp_capabilities', true)['administrator'];
-	header($header);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //-------------------------------
 //Add extra boxes to Category editor
 //-------------------------------
