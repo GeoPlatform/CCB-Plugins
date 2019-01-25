@@ -107,7 +107,7 @@ register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_details' );
 function geotags_add_rewrite_rules( $wp_rewrite )
 {
   // $new_rules = array( 'resources/([a-f\d]{32})/?' => 'index.php?pagename=' . get_theme_mod('headlink_items') . '&q=' . $wp_rewrite->preg_index(1) );
-	$new_rules = array( 'resources/([a-f\d]{32})/?' => 'index.php?pagename=geoplatform-items&q=' . $wp_rewrite->preg_index(1) );
+	$new_rules = array( 'resources\/(dataset|service|layer|map|gallery|community|organization|contact|person|concept|conceptscheme)\/([a-f\d]*)\/?' => 'index.php?pagename=geoplatform-items&q=' . $wp_rewrite->preg_index(1) );
 
   // Add the new rewrite rule into the top of the global rules array
   $wp_rewrite->rules = $new_rules + $wp_rewrite->rules;
