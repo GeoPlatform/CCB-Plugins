@@ -31,7 +31,7 @@
                 <em>None specified</em>
             </div>
             <div *ngFor="let pub of item.publishers">
-                <a href="/resources/organization/{{pub.id}}" class="u-break--all">
+                <a href="/resources/{{pub.id}}" class="u-break--all">
                     {{pub.name}}
                 </a>
             </div>
@@ -43,7 +43,7 @@
                 <em>None specified</em>
             </div>
             <div *ngFor="let creator of item.creators">
-                <a href="/resources/organization/{{creator.id}}" class="u-break--all">
+                <a href="/resources/{{creator.id}}" class="u-break--all">
                     {{creator.name}}
                 </a>
             </div>
@@ -55,7 +55,7 @@
                 <em>None specified</em>
             </div>
             <div *ngFor="let contact of item.contacts">
-                <a href="/resources/contact/{{contact.id}}">
+                <a href="/resources/{{contact.id}}">
                     {{contact.fullName||"Un-named contact"}}
                     <span *ngIf="contact.orgName" class="u-break--all">
                         ({{contact.orgName}})
