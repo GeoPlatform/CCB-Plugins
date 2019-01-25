@@ -12,6 +12,7 @@ plugins/debug-bar
 plugins/email-subscribers
 plugins/download-manager
 plugins/custom-post-widget
+plugins/daggerhart-openid-connect-generic
 
 
 # Ignore default themes files
@@ -23,4 +24,3 @@ uploads/*
 
 
 node_modules
-
