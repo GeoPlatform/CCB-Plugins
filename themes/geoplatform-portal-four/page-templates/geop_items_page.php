@@ -15,31 +15,6 @@ global $wp_query;
 global $wp;
 ?>
 
-<div class="l-body l-body--one-column">
-  <div class="l-body__main-column">
-    <p>
-      The regex that redirects to this page will only trigger if the url is "resources/{id}".
-      <br>
-      It ASSUMES that any id input is 32 characters
-      long and in hexidecimal format.
-      <br>
-      Any other inputs will either 404 or lead to a legitimate child page of resources if it exists.
-    </p>
-    <p>
-      URL to a dataset with the assumed id being passed: <a href="<?php echo 'https://ual.geoplatform.gov/api/datasets/' . get_query_var('q') ?>">CLICK HERE</a>
-      <br>
-      The url above assumes that the ID provided is to a dataset and does not check this fact.
-    </p>
-    <?php
-    echo "id passed: " . get_query_var('q') . "<br>";
+<app-root></app-root>
 
-    $current_url = home_url( add_query_arg( array(), $wp->request ) );
-    echo $current_url . "<br><br>";
-
-    // echo "messy var_dump of all rewrite rules.<br>";
-    // var_dump($wp_rewrite->rules);
-    ?>
-    <app-root></app-root>
-  </div>
-</div>
 <?php get_footer(); ?>
