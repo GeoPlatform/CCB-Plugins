@@ -15,7 +15,8 @@ global $wp_query;
 global $wp;
 ?>
 
-<div class="is-hidden">
+<div class="l-body l-body--one-column">
+  <div class="l-body__main-column">
     <p>
       The regex that redirects to this page will only trigger if the url is "resources/{id}".
       <br>
@@ -38,6 +39,7 @@ global $wp;
     // echo "messy var_dump of all rewrite rules.<br>";
     // var_dump($wp_rewrite->rules);
     ?>
+    <app-root></app-root>
+  </div>
 </div>
-<app-root></app-root>
 <?php get_footer(); ?>
