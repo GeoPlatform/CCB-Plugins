@@ -23,9 +23,8 @@
     <p>Your GeoPlatform Search Manager has been created and can be accessed via the Visit Search Interface button below.
       Alternatively, if something has occured that renders the page inoperable, press the Recreate Search Interface button below.
     </p>
-    <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'geoplatform-search' ))); ?>" target="_blank">
-      <input class="button-secondary" type="submit" value="Visit Search Interface">
-    </a>&nbsp&nbsp
+    <a class="button-secondary" href="<?php echo esc_url( get_permalink( get_page_by_path( 'geoplatform-search' ))); ?>" target="_blank">Visit Search Interface</a>
+    &nbsp&nbsp
     <button class="button-secondary" id="geopsearch_reset">Recreate Search Interface</button>
     <p>
       You can also use this plugin to insert a search bar into your posts. Inputing search terms into the bar will direct you to
