@@ -521,15 +521,15 @@ function geop_ccb_catlink_column_sorter($geopccb_columns) {};
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-function geop_portal_distro_manager() {
-  require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-  $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-  	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
-  	__FILE__,
-  	'geoplatform-portal-child'
-  );
-}
-geop_portal_distro_manager();
+// function geop_portal_distro_manager() {
+//   require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//   $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//   	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
+//   	__FILE__,
+//   	'geoplatform-portal-child'
+//   );
+// }
+// geop_portal_distro_manager();
 
 
 add_filter('widget_text', 'do_shortcode');

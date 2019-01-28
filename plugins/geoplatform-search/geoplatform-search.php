@@ -14,7 +14,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Search
- * Plugin URI:        www.geoplatform.gov
+ * Plugin URI:        https://www.geoplatform.gov
  * Description:       Browse, search, and filter GeoPlatform service objects.
  * Version:           1.0.9
  * Author:            Image Matters LLC: Patrick Neal, Lee Heazel
