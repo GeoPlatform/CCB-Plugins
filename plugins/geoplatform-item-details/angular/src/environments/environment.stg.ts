@@ -8,7 +8,9 @@ export const environment = {
   env: 'stg',
   ualUrl: 'https://stg-ual.geoplatform.gov',
   wpUrl: '',
-  helpUrl: 'https://stg.geoplatform.gov/help/geoplatform-search-help/',
+  editUrl: 'https://stg-oe.geoplatform.gov/edit/{id}',
+  svcHistoryUrl: 'https://stg-dashboard.geoplatform.gov/api/sd/service/{id}/history',
+  helpUrl: 'https://stg.geoplatform.gov/help/apps/geoplatform-item-details/',
   root: 'wp-content/plugins/geoplatform-item-details/',
   assets: 'wp-content/plugins/geoplatform-item-details/assets/'
 };

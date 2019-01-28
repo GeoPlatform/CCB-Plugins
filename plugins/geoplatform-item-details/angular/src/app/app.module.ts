@@ -40,7 +40,7 @@ import {
     DepictionComponent, ImageFallbackDirective
 } from './item/depiction/depiction.component';
 import { KeywordsComponent } from './item/keywords/keywords.component';
-import { ServiceLayersComponent } from './item/service-layers/service-layers.component';
+import { ServiceLayersComponent, ServiceLayerComponent } from './item/service-layers/service-layers.component';
 import { GalleryItemsComponent } from './item/gallery-items/gallery-items.component';
 import { MapLayersComponent } from './item/map-layers/map-layers.component';
 import { CoverageMapComponent } from './item/coverage-map/coverage-map.component';
@@ -48,6 +48,8 @@ import { CommunityMembersComponent } from './item/community-members/community-me
 import { PrimaryActionComponent } from './item/actions/primary-action/primary-action.component';
 import { ExportActionComponent } from './item/actions/export-action/export-action.component';
 import { ResourceLinkComponent } from './item/resource-link/resource-link.component';
+import { EditActionComponent } from './item/actions/edit-action/edit-action.component';
+import { DeleteActionComponent } from './item/actions/delete-action/delete-action.component';
 
 
 
@@ -90,7 +92,19 @@ export function initializeApp() {
         ImageFallbackDirective,
         LimitToPipe,
         FriendlyTypePipe,
-        FixLabelPipe, KeywordsComponent, ServiceLayersComponent, GalleryItemsComponent, MapLayersComponent, CoverageMapComponent, CommunityMembersComponent, PrimaryActionComponent, ExportActionComponent, ResourceLinkComponent
+        FixLabelPipe,
+        KeywordsComponent,
+        ServiceLayersComponent,
+        ServiceLayerComponent,
+        GalleryItemsComponent,
+        MapLayersComponent,
+        CoverageMapComponent,
+        CommunityMembersComponent,
+        PrimaryActionComponent,
+        ExportActionComponent,
+        ResourceLinkComponent,
+        EditActionComponent,
+        DeleteActionComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),

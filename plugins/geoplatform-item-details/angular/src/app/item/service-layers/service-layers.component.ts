@@ -15,6 +15,7 @@ export class ServiceLayersComponent implements OnInit {
     @Input() serviceId : string;
     public isCollapsed : boolean = false;
     public layers : any[];
+    public layerTotal: number = 0;  //total layers including nested ones
     private itemService : ItemService;
 
     constructor(http : HttpClient) {
@@ -28,12 +29,13 @@ export class ServiceLayersComponent implements OnInit {
             this.itemService.search({
                 types: ItemTypes.LAYER,
                 service: this.serviceId,
-                size: 200,
+                size: 300,
                 fields: 'parentLayer_id'    //<- used to build tree structure
             })
             .then( response => {
-                this.layers = response.results;
-                // this.buildTree(response.results);
+                // this.layers = response.results;
+                this.layerTotal = response.totalResults;
+                this.buildTree(response.results);
             })
             .catch( e => {
                 //TODO display error
@@ -78,9 +80,63 @@ export class ServiceLayersComponent implements OnInit {
                     delete cache[parentId];
                 }
             });
+            //loop check... if the number of items in the cache didn't change
+            // this iteration, then we have run out of things to do, so
+            // just end the loop prematurely
+            let oldLength = parentIds.length;
+            parentIds = Object.keys(cache);
+            if(oldLength === parentIds.length) {
+                parentIds = [];
+                console.log("WARN : layer tree building aborted early");
+            }
         }
 
         this.layers = result;
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@Component({
+  selector: 'gpid-service-layer',
+  template: `
+  <div>
+      <gpid-resource-link [item]="layer"></gpid-resource-link>
+      <div class="m-list--tree" *ngIf="layer.subLayers">
+          <gpid-service-layer *ngFor="let child of layer.subLayers"
+            [layer]="child">
+          </gpid-service-layer>
+      </div>
+  </div>
+  `,
+  styleUrls: ['./service-layer.component.less']
+})
+export class ServiceLayerComponent implements OnInit {
+
+    @Input() layer : any[];
+
+    constructor() {
+
+    }
+
+    ngOnInit() {
 
     }
 

@@ -10,10 +10,26 @@ import { ItemTypes } from "geoplatform.client";
 export class ResourceLinkComponent implements OnInit {
 
     @Input() item : any;
+    @Input() icon : any;
+    @Input() external : boolean = false;    //open link in new window/tab
 
     constructor() { }
 
     ngOnInit() {
+    }
+
+    hasIcon() : boolean {
+        // return this.icon !== null && this.icon !== undefined;
+        return true;
+    }
+
+    getIcon() :string {
+        // let result = null;
+        // let iconType = typeof(this.icon);
+        // if(iconType === 'boolean') {
+            return this.determineIconType();
+        // }
+        // else if( iconType === 'string') return iconType;
     }
 
     getLabel() {
@@ -32,7 +48,7 @@ export class ResourceLinkComponent implements OnInit {
             case ItemTypes.ORGANIZATION :
             case ItemTypes.PERSON :
                 return this.item.label || this.item.name;
-                
+
             case ItemTypes.CONCEPT :
             case ItemTypes.CONCEPT_SCHEME :
                 return this.item.label || this.item.prefLabel;
@@ -68,6 +84,32 @@ export class ResourceLinkComponent implements OnInit {
 
             default: return 'unsupported';
         }
+    }
+
+    determineIconType() {
+        let path = '/assets/icons/';
+        let name = 'dataset';
+        if(this.item && this.item.type) {
+            let type = this.item.type;
+            switch(type) {
+                case ItemTypes.DATASET :
+                case ItemTypes.ORGANIZATION :
+                case ItemTypes.CONTACT :
+                case ItemTypes.PERSON :
+                case ItemTypes.CONCEPT :
+                case ItemTypes.CONCEPT_SCHEME :
+                    name = type.split(':')[1].toLowerCase();
+                    break;
+
+                case ItemTypes.LAYER :
+                case ItemTypes.MAP :
+                case ItemTypes.GALLERY :
+                case ItemTypes.COMMUNITY :
+                    name = type.toLowerCase();
+                    break;
+            }
+        }
+        return path + name + '.svg';
     }
 
 }
