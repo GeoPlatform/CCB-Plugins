@@ -130,7 +130,7 @@ export class ServiceLayersComponent implements OnInit {
 })
 export class ServiceLayerComponent implements OnInit {
 
-    @Input() layer : any[];
+    @Input() layer : any;
 
     constructor() {
 
