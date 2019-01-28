@@ -95,12 +95,12 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                         <?php } ?>
                     </div>
                     <div class="col">
-                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>">Edit Profile</a>
-                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>">Change Password</a>
-                        <div class="dropdown-item">
-                            <strong>Focus:</strong>
-                            <em>Data</em>
-                            <a href="<?php echo $geopportal_front_user_redirect ?>">[change]</a>
+                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>/profile">Edit Profile</a>
+                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>/updatepw">Change Password</a>
+                        <?php
+                        if($geopportal_current_user->ID != 0) { ?>
+                          <a class="dropdown-item" href="<?php echo esc_url(wp_logout_url( home_url() ) ); ?>">Sign Out</a>
+                        <?php } ?>
                         </div>
                     </div>
                 </div>
