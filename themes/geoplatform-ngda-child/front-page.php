@@ -4,7 +4,7 @@
   $geopccb_theme_options = geop_ccb_get_theme_mods();
 
   get_header('ngda');
-  get_template_part( 'mega-menu', get_post_format() );
+  // get_template_part( 'mega-menu', get_post_format() );
   get_template_part( 'gp_intro', get_post_format() );
 
   $geopngda_display_format = get_theme_mod('ngda_appearance', 'ngda');
