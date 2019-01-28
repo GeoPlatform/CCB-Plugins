@@ -1953,17 +1953,17 @@ add_post_type_support( 'page', 'excerpt' );
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
-  function geop_ccb_distro_manager() {
-    require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-    $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-    	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
-    	__FILE__,
-    	'geoplatform-ccb'
-    );
-  }
-  geop_ccb_distro_manager();
-}
+// if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
+//   function geop_ccb_distro_manager() {
+//     require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//     $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//     	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
+//     	__FILE__,
+//     	'geoplatform-ccb'
+//     );
+//   }
+//   geop_ccb_distro_manager();
+// }
 
 /**
  * Second image handler for individual banners.

@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Excluded unnecessary new function from parent theme.
+- Removed automated update feature.
 
 ## 3.1.10
 * Release January 17, 2019

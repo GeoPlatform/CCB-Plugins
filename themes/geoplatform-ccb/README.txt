@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Added option to switch Community Links menu between a transparency and block in the header.
+- Removed automated update feature.
 
  = 3.2.3 =
 * Release January 18th, 2019
