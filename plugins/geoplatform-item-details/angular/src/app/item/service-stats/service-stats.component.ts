@@ -1,6 +1,11 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
-
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { GoogleCharts } from 'google-charts';
+import { Config } from 'geoplatform.client';
+
+import { environment } from '../../../environments/environment';
+import { NG2HttpClient } from '../../shared/http-client';
+
 
 const MONTHS = [
     'Jan','Feb','Mar','Apr','May','Jun',
@@ -20,24 +25,16 @@ export class ServiceStatsComponent implements OnInit {
     @Input() item : any;
 
     public isCollapsed : boolean = false;
-
-    public activeTab : string = 'stats_weekly';
-    private tabs : any  = {
-        stats_weekly : { status: true, label: "Past Week" },
-        stats_monthly : { status: false, label: "Past Month" },
-        stats_yearly : { status: false, label: "Past Year" }
-    };
-    private charts : any = {
-        stats_weekly : { status: false, fn: () => {this.drawWeeklyChart()} },
-        stats_monthly : { status: false, fn: () => {this.drawMonthlyChart()} },
-        stats_yearly : { status: false, fn: () => {this.drawYearlyChart()} }
-    };
     private googleIsLoaded : boolean = false;
     private googleWaitAttempts : number = 0;
-    private svcStatsData : any;
+    public svcStatsData : any;
+    private httpClient : NG2HttpClient;
 
-
-    constructor() { }
+    constructor(http : HttpClient) {
+        this.httpClient = new NG2HttpClient(http, {
+            timeout: Config.timeout || 60000
+        })
+    }
 
     ngOnInit() {
         //Load the charts library
@@ -49,15 +46,15 @@ export class ServiceStatsComponent implements OnInit {
 
             let itemId = changes.item.currentValue.id;
 
-            //TODO fetch RPM stats...
-            // this.serviceSvc.getHistory(itemId)
-            // .then( response => {
-            //     //TODO rebuild charts
-                    this.initCharts(true);
-            // })
-            // .catch(e => {
-            //     //display error message in place of charts
-            // });
+            //TODO fetch Service stats...
+            this.getServiceHistory()
+            .then( data => {
+                this.svcStatsData = data;
+                this.initChart(true);
+            })
+            .catch(e => {
+                //display error message in place of charts
+            });
         }
     }
 
@@ -65,31 +62,12 @@ export class ServiceStatsComponent implements OnInit {
         this.isCollapsed = !this.isCollapsed;
     }
 
-    getTabKeys() {
-        return Object.keys(this.tabs);
-    }
 
-    /**
-     * @param {string} tabName - tab to set as active
-     */
-    changeTab(tabName) {
-        this.tabs[this.activeTab].status = false;
-        this.tabs[tabName].status = true;
-        this.activeTab = tabName;
-
-        if(!this.charts[tabName].status) {
-            setTimeout( () => {
-                this.charts[tabName].status = true;
-                this.charts[tabName].fn();
-            }, 100);
-        }
-    }
-
-    initCharts( rebuild:boolean = false ) {
+    initChart( rebuild:boolean = false ) {
         if(!this.googleIsLoaded) {
             if(this.googleWaitAttempts < 5) {
                 //wait just a bit more for google charts api to finish loading
-                setTimeout( () => { this.initCharts(); }, 1000);
+                setTimeout( () => { this.initChart(rebuild); }, 1000);
             } else {
                 //display error message that google api could not load...
             }
@@ -97,19 +75,10 @@ export class ServiceStatsComponent implements OnInit {
             return;
         }
 
-        if(rebuild === true) {
-            //change in item data, so let's rebuild the charts
-            this.charts.forEach( ch => { ch.status = false; });
-        }
-
         //draw whichever chart is currently visible
-        let chart = this.charts[this.activeTab];
-        if(!chart.status) {
-            setTimeout( () => {
-                chart.status = true;
-                chart.fn();
-            }, 100);
-        }
+        setTimeout( () => {
+            this.drawWeeklyChart();
+        }, 100);
     }
 
 
@@ -117,35 +86,31 @@ export class ServiceStatsComponent implements OnInit {
     drawWeeklyChart() {
 
         var data = new GoogleCharts.api.visualization.DataTable();
-        data.addColumn('string', 'Day'); // Implicit domain label col.
-        data.addColumn('number', 'Displayed'); // Implicit series 1 data col.
-        data.addColumn({type:'string', role:'tooltip'});
+        data.addColumn('string', 'Date'); // Implicit domain label col.
+        data.addColumn('number', 'Score'); // Implicit series 1 data col.
+        data.addColumn('number', 'Speed'); // Implicit series 1 data col.
 
-
-        let date = new Date();
-
-
-        let time = date.getTime();
-        time -= 1000 * 60 * 60 * 24 * 7;
-        date.setTime(time);
 
         let rows = [], max = 0;
-        for(let i=0; i<7; ++i) {
-            time = date.getTime();
-            time += (1000 * 60 * 60 * 24);
-            date.setTime(time);
-            let dow = date.getDay();    //day of week
-            let v = Math.floor(Math.random()*10);
-            max = Math.max(max, v);
-            let label = DAYS[dow] + ' (' + (date.getMonth()+1) + '/' +
-                (date.getDate()+1) + ')';
-            rows.push([ label, v, v + '' ]);
-        }
+
+        (this.svcStatsData || []).forEach( (point,i) => {
+            // compliant: true
+            // d: "2019-01-22T00:00:00.000Z"
+            // online: true
+            // score: 99.05
+            // speed: 1.22
+            // timestamp: "Jan 22, 2019"
+            rows.push( [ point.timestamp, point.score, point.speed] );
+        });
+
         data.addRows(rows);
 
-        var options = {
+        let options = {
             height: 300,
-            title: "Last 7 Days",
+            series: {
+                0: { targetAxisIndex: 0 },
+                1: { targetAxisIndex: 1 }
+            },
             hAxis: {
                 title: 'Date',
                 format: 'M/d/yy',
@@ -153,98 +118,70 @@ export class ServiceStatsComponent implements OnInit {
                 maxValue: rows[rows.length-1][0]
             },
             vAxis: {
-                title: 'Usage',
-                minValue: 0,
-                maxValue: max + 10
-            },
-            legend: 'none'
+                0: {
+                    title: 'Score',
+                    minValue: 0,
+                    maxValue: 100
+                },
+                1: {
+                    title: 'Speed',
+                    minValue: 0,
+                    maxValue: 100
+                },
+                ticks: [0, 20, 40, 60, 80, 100]
+            }
         };
 
-        let el = document.getElementById('stats_weekly_chart');
+
+        let el = document.getElementById('stats_chart');
         var chart = new GoogleCharts.api.visualization.LineChart(el);
         chart.draw(data, options);
     }
 
 
 
+    /**
+     * @return {Promise} containing historical data or empty array or rejecting with error
+     */
+    getServiceHistory() : Promise<any> {
 
-    drawMonthlyChart() {
 
-        var data = new GoogleCharts.api.visualization.DataTable();
-        data.addColumn('number', 'Day'); // Implicit domain label col.
-        data.addColumn('number', 'Displayed'); // Implicit series 1 data col.
-        data.addColumn({type:'string', role:'tooltip'});
-
-        let date = new Date();
-        let currentMonth = date.getMonth();
-        let currentDay = date.getDate();
-
-        let rows = [], max = 0;
-        for(let i=0; i<currentDay; ++i) {
-            let v = Math.floor(Math.random()*10);
-            max = Math.max(max, v);
-            rows.push([ (i+1), v, v + '' ]);
+        let id = this.item.id;
+        if(this.item.identifiers && this.item.identifiers.length) {
+            let ngpIds = this.item.identifiers.filter( ident => ident.indexOf("ngp:")===0);
+            if(ngpIds && ngpIds.length) {
+                id = ngpIds[0].split(':')[1];
+            } else {
+                return Promise.reject(
+                    new Error("Service has no statistics identifier to use to retrieve performance history")
+                );
+            }
         }
-        data.addRows(rows);
 
-        var options = {
-            height: 300,
-            title: "This Month",
-            hAxis: {
-                title: 'Day of Month',
-                minValue: 0,
-                maxValue: currentDay
-            },
-            vAxis: {
-                title: 'Usage',
-                minValue: 0,
-                maxValue: max + 10
-            },
-            legend: 'none'
-        };
-
-        let el = document.getElementById('stats_monthly_chart');
-        var chart = new GoogleCharts.api.visualization.LineChart(el);
-        chart.draw(data, options);
-    }
-
-
-
-    drawYearlyChart() {
-
-        var data = new GoogleCharts.api.visualization.DataTable();
-        data.addColumn('string', 'Month'); // Implicit domain label col.
-        data.addColumn('number', 'Displayed'); // Implicit series 1 data col.
-        data.addColumn({type:'string', role:'tooltip'});
-
-        let date = new Date();
-        let currentMonth = date.getMonth();
-
-        let rows = [], max = 0;
-        for(let i=0; i<currentMonth; ++i) {
-            let v = Math.floor(Math.random()*10);
-            max = Math.max(max, v);
-            rows.push([ MONTHS[i], v, v + '' ]);
+        let url = environment.svcHistoryUrl;
+        if(!url) {
+            return Promise.reject(
+                new Error("URL to fetch service status history is not configured")
+            );
         }
-        data.addRows(rows);
 
-        var options = {
-            height: 300,
-            title: "This Year",
-            hAxis: {
-                title: 'Month'
-            },
-            vAxis: {
-                title: 'Usage',
-                minValue: 0,
-                maxValue: max + 10
-            },
-            legend: 'none'
+        url = url.replace(/\{id\}/, id);
+
+        //https://sit-dashboard.geoplatform.us/api/sd/service/.../history?days=6&rollupByDay=true&stub=28
+        let option = {
+            method: "GET",
+            responseType: 'json',
+            url: url,
+            params: {
+                days: 6,
+                rollupByDay: true,
+                stub: 28
+            }
         };
+        let request : HttpRequest<any> = this.httpClient.createRequestOpts(option);
+        return this.httpClient.execute(request);
 
-        let el = document.getElementById('stats_yearly_chart');
-        var chart = new GoogleCharts.api.visualization.LineChart(el);
-        chart.draw(data, options);
     }
+
 
 }

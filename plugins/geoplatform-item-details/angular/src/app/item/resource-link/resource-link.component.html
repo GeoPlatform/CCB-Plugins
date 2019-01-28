@@ -1,1 +1,4 @@
-<a href="/resources/{{getType()}}/{{item?.id}}">{{getLabel()}}</a>
+<a href="/resources/{{getType()}}/{{item?.id}}">
+    <img *ngIf="hasIcon()" class="a-icon" src="{{getIcon()}}">
+    {{getLabel()}}
+</a>

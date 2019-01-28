@@ -120,7 +120,7 @@
         </div>
 
 
-        <div class="m-section-group">
+        <div class="m-section-group" *ngIf="hasCoverage()">
             <div class="m-article">
                 <div class="m-article__heading">
                     <span *ngIf="item?.type==='Map'">Map Preview</span>
@@ -128,7 +128,7 @@
                     <span *ngIf="item?.type!=='Map'&&item?.type!=='Layer'">Geographic Extent</span>
                 </div>
                 <br>
-                <gpid-coverage-map *ngIf="hasCoverage()"
+                <gpid-coverage-map
                     [extent]="item?.extent"
                     [mapId]="item?.type==='Map'?item.id:null"
                     [layerId]="item?.type==='Layer'?item.id:null">
@@ -234,12 +234,10 @@
 
             <hr>
 
-            <button type="button" class="btn btn-info btn-block" *ngIf="isAuthorized('edit')">
-                Edit
-            </button>
-            <button type="button" class="btn btn-danger btn-block" *ngIf="isAuthorized('delete')">
-                Delete
-            </button>
+            <gpid-edit-action [item]="item"></gpid-edit-action>
+
+            <gpid-delete-action [item]="item"></gpid-delete-action>
+
         </div>
 
         <br><br>

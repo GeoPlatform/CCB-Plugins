@@ -4,7 +4,7 @@
             [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
             (click)="toggleCollapsed()">
         </span>
-        Service Layers ({{layers?layers.length:0}})
+        Service Layers ({{layerTotal}})
     </div>
 
     <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
@@ -17,10 +17,8 @@
             <em>None specified</em>
         </div>
 
-        <div *ngIf="layers">
-            <div *ngFor="let layer of layers">
-                <gpid-resource-link [item]="layer"></gpid-resource-link>
-            </div>
+        <div *ngIf="layers" class="m-list--unbulleted">
+            <gpid-service-layer *ngFor="let layer of layers" [layer]="layer"></gpid-service-layer>
         </div>
 
     </div>

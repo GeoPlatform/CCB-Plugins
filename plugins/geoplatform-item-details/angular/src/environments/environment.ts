@@ -8,7 +8,9 @@ export const environment = {
   env: 'dev',
   ualUrl: 'https://sit-ual.geoplatform.us',
   wpUrl: '',
-  helpUrl: 'https://sit.geoplatform.us/help/geoplatform-search-help/',
+  editUrl: 'https://sit-oe.geoplatform.us/edit/{id}',
+  svcHistoryUrl: 'https://sit-dashboard.geoplatform.us/api/sd/service/{id}/history',
+  helpUrl: 'https://sit.geoplatform.us/help/apps/geoplatform-item-details/',
   root: 'wp-content/plugins/geoplatform-item-details/',
   assets: 'assets/'
 };
