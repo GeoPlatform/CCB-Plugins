@@ -86,8 +86,13 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                     <div class="col u-text--center">
                         <span class="fas fa-user fa-5x"></span>
                         <br>
-                        <div><strong><?php echo $geopportal_front_username_text ?></strong></div>
-                        <div class="u-text--sm"><em><?php echo $geopportal_front_loginname_text ?></em></div>
+                        <?php
+                        if($geopportal_current_user->ID != 0) { ?>
+                          <div><strong><?php echo $geopportal_front_username_text ?></strong></div>
+                          <div class="u-text--sm"><em><?php echo $geopportal_front_loginname_text ?></em></div>
+                        <?php } else { ?>
+                          <div><strong><a href="<?php echo esc_url(wp_login_url( home_url() ) ); ?>"><?php echo $geopportal_front_username_text ?></a></strong></div>
+                        <?php } ?>
                     </div>
                     <div class="col">
                         <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>">Edit Profile</a>
