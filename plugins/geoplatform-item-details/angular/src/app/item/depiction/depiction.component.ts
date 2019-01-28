@@ -28,7 +28,7 @@ interface Thumbnail {
 })
 export class ImageFallbackDirective {
     @Input() src : string;
-    @Input() fallback : string = `../${environment.assets}img-404.png`;
+    @Input() fallback : string = `${environment.assets}/img-404.png`;
     @HostBinding('class') className
     onImgError() { this.src = this.fallback; }
     onImgLoad() { this.className = 'is-image-loaded'; }
@@ -44,7 +44,7 @@ export class ImageFallbackDirective {
 export class DepictionComponent implements OnInit {
 
     @Input() thumbnail : Thumbnail;
-    @Input() fallback : string = `/${environment.assets}no-thumb.png`;
+    @Input() fallback : string = `${environment.assets}/no-thumb.png`;
 
 
     constructor(private sanitizer: DomSanitizer) { }

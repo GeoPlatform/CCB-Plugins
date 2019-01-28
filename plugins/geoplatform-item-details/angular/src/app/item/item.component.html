@@ -1,7 +1,7 @@
 <ul class="m-page-breadcrumbs">
     <li><a href="/">Home</a></li>
     <li><a href="/resources">Resources</a></li>
-    <!-- <li><a href="/resources/{{item?.type|friendlyType}}">{{item?.type|friendlyType}}</a></li> -->
+    <li><a href="/resources/{{getTypeKey()}}">{{item?.type|friendlyType}}</a></li>
     <li class="is-active"><a>{{item?.label}}</a></li>
 </ul>
 

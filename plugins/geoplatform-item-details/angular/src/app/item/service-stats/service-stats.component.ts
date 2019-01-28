@@ -5,6 +5,7 @@ import { Config } from 'geoplatform.client';
 
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../shared/http-client';
+import { ItemDetailsError } from '../../shared/item-details-error';
 
 
 const MONTHS = [
@@ -25,9 +26,11 @@ export class ServiceStatsComponent implements OnInit {
     @Input() item : any;
 
     public isCollapsed : boolean = false;
+    public svcStatsData : any;
+    public error : ItemDetailsError;
+
     private googleIsLoaded : boolean = false;
     private googleWaitAttempts : number = 0;
-    public svcStatsData : any;
     private httpClient : NG2HttpClient;
 
     constructor(http : HttpClient) {
@@ -54,6 +57,10 @@ export class ServiceStatsComponent implements OnInit {
             })
             .catch(e => {
                 //display error message in place of charts
+                console.log("ServiceStats.ngOnChanges() - Unable to fetch service history: " + e.message);
+                let msg = "An error occurred attempting to fetch service performance history";
+                this.error = new ItemDetailsError(msg, 500);
+                this.error.label = "Unable to Fetch Service History";
             });
         }
     }

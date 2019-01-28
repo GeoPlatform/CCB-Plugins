@@ -5,6 +5,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { ItemTypes, Config, ItemService } from "geoplatform.client";
 
+import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
 
 
@@ -67,7 +68,6 @@ export class ItemComponent implements OnInit {
         case 'delete': return false;
         default: return false;
         }
-
     }
 
     hasCoverage() {
@@ -77,14 +77,11 @@ export class ItemComponent implements OnInit {
     }
 
     isAsset() {
-        return this.item && (
-            this.item.type === ItemTypes.DATASET ||
-            this.item.type === ItemTypes.SERVICE ||
-            this.item.type === ItemTypes.LAYER ||
-            this.item.type === ItemTypes.MAP ||
-            this.item.type === ItemTypes.GALLERY ||
-            this.item.type === ItemTypes.COMMUNITY
-        );
+        return ItemHelper.isAsset(this.item);
+    }
+
+    getTypeKey() {
+        return ItemHelper.getTypeKey(this.item);
     }
 
     likeItem() {
