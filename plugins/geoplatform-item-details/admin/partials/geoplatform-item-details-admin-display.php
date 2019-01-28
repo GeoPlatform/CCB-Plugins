@@ -24,11 +24,9 @@
       Alternatively, if something has occured that renders the page inoperable, press the Recreate Items Interface button below.
       When an items page is created or recreated, the associated page template will not be applied to it. This must be done manually in the edit page interface.
     </p>
-    <a href="<?php echo esc_url( get_permalink( get_page_by_path( 'geoplatform-items' ))); ?>" target="_blank">
-      <input class="button-secondary" type="submit" value="Visit Items Interface">
-    </a>&nbsp&nbsp
-    <button class="button-secondary" id="geopitems_reset">Recreate Items Interface</button>
+    <a class="button-secondary" href="<?php echo esc_url( get_permalink( get_page_by_path( 'geoplatform-items' ))); ?>" target="_blank">Visit Items Interface</a>
     &nbsp&nbsp
+    <button class="button-secondary" id="geopitems_reset">Recreate Items Interface</button>
     <!-- <button class="button-secondary" id="geopitems_flush">Flush Rewrite Rules</button> -->
   </div>
 </div>
