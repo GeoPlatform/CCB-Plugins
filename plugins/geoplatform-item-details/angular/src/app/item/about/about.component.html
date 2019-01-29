@@ -1,68 +1,67 @@
-<article class="m-article">
-    <div class="m-article__heading">About</div>
 
-    <div *ngIf="item">
+<div class="m-article__heading">About</div>
 
-        <div class="m-article__desc">
-            <strong>Created </strong>
-            {{item.created|date:'shortDate'}} by
-            <a *ngIf="item.createdBy"
-                href="/geoplatform-search/#?createdBy={{item.createdBy}}">
-                {{item.createdBy}}
-            </a>
-            <span *ngIf="!item.createdBy">an unknown user</span>
+<div *ngIf="item">
+
+    <div class="m-article__desc">
+        <strong>Created </strong>
+        {{item.created|date:'shortDate'}} by
+        <a *ngIf="item.createdBy"
+            href="/geoplatform-search/#?createdBy={{item.createdBy}}">
+            {{item.createdBy}}
+        </a>
+        <span *ngIf="!item.createdBy">an unknown user</span>
+    </div>
+
+    <div class="m-article__desc">
+        <strong>Last Modified </strong>
+        {{item.modified|date:'shortDate'}} by
+        <a *ngIf="item.lastModifiedBy"
+            href="/geoplatform-search/#?lastModifiedBy={{item.lastModifiedBy}}">
+            {{item.lastModifiedBy}}
+        </a>
+        <span *ngIf="!item.lastModifiedBy">an unknown user</span>
+    </div>
+
+    <div class="m-article__desc" *ngIf="item?.landingPage">
+        <strong>Home Page </strong>
+        <a href="{{item.landingPage}}" target="_blank">link</a>
+    </div>
+
+    <div class="m-article__desc" *ngIf="item?.source">
+        <div><strong>Source Metadata</strong></div>
+        <a href="{{item.source.uri}}" target="_blank" class="u-break--all">
+            {{item.source.label || "link"}}
+        </a>
+    </div>
+
+    <div class="m-article__desc" *ngIf="isAsset()">
+        <div><strong>Publisher(s) </strong></div>
+        <div *ngIf="!item.publishers||!item.publishers.length">
+            <em>None specified</em>
         </div>
-
-        <div class="m-article__desc">
-            <strong>Last Modified </strong>
-            {{item.modified|date:'shortDate'}} by
-            <a *ngIf="item.lastModifiedBy" 
-                href="/geoplatform-search/#?lastModifiedBy={{item.lastModifiedBy}}">
-                {{item.lastModifiedBy}}
-            </a>
-            <span *ngIf="!item.lastModifiedBy">an unknown user</span>
-        </div>
-
-        <div class="m-article__desc" *ngIf="item?.landingPage">
-            <strong>Home Page </strong>
-            <a href="{{item.landingPage}}" target="_blank">link</a>
-        </div>
-
-        <div class="m-article__desc" *ngIf="item?.source">
-            <strong>Source Metadata</strong>
-            <a href="{{item.source.uri}}" target="_blank" class="u-break--all">
-                {{item.source.label || "Untitled resource"}}
-            </a>
-        </div>
-
-        <div class="m-article__desc" *ngIf="isAsset()">
-            <div><strong>Publisher(s) </strong></div>
-            <div *ngIf="!item.publishers||!item.publishers.length">
-                <em>None specified</em>
-            </div>
-            <div *ngFor="let pub of item.publishers">
-                <gpid-resource-link [item]="pub"></gpid-resource-link>
-            </div>
-        </div>
-
-        <div class="m-article__desc" *ngIf="isAsset()">
-            <div><strong>Creators(s) </strong></div>
-            <div *ngIf="!item.creators||!item.creators.length">
-                <em>None specified</em>
-            </div>
-            <div *ngFor="let creator of item.creators">
-                <gpid-resource-link [item]="creator"></gpid-resource-link>
-            </div>
-        </div>
-
-        <div class="m-article__desc" *ngIf="isAsset()">
-            <div><strong>Contact(s) </strong></div>
-            <div *ngIf="!item.contacts||!item.contacts.length">
-                <em>None specified</em>
-            </div>
-            <div *ngFor="let contact of item.contacts">
-                <gpid-resource-link [item]="contact"></gpid-resource-link>
-            </div>
+        <div *ngFor="let pub of item.publishers">
+            <gpid-resource-link [item]="pub"></gpid-resource-link>
         </div>
     </div>
-</article>
+
+    <div class="m-article__desc" *ngIf="isAsset()">
+        <div><strong>Creators(s) </strong></div>
+        <div *ngIf="!item.creators||!item.creators.length">
+            <em>None specified</em>
+        </div>
+        <div *ngFor="let creator of item.creators">
+            <gpid-resource-link [item]="creator"></gpid-resource-link>
+        </div>
+    </div>
+
+    <div class="m-article__desc" *ngIf="isAsset()">
+        <div><strong>Contact(s) </strong></div>
+        <div *ngIf="!item.contacts||!item.contacts.length">
+            <em>None specified</em>
+        </div>
+        <div *ngFor="let contact of item.contacts">
+            <gpid-resource-link [item]="contact"></gpid-resource-link>
+        </div>
+    </div>
+</div>

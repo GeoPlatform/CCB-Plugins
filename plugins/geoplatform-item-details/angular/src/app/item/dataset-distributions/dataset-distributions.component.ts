@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'gpid-community-members',
-  templateUrl: './community-members.component.html',
-  styleUrls: ['./community-members.component.less']
+  selector: 'gpid-dataset-distributions',
+  templateUrl: './dataset-distributions.component.html',
+  styleUrls: ['./dataset-distributions.component.less']
 })
-export class CommunityMembersComponent implements OnInit {
+export class DatasetDistributionsComponent implements OnInit {
 
-    @Input() members : any[];
+    @Input() item : any;
     public isCollapsed : boolean = true;
 
     constructor() { }

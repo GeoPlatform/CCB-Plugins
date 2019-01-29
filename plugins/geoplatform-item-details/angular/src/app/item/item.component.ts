@@ -84,14 +84,4 @@ export class ItemComponent implements OnInit {
         return ItemHelper.getTypeKey(this.item);
     }
 
-    likeItem() {
-        this.itemService.like(this.item.id)
-        .then( () => {
-            //show something
-        })
-        .catch( e => {
-            //show error message
-        })
-    }
-
 }

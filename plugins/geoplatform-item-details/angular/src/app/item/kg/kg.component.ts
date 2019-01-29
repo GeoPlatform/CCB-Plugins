@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ItemTypes } from 'geoplatform.client';
+
+import { ItemHelper } from '../../shared/item-helper';
 
 
 const CLASSIFIERS = [
@@ -44,5 +47,9 @@ export class KgComponent implements OnInit {
 
     changeTab(tabName) {
         this.activeTab = tabName;
+    }
+
+    getIcon() : string {
+        return ItemHelper.getIcon(ItemTypes.CONCEPT);
     }
 }

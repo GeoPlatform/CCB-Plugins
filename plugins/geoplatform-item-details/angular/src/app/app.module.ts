@@ -50,6 +50,9 @@ import { ExportActionComponent } from './item/actions/export-action/export-actio
 import { ResourceLinkComponent } from './item/resource-link/resource-link.component';
 import { EditActionComponent } from './item/actions/edit-action/edit-action.component';
 import { DeleteActionComponent } from './item/actions/delete-action/delete-action.component';
+import { DatasetDistributionsComponent } from './item/dataset-distributions/dataset-distributions.component';
+import { LikeActionComponent } from './item/actions/like-action/like-action.component';
+import { UsedByComponent } from './item/used-by/used-by.component';
 
 
 
@@ -104,7 +107,10 @@ export function initializeApp() {
         ExportActionComponent,
         ResourceLinkComponent,
         EditActionComponent,
-        DeleteActionComponent
+        DeleteActionComponent,
+        DatasetDistributionsComponent,
+        LikeActionComponent,
+        UsedByComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),

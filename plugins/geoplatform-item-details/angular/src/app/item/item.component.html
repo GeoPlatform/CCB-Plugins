@@ -8,9 +8,7 @@
 <div class="m-page-overview" (window:resize)="onResize()">
     <div class="a-description__container"
         [ngClass]="{'is-collapsed':descriptionCollapsed}">
-        <div class="a-description__display">
-            {{item?.description || "No description provided"}}
-        </div>
+        <div class="a-description__display" [innerHTML]="item?.description||'No description provided'"></div>
     </div>
     <div class="m-page-overview__toggle" *ngIf="hasLongDescription" (click)="toggleDesc()">
         <span class="fas"
@@ -27,9 +25,8 @@
             <div class="m-article">
                 <div class="m-article__heading">{{item?.type|friendlyType}} : {{item?.label}}</div>
                 <div class="u-text--sm t-fg--gray-md">{{item?.uri}}</div>
-                <br>
 
-
+                
                 <!-- Service -->
                 <div class="m-article__desc" *ngIf="item?.serviceType">
                     <div><strong>Service Type</strong></div>
@@ -38,7 +35,7 @@
 
                 <div class="m-article__desc" *ngIf="item?.href">
                     <div><strong>Access URL</strong></div>
-                    <a href="{{item.href}}" target="_blank">{{item.href}}</a>
+                    <a href="{{item.href}}" target="_blank" class="u-break--all">{{item.href}}</a>
                 </div>
 
 
@@ -138,24 +135,9 @@
 
 
         <!-- Dataset Distributions -->
-        <div class="m-section-group" *ngIf="'dcat:Dataset'===item?.type">
-            <div class="m-article">
-                <div class="m-article__heading">
-                    <!-- <span class="fas fa-caret-down"
-                        onClick="toggleClass('#dataset-distributions', 'is-hidden');toggleClass('#dataset-distributions-summary', 'is-hidden')">
-                    </span> -->
-                    Distributions
-                </div>
-                <div class="m-article__desc" id="dataset-distributions-summary">
-                    Expand to see distribution information for this dataset
-                </div>
-                <div class="m-article__desc is-hidden" id="dataset-distributions">
-                    <ul class="m-list--unbulleted">
-                        <!-- <li><a href="/items/service.html"><img class="a-icon" src="/assets/icons/service.svg"> Service A</a></li> -->
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <gpid-dataset-distributions class="m-section-group"
+            *ngIf="'dcat:Dataset'===item?.type" [item]="item">
+        </gpid-dataset-distributions>
 
 
 
@@ -187,6 +169,11 @@
         </gpid-community-members>
 
 
+        <!-- Used By (Community Refences) -->
+        <gpid-used-by class="m-section-group"
+            *ngIf="isAsset()" [communities]="item?.usedBy">
+        </gpid-used-by>
+
 
         <!-- Service Statistics -->
         <gpid-service-stats class="m-section-group"
@@ -212,43 +199,33 @@
 
 
         <!-- THUMBNAIL -->
-        <gpid-depiction *ngIf="isAsset()"
+        <gpid-depiction class="m-article" *ngIf="isAsset()"
             [thumbnail]="item?.thumbnail">
         </gpid-depiction>
 
-        <br><br>
 
         <!-- ACTIONS -->
-        <div class="p-item__actions">
+        <div class="m-article p-item__actions">
 
             <gpid-primary-action [item]="item"></gpid-primary-action>
 
-            <hr>
-
-            <button type="button" class="btn btn-pink btn-block"
-                *ngIf="isAsset()" (click)="likeItem()">
-                <span class="fas fa-heart"></span> Like
-            </button><br>
-
-            <gpid-export-action *ngIf="isAsset()" [item]="item"></gpid-export-action>
-
-            <hr>
+            <div *ngIf="isAsset()">
+                <gpid-like-action [item]="item" [service]="itemService"></gpid-like-action>
+                <gpid-export-action [item]="item" [service]="itemService"></gpid-export-action>
+            </div>
 
             <gpid-edit-action [item]="item"></gpid-edit-action>
-
-            <gpid-delete-action [item]="item"></gpid-delete-action>
+            <!-- <gpid-delete-action [item]="item"></gpid-delete-action> -->
 
         </div>
 
-        <br><br>
 
         <!-- ABOUT -->
-        <gpid-about [item]="item"></gpid-about>
+        <gpid-about [item]="item" class="m-article"></gpid-about>
 
-        <br>
 
         <!-- Keywords -->
-        <gpid-keywords [keywords]="item?.keywords"></gpid-keywords>
+        <gpid-keywords [keywords]="item?.keywords" class="m-article"></gpid-keywords>
 
         <br>
 
