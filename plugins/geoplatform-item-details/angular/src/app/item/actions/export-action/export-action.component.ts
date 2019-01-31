@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ItemTypes, Config, ItemService } from "geoplatform.client";
-
-import { NG2HttpClient } from "../../../shared/http-client";
 
 
 
@@ -49,12 +46,9 @@ function buildFormats() {
 export class ExportActionComponent implements OnInit {
 
     @Input() item : any;
-    private itemService : ItemService;
+    @Input() service : ItemService;
 
-    constructor(http : HttpClient) {
-        let client = new NG2HttpClient(http);
-        this.itemService = new ItemService(Config.ualUrl, client);
-    }
+    constructor() { }
 
     ngOnInit() {
     }
@@ -68,9 +62,9 @@ export class ExportActionComponent implements OnInit {
     }
 
     doAction(format) {
-        if(!this.item) return;
+        if(!this.item || !this.service) return;
 
-        this.itemService.exportItem(this.item, format)
+        this.service.exportItem(this.item, format)
         .then( (response) => {
             //TODO handle response so that file can be downloaded.
             //this might mean opening the URL in a new window instead

@@ -4,18 +4,21 @@
             [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
             (click)="toggleCollapsed()">
         </span>
-        Community Members ({{members?.length||0}})
+        Community References ({{communities?.length||0}})
     </div>
+
     <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
         Expand to see communities which reference this resource
     </div>
 
     <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}">
-        <em *ngIf="!members||!members.length">None specified</em>
-        <div *ngIf="members?.length">
-            <div *ngFor="let member of members">
-                <gpid-resource-link [item]="member"></gpid-resource-link>
-            </div>
+
+        <div *ngIf="!communities || !communities.length">
+            <em>None specified</em>
         </div>
+
+        <gpid-resource-link *ngFor="let it of communities" [item]="it"></gpid-resource-link>
+
     </div>
+
 </div>

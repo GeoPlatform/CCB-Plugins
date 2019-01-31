@@ -27,6 +27,7 @@ export class ServiceStatsComponent implements OnInit {
 
     public isCollapsed : boolean = false;
     public svcStatsData : any;
+    public isFetchingData : boolean = true;
     public error : ItemDetailsError;
 
     private googleIsLoaded : boolean = false;
@@ -56,6 +57,7 @@ export class ServiceStatsComponent implements OnInit {
                 this.initChart(true);
             })
             .catch(e => {
+                this.isFetchingData = false;
                 //display error message in place of charts
                 console.log("ServiceStats.ngOnChanges() - Unable to fetch service history: " + e.message);
                 let msg = "An error occurred attempting to fetch service performance history";
@@ -139,6 +141,8 @@ export class ServiceStatsComponent implements OnInit {
             }
         };
 
+
+        // this.isFetchingData = false;
 
         let el = document.getElementById('stats_chart');
         var chart = new GoogleCharts.api.visualization.LineChart(el);

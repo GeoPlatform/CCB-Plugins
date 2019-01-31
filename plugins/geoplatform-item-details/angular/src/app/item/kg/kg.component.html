@@ -41,10 +41,7 @@
 
                 <div *ngIf="classifiers && classifiers[key]">
                     <div *ngFor="let val of classifiers[key]">
-                        <a title="{{val.uri}}" href="/resources/concepts/{{val.id}}">
-                            <img class="a-icon" src="/assets/icons/concept.svg">
-                            {{val.label||val.prefLabel}}
-                        </a>
+                        <gpid-resource-link [item]="val"></gpid-resource-link>
                     </div>
                 </div>
 
