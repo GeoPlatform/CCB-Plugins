@@ -15,12 +15,12 @@
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Resource Registration
  * Plugin URI:        https://www.geoplatform.gov
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Use a dedicated interface page to register resources with the GeoPlatform Portfolio.
  * Version:           1.0.0
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain:       geoplatform-resource-registration
  * Domain Path:       /languages
  */
@@ -55,9 +55,6 @@ function deactivate_geoplatform_resource_registration() {
 	Geoplatform_Resource_Registration_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_geoplatform_resource_registration' );
-register_deactivation_hook( __FILE__, 'deactivate_geoplatform_resource_registration' );
-
 /**
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
@@ -68,26 +65,50 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-resource-regis
 
 
 
+// Sets the parameters of and then creates the item details page. It deletes any
+// old version of that page before each generation.
+function geopregister_add_interface_page() {
+	$geopregister_parent_id = url_to_postid( get_permalink( get_page_by_path( 'resources' )));
 
+	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'resources/register' ))), true);
+	$geopregister_interface_post = array(
+		'post_title' => 'Register Your Data with GeoPlatform.gov',
+		'post_name' => 'register',
+		'post_status' => 'publish',
+		'post_type' => 'page',
+		'post_parent' => $geopregister_parent_id,
+		'post_content' => '<app-root></app-root>',
+	);
 
+	$geopregister_creation_id = wp_insert_post($geopregister_interface_post);
+	update_post_meta($geopregister_creation_id, 'geopportal_breadcrumb_title', 'Register Data');
+}
 
+register_activation_hook( __FILE__, 'geopregister_add_interface_page' );
+register_activation_hook( __FILE__, 'activate_geoplatform_resource_registration' );
+register_deactivation_hook( __FILE__, 'deactivate_geoplatform_resource_registration' );
 
+// Additional dependency enqueues.
+function geopregister_page_enqueues(){
+	if (is_page('register')){
+		wp_enqueue_script( 'inline_bundle', plugin_dir_url( __FILE__ ) . 'public/js/inline.bundle.js', array(), false, true );
+		wp_enqueue_script( 'polyfills_bundle', plugin_dir_url( __FILE__ ) . 'public/js/polyfills.bundle.js', array(), false, true );
+		wp_enqueue_script( 'scripts_bundle', plugin_dir_url( __FILE__ ) . 'public/js/scripts.bundle.js', array(), false, true );
+		wp_enqueue_script( 'main_bundle', plugin_dir_url( __FILE__ ) . 'public/js/main.bundle.js', array(), false, true );
+		wp_enqueue_style( 'styles_bundle', plugin_dir_url( __FILE__ ) . 'public/css/styles.bundle.css', array(), false, 'all' );
+	}
+}
+add_action( 'template_redirect', 'geopregister_page_enqueues' );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// AJAX handling only seems to function properly if both the hooks and PHP
+// functions are placed in this file. Instead of producing clutter, the files
+// that perform the settings interface add and remove map operations are simply
+// included here.
+function geopregister_process_refresh() {
+	include 'admin/partials/geoplatform-resource-registration-recreate.php';
+	wp_die();
+}
+add_action('wp_ajax_geopregister_refresh', 'geopregister_process_refresh');
 
 
 
