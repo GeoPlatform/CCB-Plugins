@@ -22,7 +22,6 @@
   <div style="width:50%;">
     <p>Your GeoPlatform Items Manager has been created and can be accessed via the Visit Items Interface button below.
       Alternatively, if something has occured that renders the page inoperable, press the Recreate Items Interface button below.
-      When an items page is created or recreated, the associated page template will not be applied to it. This must be done manually in the edit page interface.
     </p>
     <a class="button-secondary" href="<?php echo esc_url( get_permalink( get_page_by_path( 'geoplatform-items' ))); ?>" target="_blank">Visit Items Interface</a>
     &nbsp&nbsp

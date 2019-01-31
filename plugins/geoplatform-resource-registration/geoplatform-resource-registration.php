@@ -70,7 +70,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-resource-regis
 function geopregister_add_interface_page() {
 	$geopregister_parent_id = url_to_postid( get_permalink( get_page_by_path( 'resources' )));
 
-	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'register' ))), true);
+	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'resources/register' ))), true);
 	$geopregister_interface_post = array(
 		'post_title' => 'Register Your Data with GeoPlatform.gov',
 		'post_name' => 'register',
