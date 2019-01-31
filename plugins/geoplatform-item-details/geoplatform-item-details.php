@@ -15,17 +15,15 @@
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Item Details
  * Plugin URI:        https://www.geoplatform.gov
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       View details on individual resources in a dedicated interface page.
  * Version:           1.0.0
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain:       geoplatform-item-details
  * Domain Path:       /languages
- *
- *
- *
+
  * Copyright 2018 Image Matters LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");

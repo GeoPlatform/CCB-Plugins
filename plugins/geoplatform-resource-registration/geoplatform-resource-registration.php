@@ -15,12 +15,12 @@
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Resource Registration
  * Plugin URI:        https://www.geoplatform.gov
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Use a dedicated interface page to register resources with the GeoPlatform Portfolio.
  * Version:           1.0.0
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           Apache 2.0
+ * License URI:       http://www.apache.org/licenses/LICENSE-2.0
  * Text Domain:       geoplatform-resource-registration
  * Domain Path:       /languages
  */
