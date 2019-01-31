@@ -197,7 +197,10 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		            </div>
 		        </div>
 						<?php
-							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . get_theme_mod('featured_map_id') . " title=main]";
+							$geopportal_mainpage_map_id = get_theme_mod('featured_map_id');
+							if (empty($geopportal_mainpage_map_id))
+								$geopportal_mainpage_map_id = "1";
+							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . $geopportal_mainpage_map_id . " title=main]";
 						?>
 		        <div class="o-featured__map">
 		            <div class="o-featured__map__heading"><?php echo esc_attr(get_theme_mod('featured_map_title')) ?></div>
