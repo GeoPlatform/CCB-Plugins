@@ -111,7 +111,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
               </div>
             <?php } else { ?>
               <div class="dropdown" id="geopportal_header_user_dropdown_parent">
-                  <a class="btn btn-link dropdown-toggle" type="button" href="<?php echo esc_url(wp_login_url( home_url() ) ); ?>">
+                  <a class="btn btn-link dropdown-toggle" href="<?php echo esc_url(wp_login_url( home_url() ) ); ?>">
                       <span class="fas fa-user"></span>
                       <span class="is-hidden--xs">Sign In</span>
                   </a>
