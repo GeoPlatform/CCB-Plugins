@@ -407,6 +407,8 @@ pre[class*="language-"].line-numbers > code {
   background: #ddd;
   border-radius: 4px;
   border: 1px solid #ddd;
+  overflow: hidden;
+  /* hide any shadows from map plugin */
 }
 .p-landing-page .o-featured .o-featured__map > .m-map {
   width: 100%;
