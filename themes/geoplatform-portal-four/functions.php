@@ -1155,7 +1155,7 @@ function geopportal_breadcrumb_box_content($post) {
 // save data from checkboxes
 function geopportal_breadcrumb_post_data($post_id) {
   if ( !isset( $_POST['geopportal_breadcrumb_title'] ) || is_null( $_POST['geopportal_breadcrumb_title']) || empty( $_POST['geopportal_breadcrumb_title'] ))
-    update_post_meta( $post_id, 'geopportal_breadcrumb_title', '0' );
+    update_post_meta( $post_id, 'geopportal_breadcrumb_title', '' );
   else
 		update_post_meta( $post_id, 'geopportal_breadcrumb_title', $_POST['geopportal_breadcrumb_title'] );
 }
