@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Config, ItemService } from "geoplatform.client";
 
+import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
 import { NG2HttpClient } from "./shared/http-client";
 import { environment } from '../environments/environment';
@@ -22,7 +23,7 @@ export class AppComponent {
     public error : ItemDetailsError;
     private template: any;
 
-    constructor(http : HttpClient) {
+    constructor(private el: ElementRef, http : HttpClient) {
         let client = new NG2HttpClient(http);
         this.itemService = new ItemService(Config.ualUrl, client);
     }
@@ -39,7 +40,10 @@ export class AppComponent {
 
         //fetch item using itemService
         this.itemService.get(match.id)
-        .then( item => { this.item = item; })
+        .then( item => {
+            this.item = item;
+            this.updatePageTitle( ItemHelper.getLabel(this.item) );
+        })
         .catch( e => {
             //display error message indicating failure to load item
             if(e.status && e.status === 404) {
@@ -74,7 +78,23 @@ export class AppComponent {
         return null;
     }
 
+    /**
+     * @param {string} title - value to assign to page title
+     */
+    updatePageTitle( title : string ) {
+        if(!title || !title.length) return;
+        let document = this.el.nativeElement.ownerDocument;
+        if(document) {
+            let titleEls = document.getElementsByClassName('a-page__title');
+            if(titleEls.length) {
+                titleEls[0].innerHTML = title;
+            }
+        }
+    }
 
+    /**
+     * @param {Error} e
+     */
     handleNotFound(e : Error) {
         this.handleError({
             label: "Item Not Found",
@@ -82,6 +102,9 @@ export class AppComponent {
         });
     }
 
+    /**
+     * @param {Error} e
+     */
     handleUnauthorized(e : Error) {
         this.handleError({
             label: "Unauthorized",
@@ -89,6 +112,9 @@ export class AppComponent {
         });
     }
 
+    /**
+     * @param {Error} e
+     */
     handleError(e : any) {
         this.error = new ItemDetailsError(e.message);
         this.error.label = e.label || e.error || "An Error Occurred";
