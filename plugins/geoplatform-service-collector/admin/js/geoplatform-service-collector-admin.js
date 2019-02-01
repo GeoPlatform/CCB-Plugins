@@ -29,12 +29,13 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	 /* This is the document ready jQuery block, which contains the button press
-    * detectors for the add and remove map buttons. In both cases, when a button
-		* is pressed, the necessary data is collected and sent to the admin-ajax.php
-		* function which passes that info off to the associated function in geoplatform-maps.php,
-		* which IN TURN pass them off to the associated files in admin/partials. Once
-		* the operation is performed, any issues encountered will be shown in an
-		* alert window before the page reloads.
+    * detectors for the add and remove carousel buttons. In both cases, when a
+		* button is pressed, the necessary data is collected and sent to the
+		* admin-ajax.php function which passes that info off to the associated
+		* function in geoplatform-service-collector.php, which IN TURN pass them off
+		* to the associated files in admin/partials. Once the operation is performed,
+		* any issues encountered will be shown in an alert window before the page
+		* reloads.
    */
   jQuery(document).ready(function() {
     jQuery("#geopserve_add_action").click(function(e){
