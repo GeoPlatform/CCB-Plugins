@@ -209,40 +209,54 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     getActivationUrl(item) {
-        let url = null;
+        let type = null;
         switch(item.type) {
-
-            case ItemTypes.MAP:
-                let types = item.resourceTypes;
-                let AGOL_MAP_TYPE = 'http://www.geoplatform.gov/ont/openmap/AGOLMap';
-                if(types && types.length && ~types.indexOf(AGOL_MAP_TYPE))
-                    url = item.landingPage;
-                else
-                    url = this.getMapViewerURL() + '?id=' + item.id;
-                break;
-
-            case ItemTypes.GALLERY:
-                url = this.getGalleryURL() + '/galleries/' + item.id;
-                break;
-
-            case ItemTypes.SERVICE:
-                url = this.getDashboardURL() + '/sd/details/' + item.id;
-                break;
-
-            case ItemTypes.DATASET:
-                url = this.getDashboardURL() + '/dd/details/' + item.id;
-                break;
-
             case ItemTypes.LAYER:
+            case ItemTypes.MAP: type = item.type.toLowerCase() + 's'; break;
+            case ItemTypes.GALLERY: type = "galleries"; break;
+            case ItemTypes.COMMUNITY: type = "communities"; break;
+            case ItemTypes.CONTACT: type = "contacts"; break;
+            case ItemTypes.SERVICE:
+            case ItemTypes.DATASET:
             case ItemTypes.ORGANIZATION:
-            case ItemTypes.CONTACT:
-            case ItemTypes.COMMUNITY:
             case ItemTypes.CONCEPT:
             case ItemTypes.CONCEPT_SCHEME:
-            default:
-                return this.getObjectEditorURL() + '/view/' + item.id;
+                type = item.type.split(':')[1].toLowerCase() + 's'; break;
         }
-        return url;
+        if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
+        else return '/resources';
+
+            // case ItemTypes.MAP:
+            //     let types = item.resourceTypes;
+            //     let AGOL_MAP_TYPE = 'http://www.geoplatform.gov/ont/openmap/AGOLMap';
+            //     if(types && types.length && ~types.indexOf(AGOL_MAP_TYPE))
+            //         url = item.landingPage;
+            //     else
+            //         url = this.getMapViewerURL() + '?id=' + item.id;
+            //     break;
+            //
+            // case ItemTypes.GALLERY:
+            //     url = this.getGalleryURL() + '/galleries/' + item.id;
+            //     break;
+            //
+            // case ItemTypes.SERVICE:
+            //     url = this.getDashboardURL() + '/sd/details/' + item.id;
+            //     break;
+            //
+            // case ItemTypes.DATASET:
+            //     url = this.getDashboardURL() + '/dd/details/' + item.id;
+            //     break;
+            //
+            // case ItemTypes.LAYER:
+            // case ItemTypes.ORGANIZATION:
+            // case ItemTypes.CONTACT:
+            // case ItemTypes.COMMUNITY:
+            // case ItemTypes.CONCEPT:
+            // case ItemTypes.CONCEPT_SCHEME:
+            // default:
+            //     return this.getObjectEditorURL() + '/view/' + item.id;
+        // }
+        // return url;
     }
 
 
