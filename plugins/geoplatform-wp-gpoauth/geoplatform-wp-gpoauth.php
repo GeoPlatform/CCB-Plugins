@@ -38,7 +38,7 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'GEOWPOAUTH_PLUGIN', '1.0.0' );
 
 
-// Sets the parameters of and then creates the search page. It deletes any old
+// Sets the parameters of and then creates the token page. It deletes any old
 // version of that page before each generation.
 function geopoauth_add_interface_page() {
 	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'checktoken' ))), true);
@@ -53,13 +53,15 @@ function geopoauth_add_interface_page() {
 	wp_insert_post($geopsearch_interface_post);
 }
 
-// Activation hooks, including our interface addition to fire on activation.
+// Activation hook for the token page.
 register_activation_hook( __FILE__, 'geopoauth_add_interface_page' );
 
 
-
+// Hook for application of response headers.
 add_action('template_redirect', 'geopoauth_register_authorize');
 
+// Checks the current page, ensuring that it is the "checktoken" page. If it is,
+// the Authorize => Bearer token response header is applied to that page.
 function geopoauth_register_authorize(){
 	if (is_page()){
 		global $post;
