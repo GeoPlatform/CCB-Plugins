@@ -109,10 +109,11 @@ function geopitems_add_rewrite_rules( $wp_rewrite )
 }
 add_action('generate_rewrite_rules', 'geopitems_add_rewrite_rules');
 
+// Deprecated function.
 function myplugin_rewrite_tag() {
 	add_rewrite_tag( '%q%', '([^/]+)' );
 }
-add_action('init', 'myplugin_rewrite_tag', 10, 0);
+// add_action('init', 'myplugin_rewrite_tag', 10, 0);
 
 
 // Additional dependency enqueues.

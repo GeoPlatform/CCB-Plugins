@@ -46,6 +46,7 @@
  			return false;
     });
 
+		// This method is currently not in use.
 		jQuery('#geopitems_flush').click(function(){
       var data = {
  				action: "geopitems_flush",
