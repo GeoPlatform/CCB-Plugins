@@ -109,10 +109,11 @@ function geopitems_add_rewrite_rules( $wp_rewrite )
 }
 add_action('generate_rewrite_rules', 'geopitems_add_rewrite_rules');
 
+// Deprecated function.
 function myplugin_rewrite_tag() {
 	add_rewrite_tag( '%q%', '([^/]+)' );
 }
-add_action('init', 'myplugin_rewrite_tag', 10, 0);
+// add_action('init', 'myplugin_rewrite_tag', 10, 0);
 
 
 // Additional dependency enqueues.
@@ -138,6 +139,7 @@ function geopitems_process_refresh() {
 }
 add_action('wp_ajax_geopitems_refresh', 'geopitems_process_refresh');
 
+// No include necessary, simple rule flush action.
 function geopitems_process_flush() {
 	flush_rewrite_rules();
 	wp_die();

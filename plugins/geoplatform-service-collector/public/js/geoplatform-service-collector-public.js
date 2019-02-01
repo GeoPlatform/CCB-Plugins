@@ -38,9 +38,12 @@
 // *  #param geopserve_count_in: number of panes to generate.
 // *  #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // *  #param geopserve_thumb_in: 404 image url, in case there is no image to use.
+// *  #param geopserve_uri_in: UAL uri for this particular asset type, used for harvesting.
+// *  #param geopserve_redirect_in: Panel base URL for this particular asset type.
 //
 function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in){
 
+	// Service collection setup.
 	const Query = GeoPlatform.Query;
 	const ItemTypes = GeoPlatform.ItemTypes;
 	const QueryParameters = GeoPlatform.QueryParameters;
@@ -48,6 +51,7 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 
 	var query = new GeoPlatform.Query();
 
+	// Sets type of asset type to grab.
 	if (geopserve_cat_in == "Data")
 		query.setTypes(ItemTypes.DATASET);
 	if (geopserve_cat_in == "Services")
@@ -59,13 +63,17 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 	if (geopserve_cat_in == "Galleries")
 		query.setTypes(ItemTypes.GALLERY);
 
+	// Sets return count.
 	query.setPageSize(geopserve_count_in);
 	query.setSort('modified,desc');
+
+	// Restricts results to a single community, if provided.
 	if (geopserve_id_in) {
 		query.usedBy(geopserve_id_in);
 	}
 	query.setQ("");
 
+	// Performs the query grab.
 	geopserve_retrieve_objects(query)
 		.then(function (response) {
 			var geopserve_max_panes = geopserve_count_in;

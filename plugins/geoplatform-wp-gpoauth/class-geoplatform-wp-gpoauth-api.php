@@ -1,5 +1,10 @@
 <?php
 /**
+ * THIS FILE IS DEPRECATED AND NOT USED BY THE PLUGIN.
+ * IT IS PRESENT ONLY FOR DOCUMENTATION.
+ */
+
+/**
  * This is a list of the API endpoints that need to be exposed by WordPress
  * in order for ng-gpoauth to opporate.
  */

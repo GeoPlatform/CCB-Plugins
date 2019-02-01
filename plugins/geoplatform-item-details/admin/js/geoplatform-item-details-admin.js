@@ -46,6 +46,9 @@
  			return false;
     });
 
+		// Flushes the rewrite rules so that new rules can be written. Also done on
+		// plugin activation and deactivation, but handy to have here. Should not
+		// need to be used but rarely.
 		jQuery('#geopitems_flush').click(function(){
       var data = {
  				action: "geopitems_flush",

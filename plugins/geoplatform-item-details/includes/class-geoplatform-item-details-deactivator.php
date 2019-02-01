@@ -30,6 +30,8 @@ class Geoplatform_Item_Details_Deactivator {
 	 * @since    1.0.0
 	 */
 	public static function deactivate() {
+
+		// Deactivation flushes the page's rewrite rules.
 		flush_rewrite_rules();
 	}
 }

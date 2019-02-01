@@ -12,9 +12,6 @@ get_header();
 get_template_part( 'sub-header-post', get_post_format() );
 ?>
 
-<div class="l-body l-body--one-column">
-  <div class="l-body__main-column">
-    <app-root></app-root>
-  </div>
-</div>
+<app-root></app-root>
+
 <?php get_footer(); ?>

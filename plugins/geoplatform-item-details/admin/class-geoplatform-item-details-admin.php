@@ -100,7 +100,6 @@ class Geoplatform_Item_Details_Admin {
 
 	}
 
-
 	/**
 	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
 	 *

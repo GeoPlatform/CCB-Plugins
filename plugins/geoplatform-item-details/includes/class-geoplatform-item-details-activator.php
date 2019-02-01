@@ -30,6 +30,8 @@ class Geoplatform_Item_Details_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
+
+		// Activation flushes the page's rewrite rules.
 		flush_rewrite_rules();
 	}
 
