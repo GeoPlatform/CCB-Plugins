@@ -39,7 +39,7 @@
 // *  #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // *  #param geopserve_thumb_in: 404 image url, in case there is no image to use.
 //
-function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in){
+function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in){
 
 	const Query = GeoPlatform.Query;
 	const ItemTypes = GeoPlatform.ItemTypes;
@@ -95,7 +95,7 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 				geopserve_result_time = geopserve_temp_date.toLocaleString('en-us', { month: 'short' }) + " " + geopserve_temp_date.getDate() + ", " + geopserve_temp_date.getFullYear();
 			}
 
-			var geopserve_asset_link = "https://oe.geoplatform.gov/view/" + geopserve_results[i].id;
+			var geopserve_asset_link = geopserve_redirect_in + geopserve_results[i].id;
 
 			var geopserve_thumb_src = geopserve_uri_in + geopserve_results[i].id + "/thumbnail";
 			var geopserve_thumb_error = "this.src='" + geopserve_thumb_in + "'";
