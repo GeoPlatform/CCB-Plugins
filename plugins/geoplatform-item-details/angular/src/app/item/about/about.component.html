@@ -23,6 +23,27 @@
         <span *ngIf="!item.lastModifiedBy">an unknown user</span>
     </div>
 
+    <div class="m-article__desc" *ngIf="item.visibility">
+        <strong>Visibility </strong>{{item.visibility}}
+    </div>
+
+    <div class="m-article__desc">
+        <strong>GeoPlatform URI </strong>
+        <p class="u-text--sm t-fg--gray-md u-break--all">{{item.uri}}</p>
+    </div>
+
+    <div class="m-article__desc" *ngIf="item.temporal">
+        <strong>Temporal Extent </strong>
+        <div>
+            <span *ngIf="item.temporal.startDate">{{item.temporal.startDate|date:'mediumDate'}}</span>
+            <em *ngIf="!item.temporal.startDate">N/A</em>
+             -
+            <span *ngIf="item.temporal.endDate">{{item.temporal.endDate|date:'mediumDate'}}</span>
+            <em *ngIf="!item.temporal.endDate">N/A</em>
+        </div>
+    </div>
+
+
     <div class="m-article__desc" *ngIf="item?.landingPage">
         <strong>Home Page </strong>
         <a href="{{item.landingPage}}" target="_blank">link</a>

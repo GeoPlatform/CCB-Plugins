@@ -23,10 +23,31 @@
         <!-- General Details -->
         <div class="m-section-group">
             <div class="m-article">
-                <div class="m-article__heading">{{item?.type|friendlyType}} : {{item?.label}}</div>
-                <div class="u-text--sm t-fg--gray-md">{{item?.uri}}</div>
 
-                
+                <!--
+                <div class="m-article__heading">{{item?.type|friendlyType}} : {{item?.label}}</div>
+                <br>
+                -->
+
+                <!-- all item types -->
+                <div class="m-article__desc" *ngIf="item?.purpose">
+                    <div><strong>Purpose</strong></div>
+                    {{item.purpose}}
+                </div>
+
+                <div class="m-article__desc" *ngIf="item?.identifiers && item?.identifiers.length">
+                    <div>
+                        <strong>Additional Identifiers</strong>
+                    </div>
+                    <div *ngFor="let svc of item.identifiers; let $idx=index;">
+                        {{item.identifiers[$idx]}}
+                    </div>
+                </div>
+
+
+
+
+
                 <!-- Service -->
                 <div class="m-article__desc" *ngIf="item?.serviceType">
                     <div><strong>Service Type</strong></div>
@@ -57,8 +78,12 @@
                 </div>
 
                 <div class="m-article__desc" *ngIf="item?.services && item?.services.length">
-                    <div><strong>Service</strong></div>
-                    <gpid-resource-link [item]="item.services[0]"></gpid-resource-link>
+                    <div>
+                        <strong>Service<span *ngIf="!item.layerType">(s)</span></strong>
+                    </div>
+                    <div *ngFor="let svc of item.services; let $idx=index;">
+                        <gpid-resource-link [item]="item.services[$idx]"></gpid-resource-link>
+                    </div>
                 </div>
 
 
@@ -173,6 +198,11 @@
         <gpid-used-by class="m-section-group"
             *ngIf="isAsset()" [communities]="item?.usedBy">
         </gpid-used-by>
+
+
+        <!-- Related Resources -->
+        <gpid-related class="m-section-group" [related]="item?.related">
+        </gpid-related>
 
 
         <!-- Service Statistics -->

@@ -1,7 +1,21 @@
 <div>
 
 
-    <div class="m-map-container" id="item-coverage-map">
+    <div class="m-map-container" id="item-coverage-map"></div>
+
+    <div *ngIf="errors && errors.length">
+        <br>
+        <strong>
+            <span class="fas fa-exclamation-circle t-fg--danger"></span>
+            Errors were encountered with the
+            <span *ngIf="layerId">layer</span>
+            <span *ngIf="mapId">map</span>
+            <span *ngIf="!mapId&&!layerId">coverage map</span>
+            :
+        </strong>
+        <div *ngFor="let error of errors">
+            - {{error.message}}
+        </div>
     </div>
 
 </div>

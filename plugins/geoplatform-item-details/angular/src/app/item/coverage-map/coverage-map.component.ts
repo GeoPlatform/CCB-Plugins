@@ -37,6 +37,8 @@ export class CoverageMapComponent implements OnInit, OnChanges {
     @Input() mapId : string;
     @Input() layerId : string;
 
+    public errors : any[] = [] as any[];
+
     private layerService : LayerService;
     private httpClient : NG2HttpClient;
     private map : MapInstance;
@@ -67,6 +69,9 @@ export class CoverageMapComponent implements OnInit, OnChanges {
 
         this.map = MapFactory.get('GPMVMAP');
         this.map.setMap(map);
+        this.map.setErrorHandler( (error) => {
+            this.errors.push(error);
+        });
 
         let httpClient = new NG2HttpClient(this.http);
         // httpClient.setAuthToken(function() {

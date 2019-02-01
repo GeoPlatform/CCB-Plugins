@@ -53,6 +53,7 @@ import { DeleteActionComponent } from './item/actions/delete-action/delete-actio
 import { DatasetDistributionsComponent } from './item/dataset-distributions/dataset-distributions.component';
 import { LikeActionComponent } from './item/actions/like-action/like-action.component';
 import { UsedByComponent } from './item/used-by/used-by.component';
+import { RelatedComponent } from './item/related/related.component';
 
 
 
@@ -110,7 +111,8 @@ export function initializeApp() {
         DeleteActionComponent,
         DatasetDistributionsComponent,
         LikeActionComponent,
-        UsedByComponent
+        UsedByComponent,
+        RelatedComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),

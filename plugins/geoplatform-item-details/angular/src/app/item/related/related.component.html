@@ -1,0 +1,32 @@
+<div class="m-article">
+    <div class="m-article__heading">
+        <span class="fas"
+            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+            (click)="toggleCollapsed()">
+        </span>
+        Related Resources ({{related?.length||0}})
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
+        Expand to see related resources for this resource
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}">
+
+        <div *ngIf="!related || !related.length">
+            <em>None specified</em>
+        </div>
+
+        <div *ngFor="let rel of related">
+            <span *ngIf="!rel.href">
+                {{rel.label||"Un-titled resource"}} <em>(no url specified)</em>
+            </span>
+            <a *ngIf="rel.href" href="{{rel.href}}" target="_blank">
+                {{rel.label||"Un-titled resource"}}
+            </a>
+            <p class="t-fg--gray-md" *ngIf="rel.description">{{rel.description}}</p>
+        </div>
+
+    </div>
+
+</div>

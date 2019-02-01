@@ -51,19 +51,19 @@ export class ItemHelper {
             case ItemTypes.MAP :
             case ItemTypes.GALLERY :
             case ItemTypes.COMMUNITY :
-                return item.label || item.title;
+                return item.label || item.title || "Un-titled resource";
 
             case ItemTypes.ORGANIZATION :
             case ItemTypes.PERSON :
-                return item.label || item.name;
+                return item.label || item.name || "Un-titled resource";
 
             case ItemTypes.CONCEPT :
             case ItemTypes.CONCEPT_SCHEME :
-                return item.label || item.prefLabel;
+                return item.label || item.prefLabel || "Un-titled resource";
 
 
             case ItemTypes.CONTACT :
-                return item.fullName +
+                return (item.fullName || 'Unnamed contact') +
                     ( item.orgName ? " (" + item.orgName + ")" : '');
 
             default: return 'Unknown type';
