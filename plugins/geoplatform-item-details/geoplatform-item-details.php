@@ -139,6 +139,7 @@ function geopitems_process_refresh() {
 }
 add_action('wp_ajax_geopitems_refresh', 'geopitems_process_refresh');
 
+// No include necessary, simple rule flush action.
 function geopitems_process_flush() {
 	flush_rewrite_rules();
 	wp_die();

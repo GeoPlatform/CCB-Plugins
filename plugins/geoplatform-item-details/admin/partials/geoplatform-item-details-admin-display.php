@@ -21,10 +21,12 @@
   <h2 class="geopitems_admin_title"><?php echo esc_html(get_admin_page_title()); ?></h2>
   <div style="width:50%;">
     <p>Your GeoPlatform Items Manager has been created. You can find it at "{base site name}/resources/{resource type}/{resource id}".<br>
-      If something has occured that renders the page inoperable, press the Recreate Items Interface button below.
+      If something has occured that renders the page inoperable, press the Recreate Items Interface button below.<br>
+      If there has been an update to the rewrite rules for any reason, they can be applied by flushing the rules with the button below.<br>
     </p>
     <button class="button-secondary" id="geopitems_reset">Recreate Items Interface</button>
-    <!-- <button class="button-secondary" id="geopitems_flush">Flush Rewrite Rules</button> -->
+    &nbsp&nbsp
+    <button class="button-secondary" id="geopitems_flush">Flush Rewrite Rules</button>
   </div>
 </div>
 </body>
