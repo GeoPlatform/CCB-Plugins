@@ -323,7 +323,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		$geopmap_base_icon = 'fa';
 		$geopmap_check_icon = 'fa-check-square';
 		$geopmap_uncheck_icon = 'fa-square';
-		$geopmap_redirect = 'fa fa-plus-circle';
+		$geopmap_redirect = 'fa fa-external-link-alt';
 	}
 
 	// GeoPlatform Portal 4 theme detection, which will determine explicit output
@@ -375,8 +375,8 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			</div>
 		<?php } else { ?>
 			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
-				<a class="geop-hidden-link" title="Visit full map" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
-					<span class="geop-redirect-icon <?php echo $geopmap_redirect ?>"></span>
+				<a class="geop-hidden-link" title="Open Map" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
+					<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
 				</a>
 			</div>
 		<?php	} ?>

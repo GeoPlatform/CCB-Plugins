@@ -5,16 +5,13 @@
 // basic page with the hook text.
 wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'geoplatform-search' ))), true);
 $geopsearch_interface_post = array(
-  'post_title' => 'GeoPlatform Search',
+  'post_title' => 'Search the GeoPlatform',
   'post_name' => 'geoplatform-search',
   'post_status' => 'publish',
   'post_type' => 'page',
+  'post_content' => '<app-root></app-root>',
 );
-if (is_page_template('page-templates/geop_search_page.php'))
-  $geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/geop_search_page.php'));
-else if (is_page_template('page-templates/page_full-width.php'))
-  $geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/page_full-width.php'));
-else
-  $geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>'));
-wp_insert_post($geopsearch_interface_post);
+
+$geopsearch_creation_id = wp_insert_post($geopsearch_interface_post);
+update_post_meta($geopsearch_creation_id, 'geopportal_breadcrumb_title', 'Search');
 ?>
