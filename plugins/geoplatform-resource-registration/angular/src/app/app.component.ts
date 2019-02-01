@@ -6,7 +6,7 @@ import { filter } from 'rxjs/operators'
 import { MatStepper } from '@angular/material';
 import { ItemTypes } from 'geoplatform.client';
 
-import { AuthService, GeoPlatformUser } from 'ng-gpoauth/Angular'
+import { AuthService, GeoPlatformUser } from 'ng-gpoauth/angular'
 
 import { StepComponent, StepEvent } from './steps/step.component';
 import { TypeComponent } from './steps/type/type.component';

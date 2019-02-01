@@ -20,7 +20,7 @@ import {
 import { AppComponent } from './app.component';
 
 //configure the necessary environment variables needed by GeoPlatformClient
-import { environment, authConfig } from '../environments/environment';
+import { environment } from '../environments/environment';
 import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
@@ -32,8 +32,10 @@ export function initializeApp() {
 }
 
 // Setup auth service (pass in config)
-import { ngGpoauthFactory, AuthService } from 'ng-gpoauth/Angular';
-const authService = ngGpoauthFactory(authConfig);
+import { ngGpoauthFactory, AuthService } from 'ng-gpoauth/angular';
+const authService = ngGpoauthFactory({
+    APP_BASE_URL: 'http://localhost/my-test-site'
+});
 
 @Pipe({
     name: 'prettyJson'
@@ -46,20 +48,12 @@ export class PrettyJsonPipe implements PipeTransform {
     }
 }
 
-
-
-
-
 // //ROUTING CONFIG
 // const appRoutes: Routes = [
 //
 //     { path: '',     component: AppComponent },
 //     { path: '**',   component: AppComponent }
 // ];
-
-
-
-
 
 @NgModule({
   declarations: [

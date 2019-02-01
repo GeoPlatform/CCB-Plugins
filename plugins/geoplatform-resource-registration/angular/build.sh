@@ -7,14 +7,12 @@ JSDEST="../public/js"
 CSSDEST="../public/css"
 ASSETDEST="../assets"
 
-# Because Angular is so cool as to require a convo like this:
-#   https://stackoverflow.com/questions/37558656/angular-cli-ng-build-doesnt-produce-a-working-project
-#
-# We will then have to go ahead and make this build script in primitive "bash"
-# to suplement the new shiny "advanced" Angular tool.
-#
-# Thanks Google!
-ng build --prod --environment=${1:-prod}
+rm ../public/js/*bundle.js
+rm -r dist/*
+
+# https://stackoverflow.com/questions/37558656/angular-cli-ng-build-doesnt-produce-a-working-project
+ng build --environment=${1:-prod} --preserve-symlinks --aot #--build-optimizer=false
+# ng build --prod --environment=${1:-prod}
 
 declare -a names=(
   "main"
@@ -23,14 +21,15 @@ declare -a names=(
   "inline"
 )
 
+# Note * was removed, it was: $NGDIST/$name.*.bundle.js (left hand side)
 for name in "${names[@]}"; do
-  echo $JSDEST/$name.bundle.js " <- " $NGDIST/$name.*.bundle.js
-  cp $NGDIST/$name.*.bundle.js $JSDEST/$name.bundle.js
+  echo $JSDEST/$name.bundle.js " <- " $NGDIST/$name.bundle.js
+  cp $NGDIST/$name.bundle.js $JSDEST/$name.bundle.js
 done
 
 # Don't forget the Styles! (they count too!)
-echo $CSSDEST/styles.bundle.js " <- " $NGDIST/styles.*.bundle.js
-cp $NGDIST/styles.*.bundle.css $CSSDEST/styles.bundle.css
+echo $CSSDEST/styles.bundle.js " <- " $NGDIST/styles.bundle.js
+cp $NGDIST/styles.bundle.css $CSSDEST/styles.bundle.css
 
 # Copy all the other files types as well
 cp $NGDIST/*.eot $CSSDEST
