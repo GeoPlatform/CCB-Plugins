@@ -129,7 +129,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	/**
 	 * Detect plugin. For use on Front End only.
 	 */
-	// include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 	// Data category array format for each entry is....
 	// Button text, search bar text, search query, base uri, and temporary box text.
