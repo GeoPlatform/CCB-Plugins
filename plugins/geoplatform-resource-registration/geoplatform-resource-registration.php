@@ -88,6 +88,14 @@ register_activation_hook( __FILE__, 'geopregister_add_interface_page' );
 register_activation_hook( __FILE__, 'activate_geoplatform_resource_registration' );
 register_deactivation_hook( __FILE__, 'deactivate_geoplatform_resource_registration' );
 
+// Additional dedicated google fonts enqueue to make sure it comes before others.
+function geopregister_google_enqueue(){
+	if (is_page('register')){
+		wp_enqueue_style('google_fonts', 'https://fonts.googleapis.com/icon?family=Material+Icons');
+	}
+}
+add_action( 'template_redirect', 'geopregister_google_enqueue', 5 );
+
 // Additional dependency enqueues.
 function geopregister_page_enqueues(){
 	if (is_page('register')){
@@ -98,7 +106,7 @@ function geopregister_page_enqueues(){
 		wp_enqueue_style( 'styles_bundle', plugin_dir_url( __FILE__ ) . 'public/css/styles.bundle.css', array(), false, 'all' );
 	}
 }
-add_action( 'template_redirect', 'geopregister_page_enqueues' );
+add_action( 'template_redirect', 'geopregister_page_enqueues', 10 );
 
 // AJAX handling only seems to function properly if both the hooks and PHP
 // functions are placed in this file. Instead of producing clutter, the files
