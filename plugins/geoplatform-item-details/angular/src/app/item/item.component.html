@@ -1,0 +1,295 @@
+<ul class="m-page-breadcrumbs">
+    <li><a href="/">Home</a></li>
+    <li><a href="/resources">Resources</a></li>
+    <li><a href="/resources/{{getTypeKey()}}">{{item?.type|friendlyType}}</a></li>
+    <li class="is-active"><a>{{item?.label}}</a></li>
+</ul>
+
+<div class="m-page-overview" (window:resize)="onResize()">
+    <div class="a-description__container"
+        [ngClass]="{'is-collapsed':descriptionCollapsed}">
+        <div class="a-description__display" [innerHTML]="item?.description||'No description provided'"></div>
+    </div>
+    <div class="m-page-overview__toggle" *ngIf="hasLongDescription" (click)="toggleDesc()">
+        <span class="fas"
+            [ngClass]="{'fa-caret-down':descriptionCollapsed,'fa-caret-up':!descriptionCollapsed}"></span>
+    </div>
+</div>
+
+<div class="l-body l-body--two-column">
+
+    <div class="l-body__main-column">
+
+        <!-- General Details -->
+        <div class="m-section-group">
+            <div class="m-article">
+                <div class="m-article__heading">{{item?.type|friendlyType}} : {{item?.label}}</div>
+                <div class="u-text--sm t-fg--gray-md">{{item?.uri}}</div>
+
+                
+                <!-- Service -->
+                <div class="m-article__desc" *ngIf="item?.serviceType">
+                    <div><strong>Service Type</strong></div>
+                    {{item.serviceType.label || "Untitled service type"}}
+                </div>
+
+                <div class="m-article__desc" *ngIf="item?.href">
+                    <div><strong>Access URL</strong></div>
+                    <a href="{{item.href}}" target="_blank" class="u-break--all">{{item.href}}</a>
+                </div>
+
+
+
+                <!-- Layers -->
+                <div class="m-article__desc" *ngIf="item?.layerType">
+                    <div><strong>Layer Type</strong></div>
+                    {{item.layerType}}
+                </div>
+
+                <div class="m-article__desc" *ngIf="item?.layerName">
+                    <div><strong>Layer Name</strong></div>
+                    {{item.layerName}}
+                </div>
+
+                <div class="m-article__desc" *ngIf="item?.supportedFormats">
+                    <div><strong>Layer Formats</strong></div>
+                    <span *ngFor="let format of layer.supportedFormats">{{format}}</span>
+                </div>
+
+                <div class="m-article__desc" *ngIf="item?.services && item?.services.length">
+                    <div><strong>Service</strong></div>
+                    <gpid-resource-link [item]="item.services[0]"></gpid-resource-link>
+                </div>
+
+
+                <!-- Concepts -->
+                <div class="m-article__desc" *ngIf="item?.scheme">
+                    <div><strong>Concept Scheme</strong></div>
+                    <gpid-resource-link [item]="item.scheme"></gpid-resource-link>
+                </div>
+
+
+                <!-- Organization -->
+                <div class="m-article__desc" *ngIf="item?.subOrganizationOf">
+                    <div><strong>Sub Organization Of</strong></div>
+                    <gpid-resource-link [item]="item.subOrganizationOf"></gpid-resource-link>
+                </div>
+
+                <!-- Contact -->
+                <div class="m-article__desc" *ngIf="item?.type==='vcard:VCard'">
+                    <div><strong>Full Name</strong></div>
+                    <div>{{item.fullName||"Not specified"}}</div>
+                    <br>
+
+                    <div><strong>Organization</strong></div>
+                    <div>{{item.orgName||"Not specified"}}</div>
+                    <br>
+
+                    <div><strong>Position</strong></div>
+                    <div>{{item.positionTitle||"Not specified"}}</div>
+                    <br>
+
+                    <div><strong>Email</strong></div>
+                    <div>{{item.email||"Not specified"}}</div>
+                    <br>
+
+                    <div><strong>Phone</strong></div>
+                    <div>{{item.tel||"Not specified"}}</div>
+                    <br>
+
+                    <div *ngIf="item.address">
+                        <div><strong>Address</strong></div>
+                        <div *ngIf="item.address.street">{{item.address.street}}</div>
+                        <span *ngIf="item.address.locality">{{item.address.locality}}</span>
+                        <span *ngIf="item.address.region">{{item.address.region}}</span>
+                        <span *ngIf="item.address.zip">{{item.address.zip}}</span>
+                        <div *ngIf="item.address.country">{{item.address.country}}</div>
+                    </div>
+                </div>
+
+                <!-- Person -->
+                <div class="m-article__desc" *ngIf="item?.type==='foaf:Person'">
+                    <div><strong>Name</strong></div>
+                    <div>{{item.name||"Not specified"}}</div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="m-section-group" *ngIf="hasCoverage()">
+            <div class="m-article">
+                <div class="m-article__heading">
+                    <span *ngIf="item?.type==='Map'">Map Preview</span>
+                    <span *ngIf="item?.type==='Layer'">Layer Preview</span>
+                    <span *ngIf="item?.type!=='Map'&&item?.type!=='Layer'">Geographic Extent</span>
+                </div>
+                <br>
+                <gpid-coverage-map
+                    [extent]="item?.extent"
+                    [mapId]="item?.type==='Map'?item.id:null"
+                    [layerId]="item?.type==='Layer'?item.id:null">
+                </gpid-coverage-map>
+            </div>
+        </div>
+
+
+        <!-- Dataset Distributions -->
+        <gpid-dataset-distributions class="m-section-group"
+            *ngIf="'dcat:Dataset'===item?.type" [item]="item">
+        </gpid-dataset-distributions>
+
+
+
+        <!-- Service Layers -->
+        <gpid-service-layers class="m-section-group"
+            *ngIf="'regp:Service'===item?.type"
+            [serviceId]="item?.id">
+        </gpid-service-layers>
+
+
+        <!-- Map Layers -->
+        <gpid-map-layers class="m-section-group"
+            *ngIf="'Map'===item?.type"
+            [map]="item">
+        </gpid-map-layers>
+
+
+        <!-- Gallery Items -->
+        <gpid-gallery-items class="m-section-group"
+            *ngIf="'Gallery'===item?.type"
+            [items]="item?.items">
+        </gpid-gallery-items>
+
+
+        <!-- Community -->
+        <gpid-community-members class="m-section-group"
+            *ngIf="'Community'===item?.type"
+            [members]="item?.members">
+        </gpid-community-members>
+
+
+        <!-- Used By (Community Refences) -->
+        <gpid-used-by class="m-section-group"
+            *ngIf="isAsset()" [communities]="item?.usedBy">
+        </gpid-used-by>
+
+
+        <!-- Service Statistics -->
+        <gpid-service-stats class="m-section-group"
+            *ngIf="'regp:Service'===item?.type" [item]="item">
+        </gpid-service-stats>
+
+
+        <!-- RPM Usage -->
+        <gpid-usage *ngIf="isAsset()" class="m-section-group" [item]="item">
+        </gpid-usage>
+
+
+        <!-- Knowledge Graph -->
+        <gpid-kg *ngIf="isAsset()" class="m-section-group"
+            [classifiers]="item?.classifiers"></gpid-kg>
+
+
+    </div>
+
+
+
+    <div class="l-body__side-column">
+
+
+        <!-- THUMBNAIL -->
+        <gpid-depiction class="m-article" *ngIf="isAsset()"
+            [thumbnail]="item?.thumbnail">
+        </gpid-depiction>
+
+
+        <!-- ACTIONS -->
+        <div class="m-article p-item__actions">
+
+            <gpid-primary-action [item]="item"></gpid-primary-action>
+
+            <div *ngIf="isAsset()">
+                <gpid-like-action [item]="item" [service]="itemService"></gpid-like-action>
+                <gpid-export-action [item]="item" [service]="itemService"></gpid-export-action>
+            </div>
+
+            <gpid-edit-action [item]="item"></gpid-edit-action>
+            <!-- <gpid-delete-action [item]="item"></gpid-delete-action> -->
+
+        </div>
+
+
+        <!-- ABOUT -->
+        <gpid-about [item]="item" class="m-article"></gpid-about>
+
+
+        <!-- Keywords -->
+        <gpid-keywords [keywords]="item?.keywords" class="m-article"></gpid-keywords>
+
+        <br>
+
+        <!-- Associated Items
+        <div class="m-article">
+            <div class="m-article__heading">
+                <span class="fas fa-caret-down"
+                    onClick="toggleClass('#associated-items', 'is-hidden');toggleClass('#associated-items-summary', 'is-hidden')">
+                </span>
+                Associated Items
+            </div>
+            <div class="m-article__desc is-hidden" id="associated-items-summary">
+                Expand to see associated items
+            </div>
+            <div class="m-article__desc" id="associated-items">
+                <div><strong>Services</strong></div>
+                <div>
+                    <a href="/items/service.html">
+                        <img class="a-icon" src="/assets/icons/service.svg">
+                        Service
+                    </a>
+                </div>
+                <br>
+                <div><strong>Layers</strong></div>
+                <div>
+                    <a href="/items/layer.html">
+                        <img class="a-icon" src="/assets/icons/layer.svg">
+                        Layer A
+                    </a>
+                </div>
+                <div>
+                    <a href="/items/layer.html">
+                        <img class="a-icon" src="/assets/icons/layer.svg">
+                        Layer B
+                    </a>
+                </div>
+                <div>
+                    <a href="/items/layer.html">
+                        <img class="a-icon" src="/assets/icons/layer.svg">
+                        Layer C
+                    </a>
+                </div>
+                <div>
+                    <a href="/items/layer.html">
+                        <img class="a-icon" src="/assets/icons/layer.svg">
+                        Layer D
+                    </a>
+                </div>
+                <br>
+                <div><strong>Galleries</strong></div>
+                <div>
+                    <a href="/items/gallery.html">
+                        <img class="a-icon" src="/assets/icons/gallery.svg">
+                        Gallery
+                    </a>
+                </div>
+                <br>
+                <div><strong>Others</strong></div>
+                <div><a class="is-linkless">Related Resource</a></div>
+                <div><a class="is-linkless">Related Resource</a></div>
+            </div>
+        </div>
+        -->
+
+    </div>
+
+</div>

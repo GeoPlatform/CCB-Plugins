@@ -35,7 +35,15 @@
             <span class="fas fa-spinner spin" *ngIf="isLoading"></span>
             <span class="far fa-exclamation-circle" *ngIf="!isLoading&&error"></span>
         </div>
+
+        <button type="button" class="btn btn-link" (click)="showLegend=!showLegend"
+            title="Toggle the legend">
+            <span class="fas fa-th-list"></span>
+        </button>
     </div>
+
+
+    <portfolio-legend [isCollapsed]="!showLegend"></portfolio-legend>
 
 
     <!-- actual results -->

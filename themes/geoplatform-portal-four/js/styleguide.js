@@ -65,7 +65,34 @@ function onInputFieldClear(btn) {
     $el.addClass('is-hidden');
 }
 
+jQuery(document).ready( function() {
+  var wpAdminBar = jQuery('#wpadminbar');
+  if(wpAdminBar.length) {   //if admin bar is present...
 
+    var stickyHeader = jQuery('.o-header--sticky');
+    var primaryHeader = stickyHeader.find('.o-header__primary');
+    var menu = stickyHeader.find('.m-megamenu');
+
+    if(primaryHeader.length) {
+      primaryHeader.css({ top: '32px' }); //drop header by height of wp admin bar
+      menu.css({ top: '102px' }); //drop megamenu top by same amount
+    }
+
+    /* When user scrolls the page while wpadminbar is visible,
+     * adjust the megamenu top based upon whether the sticky header
+     * is shrunk or not
+    */
+    jQuery(document).on( 'scroll', function() {
+      if(stickyHeader.hasClass('is-shrunk')) {
+        if(parseInt(menu.css('top')) !== 82) {
+          menu.css({ top: '82px' });
+        }
+      } else if (parseInt(menu.css('top')) !== 102){
+        menu.css({ top: '102px' });
+      }
+    });
+  }
+});
 
 function cycleCarouselTo(selector, slideNo) {
     jQuery(selector).carousel( slideNo );

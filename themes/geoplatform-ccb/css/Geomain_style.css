@@ -2425,6 +2425,10 @@ header.primary .btn-account:hover>.btn {
     background: 0 0
 }
 
+.header__menu_alt>li>button, .header__menu_alt>li>a, .header__menu_alt>li>a:visited, .header__menu_alt>li>.btn-link, .header__menu_alt>li>a.btn-link, .header__menu_alt>li>.btn-group>button, .header__menu_alt>li>.btn-group>a, .header__menu_alt>li>.btn-group>a:visited, .header__menu_alt>li>.btn-group>.btn-link, .header__menu_alt>li>.btn-group>a.btn-link, .header__menu_alt .header__btn, .header__menu_alt a.header__btn, .header__menu_alt a.header__btn:visited {
+    color: inherit;
+}
+
 .header__menu>li>button>.glyphicon, .header__menu>li>a>.glyphicon, .header__menu>li>a:visited>.glyphicon, .header__menu>li>.btn-link>.glyphicon, .header__menu>li>a.btn-link>.glyphicon, .header__menu>li>.btn-group>button>.glyphicon, .header__menu>li>.btn-group>a>.glyphicon, .header__menu>li>.btn-group>a:visited>.glyphicon, .header__menu>li>.btn-group>.btn-link>.glyphicon, .header__menu>li>.btn-group>a.btn-link>.glyphicon, .header__menu .header__btn>.glyphicon, .header__menu a.header__btn>.glyphicon, .header__menu a.header__btn:visited>.glyphicon {
     vertical-align: baseline;
     font-size: 1em

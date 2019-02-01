@@ -1,0 +1,30 @@
+
+@import "../../../../../node_modules/geoplatform.style/src/less/variables.less";
+
+.m-legend {
+    font-size: 0.875em;
+
+    transition: opacity 0.3s linear;
+    height: auto;
+    opacity: 1;
+
+    &.is-collapsed {
+        height: 0;
+        opacity: 0;
+    }
+}
+
+.m-legend__items {
+    border-bottom: 1px solid @color-gray-xlt;
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #fff;
+}
+
+.m-legend__item {
+    margin-right: 1em;
+    flex-basis: 10em;
+}

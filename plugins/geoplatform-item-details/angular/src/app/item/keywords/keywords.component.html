@@ -1,0 +1,21 @@
+<div class="m-article__heading">
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleDisplay()">
+    </span>
+    Keywords
+</div>
+<div class="m-article__desc" *ngIf="isCollapsed">
+    Expand to see keywords
+</div>
+<div class="m-article__desc" *ngIf="!isCollapsed">
+    <div *ngIf="!keywords || !keywords.length">
+        <em>None specified</em>
+    </div>
+    <div *ngIf="keywords && keywords.length" class="u-text--left">
+        <a *ngFor="let key of keywords"
+            href="/geoplatform-search/#?keywords={{key}}"
+            class="a-badge--light">{{key}}
+        </a>
+    </div>
+</div>

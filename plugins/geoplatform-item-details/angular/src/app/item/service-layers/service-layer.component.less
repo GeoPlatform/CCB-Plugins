@@ -1,0 +1,43 @@
+
+:host > * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.m-list--tree {
+    margin-left: .35em;
+
+    & > * {
+        display: block;
+        border-left: 2px solid #bbb;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:before {
+            width: .9em;
+            height: 1em;
+            margin-right: .1em;
+            vertical-align: top;
+            border-bottom: 2px solid #bbb;
+            content: "";
+            display: inline-block;
+        }
+
+        & > * {
+            display: inline-block;
+        }
+
+        &:last-child {
+            border-left: none;
+            &:before {
+                border-left: 2px solid #bbb;
+            }
+        }
+    }
+}
+
+gpid-resource-link > a {
+    padding: .25em;
+}

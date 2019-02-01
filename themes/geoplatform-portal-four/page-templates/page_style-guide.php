@@ -24,6 +24,7 @@ get_template_part( 'sub-header-post', get_post_format() );
       <a href="<?php echo home_url() ?>/styleguide/colors/">Colors</a>
       <a href="<?php echo home_url() ?>/styleguide/sizing/">Sizing &amp; Spacing</a>
       <a href="<?php echo home_url() ?>/styleguide/buttons/">Buttons</a>
+      <a href="<?php echo home_url() ?>/styleguide/messages/">Messages</a>
       <a href="<?php echo home_url() ?>/styleguide/articles/">Articles</a>
       <a href="<?php echo home_url() ?>/styleguide/cards/">Cards</a>
       <a href="<?php echo home_url() ?>/styleguide/tiles/">Tiles</a>

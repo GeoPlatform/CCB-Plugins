@@ -8,6 +8,8 @@ services:
       - mysql
     links:
       - mysql:mysql
+      - gpoauth:gpoauth
+      - gpidm:gpidm
     ports:
       - "80:80"
       - "81:80"
@@ -61,3 +63,47 @@ services:
     environment:
       PMA_USER: root
       PMA_PASSWORD: imroot:012!
+
+
+  ########## Oauth Stack ##########
+
+  gpoauth:
+    image: 046725759240.dkr.ecr.us-east-1.amazonaws.com/gpoauth:latest
+    ports:
+      - "8889:8889"
+    depends_on:
+      - mongo
+    links:
+      - mongo:mongo
+    environment:
+      NODE_ENV: sit
+      DB_HOST: mongo
+      appSecret: 0123456789QWERTY
+      jwtLifetime: 10s
+      refreshLifetime: 1
+    restart: always
+
+  gpidm:
+    image: 046725759240.dkr.ecr.us-east-1.amazonaws.com/oauthidm:latest
+    ports:
+      - "8443:80"
+    depends_on:
+      - gpoauth
+    environment:
+      NODE_ENV: local
+      IDP_BASE_URL: "http://localhost:8889"
+      CALLBACK: "http://localhost:8443/#"
+      AUTH_TYPE: "token"
+      APP_ID: "5a56aaeca9e0221520f413a9"
+      PORTAL_URL: "http://localhost"
+      FORCE_LOGIN: "true"
+      LOGIN_URL: "/#/login"
+      LOGOUT_URL: "/#/login"
+    restart: always
+
+  mongo:
+    image: mongo:3.2
+    ports:
+      - "27017:27017"
+      - "28017:28017"
+    restart: always

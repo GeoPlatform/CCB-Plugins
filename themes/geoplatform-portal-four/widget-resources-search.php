@@ -61,7 +61,7 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 														aria-label="Search GeoPlatform <?php _e(sanitize_text_field(ucfirst($geopportal_resource_search_title)), 'geoplatform-ccb') ?>"
 														placeholder="Search GeoPlatform <?php _e(sanitize_text_field(ucfirst($geopportal_resource_search_title)), 'geoplatform-ccb') ?>">
 										</form>
-										<button type="button" class="btn btn-primary" id="geopportal_resource_search_button">SEARCH</button>
+										<button type="button" class="btn btn-secondary" id="geopportal_resource_search_button">SEARCH</button>
 								</div>&nbsp;&nbsp;
 						</div>
 				</article>
@@ -72,13 +72,19 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 
 				jQuery("#geopportal_resource_search_button").click(function(event){
 					var geopportal_query_string = "<?php echo $geopportal_resource_search_prefix ?>" + jQuery("#geopportal_resource_search_input").val();
-					window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+					window.open(
+						"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+						'_blank'
+					);
 				});
 
 				jQuery("#geopportal_resource_search_form").submit(function(event){
 					event.preventDefault();
 					var geopportal_query_string = "<?php echo $geopportal_resource_search_prefix ?>" + jQuery("#geopportal_resource_search_input").val();
-					window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+					window.open(
+						"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+						'_blank'
+					);
 				});
 			});
 		</script>

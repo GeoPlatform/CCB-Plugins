@@ -119,17 +119,17 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	// and overwrites them with values from $geoserve_atts.
   $geoserve_shortcode_array = shortcode_atts(array(
 		'title' => '',
-    'id' => '84924e415a256ba1941d161e16f5188c',
+    'id' => '',
     'cat' => 'TFFFFFF',
 		'count' => '6',
+		'hide' => 'F',
   ), $geopserve_atts);
   ob_start();
 
-	// Constructs the full community URI for ual, to pull info from.
-	$geoserve_id_san = sanitize_key($geoserve_shortcode_array['id']);
-	$geoserve_ual_url = 'https://ual.geoplatform.gov/api/communities/';
-	$geoserve_ual_url .= $geoserve_id_san;
-
+	/**
+	 * Detect plugin. For use on Front End only.
+	 */
+	// include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 	// Data category array format for each entry is....
 	// Button text, search bar text, search query, base uri, and temporary box text.
@@ -140,7 +140,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'search' => 'Search for associated datasets',
 				'query' => '&types=dcat:Dataset&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
-				'box' => 'DATASET LABEL',
+				'type' => 'datasets',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/dataset.svg',
 			)
 		);
@@ -151,7 +151,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'search' => 'Search for associated services',
 				'query' => '&types=regp:Service&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/services/',
-				'box' => 'SERVICE LABEL',
+				'type' => 'services',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/service.svg',
 			)
 		);
@@ -162,7 +162,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'search' => 'Search for associated layers',
 				'query' => '&types=Layer&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/layers/',
-				'box' => 'LAYER LABEL',
+				'type' => 'layers',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/layer.svg',
 			)
 		);
@@ -172,8 +172,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'button' => 'Maps',
 				'search' => 'Search for associated maps',
 				'query' => '&types=Map&q=',
-				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
-				'box' => 'MAP LABEL',
+				'uri' => 'https://ual.geoplatform.gov/api/maps/',
+				'type' => 'maps',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/map.svg',
 			)
 		);
@@ -183,8 +183,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				'button' => 'Galleries',
 				'search' => 'Search for associated galleries',
 				'query' => '&types=Gallery&q=',
-				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
-				'box' => 'GALLERY LABEL',
+				'uri' => 'https://ual.geoplatform.gov/api/galleries/',
+				'type' => 'galleries',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/gallery.svg',
 			)
 		);
@@ -196,8 +196,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 
 <!-- Carousel construction -->
-	<div class="m-article">
 		<?php
+		if ($geoserve_shortcode_array['hide'] != 'T')
+			echo "<div class='m-article'>";
+		else
+			echo "<div class='m-article' style='border-bottom:0px'>";
 
 		// Optional title display
 		if (!empty($geoserve_shortcode_array['title'])){
@@ -234,23 +237,37 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 						// Carousel block creation. Sets the first created data type to the
 						// active status, then produces the remaining elements.
 						for ($i = 0; $i < sizeof($geoserve_generation_array); $i++){
+
+							// Item Details plugin detection. If found, will pass off the relevant
+							// redirected url to the function. If not, it will set it to OE.
+							$geoserve_redirect_url = "https://oe.geoplatform.gov/view/";
+							if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
+								$geoserve_redirect_url = home_url() . "/resources/" . $geoserve_generation_array[$i]['type'] . "/";
+
+
 							if ($i == 0){ ?>
 								<div class="carousel-item active">
 							<?php } else { ?>
 								<div class="carousel-item">
-							<?php } ?>
-	                <div class="m-article">
-	                    <div class="m-article__heading" style="text-align:center;">Recent <?php echo $geoserve_generation_array[$i]['button'] ?></div>
+							<?php }
+									if ($geoserve_shortcode_array['hide'] != 'T'){ echo "<div class='m-article'>";} ?>
+										<?php
+										if ($geoserve_shortcode_array['hide'] != 'T'){?>
+											<div class="m-article__heading" style="text-align:center;">Recent <?php echo $geoserve_generation_array[$i]['type'] ?></div>
+										<?php } ?>
 	                    <div class="m-article__desc">
 	                        <div class="d-grid d-grid--3-col--lg" id="geopserve_carousel_gen_div_<?php echo $i ?>">
 
-
 												<!-- Carousel pane generation script. Replace thumb with others as necessary. -->
-														<script>
-															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>");
+														<script type="text/javascript">
+															geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>", "<?php echo $geoserve_generation_array[$i]['uri'] ?>", "<?php echo $geoserve_redirect_url ?>");
 														</script>
 
 	                        </div>
+
+													<?php
+													if ($geoserve_shortcode_array['hide'] != 'T'){?>
+
 	                        <div class="u-mg-top--xlg d-flex flex-justify-between flex-align-center">
 	                            <form class="input-group-slick flex-1 geopportal_port_community_search_form" grabs-from="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search">
 	                                <span class="icon fas fa-search"></span>
@@ -260,9 +277,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	                            </form>
 	                            <button class="u-mg-left--lg btn btn-secondary geopportal_port_community_search_button" grabs-from="geopportal_community_<?php echo $geoserve_generation_array[$i]['button'] ?>_search">SEARCH <?php echo strtoupper($geoserve_generation_array[$i]['button']) ?></button>
 	                        </div>
+
+												<?php } ?>
 	                    </div>
-	                </div>
-	            </div>
+											<?php if ($geoserve_shortcode_array['hide'] != 'T'){ echo "</div>"; } ?>
+	            	</div>
 
 						<?php } ?>
 
@@ -284,7 +303,10 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		jQuery(".geopportal_port_community_search_button").click(function(event){
 			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+			window.open(
+				"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+				'_blank'
+			);
 		});
 
 		// Search functionality trigger on pressing enter in search bar.
@@ -292,7 +314,10 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 			event.preventDefault();
 			var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 			var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-			window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+			window.open(
+				"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+				'_blank'
+			);
 		});
 	});
 	</script>

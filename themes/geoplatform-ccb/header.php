@@ -31,6 +31,30 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
   </head>
 <body <?php body_class(); ?>>
+
+<?php if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) != 'tran'){ ?>
+
+  <div class="container-fluid navbar-default">
+    <div class="row">
+      <div class="col-md-offset-3" style="margin-left:0%">
+        <ul role="menu" class="header__menu header__menu_alt" style="color:black!important; margin-left:1em; float:left;">
+          <?php
+          wp_nav_menu( array(
+            'theme_location' => 'community-links',
+            'container' => 'li',
+            'container_class' => 'nav navbar-nav navbar-right navbar-fixed-bottom',
+            'items_wrap' => '%3$s',
+            'fallback_cb' => false
+           ) );
+           ?>
+        </ul>
+        <br />
+      </div><!--#col-md-offset-3-->
+    </div><!--#row-->
+  </div><!--#container-fluid-->
+
+<?php } ?>
+
   <header class="t-transparent">
     <div class="container-fluid">
         <div class="row">

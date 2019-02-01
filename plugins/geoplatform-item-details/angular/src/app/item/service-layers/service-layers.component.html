@@ -1,0 +1,26 @@
+<div class="m-article">
+    <div class="m-article__heading">
+        <span class="fas"
+            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+            (click)="toggleCollapsed()">
+        </span>
+        Service Layers ({{layerTotal}})
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
+        Expand to see layers hosted by this service
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}">
+
+        <div *ngIf="!layers || !layers.length">
+            <em>None specified</em>
+        </div>
+
+        <div *ngIf="layers" class="m-list--unbulleted">
+            <gpid-service-layer *ngFor="let layer of layers" [layer]="layer"></gpid-service-layer>
+        </div>
+
+    </div>
+
+</div>

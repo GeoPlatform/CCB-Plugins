@@ -39,8 +39,7 @@
 // *  #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // *  #param geopserve_thumb_in: 404 image url, in case there is no image to use.
 //
-function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in){
-
+function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in){
 
 	const Query = GeoPlatform.Query;
 	const ItemTypes = GeoPlatform.ItemTypes;
@@ -62,7 +61,9 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 
 	query.setPageSize(geopserve_count_in);
 	query.setSort('modified,desc');
-	query.usedBy(geopserve_id_in);
+	if (geopserve_id_in) {
+		query.usedBy(geopserve_id_in);
+	}
 	query.setQ("");
 
 	geopserve_retrieve_objects(query)
@@ -73,13 +74,17 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 
 			var geopserve_results = response.results;
 
+			for (var i = 0; i < geopserve_max_panes; i++){
+			}
+
+
 		// Pane generation loop.
 		for (var i = 0; i < geopserve_max_panes; i++){
-
 			// Conditionals that attempt to grab author and date from JSON.
 			// For date, sets a default unknown, then attempts to grab the modified and,
 			// failing that, created values, translating them into date strings of the
 			// desired format.
+
 			var geopserve_result_time = "Unknown Time";
 			if (typeof geopserve_results[i].modified != 'undefined'){
 				var geopserve_temp_date = new Date(geopserve_results[i].modified);
@@ -90,31 +95,22 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 				geopserve_result_time = geopserve_temp_date.toLocaleString('en-us', { month: 'short' }) + " " + geopserve_temp_date.getDate() + ", " + geopserve_temp_date.getFullYear();
 			}
 
-			var geopserve_asset_link = "https://oe.geoplatform.gov/view/" + geopserve_results[i].id;
+			var geopserve_asset_link = geopserve_redirect_in + geopserve_results[i].id;
 
-			// Simpler than the above, setting a default and overriding if the there is
-			// a creating user found. The two strings are then combined for output.
+			var geopserve_thumb_src = geopserve_uri_in + geopserve_results[i].id + "/thumbnail";
+			var geopserve_thumb_error = "this.src='" + geopserve_thumb_in + "'";
+			var geopserve_label_text = geopserve_results[i].label;
+
 			var geopserve_result_name = "Unknown User";
 			if (typeof geopserve_results[i].createdBy != 'undefined')
 				geopserve_result_name = geopserve_results[i].createdBy;
 
-			var label_text = geopserve_result_time + " by " + geopserve_result_name;
+			console.log(geopserve_thumb_src);
 
-			var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
-			var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
-			var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_in});
-			var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
-			var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, html: geopserve_results[i].label});
-			var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:label_text});
-
-			thumb_div.appendChild(thumb_img);
-			body_div.appendChild(body_href);
-			body_div.appendChild(sub_div);
-			head_div.appendChild(thumb_div);
-			head_div.appendChild(body_div);
-
+			var geopserve_under_label_text = geopserve_result_time + " by " + geopserve_result_name;
 			var geopserve_temp_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
-			document.getElementById(geopserve_temp_div).appendChild(head_div);
+
+			geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error);
 		}
 	})
 	.catch(function (error) {
@@ -123,6 +119,27 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 		pagingSelector.hide();
 	});
 }( jQuery );
+
+function geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error){
+	// Simpler than the above, setting a default and overriding if the there is
+	// a creating user found. The two strings are then combined for output.
+	var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
+	var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
+	var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_src, onerror: geopserve_thumb_error});
+	var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
+	var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, target: '_blank', html: geopserve_label_text});
+	var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:geopserve_under_label_text});
+
+	thumb_div.appendChild(thumb_img);
+	body_div.appendChild(body_href);
+	body_div.appendChild(sub_div);
+	head_div.appendChild(thumb_div);
+	head_div.appendChild(body_div);
+
+	document.getElementById(geopserve_temp_div).appendChild(head_div);
+}
+
+
 
 function geopserve_retrieve_objects(query) {
 	var deferred = Q.defer();
@@ -165,5 +182,7 @@ function geopserve_createEl(geopserve_el_atts){
 		new_el.setAttribute('src', geopserve_el_atts.src);
 	if(geopserve_el_atts.href)
 		new_el.setAttribute('href', geopserve_el_atts.href);
+	if(geopserve_el_atts.onerror)
+		new_el.setAttribute('onerror', geopserve_el_atts.onerror);
 	return new_el;
 }

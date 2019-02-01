@@ -1,0 +1,40 @@
+<div class="m-article">
+    <div class="m-article__heading">
+        <span class="fas"
+            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+            (click)="toggleCollapsed()">
+        </span>
+
+        Usage
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
+        Expand to see usage statistics of this item
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" *ngFor="let key of getTabKeys()">
+                <a class="nav-link is-linkless"
+                    id="{{key}}-tab" role="tab"
+                    [ngClass]="{active:key===activeTab}"
+                    (click)="changeTab(key)"
+                    [attr.aria-controls]="key"
+                    [attr.aria-selected]="tabs[key].status">
+                    {{tabs[key].label}}
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent" style="width:100%">
+            <div class="tab-pane"
+                *ngFor="let key of getTabKeys()"
+                [ngClass]="{active:key===activeTab}"
+                role="tabpanel"
+                [attr.aria-labelledby]="key+'-tab'">
+                <div id="{{key}}_chart" style="width:100%"></div>
+            </div>
+        </div>
+
+    </div>
+</div>

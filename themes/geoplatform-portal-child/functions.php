@@ -498,6 +498,7 @@ function geop_ccb_feature_card_register($wp_customize){};
 
 // Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};
+function geop_ccb_linkmenu_register(){};
 
 // Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
@@ -520,15 +521,15 @@ function geop_ccb_catlink_column_sorter($geopccb_columns) {};
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-function geop_portal_distro_manager() {
-  require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-  $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-  	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
-  	__FILE__,
-  	'geoplatform-portal-child'
-  );
-}
-geop_portal_distro_manager();
+// function geop_portal_distro_manager() {
+//   require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//   $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//   	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
+//   	__FILE__,
+//   	'geoplatform-portal-child'
+//   );
+// }
+// geop_portal_distro_manager();
 
 
 add_filter('widget_text', 'do_shortcode');

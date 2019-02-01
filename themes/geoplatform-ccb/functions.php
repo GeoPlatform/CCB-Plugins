@@ -578,6 +578,21 @@ if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
 }
 
 /**
+ * Sanitization callback functions for linkmenu option
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_linkmenu' ) ) {
+	function geop_ccb_sanitize_linkmenu( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'tran', 'menu' ) ) )
+			$geop_ccb_value = 'tran';
+		return $geop_ccb_value;
+	}
+}
+
+/**
  * Sanitization callback functions for customizer searchbar
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
@@ -1291,6 +1306,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
       'font_choice' => 'lato',
       'bootstrap_controls' => 'on',
       'searchbar_controls' => 'wp',
+      'linkmenu_controls' => 'tran',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
 	}
@@ -1860,6 +1876,29 @@ if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
 }
 
 
+if ( ! function_exists ( 'geop_ccb_linkmenu_register' ) ) {
+  function geop_ccb_linkmenu_register($wp_customize){
+
+    $wp_customize->add_setting('linkmenu_controls',array(
+        'default' => 'tran',
+        'sanitize_callback' => 'geop_ccb_sanitize_linkmenu',
+    ));
+
+    $wp_customize->add_control('linkmenu_controls',array(
+        'type' => 'radio',
+        'label' => 'Community Links Style',
+        'section' => 'font_section',
+        'description' => "The Community Links menu can be shown in two formats: unintrusive transparency or as a bold menu bar.",
+        'choices' => array(
+            'tran' => __('Transparent', 'geoplatform-ccb'),
+            'menu' => __('Bold Menu',  'geoplatform-ccb'),
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_linkmenu_register');
+}
+
+
 
 if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
   function geop_ccb_search_register($wp_customize){
@@ -1914,17 +1953,17 @@ add_post_type_support( 'page', 'excerpt' );
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
-  function geop_ccb_distro_manager() {
-    require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-    $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-    	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
-    	__FILE__,
-    	'geoplatform-ccb'
-    );
-  }
-  geop_ccb_distro_manager();
-}
+// if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
+//   function geop_ccb_distro_manager() {
+//     require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//     $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//     	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
+//     	__FILE__,
+//     	'geoplatform-ccb'
+//     );
+//   }
+//   geop_ccb_distro_manager();
+// }
 
 /**
  * Second image handler for individual banners.

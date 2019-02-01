@@ -158,21 +158,21 @@ add_action( 'customize_register', 'geop_ngda_customize_register');
  * @link https://www.elegantthemes.com/blog/tips-tricks/how-to-manage-the-wordpress-sidebar
  * @return void
  */
-function geop_ccb_sidebar() {
-	register_sidebar(
-	array(
-		'id' => 'geoplatform-widgetized-area',
-		'name' => __( 'Sidebar Widgets', 'geoplatform-ccb' ),
-		'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-ccb' ),
-		'class' => 'widget-class',
-		'before_widget' => '<div id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<h4>',
-			'after_title'   => '</h4>'
-	)
-	);
-}
-add_action( 'widgets_init', 'geop_ccb_sidebar' );
+// function geop_ccb_sidebar() {
+// 	register_sidebar(
+// 	array(
+// 		'id' => 'geoplatform-widgetized-area',
+// 		'name' => __( 'Sidebar Widgets', 'geoplatform-ccb' ),
+// 		'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-ccb' ),
+// 		'class' => 'widget-class',
+// 		'before_widget' => '<div id="%1$s" class="card widget %2$s">',
+// 			'after_widget'  => '</div>',
+// 			'before_title'  => '<h4>',
+// 			'after_title'   => '</h4>'
+// 	)
+// 	);
+// }
+// add_action( 'widgets_init', 'geop_ccb_sidebar' );
 
 
 //-------------------------------
@@ -389,6 +389,7 @@ add_action( 'init', 'geop_ccb_register_footer_menus' );
 // Killing search register functions from CCB that have no use in NGDA.
 function geop_ccb_search_register(){};
 function geop_ccb_bootstrap_register(){};
+function geop_ccb_linkmenu_register(){};
 
 // Killing header menu creation due to lack of menu button.
 function geop_ccb_register_header_menus(){};
@@ -408,12 +409,12 @@ function geop_ccb_catlink_column_sorter($geopccb_columns) {};
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-function geop_ngda_distro_manager() {
-  require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-  $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-  	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ngda-update-details.json',
-  	__FILE__,
-  	'geoplatform-ngda-child'
-  );
-}
-geop_ngda_distro_manager();
+// function geop_ngda_distro_manager() {
+//   require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//   $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//   	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ngda-update-details.json',
+//   	__FILE__,
+//   	'geoplatform-ngda-child'
+//   );
+// }
+// geop_ngda_distro_manager();

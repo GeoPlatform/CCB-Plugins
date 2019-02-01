@@ -117,7 +117,7 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// from Font Awesome icons to glyphicons and adjust some text sizes. More
 	// functionality may be included in the future.
 	$geopmap_theme = 'F';
-	if (strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false)
+	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && (wp_get_theme()->get('Name') !== 'Geoplatform Portal 4.0'))
 		$geopmap_theme = 'T';
 
 	// Creates an empty error text report string, grabs the map_id string after
@@ -315,6 +315,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	$geopmap_base_icon = 'glyphicon';
 	$geopmap_check_icon = 'glyphicon-check';
 	$geopmap_uncheck_icon = 'glyphicon-unchecked';
+	$geopmap_redirect = 'glyphicon-unchecked';
 
 	if ($geopmap_theme == 'F'){
 		$geopmap_list_icon = 'fa fa-bars';
@@ -322,6 +323,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		$geopmap_base_icon = 'fa';
 		$geopmap_check_icon = 'fa-check-square';
 		$geopmap_uncheck_icon = 'fa-square';
+		$geopmap_redirect = 'fa fa-external-link-alt';
 	}
 
 	// GeoPlatform Portal 4 theme detection, which will determine explicit output
@@ -371,7 +373,13 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					</tr>
 				</table>
 			</div>
-		<?php } ?>
+		<?php } else { ?>
+			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
+				<a class="geop-hidden-link" title="Open Map" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
+					<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
+				</a>
+			</div>
+		<?php	} ?>
 
  <!-- The container that will hold the leaflet map. Also defines entree height. -->
 			<div class="geop-container-controls" id="container_<?php echo $geopmap_divrand; ?>" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;"></div>

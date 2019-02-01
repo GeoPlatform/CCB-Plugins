@@ -99,20 +99,11 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_port_res_fifth_button_one', $instance) && isset($instance['geopportal_port_res_fifth_button_one']) && !empty($instance['geopportal_port_res_fifth_button_one']))
       $geopportal_port_res_fifth_button_one = apply_filters('widget_title', $instance['geopportal_port_res_fifth_button_one']);
 		else
-      $geopportal_port_res_fifth_button_one = "View New Communities";
+      $geopportal_port_res_fifth_button_one = "View Communities";
 		if (array_key_exists('geopportal_port_res_fifth_link_one', $instance) && isset($instance['geopportal_port_res_fifth_link_one']) && !empty($instance['geopportal_port_res_fifth_link_one']))
       $geopportal_port_res_fifth_link_one = apply_filters('widget_title', $instance['geopportal_port_res_fifth_link_one']);
 		else
       $geopportal_port_res_fifth_link_one = "";
-		if (array_key_exists('geopportal_port_res_fifth_button_two', $instance) && isset($instance['geopportal_port_res_fifth_button_two']) && !empty($instance['geopportal_port_res_fifth_button_two']))
-      $geopportal_port_res_fifth_button_two = apply_filters('widget_title', $instance['geopportal_port_res_fifth_button_two']);
-		else
-      $geopportal_port_res_fifth_button_two = "View Trending Communities";
-		if (array_key_exists('geopportal_port_res_fifth_link_two', $instance) && isset($instance['geopportal_port_res_fifth_link_two']) && !empty($instance['geopportal_port_res_fifth_link_two']))
-      $geopportal_port_res_fifth_link_two = apply_filters('widget_title', $instance['geopportal_port_res_fifth_link_two']);
-		else
-      $geopportal_port_res_fifth_link_two = "";
-
 		?>
 
 
@@ -262,8 +253,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div>
-															<a href="<?php echo esc_url($geopportal_port_res_fifth_link_one) ?>" class="btn btn-outline-success u-mg-right--md"><?php echo sanitize_text_field($geopportal_port_res_fifth_button_one) ?></a>
-															<a href="<?php echo esc_url($geopportal_port_res_fifth_link_two) ?>" class="btn btn-outline-info u-mg-right--md"><?php echo sanitize_text_field($geopportal_port_res_fifth_button_two) ?></a>
+															<a href="<?php echo esc_url($geopportal_port_res_fifth_link_one) ?>" class="btn btn-outline-secondary u-mg-right--md"><?php echo sanitize_text_field($geopportal_port_res_fifth_button_one) ?></a>
 		                        </div>
 		                    </div>
 		                </div>
@@ -291,19 +281,23 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 							var temp = jQuery(this).attr("grabs-from");
 							var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 							var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-							window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+							window.open(
+								"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+								'_blank'
+							);
 						});
 
 						jQuery( ".geopportal_port_res_search_form" ).submit(function(event){
 							event.preventDefault();
 							var geopportal_grabs_from = jQuery(this).attr("grabs-from");
 							var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-							window.location.href="<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string;
+							window.open(
+								"<?php echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
+								'_blank'
+							);
 						});
 			    });
 				</script>
-
-
 
 		<?php
 	}
@@ -397,9 +391,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		$geopportal_port_res_fifth_title = ! empty( $instance['geopportal_port_res_fifth_title'] ) ? $instance['geopportal_port_res_fifth_title'] : 'Communities';
 		$geopportal_port_res_fifth_content = ! empty( $instance['geopportal_port_res_fifth_content'] ) ? $instance['geopportal_port_res_fifth_content'] : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
 		$geopportal_port_res_fifth_button_one = ! empty( $instance['geopportal_port_res_fifth_button_one'] ) ? $instance['geopportal_port_res_fifth_button_one'] : 'View New Communities';
-		$geopportal_port_res_fifth_button_two = ! empty( $instance['geopportal_port_res_fifth_button_two'] ) ? $instance['geopportal_port_res_fifth_button_two'] : 'View Trending Communities';
 		$geopportal_port_res_fifth_link_one = ! empty( $instance['geopportal_port_res_fifth_link_one'] ) ? $instance['geopportal_port_res_fifth_link_one'] : '';
-		$geopportal_port_res_fifth_link_two = ! empty( $instance['geopportal_port_res_fifth_link_two'] ) ? $instance['geopportal_port_res_fifth_link_two'] : '';
 
 		// Sets up the fifth content box link, or just a home link if invalid.
 		if (array_key_exists('geopportal_port_res_fifth_content', $instance) && isset($instance['geopportal_port_res_fifth_content']) && !empty($instance['geopportal_port_res_fifth_content']) && $geopportal_port_res_cb_bool){
@@ -512,18 +504,9 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_button_one' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_fifth_button_one ); ?>" />
     </p>
 		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_one' ); ?>">Fifth Button #1 URL:</label>
+      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_one' ); ?>">Fifth Button URL:</label>
       <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_one' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_link_one' ); ?>" value="<?php echo esc_url( $geopportal_port_res_fifth_link_one ); ?>" />
     </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_two' ); ?>">Fifth Button #2 Text:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_button_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_button_two' ); ?>" value="<?php echo esc_attr( $geopportal_port_res_fifth_button_two ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_two' ); ?>">Fifth Button #2 URL:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_port_res_fifth_link_two' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_port_res_fifth_link_two' ); ?>" value="<?php echo esc_url( $geopportal_port_res_fifth_link_two ); ?>" />
-    </p>
-
 		<?php
 	}
 
@@ -611,9 +594,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		$instance[ 'geopportal_port_res_fifth_title' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_title' ] );
 	  $instance[ 'geopportal_port_res_fifth_content' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_content' ] );
 		$instance[ 'geopportal_port_res_fifth_button_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_button_one' ] );
-		$instance[ 'geopportal_port_res_fifth_button_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_button_two' ] );
 		$instance[ 'geopportal_port_res_fifth_link_one' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_link_one' ] );
-		$instance[ 'geopportal_port_res_fifth_link_two' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_link_two' ] );
 		$instance[ 'geopportal_port_res_fifth_url' ] = strip_tags( $new_instance[ 'geopportal_port_res_fifth_url' ] );
 
 	  // Validity check for the content box URL.

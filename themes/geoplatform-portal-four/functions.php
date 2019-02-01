@@ -108,11 +108,8 @@ function geop_ccb_header_link_register( $wp_customize ){
 	$wp_customize->add_section( 'headlink_format' , array(
 		'title'    => __( 'Header Links', 'geoplatform-ccb' ),
 		'description' => 'Insert the slugs of posts or pages that each element will navigate to when clicked.',
-		'priority' => 40
+		'priority' => 25
 	) );
-
-
-
 
 	$wp_customize->add_setting('headlink_data',array(
 		'default' => '',
@@ -199,6 +196,36 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'default' => 'geoplatform-search'
 	));
 
+	$wp_customize->add_setting('headlink_register',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_register',array(
+		'type' => 'text',
+		'label' => 'Register (GeoPlatform Resource Registration Page)',
+		'section' => 'headlink_format',
+		'priority' => 46,
+		'default' => 'geoplatform-register'
+	));
+
+	$wp_customize->add_setting('headlink_items',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_items',array(
+		'type' => 'text',
+		'label' => 'Items (GeoPlatform Item Details Page)',
+		'section' => 'headlink_format',
+		'priority' => 47,
+		'default' => 'geoplatform-items'
+	));
+
+
+
+
+
 	$wp_customize->add_setting('headlink_help',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
@@ -211,21 +238,6 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'priority' => 50,
 	));
 
-
-
-
-	// $wp_customize->add_setting('headlink_default',array(
-	// 	'default' => '',
-	// 	'sanitize_callback' => 'sanitize_text_field'
-	// ));
-	//
-	// $wp_customize->add_control('headlink_default',array(
-	// 	'type' => 'text',
-	// 	'label' => 'Default',
-	// 	'section' => 'headlink_format',
-	// 	'priority' => 25,
-	// ));
-
 	$wp_customize->add_setting('headlink_apps',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
@@ -237,44 +249,267 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'section' => 'headlink_format',
 		'priority' => 55,
 	));
-
-	$wp_customize->add_setting('footlink_terms',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('footlink_terms',array(
-		'type' => 'text',
-		'label' => "Terms of Use (footer)",
-		'section' => 'headlink_format',
-		'priority' => 60,
-	));
-
-	$wp_customize->add_setting('footlink_two',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('footlink_two',array(
-		'type' => 'text',
-		'label' => "Footer Link #2 (footer)",
-		'section' => 'headlink_format',
-		'priority' => 65,
-	));
-
-	$wp_customize->add_setting('footlink_three',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('footlink_three',array(
-		'type' => 'text',
-		'label' => "Footer Link #3 (footer)",
-		'section' => 'headlink_format',
-		'priority' => 70,
-	));
 }
 add_action( 'customize_register', 'geop_ccb_header_link_register');
+
+
+
+function geop_ccb_footer_link_register( $wp_customize ){
+
+	$wp_customize->add_section( 'footlink_format' , array(
+		'title'    => __( 'Footer Links', 'geoplatform-ccb' ),
+		'description' => 'Insert the text for footer elements as well as the full URL that they will navigate to when clicked.',
+		'priority' => 30,
+	) );
+
+	$wp_customize->add_setting('footlink_one_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_one_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #1 text",
+		'section' => 'footlink_format',
+		'priority' => 10,
+	));
+
+	$wp_customize->add_setting('footlink_one_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_one_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #1 url",
+		'section' => 'footlink_format',
+		'priority' => 15,
+	));
+
+	$wp_customize->add_setting('footlink_two_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_two_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #2 text",
+		'section' => 'footlink_format',
+		'priority' => 20,
+	));
+
+	$wp_customize->add_setting('footlink_two_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_two_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #2 url",
+		'section' => 'footlink_format',
+		'priority' => 25,
+	));
+
+	$wp_customize->add_setting('footlink_three_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_three_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #3 text",
+		'section' => 'footlink_format',
+		'priority' => 30,
+	));
+
+	$wp_customize->add_setting('footlink_three_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_three_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #3 url",
+		'section' => 'footlink_format',
+		'priority' => 35,
+	));
+
+	$wp_customize->add_setting('footlink_four_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_four_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #4 text",
+		'section' => 'footlink_format',
+		'priority' => 40,
+	));
+
+	$wp_customize->add_setting('footlink_four_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_four_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #4 url",
+		'section' => 'footlink_format',
+		'priority' => 45,
+	));
+
+	$wp_customize->add_setting('footlink_five_text',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_five_text',array(
+		'type' => 'text',
+		'label' => "Footer Link #5 text",
+		'section' => 'footlink_format',
+		'priority' => 50,
+	));
+
+	$wp_customize->add_setting('footlink_five_url',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('footlink_five_url',array(
+		'type' => 'text',
+		'label' => "Footer Link #5 url",
+		'section' => 'footlink_format',
+		'priority' => 55,
+	));
+}
+add_action( 'customize_register', 'geop_ccb_footer_link_register');
+
+
+
+
+function geop_ccb_featured_register( $wp_customize ){
+
+	$wp_customize->add_section( 'featured_posts' , array(
+		'title'    => __( 'Featured Pages', 'geoplatform-ccb' ),
+		'description' => 'Settings here determine the behavior of any GeoPlatform Featured widgets. The boxes below accept the slugs of the linked posts. <br>Please ensure that any input slugs are valid.<br>Ensure you enter a valid map ID, not shortcode. The GeoPlatform Maps plugin will construct the necessary parameters itself.',
+		'priority' => 35,
+	) );
+
+	$wp_customize->add_setting('featured_primary_post',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_primary_post',array(
+		'type' => 'text',
+		'label' => "Primary Post Slug",
+		'section' => 'featured_posts',
+		'priority' => 10,
+	));
+
+	$wp_customize->add_setting('featured_secondary_one',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_one',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #1 Slug",
+		'section' => 'featured_posts',
+		'priority' => 15,
+	));
+
+	$wp_customize->add_setting('featured_secondary_two',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_two',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #2 Slug",
+		'section' => 'featured_posts',
+		'priority' => 20,
+	));
+
+	$wp_customize->add_setting('featured_secondary_three',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_three',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #3 Slug",
+		'section' => 'featured_posts',
+		'priority' => 25,
+	));
+
+	$wp_customize->add_setting('featured_secondary_four',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_secondary_four',array(
+		'type' => 'text',
+		'label' => "Sub-Feature Post #4 Slug",
+		'section' => 'featured_posts',
+		'priority' => 30,
+	));
+
+	$wp_customize->add_setting('featured_map_title',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_map_title',array(
+		'type' => 'text',
+		'label' => "Map Title",
+		'section' => 'featured_posts',
+		'priority' => 35,
+	));
+
+	$wp_customize->add_setting('featured_map_id',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_map_id',array(
+		'type' => 'text',
+		'label' => "Map ID",
+		'section' => 'featured_posts',
+		'priority' => 40,
+	));
+
+	$wp_customize->add_setting('featured_more_count',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_more_count',array(
+		'type' => 'number',
+		'label' => "More Content Count",
+		'section' => 'featured_posts',
+		'priority' => 45,
+	));
+
+	$wp_customize->add_setting('featured_browse_slug',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('featured_browse_slug',array(
+		'type' => 'text',
+		'label' => "Browse All Page Slug",
+		'section' => 'featured_posts',
+		'priority' => 50,
+	));
+
+
+
+
+}
+add_action( 'customize_register', 'geop_ccb_featured_register');
+
+
 
 function geop_ccb_sanitize_fonts( $geop_portal_value ) {
   if ( $geop_portal_value == '' )
@@ -627,7 +862,6 @@ class Geopportal_Graph_Widget extends WP_Widget {
 }
 
 
-
 // Includes complex widgets which regester themselves.
 get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
@@ -644,6 +878,7 @@ get_template_part( 'side-content-preview', get_post_format() );
 get_template_part( 'widget-resources-elements', get_post_format() );
 get_template_part( 'widget-resources-search', get_post_format() );
 get_template_part( 'widget-resources-creation', get_post_format() );
+get_template_part( 'widget-resources-community', get_post_format() );
 
 
 /**
@@ -920,7 +1155,7 @@ function geopportal_breadcrumb_box_content($post) {
 // save data from checkboxes
 function geopportal_breadcrumb_post_data($post_id) {
   if ( !isset( $_POST['geopportal_breadcrumb_title'] ) || is_null( $_POST['geopportal_breadcrumb_title']) || empty( $_POST['geopportal_breadcrumb_title'] ))
-    update_post_meta( $post_id, 'geopportal_breadcrumb_title', '0' );
+    update_post_meta( $post_id, 'geopportal_breadcrumb_title', '' );
   else
 		update_post_meta( $post_id, 'geopportal_breadcrumb_title', $_POST['geopportal_breadcrumb_title'] );
 }
@@ -1126,6 +1361,7 @@ if ( ! isset( $content_width ) ) {
 
 // Killing search register functions from CCB that have no use in Portal.
 function geop_ccb_search_register(){};
+function geop_ccb_linkmenu_register(){};
 
 // Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
@@ -1148,15 +1384,15 @@ function geop_ccb_register_footer_menus(){};
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-function geop_portal_distro_manager() {
-  require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-  $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-  	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
-  	__FILE__,
-  	'geoplatform-portal-four'
-  );
-}
-geop_portal_distro_manager();
+// function geop_portal_distro_manager() {
+//   require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//   $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//   	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
+//   	__FILE__,
+//   	'geoplatform-portal-four'
+//   );
+// }
+// geop_portal_distro_manager();
 
 
 add_filter('widget_text', 'do_shortcode');
