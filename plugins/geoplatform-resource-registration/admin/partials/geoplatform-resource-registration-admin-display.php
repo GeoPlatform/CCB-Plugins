@@ -23,6 +23,7 @@
     <p>Your GeoPlatform Resource Registration Manager has been created and can be accessed via the Visit Registration Interface button below.
       Alternatively, if something has occured that renders the page inoperable, press the Recreate Registration Interface button below.
       Please note that in order for navigation and old post deletion to operate properly, there MUST be a page with the slug "resources".
+      If there is not, the plugin will create a blank page with that slug.
     </p>
     <a class="button-secondary" href="<?php echo esc_url( get_permalink( get_page_by_path( 'resources/register' ))); ?>" target="_blank">Visit Registration Interface</a>
     &nbsp&nbsp

@@ -62,14 +62,25 @@ function deactivate_geoplatform_resource_registration() {
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-resource-registration.php';
 
 
-
-
-
 // Sets the parameters of and then creates the item details page. It deletes any
 // old version of that page before each generation.
 function geopregister_add_interface_page() {
 	$geopregister_parent_id = url_to_postid( get_permalink( get_page_by_path( 'resources' )));
 
+	// If there is no 'resources' page, it is made here and its ID passed off for
+	// use in the registration page creation below.
+	if ($geopregister_parent_id == null){
+	  $geopregister_parent_post = array(
+	    'post_title' => 'Resources',
+	    'post_name' => 'resources',
+	    'post_status' => 'publish',
+	    'post_type' => 'page',
+	  );
+
+	  $geopregister_parent_id = wp_insert_post($geopregister_parent_post);
+	}
+
+	// The previous registration page is deleted and the array for the new one made.
 	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'resources/register' ))), true);
 	$geopregister_interface_post = array(
 		'post_title' => 'Register Your Data with GeoPlatform.gov',
@@ -80,6 +91,8 @@ function geopregister_add_interface_page() {
 		'post_content' => '<app-root></app-root>',
 	);
 
+	// The page is created, and the resulting page ID is used to apply a value to
+	// it's breadcrumb title.
 	$geopregister_creation_id = wp_insert_post($geopregister_interface_post);
 	update_post_meta($geopregister_creation_id, 'geopportal_breadcrumb_title', 'Register Data');
 }
@@ -88,7 +101,7 @@ register_activation_hook( __FILE__, 'geopregister_add_interface_page' );
 register_activation_hook( __FILE__, 'activate_geoplatform_resource_registration' );
 register_deactivation_hook( __FILE__, 'deactivate_geoplatform_resource_registration' );
 
-// Additional dedicated google fonts enqueue to make sure it comes before others.
+// Seperate dedicated google fonts enqueue to make sure it comes before others.
 function geopregister_google_enqueue(){
 	if (is_page('register')){
 		wp_enqueue_style('google_fonts', 'https://fonts.googleapis.com/icon?family=Material+Icons');
@@ -117,9 +130,6 @@ function geopregister_process_refresh() {
 	wp_die();
 }
 add_action('wp_ajax_geopregister_refresh', 'geopregister_process_refresh');
-
-
-
 
 
 /**
