@@ -190,12 +190,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		);
 	}
 
-	// Item Details plugin detection. If found, will pass
-	$geopmap_theme = 'F';
-	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && (wp_get_theme()->get('Name') !== 'Geoplatform Portal 4.0'))
-		$geopmap_theme = 'T';
-
-
 	// Default image.
 	$geopserve_disp_thumb = plugin_dir_url(__FILE__) . 'public/assets/sample_1.jpg';
 	?>
