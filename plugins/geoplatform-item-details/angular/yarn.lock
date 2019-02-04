@@ -338,9 +338,18 @@ ajv@^5.0.0, ajv@~5.5.1:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
 
-ajv@^6.1.0, ajv@^6.1.1, ajv@^6.5.5:
+ajv@^6.1.0, ajv@^6.1.1:
   version "6.7.0"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.7.0.tgz#e3ce7bb372d6577bb1839f1dfdfcbf5ad2948d96"
+  dependencies:
+    fast-deep-equal "^2.0.1"
+    fast-json-stable-stringify "^2.0.0"
+    json-schema-traverse "^0.4.1"
+    uri-js "^4.2.2"
+
+ajv@^6.5.5:
+  version "6.8.1"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.8.1.tgz#0890b93742985ebf8973cd365c5b23920ce3cb20"
   dependencies:
     fast-deep-equal "^2.0.1"
     fast-json-stable-stringify "^2.0.0"
@@ -2557,7 +2566,8 @@ generate-object-property@^1.1.0:
 
 "geoplatform.client@git+https://github.com/GeoPlatform/client-api.git#develop":
   version "0.2.1"
-  resolved "git+https://github.com/GeoPlatform/client-api.git#009a699766a9cbfc3c3494b44fa9a07aa4ec34af"
+  uid b1ecf85b24d34b1bad16a1e3104a3ee4259e5351
+  resolved "git+https://github.com/GeoPlatform/client-api.git#b1ecf85b24d34b1bad16a1e3104a3ee4259e5351"
   dependencies:
     jquery "^3.3.1"
     q "1.1.2"
@@ -2565,7 +2575,7 @@ generate-object-property@^1.1.0:
 
 "geoplatform.mapcore@git+http://github.com/GeoPlatform/map-core.git#es6":
   version "0.1.4"
-  resolved "git+http://github.com/GeoPlatform/map-core.git#6adb50aafe2d79057b5d7943bd3eeab0394fdda3"
+  resolved "git+http://github.com/GeoPlatform/map-core.git#80218bd36f7938652443bf5ea9db0e0f6673e85a"
   dependencies:
     esri-leaflet "2.2.3"
     geoplatform.client "git+https://github.com/GeoPlatform/client-api.git#develop"
@@ -5528,12 +5538,6 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   resolved "https://registry.yarnpkg.com/run-queue/-/run-queue-1.0.3.tgz#e848396f057d223f24386924618e25694161ec47"
   dependencies:
     aproba "^1.1.1"
-
-rxjs@5.5.6:
-  version "5.5.6"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
-  dependencies:
-    symbol-observable "1.0.1"
 
 rxjs@^5.5.6:
   version "5.5.12"

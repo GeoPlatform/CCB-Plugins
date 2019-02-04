@@ -1,0 +1,39 @@
+
+<!-- Layers -->
+<div class="m-article" *ngIf="'Layer'===item?.type">
+    <div class="m-article__heading">Service</div>
+    <div class="m-article__desc">
+        <div *ngIf="!item?.services && !item?.services?.length" class="t-fg--danger">
+            <span class="fas fa-exclamation-circle"></span>
+            Layer does not specify a service
+        </div>
+        <div *ngIf="item?.services?.length>0">
+            <gpid-resource-link [item]="item.services[0]"></gpid-resource-link>
+        </div>
+    </div>
+</div>
+
+<!-- Datasets -->
+<div class="m-article" *ngIf="'dcat:Dataset'===item?.type">
+    <div class="m-article__heading">
+        <span class="fas"
+            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+            (click)="toggleCollapsed()">
+        </span>
+        Services ({{item?.services?.length||0}})
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
+        Expand to see services refenced by this dataset
+    </div>
+
+    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}">
+        <div *ngIf="!item?.services && !item?.services?.length" class="t-fg--warning">
+            <span class="fas fa-exclamation-triangle"></span>
+            No services associated with this resource
+        </div>
+        <div *ngFor="let svc of item?.services; let $idx=index;">
+            <gpid-resource-link [item]="item.services[$idx]"></gpid-resource-link>
+        </div>
+    </div>
+</div>

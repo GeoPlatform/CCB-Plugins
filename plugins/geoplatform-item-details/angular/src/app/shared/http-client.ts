@@ -104,7 +104,15 @@ export class NG2HttpClient {
         .catch( err => {
             // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));
             if (err instanceof HttpErrorResponse) {
-                throw new ItemDetailsError(err.error.message, err.status);
+                let msg = "An error occurred communicating with the GeoPlatform API";
+                if(err.error && err.error.error && err.error.error.message) {
+                    msg = err.error.error.message;
+                } else if (err.error && err.error.message) {
+                    msg = err.error.message;
+                } else if(err.message) {
+                    msg = err.message;
+                }
+                throw new ItemDetailsError(msg, err.status);
             }
             return {};
         });

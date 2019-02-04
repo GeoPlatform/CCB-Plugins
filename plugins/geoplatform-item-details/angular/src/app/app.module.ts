@@ -31,6 +31,7 @@ import { Config } from 'geoplatform.client';
 //Local code components
 
 import { AppComponent } from './app.component';
+import { ResourceLinkComponent } from './item/resource-link/resource-link.component';
 import { ItemComponent } from './item/item.component';
 import { UsageComponent } from './item/usage/usage.component';
 import { ServiceStatsComponent } from './item/service-stats/service-stats.component';
@@ -39,21 +40,28 @@ import { AboutComponent } from './item/about/about.component';
 import {
     DepictionComponent, ImageFallbackDirective
 } from './item/depiction/depiction.component';
-import { KeywordsComponent } from './item/keywords/keywords.component';
-import { ServiceLayersComponent, ServiceLayerComponent } from './item/service-layers/service-layers.component';
-import { GalleryItemsComponent } from './item/gallery-items/gallery-items.component';
-import { MapLayersComponent } from './item/map-layers/map-layers.component';
 import { CoverageMapComponent } from './item/coverage-map/coverage-map.component';
-import { CommunityMembersComponent } from './item/community-members/community-members.component';
-import { PrimaryActionComponent } from './item/actions/primary-action/primary-action.component';
-import { ExportActionComponent } from './item/actions/export-action/export-action.component';
-import { ResourceLinkComponent } from './item/resource-link/resource-link.component';
-import { EditActionComponent } from './item/actions/edit-action/edit-action.component';
-import { DeleteActionComponent } from './item/actions/delete-action/delete-action.component';
-import { DatasetDistributionsComponent } from './item/dataset-distributions/dataset-distributions.component';
-import { LikeActionComponent } from './item/actions/like-action/like-action.component';
+import { KeywordsComponent } from './item/keywords/keywords.component';
 import { UsedByComponent } from './item/used-by/used-by.component';
 import { RelatedComponent } from './item/related/related.component';
+
+import { ServiceLayersComponent, ServiceLayerComponent } from './item/collections/service-layers/service-layers.component';
+import { GalleryItemsComponent } from './item/collections/gallery-items/gallery-items.component';
+import { MapLayersComponent } from './item/collections/map-layers/map-layers.component';
+import { CommunityMembersComponent } from './item/collections/community-members/community-members.component';
+import { DatasetDistributionsComponent } from './item/collections/dataset-distributions/dataset-distributions.component';
+
+import { PrimaryActionComponent } from './item/actions/primary-action/primary-action.component';
+import { ExportActionComponent } from './item/actions/export-action/export-action.component';
+import { EditActionComponent } from './item/actions/edit-action/edit-action.component';
+import { DeleteActionComponent } from './item/actions/delete-action/delete-action.component';
+import { LikeActionComponent } from './item/actions/like-action/like-action.component';
+
+import { ServiceDetailsComponent } from './item/details/service/service-details.component';
+import { LayerDetailsComponent } from './item/details/layer/layer-details.component';
+import { DatasetDetailsComponent } from './item/details/dataset/dataset-details.component';
+import { ContactDetailsComponent } from './item/details/contact/contact-details.component';
+import { ServicesComponent } from './item/collections/services/services.component';
 
 
 
@@ -112,7 +120,12 @@ export function initializeApp() {
         DatasetDistributionsComponent,
         LikeActionComponent,
         UsedByComponent,
-        RelatedComponent
+        RelatedComponent,
+        ServiceDetailsComponent,
+        LayerDetailsComponent,
+        DatasetDetailsComponent,
+        ContactDetailsComponent,
+        ServicesComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),

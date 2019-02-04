@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ItemTypes, Config, ItemService } from "geoplatform.client";
 
 
-
 const FORMATS = buildFormats();
 
 
@@ -63,16 +62,7 @@ export class ExportActionComponent implements OnInit {
 
     doAction(format) {
         if(!this.item || !this.service) return;
-
-        this.service.exportItem(this.item, format)
-        .then( (response) => {
-            //TODO handle response so that file can be downloaded.
-            //this might mean opening the URL in a new window instead
-            // of calling itemservice
-        })
-        .catch(e => {
-            //show error message
-        });
+        window.open(Config.ualUrl + '/api/items/' + this.item.id + '/export?format=' + format, '_blank');
     }
 
 

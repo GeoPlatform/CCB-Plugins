@@ -1,6 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ItemTypes } from "geoplatform.client";
 
+import { environment } from '../../../../environments/environment';
+
+const AGOL_RES_TYPE = "http://www.geoplatform.gov/ont/openmap/AGOLMap";
+const GP_RES_TYPE = 'http://www.geoplatform.gov/ont/openmap/GeoplatformMap';
+
+
+
 @Component({
   selector: 'gpid-primary-action',
   templateUrl: './primary-action.component.html',
@@ -25,7 +32,7 @@ export class PrimaryActionComponent implements OnInit {
             case ItemTypes.DATASET : break;
             case ItemTypes.SERVICE : break;
             case ItemTypes.LAYER : break;
-            case ItemTypes.MAP : break;
+            case ItemTypes.MAP : this.openMap(); break;
             case ItemTypes.GALLERY : break;
             case ItemTypes.COMMUNITY : break;
             case ItemTypes.ORGANIZATION : break;
@@ -75,6 +82,38 @@ export class PrimaryActionComponent implements OnInit {
             case ItemTypes.CONCEPT_SCHEME : return 'This will be helpful text indicating what will happen if you click the associated button';
             default: return 'This will be helpful text indicating what will happen if you click the associated button';
         }
+    }
+
+
+    openMap() {
+
+        let resTypes = this.item.resourceTypes;
+        if(!Array.isArray(resTypes)) {
+            console.log("Warning: Map has no resource types specified");
+            return;
+        }
+
+        // GeoPlatform OpenMaps...
+        if(~resTypes.indexOf(GP_RES_TYPE)) {
+            let prefix = '', ext = '.gov';
+            let env = environment.env;
+            if('dev' === env || 'sit' === env) {
+                prefix = 'sit-';
+                ext = '.us';
+            } else if('stg' === env)
+                prefix = 'stg-';
+            let url = 'https://' + prefix + 'viewer.geoplatform' + ext + '/?id=' + this.item.id;
+            window.open(url, "_blank");
+            return;    
+        }
+
+        //all other map types...
+
+        if(!this.item.landingPage) {
+            console.log("Warning: External map has no home page specified");
+            return;
+        }
+        window.open(this.item.landingPage, "_blank");
     }
 
 }

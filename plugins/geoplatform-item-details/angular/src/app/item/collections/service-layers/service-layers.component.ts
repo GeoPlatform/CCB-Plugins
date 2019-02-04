@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService } from "geoplatform.client";
 
-import { NG2HttpClient } from "../../shared/http-client";
+import { NG2HttpClient } from "../../../shared/http-client";
 
 
 @Component({

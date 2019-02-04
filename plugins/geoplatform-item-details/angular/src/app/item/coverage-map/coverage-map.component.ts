@@ -16,6 +16,8 @@ import {
 import * as esri from "esri-leaflet";
 
 
+
+import { ResetExtentControl } from './reset-extent';
 import { NG2HttpClient } from '../../shared/http-client';
 
 
@@ -38,10 +40,12 @@ export class CoverageMapComponent implements OnInit, OnChanges {
     @Input() layerId : string;
 
     public errors : any[] = [] as any[];
+    public warnings: any[] = [] as any[];
 
     private layerService : LayerService;
     private httpClient : NG2HttpClient;
     private map : MapInstance;
+    private extentControl : any;
 
     constructor(private http : HttpClient) {
         this.httpClient = new NG2HttpClient(this.http);
@@ -49,6 +53,53 @@ export class CoverageMapComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
+
+        this.initMap();
+
+        if(this.mapId) {
+            this.loadMap(this.mapId);
+
+        } else {
+            this.setDefaultBaseLayer()
+            .then( () => {
+
+                if(this.layerId) {
+                    this.loadLayer(this.layerId);
+
+                } else if(this.extent) {
+                    this.setExtent(this.extent);
+
+                }
+            });
+        }
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if(!this.map) return;
+
+        if(changes.mapId) {
+            this.loadMap(changes.mapId.currentValue)
+
+        } else if(changes.layerId) {
+            //TODO remove all layers...
+            this.loadLayer(changes.layerId.currentValue)
+
+        } else if(changes.extent) {
+            this.setExtent(changes.extent.currentValue);
+        }
+    }
+
+    ngOnDestroy() {
+        if(this.map) {
+            this.map.remove();
+            this.map = null;
+        }
+    }
+
+    /**
+     *
+     */
+    initMap() {
 
         let map = L.map("item-coverage-map", {
             zoomControl: true,
@@ -66,6 +117,10 @@ export class CoverageMapComponent implements OnInit, OnChanges {
             map.getPane(Config.leafletPane).style.zIndex = '250';
         }
 
+        //...
+        this.extentControl = new ResetExtentControl();
+        this.extentControl.addTo(map);
+
 
         this.map = MapFactory.get('GPMVMAP');
         this.map.setMap(map);
@@ -81,80 +136,88 @@ export class CoverageMapComponent implements OnInit, OnChanges {
         // });
         this.map.setHttpClient(httpClient);
         this.map.setServiceFactory(this.getServiceFactory());
+    }
 
-        if(this.mapId) {
-            this.map.loadMap(this.mapId);
-        } else {
-            OSM.get(this.layerService).then(osm => {
-                this.map.setBaseLayer(osm);
+    /**
+     * @return {Promise}
+     */
+    setDefaultBaseLayer() {
+        return OSM.get(this.layerService).then(osm => {
+            if(this.mapId) {
+                //only show warning if this happens loading a map
+                this.warnings.push(new Error("Using OpenStreetMap default base layer"));
+            }
+            this.map.setBaseLayer(osm);
+            return osm;
+        });
+    }
 
-                if(this.layerId) {
-                    this.layerService.get(this.layerId)
-                    .then( layer => {
-                        this.map.addLayers(layer);
-                    })
-                    .catch( e => {
-                        //TODO display error about loading layer
-                    });
+    /**
+     * @param {string} id
+     * @return {Promise}
+     */
+    loadMap(id) {
+        return this.map.loadMap(id)
+        .then( map => {
+            if(!map || !map.baseLayer) {
+                this.setDefaultBaseLayer();
+            }
 
-                }
+            if(map.extent) {
+                this.extentControl.setExtent([
+                    [map.extent.miny, map.extent.minx],
+                    [map.extent.maxy, map.extent.maxx]
+                ]);
+            }
 
-                if(this.extent) {
-                    var bbox = [
-                        [ this.extent.minx, this.extent.miny ],
-                        [ this.extent.maxx, this.extent.maxy ]
-                    ];
-                    this.map.setExtent(bbox);
-                }
+            return map;
+        })
+        .catch(e => {
 
-            }).catch(e => {
-                console.log("Unable to get OSM base layer because " + e.message);
-            });
+            console.log("Unable to load map '" + id + "' because " + e.message);
+            console.log(e);
+
+            this.setDefaultBaseLayer();
+
+            //display error message to user
+            this.errors.push(e);
+
+            return Promise.resolve(null);
+        });
+    }
+
+    /**
+     * @param {string} id - GP Layer object to load
+     */
+    loadLayer(id) {
+        this.layerService.get(id)
+        .then( layer => {
+            if(layer.extent) {
+                this.setExtent(layer.extent);
+            }
+            this.map.addLayers(layer);
+        })
+        .catch( e => {
+            //TODO display error about loading layer
+        });
+    }
+
+    /**
+     * @param {object} extent - GP extent object ( { minx: ..., miny: ..., maxx: ..., maxy: ...} )
+     */
+    setExtent(extent) {
+        if(extent) {
+            var bbox = [ [ extent.miny, extent.minx ], [ extent.maxy, extent.maxx ] ];
+            this.extentControl.setExtent(bbox);
+
+            //MapCore Map expects extent, not array
+            this.map.setExtent(extent);
         }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
-        if(!this.map) return;
-
-        if(changes.mapId) {
-            this.map.loadMap(changes.mapId.currentValue)
-            .catch(e => {
-                console.log("Unable to load map '" +
-                    changes.mapId.currentValue + "' because " + e.message);
-                console.log(e);
-            });
-
-        } else if(changes.layerId) {
-
-            //TODO remove all layers...
-
-            this.layerService.get(changes.layerId.currentValue)
-            .then( layer => {
-                this.map.addLayers(layer);
-            })
-            .catch( e => {
-                //TODO display error about loading layer
-            });
-
-        }
-
-        if(changes.extent) {
-            let extent = changes.extent.currentValue;
-            var bbox = [
-                [ extent.minx, extent.miny ],
-                [ extent.maxx, extent.maxy ]
-            ];
-            this.map.setExtent(bbox);
-        }
-    }
-
-    ngOnDestroy() {
-        if(this.map) {
-            this.map.remove();
-            this.map = null;
-        }
-    }
-
+    /**
+     * @return {Function} used to generate GP service classes for use by MapCore map
+     */
     getServiceFactory() {
         return function(arg, baseUrl, httpClient) {
             let type = (typeof(arg) === 'string') ?

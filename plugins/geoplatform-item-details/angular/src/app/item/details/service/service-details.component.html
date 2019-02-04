@@ -1,0 +1,19 @@
+<!-- Service -->
+<div class="m-article__desc">
+    <div><strong>Service Type</strong></div>
+    <div *ngIf="item?.serviceType">{{item.serviceType.label || "Untitled service type"}}</div>
+    <div *ngIf="!item?.serviceType" class="t-fg--danger">
+        <span class="fas fa-exclamation-circle"></span>
+        Service is missing a service type
+    </div>
+</div>
+
+<div class="m-article__desc">
+    <div><strong>Service URL</strong></div>
+    <a *ngIf="item?.href" href="{{item.href}}" target="_blank"
+        class="u-break--all">{{item.href}}</a>
+    <div *ngIf="!item?.href" class="t-fg--danger">
+        <span class="fas fa-exclamation-circle"></span>
+        Service is missing a URL
+    </div>
+</div>

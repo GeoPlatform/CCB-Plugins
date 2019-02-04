@@ -24,67 +24,41 @@
         <div class="m-section-group">
             <div class="m-article">
 
-                <!--
-                <div class="m-article__heading">{{item?.type|friendlyType}} : {{item?.label}}</div>
+                <div class="m-article__heading">Details</div>
                 <br>
-                -->
 
                 <!-- all item types -->
-                <div class="m-article__desc" *ngIf="item?.purpose">
+                <div class="m-article__desc" *ngIf="isAsset()">
                     <div><strong>Purpose</strong></div>
-                    {{item.purpose}}
+                    {{item.purpose || "Not specified"}}
                 </div>
 
-                <div class="m-article__desc" *ngIf="item?.identifiers && item?.identifiers.length">
-                    <div>
-                        <strong>Additional Identifiers</strong>
+                <div class="m-article__desc" *ngIf="isAsset()">
+                    <div><strong>Additional Identifiers</strong></div>
+                    <div *ngIf="!item?.identifiers || !item?.identifiers.length">None specified</div>
+                    <div *ngIf="item?.identifiers && item?.identifiers.length">
+                        <div *ngFor="let svc of item.identifiers; let $idx=index;">
+                            {{item.identifiers[$idx]}}
+                        </div>
                     </div>
-                    <div *ngFor="let svc of item.identifiers; let $idx=index;">
-                        {{item.identifiers[$idx]}}
-                    </div>
                 </div>
 
 
+                <!-- Datasets -->
+                <gpid-dataset-details *ngIf="'dcat:Dataset'===item?.type" [item]="item">
+                </gpid-dataset-details>
 
 
-
-                <!-- Service -->
-                <div class="m-article__desc" *ngIf="item?.serviceType">
-                    <div><strong>Service Type</strong></div>
-                    {{item.serviceType.label || "Untitled service type"}}
-                </div>
-
-                <div class="m-article__desc" *ngIf="item?.href">
-                    <div><strong>Access URL</strong></div>
-                    <a href="{{item.href}}" target="_blank" class="u-break--all">{{item.href}}</a>
-                </div>
+                <!-- Services -->
+                <gpid-service-details *ngIf="'regp:Service'===item?.type" [item]="item">
+                </gpid-service-details>
 
 
 
                 <!-- Layers -->
-                <div class="m-article__desc" *ngIf="item?.layerType">
-                    <div><strong>Layer Type</strong></div>
-                    {{item.layerType}}
-                </div>
+                <gpid-layer-details *ngIf="'Layer'===item?.type" [item]="item">
+                </gpid-layer-details>
 
-                <div class="m-article__desc" *ngIf="item?.layerName">
-                    <div><strong>Layer Name</strong></div>
-                    {{item.layerName}}
-                </div>
-
-                <div class="m-article__desc" *ngIf="item?.supportedFormats">
-                    <div><strong>Layer Formats</strong></div>
-                    <span *ngFor="let format of layer.supportedFormats">{{format}}</span>
-                </div>
-
-                <div class="m-article__desc" *ngIf="item?.services && item?.services.length">
-                    <div>
-                        <strong>Service<span *ngIf="!item.layerType">(s)</span></strong>
-                    </div>
-                    <div *ngFor="let svc of item.services; let $idx=index;">
-                        <gpid-resource-link [item]="item.services[$idx]"></gpid-resource-link>
-                    </div>
-                </div>
 
 
                 <!-- Concepts -->
@@ -95,42 +69,17 @@
 
 
                 <!-- Organization -->
-                <div class="m-article__desc" *ngIf="item?.subOrganizationOf">
-                    <div><strong>Sub Organization Of</strong></div>
-                    <gpid-resource-link [item]="item.subOrganizationOf"></gpid-resource-link>
+                <div class="m-article__desc" *ngIf="'org:Organization'===item?.type">
+                    <div><strong>Parent Organization</strong></div>
+                    <gpid-resource-link *ngIf="item?.subOrganizationOf" [item]="item.subOrganizationOf"></gpid-resource-link>
+                    <div *ngIf="!item?.subOrganizationOf">Not specified</div>
                 </div>
 
-                <!-- Contact -->
-                <div class="m-article__desc" *ngIf="item?.type==='vcard:VCard'">
-                    <div><strong>Full Name</strong></div>
-                    <div>{{item.fullName||"Not specified"}}</div>
-                    <br>
 
-                    <div><strong>Organization</strong></div>
-                    <div>{{item.orgName||"Not specified"}}</div>
-                    <br>
+                <!-- Contact (VCard) -->
+                <gpid-contact-details *ngIf="item?.type==='vcard:VCard'" [item]="item">
+                </gpid-contact-details>
 
-                    <div><strong>Position</strong></div>
-                    <div>{{item.positionTitle||"Not specified"}}</div>
-                    <br>
-
-                    <div><strong>Email</strong></div>
-                    <div>{{item.email||"Not specified"}}</div>
-                    <br>
-
-                    <div><strong>Phone</strong></div>
-                    <div>{{item.tel||"Not specified"}}</div>
-                    <br>
-
-                    <div *ngIf="item.address">
-                        <div><strong>Address</strong></div>
-                        <div *ngIf="item.address.street">{{item.address.street}}</div>
-                        <span *ngIf="item.address.locality">{{item.address.locality}}</span>
-                        <span *ngIf="item.address.region">{{item.address.region}}</span>
-                        <span *ngIf="item.address.zip">{{item.address.zip}}</span>
-                        <div *ngIf="item.address.country">{{item.address.country}}</div>
-                    </div>
-                </div>
 
                 <!-- Person -->
                 <div class="m-article__desc" *ngIf="item?.type==='foaf:Person'">
@@ -164,6 +113,10 @@
             *ngIf="'dcat:Dataset'===item?.type" [item]="item">
         </gpid-dataset-distributions>
 
+
+        <gpid-services *ngIf="'Layer'===item?.type||'dcat:Dataset'===item?.type"
+            [item]="item" class="m-section-group" >
+        </gpid-services>
 
 
         <!-- Service Layers -->

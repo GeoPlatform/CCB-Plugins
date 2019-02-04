@@ -15,8 +15,9 @@
 
         <strong>Base Layer</strong>
 
-        <div *ngIf="!map.baseLayer">
-            <em>Not specified</em>
+        <div *ngIf="!map.baseLayer" class="t-fg--warning">
+            <span class="fas fa-exclamation-triangle"></span>
+            No base layer specified
         </div>
 
         <div *ngIf="map.baseLayer">
@@ -28,8 +29,9 @@
 
         <strong>Overlay Layers</strong>
 
-        <div *ngIf="!map?.layers || !map?.layers.length">
-            <em>None specified</em>
+        <div *ngIf="!map?.layers || !map?.layers.length" class="t-fg--warning">
+            <span class="fas fa-exclamation-triangle"></span>
+            No overlay layers specified
         </div>
 
         <div *ngIf="map?.layers">

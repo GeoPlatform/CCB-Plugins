@@ -109,17 +109,19 @@ export class ServiceStatsComponent implements OnInit {
             // score: 99.05
             // speed: 1.22
             // timestamp: "Jan 22, 2019"
-            rows.push( [ point.timestamp, point.score, point.speed] );
+
+            let score = Math.max(point.score, 0);
+            let speed = point.speed;
+            if(speed < 0) speed = 100;
+
+            rows.push( [ point.timestamp, score, speed] );
         });
 
         data.addRows(rows);
 
         let options = {
             height: 300,
-            series: {
-                0: { targetAxisIndex: 0 },
-                1: { targetAxisIndex: 1 }
-            },
+            series: { 0: { targetAxisIndex: 0 }, 1: { targetAxisIndex: 1 } },
             hAxis: {
                 title: 'Date',
                 format: 'M/d/yy',
@@ -127,20 +129,11 @@ export class ServiceStatsComponent implements OnInit {
                 maxValue: rows[rows.length-1][0]
             },
             vAxis: {
-                0: {
-                    title: 'Score',
-                    minValue: 0,
-                    maxValue: 100
-                },
-                1: {
-                    title: 'Speed',
-                    minValue: 0,
-                    maxValue: 100
-                },
+                0: { title: 'Score', minValue: 0, maxValue: 100 },
+                1: { title: 'Speed', minValue: 0, maxValue: 100 },
                 ticks: [0, 20, 40, 60, 80, 100]
             }
         };
-
 
         // this.isFetchingData = false;
 

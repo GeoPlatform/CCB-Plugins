@@ -18,4 +18,15 @@
         </div>
     </div>
 
+    <div *ngIf="warnings && warnings.length">
+        <br>
+        <strong>
+            <span class="fas fa-exclamation-triangle t-fg--warning"></span>
+            Warnings :
+        </strong>
+        <div *ngFor="let warning of warnings">
+            - {{warning.message}}
+        </div>
+    </div>
+
 </div>
