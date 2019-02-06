@@ -48,7 +48,7 @@ if ($geopsearch_content_type == 'post'){
   $geopsearch_post_fetch_final->posts = array_unique( array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
   $geopsearch_post_fetch_final->post_count = count($geopsearch_post_fetch_final->posts);
 
-  echo json_encode($geopsearch_post_fetch_final->posts);
+  var_dump($geopsearch_post_fetch_final->posts);
 }
 
 
@@ -91,7 +91,7 @@ if ($geopsearch_content_type == 'page'){
   $geopsearch_page_fetch_combo->posts = array_unique( array_merge( $geopsearch_page_fetch_one->posts, $geopsearch_page_fetch_two->posts ), SORT_REGULAR );
   $geopsearch_page_fetch_combo->post_count = count($geopsearch_page_fetch_final->posts);
 
-  echo json_encode($geopsearch_page_fetch_combo->posts);
+  var_dump($geopsearch_page_fetch_combo->posts);
 }
 
 if ($geopsearch_content_type == 'media'){

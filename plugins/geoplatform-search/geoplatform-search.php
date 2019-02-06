@@ -182,6 +182,156 @@ function geopsearch_perform_site_search() {
 }
 add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
 
+
+
+
+
+
+
+
+
+// Registers the rest api endpoint for the search, which calls its function.
+//
+// Endpoint: {home url}/wp-json/geoplatform-search/v1/{type}/{query}/{author}/{page}/{per_page}/{order}/{orderby}
+//
+// @Param {home url}: home url, such as "sit.geoplatform.us" or "communities.geoplatform.gov/oem"
+// @Param {type}: Type of asset to search for, must be "post", "page", or "media"
+// @Param {query}: Search query. Spaces must be replaced with underscores.
+// @Param {author}: name of the author, not ID.
+// @Param {page}: current page, parameter not currently in use.
+// @Param {perpage}: results per page, parameter not currently in use.
+// @Param {order}: how the results are to be ordered, "asc" or "desc".
+// @Param {orderby}: the means by which the results are ordered, such as "modified" or "date"
+//
+function geopsearch_rest_api_register(){
+	register_rest_route( 'geoplatform-search/v1', '/(?P<type>[^/]*)/(?P<search>[^/]*)/(?P<author>[^/]*)/(?P<page>[\d]*)/(?P<per_page>-?[\d]*)/(?P<order>[^/]*)/(?P<orderby>[^/]*)', array(
+		'methods' => 'GET',
+		'callback' => 'geopsearch_rest_api_search',
+	));
+}
+add_action( 'rest_api_init', 'geopsearch_rest_api_register');
+
+// Actual search function.
+function geopsearch_rest_api_search( WP_REST_Request $geopsearch_data_in ){
+
+	// Parse input data
+	$geopsearch_content_type = $geopsearch_data_in->get_param('type');
+	$geopsearch_content_search = $geopsearch_data_in->get_param('search');
+	$geopsearch_content_author = $geopsearch_data_in->get_param('author');
+	$geopsearch_content_page = $geopsearch_data_in->get_param('page');
+	$geopsearch_content_perpage = $geopsearch_data_in->get_param('per_page');
+	$geopsearch_content_order = $geopsearch_data_in->get_param('order');
+	$geopsearch_content_orderby = $geopsearch_data_in->get_param('orderby');
+
+	$geopsearch_content_terms = explode("_", $geopsearch_content_search);
+
+	// Post search methodology
+	if ($geopsearch_content_type == 'post'){
+	  $geopsearch_post_args_two = array(
+	    'post_type' => 'post',
+	    'numberposts' => -1,
+			'posts_per_page' => -1,
+	    'author_name' => $geopsearch_content_author,
+	    'order' => $geopsearch_content_order,
+	    'orderby' => $geopsearch_content_orderby,
+	    'tax_query' => array(
+	      'relation' => 'OR',
+	      array(
+	        'taxonomy' => 'category',
+	        'field' => 'slug',
+	        'terms' => array($geopsearch_content_search),
+	      ),
+	      array(
+	        'taxonomy' => 'post_tag',
+	        'field' => 'slug',
+	        'terms' => array($geopsearch_content_search),
+	      ),
+	    )
+	  );
+
+	  $geopsearch_post_args_one = array(
+	    'post_type' => 'post',
+	    'numberposts' => -1,
+			'posts_per_page' => -1,
+	    'author_name' => $geopsearch_content_author,
+	    's' => $geopsearch_content_search,
+	    'order' => $geopsearch_content_order,
+	    'orderby' => $geopsearch_content_orderby,
+	  );
+
+	  $geopsearch_post_fetch_one = new WP_Query($geopsearch_post_args_one);
+	  $geopsearch_post_fetch_two = new WP_Query($geopsearch_post_args_two);
+	  $geopsearch_post_fetch_final = array();
+
+	  $geopsearch_post_fetch_final = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
+	  // $geopsearch_post_fetch_final->post_count = count($geopsearch_post_fetch_final->posts);
+
+	  return $geopsearch_post_fetch_final;
+	}
+
+	// Page search methodology.
+	if ($geopsearch_content_type == 'page'){
+	  $geopsearch_page_args_two = array(
+	    'post_type' => 'page',
+	    'numberposts' => -1,
+			'posts_per_page' => -1,
+	    'author_name' => $geopsearch_content_author,
+	    'order' => $geopsearch_content_order,
+	    'orderby' => $geopsearch_content_orderby,
+	    'tax_query' => array(
+	      'relation' => 'OR',
+	      array(
+	        'taxonomy' => 'category',
+	        'field' => 'slug',
+	        'terms' => array($geopsearch_content_search),
+	      ),
+	      array(
+	        'taxonomy' => 'post_tag',
+	        'field' => 'slug',
+	        'terms' => array($geopsearch_content_search),
+	      ),
+	    )
+	  );
+
+	  $geopsearch_page_args_one = array(
+	    'post_type' => 'page',
+	    'numberposts' => -1,
+			'posts_per_page' => -1,
+	    'author_name' => $geopsearch_content_author,
+	    's' => $geopsearch_content_search,
+	    'order' => $geopsearch_content_order,
+	    'orderby' => $geopsearch_content_orderby,
+	  );
+
+	  $geopsearch_page_fetch_one = new WP_Query($geopsearch_page_args_one);
+	  $geopsearch_page_fetch_two = new WP_Query($geopsearch_page_args_two);
+	  $geopsearch_page_fetch_final = array();
+
+	  $geopsearch_page_fetch_final = array_unique( array_merge( $geopsearch_page_fetch_one->posts, $geopsearch_page_fetch_two->posts ), SORT_REGULAR );
+	  // $geopsearch_page_fetch_combo->post_count = count($geopsearch_page_fetch_final->posts);
+
+	  return $geopsearch_page_fetch_final;
+	}
+
+	// Media search methodology
+	if ($geopsearch_content_type == 'media'){
+	  $geopsearch_media_args = array(
+	    'post_type'      => 'attachment',
+	    'post_mime_type' => 'image',
+	    'post_status'    => 'inherit',
+	    'posts_per_page' => - 1,
+	    's' => $geopsearch_content_search,
+	    'order' => $geopsearch_content_order,
+	    'orderby' => $geopsearch_content_orderby,
+	  );
+
+	  $geopsearch_media_fetch = new WP_Query( $geopsearch_media_args );
+	  return $geopsearch_media_fetch->posts;
+	}
+}
+
+
+
 /**
  * Begins execution of the plugin.
  *
