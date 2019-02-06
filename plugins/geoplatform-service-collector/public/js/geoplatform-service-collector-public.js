@@ -40,8 +40,9 @@
 // *  #param geopserve_thumb_in: 404 image url, in case there is no image to use.
 // *  #param geopserve_uri_in: UAL uri for this particular asset type, used for harvesting.
 // *  #param geopserve_redirect_in: Panel base URL for this particular asset type.
+// *  #param geopserve_hide_in: Determines if a pane opens in a new window or not.
 //
-function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in){
+function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in, geopserve_hide_in){
 
 	// Service collection setup.
 	const Query = GeoPlatform.Query;
@@ -113,12 +114,12 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 			if (typeof geopserve_results[i].createdBy != 'undefined')
 				geopserve_result_name = geopserve_results[i].createdBy;
 
-			console.log(geopserve_thumb_src);
+			// console.log(geopserve_thumb_src);
 
 			var geopserve_under_label_text = geopserve_result_time + " by " + geopserve_result_name;
 			var geopserve_temp_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
 
-			geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error);
+			geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_hide_in);
 		}
 	})
 	.catch(function (error) {
@@ -128,14 +129,17 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 	});
 }( jQuery );
 
-function geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error){
+function geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_hide_in){
 	// Simpler than the above, setting a default and overriding if the there is
 	// a creating user found. The two strings are then combined for output.
 	var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
 	var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
 	var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_src, onerror: geopserve_thumb_error});
 	var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
-	var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, target: '_blank', html: geopserve_label_text});
+	if (geopserve_hide_in != 'T')
+		var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, target: '_blank', html: geopserve_label_text});
+	else
+		var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, html: geopserve_label_text});
 	var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:geopserve_under_label_text});
 
 	thumb_div.appendChild(thumb_img);
