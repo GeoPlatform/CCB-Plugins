@@ -211,6 +211,22 @@ function geopsearch_rest_api_register(){
 }
 add_action( 'rest_api_init', 'geopsearch_rest_api_register');
 
+
+
+
+function geopsearch_rest_api_test(){
+	register_rest_route( 'geoplatform-test/v1', '/(?P<type>[^/]*)/(?P<search>[^/]*)/(?P<author>[^/]*)/(?P<page>[\d]*)/(?P<per_page>-?[\d]*)/(?P<order>[^/]*)/(?P<orderby>[^/]*)', array(
+		'methods' => 'GET',
+		'callback' => 'geopsearch_output_test',
+	));
+}
+add_action( 'rest_api_init', 'geopsearch_rest_api_test');
+
+
+function geopsearch_output_test( WP_REST_Request $geopsearch_data_in ){
+	return $geopsearch_data_in->get_params();
+}
+
 // Actual search function.
 function geopsearch_rest_api_search( WP_REST_Request $geopsearch_data_in ){
 
