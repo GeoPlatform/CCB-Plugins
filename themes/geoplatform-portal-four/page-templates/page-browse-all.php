@@ -19,11 +19,11 @@ get_template_part( 'sub-header-post', get_post_format() );
 	<div class="l-body__main-column">
 	<?php
 
-		$geopportal_mainpage_disp_first_page = get_page_by_path(get_theme_mod('featured_primary_post'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_second_page = get_page_by_path(get_theme_mod('featured_secondary_one'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_third_page = get_page_by_path(get_theme_mod('featured_secondary_two'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_fourth_page = get_page_by_path(get_theme_mod('featured_secondary_three'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_fifth_page = get_page_by_path(get_theme_mod('featured_secondary_four'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_disp_first_page = get_page_by_path(get_theme_mod('featured_primary_post'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_second_page = get_page_by_path(get_theme_mod('featured_secondary_one'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_third_page = get_page_by_path(get_theme_mod('featured_secondary_two'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_fourth_page = get_page_by_path(get_theme_mod('featured_secondary_three'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_fifth_page = get_page_by_path(get_theme_mod('featured_secondary_four'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
 		$geopportal_mainpage_disp_slug_array = array($geopportal_mainpage_disp_first_page->post_name, $geopportal_mainpage_disp_second_page->post_name, $geopportal_mainpage_disp_third_page->post_name, $geopportal_mainpage_disp_fourth_page->post_name, $geopportal_mainpage_disp_fifth_page->post_name);
 
 		// Final sorted more content array.

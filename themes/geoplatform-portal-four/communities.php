@@ -72,7 +72,7 @@ class Geopportal_Communities_Widget extends WP_Widget {
 	    $geopportal_communities_new_fourth_link = home_url();
 
 		// Turns the slugs into pages.
-		$geopportal_communities_get_page_params = array('post', 'page', 'geopccb_catlink', 'community-post');
+		$geopportal_communities_get_page_params = array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post');
 		$geopportal_communities_trend_first_page = get_page_by_path($geopportal_communities_trend_first_link, OBJECT, $geopportal_communities_get_page_params);
 		$geopportal_communities_trend_second_page = get_page_by_path($geopportal_communities_trend_second_link, OBJECT, $geopportal_communities_get_page_params);
 		$geopportal_communities_trend_third_page = get_page_by_path($geopportal_communities_trend_third_link, OBJECT, $geopportal_communities_get_page_params);

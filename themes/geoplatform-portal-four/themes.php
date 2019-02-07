@@ -35,7 +35,7 @@ class Geopportal_Themes_Widget extends WP_Widget {
 			'order' => 'DSC',
 			'numberposts' => -1,
 			'post_status' => 'publish',
-			'post_type' => array('post','page','geopccb_catlink', 'community-post'),
+			'post_type' => array('post','page','geopccb_catlink', 'community-post', 'ngda-post'),
 
 		) );
 

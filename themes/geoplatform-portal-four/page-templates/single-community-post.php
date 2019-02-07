@@ -1,7 +1,7 @@
 <?php
 /**
- * Template Name: Community Post Template
- * Template Post Type: post, page, community-post
+ * Template Name: NGDA and Community Post Template
+ * Template Post Type: community-post, ngda-post
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

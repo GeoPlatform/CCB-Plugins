@@ -63,11 +63,11 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		// 	$geopportal_mainpage_disp_browse_slug = "";
 
 		// Turns the slugs into pages.
-		$geopportal_mainpage_disp_first_page = get_page_by_path(get_theme_mod('featured_primary_post'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_second_page = get_page_by_path(get_theme_mod('featured_secondary_one'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_third_page = get_page_by_path(get_theme_mod('featured_secondary_two'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_fourth_page = get_page_by_path(get_theme_mod('featured_secondary_three'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
-		$geopportal_mainpage_disp_fifth_page = get_page_by_path(get_theme_mod('featured_secondary_four'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_disp_first_page = get_page_by_path(get_theme_mod('featured_primary_post'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_second_page = get_page_by_path(get_theme_mod('featured_secondary_one'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_third_page = get_page_by_path(get_theme_mod('featured_secondary_two'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_fourth_page = get_page_by_path(get_theme_mod('featured_secondary_three'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
+		$geopportal_mainpage_disp_fifth_page = get_page_by_path(get_theme_mod('featured_secondary_four'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
 
 		// Sets up default thumbnails and overwrites if post has one.
 		$geopportal_mainpage_disp_first_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
@@ -158,7 +158,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		}
 
 		// Quality control of browse all category, sets link to home page if fails.
-		$geopportal_mainpage_browse_cat = get_page_by_path(get_theme_mod('featured_browse_slug'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post'));
+		$geopportal_mainpage_browse_cat = get_page_by_path(get_theme_mod('featured_browse_slug'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
 		if ($geopportal_mainpage_browse_cat)
 			$geopportal_mainpage_browse_url = (get_post_type($geopportal_mainpage_browse_cat) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_browse_cat->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_browse_cat));
 		else
