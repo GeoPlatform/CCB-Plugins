@@ -960,19 +960,11 @@ function geop_ccb_create_community_post() {
       'taxonomies' => array('category'),
       'publicly_queryable'  => true,
 			'menu_icon' => 'dashicons-images-alt2',
+			'rewrite' => array( 'slug' => 'community' ),
     )
   );
 }
 add_action( 'init', 'geop_ccb_create_community_post' );
-
-
-
-
-function geopccb_wysiwyg_register_custom_meta_box_compost(){
-	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'community-post');
-}
-add_action('admin_init', 'geopccb_wysiwyg_register_custom_meta_box_compost');
-
 
 /**
  * Community Post input incorporation
@@ -1005,6 +997,76 @@ function geop_ccb_custom_field_compost_metaboxes() {
 	);
 }
 add_action( 'add_meta_boxes', 'geop_ccb_custom_field_compost_metaboxes' );
+
+
+
+/**********************************************************************************************************************************************
+ * Creates the ngda post custom post type.
+ */
+function geop_ccb_create_ngda_post() {
+  register_post_type( 'ngda-post',
+    array(
+      'labels' => array(
+        'name' => 'NGDA Posts',
+        'singular_name' => 'NGDA Post',
+      ),
+			'capability_type' => 'page',
+      'public' => true,
+      'has_archive' => true,
+      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates'),
+      'taxonomies' => array('category'),
+      'publicly_queryable'  => true,
+			'menu_icon' => 'dashicons-images-alt2',
+			'rewrite' => array( 'slug' => 'ngda' ),
+    )
+  );
+}
+add_action( 'init', 'geop_ccb_create_ngda_post' );
+
+/**
+ * NGDA Post input incorporation
+ */
+// register the meta box for priority AND URL.
+function geop_ccb_custom_field_ngdapost_metaboxes() {
+  add_meta_box(
+      'geop_ccb_compost_main_data',          // this is HTML id of the box on edit screen
+      'Primary Community Data',    // title of the box
+      'geop_ccb_main_data_content',   // function to be called to display the checkboxes, see the function below
+      'ngda-post',        // on which edit screen the box should appear
+      'normal',      // part of page where the box should appear
+      'default'      // priority of the box
+  );
+  add_meta_box(
+      'geop_ccb_compost_add_data',          // this is HTML id of the box on edit screen
+      'Supplemental Community Data',    // title of the box
+      'geop_ccb_add_data_content',   // function to be called to display the checkboxes, see the function below
+      'ngda-post',        // on which edit screen the box should appear
+      'normal',      // part of page where the box should appear
+      'default'      // priority of the box
+  );
+	add_meta_box(
+			'geop_ccb_sorting_compost_id',          // this is HTML id of the box on edit screen
+			'Featured Display Priority',    // title of the box
+			'geop_ccb_priority_sort_content',   // function to be called to display the checkboxes, see the function below
+			'ngda-post',        // on which edit screen the box should appear
+			'normal',      // part of page where the box should appear
+			'default'      // priority of the box
+	);
+}
+add_action( 'add_meta_boxes', 'geop_ccb_custom_field_ngdapost_metaboxes' );
+
+
+
+
+
+function geopccb_wysiwyg_register_custom_meta_box_compost(){
+	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'community-post');
+	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'ngda-post');
+}
+add_action('admin_init', 'geopccb_wysiwyg_register_custom_meta_box_compost');
+
+
+
 
 // display the metabox for com_post URL and checkbox
 function geop_ccb_main_data_content($post) {
@@ -1084,6 +1146,8 @@ function geop_ccb_custom_field_compost_data($post_id) {
 }
 add_action( 'save_post', 'geop_ccb_custom_field_compost_data' );
 
+
+
 function geop_ccb_compost_column_filter( $geopccb_columns ) {
 	$geopccb_columns = array(
 		'cb' => '<input type="checkbox" />',
@@ -1095,6 +1159,7 @@ function geop_ccb_compost_column_filter( $geopccb_columns ) {
 	return $geopccb_columns;
 }
 add_filter( "manage_community-post_posts_columns", "geop_ccb_compost_column_filter" );
+add_filter( "manage_ngda-post_posts_columns", "geop_ccb_compost_column_filter" );
 
 function geop_ccb_compost_column_action( $geopccb_column, $geopccb_id ) {
 	if ( $geopccb_column == 'priority' ){
@@ -1105,6 +1170,7 @@ function geop_ccb_compost_column_action( $geopccb_column, $geopccb_id ) {
 	}
 }
 add_action('manage_community-post_posts_custom_column', 'geop_ccb_compost_column_action', 10, 2);
+add_action('manage_ngda-post_posts_custom_column', 'geop_ccb_compost_column_action', 10, 2);
 
 // Adding sortation, handled functionally by the posts function.
 function geop_ccb_compost_column_sorter($geopccb_columns) {
@@ -1112,6 +1178,7 @@ function geop_ccb_compost_column_sorter($geopccb_columns) {
 	return $geopccb_columns;
 }
 add_filter('manage_edit-community-post_sortable_columns', 'geop_ccb_compost_column_sorter');
+add_filter('manage_edit-ngda-post_sortable_columns', 'geop_ccb_compost_column_sorter');
 
 
 
@@ -1138,6 +1205,7 @@ function geopportal_add_breadcrumb_title() {
 					'post',
 					'page',
 					'community-post',
+					'ngda-post',
 				),
         // 'post',        // on which edit screen the box should appear
         'normal',      // part of page where the box should appear

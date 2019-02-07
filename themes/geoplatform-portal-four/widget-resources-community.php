@@ -35,7 +35,7 @@ class Geopportal_Resource_Community_Widget extends WP_Widget {
 			'order' => 'DSC',
 			'numberposts' => -1,
 			'post_status' => 'publish',
-			'post_type' => array('post','page','geopccb_catlink', 'community-post'),
+			'post_type' => array('post','page','geopccb_catlink', 'community-post', 'ngda-post'),
 		) );
 
 		// This list is then filtered for all pages in the Front Page category,
