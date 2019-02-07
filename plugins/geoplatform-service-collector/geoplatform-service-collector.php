@@ -211,9 +211,9 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	// Required inclusion for detecting if the Item Details plugin is active.
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-	// Default image.
+	// Default image and environment pull.
 	$geopserve_disp_thumb = plugin_dir_url(__FILE__) . 'public/assets/sample_1.jpg';
-
+	$geopserve_master_ual = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
 
 	// CAROUSEL CONSTRUCTION BEGINS
 	// Everywhere that 'hide' is checked is indicitive of an option that strips out
@@ -282,7 +282,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 							<!-- Carousel pane generation script. -->
 							<script type="text/javascript">
-								geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>", "<?php echo $geoserve_generation_array[$i]['uri'] ?>", "<?php echo $geoserve_redirect_url ?>", "<?php echo $geoserve_shortcode_array['hide'] ?>");
+								geopserve_gen_carousel("<?php echo $geoserve_shortcode_array['id'] ?>", "<?php echo $geoserve_generation_array[$i]['button'] ?>", <?php echo $geoserve_shortcode_array['count'] ?>, <?php echo $i ?>, "<?php echo $geoserve_generation_array[$i]['thumb'] ?>", "<?php echo $geoserve_generation_array[$i]['uri'] ?>", "<?php echo $geoserve_redirect_url ?>", "<?php echo $geoserve_shortcode_array['hide'] ?>", "<?php echo $geopserve_master_ual ?>");
 							</script>
 			      </div>
 

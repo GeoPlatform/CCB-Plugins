@@ -42,7 +42,7 @@
 // *  #param geopserve_redirect_in: Panel base URL for this particular asset type.
 // *  #param geopserve_hide_in: Determines if a pane opens in a new window or not.
 //
-function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in, geopserve_hide_in){
+function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in, geopserve_hide_in, geopserve_ual_in){
 
 	// Service collection setup.
 	const Query = GeoPlatform.Query;
@@ -75,7 +75,7 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 	query.setQ("");
 
 	// Performs the query grab.
-	geopserve_retrieve_objects(query)
+	geopserve_retrieve_objects(query, geopserve_ual_in)
 		.then(function (response) {
 			var geopserve_max_panes = geopserve_count_in;
 			if (response.totalResults < geopserve_count_in)
@@ -162,9 +162,9 @@ function geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopse
 
 
 
-function geopserve_retrieve_objects(query) {
+function geopserve_retrieve_objects(query, geopserve_ual) {
 	var deferred = Q.defer();
-	var service = new GeoPlatform.ItemService(GeoPlatform.ualUrl, new GeoPlatform.JQueryHttpClient());
+	var service = new GeoPlatform.ItemService(geopserve_ual, new GeoPlatform.JQueryHttpClient());
 	service.search(query)
 		.then(function (response) { deferred.resolve(response); })
 		.catch(function (e) { deferred.reject(e); });
