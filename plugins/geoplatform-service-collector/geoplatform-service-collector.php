@@ -13,7 +13,7 @@
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
- * Plugin Name:       GeoPlatform Service Collector
+ * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
  * Version:           1.0.0
@@ -98,7 +98,7 @@ function run_geoplatform_service_collector() {
 run_geoplatform_service_collector();
 
 
-// The Service Collector output operates by using a shortcode invocation of a
+// The Asset Carousel output operates by using a shortcode invocation of a
 // carousel. This is handled below.
 function geopserve_com_shortcodes_creation($geopserve_atts){
 

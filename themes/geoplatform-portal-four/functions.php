@@ -1017,6 +1017,7 @@ function geop_ccb_create_ngda_post() {
       'taxonomies' => array('category'),
       'publicly_queryable'  => true,
 			'menu_icon' => 'dashicons-images-alt2',
+			'has_archive' => false,
 			'rewrite' => array( 'slug' => 'ngda' ),
     )
   );
