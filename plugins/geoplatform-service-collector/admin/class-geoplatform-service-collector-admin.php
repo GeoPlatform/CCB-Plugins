@@ -116,7 +116,7 @@ class Geoplatform_Service_Collector_Admin {
 	     *        Administration Menus: http://codex.wordpress.org/Administration_Menus
 	     *
 	     */
-	    add_options_page( 'GeoPlatform Service Collector Plugin Settings Page', 'GeoPlatform Service Collector', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+	    add_options_page( 'GeoPlatform Asset Carousel Plugin Settings Page', 'GeoPlatform Asset Carousel', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
 	}
 
 	 /**
