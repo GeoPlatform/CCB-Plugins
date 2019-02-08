@@ -190,6 +190,112 @@ add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+/* Endpoint for custom search algorithm.
+ *
+ * Reference: https://benrobertson.io/wordpress/wordpress-custom-search-endpoint
+ *
+ * This method below registers the endpoint route.
+*/
+function geopsearch_register_search_route() {
+    register_rest_route('geoplatform-search/v1', '/gpsearch', [
+        'methods' => WP_REST_Server::READABLE,
+        'callback' => 'geopsearch_ajax_search',
+        'args' => geopsearch_get_search_args(),
+    ]);
+}
+add_action( 'rest_api_init', 'geopsearch_register_search_route');
+
+// Sets up the search args.
+function geopsearch_get_search_args() {
+    $args = [];
+		$args['type'] = [
+       'description' => esc_html__( 'asset type. post, page, or media.', 'geopsearch' ),
+       'type'        => 'string',
+   ];
+    $args['s'] = [
+       'description' => esc_html__( 'The search term.', 'geopsearch' ),
+       'type'        => 'string',
+   ];
+   return $args;
+}
+
+// Performs the actual search operation.
+function geopsearch_ajax_search( $request ) {
+  $posts = [];
+  $results = [];
+	$stype = isset($request['type']) ? $request['type'] : ['page', 'post'];
+
+  // check for a search term
+  if( isset( $request['s'] ) ){
+		// get posts
+	  $posts = get_posts([
+	    'posts_per_page' => -1,
+	    'post_type' => $stype,
+			// 's' => 'hurricane+hurricane',
+	    's' => $request['s'],
+	  ]);
+		// set up the data I want to return
+	  foreach($posts as $post){
+	    $results[] = [
+	      'title' => $post->post_title,
+	      'link' => get_permalink( $post->ID ),
+				'meta' => $post,
+	    ];
+  	}
+	}
+
+	if ( empty($results) ) :
+    return new WP_Error( 'front_end_ajax_search', 'No results');
+  endif;
+
+  return rest_ensure_response( $results );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Registers the rest api endpoint for the search, which calls its function.
 //
 // Endpoint: {home url}/wp-json/geoplatform-search/v1/{type}/{query}/{author}/{page}/{per_page}/{order}/{orderby}
