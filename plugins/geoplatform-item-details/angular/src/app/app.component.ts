@@ -6,6 +6,7 @@ import { Config, ItemService } from "geoplatform.client";
 import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
 import { NG2HttpClient } from "./shared/http-client";
+import { PluginAuthService } from './shared/auth.service';
 import { environment } from '../environments/environment';
 
 const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)/i;
@@ -30,19 +31,26 @@ export class AppComponent {
 
     ngOnInit() {
 
+        // console.log("App.init() " + window.location.href);
+        // if(this.item) return;
+
         let match = this.parseURL();
         if(!match || !match.id) {
             this.handleError({
                 label: "Malformed URL",
                 message: "The URL you provided is not a valid GeoPlatform resource identifier"
             });
+            return;
         }
 
         //fetch item using itemService
         this.itemService.get(match.id)
         .then( item => {
             this.item = item;
-            this.updatePageTitle( ItemHelper.getLabel(this.item) );
+            this.updatePageTitle(
+                "GeoPlatform Resource : " + ItemHelper.getTypeLabel(item)
+                // ItemHelper.getLabel(this.item)
+            );
         })
         .catch( e => {
             //display error message indicating failure to load item

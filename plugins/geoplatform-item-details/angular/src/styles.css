@@ -22,3 +22,9 @@ a[target="_blank"]:after {
     background-color: #f6f6f6;
     color: #333;
 }
+
+
+span.fas.fa-caret-down,
+span.fas.fa-caret-up {
+    cursor: pointer;
+}

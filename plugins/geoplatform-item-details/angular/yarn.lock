@@ -2586,6 +2586,10 @@ generate-object-property@^1.1.0:
     leaflet.markercluster "1.1.0"
     q "1.1.2"
 
+"geoplatform.ngoauth@git+https://github.com/GeoPlatform/ng-gpoauth.git#develop":
+  version "0.0.0"
+  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#dd0d4ed5469fab79d8c3d56ff8e8d174e43597c6"
+
 "geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
   version "2.0.0"
   resolved "git+http://github.com/GeoPlatform/style.git#e9d477c89d6ea55949933f92fc72dd064579497d"

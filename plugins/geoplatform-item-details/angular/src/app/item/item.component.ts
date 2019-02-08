@@ -7,6 +7,7 @@ import { ItemTypes, Config, ItemService } from "geoplatform.client";
 
 import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
+import { PluginAuthService } from '../shared/auth.service';
 
 
 const MAX_DESC_LENGTH = 550;
@@ -27,9 +28,17 @@ export class ItemComponent implements OnInit {
 
     private itemService : ItemService;
 
-    constructor(private el: ElementRef, http : HttpClient) {
+    constructor(
+        private el: ElementRef,
+        http : HttpClient,
+        private authService : PluginAuthService) {
+
         let client = new NG2HttpClient(http);
         this.itemService = new ItemService(Config.ualUrl, client);
+
+        // authService.subscribe( (user) => {
+            //in case we need to display message about user state changing...
+        // })
     }
 
     ngOnInit() {
@@ -61,6 +70,9 @@ export class ItemComponent implements OnInit {
     }
 
     isAuthorized(action : string) {
+        if(!this.authService.isAuthenticated()) return false;
+        let user = this.authService.getUser();
+
         //TODO use ng-gpoauth to see if user has credentials and
         // proper privileges for each supported action
         switch(action) {
@@ -82,6 +94,10 @@ export class ItemComponent implements OnInit {
 
     getTypeKey() {
         return ItemHelper.getTypeKey(this.item);
+    }
+
+    getTitle() {
+        return ItemHelper.getLabel(this.item);
     }
 
 }

@@ -5,7 +5,7 @@
     <li class="is-active"><a>{{item?.label}}</a></li>
 </ul>
 
-<div class="m-page-overview" (window:resize)="onResize()">
+<!-- <div class="m-page-overview" (window:resize)="onResize()">
     <div class="a-description__container"
         [ngClass]="{'is-collapsed':descriptionCollapsed}">
         <div class="a-description__display" [innerHTML]="item?.description||'No description provided'"></div>
@@ -14,34 +14,97 @@
         <span class="fas"
             [ngClass]="{'fa-caret-down':descriptionCollapsed,'fa-caret-up':!descriptionCollapsed}"></span>
     </div>
-</div>
+</div> -->
 
 <div class="l-body l-body--two-column">
 
     <div class="l-body__main-column">
 
-        <!-- General Details -->
         <div class="m-section-group">
             <div class="m-article">
+                <div class="m-article__heading">{{getTitle()}}</div>
 
-                <div class="m-article__heading">Details</div>
-                <br>
+                <div *ngIf="isAsset()">
+                    <div class="m-article__desc">
+                        <gpid-alt-titles  [titles]="item?.alternateTitles"></gpid-alt-titles>
+                    </div>
 
-                <!-- all item types -->
+                    <div class="m-article__desc" (window:resize)="onResize()">
+                        <div>
+                            <span class="fas"
+                                *ngIf="hasLongDescription" (click)="toggleDesc()"
+                                [ngClass]="{'fa-caret-down':descriptionCollapsed,'fa-caret-up':!descriptionCollapsed}">
+                            </span>
+                            <strong>Description</strong>
+                        </div>
+                        <div class="a-description__container"
+                            [ngClass]="{'is-collapsed':descriptionCollapsed}">
+                            <div class="a-description__display" [innerHTML]="item?.description||'No description provided'"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- General Details -->
+        <div class="m-section-group">
+
+            <div class="m-article">
+
+                <div class="m-article__heading">Overview</div>
+
+                <!--
+                    all Assets
+                -->
+
+                <div class="m-article__desc" *ngIf="isAsset()">
+                    <div><strong>Publisher(s) </strong></div>
+                    <div *ngIf="!item?.publishers?.length"><em>None specified</em></div>
+                    <div *ngFor="let pub of item?.publishers">
+                        <gpid-resource-link [item]="pub"></gpid-resource-link>
+                    </div>
+                </div>
+
+                <div class="m-article__desc" *ngIf="isAsset()">
+                    <div><strong>Issued</strong></div>
+                    <span *ngIf="item?.issued">{{item.issued|date}}</span>
+                    <span *ngIf="!item?.issued">Not specified</span>
+                </div>
+
+                <div class="m-article__desc" *ngIf="isAsset()">
+                    <div><strong>Source Metadata</strong></div>
+                    <span *ngIf="!item?.source?.uri">Not specified</span>
+                    <a *ngIf="item?.source?.uri" href="{{item.source.uri}}"
+                        target="_blank" class="u-break--all">
+                        {{item.source.label||item.source.uri}}
+                    </a>
+                </div>
+
+                <div class="m-article__desc" *ngIf="isAsset()">
+                    <div><strong>Home Page </strong></div>
+                    <span *ngIf="!item?.landingPage">Not specified</span>
+                    <a *ngIf="item?.landingPage" href="{{item.landingPage}}"
+                        target="_blank" class="u-break--all">
+                        {{item.landingPage}}
+                    </a>
+                </div>
+
                 <div class="m-article__desc" *ngIf="isAsset()">
                     <div><strong>Purpose</strong></div>
                     {{item.purpose || "Not specified"}}
                 </div>
 
-                <div class="m-article__desc" *ngIf="isAsset()">
-                    <div><strong>Additional Identifiers</strong></div>
-                    <div *ngIf="!item?.identifiers || !item?.identifiers.length">None specified</div>
-                    <div *ngIf="item?.identifiers && item?.identifiers.length">
-                        <div *ngFor="let svc of item.identifiers; let $idx=index;">
-                            {{item.identifiers[$idx]}}
-                        </div>
-                    </div>
+                <div class="m-article__desc">
+                    <gpid-use-constraints *ngIf="isAsset()" [rights]="item?.rights">
+                    </gpid-use-constraints>
                 </div>
+
+                <div class="m-article__desc">
+                    <gpid-alt-ids *ngIf="isAsset()" [ids]="item?.identifiers"></gpid-alt-ids>
+                </div>
+
+                <!-- end all Assets -->
 
 
                 <!-- Datasets -->
@@ -91,6 +154,7 @@
         </div>
 
 
+
         <div class="m-section-group" *ngIf="hasCoverage()">
             <div class="m-article">
                 <div class="m-article__heading">
@@ -108,54 +172,55 @@
         </div>
 
 
-        <!-- Dataset Distributions -->
-        <gpid-dataset-distributions class="m-section-group"
-            *ngIf="'dcat:Dataset'===item?.type" [item]="item">
-        </gpid-dataset-distributions>
 
+        <div class="m-section-group" *ngIf="isAsset()">
 
-        <gpid-services *ngIf="'Layer'===item?.type||'dcat:Dataset'===item?.type"
-            [item]="item" class="m-section-group" >
-        </gpid-services>
+            <div class="m-article">
+                <div class="m-article__heading">Related Resources</div>
+                <br>
 
+                <!-- Dataset Distributions -->
+                <div class="m-article__desc" *ngIf="'dcat:Dataset'===item?.type">
+                    <gpid-dataset-distributions [item]="item"></gpid-dataset-distributions>
+                </div>
 
-        <!-- Service Layers -->
-        <gpid-service-layers class="m-section-group"
-            *ngIf="'regp:Service'===item?.type"
-            [serviceId]="item?.id">
-        </gpid-service-layers>
+                <div class="m-article__desc" *ngIf="'Layer'===item?.type||'dcat:Dataset'===item?.type">
+                    <gpid-services [item]="item"></gpid-services>
+                </div>
 
+                <!-- Service Layers -->
+                <div class="m-article__desc" *ngIf="'regp:Service'===item?.type">
+                    <gpid-service-layers [serviceId]="item?.id"></gpid-service-layers>
+                </div>
 
-        <!-- Map Layers -->
-        <gpid-map-layers class="m-section-group"
-            *ngIf="'Map'===item?.type"
-            [map]="item">
-        </gpid-map-layers>
+                <!-- Map Layers -->
+                <div class="m-article__desc" *ngIf="'Map'===item?.type">
+                    <gpid-map-layers [map]="item"></gpid-map-layers>
+                </div>
 
+                <!-- Gallery Items -->
+                <div class="m-article__desc" *ngIf="'Gallery'===item?.type">
+                    <gpid-gallery-items [items]="item?.items"></gpid-gallery-items>
+                </div>
 
-        <!-- Gallery Items -->
-        <gpid-gallery-items class="m-section-group"
-            *ngIf="'Gallery'===item?.type"
-            [items]="item?.items">
-        </gpid-gallery-items>
+                <!-- Community -->
+                <div class="m-article__desc" *ngIf="'Community'===item?.type">
+                    <gpid-community-members [members]="item?.members"></gpid-community-members>
+                </div>
 
+                <!-- Used By (Community Refences) -->
+                <div class="m-article__desc" *ngIf="isAsset()">
+                    <gpid-used-by [communities]="item?.usedBy"></gpid-used-by>
+                </div>
 
-        <!-- Community -->
-        <gpid-community-members class="m-section-group"
-            *ngIf="'Community'===item?.type"
-            [members]="item?.members">
-        </gpid-community-members>
+                <!-- Related Resources -->
+                <div class="m-article__desc">
+                    <gpid-related [related]="item?.related"></gpid-related>
+                </div>
 
+            </div>
 
-        <!-- Used By (Community Refences) -->
-        <gpid-used-by class="m-section-group"
-            *ngIf="isAsset()" [communities]="item?.usedBy">
-        </gpid-used-by>
-
-
-        <!-- Related Resources -->
-        <gpid-related class="m-section-group" [related]="item?.related">
-        </gpid-related>
+        </div>
 
 
         <!-- Service Statistics -->

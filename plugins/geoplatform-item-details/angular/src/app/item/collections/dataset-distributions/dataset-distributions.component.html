@@ -1,34 +1,31 @@
-<div class="m-article">
-    <div class="m-article__heading">
-        <span class="fas"
-            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
-            (click)="toggleCollapsed()">
-        </span>
-        Distributions ({{item?.distributions?.length||0}})
+<div>
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Distributions ({{item?.distributions?.length||0}})</strong>
+</div>
+
+<div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
+    Expand to see distributions for this dataset
+</div>
+
+<div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}" *ngIf="item">
+
+    <div *ngIf="!item?.distributions || !item?.distributions.length">
+        <em>None specified</em>
     </div>
 
-    <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
-        Expand to see distributions for this dataset
-    </div>
-
-    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}" *ngIf="item">
-
-        <div *ngIf="!item?.distributions || !item?.distributions.length">
-            <em>None specified</em>
+    <div *ngIf="item?.distributions" class="m-list">
+        <div *ngFor="let dist of item.distributions" class="m-list__item">
+            <span *ngIf="!dist.href">
+                {{dist.label||"Un-titled Distribution"}} <em>(no url specified)</em>
+            </span>
+            <a *ngIf="dist.href" href="{{dist.href}}" target="_blank">
+                {{dist.label||"Un-titled Distribution"}}
+            </a>
+            <p class="t-fg--gray-md" *ngIf="dist.description">{{dist.description}}</p>
         </div>
-
-        <div *ngIf="item?.distributions">
-            <div *ngFor="let dist of item.distributions">
-                <span *ngIf="!dist.href">
-                    {{dist.label||"Un-titled Distribution"}} <em>(no url specified)</em>
-                </span>
-                <a *ngIf="dist.href" href="{{dist.href}}" target="_blank">
-                    {{dist.label||"Un-titled Distribution"}}
-                </a>
-                <p class="t-fg--gray-md" *ngIf="dist.description">{{dist.description}}</p>
-            </div>
-        </div>
-
     </div>
 
 </div>

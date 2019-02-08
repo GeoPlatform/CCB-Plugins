@@ -1,45 +1,45 @@
-<div class="m-article">
-    <div class="m-article__heading">
-        <span class="fas"
-            [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
-            (click)="toggleCollapsed()">
-        </span>
-        Map Layers
+<div class="u-mg-bottom--md">
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Map Layers</strong>
+</div>
+
+<div [ngClass]="{'is-hidden':!isCollapsed}">
+    Expand to see layers refenced by this map
+</div>
+
+
+<div [ngClass]="{'is-hidden':isCollapsed}" *ngIf="map" class="u-mg-left--xlg">
+
+    <strong class="t-fg--gray-md">Overlay Layers</strong>
+
+    <div *ngIf="!map?.layers || !map?.layers.length" class="t-fg--warning">
+        <span class="fas fa-exclamation-triangle"></span>
+        No overlay layers specified
     </div>
 
-    <div class="m-article__desc" [ngClass]="{'is-hidden':!isCollapsed}">
-        Expand to see layers refenced by this map
-    </div>
-
-    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}" *ngIf="map">
-
-        <strong>Base Layer</strong>
-
-        <div *ngIf="!map.baseLayer" class="t-fg--warning">
-            <span class="fas fa-exclamation-triangle"></span>
-            No base layer specified
-        </div>
-
-        <div *ngIf="map.baseLayer">
-            <gpid-resource-link [item]="map.baseLayer"></gpid-resource-link>
-        </div>
-    </div>
-
-    <div class="m-article__desc" [ngClass]="{'is-hidden':isCollapsed}" *ngIf="map">
-
-        <strong>Overlay Layers</strong>
-
-        <div *ngIf="!map?.layers || !map?.layers.length" class="t-fg--warning">
-            <span class="fas fa-exclamation-triangle"></span>
-            No overlay layers specified
-        </div>
-
-        <div *ngIf="map?.layers">
-            <div *ngFor="let layer of map?.layers">
-                <gpid-resource-link [item]="layer"></gpid-resource-link>
+    <div *ngIf="map?.layers" class="m-list">
+        <div *ngFor="let state of map?.layers" class="m-list__item">
+            <div *ngIf="state.layer">
+                <gpid-resource-link [item]="state.layer"></gpid-resource-link>
             </div>
         </div>
+    </div>
+</div>
 
+
+<div [ngClass]="{'is-hidden':isCollapsed}" *ngIf="map" class="u-mg-left--xlg">
+
+    <strong class="t-fg--gray-md">Base Layer</strong>
+
+    <div *ngIf="!map.baseLayer" class="t-fg--warning">
+        <span class="fas fa-exclamation-triangle"></span>
+        No base layer specified
     </div>
 
+    <div *ngIf="map.baseLayer" class="m-list">
+        <gpid-resource-link [item]="map.baseLayer" class="m-list__item"></gpid-resource-link>
+    </div>
 </div>

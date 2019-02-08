@@ -43,29 +43,6 @@
         </div>
     </div>
 
-
-    <div class="m-article__desc" *ngIf="item?.landingPage">
-        <strong>Home Page </strong>
-        <a href="{{item.landingPage}}" target="_blank">link</a>
-    </div>
-
-    <div class="m-article__desc" *ngIf="item?.source">
-        <div><strong>Source Metadata</strong></div>
-        <a href="{{item.source.uri}}" target="_blank" class="u-break--all">
-            {{item.source.label || "link"}}
-        </a>
-    </div>
-
-    <div class="m-article__desc" *ngIf="isAsset()">
-        <div><strong>Publisher(s) </strong></div>
-        <div *ngIf="!item.publishers||!item.publishers.length">
-            <em>None specified</em>
-        </div>
-        <div *ngFor="let pub of item.publishers">
-            <gpid-resource-link [item]="pub"></gpid-resource-link>
-        </div>
-    </div>
-
     <div class="m-article__desc" *ngIf="isAsset()">
         <div><strong>Creators(s) </strong></div>
         <div *ngIf="!item.creators||!item.creators.length">

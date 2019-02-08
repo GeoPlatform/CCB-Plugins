@@ -16,7 +16,7 @@ import { environment } from '../environments/environment';
 // and declaring the new paths for the images here globally, the
 // images can be referenced successfully across the rest of the app
 import * as L from 'leaflet';
-L.Icon.Default.imagePath = environment.assets; //ServerRoutes.ASSETS
+L.Icon.Default.imagePath = environment.assets;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'marker-icon-2x.png',
   iconUrl: 'marker-icon.png',
@@ -25,13 +25,18 @@ L.Icon.Default.mergeOptions({
 
 import { Config } from 'geoplatform.client';
 
+// Setup auth service (pass in config)
+// import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/angular';
+// const authService = ngGpoauthFactory({
+//     APP_BASE_URL: 'https://sit-viewer.geoplatform.us'
+// });
 
 
 
-//Local code components
 
 import { AppComponent } from './app.component';
 import { ResourceLinkComponent } from './item/resource-link/resource-link.component';
+import { PropertyComponent } from './shared/property/property.component';
 import { ItemComponent } from './item/item.component';
 import { UsageComponent } from './item/usage/usage.component';
 import { ServiceStatsComponent } from './item/service-stats/service-stats.component';
@@ -42,9 +47,12 @@ import {
 } from './item/depiction/depiction.component';
 import { CoverageMapComponent } from './item/coverage-map/coverage-map.component';
 import { KeywordsComponent } from './item/keywords/keywords.component';
-import { UsedByComponent } from './item/used-by/used-by.component';
-import { RelatedComponent } from './item/related/related.component';
+import { AltTitlesComponent } from './item/alt-titles/alt-titles.component';
+import { AltIdsComponent } from './item/alt-ids/alt-ids.component';
+import { UseConstraintsComponent } from './item/use-constraints/use-constraints.component';
 
+import { UsedByComponent } from './item/collections/used-by/used-by.component';
+import { RelatedComponent } from './item/collections/related/related.component';
 import { ServiceLayersComponent, ServiceLayerComponent } from './item/collections/service-layers/service-layers.component';
 import { GalleryItemsComponent } from './item/collections/gallery-items/gallery-items.component';
 import { MapLayersComponent } from './item/collections/map-layers/map-layers.component';
@@ -63,6 +71,7 @@ import { DatasetDetailsComponent } from './item/details/dataset/dataset-details.
 import { ContactDetailsComponent } from './item/details/contact/contact-details.component';
 import { ServicesComponent } from './item/collections/services/services.component';
 
+import { PluginAuthService } from './shared/auth.service';
 
 
 
@@ -125,7 +134,10 @@ export function initializeApp() {
         LayerDetailsComponent,
         DatasetDetailsComponent,
         ContactDetailsComponent,
-        ServicesComponent
+        ServicesComponent,
+        AltTitlesComponent,
+        AltIdsComponent,
+        UseConstraintsComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),
@@ -140,7 +152,13 @@ export function initializeApp() {
             provide: APP_INITIALIZER,
             useFactory: initializeApp,
             multi: true
-        }
+        },
+        PluginAuthService
+        // ,
+        // {
+        //     provide: AuthService,
+        //     useValue: authService
+        // }
     ],
     entryComponents: [
         //dynamic components go here

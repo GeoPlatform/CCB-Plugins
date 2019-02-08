@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'gpid-services',
-  templateUrl: './services.component.html',
-  styleUrls: ['./services.component.less']
+  selector: 'gpid-alt-titles',
+  templateUrl: './alt-titles.component.html',
+  styleUrls: ['./alt-titles.component.less']
 })
-export class ServicesComponent implements OnInit {
+export class AltTitlesComponent implements OnInit {
 
-    @Input() item : any;
+    @Input() titles : string[];
     public isCollapsed : boolean = true;
 
     constructor() { }
@@ -18,6 +18,5 @@ export class ServicesComponent implements OnInit {
     toggleCollapsed () {
         this.isCollapsed = !this.isCollapsed;
     }
-
 
 }
