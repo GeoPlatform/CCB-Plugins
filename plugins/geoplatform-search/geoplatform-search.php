@@ -224,7 +224,7 @@ function geopsearch_get_search_args() {
     'description' => esc_html__( 'asset type. post, page, or media.', 'geopsearch' ),
     'type'        => 'string',
   ];
-  $args['s'] = [
+  $args['q'] = [
     'description' => esc_html__( 'The search term.', 'geopsearch' ),
     'type'        => 'string',
   ];
@@ -261,7 +261,7 @@ function geopsearch_ajax_search( $request ) {
 
 
   // check for a search term
-  if( isset( $request['s'] ) ){
+  if( isset( $request['q'] ) ){
 		// get posts
 	  $posts = get_posts([
 	    'posts_per_page' => -1,
@@ -270,7 +270,7 @@ function geopsearch_ajax_search( $request ) {
 	    'order' => $order_binary,
 	    'orderby' => $order_sort,
 			// 's' => 'hurricane+hurricane',
-	    's' => $request['s'],
+	    's' => $request['q'],
 	  ]);
 		// set up the data I want to return
 	  foreach($posts as $post){
