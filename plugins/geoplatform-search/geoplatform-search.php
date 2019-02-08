@@ -219,30 +219,56 @@ add_action( 'rest_api_init', 'geopsearch_register_search_route');
 
 // Sets up the search args.
 function geopsearch_get_search_args() {
-    $args = [];
-		$args['type'] = [
-       'description' => esc_html__( 'asset type. post, page, or media.', 'geopsearch' ),
-       'type'        => 'string',
-   ];
-    $args['s'] = [
-       'description' => esc_html__( 'The search term.', 'geopsearch' ),
-       'type'        => 'string',
-   ];
-   return $args;
+  $args = [];
+	$args['type'] = [
+    'description' => esc_html__( 'asset type. post, page, or media.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+  $args['s'] = [
+    'description' => esc_html__( 'The search term.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['author'] = [
+    'description' => esc_html__( 'The author filter.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['page'] = [
+    'description' => esc_html__( 'The current page.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['per_page'] = [
+    'description' => esc_html__( 'Results per page.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['order'] = [
+    'description' => esc_html__( 'Binary order by which results are returned. asc or desc.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['orderby'] = [
+    'description' => esc_html__( 'Sorting order by which results are returned.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+  return $args;
 }
 
 // Performs the actual search operation.
 function geopsearch_ajax_search( $request ) {
   $posts = [];
   $results = [];
-	$stype = isset($request['type']) ? $request['type'] : ['page', 'post'];
+	$post_type = isset($request['type']) ? $request['type'] : ['page', 'post'];
+	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
+	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
+
 
   // check for a search term
   if( isset( $request['s'] ) ){
 		// get posts
 	  $posts = get_posts([
 	    'posts_per_page' => -1,
-	    'post_type' => $stype,
+	    'post_type' => $post_type,
+	    'author_name' => $request['author'],
+	    'order' => $order_binary,
+	    'orderby' => $order_sort,
 			// 's' => 'hurricane+hurricane',
 	    's' => $request['s'],
 	  ]);
@@ -251,7 +277,7 @@ function geopsearch_ajax_search( $request ) {
 	    $results[] = [
 	      'title' => $post->post_title,
 	      'link' => get_permalink( $post->ID ),
-				'meta' => $post,
+				// 'meta' => $post,
 	    ];
   	}
 	}
