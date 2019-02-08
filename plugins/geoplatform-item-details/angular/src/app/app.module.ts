@@ -137,7 +137,8 @@ export function initializeApp() {
         ServicesComponent,
         AltTitlesComponent,
         AltIdsComponent,
-        UseConstraintsComponent
+        UseConstraintsComponent,
+        PropertyComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),
