@@ -15,6 +15,11 @@ global $wp_query;
 global $wp;
 ?>
 
+<script> 
+    window.GeoPlatformSearchPluginEnv = { 
+        wpUrl: "<?php bloginfo('wpurl') ?>" 
+    }; 
+</script>
 <app-root></app-root>
 
 <?php get_footer(); ?>

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
-import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/src/angular';
 
 interface Observer {
     next: (value:GeoPlatformUser) => void;
@@ -20,7 +20,7 @@ export class PluginAuthService {
     private gpAuthSubscription : ISubscription;
 
 
-    constructor( /* private authService : AuthService */ ) {
+    constructor(  private authService : AuthService ) {
 
 
         this.user$ = new Observable( (observer:Observer) => {
@@ -40,34 +40,35 @@ export class PluginAuthService {
         });
 
 
-        // const sub = authService.getMessenger().raw();
-        // this.gpAuthSubscription = sub.subscribe(msg => {
-        //     console.log("Received Auth Message: " + msg.name);
-        //     switch(msg.name){
-        //         case 'userAuthenticated':
-        //         this.user = msg.user;
-        //         this.observers.forEach( obs => obs.next(msg.user) );
-        //         // this.user$.next(msg.user);
-        //         break;
-        //
-        //         case 'userSignOut':
-        //         this.user = null;
-        //         this.observers.forEach( obs => obs.next(null) );
-        //         // this.user$.next(null);
-        //         break;
-        //     }
-        // });
+        const sub = authService.getMessenger().raw();
+        this.gpAuthSubscription = sub.subscribe(msg => {
+            console.log("Received Auth Message: " + msg.name);
+            switch(msg.name){
+                case 'userAuthenticated':
+                this.onUserChange(msg.user);
+                // this.user$.next(msg.user);
+                break;
+
+                case 'userSignOut':
+                this.onUserChange(null);
+                break;
+            }
+        });
 
 
-        // this.authService.getUser().then( user => {
-        //     console.log('USER: ' + JSON.stringify(user));
-        //     this.observers.forEach( obs => obs.next(msg.user) );
-        // })
-        // .catch(e => {
-        //     console.log("Error retrieving user: " + e.message);
-        // })
+        this.authService.getUser().then( user => {
+            console.log('USER: ' + JSON.stringify(user));
+            this.onUserChange(user);
+        })
+        .catch(e => {
+            console.log("Error retrieving user: " + e.message);
+        })
     }
 
+    onUserChange(user) {
+        this.user = user;
+        this.observers.forEach( obs => obs.next(user) );
+    }
 
     isAuthenticated() : boolean {
         return !!this.user;
