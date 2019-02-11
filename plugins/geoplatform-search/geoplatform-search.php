@@ -256,35 +256,108 @@ function geopsearch_ajax_search( $request ) {
   $posts = [];
   $results = [];
 	$post_type = isset($request['type']) ? $request['type'] : ['page', 'post'];
+	$search_query = isset($request['q']) ? $request['q'] : '';
+	$search_author = isset($request['author']) ? $request['author'] : '';
 	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
-	$search_query = isset($request['q']) ? $request['q'] : '';
-
+	$page_now = isset($request['page']) ? $request['page'] : '1';
+	$page_per = isset($request['per_page']) ? $request['per_page'] : '5';
 
 	// get posts
-  $posts = get_posts([
-    'posts_per_page' => -1,
+  $posts_one = array(
+		'numberposts' => -1,
+		'posts_per_page' => -1,
     'post_type' => $post_type,
-    'author_name' => $request['author'],
+    'author_name' => $search_author,
     'order' => $order_binary,
     'orderby' => $order_sort,
 		// 's' => 'hurricane+hurricane',
     's' => $search_query,
-  ]);
-	// set up the data I want to return
-  foreach($posts as $post){
-    $results[] = [
-      'title' => $post->post_title,
-      'link' => get_permalink( $post->ID ),
-			// 'meta' => $post,
-    ];
+  );
+
+
+	$posts_two = array(
+		'numberposts' => -1,
+		'posts_per_page' => -1,
+		'post_type' => $post_type,
+		'author_name' => $search_author,
+		'order' => $order_binary,
+		'orderby' => $order_sort,
+		'tax_query' => array(
+			'relation' => 'OR',
+			array(
+				'taxonomy' => 'category',
+				'field' => 'slug',
+				'terms' => array($search_query),
+			),
+			array(
+				'taxonomy' => 'post_tag',
+				'field' => 'slug',
+				'terms' => array($search_query),
+			),
+		)
+	);
+
+	$geopsearch_post_fetch_one = new WP_Query($posts_one);
+	$geopsearch_post_fetch_two = new WP_Query($posts_two);
+
+	$geopsearch_post_fetch_total = array();
+	$geopsearch_post_fetch_total = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
+	$geopsearch_post_fetch_total = sort_posts($geopsearch_post_fetch_total, $order_sort, $order_binary);
+
+
+	$geopsearch_post_fetch_final = array();
+	if ( !empty($geopsearch_post_fetch_total)){
+		for ($page = 1; !empty($geopsearch_post_fetch_total); $page++){
+			$geopsearch_page_of_posts_array = array();
+			for ($i = 0; $i < $page_per && !empty($geopsearch_post_fetch_total); $i++){
+	  		array_push($geopsearch_page_of_posts_array, array_shift($geopsearch_post_fetch_total));
+			}
+			array_push($geopsearch_post_fetch_final, $geopsearch_page_of_posts_array);
+		}
 	}
 
-	if ( empty($results) ) :
+	if ( empty($geopsearch_post_fetch_final) || !isset($geopsearch_post_fetch_final[$page_now]) ) :
     return new WP_Error( 'front_end_ajax_search', 'No results');
   endif;
 
-  return rest_ensure_response( $results );
+  return rest_ensure_response( $geopsearch_post_fetch_final[$page_now] );
+}
+
+// From https://gist.github.com/bradyvercher/1576900
+function sort_posts( $posts, $orderby, $order = 'ASC', $unique = true ) {
+	if ( ! is_array( $posts ) ) {
+		return false;
+	}
+
+	usort( $posts, array( new Sort_Posts( $orderby, $order ), 'sort' ) );
+
+	// use post ids as the array keys
+	if ( $unique && count( $posts ) ) {
+		$posts = array_combine( wp_list_pluck( $posts, 'ID' ), $posts );
+	}
+
+	return $posts;
+}
+class Sort_Posts {
+	var $order, $orderby;
+
+	function __construct( $orderby, $order ) {
+		$this->orderby = $orderby;
+		$this->order = ( 'desc' == strtolower( $order ) ) ? 'DESC' : 'ASC';
+	}
+
+	function sort( $a, $b ) {
+		if ( $a->{$this->orderby} == $b->{$this->orderby} ) {
+			return 0;
+		}
+
+		if ( $a->{$this->orderby} < $b->{$this->orderby} ) {
+			return ( 'ASC' == $this->order ) ? -1 : 1;
+		} else {
+			return ( 'ASC' == $this->order ) ? 1 : -1;
+		}
+	}
 }
 
 
@@ -302,22 +375,172 @@ function geopsearch_ajax_search( $request ) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//
+// function geopsearch_search_where( $where ){
+// 	global $wpdb;
+//   if (is_search())
+//     $where .= "OR (t.name LIKE '%".get_search_query()."%' AND {$wpdb->posts}.post_status = 'publish')";
+//   return $where;
+// }
+//
+// function geopsearch_search_join($join){
+//   global $wpdb;
+//   if (is_search())
+//     $join .= "LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id=tr.term_taxonomy_id INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id";
+//   return $join;
+// }
+//
+// function geopsearch_search_groupby($groupby){
+//   global $wpdb;
+//
+//   // we need to group on post ID
+//   $groupby_id = "{$wpdb->posts}.ID";
+//   if(!is_search() || strpos($groupby, $groupby_id) !== false) return $groupby;
+//
+//   // groupby was empty, use ours
+//   if(!strlen(trim($groupby))) return $groupby_id;
+//
+//   // wasn't empty, append ours
+//   return $groupby.", ".$groupby_id;
+// }
+//
+// add_filter('posts_where','geopsearch_search_where');
+// add_filter('posts_join', 'geopsearch_search_join');
+// add_filter('posts_groupby', 'geopsearch_search_groupby');
+//
+//
+//
+//
+//
+// add_filter( 'posts_join', 'custom_posts_join', 10, 2 );
+// /**
+//  * Callback for WordPress 'posts_join' filter.'
+//  *
+//  * @global $wpdb
+//  *
+//  * @link https://codex.wordpress.org/Plugin_API/Filter_Reference/posts_join
+//  *
+//  * @param string $join The sql JOIN clause.
+//  * @param WP_Query $wp_query The current WP_Query instance.
+//  *
+//  * @return string $join The sql JOIN clause.
+//  */
+// function custom_posts_join( $join, $query ) {
+//
+//     global $wpdb;
+//
+//     if ( is_main_query() && is_search() ) {
+//
+//         $join .= "
+//         LEFT JOIN
+//         (
+//             {$wpdb->term_relationships}
+//             INNER JOIN
+//                 {$wpdb->term_taxonomy} ON {$wpdb->term_taxonomy}.term_taxonomy_id = {$wpdb->term_relationships}.term_taxonomy_id
+//             INNER JOIN
+//                 {$wpdb->terms} ON {$wpdb->terms}.term_id = {$wpdb->term_taxonomy}.term_id
+//         )
+//         ON {$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id ";
+//
+//     }
+//
+//     return $join;
+//
+// }
+//
+// add_filter( 'posts_where', 'custom_posts_where', 10, 2 );
+// /**
+//  * Callback for WordPress 'posts_where' filter.
+//  *
+//  * Modify the where clause to include searches against a WordPress taxonomy.
+//  *
+//  * @global $wpdb
+//  *
+//  * @see https://codex.wordpress.org/Plugin_API/Filter_Reference/posts_where
+//  *
+//  * @param string $where The where clause.
+//  * @param WP_Query $query The current WP_Query.
+//  *
+//  * @return string The where clause.
+//  */
+// function custom_posts_where( $where, $query ) {
+//
+//     global $wpdb;
+//
+//     if ( is_main_query() && is_search() ) {
+//
+//         // get additional where clause for the user
+//         $user_where = custom_get_user_posts_where();
+//
+//         $where .= " OR (
+//                         {$wpdb->term_taxonomy}.taxonomy IN( 'category', 'post_tag' )
+//                         AND
+//                         {$wpdb->terms}.name LIKE '%" . esc_sql( get_query_var( 's' ) ) . "%'
+//                         {$user_where}
+//                     )";
+//
+//     }
+//
+//     return $where;
+//
+// }
+//
+// /**
+//  * Get a where clause dependent on the current user's status.
+//  *
+//  * @global $wpdb https://codex.wordpress.org/Class_Reference/wpdb
+//  *
+//  * @uses get_current_user_id()
+//  * @see http://codex.wordpress.org/Function_Reference/get_current_user_id
+//  *
+//  * @return string The user where clause.
+//  */
+// function custom_get_user_posts_where() {
+//
+//     global $wpdb;
+//
+//     $user_id = get_current_user_id();
+//     $sql     = '';
+//     $status  = array( "'publish'" );
+//
+//     if ( $user_id ) {
+//
+//         $status[] = "'private'";
+//
+//         $sql .= " AND {$wpdb->posts}.post_author = {$user_id}";
+//
+//     }
+//
+//     $sql .= " AND {$wpdb->posts}.post_status IN( " . implode( ',', $status ) . " ) ";
+//
+//     return $sql;
+//
+// }
+//
+// add_filter( 'posts_groupby', 'custom_posts_groupby', 10, 2 );
+// /**
+//  * Callback for WordPress 'posts_groupby' filter.
+//  *
+//  * Set the GROUP BY clause to post IDs.
+//  *
+//  * @global $wpdb https://codex.wordpress.org/Class_Reference/wpdb
+//  *
+//  * @param string $groupby The GROUPBY caluse.
+//  * @param WP_Query $query The current WP_Query object.
+//  *
+//  * @return string The GROUPBY clause.
+//  */
+// function custom_posts_groupby( $groupby, $query ) {
+//
+//     global $wpdb;
+//
+//     if ( is_main_query() && is_search() ) {
+//         $groupby = "{$wpdb->posts}.ID";
+//     }
+//
+//     return $groupby;
+//
+// }
 
 
 // Registers the rest api endpoint for the search, which calls its function.
@@ -333,148 +556,148 @@ function geopsearch_ajax_search( $request ) {
 // @Param {order}: how the results are to be ordered, "asc" or "desc".
 // @Param {orderby}: the means by which the results are ordered, such as "modified" or "date"
 //
-function geopsearch_rest_api_register(){
-	register_rest_route( 'geoplatform-search/v1', '/(?P<type>[^/]*)/(?P<search>[^/]*)/(?P<author>[^/]*)/(?P<page>[\d]*)/(?P<per_page>-?[\d]*)/(?P<order>[^/]*)/(?P<orderby>[^/]*)', array(
-		'methods' => 'GET',
-		'callback' => 'geopsearch_rest_api_search',
-	));
-}
-add_action( 'rest_api_init', 'geopsearch_rest_api_register');
-
-
-
-
-function geopsearch_rest_api_test(){
-	register_rest_route( 'geoplatform-test/v1', '/(?P<type>[^/]*)/(?P<search>[^/]*)/(?P<author>[^/]*)/(?P<page>[\d]*)/(?P<per_page>-?[\d]*)/(?P<order>[^/]*)/(?P<orderby>[^/]*)', array(
-		'methods' => 'GET',
-		'callback' => 'geopsearch_output_test',
-	));
-}
-add_action( 'rest_api_init', 'geopsearch_rest_api_test');
-
-
-function geopsearch_output_test( WP_REST_Request $geopsearch_data_in ){
-	return $geopsearch_data_in->get_params();
-}
-
-// Actual search function.
-function geopsearch_rest_api_search( WP_REST_Request $geopsearch_data_in ){
-
-	// Parse input data
-	$geopsearch_content_type = $geopsearch_data_in->get_param('type');
-	$geopsearch_content_search = $geopsearch_data_in->get_param('search');
-	$geopsearch_content_author = $geopsearch_data_in->get_param('author');
-	$geopsearch_content_page = $geopsearch_data_in->get_param('page');
-	$geopsearch_content_perpage = $geopsearch_data_in->get_param('per_page');
-	$geopsearch_content_order = $geopsearch_data_in->get_param('order');
-	$geopsearch_content_orderby = $geopsearch_data_in->get_param('orderby');
-
-	$geopsearch_content_terms = explode("_", $geopsearch_content_search);
-
-	// Post search methodology
-	if ($geopsearch_content_type == 'post'){
-	  $geopsearch_post_args_two = array(
-	    'post_type' => 'post',
-	    'numberposts' => -1,
-			'posts_per_page' => -1,
-	    'author_name' => $geopsearch_content_author,
-	    'order' => $geopsearch_content_order,
-	    'orderby' => $geopsearch_content_orderby,
-	    'tax_query' => array(
-	      'relation' => 'OR',
-	      array(
-	        'taxonomy' => 'category',
-	        'field' => 'slug',
-	        'terms' => array($geopsearch_content_search),
-	      ),
-	      array(
-	        'taxonomy' => 'post_tag',
-	        'field' => 'slug',
-	        'terms' => array($geopsearch_content_search),
-	      ),
-	    )
-	  );
-
-	  $geopsearch_post_args_one = array(
-	    'post_type' => 'post',
-	    'numberposts' => -1,
-			'posts_per_page' => -1,
-	    'author_name' => $geopsearch_content_author,
-	    's' => $geopsearch_content_search,
-	    'order' => $geopsearch_content_order,
-	    'orderby' => $geopsearch_content_orderby,
-	  );
-
-	  $geopsearch_post_fetch_one = new WP_Query($geopsearch_post_args_one);
-	  $geopsearch_post_fetch_two = new WP_Query($geopsearch_post_args_two);
-	  $geopsearch_post_fetch_final = array();
-
-	  $geopsearch_post_fetch_final = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
-	  // $geopsearch_post_fetch_final->post_count = count($geopsearch_post_fetch_final->posts);
-
-	  return $geopsearch_post_fetch_final;
-	}
-
-	// Page search methodology.
-	if ($geopsearch_content_type == 'page'){
-	  $geopsearch_page_args_two = array(
-	    'post_type' => 'page',
-	    'numberposts' => -1,
-			'posts_per_page' => -1,
-	    'author_name' => $geopsearch_content_author,
-	    'order' => $geopsearch_content_order,
-	    'orderby' => $geopsearch_content_orderby,
-	    'tax_query' => array(
-	      'relation' => 'OR',
-	      array(
-	        'taxonomy' => 'category',
-	        'field' => 'slug',
-	        'terms' => array($geopsearch_content_search),
-	      ),
-	      array(
-	        'taxonomy' => 'post_tag',
-	        'field' => 'slug',
-	        'terms' => array($geopsearch_content_search),
-	      ),
-	    )
-	  );
-
-	  $geopsearch_page_args_one = array(
-	    'post_type' => 'page',
-	    'numberposts' => -1,
-			'posts_per_page' => -1,
-	    'author_name' => $geopsearch_content_author,
-	    's' => $geopsearch_content_search,
-	    'order' => $geopsearch_content_order,
-	    'orderby' => $geopsearch_content_orderby,
-	  );
-
-	  $geopsearch_page_fetch_one = new WP_Query($geopsearch_page_args_one);
-	  $geopsearch_page_fetch_two = new WP_Query($geopsearch_page_args_two);
-	  $geopsearch_page_fetch_final = array();
-
-	  $geopsearch_page_fetch_final = array_unique( array_merge( $geopsearch_page_fetch_one->posts, $geopsearch_page_fetch_two->posts ), SORT_REGULAR );
-	  // $geopsearch_page_fetch_combo->post_count = count($geopsearch_page_fetch_final->posts);
-
-	  return $geopsearch_page_fetch_final;
-	}
-
-	// Media search methodology
-	if ($geopsearch_content_type == 'media'){
-	  $geopsearch_media_args = array(
-	    'post_type'      => 'attachment',
-	    'post_mime_type' => 'image',
-	    'post_status'    => 'inherit',
-	    'posts_per_page' => - 1,
-	    's' => $geopsearch_content_search,
-	    'order' => $geopsearch_content_order,
-	    'orderby' => $geopsearch_content_orderby,
-	  );
-
-	  $geopsearch_media_fetch = new WP_Query( $geopsearch_media_args );
-	  return $geopsearch_media_fetch->posts;
-	}
-}
+// function geopsearch_rest_api_register(){
+// 	register_rest_route( 'geoplatform-search/v1', '/(?P<type>[^/]*)/(?P<search>[^/]*)/(?P<author>[^/]*)/(?P<page>[\d]*)/(?P<per_page>-?[\d]*)/(?P<order>[^/]*)/(?P<orderby>[^/]*)', array(
+// 		'methods' => 'GET',
+// 		'callback' => 'geopsearch_rest_api_search',
+// 	));
+// }
+// add_action( 'rest_api_init', 'geopsearch_rest_api_register');
+//
+//
+//
+//
+// function geopsearch_rest_api_test(){
+// 	register_rest_route( 'geoplatform-test/v1', '/(?P<type>[^/]*)/(?P<search>[^/]*)/(?P<author>[^/]*)/(?P<page>[\d]*)/(?P<per_page>-?[\d]*)/(?P<order>[^/]*)/(?P<orderby>[^/]*)', array(
+// 		'methods' => 'GET',
+// 		'callback' => 'geopsearch_output_test',
+// 	));
+// }
+// add_action( 'rest_api_init', 'geopsearch_rest_api_test');
+//
+//
+// function geopsearch_output_test( WP_REST_Request $geopsearch_data_in ){
+// 	return $geopsearch_data_in->get_params();
+// }
+//
+// // Actual search function.
+// function geopsearch_rest_api_search( WP_REST_Request $geopsearch_data_in ){
+//
+// 	// Parse input data
+// 	$geopsearch_content_type = $geopsearch_data_in->get_param('type');
+// 	$geopsearch_content_search = $geopsearch_data_in->get_param('search');
+// 	$geopsearch_content_author = $geopsearch_data_in->get_param('author');
+// 	$geopsearch_content_page = $geopsearch_data_in->get_param('page');
+// 	$geopsearch_content_perpage = $geopsearch_data_in->get_param('per_page');
+// 	$geopsearch_content_order = $geopsearch_data_in->get_param('order');
+// 	$geopsearch_content_orderby = $geopsearch_data_in->get_param('orderby');
+//
+// 	$geopsearch_content_terms = explode("_", $geopsearch_content_search);
+//
+// 	// Post search methodology
+// 	if ($geopsearch_content_type == 'post'){
+// 	  $geopsearch_post_args_two = array(
+// 	    'post_type' => 'post',
+// 	    'numberposts' => -1,
+// 			'posts_per_page' => -1,
+// 	    'author_name' => $geopsearch_content_author,
+// 	    'order' => $geopsearch_content_order,
+// 	    'orderby' => $geopsearch_content_orderby,
+// 	    'tax_query' => array(
+// 	      'relation' => 'OR',
+// 	      array(
+// 	        'taxonomy' => 'category',
+// 	        'field' => 'slug',
+// 	        'terms' => array($geopsearch_content_search),
+// 	      ),
+// 	      array(
+// 	        'taxonomy' => 'post_tag',
+// 	        'field' => 'slug',
+// 	        'terms' => array($geopsearch_content_search),
+// 	      ),
+// 	    )
+// 	  );
+//
+// 	  $geopsearch_post_args_one = array(
+// 	    'post_type' => 'post',
+// 	    'numberposts' => -1,
+// 			'posts_per_page' => -1,
+// 	    'author_name' => $geopsearch_content_author,
+// 	    's' => $geopsearch_content_search,
+// 	    'order' => $geopsearch_content_order,
+// 	    'orderby' => $geopsearch_content_orderby,
+// 	  );
+//
+// 	  $geopsearch_post_fetch_one = new WP_Query($geopsearch_post_args_one);
+// 	  $geopsearch_post_fetch_two = new WP_Query($geopsearch_post_args_two);
+// 	  $geopsearch_post_fetch_final = array();
+//
+// 	  $geopsearch_post_fetch_final = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
+// 	  // $geopsearch_post_fetch_final->post_count = count($geopsearch_post_fetch_final->posts);
+//
+// 	  return $geopsearch_post_fetch_final;
+// 	}
+//
+// 	// Page search methodology.
+// 	if ($geopsearch_content_type == 'page'){
+// 	  $geopsearch_page_args_two = array(
+// 	    'post_type' => 'page',
+// 	    'numberposts' => -1,
+// 			'posts_per_page' => -1,
+// 	    'author_name' => $geopsearch_content_author,
+// 	    'order' => $geopsearch_content_order,
+// 	    'orderby' => $geopsearch_content_orderby,
+// 	    'tax_query' => array(
+// 	      'relation' => 'OR',
+// 	      array(
+// 	        'taxonomy' => 'category',
+// 	        'field' => 'slug',
+// 	        'terms' => array($geopsearch_content_search),
+// 	      ),
+// 	      array(
+// 	        'taxonomy' => 'post_tag',
+// 	        'field' => 'slug',
+// 	        'terms' => array($geopsearch_content_search),
+// 	      ),
+// 	    )
+// 	  );
+//
+// 	  $geopsearch_page_args_one = array(
+// 	    'post_type' => 'page',
+// 	    'numberposts' => -1,
+// 			'posts_per_page' => -1,
+// 	    'author_name' => $geopsearch_content_author,
+// 	    's' => $geopsearch_content_search,
+// 	    'order' => $geopsearch_content_order,
+// 	    'orderby' => $geopsearch_content_orderby,
+// 	  );
+//
+// 	  $geopsearch_page_fetch_one = new WP_Query($geopsearch_page_args_one);
+// 	  $geopsearch_page_fetch_two = new WP_Query($geopsearch_page_args_two);
+// 	  $geopsearch_page_fetch_final = array();
+//
+// 	  $geopsearch_page_fetch_final = array_unique( array_merge( $geopsearch_page_fetch_one->posts, $geopsearch_page_fetch_two->posts ), SORT_REGULAR );
+// 	  // $geopsearch_page_fetch_combo->post_count = count($geopsearch_page_fetch_final->posts);
+//
+// 	  return $geopsearch_page_fetch_final;
+// 	}
+//
+// 	// Media search methodology
+// 	if ($geopsearch_content_type == 'media'){
+// 	  $geopsearch_media_args = array(
+// 	    'post_type'      => 'attachment',
+// 	    'post_mime_type' => 'image',
+// 	    'post_status'    => 'inherit',
+// 	    'posts_per_page' => - 1,
+// 	    's' => $geopsearch_content_search,
+// 	    'order' => $geopsearch_content_order,
+// 	    'orderby' => $geopsearch_content_orderby,
+// 	  );
+//
+// 	  $geopsearch_media_fetch = new WP_Query( $geopsearch_media_args );
+// 	  return $geopsearch_media_fetch->posts;
+// 	}
+// }
 
 
 
