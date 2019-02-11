@@ -62,10 +62,10 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
           <!-- Checks for a lack of mega-menu button and adjusts height to keep it consistant. -->
               <?php
-              if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone'){
+              if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone' && $post->post_name != 'geoplatform-search' && $post->post_name != 'register' && $post->post_name != 'geoplatform-items'){
                 ?>
                 <ul role="menu" class="header__menu">
-              <?php
+                <?php
               } else {
                 ?>
                 <ul role="menu" class="header__menu" style="margin-top:0.5em;">
@@ -87,7 +87,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                 <?php
               }
 
-                    if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone'){
+                    if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone' && $post->post_name != 'geoplatform-search' && $post->post_name != 'register' && $post->post_name != 'geoplatform-items'){
                       ?>
                       <li>
                       <!-- mega menu toggle -->
