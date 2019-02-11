@@ -260,7 +260,7 @@ function geopsearch_ajax_search( $request ) {
 	$search_author = isset($request['author']) ? $request['author'] : '';
 	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
-	$page_now = isset($request['page']) ? $request['page'] : '1';
+	$page_now = isset($request['page']) ? $request['page'] : '0';
 	$page_per = isset($request['per_page']) ? $request['per_page'] : '5';
 
 	// get posts
