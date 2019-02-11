@@ -5,7 +5,7 @@ import { ISubscription } from "rxjs/Subscription";
 import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 interface Observer {
-    next: (value:any) => void;
+    next: (value:GeoPlatformUser) => void;
     error: (value:Error)=>void;
 }
 
@@ -14,13 +14,13 @@ interface Observer {
 @Injectable()
 export class PluginAuthService {
 
-    private user : any;
-    private user$ : Observable<any>;
+    private user : GeoPlatformUser;
+    private user$ : Observable<GeoPlatformUser>;
     private observers : Observer[] = [] as Observer[];
     private gpAuthSubscription : ISubscription;
 
 
-    constructor( /*private authService : AuthService*/ ) {
+    constructor( /* private authService : AuthService */ ) {
 
 
         this.user$ = new Observable( (observer:Observer) => {
@@ -40,7 +40,6 @@ export class PluginAuthService {
         });
 
 
-
         // const sub = authService.getMessenger().raw();
         // this.gpAuthSubscription = sub.subscribe(msg => {
         //     console.log("Received Auth Message: " + msg.name);
@@ -57,6 +56,15 @@ export class PluginAuthService {
         //         // this.user$.next(null);
         //         break;
         //     }
+        // });
+
+
+        // this.authService.getUser().then( user => {
+        //     console.log('USER: ' + JSON.stringify(user));
+        //     this.observers.forEach( obs => obs.next(msg.user) );
+        // })
+        // .catch(e => {
+        //     console.log("Error retrieving user: " + e.message);
         // })
     }
 
@@ -65,7 +73,7 @@ export class PluginAuthService {
         return !!this.user;
     }
 
-    getUser() : any {
+    getUser() : GeoPlatformUser {
         return this.user;
     }
 

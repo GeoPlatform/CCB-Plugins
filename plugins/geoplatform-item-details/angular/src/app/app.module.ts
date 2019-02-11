@@ -26,9 +26,9 @@ L.Icon.Default.mergeOptions({
 import { Config } from 'geoplatform.client';
 
 // Setup auth service (pass in config)
-// import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/angular';
+import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/angular';
 // const authService = ngGpoauthFactory({
-//     APP_BASE_URL: 'https://sit-viewer.geoplatform.us'
+//     APP_BASE_URL: 'http://localhost:4200'
 // });
 
 

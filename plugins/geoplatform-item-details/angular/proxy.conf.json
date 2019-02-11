@@ -1,6 +1,10 @@
 {
-  "/login": {
-    "target": "http://localhost:8081",
-    "secure": false
-  }
+    "/login": {
+      "target": "http://localhost:8081",
+        "secure": false
+    },
+    "/checktoken": {
+      "target": "http://localhost:8081",
+      "secure": false
+    }
 }
