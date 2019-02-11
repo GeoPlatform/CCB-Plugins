@@ -258,28 +258,26 @@ function geopsearch_ajax_search( $request ) {
 	$post_type = isset($request['type']) ? $request['type'] : ['page', 'post'];
 	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
+	$search_query = isset($request['q']) ? $request['q'] : '';
 
 
-  // check for a search term
-  if( isset( $request['q'] ) ){
-		// get posts
-	  $posts = get_posts([
-	    'posts_per_page' => -1,
-	    'post_type' => $post_type,
-	    'author_name' => $request['author'],
-	    'order' => $order_binary,
-	    'orderby' => $order_sort,
-			// 's' => 'hurricane+hurricane',
-	    's' => $request['q'],
-	  ]);
-		// set up the data I want to return
-	  foreach($posts as $post){
-	    $results[] = [
-	      'title' => $post->post_title,
-	      'link' => get_permalink( $post->ID ),
-				// 'meta' => $post,
-	    ];
-  	}
+	// get posts
+  $posts = get_posts([
+    'posts_per_page' => -1,
+    'post_type' => $post_type,
+    'author_name' => $request['author'],
+    'order' => $order_binary,
+    'orderby' => $order_sort,
+		// 's' => 'hurricane+hurricane',
+    's' => $search_query,
+  ]);
+	// set up the data I want to return
+  foreach($posts as $post){
+    $results[] = [
+      'title' => $post->post_title,
+      'link' => get_permalink( $post->ID ),
+			// 'meta' => $post,
+    ];
 	}
 
 	if ( empty($results) ) :
