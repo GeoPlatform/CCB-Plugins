@@ -332,14 +332,14 @@ function geopsearch_ajax_search( $request ) {
 	{
 		public $start;
 	  public $size;
-		public $total;
+		public $totalResults;
 		public $type;
 	  public $results;
 
 	  function __construct($start, $size, $total, $type, $results){
 	    $this->start = $start;
 	    $this->size = $size;
-			$this->total = $total;
+			$this->totalResults = $total;
 			$this->type = $type;
 	    $this->results = $results;
 	  }
