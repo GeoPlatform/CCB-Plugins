@@ -262,49 +262,65 @@ function geopsearch_ajax_search( $request ) {
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
 	$page_now = isset($request['page']) ? $request['page'] : '0';
 	$page_per = isset($request['per_page']) ? $request['per_page'] : '5';
-
-	// get posts
-  $posts_one = array(
-		'numberposts' => -1,
-		'posts_per_page' => -1,
-    'post_type' => $post_type,
-    'author_name' => $search_author,
-    'order' => $order_binary,
-    'orderby' => $order_sort,
-		// 's' => 'hurricane+hurricane',
-    's' => $search_query,
-  );
-
-
-	$posts_two = array(
-		'numberposts' => -1,
-		'posts_per_page' => -1,
-		'post_type' => $post_type,
-		'author_name' => $search_author,
-		'order' => $order_binary,
-		'orderby' => $order_sort,
-		'tax_query' => array(
-			'relation' => 'OR',
-			array(
-				'taxonomy' => 'category',
-				'field' => 'slug',
-				'terms' => array($search_query),
-			),
-			array(
-				'taxonomy' => 'post_tag',
-				'field' => 'slug',
-				'terms' => array($search_query),
-			),
-		)
-	);
-
-	$geopsearch_post_fetch_one = new WP_Query($posts_one);
-	$geopsearch_post_fetch_two = new WP_Query($posts_two);
-
 	$geopsearch_post_fetch_total = array();
-	$geopsearch_post_fetch_total = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
-	$geopsearch_post_fetch_total = sort_posts($geopsearch_post_fetch_total, $order_sort, $order_binary);
 
+	if ($post_type == 'media'){
+	  $geopsearch_media_args = array(
+			'post_type'      => 'attachment',
+			'post_mime_type' => 'image',
+			'post_status'    => 'inherit',
+			'posts_per_page' => - 1,
+			'author_name' => $search_author,
+			's' => $search_query,
+			'order' => $order_binary,
+			'orderby' => $order_sort,
+		);
+
+		$geopsearch_media_fetch = new WP_Query( $geopsearch_media_args );
+		$geopsearch_post_fetch_total = $geopsearch_media_fetch->posts;
+	}
+	else {
+		// get posts
+	  $posts_one = array(
+			'numberposts' => -1,
+			'posts_per_page' => -1,
+	    'post_type' => $post_type,
+	    'author_name' => $search_author,
+	    'order' => $order_binary,
+	    'orderby' => $order_sort,
+			// 's' => 'hurricane+hurricane',
+	    's' => $search_query,
+	  );
+
+
+		$posts_two = array(
+			'numberposts' => -1,
+			'posts_per_page' => -1,
+			'post_type' => $post_type,
+			'author_name' => $search_author,
+			'order' => $order_binary,
+			'orderby' => $order_sort,
+			'tax_query' => array(
+				'relation' => 'OR',
+				array(
+					'taxonomy' => 'category',
+					'field' => 'slug',
+					'terms' => array($search_query),
+				),
+				array(
+					'taxonomy' => 'post_tag',
+					'field' => 'slug',
+					'terms' => array($search_query),
+				),
+			)
+		);
+
+		$geopsearch_post_fetch_one = new WP_Query($posts_one);
+		$geopsearch_post_fetch_two = new WP_Query($posts_two);
+
+		$geopsearch_post_fetch_total = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
+	}
+	$geopsearch_post_fetch_total = sort_posts($geopsearch_post_fetch_total, $order_sort, $order_binary);
 
 	$geopsearch_post_fetch_final = array();
 	if ( !empty($geopsearch_post_fetch_total)){
