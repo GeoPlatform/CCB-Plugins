@@ -260,8 +260,8 @@ function geopsearch_ajax_search( $request ) {
 	$search_author = isset($request['author']) ? $request['author'] : '';
 	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
-	$start = isset($request['start']) ? $request['start'] : '0';
-	$size = isset($request['total']) ? $request['total'] : '5';
+	$page = isset($request['page']) ? $request['page'] : '0';
+	$per_page = isset($request['per_page']) ? $request['per_page'] : '5';
 	$geopsearch_post_fetch_total = array();
 
 	if ($post_type == 'fail' || ($post_type != 'media' && $post_type != 'page' && $post_type != 'post'))
@@ -330,14 +330,14 @@ function geopsearch_ajax_search( $request ) {
 
 	class page
 	{
-		public $start;
+		public $page;
 	  public $size;
 		public $totalResults;
 		public $type;
 	  public $results;
 
-	  function __construct($start, $size, $total, $type, $results){
-	    $this->start = $start;
+	  function __construct($page, $size, $total, $type, $results){
+	    $this->page = $page;
 	    $this->size = $size;
 			$this->totalResults = $total;
 			$this->type = $type;
@@ -345,11 +345,12 @@ function geopsearch_ajax_search( $request ) {
 	  }
 	}
 
+	$slice_start = $page * $per_page;
 	// instead of $start use start
 	// instead of $per_page use $size
-	$results = array_slice($geopsearch_post_fetch_total, $start, $size, true);
+	$results = array_slice($geopsearch_post_fetch_total, $slice_start, $per_page, true);
 
-	$page_object = new page($start, $size, $geopsearch_total_count, $post_type, $results);
+	$page_object = new page($page, $per_page, $geopsearch_total_count, $post_type, $results);
 
 	if ( empty($page_object->results) )
 	 	return array('message' => 'Requested page exceeds result count.');
