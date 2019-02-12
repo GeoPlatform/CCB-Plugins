@@ -12,11 +12,11 @@ import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 export class CCBService {
 
     private baseUrl : string;
-    private usersList : { id: number; label: string }[] = [] as { id: number; label: string }[];
+    private usersList : any = {};
 
     constructor(private http : HttpClient) {
         this.baseUrl = Config.wpUrl;
-        //this.updateUserList();
+        this.updateUserList();
     }
 
     search(query : Query) : Promise<any> {
@@ -44,12 +44,10 @@ export class CCBService {
         let qobj = query.getQuery();
 
         qobj.type = this.getType(type);
-        qobj.page++;    //1-index in WP
+        //qobj.page++;    //1-index in WP
 
         //rewrite page 'size' to 'per_page'
-        // doubling requested page size since we are federating each type
-        // and need to fill in the full page of combined results
-        qobj['per_page'] = (query.getPageSize() || 10)*2;
+        qobj['per_page'] = query.getPageSize() || 10;
         delete qobj['size'];
 
         //rewrite sort parameter to 'orderBy' and 'order'
@@ -61,8 +59,6 @@ export class CCBService {
         delete qobj['sort'];
 
         //rewrite 'createdBy' param to 'author'
-        //also note: value of param is the user's label which needs to be
-        // resolved down to an id using the usersList cache
         if(qobj.createdBy) {
             qobj.author = qobj.createdBy;
             delete qobj.createdBy;
@@ -82,16 +78,20 @@ export class CCBService {
      */
     execute(request : HttpRequest<any>) {
 
-        let url = request.url + '?' + request.params.toString();
-
+        //note if this is a users request, don't 'fix' those results
+        let isUsersReq = null === request.params.get('type');
+        
         return this.http.request(request)
         .map( (event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
                 let res : HttpResponse<any> = event as HttpResponse<any>;
                 let wpTotal : any = res.headers.get('X-WP-Total');
                 let total : number = isNaN(wpTotal) ? 0 : wpTotal*1;
+
+                let results = (isUsersReq) ? res.body||[] : 
+                    (res.body||[]).map( it => { return this.fixResult(it) });
                 return {
-                    results: this.fixAuthors(res.body),
+                    results: results,
                     totalResults: total as number
                 };
             }
@@ -107,30 +107,48 @@ export class CCBService {
         });
     }
 
-    fixAuthors(items) : any[] {
-    /*
-        items.forEach( item => {
-            item.author = {
-                id: item.author,
-                label: this.usersList[item.author]
-            };
-            if(!item.author) this.updateUserList();
-        });
-    */
-        return items;
-    }
-
     updateUserList() {
         //cache a list of users
-        let url = Config.wpUrl + '/wp-json/wp/v2/users';
-        this.execute(new HttpRequest<any>('GET', url, {
-            params: { "per_page": 100 }
-        }))
+        let url = Config.wpUrl + '/wp-json/wp/v2/users?per_page=100';
+        this.execute( new HttpRequest<any>('GET', url) )
         .then( response => {
             let users = response.results;
-            users.forEach( user => {
-                this.usersList[user.id] = user.name;
-            });
+            users.forEach( user => { this.usersList[user.id+''] = user.name; });
         });
+    }
+
+    fixResult(item) {
+
+        item.id = item.ID;
+        delete item.ID;
+        
+        item.type = item.post_type;
+        delete item.post_type;
+
+        item.link = item.guid;
+
+        item.title = item.post_title;
+        delete item.post_title;
+
+        item.media_type = item.post_mime_type;
+        delete item.post_mime_type;
+
+        console.log("Author: " + item.post_author);
+        item.author = {
+            id: item.post_author,
+            label: this.usersList[item.post_author+''] || ""
+        };
+        delete item.post_author;
+        
+        item.date = item.post_date;
+        delete item.post_date;
+
+        item.modified = item.post_modified;
+        delete item.post_modified;
+        
+        item.description = item.post_content;
+        delete item.post_content;
+        
+        return item;
     }
 }
