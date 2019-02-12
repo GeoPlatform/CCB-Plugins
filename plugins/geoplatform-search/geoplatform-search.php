@@ -256,6 +256,8 @@ function geopsearch_ajax_search( $request ) {
   $posts = [];
   $results = [];
 	$post_type = isset($request['type']) ? $request['type'] : ['page', 'post'];
+	$search_query = isset($request['q']) ? $request['q'] : '';
+	$search_author = isset($request['author']) ? $request['author'] : '';
 	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
 	$page_now = isset($request['page']) ? $request['page'] : '0';
@@ -331,11 +333,47 @@ function geopsearch_ajax_search( $request ) {
 		}
 	}
 
-	if ( empty($results) ) :
+	if ( empty($geopsearch_post_fetch_final) || !isset($geopsearch_post_fetch_final[$page_now]) ) :
     return new WP_Error( 'front_end_ajax_search', 'No results');
   endif;
 
-  return rest_ensure_response( $results );
+  return rest_ensure_response( $geopsearch_post_fetch_final[$page_now] );
+}
+
+// From https://gist.github.com/bradyvercher/1576900
+function sort_posts( $posts, $orderby, $order = 'ASC', $unique = true ) {
+	if ( ! is_array( $posts ) ) {
+		return false;
+	}
+
+	usort( $posts, array( new Sort_Posts( $orderby, $order ), 'sort' ) );
+
+	// use post ids as the array keys
+	if ( $unique && count( $posts ) ) {
+		$posts = array_combine( wp_list_pluck( $posts, 'ID' ), $posts );
+	}
+
+	return $posts;
+}
+class Sort_Posts {
+	var $order, $orderby;
+
+	function __construct( $orderby, $order ) {
+		$this->orderby = $orderby;
+		$this->order = ( 'desc' == strtolower( $order ) ) ? 'DESC' : 'ASC';
+	}
+
+	function sort( $a, $b ) {
+		if ( $a->{$this->orderby} == $b->{$this->orderby} ) {
+			return 0;
+		}
+
+		if ( $a->{$this->orderby} < $b->{$this->orderby} ) {
+			return ( 'ASC' == $this->order ) ? -1 : 1;
+		} else {
+			return ( 'ASC' == $this->order ) ? 1 : -1;
+		}
+	}
 }
 
 
