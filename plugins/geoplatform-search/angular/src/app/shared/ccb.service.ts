@@ -15,8 +15,8 @@ export class CCBService {
     private usersList : { id: number; label: string }[] = [] as { id: number; label: string }[];
 
     constructor(private http : HttpClient) {
-        this.baseUrl = Config.wpUrl + '/wp-json/wp/v2';
-        this.updateUserList();
+        this.baseUrl = Config.wpUrl;
+        //this.updateUserList();
     }
 
     search(query : Query) : Promise<any> {
@@ -31,14 +31,19 @@ export class CCBService {
 
     }
 
+    getType(type : string) {
+        if(!type) return 'page';
+        switch(type) {
+        case 'pages': return 'page';
+        case 'posts': return 'post';
+        default: return type;
+        }
+    }
+
     buildRequest(query: Query, type: string) : HttpRequest<any> {
         let qobj = query.getQuery();
 
-        if(qobj.q) {
-            qobj.search = qobj.q;
-            delete qobj.q;
-        }
-
+        qobj.type = this.getType(type);
         qobj.page++;    //1-index in WP
 
         //rewrite page 'size' to 'per_page'
@@ -59,16 +64,16 @@ export class CCBService {
         //also note: value of param is the user's label which needs to be
         // resolved down to an id using the usersList cache
         if(qobj.createdBy) {
-            let authors = Object.keys(this.usersList)
-                .filter(id=>this.usersList[id]===qobj.createdBy);
-            //if a resolvable WP user, use that, otherwise use GP user which
-            // should result in 0 results (possibly through an error)
-            qobj.author = authors.length ? authors[0] : qobj.createdBy;
+            qobj.author = qobj.createdBy;
             delete qobj.createdBy;
         }
 
+        delete qobj.fields;
+        delete qobj.includeFacets;
+
         let params : HttpParams = new HttpParams({fromObject: qobj});
-        return new HttpRequest<any>('GET', this.baseUrl + '/' + type, { params:params });
+        let url = Config.wpUrl + '/wp-json/geoplatform-search/v1/gpsearch';
+        return new HttpRequest<any>('GET', url, { params:params });
     }
 
     /**
@@ -103,6 +108,7 @@ export class CCBService {
     }
 
     fixAuthors(items) : any[] {
+    /*
         items.forEach( item => {
             item.author = {
                 id: item.author,
@@ -110,12 +116,14 @@ export class CCBService {
             };
             if(!item.author) this.updateUserList();
         });
+    */
         return items;
     }
 
     updateUserList() {
         //cache a list of users
-        this.execute(new HttpRequest<any>('GET', this.baseUrl + '/users', {
+        let url = Config.wpUrl + '/wp-json/wp/v2/users';
+        this.execute(new HttpRequest<any>('GET', url, {
             params: { "per_page": 100 }
         }))
         .then( response => {
