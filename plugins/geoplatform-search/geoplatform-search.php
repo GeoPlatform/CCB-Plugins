@@ -255,14 +255,17 @@ function geopsearch_get_search_args() {
 function geopsearch_ajax_search( $request ) {
   $posts = [];
   $results = [];
-	$post_type = isset($request['type']) ? $request['type'] : ['page', 'post'];
+	$post_type = isset($request['type']) ? $request['type'] : 'fail';
 	$search_query = isset($request['q']) ? $request['q'] : '';
 	$search_author = isset($request['author']) ? $request['author'] : '';
 	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
-	$page_now = isset($request['page']) ? $request['page'] : '0';
-	$page_per = isset($request['per_page']) ? $request['per_page'] : '5';
+	$start = isset($request['start']) ? $request['start'] : '0';
+	$size = isset($request['total']) ? $request['total'] : '5';
 	$geopsearch_post_fetch_total = array();
+
+	if ($post_type == 'fail' || ($post_type != 'media' && $post_type != 'page' && $post_type != 'post'))
+		return array('error message' => 'Invalid request type. Must be post, page, or media.');
 
 	if ($post_type == 'media'){
 	  $geopsearch_media_args = array(
@@ -288,7 +291,6 @@ function geopsearch_ajax_search( $request ) {
 	    'author_name' => $search_author,
 	    'order' => $order_binary,
 	    'orderby' => $order_sort,
-			// 's' => 'hurricane+hurricane',
 	    's' => $search_query,
 	  );
 
@@ -321,23 +323,66 @@ function geopsearch_ajax_search( $request ) {
 		$geopsearch_post_fetch_total = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
 	}
 	$geopsearch_post_fetch_total = sort_posts($geopsearch_post_fetch_total, $order_sort, $order_binary);
+	$geopsearch_total_count = count($geopsearch_post_fetch_total);
 
-	$geopsearch_post_fetch_final = array();
-	if ( !empty($geopsearch_post_fetch_total)){
-		for ($page = 1; !empty($geopsearch_post_fetch_total); $page++){
-			$geopsearch_page_of_posts_array = array();
-			for ($i = 0; $i < $page_per && !empty($geopsearch_post_fetch_total); $i++){
-	  		array_push($geopsearch_page_of_posts_array, array_shift($geopsearch_post_fetch_total));
-			}
-			array_push($geopsearch_post_fetch_final, $geopsearch_page_of_posts_array);
-		}
+	if ( empty($geopsearch_post_fetch_total) )
+    return new WP_Error( 'front_end_ajax_search', 'No results');
+
+	class page
+	{
+		public $start;
+	  public $size;
+		public $total;
+		public $type;
+	  public $results;
+
+	  function __construct($start, $size, $total, $type, $results){
+	    $this->start = $start;
+	    $this->size = $size;
+			$this->total = $total;
+			$this->type = $type;
+	    $this->results = $results;
+	  }
 	}
 
-	if ( empty($geopsearch_post_fetch_final) || !isset($geopsearch_post_fetch_final[$page_now]) ) :
-    return new WP_Error( 'front_end_ajax_search', 'No results');
-  endif;
+	// instead of $start use start
+	// instead of $per_page use $size
+	$results = array_slice($geopsearch_post_fetch_total, $start, $size, true);
 
-  return rest_ensure_response( $geopsearch_post_fetch_final[$page_now] );
+	$page_object = new page($start, $size, $geopsearch_total_count, $post_type, $results);
+
+	if ( empty($page_object->results) )
+	 	return array('message' => 'Requested page exceeds result count.');
+
+	return rest_ensure_response($page_object);
+
+
+
+
+
+
+
+
+
+	// $geopsearch_post_fetch_final = array();
+	// if ( !empty($geopsearch_post_fetch_total)){
+	// 	for ($page = 1; !empty($geopsearch_post_fetch_total); $page++){
+	// 		$geopsearch_page_of_posts_array = array();
+	// 		for ($i = 0; $i < $total && !empty($geopsearch_post_fetch_total); $i++){
+	//   		array_push($geopsearch_page_of_posts_array, array_shift($geopsearch_post_fetch_total));
+	// 		}
+	// 		array_push($geopsearch_post_fetch_final, $geopsearch_page_of_posts_array);
+	// 	}
+	// }
+
+
+
+	// $geopsearch_final_query = new WP_Query();
+	// $geopsearch_final_query->posts = $geopsearch_post_fetch_final;
+	// $geopsearch_final_query->post_count = count($geopsearch_post_fetch_final);
+	//
+	//
+  // return rest_ensure_response( $geopsearch_final_query );
 }
 
 // From https://gist.github.com/bradyvercher/1576900
