@@ -21,7 +21,7 @@ $geopitems_idp = isset($_ENV['idp_url']) ? $_ENV['idp_url'] : 'https://idp.geopl
   window.GeoPlatformPluginEnv = {
       wpUrl: "<?php bloginfo('wpurl') ?>"
   };
-  window.GeoPlatform = {
+  window.GeoPlatformAuthConfig = {
     IDP_BASE_URL: "<?php echo $geopitems_idp ?>", // Where IDP is
     APP_BASE_URL: "<?php echo home_url() ?>", // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
     LOGIN_URL: "<?php echo wp_login_url() ?>",

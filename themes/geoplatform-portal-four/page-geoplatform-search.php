@@ -10,12 +10,22 @@
  */
 get_header();
 get_template_part( 'sub-header-post', get_post_format() );
+
+$geopsearch_idp = isset($_ENV['idp_url']) ? $_ENV['idp_url'] : 'https://idp.geoplatform.gov';
 ?>
 
-<!-- <div class="l-body l-body-/-one-column">
-  <div class="l-body__main-column"> -->
-    <script> window.GeoPlatformSearchPluginEnv = { wpUrl: "<?php bloginfo('wpurl') ?>" }; </script>
-    <app-root></app-root>
-  <!-- </div>
-</div> -->
+<script>
+  window.GeoPlatformSearchPluginEnv = {
+    wpUrl: "<?php bloginfo('wpurl') ?>"
+  };
+  window.GeoPlatformAuthConfig = {
+    IDP_BASE_URL: "<?php echo $geopsearch_idp ?>", // Where IDP is
+    APP_BASE_URL: "<?php echo home_url() ?>", // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
+    LOGIN_URL: "<?php echo wp_login_url() ?>",
+    LOGOUT_URL: "<?php echo wp_logout_url() ?>",
+  };
+</script>
+
+<app-root></app-root>
+
 <?php get_footer(); ?>
