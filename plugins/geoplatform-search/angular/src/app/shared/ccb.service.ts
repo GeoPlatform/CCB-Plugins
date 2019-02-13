@@ -6,7 +6,12 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
+import { environment } from "../../environments/environment";
 import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+
+const V1_SEARCH_ENDPOINT = environment.wpUrl + '/wp-json/geoplatform-search/v1/gpsearch';
+const V2_USERS_ENDPOINT = environment.wpUrl + '/wp-json/wp/v2/users?per_page=100';
+
 
 @Injectable()
 export class CCBService {
@@ -68,7 +73,7 @@ export class CCBService {
         delete qobj.includeFacets;
 
         let params : HttpParams = new HttpParams({fromObject: qobj});
-        let url = Config.wpUrl + '/wp-json/geoplatform-search/v1/gpsearch';
+        let url = V1_SEARCH_ENDPOINT;
         return new HttpRequest<any>('GET', url, { params:params });
     }
 
@@ -80,16 +85,19 @@ export class CCBService {
 
         //note if this is a users request, don't 'fix' those results
         let isUsersReq = null === request.params.get('type');
-        
+
         return this.http.request(request)
         .map( (event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
                 let res : HttpResponse<any> = event as HttpResponse<any>;
-                let wpTotal : any = res.headers.get('X-WP-Total');
+
+                let wpTotal : any = (isUsersReq) ?
+                    res.headers.get('X-WP-Total') :
+                    res.body.totalResults;
                 let total : number = isNaN(wpTotal) ? 0 : wpTotal*1;
 
-                let results = (isUsersReq) ? res.body||[] : 
-                    (res.body||[]).map( it => { return this.fixResult(it) });
+                let results = (isUsersReq) ? res.body||[] :
+                    (res.body.results||[]).map( it => { return this.fixResult(it) });
                 return {
                     results: results,
                     totalResults: total as number
@@ -109,7 +117,7 @@ export class CCBService {
 
     updateUserList() {
         //cache a list of users
-        let url = Config.wpUrl + '/wp-json/wp/v2/users?per_page=100';
+        let url = V2_USERS_ENDPOINT;
         this.execute( new HttpRequest<any>('GET', url) )
         .then( response => {
             let users = response.results;
@@ -121,7 +129,7 @@ export class CCBService {
 
         item.id = item.ID;
         delete item.ID;
-        
+
         item.type = item.post_type;
         delete item.post_type;
 
@@ -133,22 +141,21 @@ export class CCBService {
         item.media_type = item.post_mime_type;
         delete item.post_mime_type;
 
-        console.log("Author: " + item.post_author);
         item.author = {
             id: item.post_author,
             label: this.usersList[item.post_author+''] || ""
         };
         delete item.post_author;
-        
+
         item.date = item.post_date;
         delete item.post_date;
 
         item.modified = item.post_modified;
         delete item.post_modified;
-        
-        item.description = item.post_content;
-        delete item.post_content;
-        
+
+        item.description = item.post_content_filtered;
+        delete item.post_content_filtered;
+
         return item;
     }
 }
