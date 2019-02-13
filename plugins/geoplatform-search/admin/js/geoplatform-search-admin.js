@@ -45,27 +45,5 @@
 			});
 			return false;
     });
-
-		// jQuery('#geopsearch_reset').click(function(){
-    //   var data = {
-		// 		action: "geopsearch_site_search",
-	  //     type: 'page',  /* 'page'|'post'|'media' */
-	  //     search: '',
-	  //     author: '',  /* must be resolved to a user id */
-	  //     page: 1,
-	  //     per_page: 40,
-	  //     order: 'asc',
-	  //     orderby: 'modified'
-	  //   };
-		// 	jQuery.post(ajaxurl, data, function(response){
-		// 		if (response){
-		// 			alert(response);
-		// 			debugger;
-		// 		}
-		// 		location.reload();
-		// 	});
-		// 	return false;
-    // });
-
 	});
 })( jQuery );
