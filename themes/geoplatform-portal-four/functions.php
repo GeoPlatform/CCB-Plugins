@@ -183,6 +183,18 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'priority' => 40,
 	));
 
+	$wp_customize->add_setting('headlink_ngda_themes',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_ngda_themes',array(
+		'type' => 'text',
+		'label' => 'NGDA Themes',
+		'section' => 'headlink_format',
+		'priority' => 45,
+	));
+
 	$wp_customize->add_setting('headlink_search',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
@@ -192,7 +204,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => 'Search (GeoPlatform Search Plugin Page)',
 		'section' => 'headlink_format',
-		'priority' => 45,
+		'priority' => 50,
 		'default' => 'geoplatform-search'
 	));
 
@@ -205,7 +217,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => 'Register (GeoPlatform Resource Registration Page)',
 		'section' => 'headlink_format',
-		'priority' => 46,
+		'priority' => 55,
 		'default' => 'geoplatform-register'
 	));
 
@@ -218,7 +230,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => 'Items (GeoPlatform Item Details Page)',
 		'section' => 'headlink_format',
-		'priority' => 47,
+		'priority' => 60,
 		'default' => 'geoplatform-items'
 	));
 
@@ -235,7 +247,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => 'Help',
 		'section' => 'headlink_format',
-		'priority' => 50,
+		'priority' => 65,
 	));
 
 	$wp_customize->add_setting('headlink_apps',array(
@@ -247,7 +259,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => "Apps & Services (Mega Menu)",
 		'section' => 'headlink_format',
-		'priority' => 55,
+		'priority' => 70,
 	));
 }
 add_action( 'customize_register', 'geop_ccb_header_link_register');
