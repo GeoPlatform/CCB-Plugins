@@ -256,12 +256,15 @@ function geopsearch_ajax_search( $request ) {
 	$search_author = isset($request['author']) ? $request['author'] : '';
 	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
 	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
-	$page = isset($request['page']) ? $request['page'] : '0';
-	$per_page = isset($request['per_page']) ? $request['per_page'] : '5';
+	$page = isset($request['page']) ? $request['page'] : 0;
+	$per_page = isset($request['per_page']) ? $request['per_page'] : 5;
 	$geopsearch_post_fetch_total = array();
 
 	if ($post_type == 'fail' || ($post_type != 'media' && $post_type != 'page' && $post_type != 'post'))
 		return array('error message' => 'Invalid request type. Must be post, page, or media.');
+
+	if (!is_numeric($page) || !is_numeric($per_page))
+		return array('error message' => 'Page and per_page parameters must be numeric.');
 
 	if ($post_type == 'media'){
 	  $geopsearch_media_args = array(
@@ -289,7 +292,6 @@ function geopsearch_ajax_search( $request ) {
 	    'orderby' => $order_sort,
 	    's' => $search_query,
 	  );
-
 
 		$posts_two = array(
 			'numberposts' => -1,
@@ -333,9 +335,9 @@ function geopsearch_ajax_search( $request ) {
 	  public $results;
 
 	  function __construct($page, $size, $total, $type, $results){
-	    $this->page = $page;
-	    $this->size = $size;
-			$this->totalResults = $total;
+	    $this->page = (int)$page;
+	    $this->size = (int)$size;
+			$this->totalResults = (int)$total;
 			$this->type = $type;
 	    $this->results = $results;
 	  }
@@ -391,9 +393,9 @@ function sort_posts( $posts, $orderby, $order = 'ASC', $unique = true ) {
 	usort( $posts, array( new Sort_Posts( $orderby, $order ), 'sort' ) );
 
 	// use post ids as the array keys
-	if ( $unique && count( $posts ) ) {
-		$posts = array_combine( wp_list_pluck( $posts, 'ID' ), $posts );
-	}
+	// if ( $unique && count( $posts ) ) {
+	// 	$posts = array_combine( wp_list_pluck( $posts, 'ID' ), $posts );
+	// }
 
 	return $posts;
 }
