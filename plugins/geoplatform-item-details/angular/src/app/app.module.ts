@@ -35,7 +35,7 @@ if((<any>window).GeoPlatformPluginEnv && (<any>window).GeoPlatformPluginEnv.wpUr
 }
 
 // Setup auth service (pass in config)
-import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/src/angular';
+import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/angular';
 const authService = ngGpoauthFactory(authSettings);
 
 

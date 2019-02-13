@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
-import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/src/angular';
+import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 interface Observer {
     next: (value:GeoPlatformUser) => void;

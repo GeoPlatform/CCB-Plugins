@@ -29,7 +29,7 @@ export class PrimaryActionComponent implements OnInit {
 
         let type = this.item.type;
         switch(type) {
-            case ItemTypes.DATASET : break;
+            case ItemTypes.DATASET : this.openDataset(); break;
             case ItemTypes.SERVICE : break;
             case ItemTypes.LAYER : break;
             case ItemTypes.MAP : this.openMap(); break;
@@ -49,7 +49,9 @@ export class PrimaryActionComponent implements OnInit {
 
         let type = this.item.type;
         switch(type) {
-            case ItemTypes.DATASET : return 'Do Something';
+            case ItemTypes.DATASET :
+                if(this.item.source && this.item.source.uri) return "View Metadata";
+                return 'Do Something';
             case ItemTypes.SERVICE : return 'Do Something';
             case ItemTypes.LAYER : return 'Do Something';
             case ItemTypes.MAP : return 'Open Map';
@@ -85,6 +87,18 @@ export class PrimaryActionComponent implements OnInit {
     }
 
 
+    /**
+     *
+     */
+    openDataset() {
+        if(!this.item.source || !this.item.source.uri) return;
+        window.open(this.item.source.uri, '_blank');
+    }
+
+
+    /**
+     *
+     */
     openMap() {
 
         let resTypes = this.item.resourceTypes;
@@ -104,7 +118,7 @@ export class PrimaryActionComponent implements OnInit {
                 prefix = 'stg-';
             let url = 'https://' + prefix + 'viewer.geoplatform' + ext + '/?id=' + this.item.id;
             window.open(url, "_blank");
-            return;    
+            return;
         }
 
         //all other map types...
