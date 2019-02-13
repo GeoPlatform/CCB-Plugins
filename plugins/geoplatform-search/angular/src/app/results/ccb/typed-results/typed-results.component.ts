@@ -92,6 +92,11 @@ export class TypedResultsComponent implements OnInit {
         })
         .catch(e => {
             console.log("Error searching CCB for " + this.type);
+            this.error = {
+                label : "An error occurred searching for " + this.type,
+                message: e.message,
+                code : e.status || 500
+            };
         })
     }
 

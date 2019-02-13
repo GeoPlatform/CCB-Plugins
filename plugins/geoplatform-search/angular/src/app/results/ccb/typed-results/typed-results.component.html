@@ -18,8 +18,18 @@
     </div>
 </div>
 
-<div *ngIf="!results || !results.length">
-    <strong><em>No results found matching the specified constraints</em></strong>
+<!-- display error message if one is encountered -->
+<div *ngIf="error" class="m-message--error">
+    <div class="m-message__heading">{{error.error||error.label}}</div>
+    <div>{{error.message}}</div>
+    <div class="m-message__footer">
+        <a class="is-linkless" (click)="error=null">DISMISS</a>
+    </div>
+</div>
+
+<div *ngIf="!error && (!results || !results.length)" class="m-message--warning">
+    <div class="m-message__heading">No Results</div>
+    <div>No results found matching the specified constraints</div>
 </div>
 
 <div *ngFor="let item of results"
@@ -34,7 +44,7 @@
 
             <div class="m-results-item__heading">
                 <a href="{{item.link}}" target="_blank">
-                    <span *ngIf="item.title">{{item.title.rendered}}</span>
+                    <span *ngIf="item.title">{{item.title}}</span>
                     <span *ngIf="!item.title">Un-titled {{item.type}}</span>
                 </a>
             </div>
@@ -58,7 +68,7 @@
 
             <div class="m-results-item__description"
                 *ngIf="'image'!==item.media_type"
-                [innerHtml]="item.description?.rendered"></div>
+                [innerHtml]="item.description"></div>
 
             <div class="m-results-item__actions"></div>
 

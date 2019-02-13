@@ -1,7 +1,7 @@
 
 <img src="{{fallback}}" *ngIf="!source||(!source.url&&!source.contentData)">
 
-<img src="source.url" *ngIf="source.url" fallback="{{fallback}}">
+<img src="{{source.url}}" *ngIf="source.url" fallback="{{fallback}}">
 
 <img *ngIf="source.contentData"
     [style.background-size]="contain"
