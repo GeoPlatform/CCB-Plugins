@@ -180,7 +180,7 @@ function geopsearch_perform_site_search() {
 add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
 
 
-function wpb_hook_javascript() {
+function geopsearch_establish_globals() {
   ?>
   <script type="text/javascript">
 		window.GeoPlatformSearchPluginEnv = {
@@ -194,13 +194,7 @@ function wpb_hook_javascript() {
   </script>
 	<?php
 }
-add_action('wp_head', 'wpb_hook_javascript');
-
-
-
-
-
-
+add_action('wp_head', 'geopsearch_establish_globals');
 
 
 /* Endpoint for custom search algorithm.
@@ -331,7 +325,7 @@ function geopsearch_ajax_search( $request ) {
 	if ( empty($geopsearch_post_fetch_total) )
     return new WP_Error( 'front_end_ajax_search', 'No results');
 
-	class page
+	class SearchResults
 	{
 		public $page;
 	  public $size;
@@ -353,7 +347,7 @@ function geopsearch_ajax_search( $request ) {
 	// instead of $per_page use $size
 	$results = array_slice($geopsearch_post_fetch_total, $slice_start, $per_page, true);
 
-	$page_object = new page($page, $per_page, $geopsearch_total_count, $post_type, $results);
+	$page_object = new SearchResults($page, $per_page, $geopsearch_total_count, $post_type, $results);
 
 	if ( empty($page_object->results) )
 	 	return array('message' => 'Requested page exceeds result count.');
