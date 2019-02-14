@@ -78,10 +78,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details.p
 function geopitems_establish_globals() {
   ?>
   <script type="text/javascript">
-		window.GeoPlatformSearchPluginEnv = {
+		window.GeoPlatformPluginEnv = {
 			wpUrl: "<?php bloginfo('wpurl') ?>"
 		};
-		window.GeoPlatrorm = window.GeoPlatorm || {};
+		window.GeoPlatform = window.GeoPlatform || {};
 		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
 		window.GeoPlatform.IDP_BASE_URL = "<?php echo isset($_ENV['idp_url']) ? $_ENV['idp_url'] : 'https://idp.geoplatform.gov' ?>"; // Where IDP is
 		window.GeoPlatform.LOGIN_URL = "<?php echo wp_login_url() ?>";

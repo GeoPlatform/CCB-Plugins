@@ -44,6 +44,8 @@ const authServiceFactory = function() {
     //https://geoplatform.atlassian.net/browse/DT-2307
     if( (<any>window).GeoPlatform ) {
         var gp = (<any>window).GeoPlatform;
+        console.log("Configuring OAuth using GeoPlatform global: ");
+        console.log(gp);
         if(gp.IDP_BASE_URL) authSettings.IDP_BASE_URL = gp.IDP_BASE_URL;
         if(gp.APP_BASE_URL) authSettings.APP_BASE_URL = gp.APP_BASE_URL;
         if(gp.LOGIN_URL) authSettings.LOGIN_URL = gp.LOGIN_URL;
