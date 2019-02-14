@@ -15,6 +15,45 @@ interface Observer {
 }
 
 
+//should be exported by gp-ngoauth but isn't so we are declaring it here...
+interface AuthConfig {
+    AUTH_TYPE?: 'grant' | 'token'
+    IDP_BASE_URL?: string
+    APP_BASE_URL?: string
+    ALLOW_SSO_LOGIN?: boolean
+    APP_ID?: boolean
+    ALLOW_IFRAME_LOGIN?: boolean
+    FORCE_LOGIN?: boolean
+    CALLBACK?: string
+    LOGIN_URL?: string
+    LOGOUT_URL?: string
+    ALLOW_DEV_EDITS?: boolean
+};
+
+
+const authServiceFactory = function() {
+
+    let authSettings : AuthConfig = {
+        APP_BASE_URL: environment.wpUrl || ''
+    };
+    //if run-time environment variables specified, add those (overwriting any duplicates)
+    if((<any>window).GeoPlatformPluginEnv && (<any>window).GeoPlatformPluginEnv.wpUrl) {
+        authSettings.APP_BASE_URL = (<any>window).GeoPlatformPluginEnv.wpUrl;
+    }
+    //auth library settings made available through WP via 'GeoPlatform' global
+    //https://geoplatform.atlassian.net/browse/DT-2307
+    if( (<any>window).GeoPlatform ) {
+        var gp = (<any>window).GeoPlatform;
+        if(gp.IDP_BASE_URL) authSettings.IDP_BASE_URL = gp.IDP_BASE_URL;
+        if(gp.APP_BASE_URL) authSettings.APP_BASE_URL = gp.APP_BASE_URL;
+        if(gp.LOGIN_URL) authSettings.LOGIN_URL = gp.LOGIN_URL;
+        if(gp.LOGOUT_URL) authSettings.LOGOUT_URL = gp.LOGOUT_URL;
+    }
+
+    return ngGpoauthFactory(authSettings);
+};
+
+
 
 @Injectable()
 export class PluginAuthService {
@@ -25,17 +64,9 @@ export class PluginAuthService {
     private gpAuthSubscription : ISubscription;
     private authService : AuthService;
 
-    constructor( ) {
+    constructor() {
 
-        let authSettings = {
-            APP_BASE_URL: environment.wpUrl || ''
-        };
-        //if run-time environment variables specified, add those (overwriting any duplicates)
-        if((<any>window).GeoPlatformPluginEnv && (<any>window).GeoPlatformPluginEnv.wpUrl) {
-            authSettings.APP_BASE_URL = (<any>window).GeoPlatformPluginEnv.wpUrl;
-        }
-
-        this.authService = ngGpoauthFactory(authSettings);
+        this.authService = authServiceFactory();
 
         this.user$ = new Observable( (observer:Observer) => {
             // Get the next and error callbacks. These will be passed in when

@@ -12,6 +12,12 @@ get_header();
 get_template_part( 'sub-header-post', get_post_format() );
 ?>
 
+
+<script> 
+    window.GeoPlatformPluginEnv = { 
+        wpUrl: "<?php bloginfo('wpurl') ?>" 
+    }; 
+</script>
 <app-root></app-root>
 
 <?php get_footer(); ?>

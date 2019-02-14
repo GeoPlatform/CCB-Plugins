@@ -16,7 +16,7 @@ global $wp;
 ?>
 
 <script> 
-    window.GeoPlatformSearchPluginEnv = { 
+    window.GeoPlatformPluginEnv = { 
         wpUrl: "<?php bloginfo('wpurl') ?>" 
     }; 
 </script>
