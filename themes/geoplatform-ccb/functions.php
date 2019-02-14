@@ -1358,7 +1358,8 @@ if ( ! function_exists ( 'geop_ccb_sorting_register' ) ) {
 		  'type' => 'radio',
 		  'label' => 'Choose the sorting method',
 		  'section' => 'featured_format',
-      'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+      'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.<br><br>
+        To appear on the front page, posts, pages, and category links must be part of the Front Page category. Categories need only have a positive priority value and no parent category.',
 			'choices' => array(
 			  'custom' => __('Custom', 'geoplatform-ccb'),
 				'date' => __('Date',  'geoplatform-ccb')
