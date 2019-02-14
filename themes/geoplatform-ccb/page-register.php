@@ -11,9 +11,9 @@
  get_header();
  get_template_part( 'mega-menu', get_post_format() );
  get_template_part( 'single-banner', get_post_format() );
-?>
 
+ if ( have_posts() ) : while ( have_posts() ) : the_post();
+   the_content();
+ endwhile; endif;
 
-<app-root></app-root>
-
-<?php get_footer(); ?>
+get_footer(); ?>

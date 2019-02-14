@@ -11,12 +11,9 @@
 get_header();
 get_template_part( 'mega-menu', get_post_format() );
 get_template_part( 'single-banner', get_post_format() );
-?>
 
-<!-- <div class="l-body l-body-/-one-column">
-  <div class="l-body__main-column"> -->
-    <script> window.GeoPlatformSearchPluginEnv = { wpUrl: "<?php bloginfo('wpurl') ?>" }; </script>
-    <app-root></app-root>
-  <!-- </div>
-</div> -->
-<?php get_footer(); ?>
+if ( have_posts() ) : while ( have_posts() ) : the_post();
+  the_content();
+endwhile; endif;
+
+get_footer(); ?>
