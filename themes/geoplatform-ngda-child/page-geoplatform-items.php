@@ -11,10 +11,8 @@
 get_header();
 get_template_part( 'single-banner', get_post_format() );
 
-global $wp_query;
-global $wp;
-?>
+if ( have_posts() ) : while ( have_posts() ) : the_post();
+  the_content();
+endwhile; endif;
 
-<app-root></app-root>
-
-<?php get_footer(); ?>
+get_footer(); ?>

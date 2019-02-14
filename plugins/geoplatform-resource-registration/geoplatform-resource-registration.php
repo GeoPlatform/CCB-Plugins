@@ -61,6 +61,21 @@ function deactivate_geoplatform_resource_registration() {
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-resource-registration.php';
 
+function geopregister_establish_globals() {
+  ?>
+  <script type="text/javascript">
+		window.GeoPlatformSearchPluginEnv = {
+			wpUrl: "<?php bloginfo('wpurl') ?>"
+		};
+		window.GeoPlatrorm = window.GeoPlatorm || {};
+		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
+		window.GeoPlatform.IDP_BASE_URL = "<?php echo isset($_ENV['idp_url']) ? $_ENV['idp_url'] : 'https://idp.geoplatform.gov' ?>"; // Where IDP is
+		window.GeoPlatform.LOGIN_URL = "<?php echo wp_login_url() ?>";
+		window.GeoPlatform.LOGOUT_URL = "<?php echo wp_logout_url() ?>";
+  </script>
+	<?php
+}
+add_action('wp_head', 'geopregister_establish_globals');
 
 // Sets the parameters of and then creates the item details page. It deletes any
 // old version of that page before each generation.
@@ -126,11 +141,10 @@ add_action( 'template_redirect', 'geopregister_page_enqueues', 10 );
 // that perform the settings interface add and remove map operations are simply
 // included here.
 function geopregister_process_refresh() {
-	include 'admin/partials/geoplatform-resource-registration-recreate.php';
+	geopregister_add_interface_page();
 	wp_die();
 }
 add_action('wp_ajax_geopregister_refresh', 'geopregister_process_refresh');
-
 
 /**
  * Begins execution of the plugin.
