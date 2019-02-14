@@ -2588,7 +2588,7 @@ generate-object-property@^1.1.0:
 
 "geoplatform.ngoauth@git+https://github.com/GeoPlatform/ng-gpoauth.git#develop":
   version "0.0.0"
-  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#d789dbfe6b6598038c171b8105002f31f0760198"
+  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#ca759f7948286db207a612f677eab14f9693a6ec"
 
 "geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
   version "2.0.0"
@@ -6483,9 +6483,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@~2.5.3:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.5.3.tgz#df3dcdc38f3beb800d4bc322646b04a3f6ca7f0d"
+typescript@~2.4.0:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.2.tgz#f8395f85d459276067c988aa41837a8f82870844"
 
 typescript@~2.6.2:
   version "2.6.2"

@@ -25,18 +25,18 @@ L.Icon.Default.mergeOptions({
 
 import { Config } from 'geoplatform.client';
 
-
-let authSettings = {
-    APP_BASE_URL: environment.wpUrl || ''
-};
-//if run-time environment variables specified, add those (overwriting any duplicates)
-if((<any>window).GeoPlatformPluginEnv && (<any>window).GeoPlatformPluginEnv.wpUrl) {
-    authSettings.APP_BASE_URL = (<any>window).GeoPlatformPluginEnv.wpUrl;
-}
-
-// Setup auth service (pass in config)
-import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/angular';
-const authService = ngGpoauthFactory(authSettings);
+//
+// let authSettings = {
+//     APP_BASE_URL: environment.wpUrl || ''
+// };
+// //if run-time environment variables specified, add those (overwriting any duplicates)
+// if((<any>window).GeoPlatformPluginEnv && (<any>window).GeoPlatformPluginEnv.wpUrl) {
+//     authSettings.APP_BASE_URL = (<any>window).GeoPlatformPluginEnv.wpUrl;
+// }
+//
+// // Setup auth service (pass in config)
+// import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/angular';
+// const authService = ngGpoauthFactory(authSettings);
 
 
 
@@ -162,11 +162,11 @@ export function initializeApp() {
             multi: true
         },
         PluginAuthService
-        ,
-        {
-            provide: AuthService,
-            useValue: authService
-        }
+        // ,
+        // {
+        //     provide: AuthService,
+        //     useValue: authService
+        // }
     ],
     entryComponents: [
         //dynamic components go here

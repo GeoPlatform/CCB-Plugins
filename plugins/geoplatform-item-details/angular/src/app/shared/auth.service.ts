@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
-import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import {
+    ngGpoauthFactory, AuthService, GeoPlatformUser
+} from 'geoplatform.ngoauth/angular';
+
+import { environment } from '../../environments/environment';
+
 
 interface Observer {
     next: (value:GeoPlatformUser) => void;
@@ -18,10 +23,19 @@ export class PluginAuthService {
     private user$ : Observable<GeoPlatformUser>;
     private observers : Observer[] = [] as Observer[];
     private gpAuthSubscription : ISubscription;
+    private authService : AuthService;
 
+    constructor( ) {
 
-    constructor(  private authService : AuthService ) {
+        let authSettings = {
+            APP_BASE_URL: environment.wpUrl || ''
+        };
+        //if run-time environment variables specified, add those (overwriting any duplicates)
+        if((<any>window).GeoPlatformPluginEnv && (<any>window).GeoPlatformPluginEnv.wpUrl) {
+            authSettings.APP_BASE_URL = (<any>window).GeoPlatformPluginEnv.wpUrl;
+        }
 
+        this.authService = ngGpoauthFactory(authSettings);
 
         this.user$ = new Observable( (observer:Observer) => {
             // Get the next and error callbacks. These will be passed in when
@@ -40,7 +54,7 @@ export class PluginAuthService {
         });
 
 
-        const sub = authService.getMessenger().raw();
+        const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
             console.log("Received Auth Message: " + msg.name);
             switch(msg.name){
