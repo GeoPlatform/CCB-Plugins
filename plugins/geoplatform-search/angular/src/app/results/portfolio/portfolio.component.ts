@@ -22,6 +22,8 @@ import { SimilarityCodec } from '../../constraints/similarity/codec';
 import { PagingEvent } from '../../shared/paging/paging.component';
 // import { ServerRoutes } from '../../server-routes.enum'
 import { environment } from '../../../environments/environment';
+import { RPMService } from 'gp.rpm/src/iRPMService'
+
 
 @Component({
     selector: 'results-portfolio',
@@ -31,7 +33,6 @@ import { environment } from '../../../environments/environment';
 export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() constraints: Constraints;
-
     private service : ItemService;
     private listener : ISubscription;
     public totalResults : number = 0;
@@ -45,7 +46,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public showLegend : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
 
-    constructor( private http : HttpClient ) {
+    constructor( private http : HttpClient, public rpm: RPMService ) {
         this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = '_score,desc';
@@ -123,6 +124,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         // console.log("PortfolioComponent.executeQuery() - " +
         //    JSON.stringify(this.query.getQuery()));
 
+
+
         this.isLoading = true;
         this.service.search(this.query)
         .then( response => {
@@ -132,6 +135,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
             //show facet counts in picker filters...
             this.constraints.updateFacetCounts(response.facets);
+            this.rpm.logSearch(this.query.query, response.totalResults);
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
@@ -150,6 +154,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     onSortChange() {
         this.query.sort(this.sortField);
         this.queryChange.next(this.query);
+        this.rpm.logEvent('Sort', this.sortField)
     }
 
     /**
