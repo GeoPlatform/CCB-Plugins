@@ -29,6 +29,11 @@ interface AuthConfig {
     LOGOUT_URL?: string
     ALLOW_DEV_EDITS?: boolean
 };
+const AUTH_KEYS = [
+    'AUTH_TYPE', 'IDP_BASE_URL', 'APP_BASE_URL', 'ALLOW_SSO_LOGIN',
+    'APP_ID', 'ALLOW_IFRAME_LOGIN', 'FORCE_LOGIN', 'CALLBACK',
+    'LOGIN_URL', 'LOGOUT_URL', 'ALLOW_DEV_EDITS'
+];
 
 
 const authServiceFactory = function() {
@@ -43,11 +48,8 @@ const authServiceFactory = function() {
     //auth library settings made available through WP via 'GeoPlatform' global
     //https://geoplatform.atlassian.net/browse/DT-2307
     if( (<any>window).GeoPlatform ) {
-        var gp = (<any>window).GeoPlatform;
-        if(gp.IDP_BASE_URL) authSettings.IDP_BASE_URL = gp.IDP_BASE_URL;
-        if(gp.APP_BASE_URL) authSettings.APP_BASE_URL = gp.APP_BASE_URL;
-        if(gp.LOGIN_URL) authSettings.LOGIN_URL = gp.LOGIN_URL;
-        if(gp.LOGOUT_URL) authSettings.LOGOUT_URL = gp.LOGOUT_URL;
+        const gp = (<any>window).GeoPlatform;
+        AUTH_KEYS.forEach( key => { if(gp[key]) authSettings[key] = gp[key]; });
     }
 
     console.log("Configuring OAuth using: ");
