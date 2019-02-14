@@ -49,7 +49,15 @@ const authServiceFactory = function() {
     //https://geoplatform.atlassian.net/browse/DT-2307
     if( (<any>window).GeoPlatform ) {
         const gp = (<any>window).GeoPlatform;
-        AUTH_KEYS.forEach( key => { if(gp[key]) authSettings[key] = gp[key]; });
+        AUTH_KEYS.forEach( key => {
+            let v = gp[key];
+            if(typeof(v) !== 'undefined') {
+                if(~key.indexOf('ALLOW') || ~key.indexOf('FORCE')) {
+                    v = (v === true || v === 'true');
+                }
+                authSettings[key] = v;
+            }
+        });
     }
 
     console.log("Configuring OAuth using: ");
