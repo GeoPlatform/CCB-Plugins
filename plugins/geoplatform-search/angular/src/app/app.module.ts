@@ -13,6 +13,10 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
 
+// Adds window.RPMService to global namespace
+import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'gp.rpm/src/iRPMService'
+
 
 
 //Leaflet does some magic rewrites to css to reference images,
@@ -95,7 +99,6 @@ export function initializeApp() {
   }
 }
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -147,6 +150,10 @@ export function initializeApp() {
       //     useFactory: initializeApp,
       //     deps: [EnvironmentSettings], multi: true
       // }
+      {
+        provide: RPMService,
+        useValue: RPMServiceFactory()
+      },
       {
           provide: APP_INITIALIZER,
           useFactory: initializeApp,
