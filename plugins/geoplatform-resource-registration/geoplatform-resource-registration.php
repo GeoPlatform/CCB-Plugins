@@ -67,7 +67,7 @@ function geopregister_establish_globals() {
 		window.GeoPlatformPluginEnv = window.GeoPlatformPluginEnv || {}
 		window.GeoPlatformPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
 
-		window.GeoPlatrorm = window.GeoPlatorm || {};
+		window.GeoPlatform = window.GeoPlatform || {};
 		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
 		window.GeoPlatform.IDP_BASE_URL = "<?php echo isset($_ENV['idp_url']) ? $_ENV['idp_url'] : 'https://idp.geoplatform.gov' ?>"; // Where IDP is
 		window.GeoPlatform.ALLOW_SSO_LOGIN = "false";

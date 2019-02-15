@@ -2518,6 +2518,10 @@ generate-object-property@^1.1.0:
     q "1.1.2"
     request "^2.75.0"
 
+"geoplatform.ngoauth@git+https://github.com/GeoPlatform/ng-gpoauth.git#develop":
+  version "0.0.0"
+  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#ca759f7948286db207a612f677eab14f9693a6ec"
+
 "geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
   version "1.8.2"
   resolved "git+http://github.com/GeoPlatform/style.git#3f854496c29141cce3c49dfbf4045a82b3486f47"

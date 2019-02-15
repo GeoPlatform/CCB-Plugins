@@ -18,6 +18,7 @@ import {
     MatChipsModule, MatProgressSpinnerModule
 } from '@angular/material';
 
+import { AuthenticatedComponent } from './authenticated.component';
 import { AppComponent } from './app.component';
 
 //configure the necessary environment variables needed by GeoPlatformClient
@@ -33,7 +34,7 @@ export function initializeApp() {
 }
 
 
-import { AuthService } from "./auth.service";
+import { PluginAuthService } from "./auth.service";
 
 
 
@@ -65,33 +66,33 @@ export class PrettyJsonPipe implements PipeTransform {
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TypeComponent,
-    AdditionalComponent,
-    EnrichComponent,
-    ReviewComponent,
-    PrettyJsonPipe
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule, HttpClientJsonpModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatCardModule, MatInputModule, MatButtonModule,
-    MatListModule, MatStepperModule, MatFormFieldModule,
-    MatDatepickerModule, MatNativeDateModule, MatSelectModule,
-    MatCheckboxModule, MatAutocompleteModule, MatIconModule,
-    MatChipsModule, MatProgressSpinnerModule
-  ],
-  providers: [
-      {
-          provide: APP_INITIALIZER,
-          useFactory: initializeApp,
-          multi: true
-      },
-      AuthService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        TypeComponent,
+        AdditionalComponent,
+        EnrichComponent,
+        ReviewComponent,
+        PrettyJsonPipe
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule, HttpClientJsonpModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatCardModule, MatInputModule, MatButtonModule,
+        MatListModule, MatStepperModule, MatFormFieldModule,
+        MatDatepickerModule, MatNativeDateModule, MatSelectModule,
+        MatCheckboxModule, MatAutocompleteModule, MatIconModule,
+        MatChipsModule, MatProgressSpinnerModule
+    ],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApp,
+            multi: true
+        },
+        PluginAuthService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable, Subject } from 'rxjs';
+
 import { MatStepper } from '@angular/material';
 import { ItemTypes } from 'geoplatform.client';
 
@@ -12,7 +13,8 @@ import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 
-import { AuthService, GeoPlatformUser } from './auth.service';
+import { AuthenticatedComponent } from './authenticated.component';
+import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 
 export interface AppEvent {
@@ -27,7 +29,7 @@ export interface AppEvent {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends AuthenticatedComponent implements OnInit {
 
     @Output() appEvents: Subject<AppEvent>
         = new Subject<AppEvent>();
@@ -40,35 +42,30 @@ export class AppComponent implements OnInit {
 
     public item : any;
 
-    //flag indicating user's signed in status
-    public isAuthenticated : boolean = false;
-    public user : GeoPlatformUser = null;
-
-
-    constructor(
-        private formBuilder: FormBuilder,
-        private authService : AuthService
-    ) {
-
-        authService.getUser().then( user => {
-
-            //TEMP  ---------------------------------
-            if(!user) {
-                user = GeoPlatformUser.getTestUser();
-            }
-            //TEMP  ---------------------------------
-
-
-            this.user = user;
-            this.isAuthenticated = user !== null;
-            if(!this.item.createdBy) {  //update editable resource's createdBy property
-                this.item.createdBy = user ? user.username : null;
-            }
-        });
+    constructor( private formBuilder: FormBuilder ) {
+        super();
     }
 
     ngOnInit() {
+        super.init();
         this.initItem();
+    }
+
+    ngOnDestroy() {
+        super.destroy();
+        this.item = null;
+    }
+
+
+    /**
+     * @param {GeoPlatformUser} user
+     * @override AuthenticatedComponent.onUserChange
+     */
+    onUserChange(user) {
+        if(this.item && !this.item.createdBy && user) {
+            //update editable resource's createdBy property
+            this.item.createdBy = user.username;
+        }
     }
 
 
@@ -231,9 +228,11 @@ export class AppComponent implements OnInit {
         this.item = {
             // TEMPORARY for dev purposes only...
             // type: 'dcat:Dataset',
-            // title: 'test',
+            // title: 'test'
             // ----------------------------------
-            createdBy: this.user ? this.user.username : null
         };
+        if(this.user) {
+            this.item.createdBy = this.user.username;
+        }
     }
 }

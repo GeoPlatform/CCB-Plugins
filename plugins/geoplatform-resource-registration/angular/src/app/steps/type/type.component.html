@@ -17,6 +17,7 @@
                     <mat-select placeholder="Select Type" formControlName="type" required>
                         <mat-option [value]="'dcat:Dataset'">Dataset</mat-option>
                         <mat-option [value]="'regp:Service'">Service</mat-option>
+                        <mat-option [value]="'Map'">Map</mat-option>
                     </mat-select>
                     <mat-hint>You must specify a resource type before proceeding</mat-hint>
                     <mat-error *ngIf="isInvalid('type')">{{getErrorMessage('type')}}</mat-error>
@@ -104,8 +105,11 @@
                 <mat-form-field floatLabel="always">
                     <mat-label>Home Page</mat-label>
                     <mat-icon matPrefix>link</mat-icon>
-                    <input matInput formControlName="landingPage" placeholder="Specify the home page of the dataset">
+                    <input matInput formControlName="landingPage"
+                        placeholder="Specify the home page of the dataset"
+                        [required]="currentType==='Map'">
                     <mat-hint>A home page where more information can be gathered</mat-hint>
+                    <mat-error *ngIf="isInvalid('landingPage')">{{getErrorMessage('landingPage')}}</mat-error>
                 </mat-form-field>
 
 

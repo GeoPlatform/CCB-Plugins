@@ -64,7 +64,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         accessURL: ['', URL_VALIDATOR],
 
         //maps to Item.landingPage
-        landingPage: [''],
+        landingPage: ['', URL_VALIDATOR],
 
         //maps to Service.serviceType
         serviceType: ['']
@@ -180,6 +180,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         let urlField = this.formGroup.get('accessURL');
         let svcTypeField = this.formGroup.get('serviceType');
+        let landingField = this.formGroup.get('landingPage');
 
         //clear current value of URL
         urlField.setValue(null);
@@ -195,16 +196,22 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             // urlField.setValue('https://tigerweb.geo.census.gov/arcgis/rest/services/Generalized_ACS2016/Tracts_Blocks/MapServer');
             //==================================================
 
-
         } else {
             urlField.setValidators(URL_VALIDATOR);
             svcTypeField.setValidators(null);
 
         }
 
+        if(type && ItemTypes.MAP === type) {
+            landingField.setValidators([Validators.required, URL_VALIDATOR]);
+        } else {
+            landingField.setValidators(URL_VALIDATOR);
+        }
+
         //after changing validators, must re-evaluate to clear previous errors
         urlField.updateValueAndValidity();
         svcTypeField.updateValueAndValidity();
+        landingField.updateValueAndValidity();
     }
 
 

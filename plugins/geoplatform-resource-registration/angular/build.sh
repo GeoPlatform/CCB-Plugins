@@ -14,7 +14,7 @@ ASSETDEST="../assets"
 # to suplement the new shiny "advanced" Angular tool.
 #
 # Thanks Google!
-ng build --prod --environment=${1:-prod}
+ng build --prod --environment=${1:-prod} --sourcemaps=true --output-hashing=none
 
 declare -a names=(
   "main"
@@ -24,13 +24,15 @@ declare -a names=(
 )
 
 for name in "${names[@]}"; do
-  echo $JSDEST/$name.bundle.js " <- " $NGDIST/$name.*.bundle.js
-  cp $NGDIST/$name.*.bundle.js $JSDEST/$name.bundle.js
+  echo $JSDEST/$name.bundle.js " <- " $NGDIST/$name.bundle.js
+  cp $NGDIST/$name.bundle.js $JSDEST/$name.bundle.js
+  cp $NGDIST/$name.bundle.js.map $JSDEST/$name.bundle.js.map
 done
 
 # Don't forget the Styles! (they count too!)
-echo $CSSDEST/styles.bundle.js " <- " $NGDIST/styles.*.bundle.js
-cp $NGDIST/styles.*.bundle.css $CSSDEST/styles.bundle.css
+echo $CSSDEST/styles.bundle.js " <- " $NGDIST/styles.bundle.js
+cp $NGDIST/styles.bundle.css $CSSDEST/styles.bundle.css
+cp $NGDIST/styles.bundle.css.map $CSSDEST/styles.bundle.css.map
 
 # Copy all the other files types as well
 cp $NGDIST/*.eot $CSSDEST
