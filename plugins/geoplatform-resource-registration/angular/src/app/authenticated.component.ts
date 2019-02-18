@@ -72,6 +72,9 @@ export abstract class AuthenticatedComponent {
     /** @return {GeoPlatformUser} */
     getUser() : GeoPlatformUser { return this.user; }
 
+    /** @return {string} JWT token associated with the current user or null */
+    getAuthToken() : string { return this.authService.getJWT(); }
+
     /**
      * @param {GeoPlatformUser} user - authenticated user object or null if not authed
      */

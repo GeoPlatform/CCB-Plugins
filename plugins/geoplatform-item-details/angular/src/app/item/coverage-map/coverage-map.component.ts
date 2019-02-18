@@ -136,6 +136,11 @@ export class CoverageMapComponent implements OnInit, OnChanges {
         // });
         this.map.setHttpClient(httpClient);
         this.map.setServiceFactory(this.getServiceFactory());
+
+        //configure layer factory with service created here so it uses proper
+        // env vars and http client
+        let layerService = ServiceFactory(ItemTypes.LAYER, Config.ualUrl, this.httpClient);
+        LayerFactory.setLayerService(layerService);
     }
 
     /**

@@ -107,6 +107,22 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         }
     }
 
+    getTypeURLValue(type : string) : string {
+        switch(type) {
+            case ItemTypes.DATASET :
+            case ItemTypes.SERVICE :
+            case ItemTypes.ORGANIZATION :
+            case ItemTypes.CONCEPT :
+            case ItemTypes.CONCEPT_SCHEME :
+                return type.toLowerCase().split(':')[1] + 's';
+            case ItemTypes.GALLERY : return 'galleries';
+            case ItemTypes.COMMUNITY : return 'communities';
+            // case ItemTypes.MAP :
+            // case ItemTypes.LAYER :
+            default: return type.toLowerCase()+'s';
+        }
+    }
+
 
 
     /**
@@ -117,45 +133,20 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         this.onEvent.emit( { type:'app.reset', value:true } );
     }
 
-
     /**
      *
      */
-    createAndStartOver() {
-
-        //save resource and then start fresh in wizard...
-
-        let func = (persisted) => {
-            //wait a few seconds before sending back to the start
-            setTimeout( () => {
-                this.onEvent.emit( { type:'app.reset', value:true } );
-            }, 5000);
-        };
-
-        this.registerResource(func);
-    }
-
-    /**
-     *
-     */
-    createAndLeave() {
-
-        //save resource and then navigate to resource's home page (OE for now)
-
-        let func = (persisted) => {
-            let url = Config.ualUrl.replace('ual', 'oe') + '/view/' + persisted.id;
-            setTimeout( () => { window.location.href = url; }, 2000);
-        };
-
-        this.registerResource(func);
-
+    viewResource() {
+        let type = this.getTypeURLValue(this.data.type);
+        let url = Config.wpUrl + '/resources/' + type + '/' + this.data.id;
+        window.location.href = url;
     }
 
 
     /**
      * @param {function} callback - method to invoke upon successful registration
      */
-    private registerResource( callback : Function ) {
+    registerResource( ) {
 
         this.generateURI().then( item => {
             return new ItemService(Config.ualUrl, this.httpClient).save(item)
@@ -182,7 +173,10 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         .then( persisted => {
             this.status.isSaving = false;
             this.status.isSaved = true;
-            callback(persisted);
+
+            //update internal data with saved copy
+            Object.assign(this.data, persisted);
+            // callback(persisted);
         })
         .catch( (e:Error) => {
             this.status.isSaving = false;
@@ -222,6 +216,9 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         switch(event.type) {
             case 'reset':
                 this.hasError = null;
+                break;
+            case 'authToken':
+                this.httpClient.setAuthToken(event.value as string);
                 break;
         }
     }

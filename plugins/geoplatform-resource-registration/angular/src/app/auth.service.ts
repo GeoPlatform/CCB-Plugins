@@ -109,6 +109,10 @@ export class PluginAuthService {
         return this.user;
     }
 
+    /** @return {string} JWT token associated with the current user or null */
+    getAuthToken() : string { return this.authService.getJWT(); }
+
+
     subscribe( callback : Observer ) : ISubscription {
         return this.user$.subscribe( callback );
     }

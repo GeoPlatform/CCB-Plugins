@@ -43,7 +43,7 @@ export class NG2HttpClient {
             this.token = function() { return arg; };
         else if(arg && typeof(arg) === 'function')
             this.token = arg;
-        //else do nothing
+        else this.token = null;
     }
 
 
@@ -70,7 +70,10 @@ export class NG2HttpClient {
         if(this.token) {
             let token = this.token();
             if(token) {
-                opts.headers.set('Authorization', 'Bearer ' + token);
+                // console.log("NG2HttpClient.createRequestOpts() - Setting token: ");
+                // console.log(token);
+                //note 'set' returns new instance of headers
+                opts.headers = opts.headers.set('Authorization', 'Bearer ' + token);
             }
         }
 
@@ -98,7 +101,9 @@ export class NG2HttpClient {
         .catch( err => {
             // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));
             if (err instanceof HttpErrorResponse) {
-                throw new Error(err.error.message);
+                let msg = err && err.message ? err.message :
+                    (err.error && err.error.message ? err.error.message : "An unknown error occurred");
+                throw new Error(msg);
             }
             return {};
         });

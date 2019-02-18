@@ -33,7 +33,7 @@ export function initializeApp() {
   }
 }
 
-
+import { TokenInterceptor } from 'geoplatform.ngoauth/angular'
 import { PluginAuthService } from "./auth.service";
 
 
@@ -91,6 +91,11 @@ export class PrettyJsonPipe implements PipeTransform {
             useFactory: initializeApp,
             multi: true
         },
+        // { // Setup handler for sending and receiving tokens from backend service
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: TokenInterceptor,
+        //     multi: true
+        // },
         PluginAuthService
     ],
     bootstrap: [AppComponent]
