@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { curry, compose } from 'rambda'
-import { HttpClient } from '@angular/common/http'
+import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
+// import { ChartData } from '../item/usage/usage.component'
 
 
                 // Events
@@ -23,67 +24,112 @@ type MatomoAPIRequest = {
 
     module: 'API'
     idSite: number
-    token_auth: 'f822e078fcb182110b5de9deeba85e7e'
+    token_auth: string
     format: 'json'
 }
 
 type MatomoAPIResponse = {
     [x: string]: [{
         label: string
-        nb_visits: number,
-        nb_events: number,
-        nb_events_with_value: number,
-        sum_event_value: number,
-        min_event_value: number,
-        max_event_value: number,
-        sum_daily_nb_uniq_visitors: number,
-        avg_event_value: number,
-        segment: string,
+        nb_uniq_visitors: number
+        nb_visits: number
+        nb_events: number
+        nb_events_with_value: number
+        sum_event_value: number
+        min_event_value: number
+        max_event_value: number
+        sum_daily_nb_uniq_visitors: number
+        avg_event_value: number
+        segment: string
         idsubdatatable: number
     }]
 }
 
+type ChartData = {
+    labels: string[]
+    datasets: {data: number[], label: string}[]
+}
 
+// Google format was: [ 'column label', value, 'string value']
+
+const token_auth = 'f822e078fcb182110b5de9deeba85e7e'
+const rpmUrl = 'https://rpm.geoplatform.gov'
+
+
+
+// function getDateRange
 
 
 @Injectable()
 export class UsageService {
 
-    private http: HttpClient;
     private rpmUrl: string;
-    private auth_token: string;
+    // private token_auth: string;
+    private usageRequest: any;
 
-    constructor(http: HttpClient, rpmUrl: string, auth_token: string) {
-        this.http = http;
+    constructor(private http: HttpClient) {
         this.rpmUrl = rpmUrl;
-        this.auth_token = auth_token;
+        this.usageRequest = this.getAPIParams(token_auth, 'Events.getName')
     }
 
     //        Public API       //
-    public async getPastWeekUsage(id: string){
-        return this.getUsageForRange(this.usageRequest('week', 'last7', id))
+    public getPastWeekUsage(id: string){
+        return this.getUsageForRange(this.usageRequest('day', 'last7', id))
     }
 
-    public async getPastMonthUsage(id: string) {
-        return this.getUsageForRange(this.usageRequest('week', 'last5', id))
+    public getPastMonthUsage(id: string) {
+        return this.getUsageForRange(this.usageRequest('day', 'last30', id))
     }
 
-    public async getPastYearUsage(id: string) {
+    public getPastYearUsage(id: string) {
         return this.getUsageForRange(this.usageRequest('month', 'last12', id))
+    }
+
+    /**
+     * Desired output:
+     * [
+     *  ["Wed", 5, "5"]
+     * ]
+     * @param matomoResp
+     */
+    public matomoRespToDataset(dateFormat: string, matomoResp: MatomoAPIResponse): ChartData {
+        const values = Object.values(matomoResp)
+                        .map(d => {
+                            // Standardize all records with the data we want
+                            const data = d[0]
+                            return {
+                                        nb_uniq_visitors: data ? data.nb_uniq_visitors : 0,
+                                        nb_events: data ? data.nb_events : 0
+                                    }
+                        })
+                        .reduce((acc, entry) => {
+                            return {
+                                unique: acc.unique.concat([entry.nb_uniq_visitors]),
+                                events: acc.events.concat([entry.nb_events])
+                            }
+                        }, { unique: [], events: [] });
+
+        return {
+            labels: Object.keys(matomoResp),
+            datasets: [
+                { label: 'Unique Users', data: values.unique },
+                { label: 'Total Usage', data: values.events}
+            ]
+        }
     }
 
 
     //          Functions           //
 
-    private getAPIParams = curry(function(method: APIMethods, period: APIPeriod, date: string, label: string): MatomoAPIRequest{
+    private getAPIParams = curry(function(token_auth: string, method: APIMethods, period: APIPeriod, date: string, label: string): MatomoAPIRequest{
         return {
             label,
             method,
             period,
             date,
+            token_auth,
             // Common fields
             module: 'API',
-            token_auth: this.auth_token,
             format: 'json',
             idSite: 4 // viewer (this will have to be paramerterized)
         }
@@ -96,12 +142,13 @@ export class UsageService {
         return `?${pairs}`
     }
 
-    private async getStats(paramString: string) /*: Promise<MatomoAPIResponse>*/ {
+    private getStats(paramString: string) {
         return this.http.get<MatomoAPIResponse>(`${this.rpmUrl}${paramString}`)
     }
 
-    private usageRequest = this.getAPIParams('Events.getName')
-
-    private getUsageForRange = compose(this.getStats, this.apiRequestToQueryString);
+    // private getUsageForRange = compose(this.getStats, this.apiRequestToQueryString);
+    private getUsageForRange(params: MatomoAPIRequest){
+        return this.getStats(this.apiRequestToQueryString(params))
+    }
 
 }

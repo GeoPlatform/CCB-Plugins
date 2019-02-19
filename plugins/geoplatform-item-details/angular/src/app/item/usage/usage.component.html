@@ -26,7 +26,20 @@
                 </a>
             </li>
         </ul>
-        <div class="tab-content" id="myTabContent" style="width:100%">
+        <div *ngIf="chartState">
+            <canvas baseChart #UsageChart width="800" height="400"
+                [datasets]="chartState.datasets"
+                [labels]="chartState.labels"
+                [options]="chartState.options"
+                [colors]="chartState.colors"
+                [legend]="chartState.legend"
+                [chartType]="chartState.chartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+            </canvas>
+        </div>
+
+        <!-- <div class="tab-content" id="myTabContent" style="width:100%">
             <div class="tab-pane"
                 *ngFor="let key of getTabKeys()"
                 [ngClass]="{active:key===activeTab}"
@@ -34,7 +47,7 @@
                 [attr.aria-labelledby]="key+'-tab'">
                 <div id="{{key}}_chart" style="width:100%"></div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>

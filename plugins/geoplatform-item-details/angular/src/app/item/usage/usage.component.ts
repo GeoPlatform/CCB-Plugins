@@ -1,7 +1,8 @@
 import {
-    Component, OnInit, OnChanges, SimpleChanges, Input
+    Component, OnInit, OnChanges, SimpleChanges, Input, ViewChild
 } from '@angular/core';
-import { GoogleCharts } from 'google-charts';
+import { UsageService } from '../../shared/usage.service';
+import { BaseChartDirective } from 'ng2-charts//ng2-charts'
 
 const MONTHS = [
     'Jan','Feb','Mar','Apr','May','Jun',
@@ -9,7 +10,27 @@ const MONTHS = [
 ];
 const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
+// All are RGBA or HEX
+type ChartColor = {
+    backgroundColor: string
+    borderColor: string
+    pointBackgroundColor: string,
+    pointBorderColor: string
+    pointHoverBackgroundColor: string
+    pointHoverBorderColor: string
+}
 
+type ChartData = {
+    datasets: {data: number[], label: string}[]
+    labels: string[]
+}
+
+export type ChartSettings = ChartData & {
+    options?: any
+    colors: ChartColor[]
+    legend?: boolean
+    chartType: 'line' | 'bar'
+}
 
 @Component({
   selector: 'gpid-usage',
@@ -20,7 +41,11 @@ export class UsageComponent implements OnInit {
 
     @Input() item : any;
 
+    @ViewChild(BaseChartDirective)
+    private usageChart: BaseChartDirective;
+
     public isCollapsed : boolean = false;
+    public chartState: ChartSettings;
     public activeTab : string = 'usage_weekly';
     private tabs : any  = {
         usage_weekly : { status: true, label: "Past Week" },
@@ -28,36 +53,21 @@ export class UsageComponent implements OnInit {
         usage_yearly : { status: false, label: "Past Year" }
     };
     private charts : any = {
-        usage_weekly : { status: false, fn: () => {this.drawWeeklyChart()}  },
-        usage_monthly : { status: false, fn: () => {this.drawMonthlyChart()} },
-        usage_yearly : { status: false, fn: () => {this.drawYearlyChart()} }
+        usage_weekly : { status: false, fn: () => {this.fetchAndDrawlChart('week')}  },
+        usage_monthly : { status: false, fn: () => {this.fetchAndDrawlChart('month')} },
+        usage_yearly : { status: false, fn: () => {this.fetchAndDrawlChart('year')} }
     };
-    private googleIsLoaded : boolean = false;
-    private googleWaitAttempts : number = 0;
-    private itemUsageData : any;
+    private itemId : string;
 
 
-    constructor() { }
+    constructor(private usageService: UsageService) {}
 
-    ngOnInit() {
-        //Load the charts library
-        GoogleCharts.load(() => { this.googleIsLoaded = true; });
-    }
+    ngOnInit() {}
 
     ngOnChanges( changes : SimpleChanges ) {
         if(changes.item && changes.item.currentValue) {
-
-            let itemId = changes.item.currentValue.id;
-
-            //TODO fetch RPM stats...
-            // someService.getStats(itemId)
-            // .then( response => {
-            //     //TODO rebuild charts
-                    this.initCharts(true);
-            // })
-            // .catch(e => {
-            //     //display error message in place of charts
-            // });
+            this.itemId = changes.item.currentValue.id;
+            this.fetchAndDrawlChart();
         }
     }
 
@@ -85,176 +95,88 @@ export class UsageComponent implements OnInit {
         }
     }
 
-    initCharts( rebuild:boolean = false ) {
-        if(!this.googleIsLoaded) {
-            if(this.googleWaitAttempts < 5) {
-                //wait just a bit more for google charts api to finish loading
-                setTimeout( () => { this.initCharts(); }, 1000);
-            } else {
-                //display error message that google api could not load...
-            }
+    initCharts( rebuild:boolean = false ) {}
 
-            return;
+    fetchAndDrawlChart(period?: 'week' | 'month' | 'year'){
+        let func;
+        switch(period) {
+            case 'week':
+                func = 'getPastWeekUsage';
+                break;
+            case 'month':
+                func = 'getPastMonthUsage';
+                break;
+            case 'year':
+                func = 'getPastYearUsage';
+                break;
+            default:
+                func = 'getPastWeekUsage';
         }
 
-        if(rebuild === true) {
-            //change in item data, so let's rebuild the charts
-            this.charts.forEach( ch => { ch.status = false; });
-        }
-
-        //draw whichever chart is currently visible
-        let chart = this.charts[this.activeTab];
-        if(!chart.status) {
-            setTimeout( () => {
-                chart.status = true;
-                chart.fn();
-            }, 100);
+        if(func){
+            this.usageService[func](this.itemId)
+            .subscribe(data => {
+                this.drawlChart(this.usageService.matomoRespToDataset('',data))
+            });
         }
     }
-
-    drawWeeklyChart() {
-
-
-        //TODO use data stored in this.itemUsageData
-
-
-        var data = new GoogleCharts.api.visualization.DataTable();
-        data.addColumn('string', 'Day'); // Implicit domain label col.
-        data.addColumn('number', 'Displayed'); // Implicit series 1 data col.
-        data.addColumn({type:'string', role:'tooltip'});
-
-
-        let date = new Date();
-
-
-        let time = date.getTime();
-        time -= 1000 * 60 * 60 * 24 * 7;
-        date.setTime(time);
-
-        let rows = [], max = 0;
-        for(let i=0; i<7; ++i) {
-            time = date.getTime();
-            time += (1000 * 60 * 60 * 24);
-            date.setTime(time);
-            let dow = date.getDay();    //day of week
-            let v = Math.floor(Math.random()*10);
-            max = Math.max(max, v);
-            let label = DAYS[dow] + ' (' + (date.getMonth()+1) + '/' +
-                (date.getDate()+1) + ')';
-            rows.push([ label, v, v + '' ]);
-        }
-        data.addRows(rows);
-
-        var options = {
-            height: 300,
-            title: "Last 7 Days",
-            hAxis: {
-                title: 'Date',
-                format: 'M/d/yy',
-                minValue: rows[0][0],
-                maxValue: rows[rows.length-1][0]
+    /**
+     * Sets the stae of the chart
+     */
+    drawlChart(chartData: ChartData){
+        const updated: ChartSettings = {
+            // TO pass in
+            datasets: chartData.datasets,
+            labels: chartData.labels,
+            // Static
+            legend: true,
+            chartType: 'line',
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        display: true,
+                        ticks: {
+                            beginAtZero: true   // minimum value will be 0.
+                        }
+                    }]
+                }
             },
-            vAxis: {
-                title: 'Usage',
-                minValue: 0,
-                maxValue: max + 10
-            },
-            legend: 'none'
+            // Things that make it pretty
+            colors: [
+                { // grey
+                  backgroundColor: 'rgba(148,159,177,0.2)',
+                  borderColor: 'rgba(148,159,177,1)',
+                  pointBackgroundColor: 'rgba(148,159,177,1)',
+                  pointBorderColor: '#fff',
+                  pointHoverBackgroundColor: '#fff',
+                  pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                },
+                { // dark grey
+                  backgroundColor: 'rgba(77,83,96,0.2)',
+                  borderColor: 'rgba(77,83,96,1)',
+                  pointBackgroundColor: 'rgba(77,83,96,1)',
+                  pointBorderColor: '#fff',
+                  pointHoverBackgroundColor: '#fff',
+                  pointHoverBorderColor: 'rgba(77,83,96,1)'
+                },
+                { // grey
+                  backgroundColor: 'rgba(148,159,177,0.2)',
+                  borderColor: 'rgba(148,159,177,1)',
+                  pointBackgroundColor: 'rgba(148,159,177,1)',
+                  pointBorderColor: '#fff',
+                  pointHoverBackgroundColor: '#fff',
+                  pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                }
+            ],
         };
 
-        let el = document.getElementById('usage_weekly_chart');
-        var chart = new GoogleCharts.api.visualization.LineChart(el);
-        chart.draw(data, options);
-    }
-
-
-
-
-    drawMonthlyChart() {
-
-
-        //TODO use data stored in this.itemUsageData
-
-
-        var data = new GoogleCharts.api.visualization.DataTable();
-        data.addColumn('number', 'Day'); // Implicit domain label col.
-        data.addColumn('number', 'Displayed'); // Implicit series 1 data col.
-        data.addColumn({type:'string', role:'tooltip'});
-
-        let date = new Date();
-        let currentMonth = date.getMonth();
-        let currentDay = date.getDate();
-
-        let rows = [], max = 0;
-        for(let i=0; i<currentDay; ++i) {
-            let v = Math.floor(Math.random()*10);
-            max = Math.max(max, v);
-            rows.push([ (i+1), v, v + '' ]);
+        this.chartState = updated;
+        if(this.usageChart){
+            this.usageChart.chart.config.data = updated;
+            this.usageChart.chart.update();
         }
-        data.addRows(rows);
-
-        var options = {
-            height: 300,
-            title: "This Month",
-            hAxis: {
-                title: 'Day of Month',
-                minValue: 0,
-                maxValue: currentDay
-            },
-            vAxis: {
-                title: 'Usage',
-                minValue: 0,
-                maxValue: max + 10
-            },
-            legend: 'none'
-        };
-
-        let el = document.getElementById('usage_monthly_chart');
-        var chart = new GoogleCharts.api.visualization.LineChart(el);
-        chart.draw(data, options);
     }
 
-
-
-    drawYearlyChart() {
-
-
-        //TODO use data stored in this.itemUsageData
-
-
-        var data = new GoogleCharts.api.visualization.DataTable();
-        data.addColumn('string', 'Month'); // Implicit domain label col.
-        data.addColumn('number', 'Displayed'); // Implicit series 1 data col.
-        data.addColumn({type:'string', role:'tooltip'});
-
-        let date = new Date();
-        let currentMonth = date.getMonth();
-
-        let rows = [], max = 0;
-        for(let i=0; i<currentMonth; ++i) {
-            let v = Math.floor(Math.random()*10);
-            max = Math.max(max, v);
-            rows.push([ MONTHS[i], v, v + '' ]);
-        }
-        data.addRows(rows);
-
-        var options = {
-            height: 300,
-            title: "This Year",
-            hAxis: {
-                title: 'Month'
-            },
-            vAxis: {
-                title: 'Usage',
-                minValue: 0,
-                maxValue: max + 10
-            },
-            legend: 'none'
-        };
-
-        let el = document.getElementById('usage_yearly_chart');
-        var chart = new GoogleCharts.api.visualization.LineChart(el);
-        chart.draw(data, options);
-    }
 
 }
