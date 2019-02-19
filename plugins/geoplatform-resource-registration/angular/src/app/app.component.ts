@@ -16,6 +16,7 @@ import { ReviewComponent } from './steps/review/review.component';
 import { AuthenticatedComponent } from './authenticated.component';
 import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
+import { ModelProperties } from './model';
 
 export interface AppEvent {
     type   : string;
@@ -64,7 +65,7 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
     onUserChange(user) {
         if(this.item && !this.item.createdBy && user) {
             //update editable resource's createdBy property
-            this.item.createdBy = user.username;
+            this.item[ModelProperties.CREATED_BY] = user.username;
         }
         let appEvent : AppEvent = { type:'authToken', value: this.getAuthToken() };
         this.appEvents.next(appEvent);
@@ -93,7 +94,7 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             ) {
 
                 //if user provided a title, ignore whatever the harvest returned for label
-                if('label' === key && this.item.title) return;
+                if(ModelProperties.LABEL === key && this.item[ModelProperties.TITLE]) return;
 
                 this.applyItemData(key, data[key]);
             }
@@ -109,7 +110,7 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         if(value === null || value === undefined ||
             ( typeof(value) === 'string' && !value.length) ) return;
 
-        if('accessURL' === key) {
+        if(ModelProperties.ACCESS_URL === key) {
             if(this.item.type === ItemTypes.DATASET) {
                 //set as distro link
                 this.item.distributions = [{
@@ -122,20 +123,31 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
                 this.item.href = value;
             }
 
-        } else if( 'title' === key || 'label' === key ) {
-            this.item.title = this.item.label = value;
+        } else if( ModelProperties.TITLE === key || ModelProperties.LABEL === key ) {
+            this.item[ModelProperties.TITLE] = this.item[ModelProperties.LABEL] = value;
 
         }
         //knowledge graph enrichment fields
         else if(
-            'purposes' === key ||  'functions' === key || 'topics' === key ||
-            'subjects' === key ||  'places' === key ||  'audience' === key ||
-            'categories' === key
+            ModelProperties.CLASSIFIERS_PURPOSE === key ||
+            ModelProperties.CLASSIFIERS_FUNCTION === key ||
+            ModelProperties.CLASSIFIERS_TOPIC_PRIMARY === key ||
+            ModelProperties.CLASSIFIERS_TOPIC_SECONDARY === key ||
+            ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY === key ||
+            ModelProperties.CLASSIFIERS_SUBJECT_SECONDARY === key ||
+            ModelProperties.CLASSIFIERS_PLACE === key ||
+            ModelProperties.CLASSIFIERS_AUDIENCE === key ||
+            ModelProperties.CLASSIFIERS_CATEGORY === key
         ) {
             if(!this.item.classifiers) {    //initialize kg if not present
                 this.item.classifiers = { type: 'regp:KnowledgeGraph' }
             }
             this.item.classifiers[key] = value;
+
+        } else if(ModelProperties.RESOURCE_TYPES === key) {
+            //resource types are selected using objects, but the model accepts
+            // them as uris, so we have to transform them
+            this.item[key] = value.map(v => v.uri);
 
         } else { //generic property
             this.item[key] = value;
@@ -169,12 +181,14 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         //handle type first since it's needed by other fields
         // but remember type is only set on the first step of the wizard
         if(0 === event.previouslySelectedIndex) {
-            this.applyItemData('type', formGroup.get('type').value);
+            this.applyItemData(ModelProperties.TYPE,
+                formGroup.get(ModelProperties.TYPE).value);
         }
 
         let keys = Object.keys(formGroup.controls);
         keys.forEach( key => {
-            if('type' === key) return;
+            if(ModelProperties.TYPE === key) return;
+            if(key[0] === '$') return;  //ignore 'hidden' properties
 
             let ctrl = formGroup.controls[key];
             this.applyItemData(key, ctrl.value);
@@ -232,9 +246,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // type: 'dcat:Dataset',
             // title: 'test'
             // ----------------------------------
+            createdBy: 'tester'
         };
         if(this.user) {
-            this.item.createdBy = this.user.username;
+            this.item[ModelProperties.CREATED_BY] = this.user.username;
         }
     }
 }

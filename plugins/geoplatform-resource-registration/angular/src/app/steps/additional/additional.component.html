@@ -6,7 +6,7 @@
     </mat-card-subtitle>
 
 
-    <form [formGroup]="formGroupPrivate">
+    <form [formGroup]="formGroup">
 
         <div class="additional__container">
 
@@ -24,7 +24,7 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                         <input matInput #keywordsInput
-                            formControlName="keywords"
+                            formControlName="$keywords"
                             [matChipInputFor]="keyChipList"
                             (matChipInputTokenEnd)="addKeyword($event)">
                     </mat-chip-list>
@@ -45,7 +45,7 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                         <input matInput #publishersInput
-                            formControlName="publishers"
+                            formControlName="$publishers"
                             [matAutocomplete]="pubAutoComplete"
                             [matChipInputFor]="pubChipList"
                             (matChipInputTokenEnd)="addPublisher($event)"
@@ -74,7 +74,7 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                         <input matInput #communitiesInput
-                            formControlName="communities"
+                            formControlName="$communities"
                             [matAutocomplete]="comAutoComplete"
                             [matChipInputFor]="comChipList"
                             (matChipInputTokenEnd)="addCommunity($event)"

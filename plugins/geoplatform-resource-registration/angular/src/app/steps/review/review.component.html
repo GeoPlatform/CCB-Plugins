@@ -57,6 +57,16 @@
                     </div>
                 </div>
                 <div class="a-property-display">
+                    <label>Resource Type(s):</label>
+                    <div class="a-property-value">
+                        <mat-chip-list *ngIf="data.resourceTypes" selectable="false">
+                            <mat-chip *ngFor="let resType of data.resourceTypes">{{resType.label}}</mat-chip>
+                        </mat-chip-list>
+                        <span *ngIf="!data.resourceTypes||!data.resourceTypes.length"><em>none specified</em></span>
+                    </div>
+                </div>
+
+                <div class="a-property-display">
                     <label>Publishers:</label>
                     <div class="a-property-value">
                         <mat-chip-list *ngIf="data.publishers" selectable="false">
@@ -78,57 +88,59 @@
             </div>
 
 
-            <!-- Dataset-oriented properties -->
-            <div *ngIf="'dcat:Dataset'===data.type" class="m-review__section">
-                <div class="a-review__heading">Dataset Details</div>
+            <div class="m-review__section">
 
-                <div class="a-property-display">
-                    <label>Distribution:</label>
-                    <div class="a-property-value">
-                        <span *ngIf="data.distributions && data.distributions.length">
-                            <a href="{{data.distributions[0].accessURL}}" target="_blank"
-                                 class="u-break--all">
-                                {{data.distributions[0].accessURL}}
-                            </a>
-                        </span>
-                        <span *ngIf="!data.distributions || !data.distributions.length">
-                            <em>not specified</em>
-                        </span>
-                    </div>
-                </div>
-            </div>
+                <div class="a-review__heading">{{getTypeDisplayValue(data.type)}} Details</div>
 
+                <!-- Dataset-oriented properties -->
+                <div *ngIf="'dcat:Dataset'===data.type">
 
-
-            <!-- Service-oriented properties -->
-            <div  *ngIf="'regp:Service' === data.type" class="m-review__section">
-                <div class="a-review__heading">Service Details</div>
-
-                <div class="a-property-display">
-                    <label>Service URL:</label>
-                    <div class="a-property-value">
-                        <a href="{{data.href}}" target="_blank" class="u-break--all">{{data.href}}</a>
-                    </div>
-                </div>
-                <div class="a-property-display" *ngIf="'regp:Service' === data.type">
-                    <label>Service Type:</label>
-                    <div class="a-property-value">
-                        <span *ngIf="data.serviceType">{{data.serviceType.label}}</span>
-                        <span *ngIf="!data.serviceType"><em>not specified</em></span>
-                    </div>
-                </div>
-
-
-                <div class="a-property-display" *ngIf="'regp:Service'===data.type && data.layers">
-                    <label>Service Layers</label>
-                    <div class="a-property-value">
-                        <span *ngIf="!data.layers || !data.layers.length"><em>none specified</em></span>
-                        <div *ngIf="data.layers && data.layers.length">
-                            <p *ngFor="let layer of data.layers">
-                                {{layer.label}}
-                            </p>
+                    <div class="a-property-display">
+                        <label>Distribution:</label>
+                        <div class="a-property-value">
+                            <span *ngIf="data.distributions && data.distributions.length">
+                                <a href="{{data.distributions[0].accessURL}}" target="_blank"
+                                     class="u-break--all">
+                                    {{data.distributions[0].accessURL}}
+                                </a>
+                            </span>
+                            <span *ngIf="!data.distributions || !data.distributions.length">
+                                <em>not specified</em>
+                            </span>
                         </div>
                     </div>
+                </div>
+
+                <!-- Service-oriented properties -->
+                <div  *ngIf="'regp:Service' === data.type" >
+
+                    <div class="a-property-display">
+                        <label>Service URL:</label>
+                        <div class="a-property-value">
+                            <a href="{{data.href}}" target="_blank" class="u-break--all">{{data.href}}</a>
+                        </div>
+                    </div>
+                    <div class="a-property-display" *ngIf="'regp:Service' === data.type">
+                        <label>Service Type:</label>
+                        <div class="a-property-value">
+                            <span *ngIf="data.serviceType">{{data.serviceType.label}}</span>
+                            <span *ngIf="!data.serviceType"><em>not specified</em></span>
+                        </div>
+                    </div>
+
+
+                    <div class="a-property-display" *ngIf="'regp:Service'===data.type && data.layers">
+                        <label>Service Layers</label>
+                        <div class="a-property-value">
+                            <span *ngIf="!data.layers || !data.layers.length"><em>none specified</em></span>
+                            <div *ngIf="data.layers && data.layers.length">
+                                <p *ngFor="let layer of data.layers">
+                                    {{layer.label}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
             </div>

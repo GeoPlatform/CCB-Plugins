@@ -103,6 +103,34 @@
                 </div>
 
                 <mat-form-field floatLabel="always">
+                    <mat-label>Resource Types</mat-label>
+                    <mat-chip-list #resTypeChipList>
+                        <mat-chip
+                            *ngFor="let resType of resourceTypes"
+                            [selectable]="true"
+                            [removable]="true"
+                            (removed)="removeResourceType(resType)">
+                            {{resType.label}}
+                            <mat-icon matChipRemove>cancel</mat-icon>
+                        </mat-chip>
+                        <input matInput #resTypesInput
+                            formControlName="$resourceTypes"
+                            [matAutocomplete]="resTypeAutoComplete"
+                            [matChipInputFor]="resTypeChipList"
+                            (matChipInputTokenEnd)="addResourceType($event)"
+                            placeholder="Specify Resource Type(s)">
+                    </mat-chip-list>
+                    <mat-autocomplete #resTypeAutoComplete="matAutocomplete"
+                        (optionSelected)="onResTypeAutocompleteSelection($event)">
+                        <mat-option *ngFor="let option of filteredResourceTypeOptions | async" [value]="option">
+                            {{ option.label }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint>Find Resource Types using the typeahead and select them to associate</mat-hint>
+                </mat-form-field>
+
+
+                <mat-form-field floatLabel="always">
                     <mat-label>Home Page</mat-label>
                     <mat-icon matPrefix>link</mat-icon>
                     <input matInput formControlName="landingPage"

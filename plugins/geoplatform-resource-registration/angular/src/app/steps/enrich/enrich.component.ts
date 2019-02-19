@@ -25,27 +25,7 @@ import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
-
-
-
-
-//-----------------------
-// TEMP until API Client is updated to remove plurality on KGClassifiers
-const Classifiers = {
-    PURPOSE             : 'purpose',
-    FUNCTION            : 'function',
-    TOPIC_PRIMARY       : 'primaryTopic',
-    TOPIC_SECONDARY     : 'secondaryTopic',
-    SUBJECT_PRIMARY     : 'primarySubject',
-    SUBJECT_SECONDARY   : 'secondarySubject',
-    COMMUNITY           : 'community',
-    AUDIENCE            : 'audience',
-    PLACE               : 'place',
-    CATEGORY            : 'category'
-};
-//-----------------------
-
-
+import { ModelProperties } from '../../model';
 
 
 @Component({
@@ -61,9 +41,6 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
     //for storing model values for usage in the workflow proper
     public formGroup: FormGroup;
-
-    //for storing intermediate internal model values only for use within this step
-    public formGroupPrivate: FormGroup;
 
     public hasError: StepError;
 
@@ -95,15 +72,7 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     @ViewChild('audienceInput') audienceField: ElementRef;
 
 
-    formOpts = {
-        purposes: [''],
-        functions: [''],
-        topics: [''],
-        subjects: [''],
-        places: [''],
-        audience: [''],
-        categories: ['']
-    };
+    formOpts : any = {};
 
 
     constructor(
@@ -112,9 +81,25 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     ) {
 
         //initialize form controls
-        this.formGroup = this.formBuilder.group(this.formOpts);
-        this.formGroupPrivate = this.formBuilder.group(Object.assign({}, this.formOpts));
+        this.formOpts[ModelProperties.CLASSIFIERS_PURPOSE] =  [''];
+        this.formOpts[ModelProperties.CLASSIFIERS_FUNCTION] =  [''];
+        this.formOpts[ModelProperties.CLASSIFIERS_TOPIC_PRIMARY] =  [''];
+        this.formOpts[ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY] =  [''];
+        this.formOpts[ModelProperties.CLASSIFIERS_PLACE] =  [''];
+        this.formOpts[ModelProperties.CLASSIFIERS_AUDIENCE] =  [''];
+        this.formOpts[ModelProperties.CLASSIFIERS_CATEGORY] =  [''];
 
+        //temp fields for autocompletes
+        this.formOpts['$'+ModelProperties.CLASSIFIERS_PURPOSE] =  [''];
+        this.formOpts['$'+ModelProperties.CLASSIFIERS_FUNCTION] =  [''];
+        this.formOpts['$'+ModelProperties.CLASSIFIERS_TOPIC_PRIMARY] =  [''];
+        this.formOpts['$'+ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY] =  [''];
+        this.formOpts['$'+ModelProperties.CLASSIFIERS_PLACE] =  [''];
+        this.formOpts['$'+ModelProperties.CLASSIFIERS_AUDIENCE] =  [''];
+        this.formOpts['$'+ModelProperties.CLASSIFIERS_CATEGORY] =  [''];
+
+        this.formGroup = this.formBuilder.group(this.formOpts);
+        
         let client = new NG2HttpClient(http);
         this.kgService = new KGService(Config.ualUrl, client);
     }
@@ -122,13 +107,20 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     ngOnInit() {
 
         //set up filtering piping on the autocomplete fields
-        this.filteredPurposeOptions = this.setupFilteringFor('purposes', this.filterPurposes);
-        this.filteredFunctionOptions = this.setupFilteringFor('functions', this.filterFunctions);
-        this.filteredTopicOptions = this.setupFilteringFor('topics', this.filterTopics);
-        this.filteredSubjectOptions = this.setupFilteringFor('subjects', this.filterSubjects);
-        this.filteredPlaceOptions = this.setupFilteringFor('places', this.filterPlaces);
-        this.filteredAudienceOptions = this.setupFilteringFor('audience', this.filterAudience);
-        this.filteredCategoryOptions = this.setupFilteringFor('categories', this.filterCategories);
+        this.filteredPurposeOptions = this.setupFilteringFor(
+            '$'+ModelProperties.CLASSIFIERS_PURPOSE, this.filterPurposes);
+        this.filteredFunctionOptions = this.setupFilteringFor(
+            '$'+ModelProperties.CLASSIFIERS_FUNCTION, this.filterFunctions);
+        this.filteredTopicOptions = this.setupFilteringFor(
+            '$'+ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, this.filterTopics);
+        this.filteredSubjectOptions = this.setupFilteringFor(
+            '$'+ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, this.filterSubjects);
+        this.filteredPlaceOptions = this.setupFilteringFor(
+            '$'+ModelProperties.CLASSIFIERS_PLACE, this.filterPlaces);
+        this.filteredAudienceOptions = this.setupFilteringFor(
+            '$'+ModelProperties.CLASSIFIERS_AUDIENCE, this.filterAudience);
+        this.filteredCategoryOptions = this.setupFilteringFor(
+            '$'+ModelProperties.CLASSIFIERS_CATEGORY, this.filterCategories);
 
 
         this.eventsSubscription = this.appEvents.subscribe((event:AppEvent) => {
@@ -145,35 +137,21 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
             let data = changes.data.currentValue;
             if(!data || !data.classifiers) {
                 this.formGroup.reset();
-                this.formGroupPrivate.reset();
+                // this.formGroupPrivate.reset();
                 return;
             }
 
-            this.formGroupPrivate.reset();
+            // this.formGroupPrivate.reset();
 
             let kg = data.classifiers;
+            this.updateField(ModelProperties.CLASSIFIERS_PURPOSE, kg);
+            this.updateField(ModelProperties.CLASSIFIERS_FUNCTION, kg);
+            this.updateField(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, kg);
+            this.updateField(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, kg);
+            this.updateField(ModelProperties.CLASSIFIERS_PLACE, kg);
+            this.updateField(ModelProperties.CLASSIFIERS_AUDIENCE, kg);
+            this.updateField(ModelProperties.CLASSIFIERS_CATEGORY, kg);
 
-            if(kg.purposes && kg.purposes.length) {
-                this.formGroup.get("purposes").setValue(kg.purposes);
-            }
-            if(kg.functions && kg.functions.length) {
-                this.formGroup.get("functions").setValue(kg.functions);
-            }
-            if(kg.primaryTopics && kg.primaryTopics.length) {
-                this.formGroup.get("topics").setValue(kg.primaryTopics);
-            }
-            if(kg.primarySubjects && kg.primarySubjects.length) {
-                this.formGroup.get("subjects").setValue(kg.primarySubjects);
-            }
-            if(kg.categories && kg.categories.length) {
-                this.formGroup.get("categories").setValue(kg.categories);
-            }
-            if(kg.places && kg.places.length) {
-                this.formGroup.get("places").setValue(kg.places);
-            }
-            if(kg.audience && kg.audience.length) {
-                this.formGroup.get("audience").setValue(kg.audience);
-            }
         }
     }
 
@@ -181,34 +159,41 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
         this.eventsSubscription.unsubscribe();
     }
 
+    private updateField(key, kg) {
+        let value = kg[key];
+        if(value && value.length) {
+            this.formGroup.get(key).setValue(value);
+        }
+    }
+
 
     private setupFilteringFor(key: string, method: Function) : Observable<string[]> {
-        return this.formGroupPrivate.get(key).valueChanges.pipe(
+        return this.formGroup.get(key).valueChanges.pipe(
             startWith(''),
             flatMap(value => method.call(this, value) )
         );
     }
 
     private filterPurposes(value: string): Promise<string[]> {
-        return this.filterType(Classifiers.PURPOSE, value);
+        return this.filterType(ModelProperties.CLASSIFIERS_PURPOSE, value);
     }
     private filterFunctions(value: string): Promise<string[]> {
-        return this.filterType(Classifiers.FUNCTION, value);
+        return this.filterType(ModelProperties.CLASSIFIERS_FUNCTION, value);
     }
     private filterTopics(value: string): Promise<string[]> {
-        return this.filterType(Classifiers.TOPIC_PRIMARY, value);
+        return this.filterType(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, value);
     }
     private filterSubjects(value: string): Promise<string[]> {
-        return this.filterType(Classifiers.SUBJECT_PRIMARY, value);
+        return this.filterType(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, value);
     }
     private filterPlaces(value: string): Promise<string[]> {
-        return this.filterType(Classifiers.PLACE, value);
+        return this.filterType(ModelProperties.CLASSIFIERS_PLACE, value);
     }
     private filterCategories(value: string): Promise<string[]> {
-        return this.filterType(Classifiers.CATEGORY, value);
+        return this.filterType(ModelProperties.CLASSIFIERS_CATEGORY, value);
     }
     private filterAudience(value: string): Promise<string[]> {
-        return this.filterType(Classifiers.AUDIENCE, value);
+        return this.filterType(ModelProperties.CLASSIFIERS_AUDIENCE, value);
     }
 
 
@@ -219,8 +204,8 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
         let query = new KGQuery().q(filterValue).classifiers(type);
 
-        if(this.data && this.data.type) //filter by Item type
-            query.setTypes(this.data.type);
+        if(this.data && this.data[ModelProperties.TYPE]) //filter by Item type
+            query.setTypes(this.data[ModelProperties.TYPE]);
 
         return this.kgService.suggest(query)
         .then( response => response.results )
@@ -235,31 +220,38 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
     addPurpose(event: MatChipInputEvent): void {
         // Add only when MatAutocomplete is not open
-        if (!this.purposeMatAutocomplete.isOpen) this.addChip('purposes', event);
+        if (!this.purposeMatAutocomplete.isOpen)
+            this.addChip(ModelProperties.CLASSIFIERS_PURPOSE, event);
     }
     addFunction(event: MatChipInputEvent): void {
         // Add only when MatAutocomplete is not open
-        if (!this.functionMatAutocomplete.isOpen) this.addChip('functions', event);
+        if (!this.functionMatAutocomplete.isOpen)
+            this.addChip(ModelProperties.CLASSIFIERS_FUNCTION, event);
     }
     addTopic(event: MatChipInputEvent): void {
         // Add only when MatAutocomplete is not open
-        if (!this.topicMatAutocomplete.isOpen) this.addChip('topics', event);
+        if (!this.topicMatAutocomplete.isOpen)
+            this.addChip(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, event);
     }
     addSubject(event: MatChipInputEvent): void {
         // Add only when MatAutocomplete is not open
-        if (!this.subjectMatAutocomplete.isOpen) this.addChip('subjects', event);
+        if (!this.subjectMatAutocomplete.isOpen)
+            this.addChip(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, event);
     }
     addPlace(event: MatChipInputEvent): void {
         // Add only when MatAutocomplete is not open
-        if (!this.placeMatAutocomplete.isOpen) this.addChip('places', event);
+        if (!this.placeMatAutocomplete.isOpen)
+            this.addChip(ModelProperties.CLASSIFIERS_PLACE, event);
     }
     addAudience(event: MatChipInputEvent): void {
         // Add only when MatAutocomplete is not open
-        if (!this.audienceMatAutocomplete.isOpen) this.addChip('audience', event);
+        if (!this.audienceMatAutocomplete.isOpen)
+            this.addChip(ModelProperties.CLASSIFIERS_AUDIENCE, event);
     }
     addCategory(event: MatChipInputEvent): void {
         // Add only when MatAutocomplete is not open
-        if (!this.categoryMatAutocomplete.isOpen) this.addChip('categories', event);
+        if (!this.categoryMatAutocomplete.isOpen)
+            this.addChip(ModelProperties.CLASSIFIERS_CATEGORY, event);
     }
 
 
@@ -284,20 +276,34 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
         }
 
         //clear the local form group so the autocomplete empties
-        this.formGroupPrivate.get(key).setValue(null);
+        this.formGroup.get('$'+key).setValue(null);
 
     }
 
 
 
 
-    removePurpose(value: any) : void { this.removeValue("purposes", value); }
-    removeFunction(value: any): void { this.removeValue("functions", value); }
-    removeTopic(value: any)   : void { this.removeValue("topics", value); }
-    removeSubject(value: any) : void { this.removeValue("subjects", value); }
-    removeAudience(value: any): void { this.removeValue("audience", value); }
-    removePlace(value: any)   : void { this.removeValue("places", value); }
-    removeCategory(value: any): void { this.removeValue("categories", value); }
+    removePurpose(value: any) : void {
+        this.removeValue(ModelProperties.CLASSIFIERS_PURPOSE, value);
+    }
+    removeFunction(value: any): void {
+        this.removeValue(ModelProperties.CLASSIFIERS_FUNCTION, value);
+    }
+    removeTopic(value: any)   : void {
+        this.removeValue(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, value);
+    }
+    removeSubject(value: any) : void {
+        this.removeValue(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, value);
+    }
+    removeAudience(value: any): void {
+        this.removeValue(ModelProperties.CLASSIFIERS_AUDIENCE, value);
+    }
+    removePlace(value: any)   : void {
+        this.removeValue(ModelProperties.CLASSIFIERS_PLACE, value);
+    }
+    removeCategory(value: any): void {
+        this.removeValue(ModelProperties.CLASSIFIERS_CATEGORY, value);
+    }
 
     removeValue(key: string, value: any) {
         if(!value) return;
@@ -317,37 +323,37 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
 
     onPurposeAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        this.onAutoCompleteSelection('purposes', event);
+        this.onAutoCompleteSelection(ModelProperties.CLASSIFIERS_PURPOSE, event);
         this.purposesField.nativeElement.value = '';
         this.purposesField.nativeElement.blur();
     }
     onFunctionAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        this.onAutoCompleteSelection('functions', event);
+        this.onAutoCompleteSelection(ModelProperties.CLASSIFIERS_FUNCTION, event);
         this.functionsField.nativeElement.value = '';
         this.functionsField.nativeElement.blur();
     }
     onTopicAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        this.onAutoCompleteSelection('topics', event);
+        this.onAutoCompleteSelection(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, event);
         this.topicsField.nativeElement.value = '';
         this.topicsField.nativeElement.blur();
     }
     onSubjectAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        this.onAutoCompleteSelection('subjects', event);
+        this.onAutoCompleteSelection(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, event);
         this.subjectsField.nativeElement.value = '';
         this.subjectsField.nativeElement.blur();
     }
     onPlaceAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        this.onAutoCompleteSelection('places', event);
+        this.onAutoCompleteSelection(ModelProperties.CLASSIFIERS_PLACE, event);
         this.placesField.nativeElement.value = '';
         this.placesField.nativeElement.blur();
     }
     onCategoryAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        this.onAutoCompleteSelection('categories', event);
+        this.onAutoCompleteSelection(ModelProperties.CLASSIFIERS_CATEGORY, event);
         this.categoriesField.nativeElement.value = '';
         this.categoriesField.nativeElement.blur();
     }
     onAudienceAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        this.onAutoCompleteSelection('audience', event);
+        this.onAutoCompleteSelection(ModelProperties.CLASSIFIERS_AUDIENCE, event);
         this.audienceField.nativeElement.value = '';
         this.audienceField.nativeElement.blur();
     }
@@ -356,20 +362,20 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
         let existing = this.formGroup.get(key).value || [];
         existing.push(event.option.value);
         this.formGroup.get(key).setValue(existing);
-        this.formGroupPrivate.get(key).setValue(null);
+        this.formGroup.get('$'+key).setValue(null);
     }
 
 
 
 
 
-    get purposes() { return this.formGroup.get("purposes").value || []; }
-    get functions() { return this.formGroup.get("functions").value || []; }
-    get topics() { return this.formGroup.get("topics").value || []; }
-    get subjects() { return this.formGroup.get("subjects").value || []; }
-    get places() { return this.formGroup.get("places").value || []; }
-    get categories() { return this.formGroup.get("categories").value || []; }
-    get audience() { return this.formGroup.get("audience").value || []; }
+    get purposes() { return this.formGroup.get(ModelProperties.CLASSIFIERS_PURPOSE).value || []; }
+    get functions() { return this.formGroup.get(ModelProperties.CLASSIFIERS_FUNCTION).value || []; }
+    get topics() { return this.formGroup.get(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY).value || []; }
+    get subjects() { return this.formGroup.get(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY).value || []; }
+    get places() { return this.formGroup.get(ModelProperties.CLASSIFIERS_PLACE).value || []; }
+    get categories() { return this.formGroup.get(ModelProperties.CLASSIFIERS_CATEGORY).value || []; }
+    get audience() { return this.formGroup.get(ModelProperties.CLASSIFIERS_AUDIENCE).value || []; }
 
 
 
@@ -378,7 +384,7 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
         switch(event.type) {
             case 'reset':
                 this.hasError = null;
-                this.formGroupPrivate.reset();
+                // this.formGroupPrivate.reset();
                 break;
         }
     }
