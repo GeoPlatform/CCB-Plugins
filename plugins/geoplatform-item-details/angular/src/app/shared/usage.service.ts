@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { curry, compose, _ } from 'rambda'
+import { curry, compose } from 'rambda'
+import { HttpClient } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
 
 
-             // Events
+                // Events
 type APIMethods = 'Events.getName'
                 | 'Events.getCategory'
                 | 'Events.getAction'
@@ -15,7 +16,7 @@ type APIPeriod = 'day'
                | 'range'
 
 type MatomoAPIRequest = {
-    lable: string
+    label: string
     method: APIMethods
     period: APIPeriod
     date: string // TODO: limit better
@@ -25,8 +26,6 @@ type MatomoAPIRequest = {
     token_auth: 'f822e078fcb182110b5de9deeba85e7e'
     format: 'json'
 }
-
-
 
 type MatomoAPIResponse = {
     [x: string]: [{
@@ -45,57 +44,64 @@ type MatomoAPIResponse = {
 }
 
 
-//          Functions           //
 
-function getAPIParams(method: APIMethods, period: APIPeriod, date: string, label: string){
-    return {
-        label,
-        method,
-        period,
-        date,
-        // Common fields
-        module: 'API',
-        auth_token: 'f822e078fcb182110b5de9deeba85e7e',
-        format: 'json',
-        idSite: 4 // viewer (this will have to be paramerterized)
-    }
-}
-
-function apiRequestToQueryString(apiParams: MatomoAPIRequest): string {
-    const pairs = Object.entries(apiParams)
-                        .map(([key, value]) => `${key}=${value}`)
-                        .join('&')
-    return `?${pairs}`
-}
-
-async function getStats(paramString: string) /*: Promise<MatomoAPIResponse>*/ {
-    return call(`${this.rpmUrl}${paramString}`) // need to make call here.
-}
-
-const getUsageForRange = compose(getStats, apiRequestToQueryString, getAPIParams)
 
 @Injectable()
 export class UsageService {
 
+    private http: HttpClient;
     private rpmUrl: string;
     private auth_token: string;
 
-    constructor(rpmUrl: string, auth_token: string) {
-
-
+    constructor(http: HttpClient, rpmUrl: string, auth_token: string) {
+        this.http = http;
+        this.rpmUrl = rpmUrl;
+        this.auth_token = auth_token;
     }
 
     //        Public API       //
-    public async getPastWeekUsage(){
-        return this.getUsageForRange('week', 'last7')
+    public async getPastWeekUsage(id: string){
+        return this.getUsageForRange(this.usageRequest('week', 'last7', id))
     }
 
-    public async getPastMonthUsage() {
-        return this.getUsageForRange('week', 'last5')
+    public async getPastMonthUsage(id: string) {
+        return this.getUsageForRange(this.usageRequest('week', 'last5', id))
     }
 
-    public async getPastYearUsage() {
-        return this.getUsageForRange('month', 'last12')
+    public async getPastYearUsage(id: string) {
+        return this.getUsageForRange(this.usageRequest('month', 'last12', id))
     }
+
+
+    //          Functions           //
+
+    private getAPIParams = curry(function(method: APIMethods, period: APIPeriod, date: string, label: string): MatomoAPIRequest{
+        return {
+            label,
+            method,
+            period,
+            date,
+            // Common fields
+            module: 'API',
+            token_auth: this.auth_token,
+            format: 'json',
+            idSite: 4 // viewer (this will have to be paramerterized)
+        }
+    })
+
+    private apiRequestToQueryString(apiParams: MatomoAPIRequest): string {
+        const pairs = Object.entries(apiParams)
+                            .map(([key, value]) => `${key}=${value}`)
+                            .join('&')
+        return `?${pairs}`
+    }
+
+    private async getStats(paramString: string) /*: Promise<MatomoAPIResponse>*/ {
+        return this.http.get<MatomoAPIResponse>(`${this.rpmUrl}${paramString}`)
+    }
+
+    private usageRequest = this.getAPIParams('Events.getName')
+
+    private getUsageForRange = compose(this.getStats, this.apiRequestToQueryString);
 
 }
