@@ -20,7 +20,7 @@
                             *ngFor="let purpose of purposes"
                             [selectable]="true"
                             [removable]="true"
-                            (removed)="removePurpose(purpose)">
+                            (removed)="removeValue('purpose',purpose)">
                             {{purpose.label}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
@@ -28,7 +28,7 @@
                             formControlName="$purpose"
                             [matAutocomplete]="purposeAutoComplete"
                             [matChipInputFor]="purposeChipList"
-                            (matChipInputTokenEnd)="addPurpose($event)"
+                            (matChipInputTokenEnd)="addChip('purpose',$event)"
                             placeholder="Specify purpose(s) for this resource">
                         <mat-icon matSuffix
                             *ngIf="purposesField.nativeElement.value.length"
@@ -38,8 +38,8 @@
                     </mat-chip-list>
                     <mat-autocomplete #purposeAutoComplete="matAutocomplete"
                         (optionSelected)="onPurposeAutocompleteSelection($event)">
-                        <mat-option *ngIf="purposesField.nativeElement.value.length && !(filteredPurposeOptions | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredPurposeOptions | async" [value]="option">
+                        <mat-option *ngIf="purposesField.nativeElement.value.length && !(filteredOptions['purpose'] | async)?.length">No matches found</mat-option>
+                        <mat-option *ngFor="let option of filteredOptions['purpose'] | async" [value]="option">
                             {{ option.label }} <span class="u-text--xs t-fg--gray-md">{{ option.uri }}</span>
                         </mat-option>
                     </mat-autocomplete>
@@ -56,7 +56,7 @@
                             *ngFor="let function of functions"
                             [selectable]="true"
                             [removable]="true"
-                            (removed)="removeFunction(function)">
+                            (removed)="removeValue('function',function)">
                             {{function.label}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
@@ -64,7 +64,7 @@
                             formControlName="$function"
                             [matAutocomplete]="functionAutoComplete"
                             [matChipInputFor]="functionChipList"
-                            (matChipInputTokenEnd)="addFunction($event)"
+                            (matChipInputTokenEnd)="addChip('function',$event)"
                             placeholder="Specify function(s) for this resource">
                         <mat-icon matSuffix
                             *ngIf="functionsField.nativeElement.value.length"
@@ -74,8 +74,8 @@
                     </mat-chip-list>
                     <mat-autocomplete #functionAutoComplete="matAutocomplete"
                         (optionSelected)="onFunctionAutocompleteSelection($event)">
-                        <mat-option *ngIf="functionsField.nativeElement.value.length && !(filteredFunctionOptions | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredFunctionOptions | async" [value]="option">
+                        <mat-option *ngIf="functionsField.nativeElement.value.length && !(filteredOptions['function'] | async)?.length">No matches found</mat-option>
+                        <mat-option *ngFor="let option of filteredOptions['function'] | async" [value]="option">
                             {{ option.label }}
                         </mat-option>
                     </mat-autocomplete>
@@ -98,7 +98,7 @@
                             *ngFor="let topic of topics"
                             [selectable]="true"
                             [removable]="true"
-                            (removed)="removeTopic(topic)">
+                            (removed)="removeValue('primaryTopic',topic)">
                             {{topic.label}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
@@ -106,7 +106,7 @@
                             formControlName="$primaryTopic"
                             [matAutocomplete]="topicAutoComplete"
                             [matChipInputFor]="topicChipList"
-                            (matChipInputTokenEnd)="addTopic($event)"
+                            (matChipInputTokenEnd)="addChip('primaryTopic',$event)"
                             placeholder="Specify topic(s) for this resource">
                         <mat-icon matSuffix
                             *ngIf="topicsField.nativeElement.value.length"
@@ -116,8 +116,8 @@
                     </mat-chip-list>
                     <mat-autocomplete #topicAutoComplete="matAutocomplete"
                         (optionSelected)="onTopicAutocompleteSelection($event)">
-                        <mat-option *ngIf="topicsField.nativeElement.value.length && !(filteredTopicOptions | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredTopicOptions | async" [value]="option">
+                        <mat-option *ngIf="topicsField.nativeElement.value.length && !(filteredOptions['primaryTopic'] | async)?.length">No matches found</mat-option>
+                        <mat-option *ngFor="let option of filteredOptions['primaryTopic'] | async" [value]="option">
                             {{ option.label }} <span class="u-text--xs t-fg--gray-md">{{ option.uri }}</span>
                         </mat-option>
                     </mat-autocomplete>
@@ -134,7 +134,7 @@
                             *ngFor="let subject of subjects"
                             [selectable]="true"
                             [removable]="true"
-                            (removed)="removeSubject(subject)">
+                            (removed)="removeValue('primarySubject',subject)">
                             {{subject.label}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
@@ -142,7 +142,7 @@
                             formControlName="$primarySubject"
                             [matAutocomplete]="subjectAutoComplete"
                             [matChipInputFor]="subjectChipList"
-                            (matChipInputTokenEnd)="addSubject($event)"
+                            (matChipInputTokenEnd)="addChip('primarySubject',$event)"
                             placeholder="Specify subject(s) for this resource">
                         <mat-icon matSuffix
                             *ngIf="subjectsField.nativeElement.value.length"
@@ -152,8 +152,8 @@
                     </mat-chip-list>
                     <mat-autocomplete #subjectAutoComplete="matAutocomplete"
                         (optionSelected)="onSubjectAutocompleteSelection($event)">
-                        <mat-option *ngIf="subjectsField.nativeElement.value.length && !(filteredSubjectOptions | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredSubjectOptions | async" [value]="option">
+                        <mat-option *ngIf="subjectsField.nativeElement.value.length && !(filteredOptions['primarySubject'] | async)?.length">No matches found</mat-option>
+                        <mat-option *ngFor="let option of filteredOptions['primarySubject'] | async" [value]="option">
                             {{ option.label }}
                         </mat-option>
                     </mat-autocomplete>
@@ -176,7 +176,7 @@
                             *ngFor="let place of places"
                             [selectable]="true"
                             [removable]="true"
-                            (removed)="removePlace(place)">
+                            (removed)="removeValue('place',place)">
                             {{place.label}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
@@ -184,7 +184,7 @@
                             formControlName="$place"
                             [matAutocomplete]="placeAutoComplete"
                             [matChipInputFor]="placeChipList"
-                            (matChipInputTokenEnd)="addPlace($event)"
+                            (matChipInputTokenEnd)="addChip('place',$event)"
                             placeholder="Specify place(s) for this resource">
                         <mat-icon matSuffix
                             *ngIf="placesField.nativeElement.value.length"
@@ -192,8 +192,8 @@
                     </mat-chip-list>
                     <mat-autocomplete #placeAutoComplete="matAutocomplete"
                         (optionSelected)="onPlaceAutocompleteSelection($event)">
-                        <mat-option *ngIf="placesField.nativeElement.value.length && !(filteredPlaceOptions | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredPlaceOptions | async" [value]="option">
+                        <mat-option *ngIf="placesField.nativeElement.value.length && !(filteredOptions['place'] | async)?.length">No matches found</mat-option>
+                        <mat-option *ngFor="let option of filteredOptions['place'] | async" [value]="option">
                             {{ option.label }} <span class="u-text--xs t-fg--gray-md">{{ option.uri }}</span>
                         </mat-option>
                     </mat-autocomplete>
@@ -211,7 +211,7 @@
                             *ngFor="let category of categories"
                             [selectable]="true"
                             [removable]="true"
-                            (removed)="removeCategory(category)">
+                            (removed)="removeValue('category',category)">
                             {{category.label}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
@@ -219,7 +219,7 @@
                             formControlName="$category"
                             [matAutocomplete]="categoryAutoComplete"
                             [matChipInputFor]="categoryChipList"
-                            (matChipInputTokenEnd)="addCategory($event)"
+                            (matChipInputTokenEnd)="addChip('category',$event)"
                             placeholder="Specify categories for this resource">
                         <mat-icon matSuffix
                             *ngIf="categoriesField.nativeElement.value.length"
@@ -227,8 +227,8 @@
                     </mat-chip-list>
                     <mat-autocomplete #categoryAutoComplete="matAutocomplete"
                         (optionSelected)="onCategoryAutocompleteSelection($event)">
-                        <mat-option *ngIf="categoriesField.nativeElement.value.length && !(filteredCategoryOptions | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredCategoryOptions | async" [value]="option">
+                        <mat-option *ngIf="categoriesField.nativeElement.value.length && !(filteredOptions['category'] | async)?.length">No matches found</mat-option>
+                        <mat-option *ngFor="let option of filteredOptions['category'] | async" [value]="option">
                             {{ option.label }}
                         </mat-option>
                     </mat-autocomplete>
@@ -251,7 +251,7 @@
                             *ngFor="let aud of audience"
                             [selectable]="true"
                             [removable]="true"
-                            (removed)="removeAudience(aud)">
+                            (removed)="removeValue('audience',aud)">
                             {{aud.label}}
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
@@ -259,7 +259,7 @@
                             formControlName="$audience"
                             [matAutocomplete]="audienceAutoComplete"
                             [matChipInputFor]="audienceChipList"
-                            (matChipInputTokenEnd)="addAudience($event)"
+                            (matChipInputTokenEnd)="addChip('audience',$event)"
                             placeholder="Specify audiences for this resource">
                         <mat-icon matSuffix
                             *ngIf="audienceField.nativeElement.value.length"
@@ -267,8 +267,8 @@
                     </mat-chip-list>
                     <mat-autocomplete #audienceAutoComplete="matAutocomplete"
                         (optionSelected)="onAudienceAutocompleteSelection($event)">
-                        <mat-option *ngIf="audienceField.nativeElement.value.length && !(filteredAudienceOptions | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredAudienceOptions | async" [value]="option">
+                        <mat-option *ngIf="audienceField.nativeElement.value.length && !(filteredOptions['audience'] | async)?.length">No matches found</mat-option>
+                        <mat-option *ngFor="let option of filteredOptions['audience'] | async" [value]="option">
                             {{ option.label }}
                         </mat-option>
                     </mat-autocomplete>

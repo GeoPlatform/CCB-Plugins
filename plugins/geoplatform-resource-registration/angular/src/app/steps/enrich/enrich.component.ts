@@ -25,7 +25,7 @@ import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
-import { ModelProperties } from '../../model';
+import { ModelProperties, ClassifierTypes } from '../../model';
 
 
 @Component({
@@ -41,16 +41,8 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
     //for storing model values for usage in the workflow proper
     public formGroup: FormGroup;
-
     public hasError: StepError;
-
-    public filteredPurposeOptions: Observable<string[]>;
-    public filteredFunctionOptions: Observable<string[]>;
-    public filteredTopicOptions: Observable<string[]>;
-    public filteredSubjectOptions: Observable<string[]>;
-    public filteredPlaceOptions: Observable<string[]>;
-    public filteredCategoryOptions: Observable<string[]>;
-    public filteredAudienceOptions: Observable<string[]>;
+    public filteredOptions : any = {};
 
     kgService : KGService = null;
     private eventsSubscription: any;
@@ -81,25 +73,13 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     ) {
 
         //initialize form controls
-        this.formOpts[ModelProperties.CLASSIFIERS_PURPOSE] =  [''];
-        this.formOpts[ModelProperties.CLASSIFIERS_FUNCTION] =  [''];
-        this.formOpts[ModelProperties.CLASSIFIERS_TOPIC_PRIMARY] =  [''];
-        this.formOpts[ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY] =  [''];
-        this.formOpts[ModelProperties.CLASSIFIERS_PLACE] =  [''];
-        this.formOpts[ModelProperties.CLASSIFIERS_AUDIENCE] =  [''];
-        this.formOpts[ModelProperties.CLASSIFIERS_CATEGORY] =  [''];
-
-        //temp fields for autocompletes
-        this.formOpts['$'+ModelProperties.CLASSIFIERS_PURPOSE] =  [''];
-        this.formOpts['$'+ModelProperties.CLASSIFIERS_FUNCTION] =  [''];
-        this.formOpts['$'+ModelProperties.CLASSIFIERS_TOPIC_PRIMARY] =  [''];
-        this.formOpts['$'+ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY] =  [''];
-        this.formOpts['$'+ModelProperties.CLASSIFIERS_PLACE] =  [''];
-        this.formOpts['$'+ModelProperties.CLASSIFIERS_AUDIENCE] =  [''];
-        this.formOpts['$'+ModelProperties.CLASSIFIERS_CATEGORY] =  [''];
-
+        Object.keys(ClassifierTypes).forEach( key => {
+            if(~key.indexOf('secondary')) return;
+            this.formOpts[key] =  [''];     //fields for classifiers we care about
+            this.formOpts['$'+key] =  ['']; //temp fields for autocompletes
+        });
         this.formGroup = this.formBuilder.group(this.formOpts);
-        
+
         let client = new NG2HttpClient(http);
         this.kgService = new KGService(Config.ualUrl, client);
     }
@@ -107,21 +87,16 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     ngOnInit() {
 
         //set up filtering piping on the autocomplete fields
-        this.filteredPurposeOptions = this.setupFilteringFor(
-            '$'+ModelProperties.CLASSIFIERS_PURPOSE, this.filterPurposes);
-        this.filteredFunctionOptions = this.setupFilteringFor(
-            '$'+ModelProperties.CLASSIFIERS_FUNCTION, this.filterFunctions);
-        this.filteredTopicOptions = this.setupFilteringFor(
-            '$'+ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, this.filterTopics);
-        this.filteredSubjectOptions = this.setupFilteringFor(
-            '$'+ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, this.filterSubjects);
-        this.filteredPlaceOptions = this.setupFilteringFor(
-            '$'+ModelProperties.CLASSIFIERS_PLACE, this.filterPlaces);
-        this.filteredAudienceOptions = this.setupFilteringFor(
-            '$'+ModelProperties.CLASSIFIERS_AUDIENCE, this.filterAudience);
-        this.filteredCategoryOptions = this.setupFilteringFor(
-            '$'+ModelProperties.CLASSIFIERS_CATEGORY, this.filterCategories);
-
+        Object.keys(ClassifierTypes).forEach( key => {
+            let field = this.formGroup.get('$'+key);
+            if(!field) return;
+            // console.log("Setting up filtering for " + key);
+            let sub = field.valueChanges.pipe(
+                startWith(''),
+                flatMap(value => this.filterResultsForType(key, value) )
+            );
+            this.filteredOptions[key] = sub;
+        })
 
         this.eventsSubscription = this.appEvents.subscribe((event:AppEvent) => {
             this.onAppEvent(event);
@@ -137,21 +112,14 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
             let data = changes.data.currentValue;
             if(!data || !data.classifiers) {
                 this.formGroup.reset();
-                // this.formGroupPrivate.reset();
                 return;
             }
 
-            // this.formGroupPrivate.reset();
-
             let kg = data.classifiers;
-            this.updateField(ModelProperties.CLASSIFIERS_PURPOSE, kg);
-            this.updateField(ModelProperties.CLASSIFIERS_FUNCTION, kg);
-            this.updateField(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, kg);
-            this.updateField(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, kg);
-            this.updateField(ModelProperties.CLASSIFIERS_PLACE, kg);
-            this.updateField(ModelProperties.CLASSIFIERS_AUDIENCE, kg);
-            this.updateField(ModelProperties.CLASSIFIERS_CATEGORY, kg);
-
+            Object.keys(ClassifierTypes).forEach( key => {
+                if(~key.indexOf('secondary')) return;
+                this.updateField(key, kg);
+            });
         }
     }
 
@@ -166,43 +134,21 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
         }
     }
 
+    /**
+     * @param {string} type - form control key to enable value filtering for
+     * @param {string} value - user input to use to filter options
+     * @return {Promise} resolving list of strings
+     */
+    private filterResultsForType(type: string, value: string): Promise<string[]> {
 
-    private setupFilteringFor(key: string, method: Function) : Observable<string[]> {
-        return this.formGroup.get(key).valueChanges.pipe(
-            startWith(''),
-            flatMap(value => method.call(this, value) )
-        );
-    }
-
-    private filterPurposes(value: string): Promise<string[]> {
-        return this.filterType(ModelProperties.CLASSIFIERS_PURPOSE, value);
-    }
-    private filterFunctions(value: string): Promise<string[]> {
-        return this.filterType(ModelProperties.CLASSIFIERS_FUNCTION, value);
-    }
-    private filterTopics(value: string): Promise<string[]> {
-        return this.filterType(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, value);
-    }
-    private filterSubjects(value: string): Promise<string[]> {
-        return this.filterType(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, value);
-    }
-    private filterPlaces(value: string): Promise<string[]> {
-        return this.filterType(ModelProperties.CLASSIFIERS_PLACE, value);
-    }
-    private filterCategories(value: string): Promise<string[]> {
-        return this.filterType(ModelProperties.CLASSIFIERS_CATEGORY, value);
-    }
-    private filterAudience(value: string): Promise<string[]> {
-        return this.filterType(ModelProperties.CLASSIFIERS_AUDIENCE, value);
-    }
-
-
-
-    private filterType(type: string, value: string): Promise<string[]> {
+        //check for null/empty value (to prevent suggestions without inputs from user)
+        //check for short inputs to force user to provide minimum # of chars
+        if(!value || value.length < 2) return Promise.resolve([]);
 
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
 
-        let query = new KGQuery().q(filterValue).classifiers(type);
+        let cType = ClassifierTypes[type];
+        let query = new KGQuery().q(filterValue).classifiers(cType);
 
         if(this.data && this.data[ModelProperties.TYPE]) //filter by Item type
             query.setTypes(this.data[ModelProperties.TYPE]);
@@ -256,7 +202,7 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
 
 
-    private addChip( key: string, event: MatChipInputEvent ) {
+    addChip( key: string, event: MatChipInputEvent ) {
 
         const input = event.input;
         const value = event.value;
@@ -281,30 +227,10 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     }
 
 
-
-
-    removePurpose(value: any) : void {
-        this.removeValue(ModelProperties.CLASSIFIERS_PURPOSE, value);
-    }
-    removeFunction(value: any): void {
-        this.removeValue(ModelProperties.CLASSIFIERS_FUNCTION, value);
-    }
-    removeTopic(value: any)   : void {
-        this.removeValue(ModelProperties.CLASSIFIERS_TOPIC_PRIMARY, value);
-    }
-    removeSubject(value: any) : void {
-        this.removeValue(ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY, value);
-    }
-    removeAudience(value: any): void {
-        this.removeValue(ModelProperties.CLASSIFIERS_AUDIENCE, value);
-    }
-    removePlace(value: any)   : void {
-        this.removeValue(ModelProperties.CLASSIFIERS_PLACE, value);
-    }
-    removeCategory(value: any): void {
-        this.removeValue(ModelProperties.CLASSIFIERS_CATEGORY, value);
-    }
-
+    /**
+     * @param {string} key - form control key to remove value from
+     * @param {any} value - value to remove from the form control's set of values
+     */
     removeValue(key: string, value: any) {
         if(!value) return;
         let existing = this.formGroup.get(key).value;

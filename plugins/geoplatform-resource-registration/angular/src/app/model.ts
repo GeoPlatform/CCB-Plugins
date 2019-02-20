@@ -26,3 +26,17 @@ export const ModelProperties = {
     CLASSIFIERS_PLACE               : 'place',
     CLASSIFIERS_CATEGORY            : 'category'
 };
+
+
+export const ClassifierTypes = {
+    purpose:    'Purpose',
+    function:   'Function',
+    primaryTopic: 'Topic',
+    secondaryTopic: 'Topic',
+    primarySubject: 'Subject',
+    secondarySubject: 'Subject',
+    community:  'Community',
+    audience: 'Audience',
+    place: 'Place',
+    category: 'Category'
+};
