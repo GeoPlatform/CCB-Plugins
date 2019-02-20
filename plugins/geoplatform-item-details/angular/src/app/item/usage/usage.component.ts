@@ -8,10 +8,10 @@ import { BaseChartDirective } from 'ng2-charts//ng2-charts'
 type ChartColor = {
     backgroundColor: string
     borderColor: string
-    pointBackgroundColor: string,
-    pointBorderColor: string
-    pointHoverBackgroundColor: string
-    pointHoverBorderColor: string
+    pointBackgroundColor?: string,
+    pointBorderColor?: string
+    pointHoverBackgroundColor?: string
+    pointHoverBorderColor?: string
 }
 
 type ChartData = {
@@ -118,7 +118,6 @@ export class UsageComponent implements OnInit {
         if(!loaded){
             this.usageService[func](this.itemId)
             .subscribe(data => {
-                console.log(data)
                 const chartData = this.usageService.matomoRespToDataset(period ,data)
                 this[chartStateName] = this.getChartSettings(chartData);
             });
@@ -150,29 +149,19 @@ export class UsageComponent implements OnInit {
             },
             // Things that make it pretty
             colors: [
-                { // grey
-                  backgroundColor: 'rgba(148,159,177,0.2)',
-                  borderColor: 'rgba(148,159,177,1)',
-                  pointBackgroundColor: 'rgba(148,159,177,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                // 172	214	246	blue back
+                // 47	152	232	blue outline
+                { // GeoPlatform Green
+                  backgroundColor: 'rgba(92, 184, 92, 0.2)',
+                  borderColor: 'rgba(51, 153, 51, 1)',
+                  pointBackgroundColor: 'rgba(7, 119, 7,1)',
+                  pointBorderColor: 'rgb(7, 119, 7)',
                 },
-                { // dark grey
-                  backgroundColor: 'rgba(77,83,96,0.2)',
-                  borderColor: 'rgba(77,83,96,1)',
-                  pointBackgroundColor: 'rgba(77,83,96,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(77,83,96,1)'
-                },
-                { // grey
-                  backgroundColor: 'rgba(148,159,177,0.2)',
-                  borderColor: 'rgba(148,159,177,1)',
-                  pointBackgroundColor: 'rgba(148,159,177,1)',
-                  pointBorderColor: '#fff',
-                  pointHoverBackgroundColor: '#fff',
-                  pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+                { // GeoPlatform Blue
+                  backgroundColor: 'rgba(91, 192, 222,0.2)',
+                  borderColor: 'rgba(66, 139, 202,1)',
+                  pointBackgroundColor: 'rgba(17,33,88,1)',
+                  pointBorderColor: 'rgb(17,33,88)',
                 }
             ],
         };
