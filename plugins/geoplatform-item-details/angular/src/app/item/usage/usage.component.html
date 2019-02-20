@@ -26,18 +26,61 @@
                 </a>
             </li>
         </ul>
-        <div *ngIf="chartState">
-            <canvas baseChart #UsageChart width="800" height="400"
-                [datasets]="chartState.datasets"
-                [labels]="chartState.labels"
-                [options]="chartState.options"
-                [colors]="chartState.colors"
-                [legend]="chartState.legend"
-                [chartType]="chartState.chartType"
-                (chartHover)="chartHovered($event)"
-                (chartClick)="chartClicked($event)">
-            </canvas>
+        <!-- Week Chart -->
+        <div *ngIf="activeUsageChart == 'week'">
+            {{weeklyChartState}}
+            <div *ngIf="!weeklyChartState" class="m-message m-message--light">
+                <span class="fas fa-spin fa-spinner"></span>
+                Loading usage statistics...
+            </div>
+            <div *ngIf="weeklyChartState">
+                <canvas baseChart #UsageChart width="800" height="400"
+                    [datasets]="weeklyChartState.datasets"
+                    [labels]="weeklyChartState.labels"
+                    [options]="weeklyChartState.options"
+                    [colors]="weeklyChartState.colors"
+                    [legend]="weeklyChartState.legend"
+                    [chartType]="weeklyChartState.chartType">
+                </canvas>
+            </div>
         </div>
+        <!-- Month Chart -->
+        <div *ngIf="activeUsageChart == 'month'">
+            {{monthlyChartState}}
+            <div *ngIf="!monthlyChartState" class="m-message m-message--light">
+                <span class="fas fa-spin fa-spinner"></span>
+                Loading usage statistics...
+            </div>
+            <div *ngIf="monthlyChartState">
+                <canvas baseChart #UsageChart width="800" height="400"
+                    [datasets]="monthlyChartState.datasets"
+                    [labels]="monthlyChartState.labels"
+                    [options]="monthlyChartState.options"
+                    [colors]="monthlyChartState.colors"
+                    [legend]="monthlyChartState.legend"
+                    [chartType]="monthlyChartState.chartType">
+                </canvas>
+            </div>
+        </div>
+        <!-- Year Chart -->
+        <div *ngIf="ctiveUsageChart == 'year'">
+            {{yearlyChartState}}
+            <div *ngIf="!yearlyChartState" class="m-message m-message--light">
+                <span class="fas fa-spin fa-spinner"></span>
+                Loading usage statistics...
+            </div>
+            <div *ngIf="yearlyChartState">
+                <canvas baseChart #UsageChart width="800" height="400"
+                    [datasets]="yearlyChartState.datasets"
+                    [labels]="yearlyChartState.labels"
+                    [options]="yearlyChartState.options"
+                    [colors]="yearlyChartState.colors"
+                    [legend]="yearlyChartState.legend"
+                    [chartType]="yearlyChartState.chartType">
+                </canvas>
+            </div>
+        </div>
+
 
         <!-- <div class="tab-content" id="myTabContent" style="width:100%">
             <div class="tab-pane"

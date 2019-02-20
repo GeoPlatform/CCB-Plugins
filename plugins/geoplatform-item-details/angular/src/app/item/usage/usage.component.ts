@@ -32,6 +32,10 @@ export type ChartSettings = ChartData & {
     chartType: 'line' | 'bar'
 }
 
+type ChartPeriods = 'week'
+                  | 'month'
+                  | 'year'
+
 @Component({
   selector: 'gpid-usage',
   templateUrl: './usage.component.html',
@@ -45,7 +49,13 @@ export class UsageComponent implements OnInit {
     private usageChart: BaseChartDirective;
 
     public isCollapsed : boolean = false;
-    public chartState: ChartSettings;
+    public activeUsageChart: ChartPeriods = 'week';
+
+    // State for each chart
+    public weeklyChartState: ChartSettings;
+    public monthlyChartState: ChartSettings;
+    public yearlyChartState: ChartSettings;
+
     public activeTab : string = 'usage_weekly';
     private tabs : any  = {
         usage_weekly : { status: true, label: "Past Week" },
@@ -58,7 +68,6 @@ export class UsageComponent implements OnInit {
         usage_yearly : { status: false, fn: () => {this.fetchAndDrawlChart('year')} }
     };
     private itemId : string;
-
 
     constructor(private usageService: UsageService) {}
 
@@ -83,48 +92,67 @@ export class UsageComponent implements OnInit {
      * @param {string} tabName - tab to set as active
      */
     changeTab(tabName) {
+        this.charts[tabName].fn();
+
+        // Do we really need any of this below?
         this.tabs[this.activeTab].status = false;
         this.tabs[tabName].status = true;
         this.activeTab = tabName;
-
-        if(!this.charts[tabName].status) {
-            setTimeout( () => {
-                this.charts[tabName].status = true;
-                this.charts[tabName].fn();
-            }, 100);
-        }
     }
 
     initCharts( rebuild:boolean = false ) {}
 
-    fetchAndDrawlChart(period?: 'week' | 'month' | 'year'){
+    fetchAndDrawlChart(period?: ChartPeriods){
+        this.activeUsageChart = period;
+
         let func;
+        let dateFormat;
+        let chartState;
+        let loaded;
         switch(period) {
-            case 'week':
-                func = 'getPastWeekUsage';
-                break;
             case 'month':
+                loaded = !!this.weeklyChartState;
                 func = 'getPastMonthUsage';
+                dateFormat = '';
                 break;
             case 'year':
+                loaded = !!this.monthlyChartState;
                 func = 'getPastYearUsage';
+                dateFormat = '';
                 break;
-            default:
+            default: // 'week' and default
+                loaded = !!this.yearlyChartState;
                 func = 'getPastWeekUsage';
+                dateFormat = '';
+                break;
         }
 
-        if(func){
+        if(!loaded){
             this.usageService[func](this.itemId)
             .subscribe(data => {
-                this.drawlChart(this.usageService.matomoRespToDataset('',data))
+                const chartData = this.usageService.matomoRespToDataset(dateFormat ,data)
+                const chartState = this.getChartSettings(chartData)
+
+                switch(period) {
+                    case 'month':
+                        this.monthlyChartState = chartState;
+                        break;
+                    case 'year':
+                        this.yearlyChartState = chartState;
+                        break;
+                    default: // 'week' and default
+                        this.weeklyChartState = chartState;
+                        break;
+                }
             });
         }
+
     }
     /**
      * Sets the stae of the chart
      */
-    drawlChart(chartData: ChartData){
-        const updated: ChartSettings = {
+    getChartSettings(chartData: ChartData): ChartSettings {
+        return {
             // TO pass in
             datasets: chartData.datasets,
             labels: chartData.labels,
@@ -170,13 +198,6 @@ export class UsageComponent implements OnInit {
                 }
             ],
         };
-
-        this.chartState = updated;
-        if(this.usageChart){
-            this.usageChart.chart.config.data = updated;
-            this.usageChart.chart.update();
-        }
     }
-
 
 }
