@@ -149,8 +149,6 @@ export class UsageComponent implements OnInit {
             },
             // Things that make it pretty
             colors: [
-                // 172	214	246	blue back
-                // 47	152	232	blue outline
                 { // GeoPlatform Green
                   backgroundColor: 'rgba(92, 184, 92, 0.2)',
                   borderColor: 'rgba(51, 153, 51, 1)',

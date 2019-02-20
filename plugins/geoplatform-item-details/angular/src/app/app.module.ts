@@ -67,7 +67,13 @@ import { ContactDetailsComponent } from './item/details/contact/contact-details.
 import { ServicesComponent } from './item/collections/services/services.component';
 
 import { PluginAuthService } from './shared/auth.service';
+
 import { UsageService } from './shared/usage.service'
+let UsageServiceFactory = (http: HttpClient) => {
+    return new UsageService(environment.rpmUrl, environment.rpmToken, http)
+}
+
+
 
 export function initializeApp() {
     return () => {
@@ -150,7 +156,11 @@ export function initializeApp() {
             multi: true
         },
         PluginAuthService,
-        UsageService
+        {
+            provide: UsageService,
+            useFactory: UsageServiceFactory,
+            deps: [HttpClient]
+        }
     ],
     entryComponents: [
         //dynamic components go here

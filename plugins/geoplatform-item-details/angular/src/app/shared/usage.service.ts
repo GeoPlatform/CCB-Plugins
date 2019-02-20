@@ -1,7 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
-import { curry, compose } from 'rambda'
-import { HttpClient, HttpClientModule } from '@angular/common/http'
-import { Observable, Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { curry } from 'rambda'
+import { HttpClient } from '@angular/common/http';
 
                 // Events
 type APIMethods = 'Events.getName'
@@ -83,21 +82,13 @@ function matomoISOtoPrettyDate(iso: string, format: DateFormats): string {
 }
 
 
-const token_auth = 'f822e078fcb182110b5de9deeba85e7e'
-const rpmUrl = 'https://rpm.geoplatform.gov'
-
-
-// function getDateRange
-
-
 @Injectable()
 export class UsageService {
 
     private rpmUrl: string;
-    // private token_auth: string;
     private usageRequest: any;
 
-    constructor(private http: HttpClient) {
+    constructor(rpmUrl: string, token_auth: string, private http: HttpClient) {
         this.rpmUrl = rpmUrl;
         this.usageRequest = this.getAPIParams(token_auth, 'Events.getName')
     }
