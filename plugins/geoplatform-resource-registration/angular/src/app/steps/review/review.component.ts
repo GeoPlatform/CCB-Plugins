@@ -25,7 +25,11 @@ import { AppEvent } from '../../app.component';
 import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
+import { ClassifierTypes } from '../../model';
 
+const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
+    return k.indexOf("secondary")<0 && k.indexOf("community")<0
+});
 
 
 @Component({
@@ -123,7 +127,9 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         }
     }
 
-
+    getClassifierProperties() {
+        return CLASSIFIERS;
+    }
 
     /**
      *

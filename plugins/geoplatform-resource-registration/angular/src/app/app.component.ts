@@ -89,7 +89,8 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         if(!data) return;
 
         Object.keys(data).forEach( key => {
-            if( typeof(data[key]) !== 'undefined' &&  data[key] !== null &&
+            if( typeof(data[key]) !== 'undefined' &&
+                data[key] !== null &&
                 'serviceType' !== key && 'href' !== key
             ) {
 
@@ -109,6 +110,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
     applyItemData( key : string, value : any ) {
         if(value === null || value === undefined ||
             ( typeof(value) === 'string' && !value.length) ) return;
+        if(Array.isArray(value)) {
+            value = value.filter(v=>!!v);   //filter out null values
+            if(!value.length ) return;  //empty arrays
+        }
 
         if(ModelProperties.ACCESS_URL === key) {
             if(this.item.type === ItemTypes.DATASET) {
