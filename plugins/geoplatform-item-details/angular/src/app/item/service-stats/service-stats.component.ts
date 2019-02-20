@@ -86,7 +86,7 @@ export class ServiceStatsComponent implements OnInit {
 
         //draw whichever chart is currently visible
         setTimeout( () => {
-            this.drawWeeklyChart();
+            // this.drawWeeklyChart();
         }, 100);
     }
 

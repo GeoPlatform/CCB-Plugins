@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json",
+    "start": "ng serve --proxy-config proxy.conf.json --preserve-symlinks",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -25,6 +25,7 @@
     "@ng-bootstrap/ng-bootstrap": "^1.1.1",
     "@types/leaflet": "^1.4.0",
     "bootstrap": "^4.0.0",
+    "chart.js": "^2.7.3",
     "core-js": "^2.4.1",
     "esri-leaflet": "2.1.2",
     "geoplatform.client": "git+http://github.com/GeoPlatform/client-api.git#develop",
@@ -38,8 +39,10 @@
     "leaflet-timedimension": "~1.1.0",
     "leaflet.markercluster": "1.1.0",
     "ng-inline-svg": "^6.2.1",
+    "ng2-charts": "^1.6.0",
     "popper.js": "^1.12.9",
     "q": "1.4.1",
+    "rambda": "^2.3.1",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.19"
   },

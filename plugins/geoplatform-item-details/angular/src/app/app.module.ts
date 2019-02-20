@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
+import { ChartsModule } from 'ng2-charts';
+
 
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
@@ -65,6 +67,11 @@ import { ContactDetailsComponent } from './item/details/contact/contact-details.
 import { ServicesComponent } from './item/collections/services/services.component';
 
 import { PluginAuthService } from './shared/auth.service';
+
+import { UsageService } from './shared/usage.service'
+let UsageServiceFactory = (http: HttpClient) => {
+    return new UsageService(environment.rpmUrl, environment.rpmToken, http)
+}
 
 
 
@@ -139,7 +146,8 @@ export function initializeApp() {
         HttpClientModule,
         HttpClientJsonpModule,
         NgbModule.forRoot(),
-        InlineSVGModule
+        InlineSVGModule,
+        ChartsModule
     ],
     providers: [
         {
@@ -147,7 +155,12 @@ export function initializeApp() {
             useFactory: initializeApp,
             multi: true
         },
-        PluginAuthService
+        PluginAuthService,
+        {
+            provide: UsageService,
+            useFactory: UsageServiceFactory,
+            deps: [HttpClient]
+        }
     ],
     entryComponents: [
         //dynamic components go here
