@@ -28,7 +28,6 @@
         </ul>
         <!-- Week Chart -->
         <div *ngIf="activeUsageChart == 'week'">
-            {{weeklyChartState}}
             <div *ngIf="!weeklyChartState" class="m-message m-message--light">
                 <span class="fas fa-spin fa-spinner"></span>
                 Loading usage statistics...
@@ -46,8 +45,7 @@
         </div>
         <!-- Month Chart -->
         <div *ngIf="activeUsageChart == 'month'">
-            {{monthlyChartState}}
-            <div *ngIf="!monthlyChartState" class="m-message m-message--light">
+            <div *ngIf="!monthlyChartState" class="m-message m-message--light" width="800" height="400">
                 <span class="fas fa-spin fa-spinner"></span>
                 Loading usage statistics...
             </div>
@@ -63,8 +61,7 @@
             </div>
         </div>
         <!-- Year Chart -->
-        <div *ngIf="ctiveUsageChart == 'year'">
-            {{yearlyChartState}}
+        <div *ngIf="activeUsageChart == 'year'">
             <div *ngIf="!yearlyChartState" class="m-message m-message--light">
                 <span class="fas fa-spin fa-spinner"></span>
                 Loading usage statistics...

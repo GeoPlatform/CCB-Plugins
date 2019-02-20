@@ -4,12 +4,6 @@ import {
 import { UsageService } from '../../shared/usage.service';
 import { BaseChartDirective } from 'ng2-charts//ng2-charts'
 
-const MONTHS = [
-    'Jan','Feb','Mar','Apr','May','Jun',
-    'Jul','Aug','Sep','Oct','Nov','Dec'
-];
-const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-
 // All are RGBA or HEX
 type ChartColor = {
     backgroundColor: string
@@ -76,7 +70,7 @@ export class UsageComponent implements OnInit {
     ngOnChanges( changes : SimpleChanges ) {
         if(changes.item && changes.item.currentValue) {
             this.itemId = changes.item.currentValue.id;
-            this.fetchAndDrawlChart();
+            this.fetchAndDrawlChart('week');
         }
     }
 
@@ -100,53 +94,37 @@ export class UsageComponent implements OnInit {
         this.activeTab = tabName;
     }
 
-    initCharts( rebuild:boolean = false ) {}
-
     fetchAndDrawlChart(period?: ChartPeriods){
         this.activeUsageChart = period;
 
         let func;
-        let dateFormat;
-        let chartState;
-        let loaded;
+        let chartStateName;
         switch(period) {
             case 'month':
-                loaded = !!this.weeklyChartState;
+                chartStateName = 'monthlyChartState';
                 func = 'getPastMonthUsage';
-                dateFormat = '';
                 break;
             case 'year':
-                loaded = !!this.monthlyChartState;
+                chartStateName = 'yearlyChartState';
                 func = 'getPastYearUsage';
-                dateFormat = '';
                 break;
             default: // 'week' and default
-                loaded = !!this.yearlyChartState;
+                chartStateName = 'weeklyChartState';
                 func = 'getPastWeekUsage';
-                dateFormat = '';
                 break;
         }
 
+        let loaded = !!this[chartStateName];
         if(!loaded){
             this.usageService[func](this.itemId)
             .subscribe(data => {
-                const chartData = this.usageService.matomoRespToDataset(dateFormat ,data)
-                const chartState = this.getChartSettings(chartData)
-
-                switch(period) {
-                    case 'month':
-                        this.monthlyChartState = chartState;
-                        break;
-                    case 'year':
-                        this.yearlyChartState = chartState;
-                        break;
-                    default: // 'week' and default
-                        this.weeklyChartState = chartState;
-                        break;
-                }
+                console.log(data)
+                const chartData = this.usageService.matomoRespToDataset(period ,data)
+                this[chartStateName] = this.getChartSettings(chartData);
             });
+            if(this.usageChart)
+                this.usageChart.chart.update();
         }
-
     }
     /**
      * Sets the stae of the chart

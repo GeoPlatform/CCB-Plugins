@@ -2,8 +2,6 @@ import { Injectable, Inject } from '@angular/core';
 import { curry, compose } from 'rambda'
 import { HttpClient, HttpClientModule } from '@angular/common/http'
 import { Observable, Subject } from 'rxjs';
-// import { ChartData } from '../item/usage/usage.component'
-
 
                 // Events
 type APIMethods = 'Events.getName'
@@ -50,11 +48,43 @@ type ChartData = {
     datasets: {data: number[], label: string}[]
 }
 
-// Google format was: [ 'column label', value, 'string value']
+const MONTHS = [
+    'Jan','Feb','Mar','Apr','May','Jun',
+    'Jul','Aug','Sep','Oct','Nov','Dec'
+];
+const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+type DateFormats = 'week' | 'month' | 'year'
+
+/**
+ * Desired outputs:
+ *  week: Thu (2/15)
+ *  month: 4 (day of month)
+ *  year: Jan (month only)
+ *
+ * @param iso
+ */
+function matomoISOtoPrettyDate(iso: string, format: DateFormats): string {
+    const [year, month, day] = iso.split('-')
+                                  .map(s => parseInt(s))
+    // Proof that a world built on JS is doomed to destruction
+    // Note: The argument monthIndex is 0-based. This means that January = 0 and December = 11.
+    const date = new Date(year, month-1, day || 1);
+    switch (format) {
+        case 'week':
+            return `${DAYS[date.getDay()]} (${date.getMonth() + 1}/${day})`
+        case 'month':
+            return ` ${MONTHS[date.getMonth()]} ${day}`
+        case 'year':
+            return MONTHS[date.getMonth()]
+        default:
+            return iso;
+    }
+}
+
 
 const token_auth = 'f822e078fcb182110b5de9deeba85e7e'
 const rpmUrl = 'https://rpm.geoplatform.gov'
-
 
 
 // function getDateRange
@@ -74,11 +104,11 @@ export class UsageService {
 
     //        Public API       //
     public getPastWeekUsage(id: string){
-        return this.getUsageForRange(this.usageRequest('day', 'last7', id))
+        return this.getUsageForRange(this.usageRequest('day', 'previous7', id))
     }
 
     public getPastMonthUsage(id: string) {
-        return this.getUsageForRange(this.usageRequest('day', 'last30', id))
+        return this.getUsageForRange(this.usageRequest('day', 'previous30', id))
     }
 
     public getPastYearUsage(id: string) {
@@ -92,7 +122,7 @@ export class UsageService {
      * ]
      * @param matomoResp
      */
-    public matomoRespToDataset(dateFormat: string, matomoResp: MatomoAPIResponse): ChartData {
+    public matomoRespToDataset(dateFormat: DateFormats, matomoResp: MatomoAPIResponse): ChartData {
         const values = Object.values(matomoResp)
                         .map(d => {
                             // Standardize all records with the data we want
@@ -110,7 +140,8 @@ export class UsageService {
                         }, { unique: [], events: [] });
 
         return {
-            labels: Object.keys(matomoResp),
+            labels: Object.keys(matomoResp)
+                          .map(d => matomoISOtoPrettyDate(d, dateFormat)),
             datasets: [
                 { label: 'Unique Users', data: values.unique },
                 { label: 'Total Usage', data: values.events}
