@@ -26,7 +26,60 @@
                 </a>
             </li>
         </ul>
-        <div class="tab-content" id="myTabContent" style="width:100%">
+        <!-- Week Chart -->
+        <div *ngIf="activeUsageChart == 'week'">
+            <div *ngIf="!weeklyChartState" class="m-message m-message--light">
+                <span class="fas fa-spin fa-spinner"></span>
+                Loading usage statistics...
+            </div>
+            <div *ngIf="weeklyChartState">
+                <canvas baseChart #UsageChart width="800" height="400"
+                    [datasets]="weeklyChartState.datasets"
+                    [labels]="weeklyChartState.labels"
+                    [options]="weeklyChartState.options"
+                    [colors]="weeklyChartState.colors"
+                    [legend]="weeklyChartState.legend"
+                    [chartType]="weeklyChartState.chartType">
+                </canvas>
+            </div>
+        </div>
+        <!-- Month Chart -->
+        <div *ngIf="activeUsageChart == 'month'">
+            <div *ngIf="!monthlyChartState" class="m-message m-message--light" width="800" height="400">
+                <span class="fas fa-spin fa-spinner"></span>
+                Loading usage statistics...
+            </div>
+            <div *ngIf="monthlyChartState">
+                <canvas baseChart #UsageChart width="800" height="400"
+                    [datasets]="monthlyChartState.datasets"
+                    [labels]="monthlyChartState.labels"
+                    [options]="monthlyChartState.options"
+                    [colors]="monthlyChartState.colors"
+                    [legend]="monthlyChartState.legend"
+                    [chartType]="monthlyChartState.chartType">
+                </canvas>
+            </div>
+        </div>
+        <!-- Year Chart -->
+        <div *ngIf="activeUsageChart == 'year'">
+            <div *ngIf="!yearlyChartState" class="m-message m-message--light">
+                <span class="fas fa-spin fa-spinner"></span>
+                Loading usage statistics...
+            </div>
+            <div *ngIf="yearlyChartState">
+                <canvas baseChart #UsageChart width="800" height="400"
+                    [datasets]="yearlyChartState.datasets"
+                    [labels]="yearlyChartState.labels"
+                    [options]="yearlyChartState.options"
+                    [colors]="yearlyChartState.colors"
+                    [legend]="yearlyChartState.legend"
+                    [chartType]="yearlyChartState.chartType">
+                </canvas>
+            </div>
+        </div>
+
+
+        <!-- <div class="tab-content" id="myTabContent" style="width:100%">
             <div class="tab-pane"
                 *ngFor="let key of getTabKeys()"
                 [ngClass]="{active:key===activeTab}"
@@ -34,7 +87,7 @@
                 [attr.aria-labelledby]="key+'-tab'">
                 <div id="{{key}}_chart" style="width:100%"></div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>

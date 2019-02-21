@@ -12,5 +12,7 @@ export const environment = {
   svcHistoryUrl: 'https://sit-dashboard.geoplatform.us/api/sd/service/{id}/history',
   helpUrl: 'https://sit.geoplatform.us/help/apps/geoplatform-item-details/',
   root: 'wp-content/plugins/geoplatform-item-details/',
-  assets: '/assets'
+  assets: '/assets',
+  rpmUrl: 'https://rpm.geoplatform.gov',
+  rpmToken: 'f822e078fcb182110b5de9deeba85e7e'
 };
