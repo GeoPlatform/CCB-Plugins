@@ -324,7 +324,7 @@ function geopsearch_ajax_search( $request ) {
 	$geopsearch_total_count = count($geopsearch_post_fetch_total);
 
 	if ( empty($geopsearch_post_fetch_total) )
-    return array('message' => 'Requested page exceeds result count.');
+    return array('message' => 'No results.');
 
 	class SearchResults
 	{
