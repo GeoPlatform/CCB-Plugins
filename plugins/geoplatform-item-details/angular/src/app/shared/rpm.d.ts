@@ -30,10 +30,11 @@ type MatomoSiteAPIData = {
     sum_event_value: number
     min_event_value: number
     max_event_value: number
-    sum_daily_nb_uniq_visitors: number
     avg_event_value: number
     segment: string
     idsubdatatable: number
+    // Only on responses with periond = 'range'
+    sum_daily_nb_uniq_visitors?: number
 }
 
 type MatomoSingleSiteAPIResponse = {

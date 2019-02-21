@@ -118,13 +118,48 @@ export class UsageComponent implements OnInit {
         if(!loaded){
             this.rpmStats[func](this.itemId)
             .subscribe(data => {
-                const chartData = this.rpmStats.matomoRespToDataset(period ,data)
+                const chartData = this.matomoRespToDataset(period ,data)
                 this[chartStateName] = this.getChartSettings(chartData);
             });
             if(this.usageChart)
                 this.usageChart.chart.update();
         }
     }
+
+    /**
+     * Desired output:
+     * [
+     *  ["Wed", 5, "5"]
+     * ]
+     * @param matomoResp
+     */
+    private matomoRespToDataset(dateFormat: ChartPeriods, matomoResp: MatomoSingleSiteAPIResponse): ChartData {
+        const values = Object.values(matomoResp)
+                        .map(d => {
+                            // Standardize all records with the data we want
+                            const data = d[0]
+                            return {
+                                        nb_uniq_visitors: data ? data.nb_uniq_visitors : 0,
+                                        nb_events: data ? data.nb_events : 0
+                                    }
+                        })
+                        .reduce((acc, entry) => {
+                            return {
+                                unique: acc.unique.concat([entry.nb_uniq_visitors]),
+                                events: acc.events.concat([entry.nb_events])
+                            }
+                        }, { unique: [], events: [] });
+
+        return {
+            labels: Object.keys(matomoResp)
+                            .map(d => this.rpmStats.matomoISOtoPrettyDate(d, dateFormat)),
+            datasets: [
+                { label: 'Unique Users', data: values.unique },
+                { label: 'Total Usage', data: values.events}
+            ]
+        }
+    }
+
     /**
      * Sets the stae of the chart
      */

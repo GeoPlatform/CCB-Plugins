@@ -27,8 +27,12 @@ describe('UsageComponent', () => {
 
 
 describe('UsageService', () => {
+  // Service that is unable to call out and get data (not HttpClient)
+  const RFS = new RPMStatsService('', '', null);
+
+
   it('Should have accurate counts when merging mulit site records', () => {
-    const apiResponse = {
+    const multiSiteAPIResponse: MatomoMultiSiteAPIReponse = {
         "1": {
             "2019-02-14": [],
             "2019-02-15": [],
@@ -211,7 +215,7 @@ describe('UsageService', () => {
         }
     }
     // The expected output from a merge
-    const expectedResults = {
+    const expectedResults: MatomoSingleSiteAPIResponse = {
       '2019-02-14': [ { label: 'be6da1549cd91087542a5a9e3da5fb47',
         nb_uniq_visitors: 3,
         nb_visits: 3,
@@ -271,5 +275,7 @@ describe('UsageService', () => {
     '2019-02-20': [] }
 
     // Call to the function here...
+    const aggragateData = RFS.aggragateSiteStatsResponse(multiSiteAPIResponse)
+    console.log(aggragateData)
   });
 });
