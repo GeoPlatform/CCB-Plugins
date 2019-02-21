@@ -63,6 +63,7 @@ import { LayerDetailsComponent } from './item/details/layer/layer-details.compon
 import { DatasetDetailsComponent } from './item/details/dataset/dataset-details.component';
 import { ContactDetailsComponent } from './item/details/contact/contact-details.component';
 import { ServicesComponent } from './item/collections/services/services.component';
+import { DatasetsComponent } from './item/collections/datasets/datasets.component';
 
 import { PluginAuthService } from './shared/auth.service';
 
@@ -128,6 +129,7 @@ export function initializeApp() {
         DatasetDetailsComponent,
         ContactDetailsComponent,
         ServicesComponent,
+        DatasetsComponent,
         AltTitlesComponent,
         AltIdsComponent,
         UseConstraintsComponent,

@@ -1,6 +1,6 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Input } from '@angular/core';
 
-import { PluginAuthService } from '../../../shared/auth.service';
+import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -8,24 +8,31 @@ import { environment } from '../../../../environments/environment';
   templateUrl: './edit-action.component.html',
   styleUrls: ['./edit-action.component.less']
 })
-export class EditActionComponent implements OnInit {
+export class EditActionComponent extends AuthenticatedComponent implements OnInit {
 
     @Input() item : any;
 
-    constructor( private authService : PluginAuthService ) { }
+    constructor() {
+        super();
+    }
 
     ngOnInit() {
+        super.init();
     }
 
     ngOnChanges( changes : SimpleChanges ) {
 
     }
 
+    ngOnDestroy() {
+        super.destroy();
+    }
+
     isAuthorized() : boolean {
         if(!this.item || !this.item.id) return false;
         //TODO check user credentials for 'gp_editor' role or ownership of this item
 
-        let user = this.authService.getUser();
+        let user = this.getUser();
         if(!user) return false;
 
         //owner

@@ -6,7 +6,6 @@ import { Config, ItemService } from "geoplatform.client";
 import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
 import { NG2HttpClient } from "./shared/http-client";
-import { PluginAuthService } from './shared/auth.service';
 import { environment } from '../environments/environment';
 
 const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)/i;

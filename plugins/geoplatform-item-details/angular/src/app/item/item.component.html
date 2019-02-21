@@ -198,6 +198,11 @@
                     <gpid-map-layers [map]="item"></gpid-map-layers>
                 </div>
 
+                <div class="m-article__desc" *ngIf="item?.datasets">
+                    <gpid-datasets [data]="item.datasets">
+                    </gpid-datasets>
+                </div>
+
                 <!-- Gallery Items -->
                 <div class="m-article__desc" *ngIf="'Gallery'===item?.type">
                     <gpid-gallery-items [items]="item?.items"></gpid-gallery-items>

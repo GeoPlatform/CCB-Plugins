@@ -29,18 +29,19 @@ export class PrimaryActionComponent implements OnInit {
 
         let type = this.item.type;
         switch(type) {
-            case ItemTypes.DATASET : this.openDataset(); break;
-            case ItemTypes.SERVICE : break;
-            case ItemTypes.LAYER : break;
             case ItemTypes.MAP : this.openMap(); break;
-            case ItemTypes.GALLERY : break;
-            case ItemTypes.COMMUNITY : break;
-            case ItemTypes.ORGANIZATION : break;
-            case ItemTypes.CONTACT : break;
-            case ItemTypes.PERSON : break;
-            case ItemTypes.CONCEPT : break;
-            case ItemTypes.CONCEPT_SCHEME : break;
-            default: break;
+            case ItemTypes.DATASET :
+                // this.openDataset(); break;
+            case ItemTypes.SERVICE :
+            case ItemTypes.LAYER :
+            case ItemTypes.GALLERY :
+            case ItemTypes.COMMUNITY :
+            case ItemTypes.ORGANIZATION :
+            case ItemTypes.CONTACT :
+            case ItemTypes.PERSON :
+            case ItemTypes.CONCEPT :
+            case ItemTypes.CONCEPT_SCHEME :
+            default: this.openInObjectEditor();
         }
     }
 
@@ -49,20 +50,19 @@ export class PrimaryActionComponent implements OnInit {
 
         let type = this.item.type;
         switch(type) {
-            case ItemTypes.DATASET :
-                if(this.item.source && this.item.source.uri) return "View Metadata";
-                return 'Do Something';
-            case ItemTypes.SERVICE : return 'Do Something';
-            case ItemTypes.LAYER : return 'Do Something';
             case ItemTypes.MAP : return 'Open Map';
-            case ItemTypes.GALLERY : return 'Do Something';
-            case ItemTypes.COMMUNITY : return 'Do Something';
-            case ItemTypes.ORGANIZATION : return 'Do Something';
-            case ItemTypes.CONTACT : return 'Do Something';
-            case ItemTypes.PERSON : return 'Do Something';
-            case ItemTypes.CONCEPT : return 'Do Something';
-            case ItemTypes.CONCEPT_SCHEME : return 'Do Something';
-            default: return 'Do Something';
+            case ItemTypes.DATASET :
+                // if(this.item.source && this.item.source.uri) return "View Metadata";
+            case ItemTypes.SERVICE :
+            case ItemTypes.LAYER :
+            case ItemTypes.GALLERY :
+            case ItemTypes.COMMUNITY :
+            case ItemTypes.ORGANIZATION :
+            case ItemTypes.CONTACT :
+            case ItemTypes.PERSON :
+            case ItemTypes.CONCEPT :
+            case ItemTypes.CONCEPT_SCHEME :
+            default: return 'Open';
         }
     }
 
@@ -71,18 +71,19 @@ export class PrimaryActionComponent implements OnInit {
 
         let type = this.item.type;
         switch(type) {
-            case ItemTypes.DATASET : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.SERVICE : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.LAYER : return 'This will be helpful text indicating what will happen if you click the associated button';
             case ItemTypes.MAP : return 'Open Map';
-            case ItemTypes.GALLERY : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.COMMUNITY : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.ORGANIZATION : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.CONTACT : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.PERSON : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.CONCEPT : return 'This will be helpful text indicating what will happen if you click the associated button';
-            case ItemTypes.CONCEPT_SCHEME : return 'This will be helpful text indicating what will happen if you click the associated button';
-            default: return 'This will be helpful text indicating what will happen if you click the associated button';
+            case ItemTypes.DATASET :
+                // return 'View the source metadata for this Dataset';
+            case ItemTypes.SERVICE :
+            case ItemTypes.LAYER :
+            case ItemTypes.GALLERY :
+            case ItemTypes.COMMUNITY :
+            case ItemTypes.ORGANIZATION :
+            case ItemTypes.CONTACT :
+            case ItemTypes.PERSON :
+            case ItemTypes.CONCEPT :
+            case ItemTypes.CONCEPT_SCHEME :
+            default: return 'View all of this resource\'s details using GeoPlatform Object Editor';
         }
     }
 
@@ -128,6 +129,19 @@ export class PrimaryActionComponent implements OnInit {
             return;
         }
         window.open(this.item.landingPage, "_blank");
+    }
+
+
+    openInObjectEditor() {
+        let prefix = '', ext = '.gov';
+        let env = environment.env;
+        if('dev' === env || 'sit' === env) {
+            prefix = 'sit-';
+            ext = '.us';
+        } else if('stg' === env)
+            prefix = 'stg-';
+        let url = 'https://' + prefix + 'oe.geoplatform' + ext + '/view/' + this.item.id;
+        window.location.href = url;
     }
 
 }

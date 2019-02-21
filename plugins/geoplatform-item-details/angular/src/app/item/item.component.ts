@@ -7,8 +7,7 @@ import { ItemTypes, Config, ItemService } from "geoplatform.client";
 
 import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
-import { PluginAuthService } from '../shared/auth.service';
-
+import { AuthenticatedComponent} from '../shared/authenticated.component';
 
 const MAX_DESC_LENGTH = 550;
 
@@ -19,7 +18,7 @@ const MAX_DESC_LENGTH = 550;
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.less']
 })
-export class ItemComponent implements OnInit {
+export class ItemComponent extends AuthenticatedComponent implements OnInit {
 
     @Input() item : any;
 
@@ -28,20 +27,14 @@ export class ItemComponent implements OnInit {
 
     private itemService : ItemService;
 
-    constructor(
-        private el: ElementRef,
-        http : HttpClient,
-        private authService : PluginAuthService) {
-
+    constructor(private el: ElementRef, http : HttpClient) {
+        super();
         let client = new NG2HttpClient(http);
         this.itemService = new ItemService(Config.ualUrl, client);
-
-        // authService.subscribe( (user) => {
-            //in case we need to display message about user state changing...
-        // })
     }
 
     ngOnInit() {
+        super.init();
         this.onResize();
     }
 
@@ -55,7 +48,7 @@ export class ItemComponent implements OnInit {
     }
 
     ngOnDestroy() {
-
+        super.destroy();
     }
 
     onResize( ) {
@@ -70,8 +63,10 @@ export class ItemComponent implements OnInit {
     }
 
     isAuthorized(action : string) {
-        if(!this.authService.isAuthenticated()) return false;
-        let user = this.authService.getUser();
+        if(!this.isAuthenticated()) return false;
+        let user = this.getUser();
+        // if(!this.authService.isAuthenticated()) return false;
+        // let user = this.authService.getUser();
 
         //TODO use ng-gpoauth to see if user has credentials and
         // proper privileges for each supported action
