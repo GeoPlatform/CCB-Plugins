@@ -249,6 +249,8 @@ function geopsearch_get_search_args() {
 
 // Performs the actual search operation.
 function geopsearch_ajax_search( $request ) {
+	global $wpdb;
+
   $posts = [];
   $results = [];
 	$post_type = isset($request['type']) ? $request['type'] : 'fail';
@@ -293,6 +295,11 @@ function geopsearch_ajax_search( $request ) {
 	    's' => $search_query,
 	  );
 
+		$termIDs = get_terms(array(
+			'name__like' => $search_query,
+	    'fields' => 'ids',
+		));
+
 		$posts_two = array(
 			'numberposts' => -1,
 			'posts_per_page' => -1,
@@ -304,13 +311,13 @@ function geopsearch_ajax_search( $request ) {
 				'relation' => 'OR',
 				array(
 					'taxonomy' => 'category',
-					'field' => 'slug',
-					'terms' => array($search_query),
+					'field' => 'id',
+					'terms' => $termIDs,
 				),
 				array(
 					'taxonomy' => 'post_tag',
-					'field' => 'slug',
-					'terms' => array($search_query),
+					'field' => 'id',
+					'terms' => $termIDs,
 				),
 			)
 		);
