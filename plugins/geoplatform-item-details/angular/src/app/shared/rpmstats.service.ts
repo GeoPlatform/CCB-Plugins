@@ -1,51 +1,6 @@
 import { Injectable } from '@angular/core';
-import { curry } from 'rambda'
+import { curry, mergeWithKey } from 'ramda'
 import { HttpClient } from '@angular/common/http';
-
-                // Events
-type APIMethods = 'Events.getName'
-                | 'Events.getCategory'
-                | 'Events.getAction'
-
-type APIPeriod = 'day'
-               | 'week'
-               | 'month'
-               | 'year'
-               | 'range'
-
-type MatomoAPIRequest = {
-    label: string
-    method: APIMethods
-    period: APIPeriod
-    date: string // TODO: limit better
-
-    module: 'API'
-    idSite: number
-    token_auth: string
-    format: 'json'
-}
-
-type MatomoAPIResponse = {
-    [x: string]: [{
-        label: string
-        nb_uniq_visitors: number
-        nb_visits: number
-        nb_events: number
-        nb_events_with_value: number
-        sum_event_value: number
-        min_event_value: number
-        max_event_value: number
-        sum_daily_nb_uniq_visitors: number
-        avg_event_value: number
-        segment: string
-        idsubdatatable: number
-    }]
-}
-
-type ChartData = {
-    labels: string[]
-    datasets: {data: number[], label: string}[]
-}
 
 const MONTHS = [
     'Jan','Feb','Mar','Apr','May','Jun',
@@ -54,6 +9,11 @@ const MONTHS = [
 const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
 type DateFormats = 'week' | 'month' | 'year'
+
+type ChartData = {
+    labels: string[]
+    datasets: {data: number[], label: string}[]
+}
 
 /**
  * Desired outputs:
@@ -83,7 +43,7 @@ function matomoISOtoPrettyDate(iso: string, format: DateFormats): string {
 
 
 @Injectable()
-export class UsageService {
+export class RPMStatsService {
 
     private rpmUrl: string;
     private usageRequest: any;
@@ -106,6 +66,27 @@ export class UsageService {
         return this.getUsageForRange(this.usageRequest('month', 'last12', id))
     }
 
+    public multiSiteResponseToSingleSiteResponse(apiResponse: MatomoMultiSiteAPIReponse): MatomoSingleSiteAPIResponse {
+        // Fields that we are ok summing together...
+        const sumFields = [
+            'nb_uniq_visitors', // Really questionable...
+            'nb_visits',
+            'nb_events',
+            'nb_events_with_value',
+            // 'sum_event_value',
+            // 'min_event_value',
+            // 'max_event_value',
+            'sum_daily_nb_uniq_visitors',
+            // 'avg_event_value'
+        ]
+        const mergeField = (key: string, a: number, b: number) => ~sumFields.indexOf(key) ? a + b : ( a > b ? a : b);
+
+        const siteRecords = Object.values(apiResponse);
+        return siteRecords.reduce((acc, v) => {
+            return mergeWithKey(mergeField, acc, v)
+        },{})
+    }
+
     /**
      * Desired output:
      * [
@@ -113,7 +94,7 @@ export class UsageService {
      * ]
      * @param matomoResp
      */
-    public matomoRespToDataset(dateFormat: DateFormats, matomoResp: MatomoAPIResponse): ChartData {
+    public matomoRespToDataset(dateFormat: DateFormats, matomoResp: MatomoSingleSiteAPIResponse): ChartData {
         const values = Object.values(matomoResp)
                         .map(d => {
                             // Standardize all records with the data we want
@@ -153,7 +134,7 @@ export class UsageService {
             // Common fields
             module: 'API',
             format: 'json',
-            idSite: 4 // viewer (this will have to be paramerterized)
+            idSite: 'all' // viewer (this will have to be paramerterized)
         }
     })
 
@@ -165,7 +146,7 @@ export class UsageService {
     }
 
     private getStats(paramString: string) {
-        return this.http.get<MatomoAPIResponse>(`${this.rpmUrl}${paramString}`)
+        return this.http.get<MatomoSingleSiteAPIResponse>(`${this.rpmUrl}${paramString}`)
     }
 
     // private getUsageForRange = compose(this.getStats, this.apiRequestToQueryString);

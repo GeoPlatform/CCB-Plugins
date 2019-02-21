@@ -68,9 +68,9 @@ import { ServicesComponent } from './item/collections/services/services.componen
 
 import { PluginAuthService } from './shared/auth.service';
 
-import { UsageService } from './shared/usage.service'
-let UsageServiceFactory = (http: HttpClient) => {
-    return new UsageService(environment.rpmUrl, environment.rpmToken, http)
+import { RPMStatsService } from './shared/rpmstats.service'
+let RPMStatsServiceFactory = (http: HttpClient) => {
+    return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
 }
 
 
@@ -157,8 +157,8 @@ export function initializeApp() {
         },
         PluginAuthService,
         {
-            provide: UsageService,
-            useFactory: UsageServiceFactory,
+            provide: RPMStatsService,
+            useFactory: RPMStatsServiceFactory,
             deps: [HttpClient]
         }
     ],

@@ -1,7 +1,7 @@
 import {
     Component, OnInit, OnChanges, SimpleChanges, Input, ViewChild
 } from '@angular/core';
-import { UsageService } from '../../shared/usage.service';
+import { RPMStatsService } from '../../shared/rpmstats.service';
 import { BaseChartDirective } from 'ng2-charts//ng2-charts'
 
 // All are RGBA or HEX
@@ -63,7 +63,7 @@ export class UsageComponent implements OnInit {
     };
     private itemId : string;
 
-    constructor(private usageService: UsageService) {}
+    constructor(private rpmStats: RPMStatsService) {}
 
     ngOnInit() {}
 
@@ -116,9 +116,9 @@ export class UsageComponent implements OnInit {
 
         let loaded = !!this[chartStateName];
         if(!loaded){
-            this.usageService[func](this.itemId)
+            this.rpmStats[func](this.itemId)
             .subscribe(data => {
-                const chartData = this.usageService.matomoRespToDataset(period ,data)
+                const chartData = this.rpmStats.matomoRespToDataset(period ,data)
                 this[chartStateName] = this.getChartSettings(chartData);
             });
             if(this.usageChart)
@@ -142,7 +142,8 @@ export class UsageComponent implements OnInit {
                     yAxes: [{
                         display: true,
                         ticks: {
-                            beginAtZero: true   // minimum value will be 0.
+                            beginAtZero: true,   // minimum value will be 0.
+                            scaleIntegersOnly: true
                         }
                     }]
                 }
