@@ -887,6 +887,7 @@ get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );
 get_template_part( 'side-content-links', get_post_format() );
 get_template_part( 'side-content-preview', get_post_format() );
+get_template_part( 'side-content-featured', get_post_format() );
 get_template_part( 'widget-resources-elements', get_post_format() );
 get_template_part( 'widget-resources-search', get_post_format() );
 get_template_part( 'widget-resources-creation', get_post_format() );
