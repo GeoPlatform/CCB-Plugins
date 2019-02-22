@@ -104,6 +104,8 @@ export class RPMStatsService {
         // Proof that a world built on JS is doomed to destruction
         // Note: The argument monthIndex is 0-based. This means that January = 0 and December = 11.
         const date = new Date(year, month-1, day || 1);
+
+        if(date.toString() === 'Invalid Date') return '' // return nothing if no date passed
         switch (format) {
             case 'week':
                 return `${DAYS[date.getDay()]} (${date.getMonth() + 1}/${day})`
