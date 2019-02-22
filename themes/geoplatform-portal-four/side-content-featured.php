@@ -65,7 +65,7 @@ class Geopportal_Side_Content_Featured_Widget extends WP_Widget {
 
         <div class="m-list__item">
           <a class="is-linkless" href="<?php echo get_the_permalink($geopportal_post); ?>"><?php echo get_the_title($geopportal_post); ?></a>
-          <div class="m-list__item__text"><?php _e(sanitize_text_field($geopportal_post_excerpt), 'geoplatform-ccb') ?></div>
+          <!-- <div class="m-list__item__text"><?php //_e(sanitize_text_field($geopportal_post_excerpt), 'geoplatform-ccb') ?></div> -->
         </div>
 
 				<?php	} ?>
