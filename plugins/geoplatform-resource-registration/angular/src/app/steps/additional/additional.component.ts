@@ -46,21 +46,12 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     //for storing model values for usage in the workflow proper
     public formGroup: FormGroup;
-
     public hasError : StepError;
 
-    public filteredPublisherOptions: Observable<string[]>;
-    public filteredCommunityOptions: Observable<string[]>;
-
-    itemService : ItemService = null;
+    private itemService : ItemService = null;
     private eventsSubscription: any;
 
-    @ViewChild('pubAutoComplete') pubMatAutocomplete: MatAutocomplete;
-    @ViewChild('comAutoComplete') comMatAutocomplete: MatAutocomplete;
-
     @ViewChild('keywordsInput') keywordsField: ElementRef;
-    @ViewChild('publishersInput') publishersField: ElementRef;
-    @ViewChild('communitiesInput') communitiesField: ElementRef;
 
     formOpts : any = {};
 
@@ -69,13 +60,13 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         private formBuilder: FormBuilder,
         private http : HttpClient
     ) {
-        this.formOpts[ModelProperties.KEYWORDS] = [''];
-        this.formOpts[ModelProperties.PUBLISHERS] = [''];
-        this.formOpts[ModelProperties.COMMUNITIES] = [''];
-        this.formOpts['$'+ModelProperties.KEYWORDS] = [''];
-        this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];
-        this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
         //initialize form controls
+        this.formOpts[ModelProperties.KEYWORDS] = [''];
+        this.formOpts['$'+ModelProperties.KEYWORDS] = [''];
+        // this.formOpts[ModelProperties.PUBLISHERS] = [''];
+        // this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];
+        this.formOpts[ModelProperties.COMMUNITIES] = [''];
+        this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
         let client = new NG2HttpClient(http);
@@ -86,22 +77,6 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
      *
      */
     ngOnInit() {
-
-        //set up filtering piping on the autocomplete fields
-        this.filteredPublisherOptions = this.formGroup.get('$'+ModelProperties.PUBLISHERS)
-        .valueChanges.pipe(
-            startWith(''),
-            flatMap(value => {
-                let result = this.filterPublishers(value);
-                return result;
-            })
-        );
-        this.filteredCommunityOptions = this.formGroup.get('$'+ModelProperties.COMMUNITIES)
-        .valueChanges.pipe(
-            startWith(''),
-            flatMap(value => this.filterCommunities(value))
-        );
-
 
         this.eventsSubscription = this.appEvents.subscribe( (event:AppEvent) => {
             this.onAppEvent(event);
@@ -126,10 +101,10 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                     this.formGroup.get(ModelProperties.KEYWORDS)
                         .setValue(data[ModelProperties.KEYWORDS]);
                 }
-                if(data[ModelProperties.PUBLISHERS] && data[ModelProperties.PUBLISHERS].length) {
-                    this.formGroup.get(ModelProperties.PUBLISHERS)
-                        .setValue(data[ModelProperties.PUBLISHERS]);
-                }
+                // if(data[ModelProperties.PUBLISHERS] && data[ModelProperties.PUBLISHERS].length) {
+                //     this.formGroup.get(ModelProperties.PUBLISHERS)
+                //         .setValue(data[ModelProperties.PUBLISHERS]);
+                // }
                 if(data[ModelProperties.COMMUNITIES] && data[ModelProperties.COMMUNITIES].length) {
                     this.formGroup.get(ModelProperties.COMMUNITIES)
                         .setValue(data[ModelProperties.COMMUNITIES]);
@@ -146,20 +121,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     }
 
 
-
-    private filterPublishers(value: string): Promise<string[]> {
-        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue);
-        return this.itemService.search(query)
-        .then( response => {
-            return response.results
-        })
-        .catch(e => {
-            //display error message indicating an issue searching...
-            this.hasError = new StepError("Error Searching Publishers", e.message);
-        });
-    }
-    private filterCommunities(value: string): Promise<string[]> {
+    // private filterCommunities(value: string): Promise<string[]> {
+    filterCommunities = (value: string) : Promise<string[]> => {
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
         let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue);
         return this.itemService.search(query)
@@ -173,22 +136,6 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     addKeyword(event: MatChipInputEvent): void {
         this.addChip(ModelProperties.KEYWORDS, event);
-    }
-
-    addPublisher(event: MatChipInputEvent): void {
-        // Add only when MatAutocomplete is not open
-        // To make sure this does not conflict with OptionSelected Event
-        if (!this.pubMatAutocomplete.isOpen) {
-            this.addChip(ModelProperties.PUBLISHERS, event);
-        }
-    }
-
-    addCommunity(event: MatChipInputEvent): void {
-        // Add only when MatAutocomplete is not open
-        // To make sure this does not conflict with OptionSelected Event
-        if (!this.comMatAutocomplete.isOpen) {
-            this.addChip(ModelProperties.COMMUNITIES, event);
-        }
     }
 
 
@@ -226,63 +173,11 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
             this.formGroup.get(ModelProperties.KEYWORDS).setValue(existing);
         }
     }
-    removePublisher(pub: any): void {
-        let existing = this.formGroup.get(ModelProperties.PUBLISHERS).value;
-        let index = -1;
-        existing.forEach( (p,i) => { if(p.id === pub.id) { index = i; } });
-        if (index >= 0) {
-            existing.splice(index, 1);
-            this.formGroup.get(ModelProperties.PUBLISHERS).setValue(existing);
-        }
-    }
-    removeCommunity(com: any): void {
-        let existing = this.formGroup.get(ModelProperties.COMMUNITIES).value;
-        let index = -1;
-        existing.forEach( (p,i) => { if(p.id === com.id) { index = i; } });
-        if (index >= 0) {
-            existing.splice(index, 1);
-            this.formGroup.get(ModelProperties.COMMUNITIES).setValue(existing);
-        }
-    }
-
-
-
-    onPubAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        let existing = this.formGroup.get(ModelProperties.PUBLISHERS).value || [];
-        existing.push(event.option.value);
-        this.formGroup.get(ModelProperties.PUBLISHERS).setValue(existing);
-
-        //clear input and blur so autocomplete isn't left in weird state after selection
-        this.publishersField.nativeElement.value='';
-        this.publishersField.nativeElement.blur();
-        this.formGroup.get('$'+ModelProperties.PUBLISHERS).setValue(null);
-    }
-
-    onComAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        let existing = this.formGroup.get(ModelProperties.COMMUNITIES).value || [];
-        existing.push(event.option.value);
-        this.formGroup.get(ModelProperties.COMMUNITIES).setValue(existing);
-
-        //clear input and blur so autocomplete isn't left in weird state after selection
-        this.communitiesField.nativeElement.value='';
-        this.communitiesField.nativeElement.blur();
-        this.formGroup.get('$'+ModelProperties.COMMUNITIES).setValue(null);
-    }
-
 
 
     get keywords() {
         return this.formGroup.get(ModelProperties.KEYWORDS).value || [];
     }
-
-    get publishers() {
-        return this.formGroup.get(ModelProperties.PUBLISHERS).value || [];
-    }
-
-    get communities() {
-        return this.formGroup.get(ModelProperties.COMMUNITIES).value || [];
-    }
-
 
     public getValues ( key : string ) : any[] {
         let existing = this.formGroup.get(key).value;

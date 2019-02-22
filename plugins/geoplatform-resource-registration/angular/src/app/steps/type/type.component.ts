@@ -58,20 +58,19 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         isFetchingServiceInfo: false
     };
     public hasError : StepError = null;
+    public doesExist : string;
 
 
-    @ViewChild('resTypeAutoComplete') resTypeMatAutocomplete: MatAutocomplete;
-    @ViewChild('resTypesInput') resourceTypesField: ElementRef;
-    public filteredResourceTypeOptions: Observable<string[]>;
-
-
+    private formListener : any;
     private typeListener : any;
     private eventsSubscription: any;
     private httpClient : NG2HttpClient;
+    private itemService : ItemService = null;
     private availableResourceTypes: { type: string; values: ResourceType[]; } =
         {} as { type: string; values: ResourceType[]; };
 
     formOpts: any = {};
+
 
     constructor(
         private formBuilder: FormBuilder,
@@ -85,25 +84,24 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.formOpts[ModelProperties.SERVICE_TYPE] = [''];
         this.formOpts[ModelProperties.RESOURCE_TYPES] = [''];
         this.formOpts['$'+ModelProperties.RESOURCE_TYPES] = [''];   //temp field for autocomplete
+        this.formOpts[ModelProperties.PUBLISHERS] = [''];
+        this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];   //for autocomplete
         this.formGroup = this.formBuilder.group(this.formOpts);
         this.httpClient = new NG2HttpClient(http);
+        this.itemService = new ItemService(Config.ualUrl, this.httpClient);
         this.fetchData();
     }
 
 
     ngOnInit() {
 
-        //set up filtering piping on the autocomplete fields
-        this.filteredResourceTypeOptions = this.formGroup.get('$'+ModelProperties.RESOURCE_TYPES)
-        .valueChanges.pipe(
-            flatMap(value => {
-                let result = this.filterResourceTypes(value);
-                return result;
-            })
-        );
 
         this.typeListener = this.formGroup.get(ModelProperties.TYPE).valueChanges
         .subscribe(val => { this.onTypeSelection(val); });
+
+        this.formListener = this.formGroup.valueChanges.subscribe(
+            change => { this.onFormChange(change); });
+
 
         this.eventsSubscription = this.appEvents.subscribe((event) => {
             this.onAppEvent(event);
@@ -135,6 +133,15 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 this.setValue(ModelProperties.SERVICE_TYPE, data[ModelProperties.SERVICE_TYPE]||null );
                 this.setValue(ModelProperties.LANDING_PAGE, data[ModelProperties.LANDING_PAGE]||null );
 
+                if(data[ModelProperties.RESOURCE_TYPES] && data[ModelProperties.RESOURCE_TYPES].length) {
+                    this.formGroup.get(ModelProperties.RESOURCE_TYPES)
+                        .setValue(data[ModelProperties.RESOURCE_TYPES]);
+                }
+                if(data[ModelProperties.PUBLISHERS] && data[ModelProperties.PUBLISHERS].length) {
+                    this.formGroup.get(ModelProperties.PUBLISHERS)
+                        .setValue(data[ModelProperties.PUBLISHERS]);
+                }
+
                 let url = null;
                 if(ItemTypes.DATASET === data[ModelProperties.TYPE] &&
                     data[ModelProperties.DISTRIBUTIONS] &&
@@ -157,11 +164,8 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
     ngOnDestroy() {
         this.typeListener.unsubscribe();
+        this.formListener.unsubscribe();
         this.eventsSubscription.unsubscribe();
-        this.filteredResourceTypeOptions = null;
-        this.resTypeMatAutocomplete = null;
-        this.resourceTypesField = null;
-        this.filteredResourceTypeOptions = null;
         this.availableResourceTypes = null;
     }
 
@@ -178,7 +182,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             .resourceTypes('ServiceType')
             .pageSize(50)
             .sort('label,asc');
-        new ItemService(Config.ualUrl, this.httpClient).search(stq)
+        this.itemService.search(stq)
         .then( response => this.serviceTypes = response.results )
         .catch( (e : Error) => {
             //display error indicating issue loading service types
@@ -208,6 +212,17 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
      */
     compareServiceTypes(t1 : any, t2: any) : boolean {
         return t1 && t2 && t1.uri === t2.uri;
+    }
+
+    /**
+     * NOTE: this will get called AFTER type listener's callback when type is
+     * changed.
+     * @param {object} formChange
+     */
+    onFormChange( formChange ) {
+        // console.log("Form change: " + JSON.stringify(formChange));
+
+        this.checkExists();
     }
 
     /**
@@ -338,15 +353,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
 
 
-
-    get resourceTypes() {
-        return this.getValue(ModelProperties.RESOURCE_TYPES) || [];
-    }
-    get $resourceTypes() {
-        return this.getValue('$'+ModelProperties.RESOURCE_TYPES) || [];
-    }
-
-    private filterResourceTypes(value: string): Promise<string[]> {
+    filterResourceTypes = (value: string): Promise<string[]> => {
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
 
         let type = this.getValue(ModelProperties.TYPE);
@@ -360,76 +367,82 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
     }
 
-    /**
-     * Adds the value pointed to by the event parameter into the underlying resource types array in the model
-     * @param {MatChipInputEvent} event - material chip event containing value to add to the model
-     */
-    addResourceType(event: MatChipInputEvent): void {
-        // Add only when MatAutocomplete is not open
-        // To make sure this does not conflict with OptionSelected Event
-        // if (!this.resTypeMatAutocomplete.isOpen) {
-        //     this.addChip('$'+ModelProperties.RESOURCE_TYPES, ModelProperties.RESOURCE_TYPES, event);
-        // }
+    // public filterPublishers(value: string): Promise<string[]> {
+    filterPublishers = (value:string) : Promise<string[]> => {
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue);
+        return this.itemService.search(query)
+        .then( response => {
+            return response.results
+        })
+        .catch(e => {
+            //display error message indicating an issue searching...
+            this.hasError = new StepError("Error Searching Publishers", e.message);
+        });
     }
-
-    /**
-     * @param {string} from - temporary model property
-     * @param {string} to - actual model property
-     * @param {MatChipInputEvent} event - event containing value to be applied
-     */
-    private addChip( from: string, to: string, event: MatChipInputEvent ) {
-
-        const input = event.input;
-        const value = event.value;
-
-        // Add our value
-        if (value) {
-            let val = value;
-            if(typeof(val) === 'string') val = val.trim();
-            let existing = this.getValue(to) || [];
-            existing.push(val);
-            this.setValue(to, existing);
-        }
-
-        // Reset the input value
-        if (input) {
-            input.value = '';
-        }
-
-        //clear the local form group so the autocomplete empties
-        this.setValue(from, null);
-
-    }
-
-    /**
-     * @param {object} type - resource type to remove from the internal model
-     */
-    removeResourceType(type: any): void {
-        let existing = this.getValue(ModelProperties.RESOURCE_TYPES);
-        let index = existing.indexOf(type.uri);
-        if (index >= 0) {
-            existing.splice(index, 1);
-            this.setValue(ModelProperties.RESOURCE_TYPES, existing);
-        }
-    }
-
-    /**
-     * Fired when user selects a value from the material autocomplete dropdown.
-     * Takes the selected value and appends to the real form group property,
-     * while clearing the temporary form group property's value.
-     */
-    onResTypeAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
-        let existing = this.getValue(ModelProperties.RESOURCE_TYPES) || [];
-        existing.push(event.option.value);
-        this.setValue(ModelProperties.RESOURCE_TYPES, existing);
-
-        //clear input and blur so autocomplete isn't left in weird state after selection
-        this.resourceTypesField.nativeElement.value='';
-        this.resourceTypesField.nativeElement.blur();
-        this.setValue('$'+ModelProperties.RESOURCE_TYPES, null);
-    }
-
 
     getValue(field) { return this.formGroup.get(field).value; }
     setValue(field, value) { this.formGroup.get(field).setValue(value); }
+
+    private checkDebounce = null;
+
+    checkExists() {
+        if(this.checkDebounce) {
+            clearTimeout(this.checkDebounce);
+            this.checkDebounce = setTimeout(() => {
+                this.checkDebounce = null;
+                this.checkExists();
+            });
+            return;
+        }
+        this.doCheckExists();
+    }
+
+    doCheckExists() {
+        this.getURI().then( uri => {
+            if(!uri) return Promise.resolve({results:[]});
+            return this.itemService.search({uri:uri});
+        })
+        .then( response => {
+            if(response.results.length) { //Item already exists!
+                this.doesExist = this.getResourceLink(response.results[0]);
+            } else { //good to go, clear any warning
+                this.doesExist = null;
+            }
+        })
+        .catch(e => {
+            console.log("Error checking for existing value: " + e.message);
+            this.hasError = new StepError("Unable to verify uniqueness of resource", e.message);
+            this.doesExist = null;
+        });
+    }
+
+    getURI() : Promise<any> {
+        if(this.formGroup.invalid) return Promise.resolve(null);
+        let obj = this.formGroup.value;
+        return this.itemService.getUri(obj);
+    }
+
+    getResourceLink(item) {
+        if(!item || !item.type) return "";
+        let type = null;
+        switch(item.type) {
+            case ItemTypes.DATASET:
+            case ItemTypes.SERVICE:
+            case ItemTypes.ORGANIZATION:
+            case ItemTypes.CONCEPT:
+            case ItemTypes.CONCEPT_SCHEME:
+                type = item.type.split(':')[1].toLowerCase();
+                break;
+            case ItemTypes.MAP:
+            case ItemTypes.LAYER:
+            case ItemTypes.GALLERY:
+            case ItemTypes.COMMUNITY:
+                type = item.type.toLowerCase();
+                break;
+            case ItemTypes.CONTACT: type = "contacts"; break;
+        }
+        if(!type) return '';
+        return `/resources/${type}/${item.id}`;
+    }
 }

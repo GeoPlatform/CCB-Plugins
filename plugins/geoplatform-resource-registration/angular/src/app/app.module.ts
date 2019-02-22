@@ -33,6 +33,8 @@ export function initializeApp() {
   }
 }
 
+import { AutocompleteMatChipComponent } from "./autocomplete.component";
+
 import { TokenInterceptor } from 'geoplatform.ngoauth/angular'
 import { PluginAuthService } from "./auth.service";
 
@@ -72,7 +74,8 @@ export class PrettyJsonPipe implements PipeTransform {
         AdditionalComponent,
         EnrichComponent,
         ReviewComponent,
-        PrettyJsonPipe
+        PrettyJsonPipe,
+        AutocompleteMatChipComponent
     ],
     imports: [
         BrowserModule,
