@@ -66,7 +66,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
                 if(this.layerId) {
                     this.loadLayer(this.layerId);
 
-                } else if(this.extent) {
+                } else if(this.isValidExtent(this.extent)) {
                     this.setExtent(this.extent);
 
                 }
@@ -84,7 +84,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
             //TODO remove all layers...
             this.loadLayer(changes.layerId.currentValue)
 
-        } else if(changes.extent) {
+        } else if(this.isValidExtent(changes.extent)) {
             this.setExtent(changes.extent.currentValue);
         }
     }
@@ -104,7 +104,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
         let map = L.map("item-coverage-map", {
             zoomControl: true,
             center: [38, -96],
-            zoom: 5,
+            zoom: 3,
             minZoom: 2,
             maxZoom: 21,
             maxBounds: [[-90,-180],[90,180]]
@@ -239,6 +239,16 @@ export class CoverageMapComponent implements OnInit, OnChanges {
                     return ServiceFactory(arg, baseUrl, this.httpClient);
             }
         };
+    }
+
+
+    isValidExtent(extent) {
+        if (!extent) return false;
+        if( isNaN(extent.minx) || isNaN(extent.maxx) ||
+            isNaN(extent.miny) || isNaN(extent.maxy) ) return false;
+        if( ((extent.maxx*1) - (extent.minx*1)) < 0.0001 ) return false;
+        if( ((extent.maxy*1) - (extent.miny*1)) < 0.0001 ) return false;
+        return true;
     }
 
 }

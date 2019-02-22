@@ -4,14 +4,14 @@
         [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
         (click)="toggleCollapsed()">
     </span>
-    <strong>Datasets ({{data?.length||0}})</strong>
+    <strong>Datasets ({{datasets.length||0}})</strong>
 
     <div [ngClass]="{'is-hidden':!isCollapsed}">
         Expand to see datasets referenced by this resource
     </div>
 
     <div [ngClass]="{'is-hidden':isCollapsed}" class="m-list">
-        <div *ngIf="!data && !data?.length" class="m-list__item t-fg--warning">
+        <div *ngIf="!datasets.length" class="m-list__item t-fg--warning">
             <span class="fas fa-exclamation-triangle"></span>
             No datasets associated with this resource
         </div>
