@@ -249,8 +249,8 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         this.item = {
             // TEMPORARY for dev purposes only...
             // type: 'dcat:Dataset',
-            title: 'test',
-            createdBy: 'tester'
+            // title: 'test',
+            // createdBy: 'tester'
             // ----------------------------------
         };
         if(this.user) {
