@@ -13,6 +13,7 @@ function gpp_getEnv($name, $def){
 $geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
 $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
+
 /**
  * Establish this as a child theme of GeoPlatform CCB.
  * Also loads jQuery and several assets.
