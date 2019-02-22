@@ -749,7 +749,9 @@ if ( ! function_exists ( 'geop_ccb_custom_wysiwyg_save_postdata' ) ) {
 		if (!empty($_POST['geop_ccb_custom_wysiwyg'])){
 			$geopccb_data = htmlspecialchars_decode($_POST['geop_ccb_custom_wysiwyg']);
 			update_post_meta($geopccb_post_id, 'geop_ccb_custom_wysiwyg', $geopccb_data);
-	  }
+	  } else {
+      update_post_meta($geopccb_post_id, 'geop_ccb_custom_wysiwyg', '');
+    }
 	}
   add_action('save_post', 'geop_ccb_custom_wysiwyg_save_postdata');
 }
