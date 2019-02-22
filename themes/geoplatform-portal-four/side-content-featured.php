@@ -54,17 +54,21 @@ class Geopportal_Side_Content_Featured_Widget extends WP_Widget {
 				<?php
 				foreach ($geopportal_feat_pages as $geopportal_post){
 
-					// Makes sure the excerpt is only one sentence.
+					// Makes sure the excerpt is only one sentence. (deprecated for now)
 					$geopportal_post_excerpt = $geopportal_post->post_excerpt;
 
 					if (!empty($geopportal_post->post_excerpt)){
 						$geopportal_post_explode = explode('.', $geopportal_post->post_excerpt);
 						$geopportal_post_excerpt = $geopportal_post_explode[0] . ".";
 					}
+
+					$geopportal_link_url = get_the_permalink($geopportal_post);
+					if (get_post_type($geopportal_post) == 'geopccb_catlink')
+						$geopportal_link_url = esc_url($geopportal_post->geop_ccb_cat_link_url);
 				?>
 
         <div class="m-list__item">
-          <a class="is-linkless" href="<?php echo get_the_permalink($geopportal_post); ?>"><?php echo get_the_title($geopportal_post); ?></a>
+          <a class="is-linkless" href="<?php echo $geopportal_link_url ?>"><?php echo get_the_title($geopportal_post); ?></a>
           <!-- <div class="m-list__item__text"><?php //_e(sanitize_text_field($geopportal_post_excerpt), 'geoplatform-ccb') ?></div> -->
         </div>
 
