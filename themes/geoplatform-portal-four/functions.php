@@ -13,6 +13,7 @@ function gpp_getEnv($name, $def){
 $geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
 $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
+
 /**
  * Establish this as a child theme of GeoPlatform CCB.
  * Also loads jQuery and several assets.
@@ -939,23 +940,6 @@ function geop_portal_customize_register( $wp_customize )
 add_action( 'customize_register', 'geop_portal_customize_register');
 
 
-function custom_wysiwyg($post) {
-  echo "<h3>Anything you add below will show up in the Banner:</h3>";
-  $content = get_post_meta($post->ID, 'custom_wysiwyg', true);
-  wp_editor(htmlspecialchars_decode($content) , 'custom_wysiwyg', array("media_buttons" => true));
-}
-
-function geopportal_custom_wysiwyg_save_postdata($post_id) {
-  if (!empty($_POST['custom_wysiwyg'])) {
-    $data = htmlspecialchars_decode($_POST['custom_wysiwyg']);
-    update_post_meta($post_id, 'custom_wysiwyg', $data);
-  }
-}
-add_action('save_post', 'geopportal_custom_wysiwyg_save_postdata');
-
-
-
-
 /**********************************************************************************************************************************************
  * Creates the community post custom post type.
  */
@@ -1068,8 +1052,6 @@ function geop_ccb_custom_field_ngdapost_metaboxes() {
 	);
 }
 add_action( 'add_meta_boxes', 'geop_ccb_custom_field_ngdapost_metaboxes' );
-
-
 
 
 

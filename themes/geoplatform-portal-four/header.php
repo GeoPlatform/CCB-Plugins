@@ -92,7 +92,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                             <div><strong><?php echo $geopportal_front_username_text ?></strong></div>
                             <div class="u-text--sm"><em><?php echo $geopportal_front_loginname_text ?></em></div>
                           <?php } else { ?>
-                            <div><strong><a href="<?php echo esc_url(wp_login_url( home_url() ) ); ?>"><?php echo $geopportal_front_username_text ?></a></strong></div>
+                            <div><strong><a href="<?php echo esc_url(wp_login_url(get_permalink())); ?>"><?php echo $geopportal_front_username_text ?></a></strong></div>
                           <?php } ?>
                       </div>
                       <div class="col">
@@ -100,7 +100,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                           <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>/updatepw">Change Password</a>
                           <?php
                           if($geopportal_current_user->ID != 0) { ?>
-                            <a class="dropdown-item" href="<?php echo esc_url(wp_logout_url( home_url() ) ); ?>">Sign Out</a>
+                            <a class="dropdown-item" href="<?php echo esc_url(wp_logout_url( get_permalink() ) ); ?>">Sign Out</a>
                           <?php } ?>
                           </div>
                       </div>
@@ -111,7 +111,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
               </div>
             <?php } else { ?>
               <div class="dropdown" id="geopportal_header_user_dropdown_parent">
-                  <a class="btn btn-link" href="<?php echo esc_url(wp_login_url( home_url() ) ); ?>">
+                  <a class="btn btn-link" href="<?php echo esc_url(wp_login_url( get_permalink() ) ); ?>">
                       <span class="fas fa-user"></span>
                       <span class="is-hidden--xs">Sign In</span>
                   </a>

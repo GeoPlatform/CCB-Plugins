@@ -118,7 +118,8 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Added option to switch Community Links menu between a transparency and block in the header.
 - Removed automated update feature.
 - Added template pages for GeoPlatform plugins to optimize integration.
-- Added controls of what post types are featured on the front page.
+- Clarified featured section verbage and Front Page category interaction.
+- Fixed bug with wysiwyg section not saving empty input.
 
  = 3.2.3 =
 * Release January 18th, 2019
