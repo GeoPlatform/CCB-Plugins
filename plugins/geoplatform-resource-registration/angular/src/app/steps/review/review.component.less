@@ -5,6 +5,7 @@
 }
 
 .m-review__section {
+    position: relative;
     display: block;
     padding: 0 1em 1em;
     margin-bottom: 2em;
@@ -78,9 +79,20 @@
 .a-property-display--flex {
     padding: .5em 0;
     overflow: hidden;
+    position: relative;
+
+    // label {
+    //     position: absolute;
+    //     left: 0;
+    //     width: 10em;
+    //     word-break: break-word;
+    // }
 
     .a-property-value {
         display: block;
+        // margin-left: 12em;
+
+        em { color: #777; }
     }
 }
 @media(min-width:768px) {

@@ -249,12 +249,26 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         this.item = {
             // TEMPORARY for dev purposes only...
             // type: 'dcat:Dataset',
-            // title: 'test'
-            // ----------------------------------
+            title: 'test',
             createdBy: 'tester'
+            // ----------------------------------
         };
         if(this.user) {
             this.item[ModelProperties.CREATED_BY] = this.user.username;
+        }
+
+
+        let searchParams = window.location.search;
+        if(searchParams) {
+            let params : any = {};
+            searchParams.replace('?','').split('&').forEach(p => {
+                let param = p.split('='), key = param[0], value = param[1];
+                params[key] = value;
+            });
+
+            if(params.type) {
+                this.item.type = params.type;
+            }
         }
     }
 }

@@ -32,62 +32,14 @@
                 </mat-form-field>
 
 
-
-                <mat-form-field floatLabel="always">
-                    <mat-label>Publishers</mat-label>
-                    <mat-chip-list #pubChipList>
-                        <mat-chip
-                            *ngFor="let pub of publishers"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removePublisher(pub)">
-                            {{pub.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #publishersInput
-                            formControlName="$publishers"
-                            [matAutocomplete]="pubAutoComplete"
-                            [matChipInputFor]="pubChipList"
-                            (matChipInputTokenEnd)="addPublisher($event)"
-                            placeholder="Associate publishing agencies">
-                    </mat-chip-list>
-                    <mat-autocomplete #pubAutoComplete="matAutocomplete"
-                        (optionSelected)="onPubAutocompleteSelection($event)">
-                        <mat-option *ngFor="let option of filteredPublisherOptions | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find publishers using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
-
-
-
-                <mat-form-field floatLabel="always">
-                    <mat-label>Communities</mat-label>
-                    <mat-chip-list #comChipList>
-                        <mat-chip
-                            *ngFor="let com of communities"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeCommunity(com)">
-                            {{com.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #communitiesInput
-                            formControlName="$communities"
-                            [matAutocomplete]="comAutoComplete"
-                            [matChipInputFor]="comChipList"
-                            (matChipInputTokenEnd)="addCommunity($event)"
-                            placeholder="Associate communities">
-                    </mat-chip-list>
-                    <mat-autocomplete #comAutoComplete="matAutocomplete"
-                        (optionSelected)="onComAutocompleteSelection($event)">
-                        <mat-option *ngFor="let option of filteredCommunityOptions | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find communities using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Communities'"
+                    [placeholder]="'Associate communities'"
+                    [hint]="'Find communities using the typeahead and select them to associate'"
+                    [fieldName]="'communities'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterCommunities">
+                </gprr-autocomplete-mat-chip>
 
             </div>
 
