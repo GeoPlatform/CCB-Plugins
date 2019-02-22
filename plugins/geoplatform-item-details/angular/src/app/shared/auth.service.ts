@@ -8,7 +8,7 @@ import {
 
 import { environment } from '../../environments/environment';
 import { authServiceFactory } from './auth.factory';
-
+import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
 
 
@@ -27,7 +27,7 @@ export class PluginAuthService {
     private gpAuthSubscription : ISubscription;
     private authService : AuthService;
 
-    constructor() {
+    constructor(private rpm: RPMService) {
 
         this.authService = authServiceFactory();
 
@@ -53,12 +53,12 @@ export class PluginAuthService {
             console.log("Received Auth Message: " + msg.name);
             switch(msg.name){
                 case 'userAuthenticated':
-                this.onUserChange(msg.user);
-                // this.user$.next(msg.user);
+                    this.onUserChange(msg.user);
+                    // this.user$.next(msg.user);
+                    if(msg.user) this.rpm.setUserId(msg.user.id)
                 break;
-
                 case 'userSignOut':
-                this.onUserChange(null);
+                    this.onUserChange(null);
                 break;
             }
         });

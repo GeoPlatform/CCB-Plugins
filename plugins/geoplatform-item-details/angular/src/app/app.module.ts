@@ -8,6 +8,10 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { ChartsModule } from 'ng2-charts';
 
+// Adds window.RPMService to global namespace
+import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+
 
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
@@ -162,7 +166,11 @@ export function initializeApp() {
             provide: RPMStatsService,
             useFactory: RPMStatsServiceFactory,
             deps: [HttpClient]
-        }
+        },
+        {
+            provide: RPMService,
+            useValue: RPMServiceFactory()
+        },
     ],
     entryComponents: [
         //dynamic components go here
