@@ -10,77 +10,28 @@
 
         <div class="enrich__container">
 
+            <!-- PURPOSES -->
             <div class="enrich__section">
-
-                <!-- PURPOSES -->
-                <mat-form-field floatLabel="always">
-                    <mat-label>Purpose</mat-label>
-                    <mat-chip-list #purposeChipList>
-                        <mat-chip
-                            *ngFor="let purpose of purposes"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeValue('purpose',purpose)">
-                            {{purpose.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #purposeInput
-                            formControlName="$purpose"
-                            [matAutocomplete]="purposeAutoComplete"
-                            [matChipInputFor]="purposeChipList"
-                            (matChipInputTokenEnd)="addChip('purpose',$event)"
-                            placeholder="Specify purpose(s) for this resource">
-                        <mat-icon matSuffix
-                            *ngIf="purposesField.nativeElement.value.length"
-                            (click)="purposesField.nativeElement.value=''">
-                            close
-                        </mat-icon>
-                    </mat-chip-list>
-                    <mat-autocomplete #purposeAutoComplete="matAutocomplete"
-                        (optionSelected)="onPurposeAutocompleteSelection($event)">
-                        <mat-option *ngIf="purposesField.nativeElement.value.length && !(filteredOptions['purpose'] | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredOptions['purpose'] | async" [value]="option">
-                            {{ option.label }} <span class="u-text--xs t-fg--gray-md">{{ option.uri }}</span>
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find purposes using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Purpose'"
+                    [placeholder]="'Specify purpose(s) for this resource'"
+                    [hint]="'Find purposes using the typeahead and select them to associate'"
+                    [fieldName]="'purpose'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterPurposes">
+                </gprr-autocomplete-mat-chip>
             </div>
 
+            <!-- FUNCTIONS -->
             <div class="enrich__section">
-                <!-- FUNCTIONS -->
-                <mat-form-field floatLabel="always">
-                    <mat-label>Function</mat-label>
-                    <mat-chip-list #functionChipList>
-                        <mat-chip
-                            *ngFor="let function of functions"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeValue('function',function)">
-                            {{function.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #functionInput
-                            formControlName="$function"
-                            [matAutocomplete]="functionAutoComplete"
-                            [matChipInputFor]="functionChipList"
-                            (matChipInputTokenEnd)="addChip('function',$event)"
-                            placeholder="Specify function(s) for this resource">
-                        <mat-icon matSuffix
-                            *ngIf="functionsField.nativeElement.value.length"
-                            (click)="functionsField.nativeElement.value=''">
-                            close
-                        </mat-icon>
-                    </mat-chip-list>
-                    <mat-autocomplete #functionAutoComplete="matAutocomplete"
-                        (optionSelected)="onFunctionAutocompleteSelection($event)">
-                        <mat-option *ngIf="functionsField.nativeElement.value.length && !(filteredOptions['function'] | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredOptions['function'] | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find functions using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Function'"
+                    [placeholder]="'Specify function(s) for this resource'"
+                    [hint]="'Find functions using the typeahead and select them to associate'"
+                    [fieldName]="'function'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterFunctions">
+                </gprr-autocomplete-mat-chip>
             </div>
 
         </div>
@@ -89,76 +40,28 @@
 
         <div class="enrich__container">
 
+            <!-- TOPICS -->
             <div class="enrich__section">
-                <!-- TOPICS -->
-                <mat-form-field floatLabel="always">
-                    <mat-label>Topics</mat-label>
-                    <mat-chip-list #topicChipList>
-                        <mat-chip
-                            *ngFor="let topic of topics"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeValue('primaryTopic',topic)">
-                            {{topic.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #topicInput
-                            formControlName="$primaryTopic"
-                            [matAutocomplete]="topicAutoComplete"
-                            [matChipInputFor]="topicChipList"
-                            (matChipInputTokenEnd)="addChip('primaryTopic',$event)"
-                            placeholder="Specify topic(s) for this resource">
-                        <mat-icon matSuffix
-                            *ngIf="topicsField.nativeElement.value.length"
-                            (click)="topicsField.nativeElement.value=''">
-                            close
-                        </mat-icon>
-                    </mat-chip-list>
-                    <mat-autocomplete #topicAutoComplete="matAutocomplete"
-                        (optionSelected)="onTopicAutocompleteSelection($event)">
-                        <mat-option *ngIf="topicsField.nativeElement.value.length && !(filteredOptions['primaryTopic'] | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredOptions['primaryTopic'] | async" [value]="option">
-                            {{ option.label }} <span class="u-text--xs t-fg--gray-md">{{ option.uri }}</span>
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find topics using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Topic'"
+                    [placeholder]="'Specify topic(s) for this resource'"
+                    [hint]="'Find topics using the typeahead and select them to associate'"
+                    [fieldName]="'primaryTopic'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterTopics">
+                </gprr-autocomplete-mat-chip>
             </div>
 
+            <!-- SUBJECTS -->
             <div class="enrich__section">
-                <!-- SUBJECTS -->
-                <mat-form-field floatLabel="always">
-                    <mat-label>Subject</mat-label>
-                    <mat-chip-list #subjectChipList>
-                        <mat-chip
-                            *ngFor="let subject of subjects"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeValue('primarySubject',subject)">
-                            {{subject.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #subjectInput
-                            formControlName="$primarySubject"
-                            [matAutocomplete]="subjectAutoComplete"
-                            [matChipInputFor]="subjectChipList"
-                            (matChipInputTokenEnd)="addChip('primarySubject',$event)"
-                            placeholder="Specify subject(s) for this resource">
-                        <mat-icon matSuffix
-                            *ngIf="subjectsField.nativeElement.value.length"
-                            (click)="subjectsField.nativeElement.value=''">
-                            close
-                        </mat-icon>
-                    </mat-chip-list>
-                    <mat-autocomplete #subjectAutoComplete="matAutocomplete"
-                        (optionSelected)="onSubjectAutocompleteSelection($event)">
-                        <mat-option *ngIf="subjectsField.nativeElement.value.length && !(filteredOptions['primarySubject'] | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredOptions['primarySubject'] | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find subjects using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Subject'"
+                    [placeholder]="'Specify subject(s) for this resource'"
+                    [hint]="'Find subjects using the typeahead and select them to associate'"
+                    [fieldName]="'primarySubject'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterSubjects">
+                </gprr-autocomplete-mat-chip>
             </div>
 
         </div>
@@ -167,73 +70,28 @@
 
         <div class="enrich__container">
 
+            <!-- PLACES -->
             <div class="enrich__section">
-                <!-- PLACES -->
-                <mat-form-field floatLabel="always">
-                    <mat-label>Place</mat-label>
-                    <mat-chip-list #placeChipList>
-                        <mat-chip
-                            *ngFor="let place of places"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeValue('place',place)">
-                            {{place.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #placeInput
-                            formControlName="$place"
-                            [matAutocomplete]="placeAutoComplete"
-                            [matChipInputFor]="placeChipList"
-                            (matChipInputTokenEnd)="addChip('place',$event)"
-                            placeholder="Specify place(s) for this resource">
-                        <mat-icon matSuffix
-                            *ngIf="placesField.nativeElement.value.length"
-                            (click)="placesField.nativeElement.value=''">close</mat-icon>
-                    </mat-chip-list>
-                    <mat-autocomplete #placeAutoComplete="matAutocomplete"
-                        (optionSelected)="onPlaceAutocompleteSelection($event)">
-                        <mat-option *ngIf="placesField.nativeElement.value.length && !(filteredOptions['place'] | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredOptions['place'] | async" [value]="option">
-                            {{ option.label }} <span class="u-text--xs t-fg--gray-md">{{ option.uri }}</span>
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find places using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Place'"
+                    [placeholder]="'Specify place(s) for this resource'"
+                    [hint]="'Find places using the typeahead and select them to associate'"
+                    [fieldName]="'place'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterPlaces">
+                </gprr-autocomplete-mat-chip>
             </div>
 
+            <!-- CATEGORIES -->
             <div class="enrich__section">
-
-                <!-- CATEGORIES -->
-                <mat-form-field floatLabel="always">
-                    <mat-label>Category</mat-label>
-                    <mat-chip-list #categoryChipList>
-                        <mat-chip
-                            *ngFor="let category of categories"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeValue('category',category)">
-                            {{category.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #categoryInput
-                            formControlName="$category"
-                            [matAutocomplete]="categoryAutoComplete"
-                            [matChipInputFor]="categoryChipList"
-                            (matChipInputTokenEnd)="addChip('category',$event)"
-                            placeholder="Specify categories for this resource">
-                        <mat-icon matSuffix
-                            *ngIf="categoriesField.nativeElement.value.length"
-                            (click)="categoriesField.nativeElement.value=''">close</mat-icon>
-                    </mat-chip-list>
-                    <mat-autocomplete #categoryAutoComplete="matAutocomplete"
-                        (optionSelected)="onCategoryAutocompleteSelection($event)">
-                        <mat-option *ngIf="categoriesField.nativeElement.value.length && !(filteredOptions['category'] | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredOptions['category'] | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find categories using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Category'"
+                    [placeholder]="'Specify categories for this resource'"
+                    [hint]="'Find categories using the typeahead and select them to associate'"
+                    [fieldName]="'category'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterCategories">
+                </gprr-autocomplete-mat-chip>
             </div>
 
         </div>
@@ -241,39 +99,16 @@
 
 
         <div class="enrich__container">
-
+            <!-- AUDIENCE -->
             <div class="enrich__section">
-                <!-- AUDIENCE -->
-                <mat-form-field floatLabel="always">
-                    <mat-label>Audience</mat-label>
-                    <mat-chip-list #audienceChipList>
-                        <mat-chip
-                            *ngFor="let aud of audience"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeValue('audience',aud)">
-                            {{aud.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #audienceInput
-                            formControlName="$audience"
-                            [matAutocomplete]="audienceAutoComplete"
-                            [matChipInputFor]="audienceChipList"
-                            (matChipInputTokenEnd)="addChip('audience',$event)"
-                            placeholder="Specify audiences for this resource">
-                        <mat-icon matSuffix
-                            *ngIf="audienceField.nativeElement.value.length"
-                            (click)="audienceField.nativeElement.value=''">close</mat-icon>
-                    </mat-chip-list>
-                    <mat-autocomplete #audienceAutoComplete="matAutocomplete"
-                        (optionSelected)="onAudienceAutocompleteSelection($event)">
-                        <mat-option *ngIf="audienceField.nativeElement.value.length && !(filteredOptions['audience'] | async)?.length">No matches found</mat-option>
-                        <mat-option *ngFor="let option of filteredOptions['audience'] | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find audiences using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <gprr-autocomplete-mat-chip
+                    [label]="'Audience'"
+                    [placeholder]="'Specify audience(s) for this resource'"
+                    [hint]="'Find audiences using the typeahead and select them to associate'"
+                    [fieldName]="'audience'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterAudiences">
+                </gprr-autocomplete-mat-chip>
             </div>
 
         </div>

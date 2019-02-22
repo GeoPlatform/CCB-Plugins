@@ -14,8 +14,8 @@
 
     <!-- Review resource information prior to attempting registration -->
     <div *ngIf="!status.isSaved">
-        <div class="o-review__container">
 
+        <div class="o-review__container">
 
             <!-- Type-less properties -->
             <div class="m-review__section">
@@ -27,7 +27,7 @@
                     <span class="a-property-value" *ngIf="data.type">{{getTypeDisplayValue(data.type)}}</span>
                 </div>
                 <div class="a-property-display">
-                    <label>Name:</label>
+                    <label>Title:</label>
                     <span class="a-property-value">{{data.title}}</span>
                 </div>
                 <div class="a-property-display">
@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <div class="a-property-display">
-                    <label>Home Page:</label>
+                    <label>Landing Page:</label>
                     <div class="a-property-value">
                         <a *ngIf="data.landingPage" class="u-break--all"
                             href="{{data.landingPage}}" target="_blank">
@@ -50,14 +50,14 @@
                 <div class="a-property-display">
                     <label>Keywords:</label>
                     <div class="a-property-value">
-                        <span *ngIf="data.keywords && data.keywords.length">
-                            <span *ngFor="let key of data.keywords">{{key}}</span>
-                        </span>
+                        <mat-chip-list *ngIf="data.keywords && data.keywords.length" selectable="false">
+                            <mat-chip *ngFor="let key of data.keywords">{{key}}</mat-chip>
+                        </mat-chip-list>
                         <span *ngIf="!data.keywords||!data.keywords.length"><em>none specified</em></span>
                     </div>
                 </div>
                 <div class="a-property-display">
-                    <label>Resource Type(s):</label>
+                    <label>Specializations:</label>
                     <div class="a-property-value">
                         <mat-chip-list *ngIf="data.resourceTypes" selectable="false">
                             <mat-chip *ngFor="let resType of data.resourceTypes">{{resType.label}}</mat-chip>
@@ -96,7 +96,7 @@
                 <div *ngIf="'dcat:Dataset'===data.type">
 
                     <div class="a-property-display">
-                        <label>Distribution:</label>
+                        <label>Download URL:</label>
                         <div class="a-property-value">
                             <span *ngIf="data.distributions && data.distributions.length">
                                 <a href="{{data.distributions[0].accessURL}}" target="_blank"
@@ -148,18 +148,17 @@
 
             <!-- KG properties -->
             <div class="m-review__section">
+
                 <div class="a-review__heading">Knowledge Graph</div>
 
-                <div *ngIf="data.classifiers">
-                    <div *ngFor="let kgp of getClassifierProperties()"
-                        class="a-property-display">
-                        <label>{{kgp}}:</label>
-                        <div class="a-property-value" *ngIf="!data.classifiers[kgp]||!data.classifiers[kgp].length">not specified</div>
-                        <div class="a-property-value" *ngIf="data.classifiers[kgp]&&data.classifiers[kgp].length">
-                            <mat-chip-list selectable="false">
-                                <mat-chip *ngFor="let val of data.classifiers[kgp]" title="{{val.uri}}">{{val.label}}</mat-chip>
-                            </mat-chip-list>
-                        </div>
+                <div *ngFor="let kgp of getClassifierProperties()"
+                    class="a-property-display">
+                    <label>{{kgp}}:</label>
+                    <div class="a-property-value" *ngIf="!data.classifiers||!data.classifiers[kgp]||!data.classifiers[kgp].length"><em>none specified</em></div>
+                    <div class="a-property-value" *ngIf="data.classifiers&&data.classifiers[kgp]&&data.classifiers[kgp].length">
+                        <mat-chip-list selectable="false">
+                            <mat-chip *ngFor="let val of data.classifiers[kgp]" title="{{val.uri}}">{{val.label}}</mat-chip>
+                        </mat-chip-list>
                     </div>
                 </div>
 
@@ -213,7 +212,7 @@
             <button mat-raised-button matStepperPrevious>Back</button>
 
             <!-- register the resource -->
-            <button mat-raised-button color="accent"
+            <button mat-raised-button color="primary"
                 [disabled]="!data.createdBy"
                 (click)="registerResource()">
                 Register
