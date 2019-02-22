@@ -20,7 +20,6 @@ $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.
  */
 function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
-	wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
@@ -30,7 +29,6 @@ function geopportal_enqueue_scripts() {
 		wp_enqueue_style( 'styleguide-css', get_stylesheet_directory_uri() . '/css/styleguide.css');
 
 	wp_enqueue_script( 'popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' );
-	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 	wp_enqueue_script( 'geop-prism-js', get_stylesheet_directory_uri() . '/js/prism.js' );
 	wp_enqueue_script( 'geop-styleguide-js', get_stylesheet_directory_uri() . '/js/styleguide.js' );
@@ -40,6 +38,14 @@ function geopportal_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
 
+// Loads bootstrap resources, but only for pages that aren't Angular with bundled bootstrap.
+function geopportal_enqueue_bootstrap() {
+	if ( !is_page( array('geoplatform-search', 'geoplatform-items', 'register' ) ) ){
+		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
+		wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
+	}
+}
+add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_bootstrap' );
 
 /**
  * Loads all the unique scripts and styles for this theme. Overrides CCB's function.
