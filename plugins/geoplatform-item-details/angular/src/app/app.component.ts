@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Config, ItemService } from "geoplatform.client";
+import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
 import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
@@ -23,7 +24,7 @@ export class AppComponent {
     public error : ItemDetailsError;
     private template: any;
 
-    constructor(private el: ElementRef, http : HttpClient) {
+    constructor(private el: ElementRef, http : HttpClient, private rpm: RPMService) {
         let client = new NG2HttpClient(http);
         this.itemService = new ItemService(Config.ualUrl, client);
     }
@@ -46,10 +47,13 @@ export class AppComponent {
         this.itemService.get(match.id)
         .then( item => {
             this.item = item;
+            const TYPE = ItemHelper.getTypeLabel(item);
             this.updatePageTitle(
-                "GeoPlatform Resource : " + ItemHelper.getTypeLabel(item)
+                `GeoPlatform Resource : ${TYPE}`
                 // ItemHelper.getLabel(this.item)
             );
+            ;
+            this.rpm.logEvent(TYPE, 'Viewed', item.id);
         })
         .catch( e => {
             //display error message indicating failure to load item

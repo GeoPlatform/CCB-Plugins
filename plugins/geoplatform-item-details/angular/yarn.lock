@@ -2608,6 +2608,10 @@ generate-object-property@^1.1.0:
   version "0.0.0"
   resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#749f7bc6464e8cade18c320d405b7a08cd90a880"
 
+"geoplatform.rpm@git+https://github.com/GeoPlatform/rpm-js#develop":
+  version "0.1.6"
+  resolved "git+https://github.com/GeoPlatform/rpm-js#0394c6ecc0576abc855ac7d5925d30ae1a0372ea"
+
 "geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
   version "2.0.0"
   resolved "git+http://github.com/GeoPlatform/style.git#6d4ae3825c9aa3a4ee1bc513404c1d547c4fb3a0"
