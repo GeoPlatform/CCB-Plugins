@@ -19,5 +19,9 @@ export class RelatedComponent implements OnInit {
         this.isCollapsed = !this.isCollapsed;
     }
 
+    getRelated() {
+        return this.related ? this.related.filter(r=>!!r) : [];
+    }
+
 
 }
