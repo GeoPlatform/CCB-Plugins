@@ -87,6 +87,8 @@ function geopitems_establish_globals() {
 		window.GeoPlatform.ALLOW_SSO_LOGIN = "false";
 		window.GeoPlatform.LOGIN_URL = "<?php echo wp_login_url() ?>";
 		window.GeoPlatform.LOGOUT_URL = "<?php echo wp_logout_url() ?>";
+        window.GeoPlatform.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
+
   </script>
 	<?php
 }

@@ -18,13 +18,13 @@
 
     <div class="m-list">
         <div *ngFor="let rel of related" class="m-list__item">
-            <span *ngIf="!rel.href">
+            <span *ngIf="!rel || !rel.href">
                 {{rel.label||"Un-titled resource"}} <em>(no url specified)</em>
             </span>
-            <a *ngIf="rel.href" href="{{rel.href}}" target="_blank">
+            <a *ngIf="rel && rel.href" href="{{rel.href}}" target="_blank">
                 {{rel.label||"Un-titled resource"}}
             </a>
-            <p class="t-fg--gray-md" *ngIf="rel.description">{{rel.description}}</p>
+            <p class="t-fg--gray-md" *ngIf="rel && rel.description">{{rel.description}}</p>
         </div>
     </div>
 
