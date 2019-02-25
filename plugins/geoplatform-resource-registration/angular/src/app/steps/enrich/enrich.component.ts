@@ -135,6 +135,9 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
      */
     private filterResultsForType(type: string, value: string): Promise<string[]> {
 
+        let current = this.getValues(type);
+        current = current.map(c=>c.uri);
+
         //check for null/empty value (to prevent suggestions without inputs from user)
         //check for short inputs to force user to provide minimum # of chars
         if(!value || value.length < 2) return Promise.resolve([]);
@@ -148,7 +151,13 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
             query.setTypes(this.data[ModelProperties.TYPE]);
 
         return this.kgService.suggest(query)
-        .then( response => response.results )
+        .then( response => {
+            let hits = response.results;
+            if(current && current.length) {
+                hits = hits.filter(o => { return current.indexOf(o.uri)<0; });
+            }
+            return hits;
+        })
         .catch(e => {
             //display error message indicating an issue searching...
         });
@@ -164,4 +173,13 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
                 break;
         }
     }
+
+
+    public getValues ( key : string ) : any[] {
+        let existing = this.formGroup.get(key).value;
+        if(!existing) return [];
+        if(!Array.isArray(existing)) return [existing];
+        return existing;
+    }
+
 }

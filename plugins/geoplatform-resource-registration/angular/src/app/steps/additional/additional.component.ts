@@ -123,10 +123,19 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     // private filterCommunities(value: string): Promise<string[]> {
     filterCommunities = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.COMMUNITIES);
+        current = current.map(c=>c.id);
+
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
         let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue);
         return this.itemService.search(query)
-        .then( response => response.results )
+        .then( response => {
+            let hits = response.results;
+            if(current && current.length) {
+                hits = hits.filter(o => { return current.indexOf(o.id)<0; });
+            }
+            return hits;
+        })
         .catch(e => {
             //display error message indicating an issue searching...
             this.hasError = new StepError("Error Searching Communities", e.message);
@@ -135,12 +144,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
 
     addKeyword(event: MatChipInputEvent): void {
-        this.addChip(ModelProperties.KEYWORDS, event);
-    }
 
-
-    private addChip( type: string, event: MatChipInputEvent ) {
-
+        const type = ModelProperties.KEYWORDS;
         const input = event.input;
         const value = event.value;
 
@@ -149,8 +154,10 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
             let val = value;
             if(typeof(value) === 'string') val = value.trim();
             let existing = this.formGroup.get(type).value || [];
-            existing.push(val);
-            this.formGroup.get(type).setValue(existing);
+            if(existing.indexOf(value) < 0) {
+                existing.push(val);
+                this.formGroup.get(type).setValue(existing);
+            }
         }
 
         // Reset the input value
@@ -191,7 +198,6 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         switch(event.type) {
             case 'reset':
                 this.hasError = null;
-                // this.formGroupPrivate.reset();
                 break;
         }
     }

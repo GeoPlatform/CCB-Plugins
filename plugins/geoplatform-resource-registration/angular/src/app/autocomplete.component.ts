@@ -6,6 +6,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import {
     MatAutocompleteSelectedEvent,
+    MatAutocompleteTrigger,
     MatChipInputEvent,
     MatAutocomplete
 } from '@angular/material';
@@ -53,7 +54,7 @@ import {map, flatMap, startWith} from 'rxjs/operators';
                   placeholder="{{placeholder}}">
               <mat-icon matSuffix
                     *ngIf="formGroup.get(hiddenFieldName).value?.length"
-                    (click)="field?.nativeElement.value=''">
+                    (click)="clearInput()">
                     close
               </mat-icon>
           </mat-chip-list>
@@ -81,21 +82,16 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
 
     public hiddenFieldName : string;
     public filteredOptions: Observable<string[]>;
-    @ViewChild('acmcAutcomplete') matAutoComplete: MatAutocomplete;
+    @ViewChild('acmcAutoComplete') matAutoComplete: MatAutocomplete;
+    @ViewChild('acmcInput', { read: MatAutocompleteTrigger }) acTrigger: MatAutocompleteTrigger;
     @ViewChild('acmcInput') field: ElementRef;
 
-    constructor() {
 
-    }
+    constructor() { }
 
     ngOnInit() {
         this.filteredOptions = this.formGroup.get('$'+this.fieldName)
-        .valueChanges.pipe(
-            flatMap(value => {
-                let result = this.filterValues(value);
-                return result;
-            })
-        );
+        .valueChanges.pipe( flatMap(value => this.filterValues(value) ) );
     }
 
     ngOnChanges( changes : SimpleChanges ) {
@@ -106,30 +102,33 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() { }
 
+    /**
+     *
+     */
     get values() {
         return this.formGroup.get(this.fieldName).value || [];
     }
 
+    /**
+     * @param {string} value - user input to filter options with
+     * @return {Promise} resolving array of string options
+     */
     private filterValues(value: string): Promise<string[]> {
         if(this.filterFn) return this.filterFn(value);
         else return Promise.resolve([]);
     }
 
+    /**
+     * @param {MatChipInputEvent} event - event containing value to be applied
+     */
     addValue(event: MatChipInputEvent): void {
         if(!event || !event.value) return;
         // Add only when MatAutocomplete is not open
         // To make sure this does not conflict with OptionSelected Event
-        if (!this.matAutoComplete.isOpen) {
-            this.addChip('$'+this.fieldName, this.fieldName, event);
-        }
-    }
+        if (this.matAutoComplete.isOpen) return;
 
-    /**
-     * @param {string} from - temporary model property
-     * @param {string} to - actual model property
-     * @param {MatChipInputEvent} event - event containing value to be applied
-     */
-    private addChip( from: string, to: string, event: MatChipInputEvent ) {
+        let from = '$'+this.fieldName;
+        let to = this.fieldName
 
         const input = event.input;
         const value = event.value;
@@ -153,19 +152,28 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
 
     }
 
-
-    removeValue(pub: any): void {
+    /**
+     * @param {any} value - currently selected value to remove
+     */
+    removeValue(value: any): void {
         let existing = this.formGroup.get(this.fieldName).value;
         let index = -1;
-        existing.forEach( (p,i) => { if(p.id === pub.id) { index = i; } });
+        existing.forEach( (p,i) => { if(p.id === value.id) { index = i; } });
         if (index >= 0) {
             existing.splice(index, 1);
             this.formGroup.get(this.fieldName).setValue(existing);
         }
+
+        //if user is removing an existing value, then abandon whatever they have
+        // entered in the INPUT because the dropdown is populated with values
+        // that may have been filtered to not include these existing selected values
+        this.clearInput();
     }
 
 
-
+    /**
+     *
+     */
     onAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         if(!event || !event.option || !event.option.value) return;
 
@@ -174,17 +182,26 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
         this.formGroup.get(this.fieldName).setValue(existing);
 
         //clear input and blur so autocomplete isn't left in weird state after selection
-        this.field.nativeElement.value='';
-        this.field.nativeElement.blur();
-        this.formGroup.get('$'+this.fieldName).setValue(null);
+        this.clearInput();
     }
+
 
     getValue(field) { return this.formGroup.get(field).value; }
     setValue(field, value) { this.formGroup.get(field).setValue(value); }
+
 
     public hasInput() {
         return this.field &&
                this.field.nativeElement.value &&
                this.field.nativeElement.value.length;
+    }
+
+
+    public clearInput() {
+        if(this.field) this.field.nativeElement.value='';
+        this.formGroup.get(this.hiddenFieldName).setValue(null);
+        if(this.matAutoComplete.isOpen) {
+            this.acTrigger.closePanel();
+        }
     }
 }

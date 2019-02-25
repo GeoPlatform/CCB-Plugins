@@ -359,8 +359,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         let type = this.getValue(ModelProperties.TYPE);
         if(!type || !type.length) return Promise.resolve([]);
 
+        let current = this.getValue(ModelProperties.RESOURCE_TYPES) || [];
         let options = this.availableResourceTypes[type]||[];
         let results = options.filter(rt => {
+            if(current && current.length && current.filter(c=>c.uri===rt.uri).length)
+                return false;
             return ~rt.label.toLowerCase().indexOf(filterValue);
         });
         return Promise.resolve(results);
@@ -369,11 +372,19 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
     // public filterPublishers(value: string): Promise<string[]> {
     filterPublishers = (value:string) : Promise<string[]> => {
+
+        let current = this.getValue(ModelProperties.PUBLISHERS) || [];
+        current = current.map(c=>c.id);
+
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
         let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue);
         return this.itemService.search(query)
         .then( response => {
-            return response.results
+            let hits = response.results;
+            if(current && current.length) {
+                hits = hits.filter(o => { return current.indexOf(o.id)<0; });
+            }
+            return hits;
         })
         .catch(e => {
             //display error message indicating an issue searching...
