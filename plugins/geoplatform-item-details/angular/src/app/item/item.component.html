@@ -72,14 +72,13 @@
                     <span *ngIf="!item?.issued">Not specified</span>
                 </div>
 
-                <div class="m-article__desc" *ngIf="isAsset()">
+                <!-- <div class="m-article__desc" *ngIf="isAsset() && item?.source?">
                     <div><strong>Source Metadata</strong></div>
-                    <span *ngIf="!item?.source?.uri">Not specified</span>
-                    <a *ngIf="item?.source?.uri" href="{{item.source.uri}}"
+                    <a href="{{item.source.uri}}"
                         target="_blank" class="u-break--all">
                         {{item.source.label||item.source.uri}}
                     </a>
-                </div>
+                </div> -->
 
                 <div class="m-article__desc" *ngIf="isAsset()">
                     <div><strong>Home Page </strong></div>
@@ -263,8 +262,13 @@
             <gpid-primary-action [item]="item"></gpid-primary-action>
 
             <div *ngIf="isAsset()">
+
                 <gpid-like-action [item]="item" [service]="itemService"></gpid-like-action>
+
+                <gpid-download-action [item]="item"></gpid-download-action>
+
                 <gpid-export-action [item]="item" [service]="itemService"></gpid-export-action>
+
             </div>
 
             <gpid-edit-action [item]="item"></gpid-edit-action>

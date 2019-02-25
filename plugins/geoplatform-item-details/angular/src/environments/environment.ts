@@ -13,6 +13,6 @@ export const environment = {
   helpUrl: 'https://sit.geoplatform.us/help/apps/geoplatform-item-details/',
   root: 'wp-content/plugins/geoplatform-item-details/',
   assets: '/assets',
-  rpmUrl: 'https://rpm.geoplatform.gov',
-  rpmToken: 'f822e078fcb182110b5de9deeba85e7e'
+  rpmUrl: 'https://sit-rpm.geoplatform.us',
+  rpmToken: '47d10365bff7ac8d86a96bd4537b2891'
 };

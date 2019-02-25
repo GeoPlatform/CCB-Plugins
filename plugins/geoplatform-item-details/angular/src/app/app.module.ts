@@ -73,7 +73,8 @@ import { DatasetsComponent } from './item/collections/datasets/datasets.componen
 
 import { PluginAuthService } from './shared/auth.service';
 
-import { RPMStatsService } from './shared/rpmstats.service'
+import { RPMStatsService } from './shared/rpmstats.service';
+import { DownloadComponent } from './item/actions/download/download.component'
 let RPMStatsServiceFactory = (http: HttpClient) => {
     return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
 }
@@ -144,7 +145,8 @@ export function initializeApp() {
         AltTitlesComponent,
         AltIdsComponent,
         UseConstraintsComponent,
-        PropertyComponent
+        PropertyComponent,
+        DownloadComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),
