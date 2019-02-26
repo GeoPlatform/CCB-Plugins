@@ -60,7 +60,7 @@
                     <label>Specializations:</label>
                     <div class="a-property-value">
                         <mat-chip-list *ngIf="data.resourceTypes" selectable="false">
-                            <mat-chip *ngFor="let resType of data.resourceTypes">{{resType.label}}</mat-chip>
+                            <mat-chip *ngFor="let resType of data.resourceTypes">{{resType}}</mat-chip>
                         </mat-chip-list>
                         <span *ngIf="!data.resourceTypes||!data.resourceTypes.length"><em>none specified</em></span>
                     </div>
@@ -204,18 +204,24 @@
 
             <!-- if user wants to abort and start fresh -->
             <button mat-raised-button matStepperPrevious
+                [disabled]="status.isSaving || status.isSaved"
                 (click)="startOver()">
                 Cancel &amp; Start Over
             </button>
 
             <!-- in case user needs to go back to make changes -->
-            <button mat-raised-button matStepperPrevious>Back</button>
+            <button mat-raised-button matStepperPrevious
+                [disabled]="status.isSaving || status.isSaved">
+                Back
+            </button>
 
             <!-- register the resource -->
             <button mat-raised-button color="primary"
-                [disabled]="!data.createdBy"
+                [disabled]="!data.createdBy || status.isSaving || status.isSaved"
                 (click)="registerResource()">
+                <mat-spinner [diameter]="30" *ngIf="status.isSaving" style="display:inline-block"></mat-spinner>
                 Register
+
             </button>
 
         </div>

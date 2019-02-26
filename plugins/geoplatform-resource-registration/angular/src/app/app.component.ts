@@ -17,6 +17,7 @@ import { AuthenticatedComponent } from './authenticated.component';
 import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 import { ModelProperties } from './model';
+import { environment } from '../environments/environment';
 
 export interface AppEvent {
     type   : string;
@@ -250,13 +251,14 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // TEMPORARY for dev purposes only...
             // type: 'dcat:Dataset',
             // title: 'test',
-            // createdBy: 'tester'
             // ----------------------------------
         };
+        // if('development' === environment.env) {
+        //     this.item.createdBy = 'tester';
+        // }
         if(this.user) {
             this.item[ModelProperties.CREATED_BY] = this.user.username;
         }
-
 
         let searchParams = window.location.search;
         if(searchParams) {

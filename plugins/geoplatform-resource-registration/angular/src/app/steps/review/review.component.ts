@@ -154,6 +154,8 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
      */
     registerResource( ) {
 
+        this.status.isSaving = true;
+        
         this.generateURI().then( item => {
             return new ItemService(Config.ualUrl, this.httpClient).save(item)
         })

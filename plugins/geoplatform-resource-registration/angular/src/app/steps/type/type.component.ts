@@ -134,8 +134,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 this.setValue(ModelProperties.LANDING_PAGE, data[ModelProperties.LANDING_PAGE]||null );
 
                 if(data[ModelProperties.RESOURCE_TYPES] && data[ModelProperties.RESOURCE_TYPES].length) {
-                    this.formGroup.get(ModelProperties.RESOURCE_TYPES)
-                        .setValue(data[ModelProperties.RESOURCE_TYPES]);
+                    let itemType = data[ModelProperties.TYPE];
+                    let selected = this.availableResourceTypes[itemType].filter( (type) => {
+                        return ~data[ModelProperties.RESOURCE_TYPES].indexOf(type.uri)
+                    });
+                    this.formGroup.get(ModelProperties.RESOURCE_TYPES).setValue(selected);
                 }
                 if(data[ModelProperties.PUBLISHERS] && data[ModelProperties.PUBLISHERS].length) {
                     this.formGroup.get(ModelProperties.PUBLISHERS)
@@ -221,7 +224,6 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
      */
     onFormChange( formChange ) {
         // console.log("Form change: " + JSON.stringify(formChange));
-
         this.checkExists();
     }
 
@@ -400,13 +402,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     checkExists() {
         if(this.checkDebounce) {
             clearTimeout(this.checkDebounce);
-            this.checkDebounce = setTimeout(() => {
-                this.checkDebounce = null;
-                this.checkExists();
-            });
-            return;
         }
-        this.doCheckExists();
+        this.checkDebounce = setTimeout(() => {
+            this.checkDebounce = null;
+            this.doCheckExists();
+        }, 500);
     }
 
     doCheckExists() {
