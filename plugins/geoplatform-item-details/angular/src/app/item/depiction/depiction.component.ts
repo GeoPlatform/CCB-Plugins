@@ -5,6 +5,8 @@ import {
     DomSanitizer, SafeResourceUrl, SafeUrl
 } from '@angular/platform-browser';
 
+import { Config, ItemTypes } from "geoplatform.client";
+
 import { environment } from '../../../environments/environment';
 
 
@@ -43,33 +45,66 @@ export class ImageFallbackDirective {
 })
 export class DepictionComponent implements OnInit {
 
-    @Input() thumbnail : Thumbnail;
-    @Input() fallback : string = `${environment.assets}/no-thumb.png`;
-
+    @Input() item : any;
 
     constructor(private sanitizer: DomSanitizer) { }
 
     ngOnInit() {
     }
 
-    getBackgroundImage() {
-        if(!this.thumbnail)
-            return `url(${this.fallback})`;
+    getThumbnailUrl() {
+        if(this.item.thumbnail && this.item.thumbnail.url)
+            return this.item.thumbnail.url;
+        return Config.ualUrl + '/api/items/' + this.item.id + '/thumbnail';
+    }
 
-        let type = this.thumbnail.mediaType || 'image/png';
-        let content = this.thumbnail.contentData;
-        return this.sanitizer.bypassSecurityTrustStyle(`url(data:${type};base64,${content})`);
+    getBackgroundImage() {
+        if(!this.item || !this.item.thumbnail) {
+            return this.getFallbackBackgroundImage();
+        }
+
+        let thumbnail = this.item.thumbnail;
+        let type = thumbnail.mediaType || 'image/png';
+
+        if(thumbnail.contentData) {
+            let content = thumbnail.contentData;
+            return this.sanitizer.bypassSecurityTrustStyle(`url(data:${type};base64,${content})`);
+        }
+    }
+
+    getFallbackBackgroundImage() {
+        let url = this.getFallbackUrl();
+        return `url(${url})`;
     }
 
     isEmpty() {
-        return !this.thumbnail || ( !this.thumbnail.url && !this.thumbnail.contentData );
+        return !this.item || !this.item.thumbnail ||
+            ( !this.item.thumbnail.url && !this.item.thumbnail.contentData );
     }
 
     hasURL() {
-        return this.thumbnail && !!this.thumbnail.url;
+        return this.item.thumbnail && !!this.item.thumbnail.url;
     }
 
     hasContentData() {
-        return this.thumbnail && !!this.thumbnail.contentData && !this.thumbnail.url;
+        return this.item.thumbnail && !!this.item.thumbnail.contentData && !this.item.thumbnail.url;
+    }
+
+    getFallbackUrl() {
+        let path = 'no-thumb.png';
+        switch(this.item.type) {
+            case ItemTypes.DATASET :        path = 'icons/dataset.svg'; break;
+            case ItemTypes.SERVICE :        path = 'icons/service.svg'; break;
+            case ItemTypes.LAYER :          path = 'icons/layer.svg'; break;
+            case ItemTypes.MAP :            path = 'icons/map.svg'; break;
+            case ItemTypes.GALLERY :        path = 'icons/gallery.svg'; break;
+            case ItemTypes.COMMUNITY :      path = 'icons/community.svg'; break;
+            case ItemTypes.ORGANIZATION :   path = 'icons/organization.svg'; break;
+            case ItemTypes.CONTACT :        path = 'icons/vcard.svg'; break;
+            case ItemTypes.PERSON :         path = 'icons/vcard.svg'; break;
+            case ItemTypes.CONCEPT :        path = 'icons/concept.svg'; break;
+            case ItemTypes.CONCEPT_SCHEME : path = 'icons/conceptscheme.svg'; break;
+        }
+        return `${environment.assets}/${path}`;
     }
 }

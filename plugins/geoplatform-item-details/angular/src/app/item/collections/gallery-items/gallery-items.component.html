@@ -19,7 +19,7 @@
     <div *ngIf="items && items.length" class="o-gallery__items">
         <div *ngFor="let item of items" class="o-gallery__item">
             <div *ngIf="item.asset">
-                <gpid-depiction [thumbnail]="item.asset.thumbnail"></gpid-depiction>
+                <gpid-depiction [item]="item.asset"></gpid-depiction>
                 <gpid-resource-link [item]="item.asset"></gpid-resource-link>
             </div>
         </div>

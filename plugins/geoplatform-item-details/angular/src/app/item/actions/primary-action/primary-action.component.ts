@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTypes } from "geoplatform.client";
+import { Config, ItemTypes } from "geoplatform.client";
 
 import { environment } from '../../../../environments/environment';
 
@@ -131,17 +131,12 @@ export class PrimaryActionComponent implements OnInit {
         window.open(this.item.landingPage, "_blank");
     }
 
-
+    /**
+     *
+     */
     openInObjectEditor() {
-        let prefix = '', ext = '.gov';
-        let env = environment.env;
-        if('dev' === env || 'sit' === env) {
-            prefix = 'sit-';
-            ext = '.us';
-        } else if('stg' === env)
-            prefix = 'stg-';
-        let url = 'https://' + prefix + 'oe.geoplatform' + ext + '/view/' + this.item.id;
-        window.location.href = url;
+        let url = Config.ualUrl.replace('ual','oe') + '/view/' + this.item.id;
+        window.open(url, '_blank');
     }
 
 }

@@ -68,7 +68,7 @@
 
                 <div class="m-article__desc" *ngIf="isAsset()">
                     <div><strong>Issued</strong></div>
-                    <span *ngIf="item?.issued">{{item.issued|date}}</span>
+                    <span *ngIf="item?.issued">{{item.issued|date:'medium':'UTC'}}</span>
                     <span *ngIf="!item?.issued">Not specified</span>
                 </div>
 
@@ -251,9 +251,7 @@
 
 
         <!-- THUMBNAIL -->
-        <gpid-depiction class="m-article" *ngIf="isAsset()"
-            [thumbnail]="item?.thumbnail">
-        </gpid-depiction>
+        <gpid-depiction class="m-article" [item]="item"></gpid-depiction>
 
 
         <!-- ACTIONS -->

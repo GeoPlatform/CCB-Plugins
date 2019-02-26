@@ -23,12 +23,14 @@ export class LikeActionComponent implements OnInit {
     doAction() {
         if(!this.item || !this.item.id || !this.service) return;
 
-        this.service.like(this.item.id)
-        .then( () => {
-            //show something
+        this.service.like(this.item)
+        .then( (updatedItem) => {
+            if(updatedItem.statistics) {
+                this.item.statistics.numLikes = updatedItem.statistics.numLikes || 0;
+            }
         })
         .catch( e => {
-            //show error message
+            console.log("Error liking the resource: " + e.message);
         })
     }
 

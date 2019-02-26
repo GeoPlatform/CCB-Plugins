@@ -29,6 +29,7 @@ export class ServiceStatsComponent implements OnInit {
     public svcStatsData : any;
     public isFetchingData : boolean = true;
     public error : ItemDetailsError;
+    public emptyMessage: boolean = false;
 
     private googleIsLoaded : boolean = false;
     private googleWaitAttempts : number = 0;
@@ -53,6 +54,7 @@ export class ServiceStatsComponent implements OnInit {
             //TODO fetch Service stats...
             this.getServiceHistory()
             .then( data => {
+                this.isFetchingData = false;
                 this.svcStatsData = data;
                 this.initChart(true);
             })
@@ -73,6 +75,15 @@ export class ServiceStatsComponent implements OnInit {
 
 
     initChart( rebuild:boolean = false ) {
+
+        if(!this.svcStatsData || !this.svcStatsData.length) {
+            console.log("Service statistics history data came back empty");
+            this.emptyMessage = true;
+            return;
+        }
+        this.emptyMessage = false;
+
+
         if(!this.googleIsLoaded) {
             if(this.googleWaitAttempts < 5) {
                 //wait just a bit more for google charts api to finish loading
@@ -84,15 +95,13 @@ export class ServiceStatsComponent implements OnInit {
             return;
         }
 
-        //draw whichever chart is currently visible
-        setTimeout( () => {
-            // this.drawWeeklyChart();
-        }, 100);
+        //actually draw the chart
+        setTimeout( () => { this.drawChart() }, 100);
     }
 
 
 
-    drawWeeklyChart() {
+    drawChart() {
 
         var data = new GoogleCharts.api.visualization.DataTable();
         data.addColumn('string', 'Date'); // Implicit domain label col.
@@ -102,7 +111,7 @@ export class ServiceStatsComponent implements OnInit {
 
         let rows = [], max = 0;
 
-        (this.svcStatsData || []).forEach( (point,i) => {
+        this.svcStatsData.forEach( (point,i) => {
             // compliant: true
             // d: "2019-01-22T00:00:00.000Z"
             // online: true
@@ -135,8 +144,6 @@ export class ServiceStatsComponent implements OnInit {
             }
         };
 
-        // this.isFetchingData = false;
-
         let el = document.getElementById('stats_chart');
         var chart = new GoogleCharts.api.visualization.LineChart(el);
         chart.draw(data, options);
@@ -148,7 +155,6 @@ export class ServiceStatsComponent implements OnInit {
      * @return {Promise} containing historical data or empty array or rejecting with error
      */
     getServiceHistory() : Promise<any> {
-
 
         let id = this.item.id;
         if(this.item.identifiers && this.item.identifiers.length) {
@@ -162,16 +168,8 @@ export class ServiceStatsComponent implements OnInit {
             }
         }
 
-        let url = environment.svcHistoryUrl;
-        if(!url) {
-            return Promise.reject(
-                new Error("URL to fetch service status history is not configured")
-            );
-        }
-
-        url = url.replace(/\{id\}/, id);
-
-        //https://sit-dashboard.geoplatform.us/api/sd/service/.../history?days=6&rollupByDay=true&stub=28
+        //https://dashboard.geoplatform.gov/api/sd/service/.../history?days=6&rollupByDay=true&stub=28
+        let url = Config.ualUrl.replace('ual','dashboard') + '/api/sd/service/' + id + '/history';
         let option = {
             method: "GET",
             responseType: 'json',

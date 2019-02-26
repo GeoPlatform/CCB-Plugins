@@ -1,4 +1,5 @@
 import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Input } from '@angular/core';
+import { Config } from 'geoplatform.client';
 
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { environment } from '../../../../environments/environment';
@@ -48,11 +49,7 @@ export class EditActionComponent extends AuthenticatedComponent implements OnIni
 
     getEditUrl() : string {
         if(!this.item || !this.item.id) return '';
-        let url = environment.editUrl;
-        if(!url) {
-            console.log("EditAction - URL to edit items is not configured");
-        }
-        return url.replace(/\{id\}/, this.item.id);
+        return Config.ualUrl.replace('ual','oe') + '/edit/' + this.item.id;
     }
 
 }
