@@ -7,8 +7,11 @@
             times by other users
         </span>
     </div>
-    <button type="button" class="btn btn-pink btn-block" (click)="doAction()">
-        <span class="fas fa-heart"></span> Like
+    <button type="button" class="btn btn-pink btn-block" (click)="doAction()"
+        [disabled]="processing">
+        <span class="fas fa-heart"></span>
+        <span *ngIf="!processing">Like</span>
+        <span *ngIf="processing">Liking...</span>
     </button>
     <hr>
 </div>

@@ -14,6 +14,8 @@ export class LikeActionComponent implements OnInit {
     @Input() item : any;
     @Input() service : ItemService;
 
+    public processing : boolean = false;
+
     constructor() {
     }
 
@@ -23,13 +25,20 @@ export class LikeActionComponent implements OnInit {
     doAction() {
         if(!this.item || !this.item.id || !this.service) return;
 
+        this.processing = true;
         this.service.like(this.item)
         .then( (updatedItem) => {
+            this.processing = false;
             if(updatedItem.statistics) {
-                this.item.statistics.numLikes = updatedItem.statistics.numLikes || 0;
+                if(!this.item.statistics) {
+                    this.item.statistics = updatedItem.statistics;
+                } else {
+                    this.item.statistics.numLikes = updatedItem.statistics.numLikes || 0;
+                }
             }
         })
         .catch( e => {
+            this.processing = false;
             console.log("Error liking the resource: " + e.message);
         })
     }

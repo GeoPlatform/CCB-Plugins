@@ -68,7 +68,7 @@
 
                 <div class="m-article__desc" *ngIf="isAsset()">
                     <div><strong>Issued</strong></div>
-                    <span *ngIf="item?.issued">{{item.issued|date:'medium':'UTC'}}</span>
+                    <span *ngIf="item?.issued">{{item.issued|date:'mediumDate':'UTC'}}</span>
                     <span *ngIf="!item?.issued">Not specified</span>
                 </div>
 
