@@ -65,7 +65,10 @@ function geopregister_establish_globals() {
   ?>
   <script type="text/javascript">
 		window.GeoPlatformPluginEnv = window.GeoPlatformPluginEnv || {}
-		window.GeoPlatformPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
+        if(!window.GeoPlatformPluginEnv.wpUrl)
+		      window.GeoPlatformPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
+        if(!window.GeoPlatformPluginEnv.ualUrl)
+            window.GeoPlatformPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
 
 		window.GeoPlatform = window.GeoPlatform || {};
 		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
