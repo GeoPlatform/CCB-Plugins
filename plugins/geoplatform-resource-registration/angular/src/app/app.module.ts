@@ -27,17 +27,24 @@ import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
-export function initializeApp() {
-  return () => {
-      Config.configure(environment);
-  }
-}
-
 import { AutocompleteMatChipComponent } from "./autocomplete.component";
-
 import { TokenInterceptor } from 'geoplatform.ngoauth/angular'
 import { PluginAuthService } from "./auth.service";
 
+
+
+export function initializeApp() {
+  return () => {
+      Config.configure(environment);
+
+      //optionally, if run-time environment variables specified,
+      // add those (overwriting any duplicates)
+      if((<any>window).GP_ResRegPluginEnv) {
+          // console.log("Configuring app using run-time values");
+          Config.configure((<any>window).GP_ResRegPluginEnv);
+      }
+  }
+}
 
 
 

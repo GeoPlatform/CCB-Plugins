@@ -183,11 +183,13 @@ add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
 function geopsearch_establish_globals() {
   ?>
   <script type="text/javascript">
-		window.GeoPlatformPluginEnv = window.GeoPlatformPluginEnv || {}
-        if(!window.GeoPlatformPluginEnv.wpUrl)
-		      window.GeoPlatformPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
-        if(!window.GeoPlatformPluginEnv.ualUrl)
-            window.GeoPlatformPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
+		window.GP_SearchPluginEnv = {}
+        window.GP_SearchPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
+        window.GP_SearchPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
+        var rpmUrl = "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : '' ?>";
+        var rpmToken = "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>";
+        if(rpmUrl) window.GP_SearchPluginEnv.rpmUrl = rpmUrl;
+        if(rpmToken) window.GP_SearchPluginEnv.rpmToken = rpmToken;
 
 		window.GeoPlatform = window.GeoPlatform || {};
 		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'

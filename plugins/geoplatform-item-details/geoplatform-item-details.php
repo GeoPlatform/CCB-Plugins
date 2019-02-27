@@ -78,11 +78,13 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details.p
 function geopitems_establish_globals() {
   ?>
   <script type="text/javascript">
-		window.GeoPlatformPluginEnv = window.GeoPlatformPluginEnv || {}
-        if(!window.GeoPlatformPluginEnv.wpUrl)
-		      window.GeoPlatformPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
-        if(!window.GeoPlatformPluginEnv.ualUrl)
-            window.GeoPlatformPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
+		window.GP_ItemDetailsPluginEnv = {}
+        window.GP_ItemDetailsPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
+        window.GP_ItemDetailsPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
+        var rpmUrl = "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : '' ?>";
+        var rpmToken = "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>";
+        if(rpmUrl) window.GP_ItemDetailsPluginEnv.rpmUrl = rpmUrl;
+        if(rpmToken) window.GP_ItemDetailsPluginEnv.rpmToken = rpmToken;
 
 		window.GeoPlatform = window.GeoPlatform || {};
 		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'

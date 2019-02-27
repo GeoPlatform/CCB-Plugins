@@ -83,15 +83,14 @@ let RPMStatsServiceFactory = (http: HttpClient) => {
 
 export function initializeApp() {
     return () => {
-      //initial configuration via build-time environment variables
-      Config.configure(environment);
+        //initial configuration via build-time environment variables
+        Config.configure(environment);
 
-      //optionally, if run-time environment variables specified,
-      // add those (overwriting any duplicates)
-      if((<any>window).GeoPlatformPluginEnv) {
-          // console.log("Configuring app using run-time values");
-          Config.configure((<any>window).GeoPlatformPluginEnv);
-      }
+        //optionally, override variables using GP values injected from WP
+        if((<any>window).GP_ItemDetailsPluginEnv) {
+            // console.log("Configuring app using run-time values");
+            Config.configure((<any>window).GP_ItemDetailsPluginEnv);
+        }
     }
 }
 

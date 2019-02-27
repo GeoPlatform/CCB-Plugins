@@ -92,9 +92,9 @@ export function initializeApp() {
 
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
-      if((<any>window).GeoPlatformPluginEnv) {
+      if((<any>window).GP_SearchPluginEnv) {
           // console.log("Configuring app using run-time values");
-          Config.configure((<any>window).GeoPlatformPluginEnv);
+          Config.configure((<any>window).GP_SearchPluginEnv);
       }
   }
 }
