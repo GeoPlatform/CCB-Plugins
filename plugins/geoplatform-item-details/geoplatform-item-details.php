@@ -78,7 +78,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details.p
 function geopitems_establish_globals() {
   ?>
   <script type="text/javascript">
-		window.GP_ItemDetailsPluginEnv = {}
+		window.GP_ItemDetailsPluginEnv = {};
         window.GP_ItemDetailsPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
         window.GP_ItemDetailsPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
         var rpmUrl = "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : '' ?>";

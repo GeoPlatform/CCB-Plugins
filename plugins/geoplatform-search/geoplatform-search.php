@@ -183,7 +183,7 @@ add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
 function geopsearch_establish_globals() {
   ?>
   <script type="text/javascript">
-		window.GP_SearchPluginEnv = {}
+		window.GP_SearchPluginEnv = {};
         window.GP_SearchPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
         window.GP_SearchPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
         var rpmUrl = "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : '' ?>";
