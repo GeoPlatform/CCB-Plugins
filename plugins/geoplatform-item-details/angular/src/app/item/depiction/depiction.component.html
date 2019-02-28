@@ -11,7 +11,7 @@
     </div>
 
     <!-- if there is a thumbnail with URL -->
-    <img *ngIf="hasURL()" src="{{thumbnail.url}}" fallback="{{getFallbackUrl()}}">
+    <img *ngIf="hasURL()" src="{{item.thumbnail.url}}" fallback="{{getFallbackUrl()}}">
 
     <!-- if there is a thumbnail with base64 data -->
     <div *ngIf="hasContentData()" class="is-16x9">
