@@ -13,7 +13,7 @@ export const ModelProperties = {
     DISTRIBUTIONS:  "distributions",
     KEYWORDS:       'keywords',
     PUBLISHERS:     'publishers',
-    COMMUNITIES:    'communities',
+    COMMUNITIES:    'usedBy',
 
     CLASSIFIERS_PURPOSE             : 'purpose',
     CLASSIFIERS_FUNCTION            : 'function',
