@@ -8,6 +8,7 @@ import { ItemTypes, Config, ItemService } from "geoplatform.client";
 import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
 import { AuthenticatedComponent} from '../shared/authenticated.component';
+import { itemServiceProvider } from '../shared/service.provider';
 
 const MAX_DESC_LENGTH = 550;
 
@@ -16,7 +17,8 @@ const MAX_DESC_LENGTH = 550;
 @Component({
   selector: 'gpid-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.less']
+  styleUrls: ['./item.component.less'],
+  providers: [itemServiceProvider]
 })
 export class ItemComponent extends AuthenticatedComponent implements OnInit {
 
@@ -25,12 +27,8 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
     public hasLongDescription : boolean = false;
     public descriptionCollapsed: boolean = true;
 
-    private itemService : ItemService;
-
-    constructor(private el: ElementRef, http : HttpClient) {
+    constructor(private el: ElementRef, private itemService: ItemService) {
         super();
-        let client = new NG2HttpClient(http);
-        this.itemService = new ItemService(Config.ualUrl, client);
     }
 
     ngOnInit() {

@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService } from "geoplatform.client";
 
 import { NG2HttpClient } from "../../../shared/http-client";
-
+import { itemServiceProvider } from '../../../shared/service.provider';
 
 @Component({
   selector: 'gpid-service-layers',
   templateUrl: './service-layers.component.html',
-  styleUrls: ['./service-layers.component.less']
+  styleUrls: ['./service-layers.component.less'],
+  providers: [itemServiceProvider]
 })
 export class ServiceLayersComponent implements OnInit {
 
@@ -16,11 +17,8 @@ export class ServiceLayersComponent implements OnInit {
     public isCollapsed : boolean = false;
     public layers : any[];
     public layerTotal: number = 0;  //total layers including nested ones
-    private itemService : ItemService;
 
-    constructor(http : HttpClient) {
-        let client = new NG2HttpClient(http);
-        this.itemService = new ItemService(Config.ualUrl, client);
+    constructor(private itemService : ItemService) {
     }
 
     ngOnInit() {

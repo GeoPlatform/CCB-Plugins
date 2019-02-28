@@ -73,6 +73,13 @@ import { DatasetsComponent } from './item/collections/datasets/datasets.componen
 
 import { PluginAuthService } from './shared/auth.service';
 
+import {
+    itemServiceProvider,
+    serviceServiceProvider,
+    utilsServiceProvider,
+    kgServiceProvider
+} from './shared/service.provider';
+
 import { RPMStatsService } from './shared/rpmstats.service';
 import { DownloadComponent } from './item/actions/download/download.component'
 let RPMStatsServiceFactory = (http: HttpClient) => {
@@ -83,17 +90,22 @@ let RPMStatsServiceFactory = (http: HttpClient) => {
 
 export function initializeApp() {
     return () => {
+        console.log("Initializing App...");
         //initial configuration via build-time environment variables
         Config.configure(environment);
 
         //optionally, override variables using GP values injected from WP
         if((<any>window).GP_ItemDetailsPluginEnv) {
+            console.log("Overriding vars:");
+            console.log((<any>window).GP_ItemDetailsPluginEnv);
             // console.log("Configuring app using run-time values");
             Config.configure((<any>window).GP_ItemDetailsPluginEnv);
         }
+
+        console.log("Configured using:");
+        console.log(Config);
     }
 }
-
 
 
 
@@ -172,6 +184,10 @@ export function initializeApp() {
             provide: RPMService,
             useValue: RPMServiceFactory()
         },
+        itemServiceProvider,
+        serviceServiceProvider,
+        utilsServiceProvider,
+        kgServiceProvider
     ],
     entryComponents: [
         //dynamic components go here

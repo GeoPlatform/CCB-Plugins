@@ -8,6 +8,8 @@ import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
 import { NG2HttpClient } from "./shared/http-client";
 import { environment } from '../environments/environment';
+import { itemServiceProvider } from './shared/service.provider';
+
 
 const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)/i;
 
@@ -15,18 +17,21 @@ const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)/i;
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.css'],
+    providers: [itemServiceProvider]
 })
 export class AppComponent {
 
-    private itemService : ItemService;
     public item : any;
     public error : ItemDetailsError;
     private template: any;
 
-    constructor(private el: ElementRef, http : HttpClient, private rpm: RPMService) {
-        let client = new NG2HttpClient(http);
-        this.itemService = new ItemService(Config.ualUrl, client);
+    constructor(
+        private el: ElementRef,
+        private itemService : ItemService,
+        private rpm: RPMService
+    ) {
+
     }
 
     ngOnInit() {
