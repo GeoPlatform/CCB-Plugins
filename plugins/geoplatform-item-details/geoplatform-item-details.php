@@ -76,24 +76,24 @@ function deactivate_geoplatform_item_details() {
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details.php';
 
 function geopitems_establish_globals() {
-  ?>
+	?>
   <script type="text/javascript">
-		window.GP_ItemDetailsPluginEnv = {};
-        window.GP_ItemDetailsPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
-        window.GP_ItemDetailsPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
-        var rpmUrl = "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : '' ?>";
-        var rpmToken = "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>";
-        if(rpmUrl) window.GP_ItemDetailsPluginEnv.rpmUrl = rpmUrl;
-        if(rpmToken) window.GP_ItemDetailsPluginEnv.rpmToken = rpmToken;
-
-		window.GeoPlatform = window.GeoPlatform || {};
-		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
-		window.GeoPlatform.IDP_BASE_URL = "<?php echo isset($_ENV['idp_url']) ? $_ENV['idp_url'] : 'https://idp.geoplatform.gov' ?>"; // Where IDP is
-		window.GeoPlatform.ALLOW_SSO_LOGIN = "false";
-		window.GeoPlatform.LOGIN_URL = "<?php echo wp_login_url() ?>";
-		window.GeoPlatform.LOGOUT_URL = "<?php echo wp_logout_url() ?>";
-        window.GeoPlatform.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
-
+	GeoPlatform = {
+	 config: {
+	   wpUrl: "<?php echo "garbage" ?>",
+	   ualUrl: "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>",
+	   rpm: {
+	     rpmUrl: "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov' ?>",
+	     rpmToken: "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>",
+	   }
+	   auth: {
+	     APP_BASE_URL: "<?php echo home_url() ?>", // same as "wpUrl"
+	     IDP_BASE_URL: "<?php echo isset($_ENV['accounts_url']) ? $_ENV['accounts_url'] : 'https://accounts.geoplatform.gov' ?>",
+	     LOGIN_URL: "<?php echo wp_login_url() ?>",
+	     LOGOUT_URL: "<?php echo wp_logout_url() ?>",
+	    }
+	  }
+	}
   </script>
 	<?php
 }

@@ -179,24 +179,41 @@ function geopsearch_perform_site_search() {
 }
 add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
 
+/**
+ * Get Docker container enviroment variables
+ *
+ * @param [string] $name
+ * @param [string] $def (default)
+ * @return ENV[$name] or $def if none found
+ */
+
+function geop_ccb_getEnv($name, $def){
+  return isset($_ENV[$name]) ? $_ENV[$name] : $def;
+}
+//set env variables
+$geopccb_maps_url = geop_ccb_getEnv('maps_url', 'https://maps.geoplatform.gov');
+
+
 
 function geopsearch_establish_globals() {
   ?>
   <script type="text/javascript">
-		window.GP_SearchPluginEnv = {};
-        window.GP_SearchPluginEnv.wpUrl = "<?php bloginfo('wpurl') ?>";
-        window.GP_SearchPluginEnv.ualUrl = "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>"; // Where GP API endpoint is
-        var rpmUrl = "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : '' ?>";
-        var rpmToken = "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>";
-        if(rpmUrl) window.GP_SearchPluginEnv.rpmUrl = rpmUrl;
-        if(rpmToken) window.GP_SearchPluginEnv.rpmToken = rpmToken;
-
-		window.GeoPlatform = window.GeoPlatform || {};
-		window.GeoPlatform.APP_BASE_URL = "<?php echo home_url() ?>"; // root dir for site (ex: 'https://geoplatform.gov' or 'https://communities.geoplatform.gov/ngda-wildbeasts'
-		window.GeoPlatform.IDP_BASE_URL = "<?php echo isset($_ENV['idp_url']) ? $_ENV['idp_url'] : 'https://idp.geoplatform.gov' ?>"; // Where IDP is
-		window.GeoPlatform.ALLOW_SSO_LOGIN = "false";
-		window.GeoPlatform.LOGIN_URL = "<?php echo wp_login_url() ?>";
-		window.GeoPlatform.LOGOUT_URL = "<?php echo wp_logout_url() ?>";
+	GeoPlatform = {
+	 config: {
+	   wpUrl: "<?php echo "garbage" ?>",
+	   ualUrl: "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>",
+	   rpm: {
+	     rpmUrl: "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov' ?>",
+	     rpmToken: "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>",
+	   }
+	   auth: {
+	     APP_BASE_URL: "<?php echo home_url() ?>", // same as "wpUrl"
+	     IDP_BASE_URL: "<?php echo isset($_ENV['accounts_url']) ? $_ENV['accounts_url'] : 'https://accounts.geoplatform.gov' ?>",
+	     LOGIN_URL: "<?php echo wp_login_url() ?>",
+	     LOGOUT_URL: "<?php echo wp_logout_url() ?>",
+	    }
+	  }
+	}
   </script>
 	<?php
 }
