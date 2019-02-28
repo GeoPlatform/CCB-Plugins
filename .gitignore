@@ -24,3 +24,31 @@ uploads/*
 
 
 node_modules
+
+
+
+plugins/geoplatform-item-details/admin/partials/geoplatform-item-details-recreate.php
+plugins/geoplatform-item-details/angular/package-lock.json
+plugins/geoplatform-resource-registration/admin/partials/geoplatform-resource-registration-recreate.php
+plugins/geoplatform-resource-registration/public/css/fontawesome-webfont.674f50d287a8c48dc19b.eot
+plugins/geoplatform-resource-registration/public/css/fontawesome-webfont.912ec66d7572ff821749.svg
+plugins/geoplatform-resource-registration/public/css/fontawesome-webfont.af7ae505a9eed503f8b8.woff2
+plugins/geoplatform-resource-registration/public/css/fontawesome-webfont.b06871f281fee6b241d6.ttf
+plugins/geoplatform-resource-registration/public/css/fontawesome-webfont.fee66e712a8a08eef580.woff
+plugins/geoplatform-search/admin/partials/geoplatform-search-recreate.php
+plugins/geoplatform-search/includes/geoplatform-search-core.php
+plugins/geoplatform-search/public/partials/geoplatform-search-page-header.php
+plugins/geoplatform-search/public/partials/geoplatform-search-page-template.php
+themes/geoplatform-ccb/gp_intro.php.bak
+themes/geoplatform-ccb/page-templates/geop_search_page.php
+themes/geoplatform-portal-four/contact.php.bak
+themes/geoplatform-portal-four/header.php.bak
+themes/geoplatform-portal-four/main-page.php.bak
+themes/geoplatform-portal-four/main-page.php.bak2
+themes/geoplatform-portal-four/onboarding.php.bak
+themes/geoplatform-portal-four/portfolio-resources-old.php
+themes/geoplatform-portal-four/single.php.bak
+themes/geoplatform-portal-four/style.css.bak
+themes/geoplatform-portal-four/style.css.bak2
+themes/geoplatform-portal-four/sub-header-home.php.bak
+themes/geoplatform-portal-four/sub-header-post.php.bak
