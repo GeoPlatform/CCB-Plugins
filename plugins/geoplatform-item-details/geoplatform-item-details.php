@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.0.0
+ * @since             1.0.1
  * @package           Geoplatform_Item_Details
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Item Details
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       View details on individual resources in a dedicated interface page.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -46,10 +46,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 1.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOITEMS_PLUGIN', '1.0.0' );
+define( 'GEOITEMS_PLUGIN', '1.0.1' );
 
 /**
  * The code that runs during plugin activation.
