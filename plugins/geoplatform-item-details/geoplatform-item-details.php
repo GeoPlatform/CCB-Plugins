@@ -80,7 +80,7 @@ function geopitems_establish_globals() {
   <script type="text/javascript">
 	GeoPlatform = {
 	 config: {
-	   wpUrl: "<?php echo "garbage" ?>",
+	   wpUrl: "<?php echo home_url() ?>",
 	   ualUrl: "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>",
 	   rpm: {
 	     rpmUrl: "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov' ?>",
