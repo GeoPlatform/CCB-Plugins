@@ -53,14 +53,14 @@ import {map, flatMap, startWith} from 'rxjs/operators';
                   (matChipInputTokenEnd)="addValue($event)"
                   placeholder="{{placeholder}}">
               <mat-icon matSuffix
-                    *ngIf="formGroup.get(hiddenFieldName).value?.length"
+                    *ngIf="formGroup.contains(hiddenFieldName)&&formGroup.get(hiddenFieldName).value?.length"
                     (click)="clearInput()">
                     close
               </mat-icon>
           </mat-chip-list>
           <mat-autocomplete #acmcAutoComplete="matAutocomplete"
               (optionSelected)="onAutocompleteSelection($event)">
-              <mat-option *ngIf="formGroup.get(hiddenFieldName).value?.length && !(filteredOptions | async)?.length">No matches found</mat-option>
+              <mat-option *ngIf="!formGroup.contains(hiddenFieldName) || ( formGroup.get(hiddenFieldName).value?.length && !(filteredOptions | async)?.length ) ">No matches found</mat-option>
               <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                   {{ option.label }}
               </mat-option>
@@ -90,8 +90,15 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
     constructor() { }
 
     ngOnInit() {
-        this.filteredOptions = this.formGroup.get('$'+this.fieldName)
-        .valueChanges.pipe( flatMap(value => this.filterValues(value) ) );
+        let field = this.formGroup.get('$'+this.fieldName);
+        if(!field) {
+            console.log(`Warning: field named '${this.fieldName}' not found in form`);
+            this.filteredOptions = Observable.of([]);
+            return;
+        }
+        this.filteredOptions = field.valueChanges.pipe(
+            flatMap( value => this.filterValues(value) )
+        );
     }
 
     ngOnChanges( changes : SimpleChanges ) {
@@ -106,7 +113,9 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
      *
      */
     get values() {
-        return this.formGroup.get(this.fieldName).value || [];
+        let field = this.formGroup.get(this.fieldName);
+        if(field) return field.value || [];
+        return [];
     }
 
     /**
@@ -156,7 +165,9 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
      * @param {any} value - currently selected value to remove
      */
     removeValue(value: any): void {
-        let existing = this.formGroup.get(this.fieldName).value;
+        let field = this.formGroup.get(this.fieldName);
+        if(!field) return;
+        let existing = field.value || [];
         let index = -1;
         existing.forEach( (p,i) => { if(p.id === value.id) { index = i; } });
         if (index >= 0) {
@@ -176,18 +187,26 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
      */
     onAutocompleteSelection(event: MatAutocompleteSelectedEvent): void {
         if(!event || !event.option || !event.option.value) return;
-
-        let existing = this.formGroup.get(this.fieldName).value || [];
+        let field = this.formGroup.get(this.fieldName);
+        if(!field) return;
+        let existing = field.value || [];
         existing.push(event.option.value);
-        this.formGroup.get(this.fieldName).setValue(existing);
+        field.setValue(existing);
 
         //clear input and blur so autocomplete isn't left in weird state after selection
         this.clearInput();
     }
 
 
-    getValue(field) { return this.formGroup.get(field).value; }
-    setValue(field, value) { this.formGroup.get(field).setValue(value); }
+    getValue(fieldName) {
+        let field = this.formGroup.get(fieldName);
+        if(field) return field.value;
+        return [];
+    }
+    setValue(fieldName, value) {
+        let field = this.formGroup.get(fieldName);
+        if(field) field.setValue(value);
+    }
 
 
     public hasInput() {
@@ -199,7 +218,8 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
 
     public clearInput() {
         if(this.field) this.field.nativeElement.value='';
-        this.formGroup.get(this.hiddenFieldName).setValue(null);
+        let field = this.formGroup.get(this.hiddenFieldName);
+        if(field) field.setValue(null);
         if(this.matAutoComplete.isOpen) {
             this.acTrigger.closePanel();
         }
