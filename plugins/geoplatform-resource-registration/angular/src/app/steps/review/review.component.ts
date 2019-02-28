@@ -230,6 +230,8 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         switch(event.type) {
             case 'reset':
                 this.hasError = null;
+                this.status.isSaved = false;
+                this.status.isSaving = false;
                 break;
             case 'authToken':
                 this.itemService.client.setAuthToken(event.value as string);
