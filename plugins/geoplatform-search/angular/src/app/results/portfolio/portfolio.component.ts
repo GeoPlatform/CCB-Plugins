@@ -24,16 +24,18 @@ import { PagingEvent } from '../../shared/paging/paging.component';
 import { environment } from '../../../environments/environment';
 import { RPMService } from 'gp.rpm/src/iRPMService'
 
+import { itemServiceProvider } from '../../shared/service.provider';
+
 
 @Component({
     selector: 'results-portfolio',
     templateUrl: './portfolio.component.html',
-    styleUrls: ['./portfolio.component.css']
+    styleUrls: ['./portfolio.component.css'],
+    providers: [itemServiceProvider]
 })
 export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() constraints: Constraints;
-    private service : ItemService;
     private listener : ISubscription;
     public totalResults : number = 0;
     public pageSize : number = 10;
@@ -46,8 +48,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public showLegend : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
 
-    constructor( private http : HttpClient, public rpm: RPMService ) {
-        this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
+    constructor( private itemService : ItemService, public rpm: RPMService ) {
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = '_score,desc';
         this.defaultQuery.sort(this.sortField);
@@ -127,7 +128,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
 
         this.isLoading = true;
-        this.service.search(this.query)
+        this.itemService.search(this.query)
         .then( response => {
             this.isLoading = false;
             this.totalResults = response.totalResults;
@@ -184,7 +185,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     findSimilarTo(item) {
-        let constraint = new SimilarityCodec(this.http).toConstraint(item);
+        let http = this.itemService.client;
+        let constraint = new SimilarityCodec(http).toConstraint(item);
         this.constraints.set(constraint);
     }
 
@@ -231,37 +233,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
         else return '/resources';
 
-            // case ItemTypes.MAP:
-            //     let types = item.resourceTypes;
-            //     let AGOL_MAP_TYPE = 'http://www.geoplatform.gov/ont/openmap/AGOLMap';
-            //     if(types && types.length && ~types.indexOf(AGOL_MAP_TYPE))
-            //         url = item.landingPage;
-            //     else
-            //         url = this.getMapViewerURL() + '?id=' + item.id;
-            //     break;
-            //
-            // case ItemTypes.GALLERY:
-            //     url = this.getGalleryURL() + '/galleries/' + item.id;
-            //     break;
-            //
-            // case ItemTypes.SERVICE:
-            //     url = this.getDashboardURL() + '/sd/details/' + item.id;
-            //     break;
-            //
-            // case ItemTypes.DATASET:
-            //     url = this.getDashboardURL() + '/dd/details/' + item.id;
-            //     break;
-            //
-            // case ItemTypes.LAYER:
-            // case ItemTypes.ORGANIZATION:
-            // case ItemTypes.CONTACT:
-            // case ItemTypes.COMMUNITY:
-            // case ItemTypes.CONCEPT:
-            // case ItemTypes.CONCEPT_SCHEME:
-            // default:
-            //     return this.getObjectEditorURL() + '/view/' + item.id;
-        // }
-        // return url;
     }
 
 

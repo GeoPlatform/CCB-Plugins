@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { Config, Query, QueryParameters, ItemService, ItemTypes } from 'geoplatform.client';
 
 import { NG2HttpClient } from '../shared/NG2HttpClient';
+import { itemServiceFactory } from '../shared/service.provider';
 
 import { Constraint, Constraints } from '../models/constraint';
 
@@ -37,7 +38,8 @@ export class ItemListConstraint {
         private _ngZone: NgZone,
         private http : HttpClient
     ) {
-        this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
+        this.service = itemServiceFactory(http);
+        // this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
 
     }
 

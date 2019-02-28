@@ -73,6 +73,16 @@ import { SimilarityComponent } from './constraints/similarity/similarity.compone
 import { LegendComponent } from './results/portfolio/legend/legend.component';
 
 
+import {
+    itemServiceProvider,
+    serviceServiceProvider,
+    utilsServiceProvider,
+    kgServiceProvider
+} from './shared/service.provider';
+
+
+
+
 //ROUTING CONFIG
 const appRoutes: Routes = [
 
@@ -87,15 +97,21 @@ const appRoutes: Routes = [
 // }
 export function initializeApp() {
   return () => {
+      console.log("Initializing App...");
       //initial configuration via build-time environment variables
       Config.configure(environment);
 
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
       if((<any>window).GP_SearchPluginEnv) {
+          console.log("Overriding vars:");
+          console.log((<any>window).GP_SearchPluginEnv);
           // console.log("Configuring app using run-time values");
           Config.configure((<any>window).GP_SearchPluginEnv);
       }
+
+      console.log("Configured using:");
+      console.log(Config);
   }
 }
 
@@ -158,7 +174,11 @@ export function initializeApp() {
           provide: APP_INITIALIZER,
           useFactory: initializeApp,
           multi: true
-      }
+      },
+      itemServiceProvider,
+      serviceServiceProvider,
+      utilsServiceProvider,
+      kgServiceProvider
   ],
   entryComponents: [
       KeywordsComponent,
