@@ -27,6 +27,9 @@ import { NG2HttpClient } from '../../http-client';
 import { environment } from '../../../environments/environment';
 
 import { ModelProperties } from '../../model';
+import {
+    itemServiceProvider, serviceServiceProvider, utilsServiceProvider
+} from '../../item-service.provider';
 
 const URL_VALIDATOR = Validators.pattern("https?://.+");
 
@@ -40,7 +43,8 @@ interface ResourceType {
 @Component({
   selector: 'wizard-step-type',
   templateUrl: './type.component.html',
-  styleUrls: ['./type.component.less']
+  styleUrls: ['./type.component.less'],
+  providers: [ itemServiceProvider, serviceServiceProvider, utilsServiceProvider ]
 })
 export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
@@ -64,8 +68,6 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     private formListener : any;
     private typeListener : any;
     private eventsSubscription: any;
-    private httpClient : NG2HttpClient;
-    private itemService : ItemService = null;
     private availableResourceTypes: { type: string; values: ResourceType[]; } =
         {} as { type: string; values: ResourceType[]; };
 
@@ -74,8 +76,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private http : HttpClient
+        private itemService: ItemService,
+        private svcService : ServiceService,
+        private utilsService : UtilsService
     ) {
+
         this.formOpts[ModelProperties.TYPE] = ['', Validators.required];
         this.formOpts[ModelProperties.TITLE] = ['', Validators.required];
         this.formOpts[ModelProperties.DESCRIPTION] = [''];
@@ -87,8 +92,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.formOpts[ModelProperties.PUBLISHERS] = [''];
         this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];   //for autocomplete
         this.formGroup = this.formBuilder.group(this.formOpts);
-        this.httpClient = new NG2HttpClient(http);
-        this.itemService = new ItemService(Config.ualUrl, this.httpClient);
+
         this.fetchData();
     }
 
@@ -193,7 +197,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         });
 
         //fetch list of resource types
-        new UtilsService(Config.ualUrl, this.httpClient).capabilities('resourceTypes')
+        this.utilsService.capabilities('resourceTypes')
         .then( response => {
             response.results.forEach( type => {
                 this.availableResourceTypes[type.assetType] = this.availableResourceTypes[type.assetType] || [];
@@ -296,8 +300,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         let typeLabel = type.label;
 
         this.status.isFetchingServiceInfo = true;
-        new ServiceService(Config.ualUrl, this.httpClient)
-        .about({ url: href, serviceType: typeLabel })
+        this.svcService.about({ url: href, serviceType: typeLabel })
         .then( response => {
 
             this.status.isFetchingServiceInfo = false;

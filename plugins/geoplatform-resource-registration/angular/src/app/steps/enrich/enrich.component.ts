@@ -26,12 +26,13 @@ import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
 import { ModelProperties, ClassifierTypes } from '../../model';
-
+import { kgServiceProvider } from '../../item-service.provider';
 
 @Component({
   selector: 'wizard-step-enrich',
   templateUrl: './enrich.component.html',
-  styleUrls: ['./enrich.component.less']
+  styleUrls: ['./enrich.component.less'],
+  providers: [kgServiceProvider]
 })
 export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
@@ -44,16 +45,14 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     public hasError: StepError;
     public filteredOptions : any = {};
 
-    kgService : KGService = null;
     private eventsSubscription: any;
-
 
     formOpts : any = {};
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private http : HttpClient
+        private kgService : KGService
     ) {
 
         //initialize form controls
@@ -64,8 +63,8 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
         });
         this.formGroup = this.formBuilder.group(this.formOpts);
 
-        let client = new NG2HttpClient(http);
-        this.kgService = new KGService(Config.ualUrl, client);
+        // let client = new NG2HttpClient(http);
+        // this.kgService = new KGService(Config.ualUrl, client);
     }
 
     ngOnInit() {

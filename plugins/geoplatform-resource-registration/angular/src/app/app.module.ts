@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
-    NgModule, Pipe, PipeTransform, Injectable, APP_INITIALIZER
+    NgModule, Pipe, PipeTransform, Injectable, Inject, APP_INITIALIZER
 } from '@angular/core';
 import {
     HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS
@@ -31,20 +31,35 @@ import { AutocompleteMatChipComponent } from "./autocomplete.component";
 import { TokenInterceptor } from 'geoplatform.ngoauth/angular'
 import { PluginAuthService } from "./auth.service";
 
-
+import {
+    itemServiceProvider,
+    serviceServiceProvider,
+    utilsServiceProvider,
+    kgServiceProvider
+} from './item-service.provider';
 
 export function initializeApp() {
   return () => {
+
+      console.log("Initializing App...");
       Config.configure(environment);
 
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
       if((<any>window).GP_ResRegPluginEnv) {
+          console.log("Overriding vars:");
+          console.log((<any>window).GP_ResRegPluginEnv);
+
           // console.log("Configuring app using run-time values");
           Config.configure((<any>window).GP_ResRegPluginEnv);
       }
+
+      console.log("Configured using:");
+      console.log(Config);
+
   }
 }
+
 
 
 
@@ -106,7 +121,11 @@ export class PrettyJsonPipe implements PipeTransform {
         //     useClass: TokenInterceptor,
         //     multi: true
         // },
-        PluginAuthService
+        PluginAuthService,
+        itemServiceProvider,
+        serviceServiceProvider,
+        utilsServiceProvider,
+        kgServiceProvider
     ],
     bootstrap: [AppComponent]
 })

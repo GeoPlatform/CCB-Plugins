@@ -27,12 +27,14 @@ import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
 import { ModelProperties } from '../../model';
+import { itemServiceProvider } from '../../item-service.provider';
 
 
 @Component({
   selector: 'wizard-step-additional',
   templateUrl: './additional.component.html',
-  styleUrls: ['./additional.component.less']
+  styleUrls: ['./additional.component.less'],
+  providers: [ itemServiceProvider ]
 })
 export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
@@ -48,7 +50,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     public formGroup: FormGroup;
     public hasError : StepError;
 
-    private itemService : ItemService = null;
+    // private itemService : ItemService = null;
     private eventsSubscription: any;
 
     @ViewChild('keywordsInput') keywordsField: ElementRef;
@@ -58,7 +60,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private http : HttpClient
+        // private http : HttpClient
+        private itemService : ItemService
     ) {
         //initialize form controls
         this.formOpts[ModelProperties.KEYWORDS] = [''];
@@ -69,8 +72,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
-        let client = new NG2HttpClient(http);
-        this.itemService = new ItemService(Config.ualUrl, client);
+        // let client = new NG2HttpClient(http);
+        // this.itemService = new ItemService(Config.ualUrl, client);
     }
 
     /**

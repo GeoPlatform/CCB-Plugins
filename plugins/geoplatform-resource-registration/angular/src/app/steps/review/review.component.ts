@@ -26,6 +26,9 @@ import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 import { ClassifierTypes } from '../../model';
+import {
+    itemServiceProvider, serviceServiceProvider
+} from '../../item-service.provider';
 
 const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
     return k.indexOf("secondary")<0 && k.indexOf("community")<0
@@ -35,7 +38,8 @@ const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
 @Component({
   selector: 'wizard-step-review',
   templateUrl: './review.component.html',
-  styleUrls: ['./review.component.less']
+  styleUrls: ['./review.component.less'],
+  providers: [ itemServiceProvider, serviceServiceProvider ]
 })
 export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepComponent {
 
@@ -56,19 +60,20 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     };
 
 
-    httpClient : NG2HttpClient;
+    // httpClient : NG2HttpClient;
     private eventsSubscription: any;
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private http: HttpClient
+        private itemService : ItemService,
+        private svcService : ServiceService
     ) {
         this.formGroup = this.formBuilder.group({
             done: ['']
         });
 
-        this.httpClient = new NG2HttpClient(http);
+        // this.httpClient = new NG2HttpClient(http);
     }
 
     ngOnInit() {
@@ -155,16 +160,16 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     registerResource( ) {
 
         this.status.isSaving = true;
-        
+
         this.generateURI().then( item => {
-            return new ItemService(Config.ualUrl, this.httpClient).save(item)
+            // return new ItemService(Config.ualUrl, this.httpClient).save(item)
+            return this.itemService.save(item);
         })
         .then( (persisted) => {
 
             if(ItemTypes.SERVICE === persisted.type) {
                 //TODO call harvest on newly persisted service
-                return new ServiceService(Config.ualUrl, this.httpClient)
-                .harvest(persisted.id)
+                return this.svcService.harvest(persisted.id)
                 .then( layers => {
                     return persisted;   //resolve the parent service
                 })
@@ -201,7 +206,8 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
             return Promise.resolve(this.data);
         }
 
-        return new ItemService(Config.ualUrl, this.httpClient)
+        // return new ItemService(Config.ualUrl, this.httpClient)
+        return this.itemService
         .getUri(this.data)
         .then( uri => {
             this.data.uri = uri;
@@ -226,7 +232,7 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
                 this.hasError = null;
                 break;
             case 'authToken':
-                this.httpClient.setAuthToken(event.value as string);
+                this.itemService.client.setAuthToken(event.value as string);
                 break;
         }
     }
