@@ -84,7 +84,7 @@ function geopregister_establish_globals() {
   </script>
 	<?php
 }
-add_action('wp_head', 'geopregister_establish_globals');
+// add_action('wp_head', 'geopregister_establish_globals');
 
 // Sets the parameters of and then creates the item details page. It deletes any
 // old version of that page before each generation.
