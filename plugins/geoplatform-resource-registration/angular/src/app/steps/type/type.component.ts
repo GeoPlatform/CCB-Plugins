@@ -91,6 +91,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.formOpts['$'+ModelProperties.RESOURCE_TYPES] = [''];   //temp field for autocomplete
         this.formOpts[ModelProperties.PUBLISHERS] = [''];
         this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];   //for autocomplete
+        this.formOpts[ModelProperties.CREATED_BY] = ['', Validators.required];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
         this.fetchData();
@@ -136,6 +137,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 this.setValue(ModelProperties.DESCRIPTION, data[ModelProperties.DESCRIPTION]||null );
                 this.setValue(ModelProperties.SERVICE_TYPE, data[ModelProperties.SERVICE_TYPE]||null );
                 this.setValue(ModelProperties.LANDING_PAGE, data[ModelProperties.LANDING_PAGE]||null );
+                this.setValue(ModelProperties.CREATED_BY, data[ModelProperties.CREATED_BY]||null);
 
                 if(data[ModelProperties.RESOURCE_TYPES] && data[ModelProperties.RESOURCE_TYPES].length) {
                     let itemType = data[ModelProperties.TYPE];
