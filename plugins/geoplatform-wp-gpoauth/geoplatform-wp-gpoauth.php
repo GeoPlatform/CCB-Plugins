@@ -99,6 +99,7 @@ function geopoauth_establish_globals() {
       }
   }
   </script>
+	
 _GEOPLATFORMVAR;
 
 	echo $geopoauth_stuff;
