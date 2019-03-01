@@ -64,12 +64,19 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
      * @override AuthenticatedComponent.onUserChange
      */
     onUserChange(user) {
-        console.log("User Event: " + JSON.stringify(user));
+        // console.log("User Event: " + JSON.stringify(user));
         if(this.item && user) {
             //update editable resource's createdBy property
             this.item[ModelProperties.CREATED_BY] = user.username;
         }
-        let appEvent : AppEvent = { type:'authToken', value: this.getAuthToken() };
+        // console.log("Setting created by: " + this.item[ModelProperties.CREATED_BY]);
+        let appEvent : AppEvent = {
+            type:'auth',
+            value: {
+                user: user,
+                token: this.getAuthToken()
+            }
+        };
         this.appEvents.next(appEvent);
     }
 

@@ -355,6 +355,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 this.hasError = null;
                 this.status.isFetchingServiceInfo = false;
                 break;
+            case 'auth':
+                let user = event.value.user;
+                // console.log("Setting user in form as '" + JSON.stringify(user) + "'");
+                this.setValue(ModelProperties.CREATED_BY, user.username);
+                break;
         }
     }
 

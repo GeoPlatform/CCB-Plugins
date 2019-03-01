@@ -47,6 +47,12 @@
                     [filterFn]="filterPublishers">
                 </gprr-autocomplete-mat-chip>
 
+                <mat-form-field floatLabel="always">
+                    <mat-label>Created By</mat-label>
+                    <input matInput formControlName="createdBy" required disabled="disabled">
+                    <mat-error *ngIf="isInvalid('createdBy')">You must be signed in to register resources</mat-error>
+                </mat-form-field>
+
             </div>
 
 
