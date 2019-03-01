@@ -94,15 +94,16 @@ export function initializeApp() {
         //initial configuration via build-time environment variables
         Config.configure(environment);
 
-        //optionally, override variables using GP values injected from WP
-        if((<any>window).GP_ItemDetailsPluginEnv) {
-            console.log("Overriding vars:");
-            console.log((<any>window).GP_ItemDetailsPluginEnv);
-            // console.log("Configuring app using run-time values");
-            Config.configure((<any>window).GP_ItemDetailsPluginEnv);
+        let gpGlobal = (<any>window).GeoPlatform;
+        //optionally, if run-time environment variables specified,
+        // add those (overwriting any duplicates)
+        if(gpGlobal && gpGlobal.config) {
+            console.log("Configuring app using run-time values");
+            console.log(gpGlobal.config);
+            Config.configure(gpGlobal.config);
         }
 
-        console.log("Configured using:");
+        console.log("Configured App using:");
         console.log(Config);
     }
 }

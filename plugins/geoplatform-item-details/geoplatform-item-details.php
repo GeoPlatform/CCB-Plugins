@@ -78,22 +78,23 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-item-details.p
 function geopitems_establish_globals() {
 	?>
   <script type="text/javascript">
-	GeoPlatform = {
-	 config: {
-	   wpUrl: "<?php echo home_url() ?>",
-	   ualUrl: "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>",
-	   rpm: {
-	     rpmUrl: "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov' ?>",
-	     rpmToken: "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>",
-	   },
-	   auth: {
-	     APP_BASE_URL: "<?php echo home_url() ?>", // same as "wpUrl"
-	     IDP_BASE_URL: "<?php echo isset($_ENV['accounts_url']) ? $_ENV['accounts_url'] : 'https://accounts.geoplatform.gov' ?>",
-	     LOGIN_URL: "<?php echo wp_login_url() ?>",
-	     LOGOUT_URL: "<?php echo wp_logout_url() ?>",
-	    }
-	  }
-	}
+  if(typeof(GeoPlatform) === 'undefined') GeoPlatform = {};
+  GeoPlatform.config = {
+
+     wpUrl: "<?php echo home_url() ?>",
+     ualUrl: "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>",
+     rpm: {
+       rpmUrl: "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov' ?>",
+       rpmToken: "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>",
+     },
+     auth: {
+       APP_BASE_URL: "<?php echo home_url() ?>", // same as "wpUrl"
+       IDP_BASE_URL: "<?php echo isset($_ENV['accounts_url']) ? $_ENV['accounts_url'] : 'https://accounts.geoplatform.gov' ?>",
+       LOGIN_URL: "<?php echo wp_login_url() ?>",
+       LOGOUT_URL: "<?php echo wp_logout_url() ?>",
+      }
+
+  }
   </script>
 	<?php
 }

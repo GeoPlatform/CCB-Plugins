@@ -64,8 +64,9 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-resource-regis
 function geopregister_establish_globals() {
 	?>
   <script type="text/javascript">
-	GeoPlatform = {
-	 config: {
+  if(typeof(GeoPlatform) === 'undefined') GeoPlatform = {};
+	GeoPlatform.config = {
+
 	   wpUrl: "<?php echo home_url() ?>",
 	   ualUrl: "<?php echo isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov' ?>",
 	   rpm: {
@@ -78,7 +79,7 @@ function geopregister_establish_globals() {
 	     LOGIN_URL: "<?php echo wp_login_url() ?>",
 	     LOGOUT_URL: "<?php echo wp_logout_url() ?>",
 	    }
-	  }
+
 	}
   </script>
 	<?php

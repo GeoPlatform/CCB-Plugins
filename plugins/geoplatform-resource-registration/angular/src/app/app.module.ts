@@ -44,17 +44,16 @@ export function initializeApp() {
       console.log("Initializing App...");
       Config.configure(environment);
 
+      let gpGlobal = (<any>window).GeoPlatform;
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
-      if((<any>window).GP_ResRegPluginEnv) {
-          console.log("Overriding vars:");
-          console.log((<any>window).GP_ResRegPluginEnv);
-
-          // console.log("Configuring app using run-time values");
-          Config.configure((<any>window).GP_ResRegPluginEnv);
+      if(gpGlobal && gpGlobal.config) {
+          console.log("Configuring app using run-time values");
+          console.log(gpGlobal.config);
+          Config.configure(gpGlobal.config);
       }
 
-      console.log("Configured using:");
+      console.log("Configured App using:");
       console.log(Config);
 
   }
