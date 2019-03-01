@@ -30,12 +30,11 @@ export abstract class AuthenticatedComponent {
     init() {
 
         this.gpAuthSubscription = this.authService.getMessenger().raw().subscribe(msg => {
-            // console.log("AuthService() - Received Auth Message: " + msg.name);
+            console.log("AuthService() - Received Auth Message: " + msg.name);
             switch(msg.name){
                 case 'userAuthenticated':
                 this.user = msg.user;
                 this.onUserChange(msg.user);
-                // this.user$.next(msg.user);
                 break;
 
                 case 'userSignOut':

@@ -64,7 +64,8 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
      * @override AuthenticatedComponent.onUserChange
      */
     onUserChange(user) {
-        if(this.item && !this.item.createdBy && user) {
+        console.log("User Event: " + JSON.stringify(user));
+        if(this.item && user) {
             //update editable resource's createdBy property
             this.item[ModelProperties.CREATED_BY] = user.username;
         }
