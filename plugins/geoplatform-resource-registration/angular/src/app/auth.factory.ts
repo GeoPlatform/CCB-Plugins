@@ -34,20 +34,17 @@ export function authServiceFactory() {
 
     //
     //but the first time it's requested, it has to be built using env settings
+    let authSettings : AuthConfig = {};
 
-    let authSettings : AuthConfig = {
-        APP_BASE_URL: environment.wpUrl || ''
-    };
-    //if run-time environment variables specified, add those (overwriting any duplicates)
-    if((<any>window).GeoPlatformPluginEnv && (<any>window).GeoPlatformPluginEnv.wpUrl) {
-        authSettings.APP_BASE_URL = (<any>window).GeoPlatformPluginEnv.wpUrl;
-    }
-    //auth library settings made available through WP via 'GeoPlatform' global
-    //https://geoplatform.atlassian.net/browse/DT-2307
-    if( (<any>window).GeoPlatform ) {
-        const gp = (<any>window).GeoPlatform;
+    let gpGlobal = (<any>window).GeoPlatform;
+    if(gpGlobal && gpGlobal.config && gpGlobal.config.auth) {
+        //auth library settings made available through WP via 'GeoPlatform' global
+        //https://geoplatform.atlassian.net/browse/DT-2307
+        authSettings = gpGlobal.config.auth;
+    } else {
+        authSettings.APP_BASE_URL = environment.wpUrl || '';
         AUTH_KEYS.forEach( key => {
-            let v = gp[key];
+            let v = environment[key];
             if(typeof(v) !== 'undefined') {
                 if(~key.indexOf('ALLOW') || ~key.indexOf('FORCE')) {
                     v = (v === true || v === 'true');
@@ -57,8 +54,8 @@ export function authServiceFactory() {
         });
     }
 
-    // console.log("Configuring OAuth using: ");
-    // console.log(authSettings);
+    console.log("Configuring OAuth using: ");
+    console.log(authSettings);
 
     authService = ngGpoauthFactory(authSettings);
     return authService;
