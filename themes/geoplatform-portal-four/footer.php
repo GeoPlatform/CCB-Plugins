@@ -112,26 +112,6 @@
               <div class="col">
                   <div class="m-megamenu__heading">About</div>
                   <?php wp_nav_menu( array( 'theme_location' => 'headfoot-about' ) ); ?>
-                  <!-- <ul class="menu" role="menu">
-                      <li role="menuitem"><a href="/help.html">Help</a></li>
-                      <li role="menuitem"><a href="/faq.html">FAQ</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/glossary-of-terms/">Glossary of Terms</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/contact-us/">Contact Us</a></li>
-                      <li role="menuitem"><a href="/styleguide">Style Guide</a></li>
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-965">
-                          <a href="https://sit-ccb.geoplatform.us/">Dynamic Communities</a>
-                      </li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/data-policies/">Data Policy</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/privacy-policy/">Privacy Policy</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/accessibility/">Accessibility</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/news/">News</a></li>
-                      <li role="menuitem">
-                          <a href="https://gira.geoplatform.gov/">
-                              GIRA-
-                              <span class="u-text-/-sm">Geospatial Interoperability Reference Architecture</span>
-                          </a>
-                      </li>
-                  </ul> -->
               </div>
 
           </div>
