@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              http://www.imagemattersllc.com/
- * @since             1.0.10
+ * @since             1.0.11
  * @package           Geop_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Search
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Browse, search, and filter GeoPlatform service objects.
- * Version:           1.0.10
+ * Version:           1.0.11
  * Author:            Image Matters LLC: Patrick Neal, Lee Heazel
  * Author URI:        http://www.imagemattersllc.com/
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.10 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSEARCH_PLUGIN', '1.0.10' );
+define( 'GEOSEARCH_PLUGIN', '1.0.11' );
 
 /**
  * The code that runs during plugin activation.
