@@ -233,8 +233,9 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
                 this.status.isSaved = false;
                 this.status.isSaving = false;
                 break;
-            case 'authToken':
-                this.itemService.client.setAuthToken(event.value as string);
+            case 'auth':
+                let token = event.value.token;
+                this.itemService.client.setAuthToken( token as string);
                 break;
         }
     }

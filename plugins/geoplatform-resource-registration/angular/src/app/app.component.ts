@@ -69,7 +69,16 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             //update editable resource's createdBy property
             this.item[ModelProperties.CREATED_BY] = user.username;
         }
+        console.log("Setting created by: " + this.item[ModelProperties.CREATED_BY]);
         let appEvent : AppEvent = { type:'authToken', value: this.getAuthToken() };
+        this.appEvents.next(appEvent);
+        appEvent = {
+            type:'auth',
+            value: {
+                user: user,
+                token: this.getAuthToken()
+            }
+        };
         this.appEvents.next(appEvent);
     }
 

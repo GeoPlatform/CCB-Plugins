@@ -137,6 +137,8 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 this.setValue(ModelProperties.DESCRIPTION, data[ModelProperties.DESCRIPTION]||null );
                 this.setValue(ModelProperties.SERVICE_TYPE, data[ModelProperties.SERVICE_TYPE]||null );
                 this.setValue(ModelProperties.LANDING_PAGE, data[ModelProperties.LANDING_PAGE]||null );
+
+                console.log("Resetting user to " + data[ModelProperties.CREATED_BY] + " in type form");
                 this.setValue(ModelProperties.CREATED_BY, data[ModelProperties.CREATED_BY]||null);
 
                 if(data[ModelProperties.RESOURCE_TYPES] && data[ModelProperties.RESOURCE_TYPES].length) {
@@ -354,6 +356,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             case 'reset':
                 this.hasError = null;
                 this.status.isFetchingServiceInfo = false;
+                break;
+            case 'auth':
+                let user = event.value.user;
+                console.log("Setting user in form as '" + JSON.stringify(user) + "'");
+                this.setValue(ModelProperties.CREATED_BY, user);
                 break;
         }
     }
