@@ -71,7 +71,7 @@ function geopregister_establish_globals() {
 	   rpm: {
 	     rpmUrl: "<?php echo isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov' ?>",
 	     rpmToken: "<?php echo isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '' ?>",
-	   }
+	   },
 	   auth: {
 	     APP_BASE_URL: "<?php echo home_url() ?>", // same as "wpUrl"
 	     IDP_BASE_URL: "<?php echo isset($_ENV['accounts_url']) ? $_ENV['accounts_url'] : 'https://accounts.geoplatform.gov' ?>",
