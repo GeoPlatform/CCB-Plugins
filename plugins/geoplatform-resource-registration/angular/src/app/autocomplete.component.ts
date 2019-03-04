@@ -1,7 +1,8 @@
 
 import {
     Component, OnInit, OnChanges, OnDestroy,
-    Input, ViewChild, ElementRef, SimpleChanges
+    Input, ViewChild, ElementRef, SimpleChanges,
+    ContentChild, TemplateRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
@@ -62,7 +63,12 @@ import {map, flatMap, startWith} from 'rxjs/operators';
               (optionSelected)="onAutocompleteSelection($event)">
               <mat-option *ngIf="!formGroup.contains(hiddenFieldName) || ( formGroup.get(hiddenFieldName).value?.length && !(filteredOptions | async)?.length ) ">No matches found</mat-option>
               <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                  {{ option.label }}
+                  <span *ngIf="!templateRef">{{ option.label }}</span>
+                  <ng-container *ngIf="templateRef">
+                    <ng-template  [ngTemplateOutlet]="templateRef"
+                                  [ngTemplateOutletContext]="{$implicit: option}">
+                    </ng-template>
+                  </ng-container>
               </mat-option>
           </mat-autocomplete>
           <mat-hint>{{hint}}</mat-hint>
@@ -82,10 +88,14 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
 
     public hiddenFieldName : string;
     public filteredOptions: Observable<string[]>;
+
     @ViewChild('acmcAutoComplete') matAutoComplete: MatAutocomplete;
     @ViewChild('acmcInput', { read: MatAutocompleteTrigger }) acTrigger: MatAutocompleteTrigger;
     @ViewChild('acmcInput') field: ElementRef;
 
+    //for allowing custom mat-option templates to be provided
+    // as content to this component's element
+    @ContentChild(TemplateRef) templateRef;
 
     constructor() { }
 

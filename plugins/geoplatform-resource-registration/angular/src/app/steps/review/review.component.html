@@ -78,10 +78,10 @@
                 <div class="a-property-display">
                     <label>Communities:</label>
                     <div class="a-property-value">
-                        <mat-chip-list *ngIf="data.communities" selectable="false">
-                            <mat-chip *ngFor="let com of data.communities">{{com.label}}</mat-chip>
+                        <mat-chip-list *ngIf="data.usedBy" selectable="false">
+                            <mat-chip *ngFor="let com of data.usedBy">{{com.label}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!data.communities||!data.communities.length"><em>none specified</em></span>
+                        <span *ngIf="!data.usedBy||!data.usedBy.length"><em>none specified</em></span>
                     </div>
                 </div>
 

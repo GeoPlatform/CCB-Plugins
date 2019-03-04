@@ -19,6 +19,10 @@
                     [fieldName]="'purpose'"
                     [formGroup]="formGroup"
                     [filterFn]="filterPurposes">
+                    <ng-template let-option>
+                        <div>{{option.label}}</div>
+                        <div class="u-text--sm t-fg--gray-md">{{option.uri}}</div>
+                    </ng-template>
                 </gprr-autocomplete-mat-chip>
             </div>
 
@@ -31,6 +35,10 @@
                     [fieldName]="'function'"
                     [formGroup]="formGroup"
                     [filterFn]="filterFunctions">
+                    <ng-template let-option>
+                        <div>{{option.label}}</div>
+                        <div class="u-text--sm t-fg--gray-md">{{option.uri}}</div>
+                    </ng-template>
                 </gprr-autocomplete-mat-chip>
             </div>
 
@@ -49,6 +57,10 @@
                     [fieldName]="'primaryTopic'"
                     [formGroup]="formGroup"
                     [filterFn]="filterTopics">
+                    <ng-template let-option>
+                        <div>{{option.label}}</div>
+                        <div class="u-text--sm t-fg--gray-md">{{option.uri}}</div>
+                    </ng-template>
                 </gprr-autocomplete-mat-chip>
             </div>
 
@@ -61,6 +73,10 @@
                     [fieldName]="'primarySubject'"
                     [formGroup]="formGroup"
                     [filterFn]="filterSubjects">
+                    <ng-template let-option>
+                        <div>{{option.label}}</div>
+                        <div class="u-text--sm t-fg--gray-md">{{option.uri}}</div>
+                    </ng-template>
                 </gprr-autocomplete-mat-chip>
             </div>
 
@@ -79,6 +95,10 @@
                     [fieldName]="'place'"
                     [formGroup]="formGroup"
                     [filterFn]="filterPlaces">
+                    <ng-template let-option>
+                        <div>{{option.label}}</div>
+                        <div class="u-text--sm t-fg--gray-md">{{option.uri}}</div>
+                    </ng-template>
                 </gprr-autocomplete-mat-chip>
             </div>
 
@@ -91,6 +111,10 @@
                     [fieldName]="'category'"
                     [formGroup]="formGroup"
                     [filterFn]="filterCategories">
+                    <ng-template let-option>
+                        <div>{{option.label}}</div>
+                        <div class="u-text--sm t-fg--gray-md">{{option.uri}}</div>
+                    </ng-template>
                 </gprr-autocomplete-mat-chip>
             </div>
 
@@ -108,6 +132,10 @@
                     [fieldName]="'audience'"
                     [formGroup]="formGroup"
                     [filterFn]="filterAudiences">
+                    <ng-template let-option>
+                        <div>{{option.label}}</div>
+                        <div class="u-text--sm t-fg--gray-md">{{option.uri}}</div>
+                    </ng-template>
                 </gprr-autocomplete-mat-chip>
             </div>
 
