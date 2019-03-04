@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              http://www.imagemattersllc.com/
- * @since             1.0.9
+ * @since             1.0.10
  * @package           Geop_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Search
- * Plugin URI:        www.geoplatform.gov
+ * Plugin URI:        https://www.geoplatform.gov
  * Description:       Browse, search, and filter GeoPlatform service objects.
- * Version:           1.0.9
+ * Version:           1.0.10
  * Author:            Image Matters LLC: Patrick Neal, Lee Heazel
  * Author URI:        http://www.imagemattersllc.com/
  * License:           Apache 2.0
@@ -48,10 +48,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 1.0.10 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSEARCH_PLUGIN', '1.0.3' );
+define( 'GEOSEARCH_PLUGIN', '1.0.10' );
 
 /**
  * The code that runs during plugin activation.
@@ -84,19 +84,15 @@ function deactivate_geop_search() {
 function geopsearch_add_interface_page() {
 	wp_delete_post(url_to_postid( get_permalink( get_page_by_path( 'geoplatform-search' ))), true);
 	$geopsearch_interface_post = array(
-		'post_title' => 'GeoPlatform Search',
+		'post_title' => 'Search the GeoPlatform',
 		'post_name' => 'geoplatform-search',
 		'post_status' => 'publish',
 		'post_type' => 'page',
+		'post_content' => '<app-root></app-root>',
 	);
-	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/geop_search_page.php'))
-		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/geop_search_page.php'));
-	else if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && is_page_template('page-templates/page_full-width.php'))
-		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>', 'page_template' => 'page-templates/page_full-width.php'));
-	else
-		$geopsearch_interface_post = array_merge($geopsearch_interface_post, array('post_content' => '<app-root></app-root>'));
 
-	wp_insert_post($geopsearch_interface_post);
+	$geopsearch_creation_id = wp_insert_post($geopsearch_interface_post);
+	update_post_meta($geopsearch_creation_id, 'geopportal_breadcrumb_title', 'Search');
 }
 
 // Activation hooks, including our interface addition to fire on activation.
@@ -109,6 +105,7 @@ register_deactivation_hook( __FILE__, 'deactivate_geop_search' );
  * admin-specific hooks, and public-facing site hooks.
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-search.php';
+
 
 
 function geopsearch_page_enqueues(){
@@ -171,10 +168,226 @@ add_action('init', 'geopsearch_shortcodes_init');
 // that perform the settings interface add and remove map operations are simply
 // included here.
 function geopsearch_process_refresh() {
-	include 'admin/partials/geoplatform-search-recreate.php';
+	geopsearch_add_interface_page();
 	wp_die();
 }
 add_action('wp_ajax_geopsearch_refresh', 'geopsearch_process_refresh');
+
+function geopsearch_perform_site_search() {
+	include 'public/partials/geoplatform-search-site_search.php';
+	wp_die();
+}
+add_action('wp_ajax_geopsearch_site_search', 'geopsearch_perform_site_search');
+
+/**
+ * Get Docker container enviroment variables
+ *
+ * @param [string] $name
+ * @param [string] $def (default)
+ * @return ENV[$name] or $def if none found
+ */
+
+
+//set env variables
+$geopccb_maps_url = isset($_ENV['maps_url']) ? $_ENV['maps_url'] : 'https://maps.geoplatform.gov';
+
+/* Endpoint for custom search algorithm.
+ *
+ * Reference: https://benrobertson.io/wordpress/wordpress-custom-search-endpoint
+ *
+ * This method below registers the endpoint route.
+*/
+function geopsearch_register_search_route() {
+    register_rest_route('geoplatform-search/v1', '/gpsearch', [
+        'methods' => WP_REST_Server::READABLE,
+        'callback' => 'geopsearch_ajax_search',
+        'args' => geopsearch_get_search_args(),
+    ]);
+}
+add_action( 'rest_api_init', 'geopsearch_register_search_route');
+
+// Sets up the search args.
+function geopsearch_get_search_args() {
+  $args = [];
+	$args['type'] = [
+    'description' => esc_html__( 'asset type. post, page, or media.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+  $args['q'] = [
+    'description' => esc_html__( 'The search term.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['author'] = [
+    'description' => esc_html__( 'The author filter.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['page'] = [
+    'description' => esc_html__( 'The current page.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['per_page'] = [
+    'description' => esc_html__( 'Results per page.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['order'] = [
+    'description' => esc_html__( 'Binary order by which results are returned. asc or desc.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+	$args['orderby'] = [
+    'description' => esc_html__( 'Sorting order by which results are returned.', 'geopsearch' ),
+    'type'        => 'string',
+  ];
+  return $args;
+}
+
+// Performs the actual search operation.
+function geopsearch_ajax_search( $request ) {
+	global $wpdb;
+
+  $posts = [];
+  $results = [];
+	$post_type = isset($request['type']) ? $request['type'] : 'fail';
+	$search_query = isset($request['q']) ? $request['q'] : '';
+	$search_author = isset($request['author']) ? $request['author'] : '';
+	$order_binary = isset($request['order']) ? $request['order'] : 'asc';
+	$order_sort = isset($request['orderby']) ? $request['orderby'] : 'modified';
+	$page = isset($request['page']) ? $request['page'] : 0;
+	$per_page = isset($request['per_page']) ? $request['per_page'] : 5;
+	$geopsearch_post_fetch_total = array();
+
+	if ($post_type == 'fail' || ($post_type != 'media' && $post_type != 'page' && $post_type != 'post'))
+		return array('error message' => 'Invalid request type. Must be post, page, or media.');
+
+	if (!is_numeric($page) || !is_numeric($per_page))
+		return array('error message' => 'Page and per_page parameters must be numeric.');
+
+	if ($post_type == 'media'){
+	  $geopsearch_media_args = array(
+			'post_type'      => 'attachment',
+			'post_mime_type' => 'image',
+			'post_status'    => 'inherit',
+			'posts_per_page' => - 1,
+			'author_name' => $search_author,
+			's' => $search_query,
+			'order' => $order_binary,
+			'orderby' => $order_sort,
+		);
+
+		$geopsearch_media_fetch = new WP_Query( $geopsearch_media_args );
+		$geopsearch_post_fetch_total = $geopsearch_media_fetch->posts;
+	}
+	else {
+		// get posts
+	  $posts_one = array(
+			'numberposts' => -1,
+			'posts_per_page' => -1,
+	    'post_type' => $post_type,
+	    'author_name' => $search_author,
+	    'order' => $order_binary,
+	    'orderby' => $order_sort,
+	    's' => $search_query,
+	  );
+
+		$termIDs = get_terms(array(
+			'name__like' => $search_query,
+	    'fields' => 'ids',
+		));
+
+		$posts_two = array(
+			'numberposts' => -1,
+			'posts_per_page' => -1,
+			'post_type' => $post_type,
+			'author_name' => $search_author,
+			'order' => $order_binary,
+			'orderby' => $order_sort,
+			'tax_query' => array(
+				'relation' => 'OR',
+				array(
+					'taxonomy' => 'category',
+					'field' => 'id',
+					'terms' => $termIDs,
+				),
+				array(
+					'taxonomy' => 'post_tag',
+					'field' => 'id',
+					'terms' => $termIDs,
+				),
+			)
+		);
+
+		$geopsearch_post_fetch_one = new WP_Query($posts_one);
+		$geopsearch_post_fetch_two = new WP_Query($posts_two);
+
+		$geopsearch_post_fetch_total = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
+	}
+	$geopsearch_post_fetch_total = sort_posts($geopsearch_post_fetch_total, $order_sort, $order_binary);
+	$geopsearch_total_count = count($geopsearch_post_fetch_total);
+
+	if ( empty($geopsearch_post_fetch_total) )
+    return array('message' => 'No results.');
+
+	class SearchResults
+	{
+		public $page;
+	  public $size;
+		public $totalResults;
+		public $type;
+	  public $results;
+
+	  function __construct($page, $size, $total, $type, $results){
+	    $this->page = (int)$page;
+	    $this->size = (int)$size;
+			$this->totalResults = (int)$total;
+			$this->type = $type;
+	    $this->results = $results;
+	  }
+	}
+
+	$slice_start = $page * $per_page;
+	// instead of $start use start
+	// instead of $per_page use $size
+	$results = array_slice($geopsearch_post_fetch_total, $slice_start, $per_page, true);
+
+	$page_object = new SearchResults($page, $per_page, $geopsearch_total_count, $post_type, $results);
+
+	if ( empty($page_object->results) )
+	 	return array('message' => 'Requested page exceeds result count.');
+
+	return rest_ensure_response($page_object);
+}
+
+// From https://gist.github.com/bradyvercher/1576900
+function sort_posts( $posts, $orderby, $order = 'ASC', $unique = true ) {
+	if ( ! is_array( $posts ) ) {
+		return false;
+	}
+
+	usort( $posts, array( new Sort_Posts( $orderby, $order ), 'sort' ) );
+
+	return $posts;
+}
+
+class Sort_Posts {
+	var $order, $orderby;
+
+	function __construct( $orderby, $order ) {
+		$this->orderby = $orderby;
+		$this->order = ( 'desc' == strtolower( $order ) ) ? 'DESC' : 'ASC';
+	}
+
+	function sort( $a, $b ) {
+		if ( $a->{$this->orderby} == $b->{$this->orderby} ) {
+			return 0;
+		}
+
+		if ( $a->{$this->orderby} < $b->{$this->orderby} ) {
+			return ( 'ASC' == $this->order ) ? -1 : 1;
+		} else {
+			return ( 'ASC' == $this->order ) ? 1 : -1;
+		}
+	}
+}
+
 
 /**
  * Begins execution of the plugin.

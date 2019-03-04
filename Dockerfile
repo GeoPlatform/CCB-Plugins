@@ -73,7 +73,7 @@ RUN curl -L -o /usr/src/download-manager.zip \
 
 # Open ID Connect - OAUTH :
 RUN curl -L -o /usr/src/open-id-generic-master.zip \
-					https://github.com/daggerhart/openid-connect-generic/archive/master.zip; \
+					https://github.com/daggerhart/openid-connect-generic/archive/3.4.0.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/open-id-generic-master.zip; \
 		rm /usr/src/open-id-generic-master.zip;

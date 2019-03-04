@@ -1,0 +1,11 @@
+<div>
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Alternate Titles ({{titles?.length||0}})</strong>
+</div>
+<div *ngIf="!isCollapsed">
+    <div *ngIf="!titles || !titles.length">None specified</div>
+    <div *ngFor="let alt of titles">{{alt}}</div>
+</div>

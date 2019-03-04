@@ -22,17 +22,20 @@ import { SimilarityCodec } from '../../constraints/similarity/codec';
 import { PagingEvent } from '../../shared/paging/paging.component';
 // import { ServerRoutes } from '../../server-routes.enum'
 import { environment } from '../../../environments/environment';
+import { RPMService } from 'gp.rpm/src/iRPMService'
+
+import { itemServiceProvider } from '../../shared/service.provider';
+
 
 @Component({
     selector: 'results-portfolio',
     templateUrl: './portfolio.component.html',
-    styleUrls: ['./portfolio.component.css']
+    styleUrls: ['./portfolio.component.css'],
+    providers: [itemServiceProvider]
 })
 export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() constraints: Constraints;
-
-    private service : ItemService;
     private listener : ISubscription;
     public totalResults : number = 0;
     public pageSize : number = 10;
@@ -45,8 +48,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public showLegend : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
 
-    constructor( private http : HttpClient ) {
-        this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
+    constructor( private itemService : ItemService, public rpm: RPMService ) {
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = '_score,desc';
         this.defaultQuery.sort(this.sortField);
@@ -123,8 +125,10 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         // console.log("PortfolioComponent.executeQuery() - " +
         //    JSON.stringify(this.query.getQuery()));
 
+
+
         this.isLoading = true;
-        this.service.search(this.query)
+        this.itemService.search(this.query)
         .then( response => {
             this.isLoading = false;
             this.totalResults = response.totalResults;
@@ -132,6 +136,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
             //show facet counts in picker filters...
             this.constraints.updateFacetCounts(response.facets);
+            this.rpm.logSearch(this.query.query, response.totalResults);
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
@@ -150,6 +155,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     onSortChange() {
         this.query.sort(this.sortField);
         this.queryChange.next(this.query);
+        this.rpm.logEvent('Sort', this.sortField)
     }
 
     /**
@@ -179,7 +185,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     findSimilarTo(item) {
-        let constraint = new SimilarityCodec(this.http).toConstraint(item);
+        let http = this.itemService.client;
+        let constraint = new SimilarityCodec(http).toConstraint(item);
         this.constraints.set(constraint);
     }
 
@@ -209,40 +216,23 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     getActivationUrl(item) {
-        let url = null;
+        let type = null;
         switch(item.type) {
-
-            case ItemTypes.MAP:
-                let types = item.resourceTypes;
-                let AGOL_MAP_TYPE = 'http://www.geoplatform.gov/ont/openmap/AGOLMap';
-                if(types && types.length && ~types.indexOf(AGOL_MAP_TYPE))
-                    url = item.landingPage;
-                else
-                    url = this.getMapViewerURL() + '?id=' + item.id;
-                break;
-
-            case ItemTypes.GALLERY:
-                url = this.getGalleryURL() + '/galleries/' + item.id;
-                break;
-
-            case ItemTypes.SERVICE:
-                url = this.getDashboardURL() + '/sd/details/' + item.id;
-                break;
-
-            case ItemTypes.DATASET:
-                url = this.getDashboardURL() + '/dd/details/' + item.id;
-                break;
-
             case ItemTypes.LAYER:
+            case ItemTypes.MAP: type = item.type.toLowerCase() + 's'; break;
+            case ItemTypes.GALLERY: type = "galleries"; break;
+            case ItemTypes.COMMUNITY: type = "communities"; break;
+            case ItemTypes.CONTACT: type = "contacts"; break;
+            case ItemTypes.SERVICE:
+            case ItemTypes.DATASET:
             case ItemTypes.ORGANIZATION:
-            case ItemTypes.CONTACT:
-            case ItemTypes.COMMUNITY:
             case ItemTypes.CONCEPT:
             case ItemTypes.CONCEPT_SCHEME:
-            default:
-                return this.getObjectEditorURL() + '/view/' + item.id;
+                type = item.type.split(':')[1].toLowerCase() + 's'; break;
         }
-        return url;
+        if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
+        else return '/resources';
+
     }
 
 

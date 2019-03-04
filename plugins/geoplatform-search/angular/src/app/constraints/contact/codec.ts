@@ -5,12 +5,15 @@ import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
+import { itemServiceFactory } from '../../shared/service.provider';
+
 export class ContactCodec implements Codec {
 
     private service : ItemService;
 
     constructor(private http : HttpClient) {
-        this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
+        this.service = itemServiceFactory(http);
+        // this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
     }
 
     getKey() : string { return QueryParameters.CONTACTS_ID; };

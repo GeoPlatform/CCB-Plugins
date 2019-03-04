@@ -1,0 +1,38 @@
+<div class="m-article__desc">
+    <div><strong>Full Name</strong></div>
+    <div *ngIf="item.fullName">{{item.fullName}}</div>
+    <div *ngIf="!item.fullName" class="t-fg--warning">
+        <span class="fas fa-exclamation-warning-triangle"></span>
+        Not specified
+    </div>
+    <br>
+
+    <div><strong>Organization</strong></div>
+    <div *ngIf="item.orgName">{{item.orgName}}</div>
+    <div *ngIf="!item.orgName" class="t-fg--warning">
+        <span class="fas fa-exclamation-triangle"></span>
+        Not specified
+    </div>
+    <br>
+
+    <div><strong>Position</strong></div>
+    <div>{{item.positionTitle||"Not specified"}}</div>
+    <br>
+
+    <div><strong>Email</strong></div>
+    <div>{{item.email||"Not specified"}}</div>
+    <br>
+
+    <div><strong>Phone</strong></div>
+    <div>{{item.tel||"Not specified"}}</div>
+    <br>
+
+    <div *ngIf="item.address">
+        <div><strong>Address</strong></div>
+        <div *ngIf="item.address.street">{{item.address.street}}</div>
+        <span *ngIf="item.address.locality">{{item.address.locality}}</span>
+        <span *ngIf="item.address.region">{{item.address.region}}</span>
+        <span *ngIf="item.address.zip">{{item.address.zip}}</span>
+        <div *ngIf="item.address.country">{{item.address.country}}</div>
+    </div>
+</div>

@@ -7,7 +7,7 @@ export const environment = {
     production: true,
     env: 'development',
     ualUrl: 'https://sit-ual.geoplatform.us',
-    wpUrl: 'https://sit-ccb.geoplatform.us',
+    wpUrl: '',
     // helpUrl: 'https://sit.geoplatform.us/help/geoplatform-search-help/',
     root: '/',
     assets: 'assets/'

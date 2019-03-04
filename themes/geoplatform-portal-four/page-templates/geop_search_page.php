@@ -14,7 +14,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 
 <div class="l-body l-body--one-column">
   <div class="l-body__main-column">
-    <script> window.GeoPlatformSearchPluginEnv = { wpUrl: "<?php bloginfo('wpurl') ?>" }; </script>
+    <script> window.GeoPlatformPluginEnv = { wpUrl: "<?php bloginfo('wpurl') ?>" }; </script>
     <app-root></app-root>
   </div>
 </div>

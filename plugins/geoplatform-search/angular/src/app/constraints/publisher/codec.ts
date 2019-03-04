@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Params } from '@angular/router';
 import { Config, Query, QueryParameters, ItemService } from 'geoplatform.client';
 import { NG2HttpClient } from '../../shared/NG2HttpClient';
+import { itemServiceFactory } from '../../shared/service.provider';
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
@@ -10,7 +11,8 @@ export class PublisherCodec implements Codec {
     private service : ItemService;
 
     constructor(private http : HttpClient) {
-        this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
+        this.service = itemServiceFactory(http);
+        // this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
     }
 
     getKey() : string { return QueryParameters.PUBLISHERS_ID; };

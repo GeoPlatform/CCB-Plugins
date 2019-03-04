@@ -4,7 +4,7 @@
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
 **Stable tag:** 3.1.0
-**Version:** 3.1.8
+**Version:** 3.1.9
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -112,8 +112,15 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
-= 3.1.8 =
+= 3.1.9 =
 * Release pending
+
+- Excluded unnecessary new function from parent theme.
+- Removed automated update feature.
+- Added template pages for GeoPlatform plugins to optimize integration.
+
+= 3.1.8 =
+* Release January 17, 2019
 
 - Added GeoPlatform Search Page template.
 - Added GeoPlatform control allowing user to toggle darkening and text outline of front page featured cards.

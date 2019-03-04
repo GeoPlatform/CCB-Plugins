@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import {
-    NgModule, Pipe, PipeTransform, Injectable, APP_INITIALIZER
+    NgModule, Pipe, PipeTransform, Injectable, Inject, APP_INITIALIZER
 } from '@angular/core';
 import {
     HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS
@@ -18,6 +18,7 @@ import {
     MatChipsModule, MatProgressSpinnerModule
 } from '@angular/material';
 
+import { AuthenticatedComponent } from './authenticated.component';
 import { AppComponent } from './app.component';
 
 //configure the necessary environment variables needed by GeoPlatformClient
@@ -26,14 +27,37 @@ import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
+import { AutocompleteMatChipComponent } from "./autocomplete.component";
+import { TokenInterceptor } from 'geoplatform.ngoauth/angular'
+import { PluginAuthService } from "./auth.service";
+
+import {
+    itemServiceProvider,
+    serviceServiceProvider,
+    utilsServiceProvider,
+    kgServiceProvider
+} from './item-service.provider';
+
 export function initializeApp() {
   return () => {
+
+      console.log("Initializing App...");
       Config.configure(environment);
+
+      let gpGlobal = (<any>window).GeoPlatform;
+      //optionally, if run-time environment variables specified,
+      // add those (overwriting any duplicates)
+      if(gpGlobal && gpGlobal.config) {
+          console.log("Configuring app using run-time values");
+          console.log(gpGlobal.config);
+          Config.configure(gpGlobal.config);
+      }
+
+      console.log("Configured App using:");
+      console.log(Config);
+
   }
 }
-
-
-import { AuthService } from "./auth.service";
 
 
 
@@ -65,33 +89,43 @@ export class PrettyJsonPipe implements PipeTransform {
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    TypeComponent,
-    AdditionalComponent,
-    EnrichComponent,
-    ReviewComponent,
-    PrettyJsonPipe
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule, HttpClientJsonpModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    MatCardModule, MatInputModule, MatButtonModule,
-    MatListModule, MatStepperModule, MatFormFieldModule,
-    MatDatepickerModule, MatNativeDateModule, MatSelectModule,
-    MatCheckboxModule, MatAutocompleteModule, MatIconModule,
-    MatChipsModule, MatProgressSpinnerModule
-  ],
-  providers: [
-      {
-          provide: APP_INITIALIZER,
-          useFactory: initializeApp,
-          multi: true
-      },
-      AuthService
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        TypeComponent,
+        AdditionalComponent,
+        EnrichComponent,
+        ReviewComponent,
+        PrettyJsonPipe,
+        AutocompleteMatChipComponent
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule, HttpClientJsonpModule,
+        BrowserAnimationsModule,
+        ReactiveFormsModule,
+        MatCardModule, MatInputModule, MatButtonModule,
+        MatListModule, MatStepperModule, MatFormFieldModule,
+        MatDatepickerModule, MatNativeDateModule, MatSelectModule,
+        MatCheckboxModule, MatAutocompleteModule, MatIconModule,
+        MatChipsModule, MatProgressSpinnerModule
+    ],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApp,
+            multi: true
+        },
+        // { // Setup handler for sending and receiving tokens from backend service
+        //     provide: HTTP_INTERCEPTORS,
+        //     useClass: TokenInterceptor,
+        //     multi: true
+        // },
+        PluginAuthService,
+        itemServiceProvider,
+        serviceServiceProvider,
+        utilsServiceProvider,
+        kgServiceProvider
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

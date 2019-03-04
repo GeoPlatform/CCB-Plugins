@@ -1,7 +1,7 @@
 <article class="m-article">
   <div class="m-article__heading">Have Other Questions?</div>
   <div class="m-article__desc">
-    Please check out our <a href="/faq.html">FAQ page</a> in case your
+    Please check out our <a href="<?php echo home_url('faq') ?>">FAQ page</a> in case your
     question has already been addressed. If you still need help or want
     to report an issue, please send us an email at
     <a href="mailto:servicedesk@geoplatform.gov">servicedesk@geoplatform.gov</a>.

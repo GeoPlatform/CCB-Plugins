@@ -21,7 +21,7 @@ get_template_part( 'mega-menu', get_post_format() );
     <div class="row">
 	<br />
   <div class="col-md-9">
-          <h4><?php _e( 'Posts and Pages with the Tag : ', 'geoplatform-ccb') single_tag_title();?></h4>
+          <h4><?php _e( 'Posts and Pages with the Tag : ', 'geoplatform-ccb') . single_tag_title();?></h4>
             <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
               <div class="svc-card" style="padding:inherit; margin-right:-1em;">
                 <div class="svc-card__body" style="flex-basis:102%;">

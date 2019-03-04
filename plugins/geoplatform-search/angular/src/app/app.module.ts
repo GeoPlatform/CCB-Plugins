@@ -13,6 +13,10 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
 
+// Adds window.RPMService to global namespace
+import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'gp.rpm/src/iRPMService'
+
 
 
 //Leaflet does some magic rewrites to css to reference images,
@@ -69,6 +73,16 @@ import { SimilarityComponent } from './constraints/similarity/similarity.compone
 import { LegendComponent } from './results/portfolio/legend/legend.component';
 
 
+import {
+    itemServiceProvider,
+    serviceServiceProvider,
+    utilsServiceProvider,
+    kgServiceProvider
+} from './shared/service.provider';
+
+
+
+
 //ROUTING CONFIG
 const appRoutes: Routes = [
 
@@ -83,18 +97,23 @@ const appRoutes: Routes = [
 // }
 export function initializeApp() {
   return () => {
+      console.log("Initializing App...");
       //initial configuration via build-time environment variables
       Config.configure(environment);
 
+      let gpGlobal = (<any>window).GeoPlatform;
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
-      if((<any>window).GeoPlatformSearchPluginEnv) {
-          // console.log("Configuring app using run-time values");
-          Config.configure((<any>window).GeoPlatformSearchPluginEnv);
+      if(gpGlobal && gpGlobal.config) {
+          console.log("Configuring app using run-time values");
+          console.log(gpGlobal.config);
+          Config.configure(gpGlobal.config);
       }
+
+      console.log("Configured App using:");
+      console.log(Config);
   }
 }
-
 
 @NgModule({
   declarations: [
@@ -148,10 +167,18 @@ export function initializeApp() {
       //     deps: [EnvironmentSettings], multi: true
       // }
       {
+        provide: RPMService,
+        useValue: RPMServiceFactory()
+      },
+      {
           provide: APP_INITIALIZER,
           useFactory: initializeApp,
           multi: true
-      }
+      },
+      itemServiceProvider,
+      serviceServiceProvider,
+      utilsServiceProvider,
+      kgServiceProvider
   ],
   entryComponents: [
       KeywordsComponent,

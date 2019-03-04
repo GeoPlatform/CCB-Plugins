@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+a[target="_blank"]:after {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    content: "\f35d";
+    font-size: 0.75em;
+    padding-left: 0.5em;
+    vertical-align: top;
+}
+
+
+/* this needs to get folded into style repo... */
+.m-message.m-message--light {
+    background-color: #f6f6f6;
+    color: #333;
+}
+
+
+span.fas.fa-caret-down,
+span.fas.fa-caret-up {
+    cursor: pointer;
+}

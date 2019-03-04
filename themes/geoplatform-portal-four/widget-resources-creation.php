@@ -40,7 +40,7 @@ class Geopportal_Resource_Creation_Widget extends WP_Widget {
 								<p>Talk about how users can create their own <?php _e(sanitize_text_field($geopportal_resource_creation_plural), 'geoplatform-ccb') ?>... </p>
 						</div>
 						<div class="article__actions">
-								<a type="button" href="<?php echo esc_url($geopportal_resource_creation_url) ?>" class="btn btn-primary">Create a <?php _e(sanitize_text_field(ucfirst($geopportal_resource_creation_singular)), 'geoplatform-ccb') ?></a>
+								<a href="<?php echo esc_url($geopportal_resource_creation_url) ?>" class="btn btn-primary">Create a <?php _e(sanitize_text_field(ucfirst($geopportal_resource_creation_singular)), 'geoplatform-ccb') ?></a>
 						</div>
 				</article>
 		</div>

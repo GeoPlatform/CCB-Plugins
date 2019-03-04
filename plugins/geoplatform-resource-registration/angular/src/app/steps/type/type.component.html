@@ -13,29 +13,45 @@
             <div class="type__section">
 
                 <mat-form-field floatLabel="always">
-                    <mat-label>Resource Type</mat-label>
+                    <mat-label>Type</mat-label>
                     <mat-select placeholder="Select Type" formControlName="type" required>
                         <mat-option [value]="'dcat:Dataset'">Dataset</mat-option>
                         <mat-option [value]="'regp:Service'">Service</mat-option>
+                        <mat-option [value]="'Map'">Map</mat-option>
                     </mat-select>
                     <mat-hint>You must specify a resource type before proceeding</mat-hint>
                     <mat-error *ngIf="isInvalid('type')">{{getErrorMessage('type')}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field floatLabel="always">
-                    <mat-label>Resource Name</mat-label>
+                    <mat-label>Title</mat-label>
                     <input matInput formControlName="title" placeholder="Name the resource" required>
                     <mat-hint>You must provide a name for the resource</mat-hint>
                     <mat-error *ngIf="isInvalid('title')">{{getErrorMessage('title')}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field floatLabel="always">
-                    <mat-label>Resource Description</mat-label>
+                    <mat-label>Description</mat-label>
                     <textarea matInput formControlName="description"
                         placeholder="Provide a description of the resource">
                     </textarea>
                     <mat-hint>A rich description helps others discover your resource</mat-hint>
                 </mat-form-field>
+
+                <gprr-autocomplete-mat-chip
+                    [label]="'Publishers'"
+                    [placeholder]="'Associate publishing agencies'"
+                    [hint]="'Find publishers using the typeahead and select them to associate'"
+                    [fieldName]="'publishers'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterPublishers">
+                </gprr-autocomplete-mat-chip>
+
+                <!-- <mat-form-field floatLabel="always">
+                    <mat-label>Created By</mat-label>
+                    <input matInput formControlName="createdBy" required disabled="disabled">
+                    <mat-error *ngIf="isInvalid('createdBy')">You must be signed in to register resources</mat-error>
+                </mat-form-field> -->
 
             </div>
 
@@ -53,10 +69,10 @@
                 <div *ngIf="currentType==='dcat:Dataset'">
 
                     <mat-form-field floatLabel="always">
-                        <mat-label>Distribution URL</mat-label>
+                        <mat-label>Download URL</mat-label>
                         <mat-icon matPrefix>link</mat-icon>
-                        <input type="url" matInput formControlName="accessURL" placeholder="Specify a distribution URL">
-                        <mat-hint>If the dataset is distributable via a web-accessible URL</mat-hint>
+                        <input type="url" matInput formControlName="accessURL" placeholder="Specify a download URL">
+                        <mat-hint>If the dataset is downloadable via a web-accessible URL</mat-hint>
                         <mat-error *ngIf="isInvalid('accessURL')">{{getErrorMessage('accessURL')}}</mat-error>
                     </mat-form-field>
 
@@ -101,11 +117,24 @@
 
                 </div>
 
+                <gprr-autocomplete-mat-chip
+                    [label]="'Specialization'"
+                    [placeholder]="'Specify resource specialization(s)'"
+                    [hint]="'Resources can be specialized to enhance search, discovery, and usage by other users. Specializations are type-specific and may not exist for all types.'"
+                    [fieldName]="'resourceTypes'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterResourceTypes">
+                </gprr-autocomplete-mat-chip>
+
+
                 <mat-form-field floatLabel="always">
-                    <mat-label>Home Page</mat-label>
+                    <mat-label>Landing Page</mat-label>
                     <mat-icon matPrefix>link</mat-icon>
-                    <input matInput formControlName="landingPage" placeholder="Specify the home page of the dataset">
-                    <mat-hint>A home page where more information can be gathered</mat-hint>
+                    <input matInput formControlName="landingPage"
+                        placeholder="Specify the landing page of the resource"
+                        [required]="currentType==='Map'">
+                    <mat-hint>A website where more information can be gathered</mat-hint>
+                    <mat-error *ngIf="isInvalid('landingPage')">{{getErrorMessage('landingPage')}}</mat-error>
                 </mat-form-field>
 
 
@@ -123,12 +152,25 @@
             </div>
         </div>
 
+        <div class="m-message m-message--warning" *ngIf="doesExist">
+            <div class="m-message__heading">
+                <mat-icon class="m-message__icon">warning</mat-icon>
+                The Resource Already Exists
+            </div>
+            <div class="m-message__body">
+                The resource you are attempting to register already exists.
+                View the existing resource <a href="{{doesExist}}" target="_blank">here</a>
+            </div>
+        </div>
+
     </form>
 
     <mat-card-actions>
         <div class="m-step__buttons">
             <button mat-raised-button color="primary" matStepperNext
-                [disabled]="formGroup.invalid || !data.createdBy">Continue</button>
+                [disabled]="formGroup.invalid || !data.createdBy">
+                Continue
+            </button>
         </div>
     </mat-card-actions>
 

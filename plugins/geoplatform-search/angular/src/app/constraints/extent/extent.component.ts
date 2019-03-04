@@ -20,6 +20,7 @@ import { ExtentCodec } from './codec';
 
 import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { HttpTypeaheadService } from '../../shared/typeahead';
+import { utilsServiceFactory } from '../../shared/service.provider';
 
 
 
@@ -36,7 +37,7 @@ class GazetteerTypeaheadService implements HttpTypeaheadService {
 
     constructor(private http: HttpClient) {
         let client = new NG2HttpClient(http);
-        this.service = new UtilsService(Config.ualUrl, client);
+        this.service = utilsServiceFactory(http);//new UtilsService(Config.ualUrl, client);
     }
 
     search(term: string) {

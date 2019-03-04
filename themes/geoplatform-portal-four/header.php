@@ -46,7 +46,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                     </div>
                 </div>
 
-                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_communities')); ?>">Communities</a>
+                <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_ngda_themes')); ?>">NGDA Themes</a>
                 <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_search')); ?>">Search</a>
             </div>
             <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url(get_theme_mod('headlink_help')); ?>">Help</a>
@@ -58,10 +58,18 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
         <?php
         $geopportal_current_user = wp_get_current_user();
-        $geopportal_front_username_text = "Sign In";
-        $geopportal_front_loginname_text = "";
-        $geopportal_front_user_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+
+        $geopportal_login_url;
+        if ( is_front_page() || is_404() ){ $geopportal_login_url = home_url(); }
+        elseif ( is_category() ){ $geopportal_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) ); }
+        else { $geopportal_login_url = get_permalink(); }
+
         if($geopportal_current_user->ID != 0) {
+
+          $geopportal_front_username_text = "";
+          $geopportal_front_loginname_text = "";
+          $geopportal_front_user_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
+
           if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
             $geopportal_front_username_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;
           elseif (!empty($geopportal_current_user->user_firstname) && empty($geopportal_current_user->user_lastname))
@@ -73,36 +81,49 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
           $geopportal_front_loginname_text = $geopportal_current_user->user_login;
           $geopportal_front_user_redirect = esc_url($GLOBALS['geopccb_accounts_url']);
-        }
-        ?>
+          ?>
 
-        <div class="dropdown" id="geopportal_header_user_dropdown_parent">
-            <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="fas fa-user"></span>
-                <span class="is-hidden--xs"><?php echo $geopportal_front_username_text ?></span>
-            </button>
-            <div class="dropdown-menu dropdown-menu-right" id="geopportal_header_user_dropdown_child" aria-labelledby="userSignInButton">
-                <div class="d-flex">
-                    <div class="col u-text--center">
-                        <span class="fas fa-user fa-5x"></span>
-                        <br>
-                        <div><strong><?php echo $geopportal_front_username_text ?></strong></div>
-                        <div class="u-text--sm"><em><?php echo $geopportal_front_loginname_text ?></em></div>
-                    </div>
-                    <div class="col">
-                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>">Edit Profile</a>
-                        <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>">Change Password</a>
-                        <div class="dropdown-item">
-                            <strong>Focus:</strong>
-                            <em>Data</em>
-                            <a href="<?php echo $geopportal_front_user_redirect ?>">[change]</a>
-                        </div>
-                    </div>
-                </div>
-                <!-- <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a> -->
-            </div>
+          <div class="dropdown" id="geopportal_header_user_dropdown_parent">
+              <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="fas fa-user"></span>
+                  <span class="is-hidden--xs"><?php echo $geopportal_front_username_text ?></span>
+              </button>
+              <div class="dropdown-menu dropdown-menu-right" id="geopportal_header_user_dropdown_child" aria-labelledby="userSignInButton">
+                  <div class="d-flex">
+                      <div class="col u-text--center">
+                          <span class="fas fa-user fa-5x"></span>
+                          <br>
+                          <?php
+                          if($geopportal_current_user->ID != 0) { ?>
+                            <div><strong><?php echo $geopportal_front_username_text ?></strong></div>
+                            <div class="u-text--sm"><em><?php echo $geopportal_front_loginname_text ?></em></div>
+                          <?php } else { ?>
+                            <div><strong><a href="<?php echo esc_url(wp_login_url( $geopportal_login_url ) ); ?>"><?php echo $geopportal_front_username_text ?></a></strong></div>
+                          <?php } ?>
+                      </div>
+                      <div class="col">
+                          <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>/profile">Edit Profile</a>
+                          <a class="dropdown-item" href="<?php echo $geopportal_front_user_redirect ?>/updatepw">Change Password</a>
+                          <?php
+                          if($geopportal_current_user->ID != 0) { ?>
+                            <a class="dropdown-item" href="<?php echo esc_url(wp_logout_url( $geopportal_login_url ) ); ?>">Sign Out</a>
+                          <?php } ?>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a> -->
+              </div>
+            <?php } else { ?>
+              <div class="dropdown" id="geopportal_header_user_dropdown_parent">
+                  <a class="btn btn-link" href="<?php echo esc_url(wp_login_url( $geopportal_login_url ) ); ?>">
+                      <span class="fas fa-user"></span>
+                      <span class="is-hidden--xs">Sign In</span>
+                  </a>
+              </div>
+
+            <?php } ?>
         </div>
     </div>
 

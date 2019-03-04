@@ -1,0 +1,24 @@
+<div class="m-thumbnail" style="position:relative">
+
+    <!-- fallback is to use SVG for item type as its thumbnail -->
+    <div *ngIf="isEmpty()" class="is-16x9 is-fallback">
+        <div
+            [style.background-size]="'contain'"
+            [style.background-repeat]="'no-repeat'"
+            [style.background-position]="'50% 0'"
+            [style.background-image]="getFallbackBackgroundImage()">
+        </div>
+    </div>
+
+    <!-- if there is a thumbnail with URL -->
+    <img *ngIf="hasURL()" src="{{item.thumbnail.url}}" fallback="{{getFallbackUrl()}}">
+
+    <!-- if there is a thumbnail with base64 data -->
+    <div *ngIf="hasContentData()" class="is-16x9">
+        <img
+            [style.background-size]="'contain'"
+            [style.background-repeat]="'no-repeat'"
+            [style.background-image]="getBackgroundImage()">
+    </div>
+
+</div>

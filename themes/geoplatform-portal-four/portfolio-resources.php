@@ -229,7 +229,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div>
-															<a href="<?php echo esc_url($geopportal_port_res_fourth_link_one) ?>" class="btn btn-outline-secondary"><?php echo sanitize_text_field($geopportal_port_res_fourth_button_one) ?><span class="fas fa-external-link-alt"></span></a>
+															<a href="<?php echo esc_url($geopportal_port_res_fourth_link_one) ?>" class="btn btn-outline-secondary" target="_blank"><?php echo sanitize_text_field($geopportal_port_res_fourth_button_one) ?><span class="fas fa-external-link-alt"></span></a>
 		                        </div>
 		                    </div>
 		                </div>
