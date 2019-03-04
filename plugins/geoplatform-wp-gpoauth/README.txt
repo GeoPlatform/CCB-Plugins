@@ -6,7 +6,7 @@ Tags: comments, spam
 Requires at least: 4.6.9
 Requires PHP: 7.2.0
 Tested up to: 5.0.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -14,7 +14,7 @@ Activating this plugin creates a page slugged "checktoken." This page will provi
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 =
 * Initial release
 
 == A brief Markdown Example ==

@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.0.0
+ * @since             1.0.1
  * @package           Geoplatform_Wp_Gpoauth
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform WP GPOAuth
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Provides a variety of support functions for the GeoPlatform Portal experience.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -32,10 +32,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 1.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOWPOAUTH_PLUGIN', '1.0.0' );
+define( 'GEOWPOAUTH_PLUGIN', '1.0.1' );
 
 
 // Sets the parameters of and then creates the token page. It deletes any old
@@ -99,7 +99,7 @@ function geopoauth_establish_globals() {
       }
   }
   </script>
-	
+
 _GEOPLATFORMVAR;
 
 	echo $geopoauth_stuff;
