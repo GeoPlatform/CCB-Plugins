@@ -110,14 +110,7 @@ export class PrimaryActionComponent implements OnInit {
 
         // GeoPlatform OpenMaps...
         if(~resTypes.indexOf(GP_RES_TYPE)) {
-            let prefix = '', ext = '.gov';
-            let env = environment.env;
-            if('dev' === env || 'sit' === env) {
-                prefix = 'sit-';
-                ext = '.us';
-            } else if('stg' === env)
-                prefix = 'stg-';
-            let url = 'https://' + prefix + 'viewer.geoplatform' + ext + '/?id=' + this.item.id;
+            let url = Config.ualUrl.replace('ual','viewer') + '/?id=' + this.item.id;
             window.open(url, "_blank");
             return;
         }
