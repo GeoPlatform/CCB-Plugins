@@ -205,15 +205,33 @@
   border-radius: 4px;
 }
 
-/* .geop-redirect-div {
+.geop-title-div {
   z-index: 10;
-  top: 0;
-  right: 0;
+  bottom: 0.67em;
+  left: 0.67em;
   width: auto;
-  float: right;
-  padding: 1em;
+  float: left;
   position: absolute;
-} */
+
+  background: #fff;
+  padding: 0.5em;
+  box-shadow: 0 0 3px rgba(0,0,0,0.75);
+  border-radius: 4px;
+}
+
+.geop-title-grad-div {
+  position: absolute;
+  bottom: 0em;
+  width: 100%;
+  z-index: 1001;
+  padding: 2em 1em 0.5em;
+  background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+  color: #fff;
+  font-weight: 500;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 0 0 4px 4px;
+}
 
 .geop-redirect-icon {
   color: #fff;

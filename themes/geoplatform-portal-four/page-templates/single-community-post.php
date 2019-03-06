@@ -20,7 +20,7 @@ get_template_part( 'sub-header-com', get_post_format() );
       <?php
       if (isset($post->geopportal_compost_map_shortcode) && !empty($post->geopportal_compost_map_shortcode)){
         $geop_portal_broken_shortcode = explode( "'", $post->geopportal_compost_map_shortcode);
-        $geop_portal_rebuilt_shortcode = "[geopmap id=" . $geop_portal_broken_shortcode[1] . " height=350 title=off]";
+        $geop_portal_rebuilt_shortcode = "[geopmap id=" . $geop_portal_broken_shortcode[1] . " name='" . $geop_portal_broken_shortcode[3] . "' height=350 title=off]";
         ?>
         <div class="m-section-group">
           <div class="m-article">
