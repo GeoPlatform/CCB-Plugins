@@ -263,8 +263,8 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 						if (count($geopportal_pages_sort) > 0){
 							foreach ($geopportal_pages_sort as $geopccb_post){?>
 								<div class="m-tile">
-			            <a class="is-linkless m-tile__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a><br>
-			            <span class="m-tile__timestamp"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
+			            	<a class="is-linkless m-tile__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a>
+			            	<span class="m-tile__timestamp"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
 			        	</div>
 								<?php
 							}
@@ -312,24 +312,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-
-		// // Checks if the Content Boxes plugin is installed.
-		// $geopportal_mainpage_cb_bool = false;
-		// if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
-		// 	$geopportal_mainpage_cb_bool = true;
-		//
-    // // $instance[ 'geopportal_mainpage_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_title' ] );
-		// $instance[ 'geopportal_mainpage_first_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_first_link' ] );
-		// $instance[ 'geopportal_mainpage_second_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_second_link' ] );
-		// $instance[ 'geopportal_mainpage_third_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_third_link' ] );
-		// $instance[ 'geopportal_mainpage_fourth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fourth_link' ] );
-		// $instance[ 'geopportal_mainpage_fifth_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_fifth_link' ] );
-		// $instance[ 'geopportal_mainpage_map_title' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_title' ] );
-		// $instance[ 'geopportal_mainpage_map_shortcode' ] = strip_tags( $new_instance[ 'geopportal_mainpage_map_shortcode' ] );
-		// $instance[ 'geopportal_mainpage_more_cat' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_cat' ] );
-		// $instance[ 'geopportal_mainpage_more_count' ] = strip_tags( $new_instance[ 'geopportal_mainpage_more_count' ] );
-		// $instance[ 'geopportal_mainpage_browse_link' ] = strip_tags( $new_instance[ 'geopportal_mainpage_browse_link' ] );
-
 		return $instance;
 	}
 }
