@@ -377,7 +377,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 			?>
 			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
-				<a class="geop-hidden-link" title="Open Map" href="<?php echo $geopmap_redirect_item_details ?>" target="_blank">
+				<a class="geop-hidden-link" title="Open Map" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
 					<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
 				</a>
 			</div>
