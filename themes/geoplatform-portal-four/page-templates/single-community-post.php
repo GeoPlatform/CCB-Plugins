@@ -141,10 +141,6 @@ get_template_part( 'sub-header-com', get_post_format() );
                 if (isset($post->geopportal_compost_lead_name) && !empty($post->geopportal_compost_lead_name)){
                   echo "<div><strong>Theme Lead:</strong> " . esc_attr($post->geopportal_compost_lead_name) . "</div>";
                 }
-                if (isset($post->geopportal_compost_community_url) && !empty($post->geopportal_compost_community_url)){
-                  echo "<br>";
-                  echo "Please visit the " . the_title() . " community portal at <a href='" . esc_url($post->geopportal_compost_community_url) . "'>" . esc_url($post->geopportal_compost_community_url) . "</a>";
-                }
               ?>
           </div>
       </div>
