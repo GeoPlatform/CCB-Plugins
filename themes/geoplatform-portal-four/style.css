@@ -467,7 +467,7 @@ pre[class*="language-"].line-numbers > code {
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 2em;
-    grid-row-gap: 0.25em;
+    grid-row-gap: 1em;
   }
   .p-landing-page .o-featured .o-featured__map {
     /* with flex
@@ -984,6 +984,9 @@ pre[class*="language-"].line-numbers > code {
 .p-ngda-theme .carousel .carousel-item {
   overflow: hidden;
   text-align: center;
+}
+.p-ngda-theme .m-card {
+  border: 1px solid #ddd;
 }
 .p-data-registration {
   padding: 0 1em 1em;

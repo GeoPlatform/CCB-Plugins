@@ -195,8 +195,11 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	// Variables that vary among themes. They are set to default values for work
 	// in the GeoPlatform themes, then changed if one such theme is absent.
 	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
-	if ($geopmap_theme == 'F')
+	$geopmap_redirect = 'glyphicon-unchecked';
+	if ($geopmap_theme == 'F'){
 		$geopmap_info_icon = 'fas fa-info-circle';
+		$geopmap_redirect = 'fa fa-external-link-alt';
+	}
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -212,9 +215,12 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 are set initially to those of width as passed by array. The contents of the
 	 	 entire div also act as a hyperlink, set here-->
 	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
-			<a title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" style="z-index:1;">
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
+	 	<?php
+	 	if ($geopmap_shortcode_array['title'] == 'on'){
+	 	?>
+	 		<a title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" style="z-index:1;">
 				<div class="geop-display-header">
 					<table class="geop-no-border geop-no-cushion geop-header-table-layout">
 						<tr class="geop-no-border">
@@ -229,9 +235,22 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				</div>
 				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
 			</a>
+	  <?php } else {
+			$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
+			?>
+			<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
+			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
+				<a class="geop-hidden-link" title="Open Map" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank">
+					<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
+				</a>
+			</div>
+			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand; ?>">
+				<a href="<?php echo $geopmap_redirect_item_details ?>" target="_blank"><span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span></a>
+			</div>
+		<?php	} ?>
 
  <!-- Error report container with heading, an empty output region, and a button
-	 		to close it disguised as text. -->
+	 		to close it disguised as text. 4f97782131ca3e1fbdeea2bccc8946d7 1a827dc62e09d08a834f22bf3d67b720 -->
 			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
 				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
 		 		<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
@@ -373,11 +392,16 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					</tr>
 				</table>
 			</div>
-		<?php } else { ?>
+		<?php } else {
+			$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
+			?>
 			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
 				<a class="geop-hidden-link" title="Open Map" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
 					<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
 				</a>
+			</div>
+			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand; ?>">
+				<a href="<?php echo $geopmap_redirect_item_details ?>" target="_blank"><span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span></a>
 			</div>
 		<?php	} ?>
 
