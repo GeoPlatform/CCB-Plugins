@@ -118,6 +118,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Excluded unnecessary new function from parent theme.
 - Removed automated update feature.
 - Added template pages for GeoPlatform plugins to optimize integration.
+- Revamped blog page appearance and added count control under GeoPlatform Controls.
 
 = 3.1.8 =
 * Release January 17, 2019

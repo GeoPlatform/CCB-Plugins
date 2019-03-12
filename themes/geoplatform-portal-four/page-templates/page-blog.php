@@ -20,7 +20,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 	<?php
 
 	$args = array(
-		'posts_per_page' => 8,
+		'posts_per_page' => get_theme_mod('blogcount_controls', 5),
 		'paged' => $paged,
 	);
 	$wp_query = new WP_Query(); $wp_query->query($args);
