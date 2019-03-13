@@ -218,46 +218,17 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
 	 	<?php
-	 	if ($geopmap_shortcode_array['title'] == 'on'){
-	 	?>
-	 		<a title="Visit full map of <?php echo $geopmap_shortcode_array['name']; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" style="z-index:1;">
-				<div class="geop-display-header">
-					<table class="geop-no-border geop-no-cushion geop-header-table-layout">
-						<tr class="geop-no-border">
-							<th class="geop-no-border geop-no-cushion">
-								<span class="geop-white-item geop-no-transform"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
-							</th>
-							<th class="geop-no-border geop-no-cushion">
-								<span class="<?php echo $geopmap_info_icon ?> geop-white-item geop-header-controls"></span>
-							</th>
-						</tr>
-					</table>
-				</div>
-				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
+		$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
+		?>
+		<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
+		<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
+			<a class="geop-hidden-link" title="Open Map" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank">
+				<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
 			</a>
-	  <?php } else {
-
-
-
-
-
-			$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
-			?>
-			<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
-			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
-				<a class="geop-hidden-link" title="Open Map" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank">
-					<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
-				</a>
-			</div>
-			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand; ?>">
-				<a href="<?php echo $geopmap_redirect_item_details ?>" target="_blank"><span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span></a>
-			</div>
-
-
-
-
-
-		<?php	} ?>
+		</div>
+		<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand; ?>">
+			<a href="<?php echo $geopmap_redirect_item_details ?>" target="_blank"><span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span></a>
+		</div>
 
  <!-- Error report container with heading, an empty output region, and a button
 	 		to close it disguised as text. 4f97782131ca3e1fbdeea2bccc8946d7 1a827dc62e09d08a834f22bf3d67b720 -->
