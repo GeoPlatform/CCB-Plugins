@@ -577,8 +577,10 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// Error report handler. If there is content in error_report, that string
 		// is set to the error output in the error div. Otherwise, that div is
 		// hidden.
-		if (geopmap_error_report)
+		if (geopmap_error_report){
 			jQuery('#errorout_<?php echo $geopmap_divrand; ?>').html(geopmap_error_report);
+			jQuery('#title_<?php echo $geopmap_divrand; ?>').hide();
+		}
 		else
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').hide();
 
@@ -586,6 +588,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// dismiss button/text.
 		jQuery('#errorclose_<?php echo $geopmap_divrand; ?>').click(function(){
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').slideToggle();
+			jQuery('#title_<?php echo $geopmap_divrand; ?>').slideToggle();
 		});
 	})
 	</script>
