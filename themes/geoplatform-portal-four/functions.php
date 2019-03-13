@@ -1183,6 +1183,21 @@ add_filter('manage_edit-community-post_sortable_columns', 'geop_ccb_compost_colu
 add_filter('manage_edit-ngda-post_sortable_columns', 'geop_ccb_compost_column_sorter');
 
 
+function geop_ccb_blogcount_register($wp_customize){
+
+  $wp_customize->add_setting('blogcount_controls',array(
+      'default' => 7,
+      'sanitize_callback' => 'geop_ccb_sanitize_blogcount',
+  ));
+
+  $wp_customize->add_control('blogcount_controls',array(
+      'type' => 'number',
+      'label' => 'Blog Count Controls',
+      'section' => 'featured_format',
+      'description' => "Choose the number of entries on each page of the blog listing post.",
+  ));
+}
+add_action( 'customize_register', 'geop_ccb_blogcount_register');
 
 
 

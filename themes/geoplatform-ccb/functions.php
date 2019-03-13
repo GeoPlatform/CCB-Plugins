@@ -578,6 +578,21 @@ if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
 }
 
 /**
+ * Sanitization callback functions for customizer blog count
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_blogcount' ) ) {
+	function geop_ccb_sanitize_blogcount( $geop_ccb_value ) {
+		// if ( ! is_int($geop_ccb_value) )
+		// 	$geop_ccb_value = 5;
+		return $geop_ccb_value;
+	}
+}
+
+/**
  * Sanitization callback functions for linkmenu option
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
@@ -1307,6 +1322,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
       'font_choice' => 'lato',
       'bootstrap_controls' => 'on',
+      'blogcount_controls' => '5',
       'searchbar_controls' => 'wp',
       'linkmenu_controls' => 'tran',
 		);
@@ -1934,6 +1950,24 @@ if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
     ));
   }
   add_action( 'customize_register', 'geop_ccb_search_register');
+}
+
+if ( ! function_exists ( 'geop_ccb_blogcount_register' ) ) {
+  function geop_ccb_blogcount_register($wp_customize){
+
+    $wp_customize->add_setting('blogcount_controls',array(
+        'default' => 5,
+        'sanitize_callback' => 'geop_ccb_sanitize_blogcount',
+    ));
+
+    $wp_customize->add_control('blogcount_controls',array(
+        'type' => 'number',
+        'label' => 'Blog Count Controls',
+        'section' => 'font_section',
+        'description' => "Choose the number of entries on each page of the blog listing post.",
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_blogcount_register');
 }
 
 if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {

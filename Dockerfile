@@ -55,6 +55,13 @@ RUN curl -L -o /usr/src/download-manager.zip \
 					/usr/src/download-manager.zip; \
 		rm /usr/src/download-manager.zip
 
+# classic-editor:
+RUN curl -L -o /usr/src/classic-editor.zip \
+					https://downloads.wordpress.org/plugin/classic-editor.1.4.zip; \
+	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+					/usr/src/classic-editor.zip; \
+		rm /usr/src/classic-editor.zip
+
 ########### Install Developer Dependencies #############
 # theme check:
 #RUN curl -L -o /usr/src/theme-check.zip \
