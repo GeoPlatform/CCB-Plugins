@@ -62,7 +62,8 @@
             <div class="m-results-item__body">
 
                 <div class="m-results-item__icon m-results-item__icon--sm">
-                    <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span>
+                    <!-- <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span> -->
+                    <span class="{{getIconClass(item)}} is-themed u-text--huge"></span>
                 </div>
                 <div class="flex-1">
                     <div class="m-results-item__heading">

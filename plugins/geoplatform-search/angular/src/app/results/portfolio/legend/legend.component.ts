@@ -45,6 +45,23 @@ export class LegendComponent implements OnInit {
         return `../${environment.assets}${result}.svg`;
     }
 
+    getIconClass(typeName) {
+        let type = "dataset";
+        switch(typeName) {
+            case ItemTypes.DATASET:         type =  'dataset'; break;
+            case ItemTypes.SERVICE:         type =  'service'; break;
+            case ItemTypes.LAYER:           type =  'layer'; break;
+            case ItemTypes.MAP:             type =  'map'; break;
+            case ItemTypes.GALLERY:         type =  'gallery'; break;
+            case ItemTypes.ORGANIZATION:    type =  'organization'; break;
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.COMMUNITY:       type =  'community'; break;
+            case ItemTypes.CONCEPT:         type =  'concept'; break;
+            case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+        }
+        return 'icon-' + type;
+    }
+
     toggle () {
         this.isCollapsed = !this.isCollapsed;
     }

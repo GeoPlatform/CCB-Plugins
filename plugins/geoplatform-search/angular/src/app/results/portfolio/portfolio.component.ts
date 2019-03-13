@@ -212,6 +212,23 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         return `../${environment.assets}${type}.svg`;
     }
 
+    getIconClass(item) {
+        let type = "dataset";
+        switch(item.type) {
+            case ItemTypes.DATASET:         type =  'dataset'; break;
+            case ItemTypes.SERVICE:         type =  'service'; break;
+            case ItemTypes.LAYER:           type =  'layer'; break;
+            case ItemTypes.MAP:             type =  'map'; break;
+            case ItemTypes.GALLERY:         type =  'gallery'; break;
+            case ItemTypes.ORGANIZATION:    type =  'organization'; break;
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.COMMUNITY:       type =  'community'; break;
+            case ItemTypes.CONCEPT:         type =  'concept'; break;
+            case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+        }
+        return 'icon-' + type;
+    }
+
     /**
      *
      */

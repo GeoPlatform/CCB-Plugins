@@ -1,4 +1,5 @@
 <a href="/resources/{{getType()}}/{{item?.id}}">
-    <img *ngIf="hasIcon()" class="a-icon" src="{{getIcon()}}">
+    <!-- <img *ngIf="hasIcon()" class="a-icon" src="{{getIcon()}}"> -->
+    <span *ngIf="hasIcon()" class="a-icon {{getIconClass()}}"></span>
     {{getLabel()}}
 </a>

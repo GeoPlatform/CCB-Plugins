@@ -123,6 +123,23 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
         // return `../${ServerRoutes.ASSETS}${type}.svg`;
     }
 
+    getIconClass(option) {
+        let type = "dataset";
+        switch(option.id) {
+            case ItemTypes.DATASET:         type =  'dataset'; break;
+            case ItemTypes.SERVICE:         type =  'service'; break;
+            case ItemTypes.LAYER:           type =  'layer'; break;
+            case ItemTypes.MAP:             type =  'map'; break;
+            case ItemTypes.GALLERY:         type =  'gallery'; break;
+            case ItemTypes.ORGANIZATION:    type =  'organization'; break;
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.COMMUNITY:       type =  'community'; break;
+            case ItemTypes.CONCEPT:         type =  'concept'; break;
+            case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+        }
+        return 'icon-' + type;
+    }
+
     updateFacetCounts( facets : Facet[] ) {
         if(facets && facets.length) {
             facets.forEach( (facet : Facet) => {
