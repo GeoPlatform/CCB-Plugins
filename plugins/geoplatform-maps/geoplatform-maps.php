@@ -107,7 +107,7 @@ function geopmap_shortcode_creation($geopmap_atts){
     'name' => '',
     'url' => '',
 		'width' => '0',
-		'height' => '0',
+		'height' => '500',
 		'title' => 'on',
   ), $geopmap_atts);
   ob_start();
@@ -236,6 +236,11 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
 			</a>
 	  <?php } else {
+
+
+
+
+
 			$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 			?>
 			<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
@@ -247,6 +252,11 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand; ?>">
 				<a href="<?php echo $geopmap_redirect_item_details ?>" target="_blank"><span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span></a>
 			</div>
+
+
+
+
+
 		<?php	} ?>
 
  <!-- Error report container with heading, an empty output region, and a button
@@ -369,41 +379,21 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
 			<?php
-			if ($geopmap_shortcode_array['title'] == 'on'){
-			?>
-			<div class="geop-display-header" id="title_<?php echo $geopmap_divrand; ?>">
-				<table class="geop-no-border geop-no-cushion geop-header-table-layout">
-					<tr class="geop-no-border">
-						<th class="geop-no-border geop-no-cushion">
-							<a class="geop-hidden-link geop-no-transform" title="Visit full map of <?php echo esc_attr($geopmap_shortcode_array['name']); ?>" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
-								<span class="geop-white-item geop-hidden-link"><?php echo esc_attr($geopmap_shortcode_array['name']); ?></span>
-							</a>
-						</th>
-						<th class="geop-no-border geop-no-cushion">
-							<span class="geop-header-controls">
-								<button class="geop-text-button" id="layer_menu_button_<?php echo $geopmap_divrand; ?>">
-									<span class="<?php echo $geopmap_list_icon ?> geop-white-item"></span>
-								</button>
-								<a class="geop-hidden-link" title="Visit full map of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in the Object Editor." href="<?php echo $geopmap_oe_url; ?>/view/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" style="box-shadow:none;">
-									<span class="<?php echo $geopmap_info_icon ?> geop-white-item"></span>
-								</a>
-							</span>
-						</th>
-					</tr>
-				</table>
-			</div>
-		<?php } else {
 			$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 			?>
-			<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
-				<a class="geop-hidden-link" title="Open Map" href="<?php echo $geopmap_viewer_url ?>/?id=<?php echo esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
-					<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
-				</a>
+			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
+					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
+						<span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span>
+					</a>
+					<div>
+						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons">
+							<span class="geop-white-item geop-text-shadow">VIEW DETAILS</span>
+						</button>
+						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
+							<span class="geop-white-item geop-sub-buttons geop-hidden-link">Open Map</span>
+						</a>
+					</div>
 			</div>
-			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand; ?>">
-				<a href="<?php echo $geopmap_redirect_item_details ?>" target="_blank"><span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span></a>
-			</div>
-		<?php	} ?>
 
  <!-- The container that will hold the leaflet map. Also defines entree height. -->
 			<div class="geop-container-controls" id="container_<?php echo $geopmap_divrand; ?>" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;"></div>
