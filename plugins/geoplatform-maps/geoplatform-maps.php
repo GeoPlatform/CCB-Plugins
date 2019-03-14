@@ -216,19 +216,25 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	 	 entire div also act as a hyperlink, set here-->
 	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
 
-	 <!-- Actual output in HTML, displaying the title card and thumbnail. -->
-	 	<?php
-		$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
-		?>
-		<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
-		<div class="geop-redirect-div" id="title_<?php echo $geopmap_divrand; ?>">
-			<a class="geop-hidden-link" title="Open Map" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank">
-				<span class="geop-redirect-icon t-fg--selected <?php echo $geopmap_redirect ?>"></span>
-			</a>
-		</div>
-		<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand; ?>">
-			<a href="<?php echo $geopmap_redirect_item_details ?>" target="_blank"><span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span></a>
-		</div>
+<!-- Name, link, and layer control card. Provides a link to the map with the
+		 title text, link to the object editor with the info icon link, and has a
+		 button disguised as an image that toggles layer control sidebar visibility. -->
+		 	<?php
+		 	$geopmap_redirect_item_details = esc_url($geopmap_landing_page);
+		 	if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
+		 		$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
+		 	?>
+			<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
+		 	<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
+		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
+		 			<span class="geop-white-item geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
+		 		</a>
+		 		<div>
+		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank">
+		 				<span class="geop-white-item geop-sub-buttons geop-hidden-link">Open Map</span>
+		 			</a>
+		 		</div>
+		 	</div>
 
  <!-- Error report container with heading, an empty output region, and a button
 	 		to close it disguised as text. 4f97782131ca3e1fbdeea2bccc8946d7 1a827dc62e09d08a834f22bf3d67b720 -->
@@ -268,8 +274,10 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// Error report handler. If there is content in error_report, that string
 		// is set to the error output in the error div. Otherwise, that div is
 		// hidden.
-		if (geopmap_error_report)
+		if (geopmap_error_report){
 			jQuery('#errorout_<?php echo $geopmap_divrand; ?>').html(geopmap_error_report);
+			jQuery('#title_<?php echo $geopmap_divrand; ?>').hide();
+		}
 		else
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').hide();
 
@@ -277,6 +285,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// the dismiss button/text.
 		jQuery('#errorclose_<?php echo $geopmap_divrand; ?>').click(function(){
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').slideToggle();
+			jQuery('#title_<?php echo $geopmap_divrand; ?>').slideToggle();
 		});
 
 		// If the map is valid but for some reason does not possess a thumbnail, this
