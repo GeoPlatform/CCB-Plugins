@@ -52,9 +52,9 @@
 
               // Excludes front-page category.
               function geopccb_front_page_out ($var){
-                if ($var->slug !== 'front-page')
-                  return ($var);
-                return;
+                if ($var->slug == 'front-page' || $var->slug == 'uncategorized')
+                  return;
+                return ($var);
               }
               $geopccb_categories = array_filter($geopccb_categories, 'geopccb_front_page_out');
 
