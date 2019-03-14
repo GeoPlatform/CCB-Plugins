@@ -901,6 +901,7 @@ get_template_part( 'widget-resources-search', get_post_format() );
 get_template_part( 'widget-resources-creation', get_post_format() );
 get_template_part( 'widget-resources-community', get_post_format() );
 get_template_part( 'widget-resources-ngda', get_post_format() );
+get_template_part( 'widget-resources-comment', get_post_format() );
 
 
 /**

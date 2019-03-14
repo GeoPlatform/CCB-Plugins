@@ -12,67 +12,6 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 
   // Handles the widget output.
 	public function widget( $args, $instance ) {
-
-    // Checks to see if the widget admin boxes are empty. If so, uses default
-    // values. If not, pulls the values from the boxes.
-		// if (array_key_exists('geopportal_com_ngda_title', $instance) && isset($instance['geopportal_com_ngda_title']) && !empty($instance['geopportal_com_ngda_title']))
-    //   $geopportal_com_ngda_title = apply_filters('widget_title', $instance['geopportal_com_ngda_title']);
-		// else
-    //   $geopportal_com_ngda_title = "Community";
-		// if (array_key_exists('geopportal_com_ngda_link', $instance) && isset($instance['geopportal_com_ngda_link']) && !empty($instance['geopportal_com_ngda_link']))
-    //   $geopportal_com_ngda_link = apply_filters('widget_title', $instance['geopportal_com_ngda_link']);
-		// else
-    // 	$geopportal_com_ngda_link = "";
-
-
-    //Grabs the featured_appearance value and declares the trimmed post array.
-    // $geopportal_featured_sort_format = get_theme_mod('featured_appearance', 'date');
-    // $geopportal_pages_final = array();
-		// $geopportal_pages_sort = array();
-		//
-		// $geopportal_pages = get_posts(array(
-		// 	'orderby' => 'date',
-		// 	'order' => 'DSC',
-		// 	'numberposts' => -1,
-		// 	'post_status' => 'publish',
-		// 	'post_type' => array('post','page','geopccb_catlink', 'community-post', 'ngda-post'),
-		// ) );
-
-		// This list is then filtered for all pages in the Front Page category,
-		// ending the loop after 6 results.
-		// foreach($geopportal_pages as $geopportal_page){
-		// 	if (in_category($geopportal_com_ngda_link, $geopportal_page))
-		// 		array_push($geopportal_pages_sort, $geopportal_page);
-		// }
-		//
-    // // Mimics the old way of populating, but functional.
-    // if ($geopportal_featured_sort_format == 'date'){
-		// 	$geopportal_pages_final = $geopportal_pages_sort;
-    // }
-    // else {
-		// 	$geopportal_pages_trimmed = array();
-		//
-    //   // Assigns pages with valid priority values to the trimmed array.
-    //   foreach($geopportal_pages_sort as $geopportal_page){
-    //     if ($geopportal_page->geop_ccb_post_priority > 0)
-    //     	array_push($geopportal_pages_trimmed, $geopportal_page);
-    //   }
-		//
-    //   // Bubble sorts the resulting pages.
-    //   $geopportal_pages_size = count($geopportal_pages_trimmed)-1;
-    //   for ($i = 0; $i < $geopportal_pages_size; $i++) {
-    //     for ($j = 0; $j < $geopportal_pages_size - $i; $j++) {
-    //       $k = $j + 1;
-    //       $geopportal_test_left = $geopportal_pages_trimmed[$j]->geop_ccb_post_priority;
-    //       $geopportal_test_right = $geopportal_pages_trimmed[$k]->geop_ccb_post_priority;
-    //       if ($geopportal_test_left > $geopportal_test_right) {
-    //         // Swap community at indices: $j, $k
-    //         list($geopportal_pages_trimmed[$j], $geopportal_pages_trimmed[$k]) = array($geopportal_pages_trimmed[$k], $geopportal_pages_trimmed[$j]);
-    //       }
-    //     }
-    //   }
-    //   $geopportal_pages_final = $geopportal_pages_trimmed;
-    // }
 		?>
 
 		<!--
@@ -164,11 +103,6 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 
   // The admin side of the widget.
 	public function form( $instance ) {
-
-    // Checks for entries in the widget admin boxes and provides defaults if empty.
-    // $geopportal_com_ngda_title = ! empty( $instance['geopportal_com_ngda_title'] ) ? $instance['geopportal_com_ngda_title'] : 'Features &amp; Announcements';
-		// $geopportal_com_ngda_title = ! empty( $instance['geopportal_com_ngda_title'] ) ? $instance['geopportal_com_ngda_title'] : 'Community';
-		// $geopportal_com_ngda_link = ! empty( $instance['geopportal_com_ngda_link'] ) ? $instance['geopportal_com_ngda_link'] : '';
 		?>
 
 <!-- HTML for the widget control box. -->
@@ -180,11 +114,6 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
-
-    // $instance[ 'geopportal_com_ngda_title' ] = strip_tags( $new_instance[ 'geopportal_com_ngda_title' ] );
-		// $instance[ 'geopportal_com_ngda_title' ] = strip_tags( $new_instance[ 'geopportal_com_ngda_title' ] );
-		// $instance[ 'geopportal_com_ngda_link' ] = strip_tags( $new_instance[ 'geopportal_com_ngda_link' ] );
-
 		return $instance;
 	}
 }
