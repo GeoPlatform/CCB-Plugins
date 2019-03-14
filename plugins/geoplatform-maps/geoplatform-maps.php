@@ -293,7 +293,6 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 <?php
 }
 
-
 /** Method for geop map display. Much more dynamic than the agol map generator.
 *
 *  #param $geopmap_shortcode_array: array of information captured from the shortcode string.
@@ -350,11 +349,13 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  			title text, link to the object editor with the info icon link, and has a
 			button disguised as an image that toggles layer control sidebar visibility. -->
 			<?php
-			$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
+			$geopmap_redirect_item_details = $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']);
+			if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
+				$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 			?>
 			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
 					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
-						<span class="geop-white-item"><?php echo $geopmap_shortcode_array['name']; ?></span>
+						<span class="geop-white-item geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 					</a>
 					<div>
 						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons">
@@ -396,8 +397,13 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// Error report string, which will be filled for display if necessary.
 		var geopmap_error_report = "<?php echo $geopmap_error_text ?>";
 
-		// Grabs the geopmap_theme PHP param as a Javascript param.
-		var geopmap_theme = "<?php echo $geopmap_theme ?>";
+		// Checks whether the item details plugin is active. If so, sets layer links
+		// to be directed towards that interface. Otherwise, goes to OE.
+		var geopmap_item_details_check = "<?php echo is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ); ?>";
+		geopmap_item_details_base = '<?php echo $geopmap_oe_url; ?>' + "/view/";
+		if (geopmap_item_details_check)
+			geopmap_item_details_base = '<?php echo home_url() ?>' + "/resources/layers/";
+
 
 		// Scaling code. If this page element does not have custom-set width or
 		// height. If the user did not specify a width or set a width too wide
@@ -444,7 +450,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			GeopMapInstance.loadMap(geopmap_mapCode).then( function(){
 				var geopmap_baseLayer = GeopMapInstance.getBaseLayer();
 				geopmap_layerStates = GeopMapInstance.getLayers();
-				geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_theme);
+				geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_item_details_base);
 			}).catch( function(error){
 				geopmap_error_report += (error + "<BR>");
 			})
@@ -462,9 +468,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		*
 		*  #param GeopMapInstance: the GeoPlatform map instance being referenced.
 		*  #param geopmap_layerStates: the layers from that map instance.
-		*  #param geopmap_theme: a 'T' or 'F' value reflecting whether or not a GeopPlatform theme is in use.
+		*  #param geopmap_item_details_base: string for the base to which the layer link will be redirected.
 		*/
-		function geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_theme){
+		function geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_item_details_base){
 
 			// Checks to ensure that there are layers to process. If so, cycles through
 			// each layer and creates local variables in the form of html elements.
@@ -478,7 +484,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', html: geopmap_layerStates[i].layer.label});
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in the Object Viewer.', style: "color:black; box-shadow:none;", href: '<?php echo $geopmap_oe_url; ?>/view/' + geopmap_layerStates[i].layer_id, target: "_blank"})
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank"})
 					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
