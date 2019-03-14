@@ -6,7 +6,7 @@ class Geopportal_Resource_Community_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_community_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Community', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform community widget for header sub-pages.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform community widget for header sub-pages. Takes a category as input and displays the pages within along with their featured images, in a tile format.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
