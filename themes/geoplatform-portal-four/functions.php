@@ -22,6 +22,7 @@ function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
+	wp_enqueue_style( 'geop-style', get_stylesheet_directory_uri() . '/css/geop-style.css');
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( $parent_style ), wp_get_theme()->get('Version'));
 
