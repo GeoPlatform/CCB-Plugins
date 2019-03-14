@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.0.0
+ * @since             1.1.0
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -48,10 +48,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Start at version 1.1.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSERVE_PLUGIN', '1.0.0' );
+define( 'GEOSERVE_PLUGIN', '1.1.0' );
 
 /**
  * The code that runs during plugin activation.
@@ -87,7 +87,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-service-collec
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.0.0
+ * @since    1.1.0
  */
 function run_geoplatform_service_collector() {
 
@@ -154,7 +154,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	$geoserve_generation_array = array();
 	if (substr(($geoserve_shortcode_array['cat']), 0, 1) == 'T'){
 		array_push( $geoserve_generation_array, array(
-				'button' => 'Data',
+				'button' => 'Datasets',
 				'search' => 'Search for associated datasets',
 				'query' => '&types=dcat:Dataset&q=',
 				'uri' => 'https://ual.geoplatform.gov/api/datasets/',
@@ -220,21 +220,140 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	// the titles of the carousel and each entry, as well as the search bar. This
 	// Cuts it down to just the panel outputs and buttons.
 
-	if ($geoserve_shortcode_array['hide'] != 'T')
-		echo "<div class='m-article'>";
-	else
-		echo "<div class='m-article' style='border-bottom:0px'>";
+	// if ($geoserve_shortcode_array['hide'] != 'T')
+	// 	echo "<div class='m-article'>";
+	// else
+	// 	echo "<div class='m-article' style='border-bottom:0px'>";
+?>
 
-	// Optional title display
-	if (!empty($geoserve_shortcode_array['title'])){
-		?>
-    <div class="m-article__heading">
-        <?php echo $geoserve_shortcode_array['title'] ?>
-    </div>
-    <br>
-	<?php }	?>
 
-	<div class="carousel slide" data-ride="carousel" data-interval="false" id="geopserve_community_anchor_carousel">
+
+
+
+	<div class='m-article'>
+		<?php
+		if (!empty($geoserve_shortcode_array['title'])){
+			echo "<div class='m-article__heading'>";
+			echo "Explore " . $geoserve_shortcode_array['title'] . " Resources";
+			echo "</div><br>";
+		}	?>
+
+    <div class="carousel slide" data-ride="carousel" data-interval="false" id="themeCarousel" id="geopserve_community_anchor_carousel">
+
+			<?php
+			// Generates the top buttons, but only if there are at least two data
+			// types to provide output for.
+			if (sizeof($geoserve_generation_array) > 1){
+					echo "<ol class='carousel-indicators u-mg-bottom--xlg'>";
+					for ($i = 0; $i < sizeof($geoserve_generation_array); $i++){
+						if ($i == 0){
+							echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base geopserve-carousel-active active' title='" . $geoserve_generation_array[$i]['button'] . "'>";
+						} else {
+							echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base' title='" . $geoserve_generation_array[$i]['button'] . "'>";
+						}
+						switch ($geoserve_generation_array[$i]['button']){
+							case "Datasets":
+								echo "<span class='icon-dataset'></span> Datasets </li>";
+								break;
+							case "Services":
+								echo "<span class='icon-service'></span> Services </li>";
+								break;
+							case "Layers":
+								echo "<span class='icon-layer'></span> Layers </li>";
+								break;
+							case "Maps":
+								echo "<span class='icon-map'></span> Maps </li>";
+								break;
+							case "Galleries":
+								echo "<span class='icon-gallery'></span> Galleries </li>";
+								break;
+						}
+
+
+					}
+			  echo "</ol>";
+			} ?>
+
+			<ol class="carousel-indicators u-mg-bottom--xlg">
+        <li data-target="#themeCarousel" data-slide-to="0" class="active" title="Data">
+          <span class="icon-dataset"></span> Datasets
+        </li>
+        <li data-target="#themeCarousel" data-slide-to="1" title="Data Services">
+          <span class="icon-service"></span> Services
+        </li>
+        <li data-target="#themeCarousel" data-slide-to="2" title="Layers">
+          <span class="icon-layer"></span> Layers
+        </li>
+        <li data-target="#themeCarousel" data-slide-to="3" title="Open Maps">
+          <span class="icon-map"></span> Maps
+        </li>
+      </ol>
+
+
+
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="m-article">
+            <div class="m-article__heading u-text--sm">Recent Datasets</div>
+            <div class="m-article__desc">
+              <div class="m-results">
+                <div class="m-results-item">
+                  <div class="m-results-item__body">
+                    <div class="m-results-item__icon m-results-item__icon--sm">
+                      <span class="icon-dataset is-themed u-text--huge"></span>
+                    </div>
+                    <div class="flex-1">
+                      <div class="m-results-item__heading">
+                        <a href="#" target="_blank">Dataset Title</a>
+                      </div>
+                      <div class="m-results-item__facets">
+                        <span class="m-results-item__type">
+                          <strong>Dataset</strong>
+                          <span> by <a class="is-linkless" href="#">username</a></span>
+                        </span> |
+                        <span>created Jan 01, 2019</span> |
+                        <span>last modified Jan 01, 2019</span>
+                      </div>
+                      <div class="m-results-item__description">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                       </div>
+                     </div>
+                     <!-- icon if necessary -->
+                     <img class="m-results-item__icon t--large" alt="Thumbnail" src="/img/img-404.png">
+                   </div>
+                 </div>
+                 <div class="m-results-item">
+                   <div class="m-results-item__body flex-align-center">
+                     <a href="#" class="u-pd-right--md u-mg-right--md" style="border-right: 1px solid #ddd;">Browse all 1000 Datasets</a>
+                     <div class="flex-1 d-flex flex-justify-between flex-align-center">
+                     <div class="input-group-slick flex-1">
+                       <span class="icon fas fa-search"></span>
+                       <input type="text" class="form-control"
+aria-label="Search Theme|Community datasets"
+                             placeholder="Search Theme|Community datasets">
+                       </div>
+                       <a href="/search.html?type=dcat:Dataset&q=test"
+                           class="u-mg-left--lg btn btn-secondary">SEARCH</a>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
+       <div class="carousel-item"> <!-- Services   “icon-service” --> </div>
+       <div class="carousel-item"> <!-- Layers   “icon-layer” --> </div>
+       <div class="carousel-item"> <!-- Maps   “icon-map” --> </div>
+     </div>
+   <!-- </div> -->
+
+
+
+
+
+
+	<div class="carousel slide" data-ride="carousel" data-interval="false">
 
 		<?php
 		// Generates the top buttons, but only if there are at least two data
