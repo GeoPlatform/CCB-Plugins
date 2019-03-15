@@ -30,6 +30,193 @@
 })( jQuery );
 
 
+// Community list window creator. Called during each loop of the carousel, so
+// will only have to deal with one data type at a time.
+//
+// #param geopserve_id_in: the community ID for the query.
+// #param geopserve_cat_in: data type for the query.
+// #param geopserve_count_in: number of panes to generate.
+// #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
+// #param geopserve_icon_in: asset's icon class
+// #param geopserve_ual_domain_in: UAL source to draw from.
+// #param geopserve_ual_endpoint_in: UAL extension for explicit asset type
+// #param geopserve_redirect_in: Panel base URL for this particular asset type.
+// #param geopserve_new_tab: Determines if a pane opens in a new window or not.
+// #param geopserve_404_in: 404 image path.
+//
+function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_ual_endpoint_in, geopserve_redirect_in, geopserve_new_tab, geopserve_404_in){
+
+	// Service collection setup.
+	const Query = GeoPlatform.Query;
+	const ItemTypes = GeoPlatform.ItemTypes;
+	const QueryParameters = GeoPlatform.QueryParameters;
+	var ItemService = GeoPlatform.ItemService;
+
+	var query = new GeoPlatform.Query();
+
+	// Sets type of asset type to grab.
+	if (geopserve_cat_in == "Datasets")
+		query.setTypes(ItemTypes.DATASET);
+	if (geopserve_cat_in == "Services")
+		query.setTypes(ItemTypes.SERVICE);
+	if (geopserve_cat_in == "Layers")
+		query.setTypes(ItemTypes.LAYER);
+	if (geopserve_cat_in == "Maps")
+		query.setTypes(ItemTypes.MAP);
+	if (geopserve_cat_in == "Galleries")
+		query.setTypes(ItemTypes.GALLERY);
+
+	// Sets return count.
+	query.setPageSize(geopserve_count_in);
+	query.setSort('modified,desc');
+
+	// Restricts results to a single community, if provided.
+	if (geopserve_id_in) {
+		query.usedBy(geopserve_id_in);
+	}
+	query.setQ("");
+
+	// Performs the query grab.
+	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+		.then(function (response) {
+			var geopserve_max_panes = geopserve_count_in;
+			if (response.totalResults < geopserve_count_in)
+				geopserve_max_panes = response.totalResults;
+
+			var geopserve_results = response.results;
+
+
+		// Pane generation loop.
+		for (var i = 0; i < geopserve_max_panes; i++){
+			// Conditionals that attempt to grab author and date from JSON.
+			// For date, sets a default unknown, then attempts to grab the modified and,
+			// failing that, created values, translating them into date strings of the
+			// desired format.
+
+			var geopserve_result_time = "Unknown Time";
+			if (typeof geopserve_results[i].modified != 'undefined'){
+				var geopserve_temp_date = new Date(geopserve_results[i].modified);
+				geopserve_result_time = geopserve_temp_date.toLocaleString('en-us', { month: 'short' }) + " " + geopserve_temp_date.getDate() + ", " + geopserve_temp_date.getFullYear();
+			}
+			else if (typeof geopserve_results[i].modified === 'undefined' && typeof geopserve_results[i].created != 'undefined'){
+				var geopserve_temp_date = new Date(geopserve_results[i].created);
+				geopserve_result_time = geopserve_temp_date.toLocaleString('en-us', { month: 'short' }) + " " + geopserve_temp_date.getDate() + ", " + geopserve_temp_date.getFullYear();
+			}
+
+			var geopserve_asset_link = geopserve_redirect_in + geopserve_results[i].id;
+
+			var geopserve_thumb_src = geopserve_ual_domain_in + geopserve_ual_endpoint_in + geopserve_results[i].id + "/thumbnail";
+			var geopserve_thumb_error = "this.src='" + geopserve_icon_in + "'";
+			var geopserve_label_text = geopserve_results[i].label;
+
+			var geopserve_result_name = "Unknown User";
+			if (typeof geopserve_results[i].createdBy != 'undefined')
+				geopserve_result_name = geopserve_results[i].createdBy;
+
+			// console.log(geopserve_thumb_src);
+
+			var geopserve_under_label_text = geopserve_result_time + " by " + geopserve_result_name;
+			var geopserve_temp_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
+
+			geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_new_tab);
+		}
+	})
+	.catch(function (error) {
+		errorSelector.show();
+		workingSelector.hide();
+		pagingSelector.hide();
+	});
+}( jQuery );
+
+function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_new_tab){
+
+	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item'});
+	var main_div = geopserve_createEl({type: 'div', class: 'm-results-item__body'});
+	var icon_div = geopserve_createEl({type: 'div', class: 'm-results-item__icon m-results-item__icon--sm'});
+	var icon_span = geopserve_createEl({type: 'span', class: 'icon-dataset is-themed u-text--huge'});
+	var body_div = geopserve_createEl({type: 'div', class: 'flex-1'});
+	var head_div = geopserve_createEl({type: 'div', class: 'm-results-item__heading'});
+	var head_href = geopserve_createEl({type: 'a', href: geopserve_asset_link , target: '_blank', html: geopserve_label_text});
+	var mid_div = geopserve_createEl({type: 'div', class: 'm-results-item__facets'});
+	var top_span = geopserve_createEl({type: 'span', class: 'm-results-item__type', html: "<strong>Dataset</strong>"});
+	var top_sub_span = geopserve_createEl({type: 'span', html: " by "});
+	var top_sub_href = geopserve_createEl({type: 'a', class: 'is-linkless', href: '#', html: "username"});
+	var first_gap = document.createTextNode(" | ");
+	var mid_span = geopserve_createEl({type: 'span', html: "created Jan 01, 2019"});
+	var second_gap = document.createTextNode(" | ");
+	var bottom_span = geopserve_createEl({type: 'span', html: "last modified Jan 01, 2019"});
+	var sub_div = geopserve_createEl({type: 'div', class: 'm-results-item__description', html: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'});
+	var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: "Thumbnail", src: geopserve_thumb_src, onerror: geopserve_thumb_error});
+
+
+
+	icon_div.appendChild(icon_span);
+
+	head_div.appendChild(head_href);
+
+	top_sub_span.appendChild(top_sub_href);
+	top_span.appendChild(top_sub_span);
+
+	mid_div.appendChild(top_span);
+	mid_div.appendChild(first_gap);
+	mid_div.appendChild(mid_span);
+	mid_div.appendChild(second_gap);
+	mid_div.appendChild(bottom_span);
+
+	body_div.appendChild(head_div);
+	body_div.appendChild(mid_div);
+	body_div.appendChild(sub_div);
+
+	main_div.appendChild(icon_div);
+	main_div.appendChild(body_div);
+	main_div.appendChild(thumb_img);
+
+	master_div.appendChild(main_div);
+
+	document.getElementById(geopserve_temp_div).appendChild(master_div);
+}
+
+function geopserve_list_retrieve_objects(query, geopserve_ual) {
+	var deferred = Q.defer();
+	var service = new GeoPlatform.ItemService(geopserve_ual, new GeoPlatform.JQueryHttpClient());
+	service.search(query)
+		.then(function (response) { deferred.resolve(response); })
+		.catch(function (e) { deferred.reject(e); });
+	return deferred.promise;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Community carousel window creator. Called during each loop of the carousel,
 // so will only have to deal with one data type at a time.
 //
@@ -40,9 +227,9 @@
 // *  #param geopserve_thumb_in: 404 image url, in case there is no image to use.
 // *  #param geopserve_uri_in: UAL uri for this particular asset type, used for harvesting.
 // *  #param geopserve_redirect_in: Panel base URL for this particular asset type.
-// *  #param geopserve_hide_in: Determines if a pane opens in a new window or not.
+// *  #param geopserve_new_tab: Determines if a pane opens in a new window or not.
 //
-function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in, geopserve_hide_in, geopserve_ual_in){
+function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_thumb_in, geopserve_uri_in, geopserve_redirect_in, geopserve_new_tab, geopserve_ual_domain_in){
 
 	// Service collection setup.
 	const Query = GeoPlatform.Query;
@@ -75,7 +262,7 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 	query.setQ("");
 
 	// Performs the query grab.
-	geopserve_retrieve_objects(query, geopserve_ual_in)
+	geopserve_retrieve_objects(query, geopserve_ual_domain_in)
 		.then(function (response) {
 			var geopserve_max_panes = geopserve_count_in;
 			if (response.totalResults < geopserve_count_in)
@@ -119,7 +306,7 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 			var geopserve_under_label_text = geopserve_result_time + " by " + geopserve_result_name;
 			var geopserve_temp_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
 
-			geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_hide_in);
+			geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_new_tab);
 		}
 	})
 	.catch(function (error) {
@@ -129,19 +316,19 @@ function geopserve_gen_carousel(geopserve_id_in, geopserve_cat_in, geopserve_cou
 	});
 }( jQuery );
 
-function geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_hide_in){
+function geopserve_gen_element(geopserve_thumb_src, geopserve_asset_link, geopserve_under_label_text, geopserve_label_text, geopserve_temp_div, geopserve_thumb_error, geopserve_new_tab){
 	// Simpler than the above, setting a default and overriding if the there is
 	// a creating user found. The two strings are then combined for output.
 	// var head_div = geopserve_createEl({type: 'div', class: 'm-tile m-tile--16x9'});
 	// var thumb_div = geopserve_createEl({type: 'div', class: 'm-tile__thumbnail'});
 	// var thumb_img = geopserve_createEl({type: 'img', alt: "This is alternative text for the thumbnail", src: geopserve_thumb_src, onerror: geopserve_thumb_error});
 	// var body_div = geopserve_createEl({type: 'div', class: 'm-tile__body'});
-	// if (geopserve_hide_in != 'T')
+	// if (geopserve_new_tab != 'T')
 	// 	var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, target: '_blank', html: geopserve_label_text});
 	// else
 	// 	var body_href = geopserve_createEl({type: 'a', class: 'm-tile__heading', href: geopserve_asset_link, html: geopserve_label_text});
 	// var sub_div = geopserve_createEl({type: 'div', class: 'm-tile__timestamp', html:geopserve_under_label_text});
-	if (geopserve_hide_in != 'T')
+	if (geopserve_new_tab != 'T')
 		var head_div = geopserve_createEl({type: 'a', class: 'm-tile m-tile--16x9', href: geopserve_asset_link, target: '_blank'});
 	else
 		var head_div = geopserve_createEl({type: 'a', class: 'm-tile m-tile--16x9', href: geopserve_asset_link});
