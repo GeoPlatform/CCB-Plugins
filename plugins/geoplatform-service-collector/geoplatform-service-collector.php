@@ -333,10 +333,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 					var geopserve_ual_endpoint = "<?php echo $geopserve_generation_array[$i]['uri'] ?>";
 					var geopserve_redirect = "<?php echo $geopserve_redirect_url ?>";
 					var geopserve_new_tab = "<?php echo $geopserve_shortcode_array['hide'] ?>";
+					var geopserve_home = "<?php echo home_url() ?>";
 					var geopserve_fourohfour = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
 					geopserve_gen_list(geopserve_community_id, geopserve_asset_name, geopserve_result_count, geopserve_iter, geopserve_icon,
-						geopserve_ual_domain, geopserve_ual_endpoint, geopserve_redirect, geopserve_new_tab, geopserve_fourohfour);
+						geopserve_ual_domain, geopserve_ual_endpoint, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_fourohfour);
 				</script>
 
 
@@ -368,7 +369,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 							</div> <!-- m-results -->
 						</div> <!-- m-article__desc -->
 					</div> <!-- m-article -->
-				</div> <!-- carousel-item (active) -->
+				</div> <!-- carousel-item -->
 
 				<?php
 			} // End of single asset type loop.
