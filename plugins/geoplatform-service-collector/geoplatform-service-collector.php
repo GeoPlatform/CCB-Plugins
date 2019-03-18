@@ -291,6 +291,14 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 					// Redirect href for viewing additional assets.
 					$geopserve_browse_href = home_url() . "/geoplatform-search/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'];
 
+					// Placeholder text setup, establishing a default that's overwritten
+					// if within a Portal 4 custom post type.
+					$geopserve_search_placeholder = "Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_generation_array[$i]['title']);
+					if (get_post_type() == 'community-post')
+						$geopserve_search_placeholder = "Search community " . strtolower($geopserve_generation_array[$i]['title']);
+					elseif (get_post_type() == 'ngda-post')
+						$geopserve_search_placeholder = "Search theme " . strtolower($geopserve_generation_array[$i]['title']);
+
 					echo "<div class='m-results-item'>";
 						echo "<div class='m-results-item__body flex-align-center'>";
 							echo "<a href='" . $geopserve_browse_href . "' class='u-pd-right--md u-mg-right--md geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "'></a>";
@@ -302,7 +310,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 												"id='geopportal_community_" . $geopserve_generation_array[$i]['title'] . "_search' " .
 												"query-prefix='/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'] . "' " .
 												"aria-label='Search " . $geopserve_generation_array[$i]['title'] . "' " .
-												"placeholder='Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_generation_array[$i]['title']) . "'>";
+												"placeholder='" . $geopserve_search_placeholder . "'>";
 									echo "</form>";
 								echo "</div>";
 								echo "<button class='geopportal_port_community_search_button u-mg-left--lg btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_generation_array[$i]['title'] . "_search'>SEARCH</a>";
