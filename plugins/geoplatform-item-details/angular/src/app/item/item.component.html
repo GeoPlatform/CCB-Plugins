@@ -81,7 +81,7 @@
                 </div> -->
 
                 <div class="m-article__desc" *ngIf="isAsset()">
-                    <div><strong>Home Page </strong></div>
+                    <div><strong>Landing Page </strong></div>
                     <span *ngIf="!item?.landingPage">Not specified</span>
                     <a *ngIf="item?.landingPage" href="{{item.landingPage}}"
                         target="_blank" class="u-break--all">
@@ -116,11 +116,40 @@
                 </gpid-service-details>
 
 
-
                 <!-- Layers -->
                 <gpid-layer-details *ngIf="'Layer'===item?.type" [item]="item">
                 </gpid-layer-details>
 
+
+                <!-- Applications -->
+                <div *ngIf="'Application'===item?.type" class="m-article__desc">
+                    <div><strong>Application URL</strong></div>
+                    <a *ngIf="item.href" href="{{item.href}}" target="_blank">{{item.href}}</a>
+                    <span *ngIf="!item.href||!item.href.length">not specified</span>
+                </div>
+
+                <!-- Topics -->
+                <div *ngIf="'Topic'===item?.type">
+                    <br>
+                    <div class="m-article__desc" >
+                        <div><strong>Parent Topics</strong></div>
+                        <div *ngIf="item.subTopicOf && item.subTopicOf.length">
+                            <div *ngFor="let parent of item.subTopicOf">
+                                <gpid-resource-link [item]="parent"></gpid-resource-link>
+                            </div>
+                        </div>
+                        <div *ngIf="!item.subTopicOf || !item.subTopicOf.length">None specified</div>
+                    </div>
+                    <div class="m-article__desc" >
+                        <div><strong>Sub Topics</strong></div>
+                        <div *ngIf="item.subTopics && item.subTopics.length">
+                            <div *ngFor="let child of item.subTopics">
+                                <gpid-resource-link [item]="child"></gpid-resource-link>
+                            </div>
+                        </div>
+                        <div *ngIf="!item.subTopics || !item.subTopics.length">None specified</div>
+                    </div>
+                </div>
 
 
                 <!-- Concepts -->

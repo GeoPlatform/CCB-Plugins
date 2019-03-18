@@ -18,6 +18,9 @@
                         <mat-option [value]="'dcat:Dataset'">Dataset</mat-option>
                         <mat-option [value]="'regp:Service'">Service</mat-option>
                         <mat-option [value]="'Map'">Map</mat-option>
+                        <mat-option [value]="'Application'">Application</mat-option>
+                        <mat-option [value]="'Topic'">Topic</mat-option>
+                        <mat-option [value]="'WebSite'">Website</mat-option>
                     </mat-select>
                     <mat-hint>You must specify a resource type before proceeding</mat-hint>
                     <mat-error *ngIf="isInvalid('type')">{{getErrorMessage('type')}}</mat-error>

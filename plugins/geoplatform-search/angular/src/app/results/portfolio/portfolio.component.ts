@@ -196,17 +196,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     getIconPath(item) {
         let type = "dataset";
         switch(item.type) {
-            case ItemTypes.DATASET:         type =  'dataset'; break;
-            case ItemTypes.SERVICE:         type =  'service'; break;
-            case ItemTypes.LAYER:           type =  'layer'; break;
-            case ItemTypes.MAP:             type =  'map'; break;
-            case ItemTypes.GALLERY:         type =  'gallery'; break;
-            case ItemTypes.ORGANIZATION:    type =  'organization'; break;
             case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.COMMUNITY:       type =  'community'; break;
-            case ItemTypes.CONCEPT:         type =  'concept'; break;
-            case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
-            default: type = 'post';
+            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         // return `../${ServerRoutes.ASSETS}${type}.svg`;
         return `../${environment.assets}${type}.svg`;
@@ -215,16 +206,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     getIconClass(item) {
         let type = "dataset";
         switch(item.type) {
-            case ItemTypes.DATASET:         type =  'dataset'; break;
-            case ItemTypes.SERVICE:         type =  'service'; break;
-            case ItemTypes.LAYER:           type =  'layer'; break;
-            case ItemTypes.MAP:             type =  'map'; break;
-            case ItemTypes.GALLERY:         type =  'gallery'; break;
-            case ItemTypes.ORGANIZATION:    type =  'organization'; break;
             case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.COMMUNITY:       type =  'community'; break;
-            case ItemTypes.CONCEPT:         type =  'concept'; break;
-            case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
+            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         return 'icon-' + type;
     }
@@ -235,17 +218,10 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     getActivationUrl(item) {
         let type = null;
         switch(item.type) {
-            case ItemTypes.LAYER:
-            case ItemTypes.MAP: type = item.type.toLowerCase() + 's'; break;
             case ItemTypes.GALLERY: type = "galleries"; break;
             case ItemTypes.COMMUNITY: type = "communities"; break;
             case ItemTypes.CONTACT: type = "contacts"; break;
-            case ItemTypes.SERVICE:
-            case ItemTypes.DATASET:
-            case ItemTypes.ORGANIZATION:
-            case ItemTypes.CONCEPT:
-            case ItemTypes.CONCEPT_SCHEME:
-                type = item.type.split(':')[1].toLowerCase() + 's'; break;
+            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's'; break;
         }
         if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
         else return '/resources';

@@ -349,9 +349,9 @@ ajv@^6.1.0, ajv@^6.1.1:
     uri-js "^4.2.2"
 
 ajv@^6.5.5:
-  version "6.9.2"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.9.2.tgz#4927adb83e7f48e5a32b45729744c71ec39c9c7b"
-  integrity sha512-4UFy0/LgDo7Oa/+wOAlj44tp9K78u38E5/359eSrqEp1Z5PdVfimCcs7SluXMP755RUQu6d2b4AvF0R1C9RZjg==
+  version "6.10.0"
+  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.0.tgz#90d0d54439da587cd7e843bfb7045f50bd22bdf1"
+  integrity sha512-nffhOpkymDECQyR0mnsUtoCE8RlX38G0rYP+wgLWFyZuUyuuojSSvi/+euOiQBIn63whYwYVIIH1TvE3tu4OEg==
   dependencies:
     fast-deep-equal "^2.0.1"
     fast-json-stable-stringify "^2.0.0"
@@ -2603,7 +2603,7 @@ generate-object-property@^1.1.0:
 
 "geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
   version "0.2.1"
-  resolved "git+http://github.com/GeoPlatform/client-api.git#f7066c160b06fd134d6a1c1ca65cf5ae083b920d"
+  resolved "git+http://github.com/GeoPlatform/client-api.git#16f15d42a20c43888b08b201f23cf1980dad8952"
   dependencies:
     jquery "^3.3.1"
     q "1.1.2"
@@ -2640,7 +2640,7 @@ generate-object-property@^1.1.0:
 
 "geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
   version "2.0.0"
-  resolved "git+http://github.com/GeoPlatform/style.git#c5de6c3e22c8c1dd57acb3245f8f12f89b8e60f9"
+  resolved "git+http://github.com/GeoPlatform/style.git#29f5e9be1787aa5c085e28c1059b2a70fc6d4997"
   dependencies:
     grunt-cli "~0.1.13"
 
