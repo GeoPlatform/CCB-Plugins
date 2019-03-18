@@ -39,7 +39,7 @@ get_template_part( 'sub-header-com', get_post_format() );
       <?php
       if (isset($post->geopportal_compost_carousel_shortcode) && !empty($post->geopportal_compost_carousel_shortcode)){ ?>
 
-        <div class="m-section-group t-light">
+        <div class="m-section-group">
           <?php echo do_shortcode($post->geopportal_compost_carousel_shortcode); ?>
         </div>
 

@@ -6,7 +6,7 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_resource_search_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Search', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform search widget for the header sub-pages.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform search widget for the header sub-pages. Redirects input to the Search interface, while also providing option asset type filtering.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

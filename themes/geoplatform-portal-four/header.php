@@ -34,7 +34,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
             <div class="a-nav__collapsible-menu">
                 <div class="dropdown" role="menuitem">
                     <a class="btn btn-link dropdown-toggle is-hidden--xs" href="/data.html" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
-                        Explore Resources
+                        Explore
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton">
                         <a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Datasets</a>
