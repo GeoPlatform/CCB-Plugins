@@ -30,6 +30,60 @@
 })( jQuery );
 
 
+function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
+
+	// Service collection setup.
+	const Query = GeoPlatform.Query;
+	const ItemTypes = GeoPlatform.ItemTypes;
+	const QueryParameters = GeoPlatform.QueryParameters;
+	var ItemService = GeoPlatform.ItemService;
+
+	var query = new GeoPlatform.Query();
+
+	// Sets type of asset type to grab.
+	if (geopserve_cat_in == "Datasets")
+		query.setTypes(ItemTypes.DATASET);
+	if (geopserve_cat_in == "Services")
+		query.setTypes(ItemTypes.SERVICE);
+	if (geopserve_cat_in == "Layers")
+		query.setTypes(ItemTypes.LAYER);
+	if (geopserve_cat_in == "Maps")
+		query.setTypes(ItemTypes.MAP);
+	if (geopserve_cat_in == "Galleries")
+		query.setTypes(ItemTypes.GALLERY);
+
+	// Sets return count.
+	query.setSort('modified,desc');
+
+	// Restricts results to a single community, if provided.
+	if (geopserve_id_in) {
+		query.usedBy(geopserve_id_in);
+	}
+	query.setQ("");
+
+	// Performs the query grab.
+	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	.then(function (response) {
+
+		var geopserve_temp_div = 'geopserve_carousel_search_div_' + geopserve_iter_in;
+		var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_cat_in;
+		if (response.totalResults <= 0)
+			geopserve_search_text = 'No ' + geopserve_cat_in.toLowerCase() + ' to browse';
+
+		console.log(geopserve_search_text);
+		console.log(geopserve_temp_div);
+		geop_search_node = document.createTextNode(geopserve_search_text);
+
+		document.getElementById(geopserve_temp_div).appendChild(geop_search_node);
+	})
+	.catch(function (error) {
+		errorSelector.show();
+		workingSelector.hide();
+		pagingSelector.hide();
+	});
+}( jQuery );
+
+
 // Community list window creator. Called during each loop of the carousel, so
 // will only have to deal with one data type at a time.
 //
@@ -98,7 +152,7 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 			var geopserve_thumb_src = geopserve_ual_domain_in + geopserve_ual_endpoint_in + geopserve_results[i].id + "/thumbnail";
 			var geopserve_label_text = geopserve_results[i].label;
 
-			console.log(response);
+			// console.log(response);
 
 			// Determines singular version of the asset type and icon.
 

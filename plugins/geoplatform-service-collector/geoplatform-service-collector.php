@@ -155,10 +155,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	if (substr(($geopserve_shortcode_array['cat']), 0, 1) == 'T'){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Datasets',
-				'search' => 'Search for associated datasets',
 				'query' => '&types=dcat:Dataset&q=',
 				'uri' => '/api/datasets/',
-				'type' => 'datasets',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/dataset.svg',
 				'icon' => 'icon-dataset',
 			)
@@ -167,10 +165,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	if (substr(($geopserve_shortcode_array['cat']), 1, 1) == 'T'){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Services',
-				'search' => 'Search for associated services',
 				'query' => '&types=regp:Service&q=',
 				'uri' => '/api/services/',
-				'type' => 'services',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/service.svg',
 				'icon' => 'icon-service',
 			)
@@ -179,10 +175,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	if (substr(($geopserve_shortcode_array['cat']), 2, 1) == 'T'){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Layers',
-				'search' => 'Search for associated layers',
 				'query' => '&types=Layer&q=',
 				'uri' => '/api/layers/',
-				'type' => 'layers',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/layer.svg',
 				'icon' => 'icon-layer',
 			)
@@ -191,10 +185,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	if (substr(($geopserve_shortcode_array['cat']), 3, 1) == 'T'){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Maps',
-				'search' => 'Search for associated maps',
 				'query' => '&types=Map&q=',
 				'uri' => '/api/maps/',
-				'type' => 'maps',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/map.svg',
 				'icon' => 'icon-map',
 			)
@@ -203,10 +195,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	if (substr(($geopserve_shortcode_array['cat']), 4, 1) == 'T'){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Galleries',
-				'search' => 'Search for associated galleries',
 				'query' => '&types=Gallery&q=',
 				'uri' => '/api/galleries/',
-				'type' => 'galleries',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/gallery.svg',
 				'icon' => 'icon-gallery',
 			)
@@ -224,19 +214,18 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	// Everywhere that 'hide' is checked is indicitive of an option that strips out
 	// the titles of the carousel and each entry, as well as the search bar. This
 	// Cuts it down to just the panel outputs and buttons.
-?>
 
-	<div class='m-article'>
-		<?php
+
+	echo "<div class='m-article'>";
+
 		if (!empty($geopserve_shortcode_array['title'])){
 			echo "<div class='m-article__heading'>";
 			echo "Explore " . $geopserve_shortcode_array['title'] . " Resources";
 			echo "</div><br>";
-		}	?>
+		}
 
-    <div class="carousel slide" data-ride="carousel" data-interval="false" id="geopserve_community_anchor_carousel">
+    echo "<div class='carousel slide' data-ride='carousel' data-interval='false' id='geopserve_community_anchor_carousel'>";
 
-			<?php
 			// Generates the top buttons, but only if there are at least two data
 			// types to provide output for.
 			if (sizeof($geopserve_generation_array) > 1){
@@ -295,7 +284,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				// redirected url to the function. If not, it will set it to OE.
 				$geopserve_redirect_url = "https://oe.geoplatform.gov/view/";
 				if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
-					$geopserve_redirect_url = home_url() . "/" . "resources/" . $geopserve_generation_array[$i]['type'] . "/";
+					$geopserve_redirect_url = home_url() . "/" . "resources/" . strtolower($geopserve_generation_array[$i]['title']) . "/";
 
 				// Sets the first part of the carousel as active.
 				if ($i == 0)
@@ -307,13 +296,37 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 				// Displays the current carousel item title, if not hidden.
 				if ($geopserve_shortcode_array['hide'] != 'T')
-					echo "<div class='m-article__heading u-text--sm'>Recent " . $geopserve_generation_array[$i]['type'] . "</div>";
+					echo "<div class='m-article__heading u-text--sm'>Recent " . strtolower($geopserve_generation_array[$i]['title']) . "</div>";
 
 				echo "<div class='m-article__desc'>";
-				echo "<div class='m-results' id='geopserve_carousel_gen_div_" . $i . "'>";
+				echo "<div class='m-results'>";
+				echo "<div id='geopserve_carousel_gen_div_" . $i . "'></div>";
 
-				?>
-		<!-- Carousel pane generation script. -->
+
+				// Generates and outputs the search bar if not hidden.
+				if ($geopserve_shortcode_array['hide'] != 'T'){
+
+					$geopserve_browse_href = home_url() . "/geoplatform-search/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'];
+
+					echo "<div class='m-results-item'>";
+						echo "<div class='m-results-item__body flex-align-center'>";
+							echo "<a href='" . $geopserve_browse_href . "' class='u-pd-right--md u-mg-right--md geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "'></a>";
+							echo "<div class='flex-1 d-flex flex-justify-between flex-align-center'>";
+								echo "<div class='input-group-slick flex-1'>";
+									echo "<span class='icon fas fa-search'></span>";
+									echo "<input type='text' class='form-control' aria-label='Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_generation_array[$i]['title']) . "' " .
+											" id='geopportal_community_" . $geopserve_generation_array[$i]['title'] . "_search " .
+											"query-prefix='/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'] . "' " .
+											"aria-label='Search " . $geopserve_generation_array[$i]['title'] . "' " .
+											"placeholder='Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_generation_array[$i]['title']) . "'>";
+								echo "</div>";
+								echo "<button class='u-mg-left--lg btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_generation_array[$i]['title'] . "_search'>SEARCH</a>";
+							echo "</div>";
+						echo "</div>";
+					echo "</div>";
+				} ?>
+
+				<!-- Carousel pane generation script. -->
 				<script type="text/javascript">
 					var geopserve_community_id = "<?php echo $geopserve_shortcode_array['id'] ?>";
 					var geopserve_asset_name = "<?php echo $geopserve_generation_array[$i]['title'] ?>";
@@ -329,119 +342,21 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 					geopserve_gen_list(geopserve_community_id, geopserve_asset_name, geopserve_result_count, geopserve_iter, geopserve_icon,
 						geopserve_ual_domain, geopserve_ual_endpoint, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_fourohfour);
+
+					geopserve_gen_count(geopserve_community_id, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);
 				</script>
-
-
-
-							<?php
-							// Generates and outputs the search bar if not hidden.
-							if ($geopserve_shortcode_array['hide'] != 'T'){?>
-
-								<div class="m-results-item">
-									<div class="m-results-item__body flex-align-center">
-										<a href="#" class="u-pd-right--md u-mg-right--md" style="border-right: 1px solid #ddd;">Browse all 1000 Datasets</a>
-										<div class="flex-1 d-flex flex-justify-between flex-align-center">
-										<div class="input-group-slick flex-1">
-											<span class="icon fas fa-search"></span>
-											<input type="text" class="form-control" aria-label="Search Theme|Community datasets"
-													id="geopportal_community_<?php echo $geopserve_generation_array[$i]['title'] ?>_search"
-													query-prefix="/#/?communities=<?php echo $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'] ?>"
-													aria-label="<?php echo $geopserve_generation_array[$i]['search'] ?>"
-													placeholder="<?php echo $geopserve_generation_array[$i]['search'] ?>">
-											</div>
-											<button class="u-mg-left--lg btn btn-secondary" grabs-from="geopportal_community_<?php echo $geopserve_generation_array[$i]['title'] ?>_search">SEARCH</a>
-										</div>
-									</div>
-								</div>
-							<?php } ?>
-
-
-
-							</div> <!-- m-results -->
-						</div> <!-- m-article__desc -->
-					</div> <!-- m-article -->
-				</div> <!-- carousel-item -->
-
 				<?php
+
+							echo "</div> <!-- m-results -->";
+						echo "</div> <!-- m-article__desc -->";
+					echo "</div> <!-- m-article -->";
+				echo "</div> <!-- carousel-item -->";
+
 			} // End of single asset type loop.
-			?>
+      echo "</div> <!-- carousel-inner -->";
+    echo "</div> <!-- carousel slide -->";
+  echo "</div> <!-- m-article -->";
 
-
-
-
-
-
-
-
-        <div class="carousel-item active">
-          <div class="m-article">
-            <div class="m-article__heading u-text--sm">Recent Datasets</div>
-            <div class="m-article__desc">
-              <div class="m-results">
-
-
-                <div class="m-results-item">
-                  <div class="m-results-item__body">
-                    <div class="m-results-item__icon m-results-item__icon--sm">
-                      <span class="icon-dataset is-themed u-text--huge"></span>
-                    </div>
-                    <div class="flex-1">
-                      <div class="m-results-item__heading">
-                        <a href="#" target="_blank">Dataset Title</a>
-                      </div>
-                      <div class="m-results-item__facets">
-                        <span class="m-results-item__type">
-                          <strong>Dataset</strong>
-                          <span> by <a class="is-linkless" href="#">username</a></span>
-                        </span> |
-                        <span>created Jan 01, 2019</span> |
-                        <span>last modified Jan 01, 2019</span>
-                      </div>
-                      <div class="m-results-item__description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                       </div>
-                     </div>
-                     <!-- icon if necessary -->
-                     <img class="m-results-item__icon t--large" alt="Thumbnail" src="/img/img-404.png">
-                   </div>
-                 </div>
-
-
-                 <div class="m-results-item">
-                   <div class="m-results-item__body flex-align-center">
-                     <a href="#" class="u-pd-right--md u-mg-right--md" style="border-right: 1px solid #ddd;">Browse all 1000 Datasets</a>
-                     <div class="flex-1 d-flex flex-justify-between flex-align-center">
-                     <div class="input-group-slick flex-1">
-                       <span class="icon fas fa-search"></span>
-                       <input type="text" class="form-control" aria-label="Search Theme|Community datasets"
-                             placeholder="Search Theme|Community datasets">
-                       </div>
-                       <a href="/search.html?type=dcat:Dataset&q=test"
-                           class="u-mg-left--lg btn btn-secondary">SEARCH</a>
-                     </div>
-                   </div>
-                 </div>
-
-
-               </div>
-             </div>
-           </div>
-         </div>
-
-
-
-
-       </div> <!-- carousel-inner -->
-     </div> <!-- carousel slide -->
-   </div> <!-- m-article -->
-
-
-
-
-
-
-
-	<?php
 	return ob_get_clean();
 }
 
