@@ -6,7 +6,7 @@ class Geopportal_Resource_Creation_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_resource_creation_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Creation', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform creation widget for the header sub-pages.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform creation widget for the header sub-pages. A simple means to zip right to the Resource Registration page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

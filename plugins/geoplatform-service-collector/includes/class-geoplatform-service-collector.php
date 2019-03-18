@@ -7,7 +7,7 @@
  * public-facing side of the site and the admin area.
  *
  * @link       https://www.imagemattersllc.com
- * @since      1.0.0
+ * @since      1.1.0
  *
  * @package    Geoplatform_Service_Collector
  * @subpackage Geoplatform_Service_Collector/includes
@@ -22,7 +22,7 @@
  * Also maintains the unique identifier of this plugin as well as the current
  * version of the plugin.
  *
- * @since      1.0.0
+ * @since      1.1.0
  * @package    Geoplatform_Service_Collector
  * @subpackage Geoplatform_Service_Collector/includes
  * @author     Image Matters LLC <servicedesk@geoplatform.gov>
@@ -33,7 +33,7 @@ class Geoplatform_Service_Collector {
 	 * The loader that's responsible for maintaining and registering all hooks that power
 	 * the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   protected
 	 * @var      Geoplatform_Service_Collector_Loader    $loader    Maintains and registers all hooks for the plugin.
 	 */
@@ -42,7 +42,7 @@ class Geoplatform_Service_Collector {
 	/**
 	 * The unique identifier of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
@@ -51,7 +51,7 @@ class Geoplatform_Service_Collector {
 	/**
 	 * The current version of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
@@ -64,13 +64,13 @@ class Geoplatform_Service_Collector {
 	 * Load the dependencies, define the locale, and set the hooks for the admin area and
 	 * the public-facing side of the site.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 */
 	public function __construct() {
 		if ( defined( 'GEOSERVE_PLUGIN' ) ) {
 			$this->version = GEOSERVE_PLUGIN;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.1.0';
 		}
 		$this->plugin_name = 'geoplatform-service-collector';
 
@@ -94,7 +94,7 @@ class Geoplatform_Service_Collector {
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   private
 	 */
 	private function load_dependencies() {
@@ -132,7 +132,7 @@ class Geoplatform_Service_Collector {
 	 * Uses the Geoplatform_Service_Collector_i18n class in order to set the domain and to register the hook
 	 * with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   private
 	 */
 	private function set_locale() {
@@ -147,7 +147,7 @@ class Geoplatform_Service_Collector {
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   private
 	 */
 	private function define_admin_hooks() {
@@ -175,7 +175,7 @@ class Geoplatform_Service_Collector {
 	 * Register all of the hooks related to the public-facing functionality
 	 * of the plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   private
 	 */
 	private function define_public_hooks() {
@@ -190,7 +190,7 @@ class Geoplatform_Service_Collector {
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 */
 	public function run() {
 		$this->loader->run();
@@ -200,7 +200,7 @@ class Geoplatform_Service_Collector {
 	 * The name of the plugin used to uniquely identify it within the context of
 	 * WordPress and to define internationalization functionality.
 	 *
-	 * @since     1.0.0
+	 * @since     1.1.0
 	 * @return    string    The name of the plugin.
 	 */
 	public function get_plugin_name() {
@@ -210,7 +210,7 @@ class Geoplatform_Service_Collector {
 	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     1.1.0
 	 * @return    Geoplatform_Service_Collector_Loader    Orchestrates the hooks of the plugin.
 	 */
 	public function get_loader() {
@@ -220,7 +220,7 @@ class Geoplatform_Service_Collector {
 	/**
 	 * Retrieve the version number of the plugin.
 	 *
-	 * @since     1.0.0
+	 * @since     1.1.0
 	 * @return    string    The version number of the plugin.
 	 */
 	public function get_version() {
