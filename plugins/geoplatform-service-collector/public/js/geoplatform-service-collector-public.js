@@ -93,7 +93,6 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 			// For date, sets a default unknown, then attempts to grab the modified and,
 			// failing that, created values, translating them into date strings of the
 			// desired format.
-
 			var geopserve_asset_link = geopserve_redirect_in + geopserve_results[i].id;
 
 			var geopserve_thumb_src = geopserve_ual_domain_in + geopserve_ual_endpoint_in + geopserve_results[i].id + "/thumbnail";
@@ -101,26 +100,34 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 
 			console.log(response);
 
-			// Determines singular version of the asset type.
+			// Determines singular version of the asset type and icon.
+
 			var geopserve_under_label_type = "";
+			var geopserve_under_label_icon = "";
 			switch(geopserve_cat_in){
 				case "Datasets":
 					geopserve_under_label_type = "<strong>Dataset</strong>";
+					geopserve_under_label_icon = "icon-dataset is-themed u-text--huge"
 					break;
 				case "Services":
 					geopserve_under_label_type = "<strong>Service</strong>";
+					geopserve_under_label_icon = "icon-service is-themed u-text--huge"
 					break;
 				case "Layers":
 					geopserve_under_label_type = "<strong>Layer</strong>";
+					geopserve_under_label_icon = "icon-layer is-themed u-text--huge"
 					break;
 				case "Maps":
 					geopserve_under_label_type = "<strong>Map</strong>";
+					geopserve_under_label_icon = "icon-map is-themed u-text--huge"
 					break;
 				case "Galleries":
 					geopserve_under_label_type = "<strong>Gallery</strong>";
+					geopserve_under_label_icon = "icon-gallery is-themed u-text--huge"
 					break;
 				default:
 					geopserve_under_label_type = "<strong>Unknown</strong>";
+					geopserve_under_label_icon = "icon-dataset is-themed u-text--huge"
 					break;
 			}
 
@@ -158,7 +165,7 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 				geopserve_under_label_description = geopserve_results[i].description;
 
 			// Packages the under label data in an array for feeding to the generator.
-			var geopserve_under_label_array = [geopserve_under_label_type, geopserve_under_label_name, geopserve_under_label_href, geopserve_under_label_created, geopserve_under_label_modified, geopserve_under_label_description];
+			var geopserve_under_label_array = [geopserve_under_label_icon, geopserve_under_label_type, geopserve_under_label_name, geopserve_under_label_href, geopserve_under_label_created, geopserve_under_label_modified, geopserve_under_label_description];
 			var geopserve_temp_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
 
 			// Modifies the 404 for proper syntax.
@@ -179,19 +186,19 @@ function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, g
 	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item'});
 	var main_div = geopserve_createEl({type: 'div', class: 'm-results-item__body'});
 	var icon_div = geopserve_createEl({type: 'div', class: 'm-results-item__icon m-results-item__icon--sm'});
-	var icon_span = geopserve_createEl({type: 'span', class: 'icon-dataset is-themed u-text--huge'});
+	var icon_span = geopserve_createEl({type: 'span', class: geopserve_under_label_array[0]});
 	var body_div = geopserve_createEl({type: 'div', class: 'flex-1'});
 	var head_div = geopserve_createEl({type: 'div', class: 'm-results-item__heading'});
 	var head_href = geopserve_createEl({type: 'a', href: geopserve_asset_link , target: '_blank', html: geopserve_label_text});
 	var mid_div = geopserve_createEl({type: 'div', class: 'm-results-item__facets'});
-	var top_span = geopserve_createEl({type: 'span', class: 'm-results-item__type', html: geopserve_under_label_array[0]});
+	var top_span = geopserve_createEl({type: 'span', class: 'm-results-item__type', html: geopserve_under_label_array[1]});
 	var top_sub_span = geopserve_createEl({type: 'span', html: " by "});
-	var top_sub_href = geopserve_createEl({type: 'a', class: 'is-linkless', href: geopserve_under_label_array[2], html: geopserve_under_label_array[1], target: '_blank'});
+	var top_sub_href = geopserve_createEl({type: 'a', class: 'is-linkless', href: geopserve_under_label_array[3], html: geopserve_under_label_array[2], target: '_blank'});
 	var first_gap = document.createTextNode(" | ");
-	var mid_span = geopserve_createEl({type: 'span', html: geopserve_under_label_array[3]});
+	var mid_span = geopserve_createEl({type: 'span', html: geopserve_under_label_array[4]});
 	var second_gap = document.createTextNode(" | ");
-	var bottom_span = geopserve_createEl({type: 'span', html: geopserve_under_label_array[4]});
-	var sub_div = geopserve_createEl({type: 'div', class: 'm-results-item__description', html: geopserve_under_label_array[5]});
+	var bottom_span = geopserve_createEl({type: 'span', html: geopserve_under_label_array[5]});
+	var sub_div = geopserve_createEl({type: 'div', class: 'm-results-item__description', html: geopserve_under_label_array[6]});
 	var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: 'Thumbnail', src: geopserve_thumb_src, onerror: geopserve_thumb_error});
 
 	icon_div.appendChild(icon_span);

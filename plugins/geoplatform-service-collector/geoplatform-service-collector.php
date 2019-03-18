@@ -224,16 +224,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	// Everywhere that 'hide' is checked is indicitive of an option that strips out
 	// the titles of the carousel and each entry, as well as the search bar. This
 	// Cuts it down to just the panel outputs and buttons.
-
-	// if ($geopserve_shortcode_array['hide'] != 'T')
-	// 	echo "<div class='m-article'>";
-	// else
-	// 	echo "<div class='m-article' style='border-bottom:0px'>";
 ?>
-
-
-
-
 
 	<div class='m-article'>
 		<?php
@@ -243,7 +234,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 			echo "</div><br>";
 		}	?>
 
-    <div class="carousel slide" data-ride="carousel" data-interval="false" id="themeCarousel" id="geopserve_community_anchor_carousel">
+    <div class="carousel slide" data-ride="carousel" data-interval="false" id="geopserve_community_anchor_carousel">
 
 			<?php
 			// Generates the top buttons, but only if there are at least two data
@@ -432,7 +423,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
                  </div>
 
 
-
                </div>
              </div>
            </div>
@@ -441,12 +431,9 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 
 
-       </div>
-       <div class="carousel-item"> <!-- Services   “icon-service” --> </div>
-       <div class="carousel-item"> <!-- Layers   “icon-layer” --> </div>
-       <div class="carousel-item"> <!-- Maps   “icon-map” --> </div>
-     </div>
-   </div>
+       </div> <!-- carousel-inner -->
+     </div> <!-- carousel slide -->
+   </div> <!-- m-article -->
 
 
 
