@@ -133,9 +133,7 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 	if (geopserve_id_in) {
 		query.usedBy(geopserve_id_in);
 	}
-
-	// Sets blank query param, to grab all results.
-	query.setQ("");
+	// query.setQ("");
 
 	// Performs the query grab.
 	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
