@@ -136,8 +136,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		});
 	</script><?php
 
-
-
 	// Establishes a base array with default values required for shortcode creation
 	// and overwrites them with values from $geopserve_atts.
   $geopserve_shortcode_array = shortcode_atts(array(
@@ -207,23 +205,22 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 	// Default image and environment pull.
-	$geopserve_disp_thumb = plugin_dir_url(__FILE__) . 'public/assets/sample_1.jpg';
 	$geopserve_ual_domain = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
 
 	// CAROUSEL CONSTRUCTION BEGINS
 	// Everywhere that 'hide' is checked is indicitive of an option that strips out
 	// the titles of the carousel and each entry, as well as the search bar. This
 	// Cuts it down to just the panel outputs and buttons.
-
-
 	echo "<div class='m-article'>";
 
+		// Checks if the title attribute is set and creates the title output if found.
 		if (!empty($geopserve_shortcode_array['title'])){
 			echo "<div class='m-article__heading'>";
 			echo "Explore " . $geopserve_shortcode_array['title'] . " Resources";
 			echo "</div><br>";
 		}
 
+		// Houses the main carousel body.
     echo "<div class='carousel slide' data-ride='carousel' data-interval='false' id='geopserve_community_anchor_carousel'>";
 
 			// Generates the top buttons, but only if there are at least two data
@@ -255,25 +252,9 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 						}
 					}
 			  echo "</ol>";
-			}?>
+			}
 
-			<!-- Icons are centered, not sure why it doesn't work above -->
-			<!-- <ol class="carousel-indicators u-mg-bottom-/-xlg">
-        <li data-target="#themeCarousel" data-slide-to="0" class="active" title="Data">
-          <span class="icon-dataset"></span> Datasets
-        </li>
-        <li data-target="#themeCarousel" data-slide-to="1" title="Data Services">
-          <span class="icon-service"></span> Services
-        </li>
-        <li data-target="#themeCarousel" data-slide-to="2" title="Layers">
-          <span class="icon-layer"></span> Layers
-        </li>
-        <li data-target="#themeCarousel" data-slide-to="3" title="Open Maps">
-          <span class="icon-map"></span> Maps
-        </li>
-      </ol> -->
-
-			<?php
+			// Inner carousel section, housing the assets and search area.
       echo "<div class='carousel-inner'>";
 
 			// Carousel block creation. Sets the first created data type to the
@@ -298,6 +279,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				if ($geopserve_shortcode_array['hide'] != 'T')
 					echo "<div class='m-article__heading u-text--sm'>Recent " . strtolower($geopserve_generation_array[$i]['title']) . "</div>";
 
+				// More container divs, including the carousel div that assets will be applied to.
 				echo "<div class='m-article__desc'>";
 				echo "<div class='m-results'>";
 				echo "<div id='geopserve_carousel_gen_div_" . $i . "'></div>";
@@ -306,6 +288,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				// Generates and outputs the search bar if not hidden.
 				if ($geopserve_shortcode_array['hide'] != 'T'){
 
+					// Redirect href for viewing additional assets.
 					$geopserve_browse_href = home_url() . "/geoplatform-search/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'];
 
 					echo "<div class='m-results-item'>";
@@ -342,13 +325,16 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 					var geopserve_home = "<?php echo home_url() ?>";
 					var geopserve_fourohfour = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
+					// Asset list creation.
 					geopserve_gen_list(geopserve_community_id, geopserve_asset_name, geopserve_result_count, geopserve_iter, geopserve_icon,
 						geopserve_ual_domain, geopserve_ual_endpoint, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_fourohfour);
 
+					// Search bar count applicator.
 					geopserve_gen_count(geopserve_community_id, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);
 				</script>
 				<?php
 
+				// Divs that close out the interface.
 							echo "</div> <!-- m-results -->";
 						echo "</div> <!-- m-article__desc -->";
 					echo "</div> <!-- m-article -->";
