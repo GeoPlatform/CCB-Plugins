@@ -3,8 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { curry
        , mapObjIndexed
        , zipObj
-       , mergeWithKey
-       , reduce  } from 'ramda'
+       , mergeWithKey } from 'ramda'
 
 const MONTHS = [
     'Jan','Feb','Mar','Apr','May','Jun',

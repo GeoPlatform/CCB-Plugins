@@ -178,7 +178,12 @@ export class UsageComponent implements OnInit {
                         display: true,
                         ticks: {
                             beginAtZero: true,   // minimum value will be 0.
-                            scaleIntegersOnly: true
+                            precision: 0,
+                            // scaleIntegersOnly: true,
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Event Count'
                         }
                     }]
                 }
