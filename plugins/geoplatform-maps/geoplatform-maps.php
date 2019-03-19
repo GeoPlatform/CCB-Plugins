@@ -227,11 +227,11 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
 		 	<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
 		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
-		 			<span class="geop-white-item geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
+		 			<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 		 		</a>
 		 		<div>
-		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank">
-		 				<span class="geop-white-item geop-sub-buttons geop-hidden-link">Open Map</span>
+		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank" class="btn btn-info btn-sm geop-sub-buttons">
+		 				<span>Open Map</span>
 		 			</a>
 		 		</div>
 		 	</div>
@@ -239,9 +239,9 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  <!-- Error report container with heading, an empty output region, and a button
 	 		to close it disguised as text. 4f97782131ca3e1fbdeea2bccc8946d7 1a827dc62e09d08a834f22bf3d67b720 -->
 			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
-				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
-		 		<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
-		 		<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
+				<p class="t-fg--white geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
+		 		<p class="t-fg--white geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
+		 		<button class="t-fg--white geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
 		 	</div>
 	  </div>
 	</div>
@@ -364,7 +364,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			?>
 			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
 					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text geop-text-shadow">
-						<span class="geop-white-item geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
+						<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 					</a>
 					<div>
 						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons btn btn-light btn-sm">
@@ -392,9 +392,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  			to close it disguised as text. The output region has the possibility to be
 		 	filled later if errors are found. -->
 			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>">
-				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
-				<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
-				<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
+				<p class="t-fg--white geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
+				<p class="t-fg--white geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
+				<button class="t-fg--white geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
 			</div>
   	</div>
 	</div>
