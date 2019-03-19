@@ -69,7 +69,7 @@
    margin: auto;
  }
 
- .geop-white-item {
+ .t-fg--white {
    color: #fff;
  }
 
@@ -94,7 +94,7 @@
    border: 1px solid #ddd;
    width: 50%;
    background-color: #fff;
-   z-index: 2;
+   z-index: 3;
    position: absolute;
    bottom: 0;
    right: 0;
@@ -207,7 +207,6 @@
 
 .geop-map-title-text {
   font-size: 1.125em;
-  text-transform: uppercase;
   line-height: 1.25;
   margin-bottom: .5em;
   max-height: 3.5em;
@@ -246,23 +245,25 @@
 }
 
 .geop-title-grad-div {
+  /* background: radial-gradient(farthest-side at 0% 100%, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); */
   position: absolute;
-  bottom: 0em;
-  /* width: 100%; */
-  z-index: 1001;
-  padding: 2em 1em 0.5em;
-  /* background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)); */
+  width: 100%;
+  z-index: 2;
   color: #fff;
   font-weight: 800;
-  text-transform: uppercase;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
   border-radius: 0 0 4px 4px;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+  padding: 2em 1em 0.5em;
+  top: auto;
+  bottom: 0em;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
 }
 
 .geop-redirect-icon {
   color: #fff;
   font-size: 1.25rem;
-  /* text-shadow: 0px 0px 6px #000000; */
 }
 
 
