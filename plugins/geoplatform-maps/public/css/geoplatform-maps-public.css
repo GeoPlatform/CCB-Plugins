@@ -94,7 +94,7 @@
    border: 1px solid #ddd;
    width: 50%;
    background-color: #fff;
-   z-index: 2;
+   z-index: 3;
    position: absolute;
    bottom: 0;
    right: 0;
@@ -248,7 +248,7 @@
   /* background: radial-gradient(farthest-side at 0% 100%, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); */
   position: absolute;
   width: 100%;
-  z-index: 1001;
+  z-index: 2;
   color: #fff;
   font-weight: 800;
   border-radius: 0 0 4px 4px;
