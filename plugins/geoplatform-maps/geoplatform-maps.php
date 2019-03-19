@@ -354,9 +354,13 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 are set initially to those of the width as passed by array.-->
 	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
 
+
+
+
+
+
  <!-- Name, link, and layer control card. Provides a link to the map with the
- 			title text, link to the object editor with the info icon link, and has a
-			button disguised as an image that toggles layer control sidebar visibility. -->
+ 			title text and link to the object editor with the info icon link. -->
 			<?php
 			$geopmap_redirect_item_details = $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']);
 			if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
@@ -367,9 +371,17 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 						<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 					</a>
 					<div>
+
 						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons btn btn-light btn-sm">
-							<span>View Details</span>
+							<span class="geop-redirect-icon t-fg--selected fas fa-bars"></span>
 						</button>
+
+						<?php
+						if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
+							echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
+							echo "<span>View Details</span></a>";
+						}?>
+
 						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" class="geop-sub-buttons btn btn-info btn-sm">
 							<span>Open Map</span>
 						</a>
