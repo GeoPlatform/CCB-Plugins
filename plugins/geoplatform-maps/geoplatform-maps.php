@@ -363,15 +363,15 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 			?>
 			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
-					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
+					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text geop-text-shadow">
 						<span class="geop-white-item geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 					</a>
 					<div>
-						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons">
-							<span class="geop-white-item geop-text-shadow">VIEW DETAILS</span>
+						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons btn btn-light btn-sm">
+							<span>View Details</span>
 						</button>
-						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
-							<span class="geop-white-item geop-sub-buttons geop-hidden-link">Open Map</span>
+						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" class="geop-sub-buttons btn btn-info btn-sm">
+							<span>Open Map</span>
 						</a>
 					</div>
 			</div>
