@@ -230,6 +230,13 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 			<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 		 		</a>
 		 		<div>
+
+					<?php
+					if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
+						echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
+						echo "<span>View Details</span></a>";
+					}?>
+
 		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank" class="btn btn-info btn-sm geop-sub-buttons">
 		 				<span>Open Map</span>
 		 			</a>
