@@ -240,7 +240,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
                     return;
                 }
                 this.extentLayer.addLayer(l);
-                
+
             } else if(this.extentLayer) {
                 //if loading a map or layer, don't show extent layer
                 this.extentLayer.remove();
@@ -294,7 +294,11 @@ export class CoverageMapComponent implements OnInit, OnChanges {
             let type = (typeof(arg) === 'string') ?
                 arg : (arg && arg.type ? arg.type : null);
             if(!type) throw new Error("Must provide a type or object with a type specified");
-            if(!baseUrl) throw new Error("Must provide a base url");
+
+            //ignore baseUrl provided by map instance. instead use what is configured
+            // inside this application
+            // if(!baseUrl) throw new Error("Must provide a base url");
+
             if(!httpClient) throw new Error("Must provide an http client to use to make requests");
             switch(type) {
                 case ItemTypes.MAP:
@@ -302,7 +306,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
                     return new MapService(Config.ualUrl, this.httpClient);
                 default:
                     //non-maps won't need authentication to transact (no post/put/delete)
-                    return ServiceFactory(arg, baseUrl, this.httpClient);
+                    return ServiceFactory(arg, Config.ualUrl, this.httpClient);
             }
         };
     }
