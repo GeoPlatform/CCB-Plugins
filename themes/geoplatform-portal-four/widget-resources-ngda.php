@@ -6,7 +6,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_com_ngda_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource NGDA', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform NGDA Theme widget for header sub-pages. Outputs the NGDA themes in an icon format. No customization methods are present at this time.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform NGDA Theme widget for resource pages. Outputs the NGDA themes in a grid format of icons. No customization methods are present at this time.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

@@ -6,7 +6,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_mainpage_widget', // Base ID
 			esc_html__( 'GeoPlatform Featured', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform featured articles widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Featured Articles widget for the front page. Front and center element of the GeoPlatform Portal front page. Provides an output for the data in Customize->Featured Pages section.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -280,34 +280,9 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 
   // The admin side of the widget.
 	public function form( $instance ) {
-
-		// Checks if the Content Boxes plugin is installed.
-		$geopportal_mainpage_cb_bool = false;
-		$geopportal_mainpage_cb_message = "Content Blocks plugin not found.";
-		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
-			$geopportal_mainpage_cb_bool = true;
-			$geopportal_mainpage_cb_message = "Click here to edit this content block";
-		}
-
-    // Checks for entries in the widget admin boxes and provides defaults if empty.
-    // $geopportal_mainpage_title = ! empty( $instance['geopportal_mainpage_title'] ) ? $instance['geopportal_mainpage_title'] : 'Features &amp; Announcements';
-		$geopportal_mainpage_first_link = ! empty( $instance['geopportal_mainpage_first_link'] ) ? $instance['geopportal_mainpage_first_link'] : '';
-		$geopportal_mainpage_second_link = ! empty( $instance['geopportal_mainpage_second_link'] ) ? $instance['geopportal_mainpage_second_link'] : '';
-		$geopportal_mainpage_third_link = ! empty( $instance['geopportal_mainpage_third_link'] ) ? $instance['geopportal_mainpage_third_link'] : '';
-		$geopportal_mainpage_fourth_link = ! empty( $instance['geopportal_mainpage_fourth_link'] ) ? $instance['geopportal_mainpage_fourth_link'] : '';
-		$geopportal_mainpage_fifth_link = ! empty( $instance['geopportal_mainpage_fifth_link'] ) ? $instance['geopportal_mainpage_fifth_link'] : '';
-		$geopportal_mainpage_map_title = ! empty( $instance['geopportal_mainpage_map_title'] ) ? $instance['geopportal_mainpage_map_title'] : '';
-		$geopportal_mainpage_map_shortcode = ! empty( $instance['geopportal_mainpage_map_shortcode'] ) ? $instance['geopportal_mainpage_map_shortcode'] : '';
-		$geopportal_mainpage_more_count = ! empty( $instance['geopportal_mainpage_more_count'] ) ? $instance['geopportal_mainpage_more_count'] : '0';
-		$geopportal_mainpage_more_cat = ! empty( $instance['geopportal_mainpage_more_cat'] ) ? $instance['geopportal_mainpage_more_cat'] : '0';
-		$geopportal_mainpage_browse_link = ! empty( $instance['geopportal_mainpage_browse_link'] ) ? $instance['geopportal_mainpage_browse_link'] : '';
-		?>
-
-<!-- HTML for the widget control box. -->
-		<p>
-			<?php _e('No controls are provided for this widget here. To provide data for the Featured Posts widget, please input it under the Customize->Featured Pages section.' , 'geoplatform-ccb'); ?>
-		</p>
-		<?php
+		echo "<p>";
+			_e('No controls are provided for this widget here. To provide data for the Featured Posts widget, please input it under the Customize->Featured Pages section.' , 'geoplatform-ccb');
+		echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {

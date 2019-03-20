@@ -6,7 +6,7 @@ class Geopportal_Resource_Elements_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_elements_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Elements', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform elements widget for resource pages. Takes Asset Carousel shortcode as input and displays the assets in a tile format.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Elements widget for resource pages. Takes Asset Carousel shortcode as input and displays the assets in a list format. The shortcode must be modified manually to provide only one data type and no id to function properly.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

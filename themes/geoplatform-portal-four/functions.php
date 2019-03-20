@@ -808,7 +808,7 @@ class Geopportal_Contact_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_contact_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Contact', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform contact information widget for the sidebar.', 'geoplatform-ccb' ), ) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Contact widget for the sidebar. Simple contact information output. There are no customization options with this widget.', 'geoplatform-ccb' ), ) // Args
 		);
 	}
 
@@ -887,11 +887,11 @@ get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );
 get_template_part( 'apps-and-services', get_post_format() );
+get_template_part( 'partners', get_post_format() );
 // get_template_part( 'portfolio-resources-dark', get_post_format() );
 // get_template_part( 'portfolio-resources-old', get_post_format() );
 // get_template_part( 'communities', get_post_format() );
-get_template_part( 'partners', get_post_format() );
-get_template_part( 'themes', get_post_format() );
+// get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );
 get_template_part( 'side-content-links', get_post_format() );
 get_template_part( 'side-content-preview', get_post_format() );
@@ -909,7 +909,7 @@ get_template_part( 'widget-resources-comment', get_post_format() );
  */
 function geopportal_register_portal_widgets() {
 	register_widget( 'Geopportal_Contact_Widget' );
-	register_widget( 'Geopportal_Graph_Widget' );
+	// register_widget( 'Geopportal_Graph_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 

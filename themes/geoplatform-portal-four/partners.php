@@ -6,7 +6,7 @@ class Geopportal_Partners_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_partners_widget', // Base ID
 			esc_html__( 'GeoPlatform Partners', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Partners widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Partners widget for the front page. Accepts page slugs and displays their features images. Empty inputs are not shown. Dummy posts or pages are suggested.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
