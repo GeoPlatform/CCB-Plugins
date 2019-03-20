@@ -215,7 +215,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 	if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
 		 		$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 		 	?>
-			<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
+			<div class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" src="" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px; background-image: url( <?php echo $geopmap_ual_url . '/api/maps/' . esc_attr($geopmap_shortcode_array['id']) . '/thumbnail' ?> );" onerror="geopmap_thumb_error(this);"></div>
 		 	<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
 		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
 		 			<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
