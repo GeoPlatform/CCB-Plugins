@@ -48,13 +48,13 @@ class EditorRegistry {
 
 let SearchEditorRegistry = new EditorRegistry();
 
-SearchEditorRegistry.registerEditor( "creator", "Creator", CreatorComponent );
+// SearchEditorRegistry.registerEditor( "creator", "Creator", CreatorComponent );
 SearchEditorRegistry.registerEditor( "extent", "Geographic Extent", ExtentComponent );
 SearchEditorRegistry.registerEditor( "keywords", "Keywords", KeywordsComponent );
-SearchEditorRegistry.registerEditor( "contacts", "Points of Contact", ContactComponent );
+// SearchEditorRegistry.registerEditor( "contacts", "Points of Contact", ContactComponent );
 SearchEditorRegistry.registerEditor( "publishers", "Publishers", PublisherComponent );
 SearchEditorRegistry.registerEditor( "communities", "Communities", CommunityComponent );
-SearchEditorRegistry.registerEditor( "temporal", "Temporal Extent", TemporalComponent );
+SearchEditorRegistry.registerEditor( "temporal", "Date Range", TemporalComponent );
 SearchEditorRegistry.registerEditor( "themes", "Themes", ThemeComponent );
 SearchEditorRegistry.registerEditor( "types", "Types", TypeComponent );
 SearchEditorRegistry.registerEditor( "semantic", "Semantic Concepts", SemanticComponent );

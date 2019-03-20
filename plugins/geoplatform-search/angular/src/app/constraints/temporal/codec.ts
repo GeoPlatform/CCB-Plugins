@@ -86,7 +86,7 @@ export class TemporalCodec implements Codec {
             "Ends"
         );
 
-        return new CompoundConstraint(Constants.KEY, [start,end], "Temporal Extent");
+        return new CompoundConstraint(Constants.KEY, [start,end], "Date Range");
 
     }
 
