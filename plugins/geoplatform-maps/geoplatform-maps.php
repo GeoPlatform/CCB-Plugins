@@ -117,7 +117,7 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// from Font Awesome icons to glyphicons and adjust some text sizes. More
 	// functionality may be included in the future.
 	$geopmap_theme = 'F';
-	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && (wp_get_theme()->get('Name') !== 'Geoplatform Portal 4.0'))
+	if (wp_get_theme()->get('Name') == 'Geoplatform Portal 4.0')
 		$geopmap_theme = 'T';
 
 	// Creates an empty error text report string, grabs the map_id string after
@@ -331,6 +331,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	$geopmap_check_icon = 'glyphicon-check';
 	$geopmap_uncheck_icon = 'glyphicon-unchecked';
 	$geopmap_redirect = 'glyphicon-unchecked';
+	$geopmap_layer_icon = 'icon-layer';
 
 	if ($geopmap_theme == 'F'){
 		$geopmap_list_icon = 'fa fa-bars';
@@ -339,6 +340,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		$geopmap_check_icon = 'fa-check-square';
 		$geopmap_uncheck_icon = 'fa-square';
 		$geopmap_redirect = 'fa fa-external-link-alt';
+		$geopmap_layer_icon = 'fas fa-bars';
 	}
 
 	// GeoPlatform Portal 4 theme detection, which will determine explicit output
@@ -381,8 +383,8 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 						<?php
 						if (esc_attr($geopmap_shortcode_array['title']) != 'main'){
-							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn-sm' style='margin-right:7.5;'>";
-								echo "<span class='geop-redirect-icon t-fg--selected fas fa-bars'></span>";
+							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn-sm' style='margin-right:.5em;'>";
+								echo "<span class='geop-redirect-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
 							echo "</button>";
 						}
 
