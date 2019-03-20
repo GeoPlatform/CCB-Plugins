@@ -6,7 +6,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_com_ngda_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource NGDA', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform NGDA Theme widget for header sub-pages. Outputs the NGDA themes in an icon format. No customization methods are present at this time.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform NGDA Theme widget for resource pages. Outputs the NGDA themes in a grid format of icons. No customization methods are present at this time.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -19,81 +19,81 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		-->
 		<div class="m-section-group">
 		  <div class="m-article">
-		    <div class="m-article__heading">NGDA Themes</div>
+				<div class="m-article__heading">NGDA Themes</div>
 		    <br>
-		    <div class="d-grid d-grid--3-col--lg">
+		    <div class="m-icon-grid">
 
 		      <a href="<?php echo home_url('ngda/portfolio/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-home t-fg--blue-dk"></span><br>
-						NGDA Portfolio Community
+						<span class="u-text--sm">NGDA Portfolio Community</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/address/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-home t-fg--blue-dk"></span><br>
-						Address Theme
+						<span class="u-text--sm">Address Theme</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/biodiversity/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-frog t-fg--blue-dk"></span><br>
-						Biodiversity &amp; Ecosystems
+						<span class="u-text--sm">Biodiversity &amp; Ecosystems</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/cadastre/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-scroll t-fg--blue-dk"></span><br>
-						Cadastre
+						<span class="u-text--sm">Cadastre</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/climate/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-cloud-sun-rain t-fg--blue-dk"></span><br>
-						Climate &amp; Weather
+						<span class="u-text--sm">Climate &amp; Weather</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/cultural/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-home t-fg--blue-dk"></span><br>
-						Cultural Resources
+						<span class="u-text--sm">Cultural Resources</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/elevation/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-mountain t-fg--blue-dk"></span><br>
-						Elevation
+						<span class="u-text--sm">Elevation</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/geodeticcontrol/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-compass t-fg--blue-dk"></span><br>
-						Geodetic Control
+						<span class="u-text--sm">Geodetic Control</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/geology/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-gem t-fg--blue-dk"></span><br>
-						Geology
+						<span class="u-text--sm">Geology</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/govunits/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-flag-usa t-fg--blue-dk"></span><br>
-						Units and Administrative & Statistical Boundaries
+						<span class="u-text--sm">Government Units and Administrative & Statistical Boundaries</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/imagery/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-layer-group t-fg--blue-dk"></span><br>
-						Imagery
+						<span class="u-text--sm">Imagery</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/landuse/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-home t-fg--blue-dk"></span><br>
-						Land Use - Land Cover
+						<span class="u-text--sm">Land Use - Land Cover</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/realproperty/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-building t-fg--blue-dk"></span><br>
-						Real Property
+						<span class="u-text--sm">Real Property</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/soils/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-home t-fg--blue-dk"></span><br>
-						Soils
+						<span class="u-text--sm">Soils</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/transportation/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-shuttle-van t-fg--blue-dk"></span><br>
-						Transportation
+						<span class="u-text--sm">Transportation</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/utilities/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-bolt t-fg--blue-dk"></span><br>
-						Utilities
+						<span class="u-text--sm">Utilities</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/waterinland/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-stream t-fg--blue-dk"></span><br>
-						Water - Inland
+						<span class="u-text--sm">Water - Inland</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/waterocean/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-stream t-fg--blue-dk"></span><br>
-						Water - Oceans &amp; Coasts
+						<span class="u-text--sm">Water - Oceans &amp; Coasts</span>
 		      </a>
 		    </div>
 		  </div>

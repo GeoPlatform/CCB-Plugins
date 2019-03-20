@@ -6,7 +6,7 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_side_content_link_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Category', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform sidebar content widget for category display. Requires the Content Blocks plugin and a prepared category.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Content widget for the sidebar. Accepts and outputs Content Block shortcode, as well as a category slug to output its contents. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

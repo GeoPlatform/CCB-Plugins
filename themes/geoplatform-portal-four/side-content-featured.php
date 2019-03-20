@@ -6,7 +6,7 @@ class Geopportal_Side_Content_Featured_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_side_content_featured_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Featured', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform sidebar content widget for featured post display. Requires posts to be set in the Featured Pages section.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( "GeoPlatform Featured widget for the sidebar. Outputs the site's featured posts in sidebar form. It can also accept content block shortcode for the section heading. Shortcode section requires the Content Blocks plugin.", 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

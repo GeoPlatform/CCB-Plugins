@@ -117,7 +117,7 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// from Font Awesome icons to glyphicons and adjust some text sizes. More
 	// functionality may be included in the future.
 	$geopmap_theme = 'F';
-	if ((strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform') !== false) && (wp_get_theme()->get('Name') !== 'Geoplatform Portal 4.0'))
+	if (wp_get_theme()->get('Name') == 'Geoplatform Portal 4.0')
 		$geopmap_theme = 'T';
 
 	// Creates an empty error text report string, grabs the map_id string after
@@ -191,15 +191,6 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	$geopmap_divrand = rand(0, 99999);
 	$geopmap_ual_url = 'https://ual.geoplatform.gov';
 	$geopmap_maps_url = 'https://maps.geoplatform.gov';
-
-	// Variables that vary among themes. They are set to default values for work
-	// in the GeoPlatform themes, then changed if one such theme is absent.
-	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
-	$geopmap_redirect = 'glyphicon-unchecked';
-	if ($geopmap_theme == 'F'){
-		$geopmap_info_icon = 'fas fa-info-circle';
-		$geopmap_redirect = 'fa fa-external-link-alt';
-	}
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -227,11 +218,18 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			<img class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" href="<?php echo esc_url($geopmap_landing_page) ?>" target="_blank" src="<?php echo $geopmap_ual_url ?>/api/maps/<?php echo esc_attr($geopmap_shortcode_array['id']); ?>/thumbnail" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;" onerror="geopmap_thumb_error(this);"/>
 		 	<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
 		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
-		 			<span class="geop-white-item geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
+		 			<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 		 		</a>
 		 		<div>
-		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank">
-		 				<span class="geop-white-item geop-sub-buttons geop-hidden-link">Open Map</span>
+
+					<?php
+					if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
+						echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
+						echo "<span>View Details</span></a>";
+					}?>
+
+		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank" class="btn btn-info btn-sm geop-sub-buttons">
+		 				<span>Open Map</span>
 		 			</a>
 		 		</div>
 		 	</div>
@@ -239,9 +237,9 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  <!-- Error report container with heading, an empty output region, and a button
 	 		to close it disguised as text. 4f97782131ca3e1fbdeea2bccc8946d7 1a827dc62e09d08a834f22bf3d67b720 -->
 			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
-				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
-		 		<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
-		 		<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
+				<p class="t-fg--white geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
+		 		<p class="t-fg--white geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
+		 		<button class="t-fg--white geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
 		 	</div>
 	  </div>
 	</div>
@@ -318,20 +316,14 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 	// Variables that vary among themes. They are set to default values for work
 	// in the GeoPlatform themes, then changed if one such theme is absent.
-	$geopmap_list_icon = 'glyphicon glyphicon-menu-hamburger';
-	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
-	$geopmap_base_icon = 'glyphicon';
-	$geopmap_check_icon = 'glyphicon-check';
-	$geopmap_uncheck_icon = 'glyphicon-unchecked';
-	$geopmap_redirect = 'glyphicon-unchecked';
+	$geopmap_info_icon = 'fa fa-info-circle';
+	$geopmap_base_icon = 'fa';
+	$geopmap_check_icon = 'fa-check-square';
+	$geopmap_uncheck_icon = 'fa-square';
+	$geopmap_layer_icon = 'icon-layer';
 
 	if ($geopmap_theme == 'F'){
-		$geopmap_list_icon = 'fa fa-bars';
-		$geopmap_info_icon = 'fa fa-info-circle';
-		$geopmap_base_icon = 'fa';
-		$geopmap_check_icon = 'fa-check-square';
-		$geopmap_uncheck_icon = 'fa-square';
-		$geopmap_redirect = 'fa fa-external-link-alt';
+		$geopmap_layer_icon = 'fas fa-bars';
 	}
 
 	// GeoPlatform Portal 4 theme detection, which will determine explicit output
@@ -354,24 +346,38 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 are set initially to those of the width as passed by array.-->
 	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
 
+
+
+
+
+
  <!-- Name, link, and layer control card. Provides a link to the map with the
- 			title text, link to the object editor with the info icon link, and has a
-			button disguised as an image that toggles layer control sidebar visibility. -->
+ 			title text and link to the object editor with the info icon link. -->
 			<?php
 			$geopmap_redirect_item_details = $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']);
 			if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
 				$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 			?>
 			<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
-					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
-						<span class="geop-white-item geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
+					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text geop-text-shadow">
+						<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 					</a>
 					<div>
-						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons">
-							<span class="geop-white-item geop-text-shadow">VIEW DETAILS</span>
-						</button>
-						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank">
-							<span class="geop-white-item geop-sub-buttons geop-hidden-link">Open Map</span>
+
+						<?php
+						if (esc_attr($geopmap_shortcode_array['title']) != 'main'){
+							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn-sm' style='margin-right:.5em;'>";
+								echo "<span class='geop-redirect-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
+							echo "</button>";
+						}
+
+						if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
+							echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
+							echo "<span>View Details</span></a>";
+						}?>
+
+						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" class="geop-sub-buttons btn btn-info btn-sm">
+							<span>Open Map</span>
 						</a>
 					</div>
 			</div>
@@ -392,9 +398,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  			to close it disguised as text. The output region has the possibility to be
 		 	filled later if errors are found. -->
 			<div class="geop-error-box" id="errorbox_<?php echo $geopmap_divrand; ?>">
-				<p class="geop-white-item geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
-				<p class="geop-white-item geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
-				<button class="geop-white-item geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
+				<p class="t-fg--white geop-heavy-text geop-sixteen-text geop-error-bottom-eight-marg">An Error Has Occurred</p>
+				<p class="t-fg--white geop-error-report geop-sixteen-text geop-error-bottom-twelve-marg" id="errorout_<?php echo $geopmap_divrand; ?>"></p>
+				<button class="t-fg--white geop-no-transform geop-right-marg-float geop-text-button geop-sixteen-text" id="errorclose_<?php echo $geopmap_divrand; ?>">Dismiss</button>
 			</div>
   	</div>
 	</div>

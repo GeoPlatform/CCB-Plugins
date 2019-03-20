@@ -6,7 +6,7 @@ class Geopportal_Resource_Comment_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_comment_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Commentary', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform commentary widget for header sub-pages. Simply accepts a shortcode input and provides an output. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Commentary widget for resource pages. Accepts a content block shortcode and outputs its results in the widget area. Simple and to the point. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
