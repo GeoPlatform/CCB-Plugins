@@ -7,7 +7,7 @@ import {
 } from "geoplatform.client";
 
 import {
-    MapFactory, MapInstance, OSM, LayerFactory, L
+    MapFactory, MapInstance, OSM, LayerFactory, L, DefaultBaseLayer
 } from "geoplatform.mapcore";
 
 
@@ -155,13 +155,13 @@ export class CoverageMapComponent implements OnInit, OnChanges {
      * @return {Promise}
      */
     setDefaultBaseLayer() {
-        return OSM.get(this.layerService).then(osm => {
+        return DefaultBaseLayer.get(this.layerService).then(baseLayer => {
             if(this.mapId) {
                 //only show warning if this happens loading a map
-                this.warnings.push(new Error("Using OpenStreetMap default base layer"));
+                this.warnings.push(new Error("Using default base layer"));
             }
-            this.map.setBaseLayer(osm);
-            return osm;
+            this.map.setBaseLayer(baseLayer);
+            return baseLayer;
         });
     }
 

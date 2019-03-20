@@ -99,7 +99,7 @@ register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_details' );
 // Rule rewrites to control the URL of the items page.
 function geopitems_add_rewrite_rules( $wp_rewrite )
 {
-	$geop_items_key = 'resources\/(dataset|datasets|service|services|layer|layers|map|maps|gallery|galleries|community|communities|organization|organizations|contact|contacts|person|people|concept|concepts|conceptscheme|webapps|topics)\/([a-f\d]*)\/?';
+	$geop_items_key = 'resources\/(dataset|datasets|service|services|layer|layers|map|maps|gallery|galleries|community|communities|organization|organizations|contact|contacts|person|persons|people|concept|concepts|conceptscheme|conceptschemes|webapps|topics|applications|websites)\/([a-f\d]*)\/?';
 	$geop_items_value = 'index.php?pagename=geoplatform-items&q=' . $wp_rewrite->preg_index(1);
   // $geop_items_new_rules = array( 'resources/([a-f\d]{32})/?' => 'index.php?pagename=' . get_theme_mod('headlink_items') . '&q=' . $wp_rewrite->preg_index(1) );
 	$geop_items_new_rules = array( $geop_items_key => $geop_items_value );

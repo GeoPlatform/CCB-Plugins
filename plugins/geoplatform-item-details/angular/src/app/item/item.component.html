@@ -28,7 +28,9 @@
                     <div class="m-article__desc">
                         <gpid-alt-titles  [titles]="item?.alternateTitles"></gpid-alt-titles>
                     </div>
+                </div>
 
+                <div *ngIf="item?.description">
                     <div class="m-article__desc" (window:resize)="onResize()">
                         <div>
                             <span class="fas"
