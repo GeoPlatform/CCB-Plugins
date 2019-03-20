@@ -191,15 +191,6 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	$geopmap_divrand = rand(0, 99999);
 	$geopmap_ual_url = 'https://ual.geoplatform.gov';
 	$geopmap_maps_url = 'https://maps.geoplatform.gov';
-
-	// Variables that vary among themes. They are set to default values for work
-	// in the GeoPlatform themes, then changed if one such theme is absent.
-	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
-	$geopmap_redirect = 'glyphicon-unchecked';
-	if ($geopmap_theme == 'F'){
-		$geopmap_info_icon = 'fas fa-info-circle';
-		$geopmap_redirect = 'fa fa-external-link-alt';
-	}
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -325,21 +316,13 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 	// Variables that vary among themes. They are set to default values for work
 	// in the GeoPlatform themes, then changed if one such theme is absent.
-	$geopmap_list_icon = 'glyphicon glyphicon-menu-hamburger';
-	$geopmap_info_icon = 'glyphicon glyphicon-info-sign';
-	$geopmap_base_icon = 'glyphicon';
-	$geopmap_check_icon = 'glyphicon-check';
-	$geopmap_uncheck_icon = 'glyphicon-unchecked';
-	$geopmap_redirect = 'glyphicon-unchecked';
+	$geopmap_info_icon = 'fa fa-info-circle';
+	$geopmap_base_icon = 'fa';
+	$geopmap_check_icon = 'fa-check-square';
+	$geopmap_uncheck_icon = 'fa-square';
 	$geopmap_layer_icon = 'icon-layer';
 
 	if ($geopmap_theme == 'F'){
-		$geopmap_list_icon = 'fa fa-bars';
-		$geopmap_info_icon = 'fa fa-info-circle';
-		$geopmap_base_icon = 'fa';
-		$geopmap_check_icon = 'fa-check-square';
-		$geopmap_uncheck_icon = 'fa-square';
-		$geopmap_redirect = 'fa fa-external-link-alt';
 		$geopmap_layer_icon = 'fas fa-bars';
 	}
 
