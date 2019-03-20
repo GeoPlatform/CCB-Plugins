@@ -379,11 +379,13 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					</a>
 					<div>
 
-						<button id="layer_menu_button_<?php echo $geopmap_divrand; ?>" class="geop-sub-buttons btn btn-light btn-sm">
-							<span class="geop-redirect-icon t-fg--selected fas fa-bars"></span>
-						</button>
-
 						<?php
+						if (esc_attr($geopmap_shortcode_array['title']) != 'main'){
+							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn-sm' style='margin-right:7.5;'>";
+								echo "<span class='geop-redirect-icon t-fg--selected fas fa-bars'></span>";
+							echo "</button>";
+						}
+
 						if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
 							echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
 							echo "<span>View Details</span></a>";
