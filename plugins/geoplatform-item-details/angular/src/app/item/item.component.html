@@ -103,6 +103,10 @@
                     <gpid-alt-ids *ngIf="isAsset()" [ids]="item?.identifiers"></gpid-alt-ids>
                 </div>
 
+                <div class="m-article__desc">
+                    <gpid-themes *ngIf="isAsset()" [themes]="item?.themes"></gpid-themes>
+                </div>
+
                 <!-- end all Assets -->
 
 
@@ -312,67 +316,6 @@
         <gpid-keywords [keywords]="item?.keywords" class="m-article"></gpid-keywords>
 
         <br>
-
-        <!-- Associated Items
-        <div class="m-article">
-            <div class="m-article__heading">
-                <span class="fas fa-caret-down"
-                    onClick="toggleClass('#associated-items', 'is-hidden');toggleClass('#associated-items-summary', 'is-hidden')">
-                </span>
-                Associated Items
-            </div>
-            <div class="m-article__desc is-hidden" id="associated-items-summary">
-                Expand to see associated items
-            </div>
-            <div class="m-article__desc" id="associated-items">
-                <div><strong>Services</strong></div>
-                <div>
-                    <a href="/items/service.html">
-                        <img class="a-icon" src="/assets/icons/service.svg">
-                        Service
-                    </a>
-                </div>
-                <br>
-                <div><strong>Layers</strong></div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer A
-                    </a>
-                </div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer B
-                    </a>
-                </div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer C
-                    </a>
-                </div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer D
-                    </a>
-                </div>
-                <br>
-                <div><strong>Galleries</strong></div>
-                <div>
-                    <a href="/items/gallery.html">
-                        <img class="a-icon" src="/assets/icons/gallery.svg">
-                        Gallery
-                    </a>
-                </div>
-                <br>
-                <div><strong>Others</strong></div>
-                <div><a class="is-linkless">Related Resource</a></div>
-                <div><a class="is-linkless">Related Resource</a></div>
-            </div>
-        </div>
-        -->
 
     </div>
 
