@@ -12,6 +12,13 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 
   // Handles the widget output.
 	public function widget( $args, $instance ) {
+
+		// Checks to see if the widget admin boxes are empty. If so, uses default
+    // values. If not, pulls the values from the boxes.
+		if (array_key_exists('geopportal_com_ngda_title', $instance) && isset($instance['geopportal_com_ngda_title']) && !empty($instance['geopportal_com_ngda_title']))
+      $geopportal_com_ngda_title = apply_filters('widget_title', $instance['geopportal_com_ngda_title']);
+		else
+      $geopportal_com_ngda_title = "NGDA Themes";
 		?>
 
 		<!--
@@ -19,7 +26,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		-->
 		<div class="m-section-group">
 		  <div class="m-article">
-				<div class="m-article__heading">NGDA Themes</div>
+				<div class="m-article__heading"><?php _e(sanitize_text_field($geopportal_com_ngda_title), 'geoplatform-ccb') ?></div>
 		    <br>
 		    <div class="m-icon-grid">
 
@@ -103,17 +110,26 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 
   // The admin side of the widget.
 	public function form( $instance ) {
+
+		$geopportal_com_ngda_title = ! empty( $instance['geopportal_com_ngda_title'] ) ? $instance['geopportal_com_ngda_title'] : 'NGDA Themes';
 		?>
 
 <!-- HTML for the widget control box. -->
 		<p>
-			<?php _e('This widget is currently fully autonamous. Customization options may be added at a later date if needed.', 'geoplatform-ccb'); ?>
+			<?php _e("This widget's links are currently fully autonamous. You can however add a custom title.", 'geoplatform-ccb'); ?>
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'geopportal_com_ngda_title' ); ?>">Widget Title:</label>
+			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_com_ngda_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_com_ngda_title' ); ?>" value="<?php echo esc_attr( $geopportal_com_ngda_title ); ?>" />
 		</p>
 		<?php
 	}
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
+
+		$instance[ 'geopportal_com_ngda_title' ] = strip_tags( $new_instance[ 'geopportal_com_ngda_title' ] );
+
 		return $instance;
 	}
 }
