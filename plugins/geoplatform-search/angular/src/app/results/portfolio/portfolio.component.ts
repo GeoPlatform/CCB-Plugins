@@ -122,8 +122,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
      */
     executeQuery() {
 
-        console.log("PortfolioComponent.executeQuery() - " +
-           JSON.stringify(this.query.getQuery(), null, ' '));
+        // console.log("PortfolioComponent.executeQuery() - " +
+        //    JSON.stringify(this.query.getQuery(), null, ' '));
 
 
         this.isLoading = true;
