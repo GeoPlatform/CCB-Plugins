@@ -63,8 +63,8 @@
                     </a>
                     <span *ngIf="!item.author.id">unknown author</span>
                 </span> |
-                <span>created {{item.date|date}}</span> |
-                <span>last modified {{item.modified|date}}</span>
+                <span><em>created</em> {{item.date|date:'mediumDate':'UTC'}}</span> |
+                <span><em>last modified</em> {{item.modified|date:'mediumDate':'UTC'}}</span>
             </div>
 
             <div class="m-results-item__description"

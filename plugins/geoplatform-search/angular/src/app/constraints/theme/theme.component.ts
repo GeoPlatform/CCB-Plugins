@@ -51,4 +51,14 @@ implements OnInit, OnDestroy, ConstraintEditor {
     hasNext() {
         return this.totalResults > this.getPageEnd();
     }
+
+    /**
+     * @override ItemListConstraint.prototype.configureQuery
+     */
+    configureQuery(query : Query) {
+        //sort by relevance (DT-24187)
+        query.sort("_score,desc");
+        //and only find concepts that belong to concept schemes (DT-24187)
+        query.setParameter("facet.inScheme.exists", true);
+    }
 }

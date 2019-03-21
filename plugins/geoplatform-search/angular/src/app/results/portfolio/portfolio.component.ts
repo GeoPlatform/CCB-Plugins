@@ -122,9 +122,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
      */
     executeQuery() {
 
-        // console.log("PortfolioComponent.executeQuery() - " +
-        //    JSON.stringify(this.query.getQuery()));
-
+        console.log("PortfolioComponent.executeQuery() - " +
+           JSON.stringify(this.query.getQuery(), null, ' '));
 
 
         this.isLoading = true;
@@ -153,8 +152,13 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     onSortChange() {
+        //update current query
         this.query.sort(this.sortField);
+        // and default query so we don't lose the selected sort on a constraint change
+        this.defaultQuery.sort(this.sortField);
+        //let listeners know the query has changed
         this.queryChange.next(this.query);
+        //trigger RPM tracking event
         this.rpm.logEvent('Sort', this.sortField)
     }
 
@@ -166,10 +170,15 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         let changed = false;
         if(!isNaN($event.page)) {
             this.query.setPage($event.page);
+            //don't update default query page because we want constraint
+            // changes to restart paging at the first page of results
             changed = true;
         }
         if(!isNaN($event.size)) {
             this.query.setPageSize($event.size);
+            //update default query because we don't want to lose user-selected
+            // page size value when the constraints change
+            this.defaultQuery.setPageSize($event.size);
             changed = true;
         }
         if(!changed) return;
