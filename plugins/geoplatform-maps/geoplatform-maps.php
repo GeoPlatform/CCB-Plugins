@@ -155,7 +155,8 @@ function geopmap_shortcode_creation($geopmap_atts){
 	if (array_key_exists('statusCode', $geopmap_result) && $geopmap_result['statusCode'] >= "500" && $geopmap_result['statusCode'] < "600")
 	  $geopmap_error_text .= "The map service provider could not be contacted. Please try again later.<BR>";
 
-
+	// Includes the plugin.php file so that active plugins can be checked public-side.
+	include_once(ABSPATH.'wp-admin/includes/plugin.php');
 
 	// The JSON info grabbed is checked for a value found only in AGOL maps. If it
 	// is found, the landing page value is pulled from the JSON and the process
@@ -225,7 +226,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					<?php
 					if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
 						echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
-						echo "<span>View Details</span></a>";
+						echo "<span style='color: #212529'>View Details</span></a>";
 					}?>
 
 		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank" class="btn btn-info btn-sm geop-sub-buttons">
@@ -373,7 +374,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 						if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
 							echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
-							echo "<span>View Details</span></a>";
+							echo "<span style='color: #212529'>View Details</span></a>";
 						}?>
 
 						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" class="geop-sub-buttons btn btn-info btn-sm">
