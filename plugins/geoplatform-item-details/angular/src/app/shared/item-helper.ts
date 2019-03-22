@@ -56,10 +56,14 @@ export class ItemHelper {
             case ItemTypes.CONCEPT_SCHEME :
                 return item.label || item.prefLabel || "Un-titled resource";
 
-
             case ItemTypes.CONTACT :
-                return (item.fullName || 'Unnamed contact') +
-                    ( item.orgName ? " (" + item.orgName + ")" : '');
+                let fn = item.fullName || '';
+                let pt = item.positionTitle || '';
+                let on = item.orgName || '';
+                let label = fn + (fn.length?' - ':'') + pt + (pt.length?' - ':'') + on;
+                //if none of those fields have been provided, default to email or placeholder
+                if(!label.length) label = item.email || 'Untitled Contact';
+                return label;
 
             default: return item.label || item.title || "Un-titled resource";
         }
