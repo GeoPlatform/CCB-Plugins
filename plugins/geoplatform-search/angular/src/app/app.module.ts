@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg';
 // import { ServerRoutes } from './server-routes.enum';
 
@@ -37,6 +37,8 @@ import { Config } from 'geoplatform.client';
 import { AppComponent } from './app.component';
 import { PickerComponent } from './picker/picker.component';
 import { EditorComponent, ConstraintDirective } from './picker/editor/editor.component';
+
+import { UTCDatepickerAdapter } from './constraints/temporal/temporal.component';
 
 import {
     CurrentComponent,
@@ -178,7 +180,11 @@ export function initializeApp() {
       itemServiceProvider,
       serviceServiceProvider,
       utilsServiceProvider,
-      kgServiceProvider
+      kgServiceProvider,
+      {
+          provide: NgbDateAdapter,
+          useClass: UTCDatepickerAdapter
+      }
   ],
   entryComponents: [
       KeywordsComponent,

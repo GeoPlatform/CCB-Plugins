@@ -62,7 +62,8 @@
             <div class="m-results-item__body">
 
                 <div class="m-results-item__icon m-results-item__icon--sm">
-                    <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span>
+                    <!-- <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span> -->
+                    <span class="{{getIconClass(item)}} is-themed u-text--huge"></span>
                 </div>
                 <div class="flex-1">
                     <div class="m-results-item__heading">
@@ -79,8 +80,12 @@
                                 by <a class="is-linkless" (click)="addCreatorConstraint(item.createdBy)">{{item.createdBy}}</a>
                             </span>
                         </span> |
-                        <span *ngIf="item.created" title="Creation date">created {{item.created|date}}</span> |
-                        <span *ngIf="item.modified" title="Last modified date">last modified {{item.modified|date}}</span>
+                        <span *ngIf="item.created" title="Creation date">
+                            <em>created</em> {{item.created|date:'mediumDate':'UTC'}}
+                        </span> |
+                        <span *ngIf="item.modified" title="Last modified date">
+                            <em>last modified</em> {{item.modified|date:'mediumDate':'UTC'}}
+                        </span>
                     </div>
                     <div class="m-results-item__description" [innerHtml]="item.description"></div>
                     <div class="m-results-item__actions">

@@ -123,8 +123,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     executeQuery() {
 
         // console.log("PortfolioComponent.executeQuery() - " +
-        //    JSON.stringify(this.query.getQuery()));
-
+        //    JSON.stringify(this.query.getQuery(), null, ' '));
 
 
         this.isLoading = true;
@@ -153,8 +152,13 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
      *
      */
     onSortChange() {
+        //update current query
         this.query.sort(this.sortField);
+        // and default query so we don't lose the selected sort on a constraint change
+        this.defaultQuery.sort(this.sortField);
+        //let listeners know the query has changed
         this.queryChange.next(this.query);
+        //trigger RPM tracking event
         this.rpm.logEvent('Sort', this.sortField)
     }
 
@@ -166,10 +170,15 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         let changed = false;
         if(!isNaN($event.page)) {
             this.query.setPage($event.page);
+            //don't update default query page because we want constraint
+            // changes to restart paging at the first page of results
             changed = true;
         }
         if(!isNaN($event.size)) {
             this.query.setPageSize($event.size);
+            //update default query because we don't want to lose user-selected
+            // page size value when the constraints change
+            this.defaultQuery.setPageSize($event.size);
             changed = true;
         }
         if(!changed) return;
@@ -196,20 +205,20 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     getIconPath(item) {
         let type = "dataset";
         switch(item.type) {
-            case ItemTypes.DATASET:         type =  'dataset'; break;
-            case ItemTypes.SERVICE:         type =  'service'; break;
-            case ItemTypes.LAYER:           type =  'layer'; break;
-            case ItemTypes.MAP:             type =  'map'; break;
-            case ItemTypes.GALLERY:         type =  'gallery'; break;
-            case ItemTypes.ORGANIZATION:    type =  'organization'; break;
             case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.COMMUNITY:       type =  'community'; break;
-            case ItemTypes.CONCEPT:         type =  'concept'; break;
-            case ItemTypes.CONCEPT_SCHEME:  type =  'conceptscheme'; break;
-            default: type = 'post';
+            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         // return `../${ServerRoutes.ASSETS}${type}.svg`;
         return `../${environment.assets}${type}.svg`;
+    }
+
+    getIconClass(item) {
+        let type = "dataset";
+        switch(item.type) {
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
+        }
+        return 'icon-' + type;
     }
 
     /**
@@ -218,17 +227,10 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     getActivationUrl(item) {
         let type = null;
         switch(item.type) {
-            case ItemTypes.LAYER:
-            case ItemTypes.MAP: type = item.type.toLowerCase() + 's'; break;
             case ItemTypes.GALLERY: type = "galleries"; break;
             case ItemTypes.COMMUNITY: type = "communities"; break;
             case ItemTypes.CONTACT: type = "contacts"; break;
-            case ItemTypes.SERVICE:
-            case ItemTypes.DATASET:
-            case ItemTypes.ORGANIZATION:
-            case ItemTypes.CONCEPT:
-            case ItemTypes.CONCEPT_SCHEME:
-                type = item.type.split(':')[1].toLowerCase() + 's'; break;
+            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's'; break;
         }
         if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
         else return '/resources';

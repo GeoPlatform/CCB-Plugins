@@ -91,20 +91,21 @@ export class DepictionComponent implements OnInit {
     }
 
     getFallbackUrl() {
-        let path = 'no-thumb.png';
-        switch(this.item.type) {
-            case ItemTypes.DATASET :        path = 'icons/dataset.svg'; break;
-            case ItemTypes.SERVICE :        path = 'icons/service.svg'; break;
-            case ItemTypes.LAYER :          path = 'icons/layer.svg'; break;
-            case ItemTypes.MAP :            path = 'icons/map.svg'; break;
-            case ItemTypes.GALLERY :        path = 'icons/gallery.svg'; break;
-            case ItemTypes.COMMUNITY :      path = 'icons/community.svg'; break;
-            case ItemTypes.ORGANIZATION :   path = 'icons/organization.svg'; break;
-            case ItemTypes.CONTACT :        path = 'icons/vcard.svg'; break;
-            case ItemTypes.PERSON :         path = 'icons/vcard.svg'; break;
-            case ItemTypes.CONCEPT :        path = 'icons/concept.svg'; break;
-            case ItemTypes.CONCEPT_SCHEME : path = 'icons/conceptscheme.svg'; break;
-        }
-        return `${environment.assets}/${path}`;
+        return Config.ualUrl + '/api/items/' + this.item.id + '/thumbnail';
+        // let path = 'no-thumb.png';
+        // switch(this.item.type) {
+        //     case ItemTypes.DATASET :        path = 'icons/dataset.svg'; break;
+        //     case ItemTypes.SERVICE :        path = 'icons/service.svg'; break;
+        //     case ItemTypes.LAYER :          path = 'icons/layer.svg'; break;
+        //     case ItemTypes.MAP :            path = 'icons/map.svg'; break;
+        //     case ItemTypes.GALLERY :        path = 'icons/gallery.svg'; break;
+        //     case ItemTypes.COMMUNITY :      path = 'icons/community.svg'; break;
+        //     case ItemTypes.ORGANIZATION :   path = 'icons/organization.svg'; break;
+        //     case ItemTypes.CONTACT :        path = 'icons/vcard.svg'; break;
+        //     case ItemTypes.PERSON :         path = 'icons/vcard.svg'; break;
+        //     case ItemTypes.CONCEPT :        path = 'icons/concept.svg'; break;
+        //     case ItemTypes.CONCEPT_SCHEME : path = 'icons/conceptscheme.svg'; break;
+        // }
+        // return `${environment.assets}/${path}`;
     }
 }

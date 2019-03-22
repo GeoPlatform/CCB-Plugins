@@ -19,7 +19,9 @@ export class ItemHelper {
         return type && (
             type === ItemTypes.DATASET || type === ItemTypes.SERVICE   ||
             type === ItemTypes.LAYER   || type === ItemTypes.MAP       ||
-            type === ItemTypes.GALLERY || type === ItemTypes.COMMUNITY
+            type === ItemTypes.GALLERY || type === ItemTypes.COMMUNITY ||
+            type === ItemTypes.APPLICATION || type === ItemTypes.TOPIC ||
+            type === ItemTypes.WEBSITE
         );
     }
 
@@ -45,13 +47,6 @@ export class ItemHelper {
 
         let type = item.type;
         switch(type) {
-            case ItemTypes.DATASET :
-            case ItemTypes.SERVICE :
-            case ItemTypes.LAYER :
-            case ItemTypes.MAP :
-            case ItemTypes.GALLERY :
-            case ItemTypes.COMMUNITY :
-                return item.label || item.title || "Un-titled resource";
 
             case ItemTypes.ORGANIZATION :
             case ItemTypes.PERSON :
@@ -66,7 +61,7 @@ export class ItemHelper {
                 return (item.fullName || 'Unnamed contact') +
                     ( item.orgName ? " (" + item.orgName + ")" : '');
 
-            default: return 'Unknown type';
+            default: return item.label || item.title || "Un-titled resource";
         }
     }
 
@@ -83,18 +78,16 @@ export class ItemHelper {
         else return null;
 
         switch(type) {
-            case ItemTypes.DATASET : return "Dataset";
-            case ItemTypes.SERVICE : return "Service";
-            case ItemTypes.ORGANIZATION : return "Organization";
-            case ItemTypes.CONTACT : return "Contact";
-            case ItemTypes.PERSON : return "Person";
-            case ItemTypes.CONCEPT : return "Concept";
+            case ItemTypes.DATASET :
+            case ItemTypes.SERVICE :
+            case ItemTypes.PERSON :
+            case ItemTypes.ORGANIZATION :
+            case ItemTypes.CONCEPT :
+                return type.replace(/^[a-z]+\:/i, '');
             case ItemTypes.CONCEPT_SCHEME : return "Concept Scheme";
-            case ItemTypes.LAYER : return "Layer";
-            case ItemTypes.MAP : return "Map";
-            case ItemTypes.GALLERY : return 'Gallery';
-            case ItemTypes.COMMUNITY : return 'Community';
-            default: return 'Unknown Resource Type';
+            case ItemTypes.WEBSITE : return "Website";
+            case ItemTypes.CONTACT : return "Contact";
+            default: return type;   //remainder are unprefixed
         }
     }
 
@@ -112,23 +105,14 @@ export class ItemHelper {
         else return null;
 
         switch(type) {
-            case ItemTypes.DATASET :
-            case ItemTypes.SERVICE :
-            case ItemTypes.ORGANIZATION :
-            case ItemTypes.PERSON :
-            case ItemTypes.CONCEPT :
-            case ItemTypes.CONCEPT_SCHEME :
-                return type.split(':')[1].toLowerCase() + 's';
-
-            case ItemTypes.LAYER :
-            case ItemTypes.MAP :
-                return type.toLowerCase() + 's';
-
+            //special plurality
             case ItemTypes.GALLERY : return 'galleries';
             case ItemTypes.COMMUNITY : return 'communities';
+            //different name
             case ItemTypes.CONTACT : return 'contacts'; //instead of "vcards"
+            //remainder
+            default: return type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's';
 
-            default: return 'unsupported';
         }
     }
 
@@ -138,27 +122,7 @@ export class ItemHelper {
      * @return {string} string path to the type's icon
      */
     static determineIconType(type : string) {
-
-        let name = 'dataset';
-
-        switch(type) {
-            case ItemTypes.DATASET :
-            case ItemTypes.ORGANIZATION :
-            case ItemTypes.CONTACT :
-            case ItemTypes.PERSON :
-            case ItemTypes.CONCEPT :
-            case ItemTypes.CONCEPT_SCHEME :
-                name = type.split(':')[1].toLowerCase();
-                break;
-
-            case ItemTypes.LAYER :
-            case ItemTypes.MAP :
-            case ItemTypes.GALLERY :
-            case ItemTypes.COMMUNITY :
-                name = type.toLowerCase();
-                break;
-        }
-
+        let name = type.replace(/^[a-z]+\:/i, '').toLowerCase();
         return `${environment.assets}/icons/${name}.svg`;
     }
 

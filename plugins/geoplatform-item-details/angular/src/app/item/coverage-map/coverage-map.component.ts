@@ -7,7 +7,7 @@ import {
 } from "geoplatform.client";
 
 import {
-    MapFactory, MapInstance, OSM, LayerFactory, L
+    MapFactory, MapInstance, OSM, LayerFactory, L, DefaultBaseLayer
 } from "geoplatform.mapcore";
 
 
@@ -20,6 +20,13 @@ import * as esri from "esri-leaflet";
 import { ResetExtentControl } from './reset-extent';
 import { NG2HttpClient } from '../../shared/http-client';
 
+const EXTENT_STYLE = {
+    color: "transparent",
+    weight: 1,
+    fill: true,
+    fillColor: "#777777",
+    fillOpacity: 0.7
+};
 
 interface Bbox {
     minx: number;
@@ -46,6 +53,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
     private httpClient : NG2HttpClient;
     private map : MapInstance;
     private extentControl : any;
+    private extentLayer : L.Layer;
 
     constructor(private http : HttpClient) {
         this.httpClient = new NG2HttpClient(this.http);
@@ -147,13 +155,13 @@ export class CoverageMapComponent implements OnInit, OnChanges {
      * @return {Promise}
      */
     setDefaultBaseLayer() {
-        return OSM.get(this.layerService).then(osm => {
+        return DefaultBaseLayer.get(this.layerService).then(baseLayer => {
             if(this.mapId) {
                 //only show warning if this happens loading a map
-                this.warnings.push(new Error("Using OpenStreetMap default base layer"));
+                this.warnings.push(new Error("Using default base layer"));
             }
-            this.map.setBaseLayer(osm);
-            return osm;
+            this.map.setBaseLayer(baseLayer);
+            return baseLayer;
         });
     }
 
@@ -212,13 +220,71 @@ export class CoverageMapComponent implements OnInit, OnChanges {
      */
     setExtent(extent) {
         if(extent) {
-            var bbox = [ [ extent.miny, extent.minx ], [ extent.maxy, extent.maxx ] ];
-            this.extentControl.setExtent(bbox);
+            let bounds = this.getBoundsFor(extent);
+            if(!bounds) return;
+
+            this.extentControl.setExtent(bounds);
 
             //MapCore Map expects extent, not array
             this.map.setExtent(extent);
+
+            if(!this.mapId && !this.layerId) {
+                //if not loading a map or layer, show extent layer
+                if(!this.extentLayer) {
+                    this.extentLayer = new L.FeatureGroup();
+                    this.extentLayer.addTo(this.map.getMap());
+                }
+                let l = this.renderBounds(bounds, !!this.mapId||!!this.layerId);
+                if(!l) {
+                    console.log("WARN: Could not render extent as a path layer");
+                    return;
+                }
+                this.extentLayer.addLayer(l);
+
+            } else if(this.extentLayer) {
+                //if loading a map or layer, don't show extent layer
+                this.extentLayer.remove();
+                this.extentLayer = null;
+            }
         }
     }
+
+    /**
+     * @param {object} extent - extent object
+     * @return {array} bounds
+     */
+    getBoundsFor(extent : any) : any {
+        if(!extent) return null;
+        if( isNaN(extent.minx) || isNaN(extent.miny) ||
+            isNaN(extent.maxx) || isNaN(extent.maxy) ) {
+            return null;
+        }
+        let bounds = [];
+        bounds.push( [ extent.miny*1, extent.minx*1 ] );
+        bounds.push( [ extent.maxy*1, extent.maxx*1 ] );
+        if(bounds[0][0] < -89) bounds[0][0] = -89;
+        if(bounds[0][1] < -179) bounds[0][1] = -179;
+        if(bounds[1][0] > 89) bounds[1][0] = 89;
+        if(bounds[1][1] > 179) bounds[1][1] = 179;
+        return bounds;
+    }
+
+    renderBounds(bounds : any, forItem ?: boolean) : L.Layer {
+        if(!bounds) return null;
+        if(forItem) {
+            return new L.Rectangle(bounds, EXTENT_STYLE);
+        }
+
+        let coords = [
+            [ [-90, -180], [-90, 180], [90, 180], [90, -180], [-90,-180] ], // outer ring
+            [   bounds[0], [bounds[0][0],bounds[1][1]],
+                bounds[1], [bounds[1][0],bounds[0][1]],
+                bounds[0]
+            ]  // hole
+        ];
+        return new L.Polygon(coords, EXTENT_STYLE);
+    }
+
 
     /**
      * @return {Function} used to generate GP service classes for use by MapCore map
@@ -228,7 +294,11 @@ export class CoverageMapComponent implements OnInit, OnChanges {
             let type = (typeof(arg) === 'string') ?
                 arg : (arg && arg.type ? arg.type : null);
             if(!type) throw new Error("Must provide a type or object with a type specified");
-            if(!baseUrl) throw new Error("Must provide a base url");
+
+            //ignore baseUrl provided by map instance. instead use what is configured
+            // inside this application
+            // if(!baseUrl) throw new Error("Must provide a base url");
+
             if(!httpClient) throw new Error("Must provide an http client to use to make requests");
             switch(type) {
                 case ItemTypes.MAP:
@@ -236,7 +306,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
                     return new MapService(Config.ualUrl, this.httpClient);
                 default:
                     //non-maps won't need authentication to transact (no post/put/delete)
-                    return ServiceFactory(arg, baseUrl, this.httpClient);
+                    return ServiceFactory(arg, Config.ualUrl, this.httpClient);
             }
         };
     }
@@ -246,8 +316,27 @@ export class CoverageMapComponent implements OnInit, OnChanges {
         if (!extent) return false;
         if( isNaN(extent.minx) || isNaN(extent.maxx) ||
             isNaN(extent.miny) || isNaN(extent.maxy) ) return false;
-        if( ((extent.maxx*1) - (extent.minx*1)) < 0.0001 ) return false;
-        if( ((extent.maxy*1) - (extent.miny*1)) < 0.0001 ) return false;
+        extent.maxx *= 1;
+        extent.minx *= 1;
+        extent.maxy *= 1;
+        extent.miny *= 1;
+
+        if(extent.maxx < extent.minx) {
+            let min = extent.maxx;
+            extent.maxx = extent.minx;
+            extent.minx = min;
+        } else if( (extent.maxx - extent.minx) < 0.0001 ) {
+            if(extent.minx < -179.0) extent.minx -= 1.0;
+            else extent.maxx += 1.0;
+        }
+        if(extent.maxy < extent.miny) {
+            let min = extent.maxy;
+            extent.maxy = extent.miny;
+            extent.miny = min;
+        } else if( (extent.maxy - extent.miny) < 0.0001 ) {
+            if(extent.miny < -79.0) extent.miny -= 1.0;
+            else extent.maxy += 1.0;
+        }
         return true;
     }
 

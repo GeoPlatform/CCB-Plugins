@@ -95,7 +95,15 @@
           foreach($geopccb_result['items'] as $geopccb_map){
             try {
               //set map ID
-              $geopccb_map_id = $geopccb_map['asset']['id'];
+              $geopccb_map_id = NULL;
+              if (isset($geopccb_map['asset']['id']))
+                $geopccb_map_id = $geopccb_map['asset']['id'];
+              elseif (isset($geopccb_map['assetId']))
+                $geopccb_map_id = $geopccb_map['assetId'];
+              else{
+                $geopccb_single_result = __( 'The map does not an expected metadata format.', 'geoplatform-ccb');
+                return false;
+              }
               $geopccb_single_map = wp_remote_get( $GLOBALS['geopccb_ual_url'] .'/api/maps/'.$geopccb_map_id.'');
 
               if( is_wp_error( $geopccb_single_map ) ) {

@@ -37,7 +37,8 @@
     <div class="m-results-item__body">
 
         <div class="m-results-item__icon m-results-item__icon--sm">
-            <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span>
+            <!-- <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span> -->
+            <span class="{{getIconClass(item)}} u-text--huge"></span>
         </div>
 
         <div class="flex-1">
@@ -62,8 +63,8 @@
                     </a>
                     <span *ngIf="!item.author.id">unknown author</span>
                 </span> |
-                <span>created {{item.date|date}}</span> |
-                <span>last modified {{item.modified|date}}</span>
+                <span><em>created</em> {{item.date|date:'mediumDate':'UTC'}}</span> |
+                <span><em>last modified</em> {{item.modified|date:'mediumDate':'UTC'}}</span>
             </div>
 
             <div class="m-results-item__description"

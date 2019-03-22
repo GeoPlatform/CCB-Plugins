@@ -27,8 +27,8 @@
         <strong>Visibility </strong>{{item.visibility}}
     </div>
 
-    <div class="m-article__desc">
-        <strong>GeoPlatform URI </strong>
+    <div class="m-article__desc" *ngIf="item.uri && item.uri.indexOf('geoplatform.gov')<0">
+        <strong>Source URI </strong>
         <p class="u-text--sm t-fg--gray-md u-break--all">{{item.uri}}</p>
     </div>
 

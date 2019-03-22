@@ -6,7 +6,7 @@ class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_side_content_prev_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Image', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( "GeoPlatform sidebar content widget for displaying the current post's featured image.", 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( "GeoPlatform Image widget for the sidebar. Will display the current post's featured image. An optional title input is also present.", 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

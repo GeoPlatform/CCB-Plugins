@@ -6,7 +6,7 @@ class Geopportal_Resource_Elements_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_elements_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Elements', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform elements widget for resource pages.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Elements widget for resource pages. Takes Asset Carousel shortcode as input and displays the assets in a list format. The shortcode must be modified manually to provide only one data type and no id to function properly.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -49,7 +49,7 @@ class Geopportal_Resource_Elements_Widget extends WP_Widget {
 
 <!-- HTML for the widget control box. -->
 		<p>
-			<?php _e('Input a GeoPlatform Service Collector plugin shortcode. There should only be one enabled data type. You will also need to manually remove the community ID and title attributes from the shortcode, leaving only the cat and count values without quotation marks.', 'geoplatform-ccb'); ?>
+			<?php _e('Input a GeoPlatform Asset Carousel plugin shortcode. There should only be one enabled data type. You will also need to manually remove the community ID and title attributes from the shortcode, leaving only the cat and count values without quotation marks.', 'geoplatform-ccb'); ?>
 		</p>
 		<p>
       <label for="<?php echo $this->get_field_id( 'geopportal_elements_title' ); ?>">Widget Title:</label>

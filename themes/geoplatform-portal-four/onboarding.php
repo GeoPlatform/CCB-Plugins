@@ -6,7 +6,7 @@ class Geopportal_Onboarding_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_onboarding_widget', // Base ID
 			esc_html__( 'GeoPlatform Onboarding', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform onboarding widget for the front page.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Onboarding widget for the front page. Provides a means for users to sign up or sign in, as well as a redirect to learn more about the GeoPlatform.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

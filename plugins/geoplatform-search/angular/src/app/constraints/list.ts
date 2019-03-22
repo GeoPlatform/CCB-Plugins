@@ -78,7 +78,9 @@ export class ItemListConstraint {
 
     refreshOptions() {
 
-        this.listQuery.q(this.listFilter);
+        if(this.listFilter && this.listFilter.length)
+            this.listQuery.q(this.listFilter);
+        else this.listQuery.q(null);
 
         this.service.search(this.listQuery)
         .then( (response) => {

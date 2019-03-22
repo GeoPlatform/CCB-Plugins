@@ -28,7 +28,9 @@
                     <div class="m-article__desc">
                         <gpid-alt-titles  [titles]="item?.alternateTitles"></gpid-alt-titles>
                     </div>
+                </div>
 
+                <div *ngIf="item?.description">
                     <div class="m-article__desc" (window:resize)="onResize()">
                         <div>
                             <span class="fas"
@@ -81,7 +83,7 @@
                 </div> -->
 
                 <div class="m-article__desc" *ngIf="isAsset()">
-                    <div><strong>Home Page </strong></div>
+                    <div><strong>Landing Page </strong></div>
                     <span *ngIf="!item?.landingPage">Not specified</span>
                     <a *ngIf="item?.landingPage" href="{{item.landingPage}}"
                         target="_blank" class="u-break--all">
@@ -103,6 +105,10 @@
                     <gpid-alt-ids *ngIf="isAsset()" [ids]="item?.identifiers"></gpid-alt-ids>
                 </div>
 
+                <div class="m-article__desc">
+                    <gpid-themes *ngIf="isAsset()" [themes]="item?.themes"></gpid-themes>
+                </div>
+
                 <!-- end all Assets -->
 
 
@@ -116,11 +122,40 @@
                 </gpid-service-details>
 
 
-
                 <!-- Layers -->
                 <gpid-layer-details *ngIf="'Layer'===item?.type" [item]="item">
                 </gpid-layer-details>
 
+
+                <!-- Applications -->
+                <div *ngIf="'Application'===item?.type" class="m-article__desc">
+                    <div><strong>Application URL</strong></div>
+                    <a *ngIf="item.href" href="{{item.href}}" target="_blank">{{item.href}}</a>
+                    <span *ngIf="!item.href||!item.href.length">not specified</span>
+                </div>
+
+                <!-- Topics -->
+                <div *ngIf="'Topic'===item?.type">
+                    <br>
+                    <div class="m-article__desc" >
+                        <div><strong>Parent Topics</strong></div>
+                        <div *ngIf="item.subTopicOf && item.subTopicOf.length">
+                            <div *ngFor="let parent of item.subTopicOf">
+                                <gpid-resource-link [item]="parent"></gpid-resource-link>
+                            </div>
+                        </div>
+                        <div *ngIf="!item.subTopicOf || !item.subTopicOf.length">None specified</div>
+                    </div>
+                    <div class="m-article__desc" >
+                        <div><strong>Sub Topics</strong></div>
+                        <div *ngIf="item.subTopics && item.subTopics.length">
+                            <div *ngFor="let child of item.subTopics">
+                                <gpid-resource-link [item]="child"></gpid-resource-link>
+                            </div>
+                        </div>
+                        <div *ngIf="!item.subTopics || !item.subTopics.length">None specified</div>
+                    </div>
+                </div>
 
 
                 <!-- Concepts -->
@@ -283,67 +318,6 @@
         <gpid-keywords [keywords]="item?.keywords" class="m-article"></gpid-keywords>
 
         <br>
-
-        <!-- Associated Items
-        <div class="m-article">
-            <div class="m-article__heading">
-                <span class="fas fa-caret-down"
-                    onClick="toggleClass('#associated-items', 'is-hidden');toggleClass('#associated-items-summary', 'is-hidden')">
-                </span>
-                Associated Items
-            </div>
-            <div class="m-article__desc is-hidden" id="associated-items-summary">
-                Expand to see associated items
-            </div>
-            <div class="m-article__desc" id="associated-items">
-                <div><strong>Services</strong></div>
-                <div>
-                    <a href="/items/service.html">
-                        <img class="a-icon" src="/assets/icons/service.svg">
-                        Service
-                    </a>
-                </div>
-                <br>
-                <div><strong>Layers</strong></div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer A
-                    </a>
-                </div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer B
-                    </a>
-                </div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer C
-                    </a>
-                </div>
-                <div>
-                    <a href="/items/layer.html">
-                        <img class="a-icon" src="/assets/icons/layer.svg">
-                        Layer D
-                    </a>
-                </div>
-                <br>
-                <div><strong>Galleries</strong></div>
-                <div>
-                    <a href="/items/gallery.html">
-                        <img class="a-icon" src="/assets/icons/gallery.svg">
-                        Gallery
-                    </a>
-                </div>
-                <br>
-                <div><strong>Others</strong></div>
-                <div><a class="is-linkless">Related Resource</a></div>
-                <div><a class="is-linkless">Related Resource</a></div>
-            </div>
-        </div>
-        -->
 
     </div>
 

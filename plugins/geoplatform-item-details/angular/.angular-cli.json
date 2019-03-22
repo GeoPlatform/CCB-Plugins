@@ -27,6 +27,7 @@
           "../node_modules/bootstrap/dist/css/bootstrap.css",
           "../node_modules/@fortawesome/fontawesome-free/css/all.css",
           "../node_modules/geoplatform.style/dist/css/platform.css",
+          "../node_modules/geoplatform.style/src/icons/geoplatform-icons-font.css",
           "../node_modules/leaflet/dist/leaflet.css",
           "../node_modules/leaflet-draw/dist/leaflet.draw.css",
           "../node_modules/leaflet.markercluster/dist/MarkerCluster.css",

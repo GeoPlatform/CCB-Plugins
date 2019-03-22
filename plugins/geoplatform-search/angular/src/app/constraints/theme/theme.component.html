@@ -1,18 +1,18 @@
 <div class="c-constraint__editor">
-  <p>Select one or more themes from the list below and click "Apply"</p>
-  <br>
+    <p>Select one or more themes from the list below and click "Apply"</p>
+    <br>
 
-  <label for="themesFilter">Find theme(s) to use in filtering search results</label>
-  <div class="input-group-slick">
-      <span class="fa fa-search"></span>
-      <input type="text" id="themesFilter"
-        class="form-control"
-        placeholder="Specify themes..."
-        [(ngModel)]="listFilter"
-        (keyup.enter)="refreshOptions()">
-      <button type="button" class="btn btn-secondary" (click)="refreshOptions()">Find</button>
-  </div>
-  <hr>
+    <label for="themesFilter">Find theme(s) to use in filtering search results</label>
+    <div class="input-group-slick">
+        <span class="fa fa-search"></span>
+        <input type="text" id="themesFilter"
+            class="form-control"
+            placeholder="Specify themes..."
+            [(ngModel)]="listFilter"
+            (keyup.enter)="refreshOptions()">
+        <button type="button" class="btn btn-secondary" (click)="refreshOptions()">Find</button>
+    </div>
+    <hr>
 
   <!-- display error message if one is encountered -->
   <div *ngIf="error" class="c-message--error">

@@ -20,8 +20,9 @@ $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.
  */
 function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
-	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
+	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
+	wp_enqueue_style( 'geop-style', get_stylesheet_directory_uri() . '/css/geop-style.css');
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( $parent_style ), wp_get_theme()->get('Version'));
 
@@ -62,9 +63,10 @@ add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 function geop_ccb_header_customize_css(){}
 add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
-
 //Disable admin bar (un-comment for prod sites)
-add_filter('show_admin_bar', '__return_false');
+if ( !current_user_can('administrator')){
+	add_filter('show_admin_bar', '__return_false');
+}
 
 //--------------------------
 //Support adding Menus for header and footer
@@ -807,7 +809,7 @@ class Geopportal_Contact_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_contact_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Contact', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform contact information widget for the sidebar.', 'geoplatform-ccb' ), ) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Contact widget for the sidebar. Simple contact information output. There are no customization options with this widget.', 'geoplatform-ccb' ), ) // Args
 		);
 	}
 
@@ -886,11 +888,11 @@ get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );
 get_template_part( 'apps-and-services', get_post_format() );
+get_template_part( 'partners', get_post_format() );
 // get_template_part( 'portfolio-resources-dark', get_post_format() );
 // get_template_part( 'portfolio-resources-old', get_post_format() );
 // get_template_part( 'communities', get_post_format() );
-get_template_part( 'partners', get_post_format() );
-get_template_part( 'themes', get_post_format() );
+// get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );
 get_template_part( 'side-content-links', get_post_format() );
 get_template_part( 'side-content-preview', get_post_format() );
@@ -899,6 +901,8 @@ get_template_part( 'widget-resources-elements', get_post_format() );
 get_template_part( 'widget-resources-search', get_post_format() );
 get_template_part( 'widget-resources-creation', get_post_format() );
 get_template_part( 'widget-resources-community', get_post_format() );
+get_template_part( 'widget-resources-ngda', get_post_format() );
+get_template_part( 'widget-resources-comment', get_post_format() );
 
 
 /**
@@ -906,7 +910,7 @@ get_template_part( 'widget-resources-community', get_post_format() );
  */
 function geopportal_register_portal_widgets() {
 	register_widget( 'Geopportal_Contact_Widget' );
-	register_widget( 'Geopportal_Graph_Widget' );
+	// register_widget( 'Geopportal_Graph_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 
@@ -959,7 +963,7 @@ function geop_ccb_create_community_post() {
 			'capability_type' => 'page',
       'public' => true,
       'has_archive' => true,
-      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates'),
+      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates', 'revisions'),
       'taxonomies' => array('category'),
       'publicly_queryable'  => true,
 			'menu_icon' => 'dashicons-images-alt2',
@@ -1016,7 +1020,7 @@ function geop_ccb_create_ngda_post() {
 			'capability_type' => 'page',
       'public' => true,
       'has_archive' => true,
-      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates'),
+      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates', 'revisions'),
       'taxonomies' => array('category'),
       'publicly_queryable'  => true,
 			'menu_icon' => 'dashicons-images-alt2',
@@ -1183,6 +1187,21 @@ add_filter('manage_edit-community-post_sortable_columns', 'geop_ccb_compost_colu
 add_filter('manage_edit-ngda-post_sortable_columns', 'geop_ccb_compost_column_sorter');
 
 
+function geop_ccb_blogcount_register($wp_customize){
+
+  $wp_customize->add_setting('blogcount_controls',array(
+      'default' => 7,
+      'sanitize_callback' => 'geop_ccb_sanitize_blogcount',
+  ));
+
+  $wp_customize->add_control('blogcount_controls',array(
+      'type' => 'number',
+      'label' => 'Blog Count Controls',
+      'section' => 'featured_format',
+      'description' => "Choose the number of entries on each page of the blog listing post.",
+  ));
+}
+add_action( 'customize_register', 'geop_ccb_blogcount_register');
 
 
 

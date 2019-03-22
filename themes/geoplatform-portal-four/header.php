@@ -33,8 +33,8 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
             <div class="a-nav__collapsible-menu">
                 <div class="dropdown" role="menuitem">
-                    <a class="btn btn-link dropdown-toggle is-hidden--xs" href="/data.html" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
-                        Explore Resources
+                    <a class="btn btn-link dropdown-toggle is-hidden--xs" href="<?php echo home_url('resources'); ?>" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                        Explore
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton">
                         <a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Datasets</a>
@@ -153,49 +153,44 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           <div class="a-page__title"><?php esc_html(single_cat_title()); ?></div>
         <?php } else { ?>
           <div class="a-page__title"><?php the_title(); ?></div>
-        <?php }
+        <?php } ?>
 
-        // Search works but currently breaks CSS if the form is used. Uncomment when CSS for it is ready.
-
-        // Ensures that the search bar will only appear if the associated plugin is active.
-    		if (in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array() ) )){
-    		?>
-
-        <!-- <form id="geoplatform_header_searchfield"> -->
-          <!-- <div class="a-search">
-            <div class="icon fas fa-search"></div>
-            <form class="m-search-box" id="geoplatform_header_searchfield">
-                <div class="input-group-slick">
-                    <span class="icon fas fa-search"></span>
-                    <input type="text" class="form-control" id="geoplatform_header_searchform" placeholder="SEARCH THE GEOPLATFORM">
-                </div>
-            </form>
-          </div> -->
-        <!-- </form> -->
-        <?php
-        }
-        ?>
     </div>
 
-    <!-- <script>
-		// Triggers off of form submission and navigates to the geoplatform-search page with the search field params.
-		  jQuery( "#geoplatform_header_searchfield" ).submit(function( event ) {
-		    event.preventDefault();
-		    window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatform_header_searchform').val();
-		  });
-		</script> -->
-
-
     <nav class="m-megamenu" id="header-megamenu">
-
         <div class="m-megamenu__content">
 
             <div class="col">
-                <div class="m-megamenu__heading">Featured</div>
-                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
-                <br>
-                <div class="m-megamenu__heading">Get Involved</div>
-                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
+
+              <div class="d-lg-none d-xl-none">
+                  <div class="m-megamenu__heading">Navigation</div>
+                  <ul class="menu" role="menu">
+                      <li role="menuitem" class="d-md-none">
+                          <a href="<?php echo home_url('resources'); ?>">Explore</a>
+                          <ul class="menu" role="menu">
+                              <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>" class="u-pd-left--xlg">Datasets</a></li>
+                              <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_services')); ?>" class="u-pd-left--xlg">Services</a></li>
+                              <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_layers')); ?>" class="u-pd-left--xlg">Layers</a></li>
+                              <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_maps')); ?>" class="u-pd-left--xlg">Maps</a></li>
+                              <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_galleries')); ?>" class="u-pd-left--xlg">Galleries</a></li>
+                              <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_communities')); ?>" class="u-pd-left--xlg">Communities</a></li>
+                          </ul>
+                      </li>
+                      <li role="menuitem">
+                          <a role="menuitem" href="<?php echo home_url(get_theme_mod('headlink_ngda_themes')); ?>">NGDA Themes</a>
+                      </li>
+                      <li role="menuitem">
+                          <a role="menuitem" href="<?php echo home_url(get_theme_mod('headlink_search')); ?>">Search</a>
+                      </li>
+                  </ul>
+                  <br>
+              </div>
+
+              <div class="m-megamenu__heading">Featured</div>
+              <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
+              <br>
+              <div class="m-megamenu__heading">Get Involved</div>
+              <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
             </div>
 
 

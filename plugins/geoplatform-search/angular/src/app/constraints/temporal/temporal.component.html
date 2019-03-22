@@ -1,21 +1,44 @@
 <div class="c-constraint__editor">
-  <p>Provide the following information and click "Apply"</p>
-  <br>
+    <div class="a-heading">Date Range Filter</div>
+    <p>
+        Filter search results by a date range against each resource's temporal extent.
+        Enter one or more dates below and click "Apply"
+    </p>
+    <p class="u-text--sm t-fg--gray-md">
+        <span class="fas fa-info-circle"></span>
+        Note that dates are treated as Universal Time Coordinated (UTC), also known as GMT or Zulu time.
+    </p>
 
-  <label for="startDate">Beginning</label>
-  <div class="input-group-slick">
-      <input type="text" id="startDate" placeholder="e.g., 2018-01-31" [(ngModel)]="startDate">
-      <span class="far fa-calendar-alt"></span>
-  </div>
-  <br>
-  <label for="endDate">Ending</label>
-  <div class="input-group-slick">
-      <input type="text" id="endDate" placeholder="e.g., 2018-01-31" [(ngModel)]="endDate">
-      <span class="far fa-calendar-alt"></span>
-  </div>
-  <br><br>
+    <label for="startDate">Beginning</label>
+    <div class="input-group-slick">
+        <input type="text" id="startDate" placeholder="e.g., 2018-01-31"
+            [(ngModel)]="startDate"
+            ngbDatepicker #beginPicker="ngbDatepicker"
+            (keyup)="validateStartDate($event)">
+        <button type="button" class="btn btn-sm btn-light" (click)="beginPicker.toggle()">
+            <span class="far fa-calendar-alt"></span>
+        </button>
+    </div>
+    <div class="u-text--sm t-fg--danger" *ngIf="startDateMessage">{{startDateMessage}}</div>
+    <br>
+    <label for="endDate">Ending</label>
+    <div class="input-group-slick">
+        <input type="text" id="endDate" placeholder="e.g., 2018-01-31"
+            [(ngModel)]="endDate"
+            ngbDatepicker #endPicker="ngbDatepicker"
+            (keyup)="validateEndDate($event)">
+        <button type="button" class="btn btn-sm btn-light" (click)="endPicker.toggle()">
+            <span class="far fa-calendar-alt"></span>
+        </button>
+    </div>
+    <div class="u-text--sm t-fg--danger" *ngIf="endDateMessage">{{endDateMessage}}</div>
+    <br>
 
-  <footer>
-      <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
-  </footer>
+    <footer>
+        <button type="button" class="btn btn-primary applyBtn"
+            [disabled]="(!startDate && !endDate) || startDateMessage || endDateMessage"
+            (click)="apply()">
+            Apply
+        </button>
+    </footer>
 </div>

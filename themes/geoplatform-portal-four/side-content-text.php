@@ -6,7 +6,7 @@ class Geopportal_Side_Content_Text_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_side_content_text_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Text', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform sidebar content widget for text display. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Text widget for the sidebar. Takes a content block shortcode as input and outputs it in the sidebar, with optional title. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 

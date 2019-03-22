@@ -424,7 +424,20 @@ a.list-item.selected,
 .input-group-slick.input-group-slick--lg > .glyphicon,
 .input-group-slick.input-group-slick--lg > .fa,
 .input-group-slick.input-group-slick--lg > .far,
-.input-group-slick.input-group-slick--lg > .fas { top: 0.875em; }
+.input-group-slick.input-group-slick--lg > .fas {
+    top: 0.875em;
+}
+
+.input-group-slick.input-group-slick--lg > .glyphicon:first-child,
+.input-group-slick.input-group-slick--lg > .fa:first-child,
+.input-group-slick.input-group-slick--lg > .far:first-child,
+.input-group-slick.input-group-slick--lg > .fas:first-child { left: @px-lg; }
+
+.input-group-slick.input-group-slick--lg > .glyphicon:last-child,
+.input-group-slick.input-group-slick--lg > .fa:last-child,
+.input-group-slick.input-group-slick--lg > .far:last-child,
+.input-group-slick.input-group-slick--lg > .fas:last-child { right: @px-lg; }
+
 
 .input-group-slick.input-group-slick--lg > .form-control {
     font-size: 1.25em;

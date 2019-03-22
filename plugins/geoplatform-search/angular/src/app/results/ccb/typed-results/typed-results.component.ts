@@ -146,5 +146,9 @@ export class TypedResultsComponent implements OnInit {
         // return `../${ServerRoutes.ASSETS}${item.type}.svg`;
         return `../${environment.assets}${item.type}.svg`;
     }
+    
+    getIconClass(item) {
+        return 'icon-' + item.type;
+    }
 
 }
