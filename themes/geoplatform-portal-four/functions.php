@@ -635,8 +635,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_one' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-one',
-			'name' => __( 'Resources Template One', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page one can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Datasets Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Dataset Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -652,8 +652,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_two' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-two',
-			'name' => __( 'Resources Template Two', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page two can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Services Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Service Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -669,8 +669,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_three' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-three',
-			'name' => __( 'Resources Template Three', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page three can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Layers Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Layer Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -686,8 +686,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_four' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-four',
-			'name' => __( 'Resources Template Four', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page four can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Maps Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Map Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -703,8 +703,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_five' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-five',
-			'name' => __( 'Resources Template Five', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page five can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Galleries Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Gallery Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -720,8 +720,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_six' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-six',
-			'name' => __( 'Resources Template Six', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page six can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Communities Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Communities Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -737,8 +737,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_seven' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-seven',
-			'name' => __( 'Resources Template Seven', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page seven can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources NGDA Themes Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore NGDA Themes page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -754,8 +754,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_eight' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-eight',
-			'name' => __( 'Resources Template Eight', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page eight can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Organizations Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Organizations Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -771,8 +771,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_nine' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-nine',
-			'name' => __( 'Resources Template Nine', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page nine can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Contacts Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Contact Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -788,13 +788,64 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_ten' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-ten',
-			'name' => __( 'Resources Template Ten', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page ten can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources People Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore People Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
 	}
 	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_ten' );
+}
+
+/**
+ * Widgetizing Explore Resources page elevin
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_elevin' ) ) {
+	function geop_ccb_explore_resources_widgets_elevin() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-elevin',
+			'name' => __( 'Resources Applications Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Application Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_elevin' );
+}
+
+/**
+ * Widgetizing Explore Resources page twelve
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_twelve' ) ) {
+	function geop_ccb_explore_resources_widgets_twelve() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-twelve',
+			'name' => __( 'Resources Topics Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Topic Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_twelve' );
+}
+
+/**
+ * Widgetizing Explore Resources page thirteen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_thirteen' ) ) {
+	function geop_ccb_explore_resources_widgets_thirteen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-thirteen',
+			'name' => __( 'Resources Websites Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Website Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_thirteen' );
 }
 
 /**

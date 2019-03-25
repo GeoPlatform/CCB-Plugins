@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Maps Template
+ * Template Name: Resources Applications Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *
@@ -14,7 +14,7 @@
 
  <div class="l-body l-body--two-column p-ngda">
    <div class="l-body__main-column">
-           <?php dynamic_sidebar( 'geoplatform-resources-template-widgets-four' ); ?>
+           <?php dynamic_sidebar( 'geoplatform-resources-template-widgets-elevin' ); ?>
    </div>
    <?php get_template_part( 'sidebar', get_post_format() ); ?>
  </div>

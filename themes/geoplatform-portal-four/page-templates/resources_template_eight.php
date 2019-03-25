@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template Eight
+ * Template Name: Resources Organizations Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

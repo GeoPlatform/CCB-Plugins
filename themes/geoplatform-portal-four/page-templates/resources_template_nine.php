@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template Nine
+ * Template Name: Resources Contacts Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template Five
+ * Template Name: Resources Galleries Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *
