@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template Three
+ * Template Name: Resources Layers Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

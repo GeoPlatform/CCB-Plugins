@@ -107,7 +107,7 @@ function geopmap_shortcode_creation($geopmap_atts){
     'name' => '',
     'url' => '',
 		'width' => '0',
-		'height' => '500',
+		'height' => '0',
 		'title' => 'on',
   ), $geopmap_atts);
   ob_start();
@@ -206,7 +206,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
  		 of the visible map and title card, and contains those elements. Its values
 		 are set initially to those of width as passed by array. The contents of the
 	 	 entire div also act as a hyperlink, set here-->
-	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px;">
+	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo esc_attr($geopmap_shortcode_array['width']); ?>px; height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px;">
 
 <!-- Name, link, and layer control card. Provides a link to the map with the
 		 title text, link to the object editor with the info icon link, and has a
@@ -216,7 +216,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 	if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
 		 		$geopmap_redirect_item_details = home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']);
 		 	?>
-			<div class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" src="" alt="Thumbnail failed to load" style="height:<?php echo esc_attr($geopmap_shortcode_array['height']); ?>px; background-image: url( <?php echo $geopmap_ual_url . '/api/maps/' . esc_attr($geopmap_shortcode_array['id']) . '/thumbnail' ?> );" onerror="geopmap_thumb_error(this);"></div>
+			<div class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" src="" alt="Thumbnail failed to load" style="background-image: url( <?php echo $geopmap_ual_url . '/api/maps/' . esc_attr($geopmap_shortcode_array['id']) . '/thumbnail' ?> );" onerror="geopmap_thumb_error(this);"></div>
 		 	<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
 		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
 		 			<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
@@ -265,10 +265,10 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		if (<?php echo esc_attr($geopmap_shortcode_array['width']); ?> == 0 || <?php echo esc_attr($geopmap_shortcode_array['width']); ?> > widthGrab){
 			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('98%');
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').width('100%');
-			jQuery('#image_<?php echo $geopmap_divrand; ?>').width('100%');
 		}
-		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0)
-			jQuery('#image_<?php echo $geopmap_divrand; ?>').height(jQuery('#image_<?php echo $geopmap_divrand; ?>').width() * 0.56);
+		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
+			jQuery('#middle_<?php echo $geopmap_divrand; ?>').height('98%');
+		}
 
 		// Error report handler. If there is content in error_report, that string
 		// is set to the error output in the error div. Otherwise, that div is

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template Six
+ * Template Name: Resources Communities Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

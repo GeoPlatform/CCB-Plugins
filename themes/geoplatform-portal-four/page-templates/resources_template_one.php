@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template One
+ * Template Name: Resources Datasets Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

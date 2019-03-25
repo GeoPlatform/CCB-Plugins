@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template Seven
+ * Template Name: Resources NGDA Themes Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *
