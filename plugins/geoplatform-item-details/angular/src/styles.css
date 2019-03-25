@@ -28,3 +28,12 @@ span.fas.fa-caret-down,
 span.fas.fa-caret-up {
     cursor: pointer;
 }
+
+
+
+.leaflet-bar a.leaflet-control-reset-extent,
+.leaflet-bar a.leaflet-control-reset-extent:hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
