@@ -52,11 +52,10 @@
    box-shadow: 9px 9px 10px 0px rgba(0, 0, 0, .25);
    font-size: 1rem;
    background: #fff;
-   color: inherit
+   color: inherit;
    display: block;
    border-bottom: 1px solid #ddd;
    background-color: #112158;
-   height: 100%;
  }
 
  .geop-display-header {
@@ -99,6 +98,7 @@
  .geop-container-controls {
    position: relative;
    width: 100%;
+   height: 100%;
    z-index: 1;
    background-size: 100% 100%;
  }
