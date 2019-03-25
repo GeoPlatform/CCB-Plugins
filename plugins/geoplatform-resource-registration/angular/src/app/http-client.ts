@@ -12,6 +12,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 
+import { AppError } from './model';
+
 export class NG2HttpClient {
 
 
@@ -101,9 +103,19 @@ export class NG2HttpClient {
         .catch( err => {
             // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));
             if (err instanceof HttpErrorResponse) {
-                let msg = err && err.message ? err.message :
-                    (err.error && err.error.message ? err.error.message : "An unknown error occurred");
-                throw new Error(msg);
+                let label = "An error occurred";
+                let msg = "An error occurred communicating with the GeoPlatform API";
+                if(err.error && err.error.error && err.error.error.message) {
+                    msg = err.error.error.message;
+                    label = err.error.error.error || label;
+                } else if (err.error && err.error.message) {
+                    msg = err.error.message;
+                    label = err.error.error || label;
+                } else if(err.message) {
+                    msg = err.message;
+                    label = err.error || label;
+                }
+                throw new AppError(msg, err.status, label);
             }
             return {};
         });

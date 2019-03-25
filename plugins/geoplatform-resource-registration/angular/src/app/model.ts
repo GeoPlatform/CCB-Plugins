@@ -14,6 +14,8 @@ export const ModelProperties = {
     KEYWORDS:       'keywords',
     PUBLISHERS:     'publishers',
     COMMUNITIES:    'usedBy',
+    THUMBNAIL_URL:  'thumbnailUrl',
+    THUMBNAIL_CONTENT: 'thumbnailContent',
 
     CLASSIFIERS_PURPOSE             : 'purpose',
     CLASSIFIERS_FUNCTION            : 'function',
@@ -40,3 +42,18 @@ export const ClassifierTypes = {
     place: 'Place',
     category: 'Category'
 };
+
+
+
+export class AppError extends Error {
+
+    public label : string;
+    public status : number = 500;
+
+    constructor(message : string, status?:number, label?:string) {
+        super(message);
+        if(status) this.status = status;
+        if(label) this.label = label;
+    }
+
+}

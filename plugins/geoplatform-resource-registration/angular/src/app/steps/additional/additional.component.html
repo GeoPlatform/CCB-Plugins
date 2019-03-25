@@ -41,6 +41,24 @@
                     [filterFn]="filterCommunities">
                 </gprr-autocomplete-mat-chip>
 
+
+
+                <!-- <div class="d-flex"> -->
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Thumbnail</mat-label>
+                        <mat-icon matPrefix>image</mat-icon>
+                        <input type="url" matInput formControlName="thumbnailUrl"
+                            placeholder="Specify a thumbnail image">
+                        <mat-hint>Specify the URL of an image to use as the thumbnail of the resource</mat-hint>
+                        <mat-error *ngIf="isInvalid('thumbnailUrl')">{{getErrorMessage('thumbnailUrl')}}</mat-error>
+                    </mat-form-field>
+                    <!-- <div>
+                        <button mat-raised-button (click)="triggerFileUpload()">Choose a File</button>
+                        <input type="file"  style="display:none" #thumbFileInput (change)="onFileUpload()">
+                        <input type="hidden" formControlName="thumbnailContent">
+                    </div>
+                </div> -->
+
             </div>
 
         </div>

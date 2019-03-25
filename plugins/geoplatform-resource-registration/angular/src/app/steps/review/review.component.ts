@@ -3,6 +3,9 @@ import {
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
+    DomSanitizer, SafeResourceUrl, SafeUrl
+} from '@angular/platform-browser';
+import {
     HttpClient, HttpRequest, HttpHeaders, HttpParams,
     HttpResponse, HttpEvent, HttpErrorResponse
 } from '@angular/common/http';
@@ -29,6 +32,7 @@ import { ClassifierTypes } from '../../model';
 import {
     itemServiceProvider, serviceServiceProvider
 } from '../../item-service.provider';
+import { AppError } from '../../model';
 
 const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
     return k.indexOf("secondary")<0 && k.indexOf("community")<0
@@ -67,7 +71,8 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     constructor(
         private formBuilder: FormBuilder,
         private itemService : ItemService,
-        private svcService : ServiceService
+        private svcService : ServiceService,
+        private sanitizer: DomSanitizer
     ) {
         this.formGroup = this.formBuilder.group({
             done: ['']
@@ -191,9 +196,26 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
             Object.assign(this.data, persisted);
             // callback(persisted);
         })
-        .catch( (e:Error) => {
+        .catch( e => {
             this.status.isSaving = false;
-            this.hasError = new StepError("Unable to Register Resource", e.message);
+
+            if(e.status) {
+                if(e.status === 403) {
+                    this.hasError = new StepError(
+                        "Your session has expired", "Please login again and retry");
+                } else if(e.status === 409) {
+                    this.hasError = new StepError(
+                        "Resource already exists",
+                        "The resource you are attempting to register already exists");
+                } else {
+                    this.hasError = new StepError(
+                        e.error || "Unable to Register Resource",
+                        e.message);
+                }
+
+            } else {
+                this.hasError = new StepError("Unable to Register Resource", e.message);
+            }
         });
     }
 
@@ -238,5 +260,13 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
                 this.itemService.client.setAuthToken( token as string);
                 break;
         }
+    }
+
+
+    getThumbnailBackground() {
+        let thumbnail = this.data.thumbnail;
+        let type = thumbnail.mediaType || 'image/png';
+        let content = thumbnail.contentData;
+        return this.sanitizer.bypassSecurityTrustStyle(`url(data:${type};base64,${content})`);
     }
 }

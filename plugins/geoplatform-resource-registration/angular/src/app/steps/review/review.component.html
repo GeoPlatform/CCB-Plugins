@@ -48,6 +48,26 @@
                     </div>
                 </div>
                 <div class="a-property-display">
+                    <label>Thumbnail:</label>
+                    <div class="a-property-value">
+                        <a *ngIf="data.thumbnail?.url" class="u-break--all"
+                            href="{{data.thumbnail.url}}" target="_blank">
+                            <img src="{{data.thumbnail.url}}" style="max-width:100%;max-height:200px">
+                            <br>{{data.thumbnail.url}}
+                        </a>
+                        <div *ngIf="data.thumbnail?.contentData" style="max-width:100%;max-height:200px">
+                            <div
+                                [style.backgroundImage]="getThumbnailBackground()"
+                                [style.backgroundSize]="'contain'"
+                                [style.backgroundRepeat]="'no-repeat'"
+                                [style.height]="'200px'"
+                                [style.maxWidth]="'100%'">
+                            </div>
+                        </div>
+                        <span *ngIf="!data.thumbnail||(!data.thumbnail.url&&!data.thumbnail.contentData)"><em>not specified</em></span>
+                    </div>
+                </div>
+                <div class="a-property-display">
                     <label>Keywords:</label>
                     <div class="a-property-value">
                         <mat-chip-list *ngIf="data.keywords && data.keywords.length" selectable="false">

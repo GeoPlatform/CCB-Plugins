@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import {
     HttpClient, HttpRequest, HttpHeaders, HttpParams,
-    HttpResponse, HttpEvent, HttpErrorResponse
+    HttpResponse, HttpEvent, HttpErrorResponse, HttpEventType
 } from '@angular/common/http';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
@@ -30,6 +30,9 @@ import { ModelProperties } from '../../model';
 import { itemServiceProvider } from '../../item-service.provider';
 
 
+const URL_VALIDATOR = Validators.pattern("https?://.+");
+
+
 @Component({
   selector: 'wizard-step-additional',
   templateUrl: './additional.component.html',
@@ -52,15 +55,17 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     // private itemService : ItemService = null;
     private eventsSubscription: any;
+    private authToken : string;
 
     @ViewChild('keywordsInput') keywordsField: ElementRef;
+    @ViewChild('thumbFileInput') thumbFile: ElementRef;
 
     formOpts : any = {};
 
 
     constructor(
         private formBuilder: FormBuilder,
-        // private http : HttpClient
+        private http : HttpClient,
         private itemService : ItemService
     ) {
         //initialize form controls
@@ -70,6 +75,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         // this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];
         this.formOpts[ModelProperties.COMMUNITIES] = [''];
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
+        this.formOpts[ModelProperties.THUMBNAIL_URL] = ['', URL_VALIDATOR];
+        this.formOpts[ModelProperties.THUMBNAIL_CONTENT] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
         // let client = new NG2HttpClient(http);
@@ -112,6 +119,16 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                     this.formGroup.get(ModelProperties.COMMUNITIES)
                         .setValue(data[ModelProperties.COMMUNITIES]);
                 }
+
+                if(data[ModelProperties.THUMBNAIL_URL]) {
+                    this.formGroup.get(ModelProperties.THUMBNAIL_URL)
+                        .setValue(data[ModelProperties.THUMBNAIL_URL]);
+                }
+                if(data[ModelProperties.THUMBNAIL_CONTENT]) {
+                    // this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT)
+                    //     .setValue(data[ModelProperties.THUMBNAIL_CONTENT]);
+                }
+
             }
         }
     }
@@ -202,7 +219,90 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
             case 'reset':
                 this.hasError = null;
                 break;
+            case 'auth':
+                this.authToken = event.value.token;
+                break;
         }
     }
 
+    /**
+     * @param {string} field
+     * @return {any}
+     */
+    getValue(field) { return this.formGroup.get(field).value; }
+
+    /**
+     * @param {string} field
+     * @param {any} value
+     */
+    setValue(field, value) { this.formGroup.get(field).setValue(value); }
+
+    /**
+     * @param {string} fieldName
+     * @return {boolean}
+     */
+    isInvalid(fieldName) { return this.formGroup.get(fieldName).invalid; }
+
+    getErrorMessage(fieldName) {
+        if(this.formGroup.get(fieldName).hasError('required'))
+            return 'You must enter a value';
+        if(this.formGroup.get(fieldName).hasError('pattern'))
+            return 'You must provide a valid url';
+        return null;
+    }
+
+    triggerFileUpload() {
+        this.thumbFile.nativeElement.click();
+    }
+
+    onFileUpload() {
+        let file = this.thumbFile.nativeElement.files[0];
+        // let sub = this.upload(file).subscribe( (content) => {
+        //     this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
+        //     this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(content);
+        //     sub.unsubscribe();
+        // });
+
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            let encoded = reader.result.replace(/^data:(.*;base64,)?/, '');
+            if ((encoded.length % 4) > 0) {
+                encoded += '='.repeat(4 - (encoded.length % 4));
+            }
+            this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
+            this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(encoded);
+        };
+        reader.readAsDataURL(file);
+
+    }
+
+    // public upload(file: File) : Observable<string> {
+    //
+    //     let url = Config.ualUrl.replace('ual','oe') + '/api/thumbnail';
+    //     let token = this.authToken;
+    //
+    //     // create a new multipart-form for every file
+    //     const formData: FormData = new FormData();
+    //     formData.append('upload', file, file.name);
+    //
+    //     // create a http-post request and pass the form
+    //     // tell it to report the upload progress
+    //     const req = new HttpRequest('POST', url, formData, {
+    //         reportProgress: true,
+    //         headers : new HttpHeaders().set('Authorization', 'Bearer ' + token)
+    //     });
+    //
+    //     // create a new progress-subject for every file
+    //     const result = new Subject<string>();
+    //
+    //     // send the http-request and subscribe for progress-updates
+    //     this.http.request(req).subscribe(event => {
+    //         if (event instanceof HttpResponse) {
+    //             let data : string = (event as HttpResponse<any>).body;
+    //             result.next(data);
+    //         }
+    //     });
+    //
+    //     return result.asObservable();
+    // }
 }

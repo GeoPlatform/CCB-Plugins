@@ -163,6 +163,22 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // them as uris, so we have to transform them
             this.item[key] = value.map(v => v.uri);
 
+        } else if(ModelProperties.THUMBNAIL_URL === key) {
+            if(value && value.length) {
+                this.item.thumbnail = this.item.thumbnail || {};
+                this.item.thumbnail.url = value;
+            } else {
+                this.item.thumbnail = null;
+            }
+
+        } else if(ModelProperties.THUMBNAIL_CONTENT === key) {
+            if(value && value.length) {
+                this.item.thumbnail = this.item.thumbnail || {};
+                this.item.thumbnail.contentData = value;
+            } else {
+                this.item.thumbnail = null;
+            }
+
         } else { //generic property
             this.item[key] = value;
         }
