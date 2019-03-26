@@ -63,10 +63,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Geodetic Control</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/geology/'); ?>" class="u-text--center">
-						<span class="fas fa-3x t-fg--blue-dk">
-							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/landslide.svg' ?>" style="height:48px;">
-						</span>
-						<br>
+						<span class="fas t-fg--blue-dk flaticon-landslide"></span><br>
 						<span class="u-text--sm">Geology</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/govunits/'); ?>" class="u-text--center">
@@ -78,10 +75,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Imagery</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/landuse/'); ?>" class="u-text--center">
-						<span class="fas fa-3x t-fg--blue-dk">
-							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/community.svg' ?>" style="height:48px;">
-						</span>
-						<br>
+						<span class="fas t-fg--blue-dk flaticon-park"></span><br>
 						<span class="u-text--sm">Land Use - Land Cover</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/realproperty/'); ?>" class="u-text--center">
@@ -89,10 +83,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Real Property</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/soils/'); ?>" class="u-text--center">
-						<span class="fas fa-3x t-fg--blue-dk">
-							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/bud.svg' ?>" style="height:48px;">
-						</span>
-						<br>
+						<span class="fas t-fg--blue-dk flaticon-soil"></span><br>
 						<span class="u-text--sm">Soils</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/transportation/'); ?>" class="u-text--center">
@@ -108,10 +99,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Water - Inland</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/waterocean/'); ?>" class="u-text--center">
-						<span class="fas fa-3x t-fg--blue-dk">
-							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/waves.svg' ?>" style="height:48px;">
-						</span>
-						<br>
+						<span class="fas t-fg--blue-dk flaticon-wave"></span><br>
 						<span class="u-text--sm">Water - Oceans &amp; Coasts</span>
 		      </a>
 		    </div>
