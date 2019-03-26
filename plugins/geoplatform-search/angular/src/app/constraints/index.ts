@@ -48,7 +48,7 @@ class EditorRegistry {
 
 let SearchEditorRegistry = new EditorRegistry();
 
-// SearchEditorRegistry.registerEditor( "creator", "Creator", CreatorComponent );
+SearchEditorRegistry.registerEditor( "creator", "Creator", CreatorComponent );
 SearchEditorRegistry.registerEditor( "extent", "Geographic Extent", ExtentComponent );
 SearchEditorRegistry.registerEditor( "keywords", "Keywords", KeywordsComponent );
 // SearchEditorRegistry.registerEditor( "contacts", "Points of Contact", ContactComponent );

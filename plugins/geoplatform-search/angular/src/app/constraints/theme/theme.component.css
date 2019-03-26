@@ -1,1 +1,16 @@
 
+.list-item__hint {
+    display: block;
+    font-size: 0.875em;
+    color: #777;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+@media(min-width:768px) {
+    .list-item__hint {
+        max-width: 300px;
+        width: auto;
+    }
+}

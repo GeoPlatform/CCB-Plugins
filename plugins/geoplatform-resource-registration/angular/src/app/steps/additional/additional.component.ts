@@ -71,16 +71,12 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         //initialize form controls
         this.formOpts[ModelProperties.KEYWORDS] = [''];
         this.formOpts['$'+ModelProperties.KEYWORDS] = [''];
-        // this.formOpts[ModelProperties.PUBLISHERS] = [''];
-        // this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];
         this.formOpts[ModelProperties.COMMUNITIES] = [''];
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
         this.formOpts[ModelProperties.THUMBNAIL_URL] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.THUMBNAIL_CONTENT] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
-        // let client = new NG2HttpClient(http);
-        // this.itemService = new ItemService(Config.ualUrl, client);
     }
 
     /**
@@ -111,10 +107,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                     this.formGroup.get(ModelProperties.KEYWORDS)
                         .setValue(data[ModelProperties.KEYWORDS]);
                 }
-                // if(data[ModelProperties.PUBLISHERS] && data[ModelProperties.PUBLISHERS].length) {
-                //     this.formGroup.get(ModelProperties.PUBLISHERS)
-                //         .setValue(data[ModelProperties.PUBLISHERS]);
-                // }
+
                 if(data[ModelProperties.COMMUNITIES] && data[ModelProperties.COMMUNITIES].length) {
                     this.formGroup.get(ModelProperties.COMMUNITIES)
                         .setValue(data[ModelProperties.COMMUNITIES]);
@@ -123,10 +116,12 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                 if(data[ModelProperties.THUMBNAIL_URL]) {
                     this.formGroup.get(ModelProperties.THUMBNAIL_URL)
                         .setValue(data[ModelProperties.THUMBNAIL_URL]);
+                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(null);
                 }
                 if(data[ModelProperties.THUMBNAIL_CONTENT]) {
-                    // this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT)
-                    //     .setValue(data[ModelProperties.THUMBNAIL_CONTENT]);
+                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT)
+                        .setValue(data[ModelProperties.THUMBNAIL_CONTENT]);
+                    this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
                 }
 
             }
@@ -218,6 +213,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         switch(event.type) {
             case 'reset':
                 this.hasError = null;
+                this.clearThumbnailFile();
                 break;
             case 'auth':
                 this.authToken = event.value.token;
@@ -237,12 +233,19 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
      */
     setValue(field, value) { this.formGroup.get(field).setValue(value); }
 
+    /** */
+    hasValue(field) { return !!this.formGroup.get(field).value; }
+
     /**
      * @param {string} fieldName
      * @return {boolean}
      */
     isInvalid(fieldName) { return this.formGroup.get(fieldName).invalid; }
 
+
+    /**
+     *
+     */
     getErrorMessage(fieldName) {
         if(this.formGroup.get(fieldName).hasError('required'))
             return 'You must enter a value';
@@ -257,12 +260,6 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     onFileUpload() {
         let file = this.thumbFile.nativeElement.files[0];
-        // let sub = this.upload(file).subscribe( (content) => {
-        //     this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
-        //     this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(content);
-        //     sub.unsubscribe();
-        // });
-
         var reader = new FileReader();
         reader.onload = (e) => {
             let encoded = reader.result.replace(/^data:(.*;base64,)?/, '');
@@ -276,33 +273,14 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     }
 
-    // public upload(file: File) : Observable<string> {
-    //
-    //     let url = Config.ualUrl.replace('ual','oe') + '/api/thumbnail';
-    //     let token = this.authToken;
-    //
-    //     // create a new multipart-form for every file
-    //     const formData: FormData = new FormData();
-    //     formData.append('upload', file, file.name);
-    //
-    //     // create a http-post request and pass the form
-    //     // tell it to report the upload progress
-    //     const req = new HttpRequest('POST', url, formData, {
-    //         reportProgress: true,
-    //         headers : new HttpHeaders().set('Authorization', 'Bearer ' + token)
-    //     });
-    //
-    //     // create a new progress-subject for every file
-    //     const result = new Subject<string>();
-    //
-    //     // send the http-request and subscribe for progress-updates
-    //     this.http.request(req).subscribe(event => {
-    //         if (event instanceof HttpResponse) {
-    //             let data : string = (event as HttpResponse<any>).body;
-    //             result.next(data);
-    //         }
-    //     });
-    //
-    //     return result.asObservable();
-    // }
+    onThumbnailUrlChange($event) {
+        this.clearThumbnailFile();  //remove any uploaded file if there is one
+    }
+
+    clearThumbnailFile() {
+        if(this.thumbFile) {
+            this.thumbFile.nativeElement.value = "";
+            this.setValue(ModelProperties.THUMBNAIL_CONTENT, null);
+        }
+    }
 }

@@ -60,5 +60,7 @@ implements OnInit, OnDestroy, ConstraintEditor {
         query.sort("_score,desc");
         //and only find concepts that belong to concept schemes (DT-24187)
         query.setParameter("facet.inScheme.exists", true);
+        //and make sure the concepts come back with their scheme info
+        query.addField('scheme');
     }
 }

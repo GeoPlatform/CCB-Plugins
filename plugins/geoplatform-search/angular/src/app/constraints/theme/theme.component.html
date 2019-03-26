@@ -24,14 +24,16 @@
   <!-- paging controls for list options -->
   <div class="c-pagination">
       <span>{{totalResults}} total</span>
-      <span> (<em>max {{listQuery.getPageSize()}} per page</em>)</span>
+      <span> (<em>{{listQuery.getPageSize()}} per page</em>)</span>
       <div>
-          <span>Showing {{getPageStart()}} - {{getPageEnd()}}</span>
-          <button type="button" class="btn btn-sm"
+          <span class="u-text--sm t-fg--gray-md">
+              Showing {{getPageStart()}} - {{getPageEnd()}}
+          </span>
+          <button type="button" class="btn btn-link btn-sm"
             *ngIf="listQuery.getPage()>0" (click)="previousPage()">
             &lt;&lt;
           </button>
-          <button type="button" class="btn btn-sm"
+          <button type="button" class="btn btn-link btn-sm"
             *ngIf="hasNext()" (click)="nextPage()">
             &gt;&gt;
           </button>
@@ -44,6 +46,9 @@
     [ngClass]="{selected:isSelected(theme)}"
     (click)="select(theme)">
       {{theme.label}}
+      <span class="list-item__hint" title="{{theme.scheme.label}}">
+          {{theme.scheme.label}}
+      </span>
   </a>
 
   <footer>
