@@ -166,6 +166,14 @@
           public.
       </small>
 
+      <?php
+      global $post;
+      if ($post->post_name == 'ngda-test'){
+        echo "YEET!!!";
+      }
+
+      ?>
+
   </footer>
 
 </div>

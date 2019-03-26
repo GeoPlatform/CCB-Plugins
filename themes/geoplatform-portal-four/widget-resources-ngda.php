@@ -31,11 +31,11 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		    <div class="m-icon-grid">
 
 		      <a href="<?php echo home_url('ngda/portfolio/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-home t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x fa-sitemap t-fg--blue-dk"></span><br>
 						<span class="u-text--sm">NGDA Portfolio Community</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/address/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-mail-bulk t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x fa-map-marked t-fg--blue-dk"></span><br>
 						<span class="u-text--sm">Address Theme</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/biodiversity/'); ?>" class="u-text--center">
@@ -51,7 +51,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Climate &amp; Weather</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/cultural/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-feather-alt t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x fa-landmark t-fg--blue-dk"></span><br>
 						<span class="u-text--sm">Cultural Resources</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/elevation/'); ?>" class="u-text--center">
@@ -63,7 +63,10 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Geodetic Control</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/geology/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-gem t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x t-fg--blue-dk">
+							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/landslide.svg' ?>" style="height:48px;">
+						</span>
+						<br>
 						<span class="u-text--sm">Geology</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/govunits/'); ?>" class="u-text--center">
@@ -71,11 +74,14 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Government Units and Administrative & Statistical Boundaries</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/imagery/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-layer-group t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x fa-images t-fg--blue-dk"></span><br>
 						<span class="u-text--sm">Imagery</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/landuse/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-tree t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x t-fg--blue-dk">
+							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/community.svg' ?>" style="height:48px;">
+						</span>
+						<br>
 						<span class="u-text--sm">Land Use - Land Cover</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/realproperty/'); ?>" class="u-text--center">
@@ -83,7 +89,10 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Real Property</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/soils/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-seedling t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x t-fg--blue-dk">
+							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/bud.svg' ?>" style="height:48px;">
+						</span>
+						<br>
 						<span class="u-text--sm">Soils</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/transportation/'); ?>" class="u-text--center">
@@ -95,11 +104,14 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Utilities</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/waterinland/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-stream t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x fa-water t-fg--blue-dk"></span><br>
 						<span class="u-text--sm">Water - Inland</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/waterocean/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-water t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x t-fg--blue-dk">
+							<img alt="Apps" src="<?php echo get_stylesheet_directory_uri() . '/img/waves.svg' ?>" style="height:48px;">
+						</span>
+						<br>
 						<span class="u-text--sm">Water - Oceans &amp; Coasts</span>
 		      </a>
 		    </div>
