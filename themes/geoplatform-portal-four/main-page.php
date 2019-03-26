@@ -46,25 +46,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_disp_fourth_url = get_post_type($geopportal_mainpage_disp_fourth_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_fourth_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_fourth_page);
 		$geopportal_mainpage_disp_fifth_url = get_post_type($geopportal_mainpage_disp_fifth_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_fifth_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_fifth_page);
 
-		// Sets up invalid post notices for dates and overwrites if the associated post is valid with an actual date.
-		$geopportal_mainpage_disp_first_date = "";
-		$geopportal_mainpage_disp_second_date = "";
-		$geopportal_mainpage_disp_third_date = "";
-		$geopportal_mainpage_disp_fourth_date = "";
-		$geopportal_mainpage_disp_fifth_date = "";
-
-		// Sets dates.
-		if ( isset($geopportal_mainpage_disp_first_page->ID) )
-			$geopportal_mainpage_disp_first_date = get_the_date("F j, Y", $geopportal_mainpage_disp_first_page->ID);
-		if ( isset($geopportal_mainpage_disp_second_page->ID) )
-			$geopportal_mainpage_disp_second_date = get_the_date("F j, Y", $geopportal_mainpage_disp_second_page->ID);
-		if ( isset($geopportal_mainpage_disp_third_page->ID) )
-			$geopportal_mainpage_disp_third_date = get_the_date("F j, Y", $geopportal_mainpage_disp_third_page->ID);
-		if ( isset($geopportal_mainpage_disp_fourth_page->ID) )
-			$geopportal_mainpage_disp_fourth_date = get_the_date("F j, Y", $geopportal_mainpage_disp_fourth_page->ID);
-		if ( isset($geopportal_mainpage_disp_fifth_page->ID) )
-			$geopportal_mainpage_disp_fifth_date = get_the_date("F j, Y", $geopportal_mainpage_disp_fifth_page->ID);
-
 		// Sets up category tags from posts.
 		$geopportal_mainpage_disp_first_tags = get_the_category($geopportal_mainpage_disp_first_page->ID);
 		$geopportal_mainpage_disp_second_tags = get_the_category($geopportal_mainpage_disp_second_page->ID);
@@ -128,7 +109,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_first_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_first_page); ?></a>
-		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_first_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_first_tags){
 													$i = 0;
@@ -168,7 +148,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_second_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_second_page); ?></a>
-		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_second_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_second_tags){
 													$i = 0;
@@ -190,7 +169,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_third_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_third_page); ?></a>
-		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_third_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_third_tags){
 													$i = 0;
@@ -212,7 +190,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_fourth_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_fourth_page); ?></a>
-		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_fourth_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_fourth_tags){
 													$i = 0;
@@ -234,7 +211,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_fifth_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_fifth_page); ?></a>
-		                    <div class="m-tile__timestamp"><?php echo $geopportal_mainpage_disp_fifth_date; ?></div>
 		                    <div class="m-tile__tags"><?php
 												if ($geopportal_mainpage_disp_fifth_tags){
 													$i = 0;
