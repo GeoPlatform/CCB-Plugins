@@ -9,8 +9,10 @@
         class="form-control"
         placeholder="Find community by name..."
         [(ngModel)]="listFilter"
-        (keyup.enter)="refreshOptions()">
-      <button type="button" class="btn btn-secondary" (click)="refreshOptions()">Find</button>
+        (keyup)="onKeywordChange($event.target.value)">
+    <span class="fa fa-times" *ngIf="listFilter?.length"
+        (click)="clearKeywords()">
+    </span>
   </div>
   <hr>
 
@@ -25,9 +27,11 @@
 
   <div class="c-pagination">
       <span>{{totalResults}} total</span>
-      <span> (<em>max {{listQuery.getPageSize()}} per page</em>)</span>
+      <span> (<em> {{listQuery.getPageSize()}} per page</em>)</span>
       <div>
-          <span>Showing {{getPageStart()}} - {{getPageEnd()}}</span>
+          <span class="u-text--sm t-fg--gray-md">
+              Showing {{getPageStart()}} - {{getPageEnd()}}
+          </span>
           <button type="button" class="btn btn-sm"
             *ngIf="listQuery.getPage()>0" (click)="previousPage()">
             &lt;&lt;

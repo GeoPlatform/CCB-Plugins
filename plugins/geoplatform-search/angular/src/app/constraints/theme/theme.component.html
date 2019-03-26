@@ -9,8 +9,10 @@
             class="form-control"
             placeholder="Specify themes..."
             [(ngModel)]="listFilter"
-            (keyup.enter)="refreshOptions()">
-        <button type="button" class="btn btn-secondary" (click)="refreshOptions()">Find</button>
+            (keyup)="onKeywordChange($event.target.value)">
+        <span class="fa fa-times" *ngIf="listFilter?.length"
+            (click)="clearKeywords()">
+        </span>
     </div>
     <hr>
 

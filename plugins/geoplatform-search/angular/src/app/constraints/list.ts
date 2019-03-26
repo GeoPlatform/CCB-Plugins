@@ -1,7 +1,10 @@
 import { NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { Config, Query, QueryParameters, ItemService, ItemTypes } from 'geoplatform.client';
+import { ISubscription } from "rxjs/Subscription";
+import {
+    Config, Query, QueryParameters, ItemService, ItemTypes
+} from 'geoplatform.client';
 
 import { NG2HttpClient } from '../shared/NG2HttpClient';
 import { itemServiceFactory } from '../shared/service.provider';
@@ -34,6 +37,9 @@ export class ItemListConstraint {
     protected codec : Codec;
     public error : { label: string, message: string, code?:number } = null;
 
+    private keywordSubject: Subject<string> = new Subject<string>();
+    private keywordSub : ISubscription;
+
     constructor(
         private _ngZone: NgZone,
         private http : HttpClient
@@ -61,6 +67,12 @@ export class ItemListConstraint {
             })
         }
         this.refreshOptions();
+
+        this.keywordSub = this.keywordSubject.debounceTime(300).subscribe(text => {
+            //don't need to update this.listFilter (should already be)
+            this.refreshOptions();
+        });
+
     }
 
     destroy() {
@@ -70,10 +82,23 @@ export class ItemListConstraint {
         this.listFilter = null;
         this.resultsObs$ = null;
         this.resultsSrc = null;
+        if(this.keywordSub) {
+            this.keywordSub.unsubscribe();
+            this.keywordSub = null;
+        }
     }
 
     configureQuery(query : Query) {
         //implement in subclass
+    }
+
+    clearKeywords() {
+        this.listFilter = null;
+        this.onKeywordChange(null);
+    }
+
+    onKeywordChange(keywords : string) {
+        this.keywordSubject.next(keywords);
     }
 
     refreshOptions() {

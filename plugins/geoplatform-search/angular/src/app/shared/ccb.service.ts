@@ -107,9 +107,9 @@ export class CCBService {
         })
         .toPromise()
         .catch( err => {
-            // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));
+            // console.log("CCBService.catch() - " + JSON.stringify(err));
             if (err instanceof HttpErrorResponse) {
-                throw new Error(err.error.message);
+                // throw new Error(err.error.message);
             }
             return { totalResults: 0, results: [] };
         });
