@@ -105,11 +105,15 @@ get_template_part( 'sub-header-com', get_post_format() );
   <div class="l-body__side-column">
 
       <!-- THUMBNAIL -->
-      <div class="m-article">
-          <div class="m-article__desc">
-            <img src="<?php echo get_the_post_thumbnail_url() ?>" width="100%">
-          </div>
-      </div>
+      <?php
+      if (has_post_thumbnail()){
+        echo "<div class='m-article'>";
+          echo "<div class='m-article__desc'>";
+            echo "<img src='" . get_the_post_thumbnail_url() . "' width='100%'>";
+          echo "</div>";
+        echo "</div>";
+      }
+      ?>
 
       <div class="m-article">
           <div class="m-article__desc">

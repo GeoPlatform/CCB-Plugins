@@ -39,6 +39,14 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 			$geopportal_resource_search_prefix = "/#/?types=org:Organization&q=";
 		elseif ($geopportal_test_value == "contact" || $geopportal_test_value == "contacts")
 			$geopportal_resource_search_prefix = "/#/?types=vcard:VCard&q=";
+		elseif ($geopportal_test_value == "person" || $geopportal_test_value == "people")
+			$geopportal_resource_search_prefix = "/#/?types=foaf:Person&q=";
+		elseif ($geopportal_test_value == "application" || $geopportal_test_value == "applications")
+			$geopportal_resource_search_prefix = "/#/?types=Application&q=";
+		elseif ($geopportal_test_value == "topic" || $geopportal_test_value == "topics")
+			$geopportal_resource_search_prefix = "/#/?types=Topic&q=";
+		elseif ($geopportal_test_value == "website" || $geopportal_test_value == "websites")
+			$geopportal_resource_search_prefix = "/#/?types=WebSite&q=";
 		else
 			$geopportal_resource_search_prefix = "/#/?q="
 		?>
