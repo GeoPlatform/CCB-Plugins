@@ -78,7 +78,7 @@ export class EditorComponent implements OnInit, OnChanges, OnDestroy {
         @Inject("constraint-provider-service") shared
     ) {
         this.vcCreateListener = shared.on('create', (container) => {
-            console.log("Container Created");
+            // console.log("Container Created");
             this.constraintViewContainer = container;
             if(this.component)
                 this.loadComponent();
@@ -86,7 +86,7 @@ export class EditorComponent implements OnInit, OnChanges, OnDestroy {
             this.vcCreateListener = null;
         });
         this.vcDestroyListener = shared.on('destroy', () => {
-            console.log("Container Destroyed");
+            // console.log("Container Destroyed");
             this.constraintViewContainer = null;
             this.vcDestroyListener();
             this.vcDestroyListener = null;

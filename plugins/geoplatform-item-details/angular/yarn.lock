@@ -2602,7 +2602,7 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
+"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#0.2.1":
   version "0.2.1"
   resolved "git+http://github.com/GeoPlatform/client-api.git#16f15d42a20c43888b08b201f23cf1980dad8952"
   dependencies:
@@ -2619,9 +2619,9 @@ generate-object-property@^1.1.0:
     q "1.1.2"
     request "^2.75.0"
 
-"geoplatform.mapcore@git+http://github.com/GeoPlatform/map-core.git#develop":
-  version "0.2.0"
-  resolved "git+http://github.com/GeoPlatform/map-core.git#5202ba0f81e80824af95d948514ac83bb4578c04"
+"geoplatform.mapcore@git+http://github.com/GeoPlatform/map-core.git#0.2.0":
+  version "0.2.1"
+  resolved "git+http://github.com/GeoPlatform/map-core.git#4e4fb9534c71ebb3423d328c4ada4f529c6f4f98"
   dependencies:
     esri-leaflet "2.2.3"
     geoplatform.client "git+https://github.com/GeoPlatform/client-api.git#develop"
@@ -2632,13 +2632,13 @@ generate-object-property@^1.1.0:
     leaflet.markercluster "1.1.0"
     q "1.1.2"
 
-"geoplatform.ngoauth@git+https://github.com/GeoPlatform/ng-gpoauth.git#develop":
+"geoplatform.ngoauth@git+https://github.com/GeoPlatform/ng-gpoauth.git#0.1.0":
   version "0.0.0"
-  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#749f7bc6464e8cade18c320d405b7a08cd90a880"
+  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#dfaf6323b0d3bb39bfb4c0e009a5018e6d151f64"
 
-"geoplatform.rpm@git+https://github.com/GeoPlatform/rpm-js#develop":
+"geoplatform.rpm@git+https://github.com/GeoPlatform/rpm-js#0.2.3":
   version "0.1.6"
-  resolved "git+https://github.com/GeoPlatform/rpm-js#0394c6ecc0576abc855ac7d5925d30ae1a0372ea"
+  resolved "git+https://github.com/GeoPlatform/rpm-js#538fc4e8cde6ba0249f244638e0b773351c0482f"
 
 "geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
   version "2.0.0"
