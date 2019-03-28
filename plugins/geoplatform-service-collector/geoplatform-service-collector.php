@@ -215,9 +215,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 		// Checks if the title attribute is set and creates the title output if found.
 		if (!empty($geopserve_shortcode_array['title'])){
-			echo "<div class='m-article__heading'>";
-			echo "Explore " . $geopserve_shortcode_array['title'] . " Resources";
-			echo "</div><br>";
+			echo "<div class='m-article__heading'>" . $geopserve_shortcode_array['title'] . "</div><br>";
 		}
 
 		// Houses the main carousel body.
