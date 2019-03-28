@@ -2619,9 +2619,9 @@ generate-object-property@^1.1.0:
     q "1.1.2"
     request "^2.75.0"
 
-"geoplatform.mapcore@git+http://github.com/GeoPlatform/map-core.git#es6":
-  version "0.1.4"
-  resolved "git+http://github.com/GeoPlatform/map-core.git#77640500ac85caf7d41b5d1c1f57926108436952"
+"geoplatform.mapcore@git+http://github.com/GeoPlatform/map-core.git#develop":
+  version "0.2.0"
+  resolved "git+http://github.com/GeoPlatform/map-core.git#5202ba0f81e80824af95d948514ac83bb4578c04"
   dependencies:
     esri-leaflet "2.2.3"
     geoplatform.client "git+https://github.com/GeoPlatform/client-api.git#develop"
