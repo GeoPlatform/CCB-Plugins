@@ -1,0 +1,11 @@
+<div>
+    <!-- <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span> -->
+    <strong>Use Constraints</strong>
+</div>
+<div *ngIf="!isCollapsed">
+    <div *ngIf="!rights || !rights.length">None specified</div>
+    <div *ngFor="let use of rights">{{use.description||"not defined"}}</div>
+</div>

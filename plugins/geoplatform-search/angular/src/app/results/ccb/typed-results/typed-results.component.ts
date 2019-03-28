@@ -92,6 +92,11 @@ export class TypedResultsComponent implements OnInit {
         })
         .catch(e => {
             console.log("Error searching CCB for " + this.type);
+            this.error = {
+                label : "An error occurred searching for " + this.type,
+                message: e.message,
+                code : e.status || 500
+            };
         })
     }
 
@@ -140,6 +145,10 @@ export class TypedResultsComponent implements OnInit {
     getIconPath(item) {
         // return `../${ServerRoutes.ASSETS}${item.type}.svg`;
         return `../${environment.assets}${item.type}.svg`;
+    }
+    
+    getIconClass(item) {
+        return 'icon-' + item.type;
     }
 
 }

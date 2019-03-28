@@ -18,8 +18,18 @@
     </div>
 </div>
 
-<div *ngIf="!results || !results.length">
-    <strong><em>No results found matching the specified constraints</em></strong>
+<!-- display error message if one is encountered -->
+<div *ngIf="error" class="m-message--error">
+    <div class="m-message__heading">{{error.error||error.label}}</div>
+    <div>{{error.message}}</div>
+    <div class="m-message__footer">
+        <a class="is-linkless" (click)="error=null">DISMISS</a>
+    </div>
+</div>
+
+<div *ngIf="!error && (!results || !results.length)" class="m-message--warning">
+    <div class="m-message__heading">No Results</div>
+    <div>No results found matching the specified constraints</div>
 </div>
 
 <div *ngFor="let item of results"
@@ -27,14 +37,15 @@
     <div class="m-results-item__body">
 
         <div class="m-results-item__icon m-results-item__icon--sm">
-            <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span>
+            <!-- <span [inlineSVG]="getIconPath(item)" class="svg-icon svg-icon--lg"></span> -->
+            <span class="{{getIconClass(item)}} u-text--huge"></span>
         </div>
 
         <div class="flex-1">
 
             <div class="m-results-item__heading">
                 <a href="{{item.link}}" target="_blank">
-                    <span *ngIf="item.title">{{item.title.rendered}}</span>
+                    <span *ngIf="item.title">{{item.title}}</span>
                     <span *ngIf="!item.title">Un-titled {{item.type}}</span>
                 </a>
             </div>
@@ -52,13 +63,13 @@
                     </a>
                     <span *ngIf="!item.author.id">unknown author</span>
                 </span> |
-                <span>created {{item.date|date}}</span> |
-                <span>last modified {{item.modified|date}}</span>
+                <span><em>created</em> {{item.date|date:'mediumDate':'UTC'}}</span> |
+                <span><em>last modified</em> {{item.modified|date:'mediumDate':'UTC'}}</span>
             </div>
 
             <div class="m-results-item__description"
                 *ngIf="'image'!==item.media_type"
-                [innerHtml]="item.description?.rendered"></div>
+                [innerHtml]="item.description"></div>
 
             <div class="m-results-item__actions"></div>
 

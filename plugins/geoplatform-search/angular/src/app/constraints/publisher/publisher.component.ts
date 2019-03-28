@@ -38,6 +38,14 @@ implements OnInit, OnDestroy, ConstraintEditor {
 
     getCodec() : Codec { return this.codec; }
 
+    /**
+     * Override or extend the query used in the super-class
+     */
+    configureQuery(query : Query) {
+        query.sort('_score,desc');
+    }
+
+
     apply() {
         super.apply(this.constraints);
     }

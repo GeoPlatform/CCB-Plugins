@@ -4,7 +4,7 @@
  * The admin-specific functionality of the plugin.
  *
  * @link       https://www.imagemattersllc.com
- * @since      1.0.0
+ * @since      1.1.0
  *
  * @package    Geoplatform_Service_Collector
  * @subpackage Geoplatform_Service_Collector/admin
@@ -25,7 +25,7 @@ class Geoplatform_Service_Collector_Admin {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Geoplatform_Service_Collector_Admin {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class Geoplatform_Service_Collector_Admin {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 * @param      string    $plugin_name       The name of this plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
@@ -57,7 +57,7 @@ class Geoplatform_Service_Collector_Admin {
 	/**
 	 * Register the stylesheets for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 */
 	public function enqueue_styles() {
 
@@ -80,7 +80,7 @@ class Geoplatform_Service_Collector_Admin {
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 */
 	public function enqueue_scripts() {
 
@@ -103,7 +103,7 @@ class Geoplatform_Service_Collector_Admin {
 	/**
 	 * Register the administration menu for this plugin into the WordPress Dashboard menu.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 */
 
 	public function geopserve_add_plugin_admin_menu() {
@@ -116,13 +116,13 @@ class Geoplatform_Service_Collector_Admin {
 	     *        Administration Menus: http://codex.wordpress.org/Administration_Menus
 	     *
 	     */
-	    add_options_page( 'GeoPlatform Service Collector Plugin Settings Page', 'GeoPlatform Service Collector', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
+	    add_options_page( 'GeoPlatform Asset Carousel Plugin Settings Page', 'GeoPlatform Asset Carousel', 'edit_others_posts', $this->plugin_name, array($this, 'display_plugin_setup_page'));
 	}
 
 	 /**
 	 * Add settings action link to the plugins page.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 */
 
 	public function add_action_links( $links ) {
@@ -139,7 +139,7 @@ class Geoplatform_Service_Collector_Admin {
 	/**
 	 * Render the settings page for this plugin.
 	 *
-	 * @since    1.0.0
+	 * @since    1.1.0
 	 */
 
 	public function display_plugin_setup_page() {

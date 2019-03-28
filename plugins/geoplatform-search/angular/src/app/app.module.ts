@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg';
 // import { ServerRoutes } from './server-routes.enum';
 
@@ -12,6 +12,10 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
+
+// Adds window.RPMService to global namespace
+import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'gp.rpm/src/iRPMService'
 
 
 
@@ -33,6 +37,8 @@ import { Config } from 'geoplatform.client';
 import { AppComponent } from './app.component';
 import { PickerComponent } from './picker/picker.component';
 import { EditorComponent, ConstraintDirective } from './picker/editor/editor.component';
+
+import { UTCDatepickerAdapter } from './constraints/temporal/temporal.component';
 
 import {
     CurrentComponent,
@@ -69,6 +75,16 @@ import { SimilarityComponent } from './constraints/similarity/similarity.compone
 import { LegendComponent } from './results/portfolio/legend/legend.component';
 
 
+import {
+    itemServiceProvider,
+    serviceServiceProvider,
+    utilsServiceProvider,
+    kgServiceProvider
+} from './shared/service.provider';
+
+
+
+
 //ROUTING CONFIG
 const appRoutes: Routes = [
 
@@ -83,18 +99,23 @@ const appRoutes: Routes = [
 // }
 export function initializeApp() {
   return () => {
+      console.log("Initializing App...");
       //initial configuration via build-time environment variables
       Config.configure(environment);
 
+      let gpGlobal = (<any>window).GeoPlatform;
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
-      if((<any>window).GeoPlatformSearchPluginEnv) {
-          // console.log("Configuring app using run-time values");
-          Config.configure((<any>window).GeoPlatformSearchPluginEnv);
+      if(gpGlobal && gpGlobal.config) {
+          console.log("Configuring app using run-time values");
+          console.log(gpGlobal.config);
+          Config.configure(gpGlobal.config);
       }
+
+      console.log("Configured App using:");
+      console.log(Config);
   }
 }
-
 
 @NgModule({
   declarations: [
@@ -148,9 +169,21 @@ export function initializeApp() {
       //     deps: [EnvironmentSettings], multi: true
       // }
       {
+        provide: RPMService,
+        useValue: RPMServiceFactory()
+      },
+      {
           provide: APP_INITIALIZER,
           useFactory: initializeApp,
           multi: true
+      },
+      itemServiceProvider,
+      serviceServiceProvider,
+      utilsServiceProvider,
+      kgServiceProvider,
+      {
+          provide: NgbDateAdapter,
+          useClass: UTCDatepickerAdapter
       }
   ],
   entryComponents: [

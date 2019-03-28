@@ -1,10 +1,10 @@
 <?php
 /**
- * Provide an area to run code in charge of adding maps to the database. This
- * class is called by the Add Map button in the display.php class.
+ * Provide an area to run code in charge of adding carousels to the database. This
+ * class is called by the Add Carousel button in the display.php class.
  *
  * @link       www.geoplatform.gov
- * @since      1.0.0
+ * @since      1.1.0
  *
  */
 
@@ -24,14 +24,12 @@ $geopserve_cat_map = sanitize_key($_POST["serve_cat_map"]);
 $geopserve_cat_gal = sanitize_key($_POST["serve_cat_gal"]);
 $geopserve_rand = rand(0, 10000000000000);
 
+// Working default variables.
 $geopserve_invalid_bool = false;
 $geopserve_ual_url_in = '';
 $geopserve_link_scrub = '';
 $geopserve_response = '';
 $geopserve_result = '';
-
-
-
 $geopserve_table_name = "";
 $geopserve_retrieved_data = "";
 

@@ -6,7 +6,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_portfolio_resources_widget', // Base ID
 			esc_html__( 'GeoPlatform Portfolio', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform portfolio resources widget with a light theme for the front page. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Portfolio widget for the front page. Provides a carousel detailing services and resources offered by GeoPlatform. Each section accepts text, url, and content block input to be fleshed out. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -229,7 +229,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                        </div>
 		                        <br>
 		                        <div>
-															<a href="<?php echo esc_url($geopportal_port_res_fourth_link_one) ?>" class="btn btn-outline-secondary"><?php echo sanitize_text_field($geopportal_port_res_fourth_button_one) ?><span class="fas fa-external-link-alt"></span></a>
+															<a href="<?php echo esc_url($geopportal_port_res_fourth_link_one) ?>" class="btn btn-outline-secondary" target="_blank"><?php echo sanitize_text_field($geopportal_port_res_fourth_button_one) ?><span class="fas fa-external-link-alt"></span></a>
 		                        </div>
 		                    </div>
 		                </div>

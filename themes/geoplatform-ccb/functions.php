@@ -36,13 +36,15 @@ $geopccb_ga_code = geop_ccb_getEnv('ga_code','UA-42040723-1');
 if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   function geop_ccb_scripts() {
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
-  	wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
-  	wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
+    wp_enqueue_style( 'bootstrap-css',get_template_directory_uri() . '/css/bootstrap.css');
+		// wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
+    wp_enqueue_style( 'theme-style', get_template_directory_uri() . '/css/Geomain_style.css' );
     wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 
     $geop_ccb_options = geop_ccb_get_theme_mods();
     if (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on'){
-  	   wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
+      wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/js/bootstrap.js', array(), '3.3.7', true);
+      // wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
     }
   }
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
@@ -578,6 +580,36 @@ if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
 }
 
 /**
+ * Sanitization callback functions for customizer blog count
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_blogcount' ) ) {
+	function geop_ccb_sanitize_blogcount( $geop_ccb_value ) {
+		// if ( ! is_int($geop_ccb_value) )
+		// 	$geop_ccb_value = 5;
+		return $geop_ccb_value;
+	}
+}
+
+/**
+ * Sanitization callback functions for linkmenu option
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_linkmenu' ) ) {
+	function geop_ccb_sanitize_linkmenu( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'tran', 'menu' ) ) )
+			$geop_ccb_value = 'tran';
+		return $geop_ccb_value;
+	}
+}
+
+/**
  * Sanitization callback functions for customizer searchbar
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
@@ -734,7 +766,9 @@ if ( ! function_exists ( 'geop_ccb_custom_wysiwyg_save_postdata' ) ) {
 		if (!empty($_POST['geop_ccb_custom_wysiwyg'])){
 			$geopccb_data = htmlspecialchars_decode($_POST['geop_ccb_custom_wysiwyg']);
 			update_post_meta($geopccb_post_id, 'geop_ccb_custom_wysiwyg', $geopccb_data);
-	  }
+	  } else {
+      update_post_meta($geopccb_post_id, 'geop_ccb_custom_wysiwyg', '');
+    }
 	}
   add_action('save_post', 'geop_ccb_custom_wysiwyg_save_postdata');
 }
@@ -1290,7 +1324,9 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
       'font_choice' => 'lato',
       'bootstrap_controls' => 'on',
+      'blogcount_controls' => '5',
       'searchbar_controls' => 'wp',
+      'linkmenu_controls' => 'tran',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
 	}
@@ -1342,7 +1378,8 @@ if ( ! function_exists ( 'geop_ccb_sorting_register' ) ) {
 		  'type' => 'radio',
 		  'label' => 'Choose the sorting method',
 		  'section' => 'featured_format',
-      'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.',
+      'description' => 'You can make use of custom sorting from your Categories admin page. Each category can be assigned a numeric value. Lower values will appear first, zero and negative values will not appear at all.<br><br>
+        To appear on the front page, posts, pages, and category links must be part of the Front Page category. Categories need only have a positive priority value and no parent category.',
 			'choices' => array(
 			  'custom' => __('Custom', 'geoplatform-ccb'),
 				'date' => __('Date',  'geoplatform-ccb')
@@ -1860,6 +1897,29 @@ if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
 }
 
 
+if ( ! function_exists ( 'geop_ccb_linkmenu_register' ) ) {
+  function geop_ccb_linkmenu_register($wp_customize){
+
+    $wp_customize->add_setting('linkmenu_controls',array(
+        'default' => 'tran',
+        'sanitize_callback' => 'geop_ccb_sanitize_linkmenu',
+    ));
+
+    $wp_customize->add_control('linkmenu_controls',array(
+        'type' => 'radio',
+        'label' => 'Community Links Style',
+        'section' => 'font_section',
+        'description' => "The Community Links menu can be shown in two formats: unintrusive transparency or as a bold menu bar.",
+        'choices' => array(
+            'tran' => __('Transparent', 'geoplatform-ccb'),
+            'menu' => __('Bold Menu',  'geoplatform-ccb'),
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_linkmenu_register');
+}
+
+
 
 if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
   function geop_ccb_search_register($wp_customize){
@@ -1894,6 +1954,24 @@ if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
   add_action( 'customize_register', 'geop_ccb_search_register');
 }
 
+if ( ! function_exists ( 'geop_ccb_blogcount_register' ) ) {
+  function geop_ccb_blogcount_register($wp_customize){
+
+    $wp_customize->add_setting('blogcount_controls',array(
+        'default' => 5,
+        'sanitize_callback' => 'geop_ccb_sanitize_blogcount',
+    ));
+
+    $wp_customize->add_control('blogcount_controls',array(
+        'type' => 'number',
+        'label' => 'Blog Count Controls',
+        'section' => 'font_section',
+        'description' => "Choose the number of entries on each page of the blog listing post.",
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_blogcount_register');
+}
+
 if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
   function geop_ccb_custom_field_post_data($post_id) {
     if ( !isset( $_POST['geop_ccb_post_priority'] ) || is_null( $_POST['geop_ccb_post_priority']) || empty( $_POST['geop_ccb_post_priority'] ))
@@ -1914,17 +1992,17 @@ add_post_type_support( 'page', 'excerpt' );
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
-  function geop_ccb_distro_manager() {
-    require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-    $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-    	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
-    	__FILE__,
-    	'geoplatform-ccb'
-    );
-  }
-  geop_ccb_distro_manager();
-}
+// if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
+//   function geop_ccb_distro_manager() {
+//     require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//     $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//     	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
+//     	__FILE__,
+//     	'geoplatform-ccb'
+//     );
+//   }
+//   geop_ccb_distro_manager();
+// }
 
 /**
  * Second image handler for individual banners.

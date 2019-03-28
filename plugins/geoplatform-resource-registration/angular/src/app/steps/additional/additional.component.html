@@ -1,12 +1,12 @@
 <mat-card>
 
     <mat-card-subtitle>
-        Optionally, specify one or more keywords, publishing agencies, and
-        associated GeoPlatform communities.
+        Optionally, specify additional information to help better describe your
+        resource and to aid others in discovering it.
     </mat-card-subtitle>
 
 
-    <form [formGroup]="formGroupPrivate">
+    <form [formGroup]="formGroup">
 
         <div class="additional__container">
 
@@ -24,7 +24,7 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                         <input matInput #keywordsInput
-                            formControlName="keywords"
+                            formControlName="$keywords"
                             [matChipInputFor]="keyChipList"
                             (matChipInputTokenEnd)="addKeyword($event)">
                     </mat-chip-list>
@@ -32,62 +32,55 @@
                 </mat-form-field>
 
 
+                <gprr-autocomplete-mat-chip
+                    [label]="'Communities'"
+                    [placeholder]="'Associate communities'"
+                    [hint]="'Find communities using the typeahead and select them to associate'"
+                    [fieldName]="'usedBy'"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterCommunities">
+                </gprr-autocomplete-mat-chip>
 
-                <mat-form-field floatLabel="always">
-                    <mat-label>Publishers</mat-label>
-                    <mat-chip-list #pubChipList>
-                        <mat-chip
-                            *ngFor="let pub of publishers"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removePublisher(pub)">
-                            {{pub.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #publishersInput
-                            formControlName="publishers"
-                            [matAutocomplete]="pubAutoComplete"
-                            [matChipInputFor]="pubChipList"
-                            (matChipInputTokenEnd)="addPublisher($event)"
-                            placeholder="Associate publishing agencies">
-                    </mat-chip-list>
-                    <mat-autocomplete #pubAutoComplete="matAutocomplete"
-                        (optionSelected)="onPubAutocompleteSelection($event)">
-                        <mat-option *ngFor="let option of filteredPublisherOptions | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find publishers using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
+                <!-- Thumbnail -->
+                <div>
+                    <div class="u-text--sm t-text--bold t-fg--gray-md">Thumbnail</div>
+                    <div class="thumbnail__container">
+                        <div class="thumbnail__form">
+                            <div>
+                                <input type="file" accept="image/*" style="display:none"
+                                    #thumbFileInput (change)="onFileUpload()">
+                                <input type="hidden" formControlName="thumbnailContent">
+                                <button mat-raised-button (click)="triggerFileUpload()">
+                                    <mat-icon>image</mat-icon> Use a File
+                                </button>
+                                <span *ngIf="thumbFileInput.nativeElement?.files?.length">
+                                    {{thumbFileInput.nativeElement?.files[0].name}}
+                                </span>
+                            </div>
+                            <div>
+                                <mat-form-field floatLabel="always">
+                                    <mat-label>Use URL</mat-label>
+                                    <mat-icon matPrefix>link</mat-icon>
+                                    <input type="url" matInput
+                                        formControlName="thumbnailUrl"
+                                        (keyup)="onThumbnailUrlChange($event)"
+                                        placeholder="Specify a thumbnail image">
+                                    <mat-hint>Specify the URL of an image to use as the thumbnail of the resource</mat-hint>
+                                    <mat-error *ngIf="isInvalid('thumbnailUrl')">{{getErrorMessage('thumbnailUrl')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="thumbnail__preview" *ngIf="hasValue('thumbnailUrl')||hasValue('thumbnailContent')">
+                            <div class="u-text--sm t-text--bold t-fg--gray-md">Selected Thumbnail</div>
+                            <img *ngIf="hasValue('thumbnailUrl')"
+                                [src]="getValue('thumbnailUrl')">
+                            <img *ngIf="hasValue('thumbnailContent')"
+                                [src]="'data:image/png;base64,'+getValue('thumbnailContent')">
+                        </div>
+                    </div>
+                </div>
 
 
-
-                <mat-form-field floatLabel="always">
-                    <mat-label>Communities</mat-label>
-                    <mat-chip-list #comChipList>
-                        <mat-chip
-                            *ngFor="let com of communities"
-                            [selectable]="true"
-                            [removable]="true"
-                            (removed)="removeCommunity(com)">
-                            {{com.label}}
-                            <mat-icon matChipRemove>cancel</mat-icon>
-                        </mat-chip>
-                        <input matInput #communitiesInput
-                            formControlName="communities"
-                            [matAutocomplete]="comAutoComplete"
-                            [matChipInputFor]="comChipList"
-                            (matChipInputTokenEnd)="addCommunity($event)"
-                            placeholder="Associate communities">
-                    </mat-chip-list>
-                    <mat-autocomplete #comAutoComplete="matAutocomplete"
-                        (optionSelected)="onComAutocompleteSelection($event)">
-                        <mat-option *ngFor="let option of filteredCommunityOptions | async" [value]="option">
-                            {{ option.label }}
-                        </mat-option>
-                    </mat-autocomplete>
-                    <mat-hint>Find communities using the typeahead and select them to associate</mat-hint>
-                </mat-form-field>
 
             </div>
 

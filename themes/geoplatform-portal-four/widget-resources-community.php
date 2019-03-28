@@ -6,7 +6,7 @@ class Geopportal_Resource_Community_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_community_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Community', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform community widget for header sub-pages.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Community widget for resource pages. Takes a category as input and displays its pages, along with their featured images, in a tile format.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -35,7 +35,7 @@ class Geopportal_Resource_Community_Widget extends WP_Widget {
 			'order' => 'DSC',
 			'numberposts' => -1,
 			'post_status' => 'publish',
-			'post_type' => array('post','page','geopccb_catlink', 'community-post'),
+			'post_type' => array('post','page','geopccb_catlink', 'community-post', 'ngda-post'),
 		) );
 
 		// This list is then filtered for all pages in the Front Page category,

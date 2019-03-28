@@ -1,0 +1,13 @@
+<div>
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Additional Identifiers ({{ids?.length||0}})</strong>
+</div>
+<div [ngClass]="{'is-hidden':isCollapsed}">
+    <div *ngIf="!ids || !ids.length">None specified</div>
+    <div *ngIf="ids && ids.length">
+        <div *ngFor="let id of ids">{{id}}</div>
+    </div>
+</div>

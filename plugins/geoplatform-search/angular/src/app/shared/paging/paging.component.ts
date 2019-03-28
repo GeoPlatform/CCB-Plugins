@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 
 import { Query } from "geoplatform.client";
+import { RPMService } from 'gp.rpm/src/iRPMService'
 
 
 export interface PagingEvent {
@@ -24,7 +25,7 @@ export class PagingComponent implements OnInit {
     @Output() onEvent : EventEmitter<PagingEvent> = new EventEmitter<PagingEvent>();
     public pageSize: number = 0;
 
-    constructor() { }
+    constructor(private rpm: RPMService ) { }
 
     ngOnInit() {
     }
@@ -38,16 +39,19 @@ export class PagingComponent implements OnInit {
     onPageSizeChange() {
         let evt : PagingEvent = { size: this.pageSize };
         this.onEvent.emit(evt);
+        this.rpm.logEvent('Page', 'ResultsPerPage', this.pageSize)
     }
 
     previousPage() {
         let evt : PagingEvent = { page: this.query.getPage()-1 };
         this.onEvent.emit(evt);
+        this.rpm.logEvent('Page', 'Previous')
     }
 
     nextPage() {
         let evt : PagingEvent = { page: this.query.getPage()+1 };
         this.onEvent.emit(evt);
+        this.rpm.logEvent('Page', 'Next')
     }
 
     hasNextPage() {
@@ -57,6 +61,8 @@ export class PagingComponent implements OnInit {
     goToPage(page) {
         let evt : PagingEvent = { page: page*1 };
         this.onEvent.emit(evt);
+        if(page === 0)
+            this.rpm.logEvent('Page', 'First')
     }
 
 }

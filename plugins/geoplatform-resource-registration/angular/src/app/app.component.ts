@@ -1,7 +1,8 @@
-import { Component, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable, Subject } from 'rxjs';
+
 import { MatStepper } from '@angular/material';
 import { ItemTypes } from 'geoplatform.client';
 
@@ -12,8 +13,11 @@ import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 
-import { AuthService, GeoPlatformUser } from './auth.service';
+import { AuthenticatedComponent } from './authenticated.component';
+import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
+import { ModelProperties } from './model';
+import { environment } from '../environments/environment';
 
 export interface AppEvent {
     type   : string;
@@ -27,7 +31,7 @@ export interface AppEvent {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends AuthenticatedComponent implements OnInit {
 
     @Output() appEvents: Subject<AppEvent>
         = new Subject<AppEvent>();
@@ -40,35 +44,40 @@ export class AppComponent implements OnInit {
 
     public item : any;
 
-    //flag indicating user's signed in status
-    public isAuthenticated : boolean = false;
-    public user : GeoPlatformUser = null;
-
-
-    constructor(
-        private formBuilder: FormBuilder,
-        private authService : AuthService
-    ) {
-
-        authService.getUser().then( user => {
-
-            //TEMP  ---------------------------------
-            if(!user) {
-                user = GeoPlatformUser.getTestUser();
-            }
-            //TEMP  ---------------------------------
-
-
-            this.user = user;
-            this.isAuthenticated = user !== null;
-            if(!this.item.createdBy) {  //update editable resource's createdBy property
-                this.item.createdBy = user ? user.username : null;
-            }
-        });
+    constructor( private formBuilder: FormBuilder ) {
+        super();
     }
 
     ngOnInit() {
+        super.init();
         this.initItem();
+    }
+
+    ngOnDestroy() {
+        super.destroy();
+        this.item = null;
+    }
+
+
+    /**
+     * @param {GeoPlatformUser} user
+     * @override AuthenticatedComponent.onUserChange
+     */
+    onUserChange(user) {
+        // console.log("User Event: " + JSON.stringify(user));
+        if(this.item && user) {
+            //update editable resource's createdBy property
+            this.item[ModelProperties.CREATED_BY] = user.username;
+        }
+        // console.log("Setting created by: " + this.item[ModelProperties.CREATED_BY]);
+        let appEvent : AppEvent = {
+            type:'auth',
+            value: {
+                user: user,
+                token: this.getAuthToken()
+            }
+        };
+        this.appEvents.next(appEvent);
     }
 
 
@@ -89,12 +98,13 @@ export class AppComponent implements OnInit {
         if(!data) return;
 
         Object.keys(data).forEach( key => {
-            if( typeof(data[key]) !== 'undefined' &&  data[key] !== null &&
+            if( typeof(data[key]) !== 'undefined' &&
+                data[key] !== null &&
                 'serviceType' !== key && 'href' !== key
             ) {
 
                 //if user provided a title, ignore whatever the harvest returned for label
-                if('label' === key && this.item.title) return;
+                if(ModelProperties.LABEL === key && this.item[ModelProperties.TITLE]) return;
 
                 this.applyItemData(key, data[key]);
             }
@@ -109,8 +119,12 @@ export class AppComponent implements OnInit {
     applyItemData( key : string, value : any ) {
         if(value === null || value === undefined ||
             ( typeof(value) === 'string' && !value.length) ) return;
+        if(Array.isArray(value)) {
+            value = value.filter(v=>!!v);   //filter out null values
+            if(!value.length ) return;  //empty arrays
+        }
 
-        if('accessURL' === key) {
+        if(ModelProperties.ACCESS_URL === key) {
             if(this.item.type === ItemTypes.DATASET) {
                 //set as distro link
                 this.item.distributions = [{
@@ -123,20 +137,47 @@ export class AppComponent implements OnInit {
                 this.item.href = value;
             }
 
-        } else if( 'title' === key || 'label' === key ) {
-            this.item.title = this.item.label = value;
+        } else if( ModelProperties.TITLE === key || ModelProperties.LABEL === key ) {
+            this.item[ModelProperties.TITLE] = this.item[ModelProperties.LABEL] = value;
 
         }
         //knowledge graph enrichment fields
         else if(
-            'purposes' === key ||  'functions' === key || 'topics' === key ||
-            'subjects' === key ||  'places' === key ||  'audience' === key ||
-            'categories' === key
+            ModelProperties.CLASSIFIERS_PURPOSE === key ||
+            ModelProperties.CLASSIFIERS_FUNCTION === key ||
+            ModelProperties.CLASSIFIERS_TOPIC_PRIMARY === key ||
+            ModelProperties.CLASSIFIERS_TOPIC_SECONDARY === key ||
+            ModelProperties.CLASSIFIERS_SUBJECT_PRIMARY === key ||
+            ModelProperties.CLASSIFIERS_SUBJECT_SECONDARY === key ||
+            ModelProperties.CLASSIFIERS_PLACE === key ||
+            ModelProperties.CLASSIFIERS_AUDIENCE === key ||
+            ModelProperties.CLASSIFIERS_CATEGORY === key
         ) {
             if(!this.item.classifiers) {    //initialize kg if not present
                 this.item.classifiers = { type: 'regp:KnowledgeGraph' }
             }
             this.item.classifiers[key] = value;
+
+        } else if(ModelProperties.RESOURCE_TYPES === key) {
+            //resource types are selected using objects, but the model accepts
+            // them as uris, so we have to transform them
+            this.item[key] = value.map(v => v.uri);
+
+        } else if(ModelProperties.THUMBNAIL_URL === key) {
+            if(value && value.length) {
+                this.item.thumbnail = this.item.thumbnail || {};
+                this.item.thumbnail.url = value;
+            } else {
+                this.item.thumbnail = null;
+            }
+
+        } else if(ModelProperties.THUMBNAIL_CONTENT === key) {
+            if(value && value.length) {
+                this.item.thumbnail = this.item.thumbnail || {};
+                this.item.thumbnail.contentData = value;
+            } else {
+                this.item.thumbnail = null;
+            }
 
         } else { //generic property
             this.item[key] = value;
@@ -170,12 +211,14 @@ export class AppComponent implements OnInit {
         //handle type first since it's needed by other fields
         // but remember type is only set on the first step of the wizard
         if(0 === event.previouslySelectedIndex) {
-            this.applyItemData('type', formGroup.get('type').value);
+            this.applyItemData(ModelProperties.TYPE,
+                formGroup.get(ModelProperties.TYPE).value);
         }
 
         let keys = Object.keys(formGroup.controls);
         keys.forEach( key => {
-            if('type' === key) return;
+            if(ModelProperties.TYPE === key) return;
+            if(key[0] === '$') return;  //ignore 'hidden' properties
 
             let ctrl = formGroup.controls[key];
             this.applyItemData(key, ctrl.value);
@@ -231,9 +274,27 @@ export class AppComponent implements OnInit {
         this.item = {
             // TEMPORARY for dev purposes only...
             // type: 'dcat:Dataset',
-            // title: 'test',
+            // title: 'test2',
             // ----------------------------------
-            createdBy: this.user ? this.user.username : null
         };
+        // if('development' === environment.env) {
+        //     this.item.createdBy = 'tester';
+        // }
+        if(this.user) {
+            this.item[ModelProperties.CREATED_BY] = this.user.username;
+        }
+
+        let searchParams = window.location.search;
+        if(searchParams) {
+            let params : any = {};
+            searchParams.replace('?','').split('&').forEach(p => {
+                let param = p.split('='), key = param[0], value = param[1];
+                params[key] = value;
+            });
+
+            if(params.type) {
+                this.item.type = params.type;
+            }
+        }
     }
 }

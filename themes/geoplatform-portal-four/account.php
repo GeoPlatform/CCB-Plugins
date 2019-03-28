@@ -16,7 +16,7 @@
             <a class="btn btn-sm btn-default" href="<?php echo $GLOBALS["geopccb_accounts_url"]?>/profile" title="Edit Account Details">
                 <span class="glyphicon glyphicon-wrench"></span>
             </a>
-            <a class="btn btn-sm btn-warning" href="<?php echo wp_logout_url( home_url() ); ?>" title="Log Out">
+            <a class="btn btn-sm btn-warning" href="<?php echo wp_logout_url( get_permalink() ); ?>" title="Log Out">
                 <span class="glyphicon glyphicon-off"></span>
             </a>
         </div>
@@ -35,7 +35,6 @@
 	<p class="section-desc">Don't have an account? Register a new account using the button below. It's quick, free, and available to everyone!</p>
         <div class="row">
             <div class="col-md-12">
-                <!-- <a class="btn btn-primary pull-right" onclick="login()">Sign In</a> -->
                 <a class="btn btn-accent" href="<?php echo $GLOBALS["geopccb_accounts_url"]?>/register">Register</a>
             </div>
         </div>
@@ -45,8 +44,6 @@
 
 	   if(!($current_user->ID == 0)) {
 		    $ch = curl_init();
-		    //$url = "https://registry.geoplatform.gov/api/maps?author=" . $current_user->user_login . "&sortElement=updated&sortOrder=dsc&count=3";
-        //$url = "https://sit-ual.geoplatform.us/api/items?createdBy=laraduffy&size=10&sort=_modified,desc&type=Map&fields=*";
         $url = $GLOBALS['geopccb_ual_url'] . "/api/items?createdBy=" . $current_user->user_login . "&size=3&sort=_modified,desc&type=Map&fields=*";
 		    curl_setopt($ch, CURLOPT_URL, $url);
 		    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

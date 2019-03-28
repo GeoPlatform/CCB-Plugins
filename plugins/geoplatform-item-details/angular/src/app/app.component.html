@@ -1,0 +1,12 @@
+
+<gpid-item *ngIf="item" [item]="item"></gpid-item>
+
+<div class="m-message__container">
+    <div class="m-message--error" *ngIf="error">
+        <div class="m-message__heading">
+            <span class="fas fa-exclamation-circle"></span>
+            {{error.label}}
+        </div>
+        {{error.message}}
+    </div>
+</div>

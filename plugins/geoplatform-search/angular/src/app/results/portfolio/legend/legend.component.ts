@@ -31,18 +31,21 @@ export class LegendComponent implements OnInit {
     getIconPath(type) {
         let result = "dataset";
         switch(type) {
-            case ItemTypes.DATASET:         result =  'dataset'; break;
-            case ItemTypes.SERVICE:         result =  'service'; break;
-            case ItemTypes.LAYER:           result =  'layer'; break;
-            case ItemTypes.MAP:             result =  'map'; break;
-            case ItemTypes.GALLERY:         result =  'gallery'; break;
-            case ItemTypes.ORGANIZATION:    result =  'organization'; break;
             case ItemTypes.CONTACT:         result =  'vcard'; break;
-            case ItemTypes.COMMUNITY:       result =  'community'; break;
-            case ItemTypes.CONCEPT:         result =  'concept'; break;
-            case ItemTypes.CONCEPT_SCHEME:  result =  'conceptscheme'; break;
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            default: type = type.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         return `../${environment.assets}${result}.svg`;
+    }
+
+    getIconClass(typeName) {
+        let type = "dataset";
+        switch(typeName) {
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            default: type = typeName.replace(/^[a-z]+\:/i, '').toLowerCase();
+        }
+        return 'icon-' + type;
     }
 
     toggle () {

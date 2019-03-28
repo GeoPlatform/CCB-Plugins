@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
@@ -26,7 +26,8 @@
     "bootstrap": "^4.0.0",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
-    "geoplatform.client": "git+http://github.com/GeoPlatform/client-api.git#0.2.0",
+    "geoplatform.client": "git+http://github.com/GeoPlatform/client-api.git#develop",
+    "gp.rpm": "git+https://github.com/GeoPlatform/rpm-js#develop",
     "jquery": "^3.0.0",
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.13",

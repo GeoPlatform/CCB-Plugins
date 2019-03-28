@@ -1,0 +1,12 @@
+{
+    "/wp-json/geoplatform-search/v1/gpsearch": {
+      "target": "https://sit-ccb.geoplatform.us/sit-ccb",
+      "secure": true,
+      "changeOrigin": true
+  },
+  "/wp-json/wp/v2/users": {
+      "target": "https://sit-ccb.geoplatform.us/sit-ccb",
+      "secure": true,
+      "changeOrigin": true
+  }
+}

@@ -6,7 +6,7 @@
  * This file is used to markup the admin-facing aspects of the plugin.
  *
  * @link       https://www.imagemattersllc.com
- * @since      1.0.0
+ * @since      1.1.0
  *
  * @package    Geoplatform_Service_Collector
  * @subpackage Geoplatform_Service_Collector/admin/partials

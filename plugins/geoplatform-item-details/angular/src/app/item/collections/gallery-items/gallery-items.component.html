@@ -1,0 +1,28 @@
+<div>
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Gallery Items</strong>
+</div>
+
+<div [ngClass]="{'is-hidden':!isCollapsed}">
+    Expand to see items referenced by this gallery
+</div>
+
+<div [ngClass]="{'is-hidden':isCollapsed}">
+
+    <div *ngIf="!items && !items.length">
+        <em>None specified</em>
+    </div>
+
+    <div *ngIf="items && items.length" class="o-gallery__items">
+        <div *ngFor="let item of items" class="o-gallery__item">
+            <div *ngIf="item.asset">
+                <gpid-depiction [item]="item.asset"></gpid-depiction>
+                <gpid-resource-link [item]="item.asset"></gpid-resource-link>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -42,6 +42,7 @@ implements OnInit, OnDestroy, ConstraintEditor {
      */
     configureQuery(query : Query) {
         query.addField('title');
+        query.sort('_score,desc');
     }
 
     getCodec() : Codec { return this.codec; }

@@ -3,8 +3,8 @@
 -Contributors: imagemattersllc, kevins713, lheazel
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.8
--Stable tag: 4.0.0
--Version: 4.0.0
+-Stable tag: 4.0.2
+-Version: 4.0.2
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -112,8 +112,20 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
 
-## 4.0.0 =
+## 4.0.2
 * Release pending
+
+- NGDA and Text Resource Widgets added.
+- Megamenu update to accommodate lower resolutions and the header controls.
+
+## 4.0.1
+* Release pending
+
+- Excluded unnecessary new function from parent theme.
+- Removed automated update feature.
+
+## 4.0.0
+* Release January 17, 2019
 
  - Complete redesign of the user experience.
 

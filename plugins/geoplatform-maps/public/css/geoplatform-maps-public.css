@@ -16,6 +16,33 @@
      width: -webkit-fill-available;
  }
 
+ .geop-text-shadow {
+   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+ }
+
+ .geop-open-control {
+   z-index: 6;
+   font-size: .85em;
+   font-weight: 800;
+   display: inline-block;
+   padding: 0;
+   margin: 0;
+   background-color: hsl(100, 100%, 100%);
+   border: none;
+}
+
+.geop-sub-buttons {
+  font-size: .85em;
+  font-weight: 800;
+  display: inline-block;
+  border-radius: .75em;
+  padding: .25em .75em;
+  margin: 0 .25em .5em 0;
+  /* background-color: hsl(180, 100%, 45%); */
+  text-decoration: none;
+  border: none;
+}
+
  .geop-display-main {
    position: relative;
    margin: 0 0 1em;
@@ -25,7 +52,7 @@
    box-shadow: 9px 9px 10px 0px rgba(0, 0, 0, .25);
    font-size: 1rem;
    background: #fff;
-   color: inherit
+   color: inherit;
    display: block;
    border-bottom: 1px solid #ddd;
    background-color: #112158;
@@ -47,14 +74,14 @@
    margin: auto;
  }
 
- .geop-hidden-link a, .geop-hidden-link:link a, .geop-hidden-link:hover a, .geop-hidden-link:visited a, .geop-hidden-link:active a {
+ .geop-hidden-link, .geop-hidden-link:link, .geop-hidden-link:hover, .geop-hidden-link:visited, .geop-hidden-link:active {
    text-transform: none;
    text-decoration: none;
    box-shadow: none;
    margin: auto;
  }
 
- .geop-white-item {
+ .t-fg--white {
    color: #fff;
  }
 
@@ -71,7 +98,9 @@
  .geop-container-controls {
    position: relative;
    width: 100%;
+   height: 100%;
    z-index: 1;
+   background-size: 100% 100%;
  }
 
  .geop-layer-menu {
@@ -79,7 +108,7 @@
    border: 1px solid #ddd;
    width: 50%;
    background-color: #fff;
-   z-index: 2;
+   z-index: 3;
    position: absolute;
    bottom: 0;
    right: 0;
@@ -190,23 +219,136 @@
 
 /* Additions for Community map */
 
+.geop-map-title-text {
+  font-size: 1.125em;
+  line-height: 1.25;
+  margin-bottom: .5em;
+  max-height: 3.5em;
+  overflow: hidden;
+  display: block;
+  align-self: center;
+  justify-self: centered;
+}
 
 .geop-redirect-div {
-  z-index: 10;
-  top: 0;
-  right: 0;
+  z-index: 2;
+  top: 0.67em;
+  right: 0.67em;
   width: auto;
   float: right;
-  padding: 1em;
   position: absolute;
+
+  background: #fff;
+  padding: 0.5em;
+  box-shadow: 0 0 3px rgba(0,0,0,0.75);
+  border-radius: 4px;
 }
+
+.geop-title-div {
+  z-index: 10;
+  bottom: 0.67em;
+  left: 0.67em;
+  width: auto;
+  float: left;
+  position: absolute;
+
+  background: #fff;
+  padding: 0.5em;
+  box-shadow: 0 0 3px rgba(0,0,0,0.75);
+  border-radius: 4px;
+}
+
+.geop-title-grad-div {
+  /* background: radial-gradient(farthest-side at 0% 100%, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)); */
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  color: #fff;
+  font-weight: 800;
+  border-radius: 0 0 4px 4px;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: left;
+  padding: 2em 1em 0.5em;
+  top: auto;
+  bottom: 0em;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+}
+
 .geop-redirect-icon {
   color: #fff;
   font-size: 1.25rem;
-  text-shadow: 0px 0px 6px #000000;
 }
 
 
+
+
+
+/* Bootstrap nabs */
+
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+}
+
+body .btn.btn-sm {
+    padding: .25em .75em;
+    font-size: .875em;
+    line-height: 1.5;
+}
+
+.btn-group-sm > .btn, .btn-sm {
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+.btn-light {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: transparent;
+        border-left-color: transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn-light.focus, .btn-light:focus {
+    box-shadow: 0 0 0 .2rem rgba(248,249,250,.5);
+}
+
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0,123,255,.25);
+}
+
+.btn:focus, .btn:hover {
+    text-decoration: none;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}
 
  /*--------------------------------------------------------------
  # Content Width

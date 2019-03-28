@@ -13,15 +13,17 @@ function gpp_getEnv($name, $def){
 $geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
 $geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
+
 /**
  * Establish this as a child theme of GeoPlatform CCB.
  * Also loads jQuery and several assets.
  */
 function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
-	wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
-	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.2.0/css/all.css');
+	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
+	wp_enqueue_style( 'flaticons-css', get_stylesheet_directory_uri() . '/font/flaticon.css');
 	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
+	wp_enqueue_style( 'geop-style', get_stylesheet_directory_uri() . '/css/geop-style.css');
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( $parent_style ), wp_get_theme()->get('Version'));
 
@@ -29,7 +31,6 @@ function geopportal_enqueue_scripts() {
 		wp_enqueue_style( 'styleguide-css', get_stylesheet_directory_uri() . '/css/styleguide.css');
 
 	wp_enqueue_script( 'popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' );
-	wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 	wp_enqueue_script( 'geop-prism-js', get_stylesheet_directory_uri() . '/js/prism.js' );
 	wp_enqueue_script( 'geop-styleguide-js', get_stylesheet_directory_uri() . '/js/styleguide.js' );
@@ -39,6 +40,14 @@ function geopportal_enqueue_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
 
+// Loads bootstrap resources, but only for pages that aren't Angular with bundled bootstrap.
+function geopportal_enqueue_bootstrap() {
+	if ( !is_page( array('geoplatform-search', 'geoplatform-items', 'register' ) ) ){
+		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
+		wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
+	}
+}
+add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_bootstrap' );
 
 /**
  * Loads all the unique scripts and styles for this theme. Overrides CCB's function.
@@ -55,9 +64,10 @@ add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 function geop_ccb_header_customize_css(){}
 add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
-
 //Disable admin bar (un-comment for prod sites)
-//add_filter('show_admin_bar', '__return_false');
+if ( !current_user_can('administrator')){
+	add_filter('show_admin_bar', '__return_false');
+}
 
 //--------------------------
 //Support adding Menus for header and footer
@@ -183,6 +193,18 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'priority' => 40,
 	));
 
+	$wp_customize->add_setting('headlink_ngda_themes',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_ngda_themes',array(
+		'type' => 'text',
+		'label' => 'NGDA Themes',
+		'section' => 'headlink_format',
+		'priority' => 45,
+	));
+
 	$wp_customize->add_setting('headlink_search',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
@@ -192,9 +214,39 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => 'Search (GeoPlatform Search Plugin Page)',
 		'section' => 'headlink_format',
-		'priority' => 45,
+		'priority' => 50,
 		'default' => 'geoplatform-search'
 	));
+
+	$wp_customize->add_setting('headlink_register',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_register',array(
+		'type' => 'text',
+		'label' => 'Register (GeoPlatform Resource Registration Page)',
+		'section' => 'headlink_format',
+		'priority' => 55,
+		'default' => 'geoplatform-register'
+	));
+
+	$wp_customize->add_setting('headlink_items',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_items',array(
+		'type' => 'text',
+		'label' => 'Items (GeoPlatform Item Details Page)',
+		'section' => 'headlink_format',
+		'priority' => 60,
+		'default' => 'geoplatform-items'
+	));
+
+
+
+
 
 	$wp_customize->add_setting('headlink_help',array(
 		'default' => '',
@@ -205,7 +257,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => 'Help',
 		'section' => 'headlink_format',
-		'priority' => 50,
+		'priority' => 65,
 	));
 
 	$wp_customize->add_setting('headlink_apps',array(
@@ -217,7 +269,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => "Apps & Services (Mega Menu)",
 		'section' => 'headlink_format',
-		'priority' => 55,
+		'priority' => 70,
 	));
 }
 add_action( 'customize_register', 'geop_ccb_header_link_register');
@@ -584,8 +636,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_one' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-one',
-			'name' => __( 'Resources Template One', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page one can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Datasets Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Dataset Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -601,8 +653,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_two' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-two',
-			'name' => __( 'Resources Template Two', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page two can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Services Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Service Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -618,8 +670,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_three' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-three',
-			'name' => __( 'Resources Template Three', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page three can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Layers Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Layer Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -635,8 +687,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_four' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-four',
-			'name' => __( 'Resources Template Four', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page four can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Maps Widgets', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Map Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -652,8 +704,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_five' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-five',
-			'name' => __( 'Resources Template Five', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page five can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Galleries Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Gallery Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -669,8 +721,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_six' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-six',
-			'name' => __( 'Resources Template Six', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page six can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Communities Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Communities Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -686,8 +738,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_seven' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-seven',
-			'name' => __( 'Resources Template Seven', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page seven can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources NGDA Themes Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore NGDA Themes page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -703,8 +755,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_eight' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-eight',
-			'name' => __( 'Resources Template Eight', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page eight can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Organizations Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Organizations Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -720,8 +772,8 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_nine' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-nine',
-			'name' => __( 'Resources Template Nine', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page nine can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources Contacts Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Contact Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
@@ -737,13 +789,64 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_ten' ) ) {
 		register_sidebar(
 		array(
 			'id' => 'geoplatform-resources-template-widgets-ten',
-			'name' => __( 'Resources Template Ten', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go in the Explore Resources page ten can be added here.', 'geoplatform-ccb' ),
+			'name' => __( 'Resources People Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore People Resources page can be added here.', 'geoplatform-ccb' ),
 			'class' => 'widget-class'
 		)
 		);
 	}
 	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_ten' );
+}
+
+/**
+ * Widgetizing Explore Resources page elevin
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_elevin' ) ) {
+	function geop_ccb_explore_resources_widgets_elevin() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-elevin',
+			'name' => __( 'Resources Applications Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Application Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_elevin' );
+}
+
+/**
+ * Widgetizing Explore Resources page twelve
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_twelve' ) ) {
+	function geop_ccb_explore_resources_widgets_twelve() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-twelve',
+			'name' => __( 'Resources Topics Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Topic Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_twelve' );
+}
+
+/**
+ * Widgetizing Explore Resources page thirteen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_thirteen' ) ) {
+	function geop_ccb_explore_resources_widgets_thirteen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-thirteen',
+			'name' => __( 'Resources Websites Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Website Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_thirteen' );
 }
 
 /**
@@ -758,7 +861,7 @@ class Geopportal_Contact_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_contact_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Contact', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform contact information widget for the sidebar.', 'geoplatform-ccb' ), ) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Contact widget for the sidebar. Simple contact information output. There are no customization options with this widget.', 'geoplatform-ccb' ), ) // Args
 		);
 	}
 
@@ -837,18 +940,21 @@ get_template_part( 'main-page', get_post_format() );
 get_template_part( 'onboarding', get_post_format() );
 get_template_part( 'portfolio-resources', get_post_format() );
 get_template_part( 'apps-and-services', get_post_format() );
+get_template_part( 'partners', get_post_format() );
 // get_template_part( 'portfolio-resources-dark', get_post_format() );
 // get_template_part( 'portfolio-resources-old', get_post_format() );
 // get_template_part( 'communities', get_post_format() );
-get_template_part( 'partners', get_post_format() );
-get_template_part( 'themes', get_post_format() );
+// get_template_part( 'themes', get_post_format() );
 get_template_part( 'side-content-text', get_post_format() );
 get_template_part( 'side-content-links', get_post_format() );
 get_template_part( 'side-content-preview', get_post_format() );
+get_template_part( 'side-content-featured', get_post_format() );
 get_template_part( 'widget-resources-elements', get_post_format() );
 get_template_part( 'widget-resources-search', get_post_format() );
 get_template_part( 'widget-resources-creation', get_post_format() );
 get_template_part( 'widget-resources-community', get_post_format() );
+get_template_part( 'widget-resources-ngda', get_post_format() );
+get_template_part( 'widget-resources-comment', get_post_format() );
 
 
 /**
@@ -856,7 +962,7 @@ get_template_part( 'widget-resources-community', get_post_format() );
  */
 function geopportal_register_portal_widgets() {
 	register_widget( 'Geopportal_Contact_Widget' );
-	register_widget( 'Geopportal_Graph_Widget' );
+	// register_widget( 'Geopportal_Graph_Widget' );
 }
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 
@@ -896,23 +1002,6 @@ function geop_portal_customize_register( $wp_customize )
 add_action( 'customize_register', 'geop_portal_customize_register');
 
 
-function custom_wysiwyg($post) {
-  echo "<h3>Anything you add below will show up in the Banner:</h3>";
-  $content = get_post_meta($post->ID, 'custom_wysiwyg', true);
-  wp_editor(htmlspecialchars_decode($content) , 'custom_wysiwyg', array("media_buttons" => true));
-}
-
-function geopportal_custom_wysiwyg_save_postdata($post_id) {
-  if (!empty($_POST['custom_wysiwyg'])) {
-    $data = htmlspecialchars_decode($_POST['custom_wysiwyg']);
-    update_post_meta($post_id, 'custom_wysiwyg', $data);
-  }
-}
-add_action('save_post', 'geopportal_custom_wysiwyg_save_postdata');
-
-
-
-
 /**********************************************************************************************************************************************
  * Creates the community post custom post type.
  */
@@ -926,23 +1015,15 @@ function geop_ccb_create_community_post() {
 			'capability_type' => 'page',
       'public' => true,
       'has_archive' => true,
-      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates'),
+      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates', 'revisions'),
       'taxonomies' => array('category'),
       'publicly_queryable'  => true,
 			'menu_icon' => 'dashicons-images-alt2',
+			'rewrite' => array( 'slug' => 'community' ),
     )
   );
 }
 add_action( 'init', 'geop_ccb_create_community_post' );
-
-
-
-
-function geopccb_wysiwyg_register_custom_meta_box_compost(){
-	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'community-post');
-}
-add_action('admin_init', 'geopccb_wysiwyg_register_custom_meta_box_compost');
-
 
 /**
  * Community Post input incorporation
@@ -975,6 +1056,75 @@ function geop_ccb_custom_field_compost_metaboxes() {
 	);
 }
 add_action( 'add_meta_boxes', 'geop_ccb_custom_field_compost_metaboxes' );
+
+
+
+/**********************************************************************************************************************************************
+ * Creates the ngda post custom post type.
+ */
+function geop_ccb_create_ngda_post() {
+  register_post_type( 'ngda-post',
+    array(
+      'labels' => array(
+        'name' => 'NGDA Posts',
+        'singular_name' => 'NGDA Post',
+      ),
+			'capability_type' => 'page',
+      'public' => true,
+      'has_archive' => true,
+      'supports' => array( 'title', 'editor', 'thumbnail', 'excerpt', 'category', 'templates', 'revisions'),
+      'taxonomies' => array('category'),
+      'publicly_queryable'  => true,
+			'menu_icon' => 'dashicons-images-alt2',
+			'has_archive' => false,
+			'rewrite' => array( 'slug' => 'ngda' ),
+    )
+  );
+}
+add_action( 'init', 'geop_ccb_create_ngda_post' );
+
+/**
+ * NGDA Post input incorporation
+ */
+// register the meta box for priority AND URL.
+function geop_ccb_custom_field_ngdapost_metaboxes() {
+  add_meta_box(
+      'geop_ccb_compost_main_data',          // this is HTML id of the box on edit screen
+      'Primary Community Data',    // title of the box
+      'geop_ccb_main_data_content',   // function to be called to display the checkboxes, see the function below
+      'ngda-post',        // on which edit screen the box should appear
+      'normal',      // part of page where the box should appear
+      'default'      // priority of the box
+  );
+  add_meta_box(
+      'geop_ccb_compost_add_data',          // this is HTML id of the box on edit screen
+      'Supplemental Community Data',    // title of the box
+      'geop_ccb_add_data_content',   // function to be called to display the checkboxes, see the function below
+      'ngda-post',        // on which edit screen the box should appear
+      'normal',      // part of page where the box should appear
+      'default'      // priority of the box
+  );
+	add_meta_box(
+			'geop_ccb_sorting_compost_id',          // this is HTML id of the box on edit screen
+			'Featured Display Priority',    // title of the box
+			'geop_ccb_priority_sort_content',   // function to be called to display the checkboxes, see the function below
+			'ngda-post',        // on which edit screen the box should appear
+			'normal',      // part of page where the box should appear
+			'default'      // priority of the box
+	);
+}
+add_action( 'add_meta_boxes', 'geop_ccb_custom_field_ngdapost_metaboxes' );
+
+
+
+function geopccb_wysiwyg_register_custom_meta_box_compost(){
+	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'community-post');
+	add_meta_box(WYSIWYG_META_BOX_ID, __('Banner Area Custom Content', 'geoplatform-ccb') , 'geop_ccb_custom_wysiwyg', 'ngda-post');
+}
+add_action('admin_init', 'geopccb_wysiwyg_register_custom_meta_box_compost');
+
+
+
 
 // display the metabox for com_post URL and checkbox
 function geop_ccb_main_data_content($post) {
@@ -1054,6 +1204,8 @@ function geop_ccb_custom_field_compost_data($post_id) {
 }
 add_action( 'save_post', 'geop_ccb_custom_field_compost_data' );
 
+
+
 function geop_ccb_compost_column_filter( $geopccb_columns ) {
 	$geopccb_columns = array(
 		'cb' => '<input type="checkbox" />',
@@ -1065,6 +1217,7 @@ function geop_ccb_compost_column_filter( $geopccb_columns ) {
 	return $geopccb_columns;
 }
 add_filter( "manage_community-post_posts_columns", "geop_ccb_compost_column_filter" );
+add_filter( "manage_ngda-post_posts_columns", "geop_ccb_compost_column_filter" );
 
 function geop_ccb_compost_column_action( $geopccb_column, $geopccb_id ) {
 	if ( $geopccb_column == 'priority' ){
@@ -1075,6 +1228,7 @@ function geop_ccb_compost_column_action( $geopccb_column, $geopccb_id ) {
 	}
 }
 add_action('manage_community-post_posts_custom_column', 'geop_ccb_compost_column_action', 10, 2);
+add_action('manage_ngda-post_posts_custom_column', 'geop_ccb_compost_column_action', 10, 2);
 
 // Adding sortation, handled functionally by the posts function.
 function geop_ccb_compost_column_sorter($geopccb_columns) {
@@ -1082,8 +1236,24 @@ function geop_ccb_compost_column_sorter($geopccb_columns) {
 	return $geopccb_columns;
 }
 add_filter('manage_edit-community-post_sortable_columns', 'geop_ccb_compost_column_sorter');
+add_filter('manage_edit-ngda-post_sortable_columns', 'geop_ccb_compost_column_sorter');
 
 
+function geop_ccb_blogcount_register($wp_customize){
+
+  $wp_customize->add_setting('blogcount_controls',array(
+      'default' => 7,
+      'sanitize_callback' => 'geop_ccb_sanitize_blogcount',
+  ));
+
+  $wp_customize->add_control('blogcount_controls',array(
+      'type' => 'number',
+      'label' => 'Blog Count Controls',
+      'section' => 'featured_format',
+      'description' => "Choose the number of entries on each page of the blog listing post.",
+  ));
+}
+add_action( 'customize_register', 'geop_ccb_blogcount_register');
 
 
 
@@ -1108,6 +1278,7 @@ function geopportal_add_breadcrumb_title() {
 					'post',
 					'page',
 					'community-post',
+					'ngda-post',
 				),
         // 'post',        // on which edit screen the box should appear
         'normal',      // part of page where the box should appear
@@ -1125,7 +1296,7 @@ function geopportal_breadcrumb_box_content($post) {
 // save data from checkboxes
 function geopportal_breadcrumb_post_data($post_id) {
   if ( !isset( $_POST['geopportal_breadcrumb_title'] ) || is_null( $_POST['geopportal_breadcrumb_title']) || empty( $_POST['geopportal_breadcrumb_title'] ))
-    update_post_meta( $post_id, 'geopportal_breadcrumb_title', '0' );
+    update_post_meta( $post_id, 'geopportal_breadcrumb_title', '' );
   else
 		update_post_meta( $post_id, 'geopportal_breadcrumb_title', $_POST['geopportal_breadcrumb_title'] );
 }
@@ -1331,6 +1502,7 @@ if ( ! isset( $content_width ) ) {
 
 // Killing search register functions from CCB that have no use in Portal.
 function geop_ccb_search_register(){};
+function geop_ccb_linkmenu_register(){};
 
 // Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
@@ -1353,15 +1525,15 @@ function geop_ccb_register_footer_menus(){};
  *
  * @link https://github.com/YahnisElsts/plugin-update-checker
  */
-function geop_portal_distro_manager() {
-  require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
-  $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
-  	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
-  	__FILE__,
-  	'geoplatform-portal-four'
-  );
-}
-geop_portal_distro_manager();
+// function geop_portal_distro_manager() {
+//   require dirname(__FILE__) . '/plugin-update-checker-4.4/plugin-update-checker.php';
+//   $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+//   	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-portal-update-details.json',
+//   	__FILE__,
+//   	'geoplatform-portal-four'
+//   );
+// }
+// geop_portal_distro_manager();
 
 
 add_filter('widget_text', 'do_shortcode');

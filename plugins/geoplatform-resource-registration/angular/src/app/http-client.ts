@@ -12,6 +12,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 
+import { AppError } from './model';
+
 export class NG2HttpClient {
 
 
@@ -43,7 +45,7 @@ export class NG2HttpClient {
             this.token = function() { return arg; };
         else if(arg && typeof(arg) === 'function')
             this.token = arg;
-        //else do nothing
+        else this.token = null;
     }
 
 
@@ -70,7 +72,10 @@ export class NG2HttpClient {
         if(this.token) {
             let token = this.token();
             if(token) {
-                opts.headers.set('Authorization', 'Bearer ' + token);
+                // console.log("NG2HttpClient.createRequestOpts() - Setting token: ");
+                // console.log(token);
+                //note 'set' returns new instance of headers
+                opts.headers = opts.headers.set('Authorization', 'Bearer ' + token);
             }
         }
 
@@ -98,7 +103,19 @@ export class NG2HttpClient {
         .catch( err => {
             // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));
             if (err instanceof HttpErrorResponse) {
-                throw new Error(err.error.message);
+                let label = "An error occurred";
+                let msg = "An error occurred communicating with the GeoPlatform API";
+                if(err.error && err.error.error && err.error.error.message) {
+                    msg = err.error.error.message;
+                    label = err.error.error.error || label;
+                } else if (err.error && err.error.message) {
+                    msg = err.error.message;
+                    label = err.error.error || label;
+                } else if(err.message) {
+                    msg = err.message;
+                    label = err.error || label;
+                }
+                throw new AppError(msg, err.status, label);
             }
             return {};
         });

@@ -1,0 +1,28 @@
+
+<div><strong>{{label}}</strong></div>
+<span *ngIf="!value">Not specified</span>
+<div *ngIf="value">
+
+    <div *ngIf="hasMultiple" class="m-list">
+        <div *ngFor="let val of value" class="m-list__item">
+            <div *ngIf="!isUrl">
+                {{valueProperty?val[valueProperty]:val}}
+            </div>
+            <a *ngIf="isUrl" href="{{valueProperty?value[valueProperty]:value}}"
+                target="_blank" class="u-break--all">
+                {{labelProperty?val[labelProperty]:val}}
+            </a>
+        </div>
+    </div>
+
+    <div *ngIf="!hasMultiple">
+        <div *ngIf="!isUrl">
+            {{valueProperty?value[valueProperty]:value}}
+        </div>
+        <a *ngIf="isUrl" href="{{valueProperty?value[valueProperty]:value}}"
+            target="_blank" class="u-break--all">
+            {{labelProperty ? value[labelProperty] || (valueProperty?value[valueProperty]:value) : value}}
+        </a>
+    </div>
+
+</div>

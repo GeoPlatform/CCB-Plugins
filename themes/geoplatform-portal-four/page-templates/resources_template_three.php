@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Resources Template Three
+ * Template Name: Resources Layers Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *
@@ -12,7 +12,7 @@
  get_template_part( 'sub-header-post', get_post_format() );
  ?>
 
- <div class="l-body l-body--two-column">
+ <div class="l-body l-body--two-column p-ngda">
    <div class="l-body__main-column">
            <?php dynamic_sidebar( 'geoplatform-resources-template-widgets-three' ); ?>
    </div>

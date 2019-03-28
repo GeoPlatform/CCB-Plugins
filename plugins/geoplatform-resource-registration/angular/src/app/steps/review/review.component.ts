@@ -3,6 +3,9 @@ import {
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
+    DomSanitizer, SafeResourceUrl, SafeUrl
+} from '@angular/platform-browser';
+import {
     HttpClient, HttpRequest, HttpHeaders, HttpParams,
     HttpResponse, HttpEvent, HttpErrorResponse
 } from '@angular/common/http';
@@ -25,13 +28,22 @@ import { AppEvent } from '../../app.component';
 import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
+import { ClassifierTypes } from '../../model';
+import {
+    itemServiceProvider, serviceServiceProvider
+} from '../../item-service.provider';
+import { AppError } from '../../model';
 
+const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
+    return k.indexOf("secondary")<0 && k.indexOf("community")<0
+});
 
 
 @Component({
   selector: 'wizard-step-review',
   templateUrl: './review.component.html',
-  styleUrls: ['./review.component.less']
+  styleUrls: ['./review.component.less'],
+  providers: [ itemServiceProvider, serviceServiceProvider ]
 })
 export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepComponent {
 
@@ -52,19 +64,21 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     };
 
 
-    httpClient : NG2HttpClient;
+    // httpClient : NG2HttpClient;
     private eventsSubscription: any;
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private http: HttpClient
+        private itemService : ItemService,
+        private svcService : ServiceService,
+        private sanitizer: DomSanitizer
     ) {
         this.formGroup = this.formBuilder.group({
             done: ['']
         });
 
-        this.httpClient = new NG2HttpClient(http);
+        // this.httpClient = new NG2HttpClient(http);
     }
 
     ngOnInit() {
@@ -107,7 +121,25 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         }
     }
 
+    getTypeURLValue(type : string) : string {
+        switch(type) {
+            case ItemTypes.DATASET :
+            case ItemTypes.SERVICE :
+            case ItemTypes.ORGANIZATION :
+            case ItemTypes.CONCEPT :
+            case ItemTypes.CONCEPT_SCHEME :
+                return type.toLowerCase().split(':')[1] + 's';
+            case ItemTypes.GALLERY : return 'galleries';
+            case ItemTypes.COMMUNITY : return 'communities';
+            // case ItemTypes.MAP :
+            // case ItemTypes.LAYER :
+            default: return type.toLowerCase()+'s';
+        }
+    }
 
+    getClassifierProperties() {
+        return CLASSIFIERS;
+    }
 
     /**
      *
@@ -117,55 +149,32 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         this.onEvent.emit( { type:'app.reset', value:true } );
     }
 
-
     /**
      *
      */
-    createAndStartOver() {
-
-        //save resource and then start fresh in wizard...
-
-        let func = (persisted) => {
-            //wait a few seconds before sending back to the start
-            setTimeout( () => {
-                this.onEvent.emit( { type:'app.reset', value:true } );
-            }, 5000);
-        };
-
-        this.registerResource(func);
-    }
-
-    /**
-     *
-     */
-    createAndLeave() {
-
-        //save resource and then navigate to resource's home page (OE for now)
-
-        let func = (persisted) => {
-            let url = Config.ualUrl.replace('ual', 'oe') + '/view/' + persisted.id;
-            setTimeout( () => { window.location.href = url; }, 2000);
-        };
-
-        this.registerResource(func);
-
+    viewResource() {
+        let type = this.getTypeURLValue(this.data.type);
+        let url = Config.wpUrl + '/resources/' + type + '/' + this.data.id;
+        window.location.href = url;
     }
 
 
     /**
      * @param {function} callback - method to invoke upon successful registration
      */
-    private registerResource( callback : Function ) {
+    registerResource( ) {
+
+        this.status.isSaving = true;
 
         this.generateURI().then( item => {
-            return new ItemService(Config.ualUrl, this.httpClient).save(item)
+            // return new ItemService(Config.ualUrl, this.httpClient).save(item)
+            return this.itemService.save(item);
         })
         .then( (persisted) => {
 
             if(ItemTypes.SERVICE === persisted.type) {
                 //TODO call harvest on newly persisted service
-                return new ServiceService(Config.ualUrl, this.httpClient)
-                .harvest(persisted.id)
+                return this.svcService.harvest(persisted.id)
                 .then( layers => {
                     return persisted;   //resolve the parent service
                 })
@@ -182,11 +191,31 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         .then( persisted => {
             this.status.isSaving = false;
             this.status.isSaved = true;
-            callback(persisted);
+
+            //update internal data with saved copy
+            Object.assign(this.data, persisted);
+            // callback(persisted);
         })
-        .catch( (e:Error) => {
+        .catch( e => {
             this.status.isSaving = false;
-            this.hasError = new StepError("Unable to Register Resource", e.message);
+
+            if(e.status) {
+                if(e.status === 403) {
+                    this.hasError = new StepError(
+                        "Your session has expired", "Please login again and retry");
+                } else if(e.status === 409) {
+                    this.hasError = new StepError(
+                        "Resource already exists",
+                        "The resource you are attempting to register already exists");
+                } else {
+                    this.hasError = new StepError(
+                        e.error || "Unable to Register Resource",
+                        e.message);
+                }
+
+            } else {
+                this.hasError = new StepError("Unable to Register Resource", e.message);
+            }
         });
     }
 
@@ -199,7 +228,8 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
             return Promise.resolve(this.data);
         }
 
-        return new ItemService(Config.ualUrl, this.httpClient)
+        // return new ItemService(Config.ualUrl, this.httpClient)
+        return this.itemService
         .getUri(this.data)
         .then( uri => {
             this.data.uri = uri;
@@ -222,7 +252,21 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         switch(event.type) {
             case 'reset':
                 this.hasError = null;
+                this.status.isSaved = false;
+                this.status.isSaving = false;
+                break;
+            case 'auth':
+                let token = event.value.token;
+                this.itemService.client.setAuthToken( token as string);
                 break;
         }
+    }
+
+
+    getThumbnailBackground() {
+        let thumbnail = this.data.thumbnail;
+        let type = thumbnail.mediaType || 'image/png';
+        let content = thumbnail.contentData;
+        return this.sanitizer.bypassSecurityTrustStyle(`url(data:${type};base64,${content})`);
     }
 }

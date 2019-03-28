@@ -19,23 +19,36 @@
           <div class="m-megamenu__content">
 
               <div class="col">
-                  <div class="m-megamenu__heading">Featured</div>
-                  <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
-                  <!-- <ul class="menu" role="menu">
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/release-overview/">Release Overview</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/map-collaboration/">Map Collaboration</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/arcgis-online-support/">ArcGIS Online Support</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/cloud-hosting-services/">Cloud Hosting Services</a></li>
-                      <li role="menuitem"><a target="_blank" href="https://www.youtube.com/watch?v=rgd8vCLnvfo&amp;list=PLMCNwMDgTQxB-yC5xy20dtEoXCRfG3M63">GeoPlatform on YouTube <sup><span class="glyphicon glyphicon-new-window"></span></sup></a></li>
-                  </ul> -->
-                  <br>
-                  <div class="m-megamenu__heading">Get Involved</div>
-                  <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
-                  <!-- <ul class="menu" role="menu">
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/share-geospatial-resources/">Share GeoSpatial Resources</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/data-acquisition-services/">Data Acquisition Services</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/communities/">Communities</a></li>
-                  </ul> -->
+
+                <div class="d-lg-none d-xl-none">
+                    <div class="m-megamenu__heading">Navigation</div>
+                    <ul class="menu" role="menu">
+                        <li role="menuitem" class="d-md-none">
+                            <a href="<?php echo home_url('resources'); ?>">Explore</a>
+                            <ul class="menu" role="menu">
+                                <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>" class="u-pd-left--xlg">Datasets</a></li>
+                                <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_services')); ?>" class="u-pd-left--xlg">Services</a></li>
+                                <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_layers')); ?>" class="u-pd-left--xlg">Layers</a></li>
+                                <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_maps')); ?>" class="u-pd-left--xlg">Maps</a></li>
+                                <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_galleries')); ?>" class="u-pd-left--xlg">Galleries</a></li>
+                                <li role="menuitem"><a href="<?php echo home_url(get_theme_mod('headlink_communities')); ?>" class="u-pd-left--xlg">Communities</a></li>
+                            </ul>
+                        </li>
+                        <li role="menuitem">
+                            <a role="menuitem" href="<?php echo home_url(get_theme_mod('headlink_ngda_themes')); ?>">NGDA Themes</a>
+                        </li>
+                        <li role="menuitem">
+                            <a role="menuitem" href="<?php echo home_url(get_theme_mod('headlink_search')); ?>">Search</a>
+                        </li>
+                    </ul>
+                    <br>
+                </div>
+
+                <div class="m-megamenu__heading">Featured</div>
+                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
+                <br>
+                <div class="m-megamenu__heading">Get Involved</div>
+                <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
               </div>
 
 
@@ -112,26 +125,6 @@
               <div class="col">
                   <div class="m-megamenu__heading">About</div>
                   <?php wp_nav_menu( array( 'theme_location' => 'headfoot-about' ) ); ?>
-                  <!-- <ul class="menu" role="menu">
-                      <li role="menuitem"><a href="/help.html">Help</a></li>
-                      <li role="menuitem"><a href="/faq.html">FAQ</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/glossary-of-terms/">Glossary of Terms</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/contact-us/">Contact Us</a></li>
-                      <li role="menuitem"><a href="/styleguide">Style Guide</a></li>
-                      <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-965">
-                          <a href="https://sit-ccb.geoplatform.us/">Dynamic Communities</a>
-                      </li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/data-policies/">Data Policy</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/privacy-policy/">Privacy Policy</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/accessibility/">Accessibility</a></li>
-                      <li role="menuitem"><a href="https://sit.geoplatform.us/news/">News</a></li>
-                      <li role="menuitem">
-                          <a href="https://gira.geoplatform.gov/">
-                              GIRA-
-                              <span class="u-text-/-sm">Geospatial Interoperability Reference Architecture</span>
-                          </a>
-                      </li>
-                  </ul> -->
               </div>
 
           </div>

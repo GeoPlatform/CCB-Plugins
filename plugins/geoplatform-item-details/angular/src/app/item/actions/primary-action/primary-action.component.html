@@ -1,0 +1,9 @@
+<div *ngIf="item">
+    <div class="u-text--justify u-mg-bottom--md">
+        {{getDescription()}}
+    </div>
+    <button type="button" class="btn btn-primary btn-block" (click)="doAction()">
+        {{getLabel()}}
+    </button>
+    <hr>
+</div>

@@ -6,7 +6,7 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_resource_search_widget', // Base ID
 			esc_html__( 'GeoPlatform Resource Search', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform search widget for the header sub-pages.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Search widget for resource pages. Redirects input to the Search interface, while also providing optional asset type filtering.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -39,6 +39,14 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 			$geopportal_resource_search_prefix = "/#/?types=org:Organization&q=";
 		elseif ($geopportal_test_value == "contact" || $geopportal_test_value == "contacts")
 			$geopportal_resource_search_prefix = "/#/?types=vcard:VCard&q=";
+		elseif ($geopportal_test_value == "person" || $geopportal_test_value == "people")
+			$geopportal_resource_search_prefix = "/#/?types=foaf:Person&q=";
+		elseif ($geopportal_test_value == "application" || $geopportal_test_value == "applications")
+			$geopportal_resource_search_prefix = "/#/?types=Application&q=";
+		elseif ($geopportal_test_value == "topic" || $geopportal_test_value == "topics")
+			$geopportal_resource_search_prefix = "/#/?types=Topic&q=";
+		elseif ($geopportal_test_value == "website" || $geopportal_test_value == "websites")
+			$geopportal_resource_search_prefix = "/#/?types=WebSite&q=";
 		else
 			$geopportal_resource_search_prefix = "/#/?q="
 		?>
@@ -51,7 +59,7 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 				<article class="m-article">
 						<div class="m-article__heading">Find <?php _e(sanitize_text_field($geopportal_resource_search_title), 'geoplatform-ccb') ?></div>
 						<div class="m-article__desc">
-								<p>Help users understand how to find <?php _e(sanitize_text_field($geopportal_resource_search_title), 'geoplatform-ccb') ?> using Search or MM/MV, including enriched <?php _e(sanitize_text_field($geopportal_resource_search_title), 'geoplatform-ccb') ?> and linked communities.</p>
+								<p>Enter a search phrase or just hit the search button and search for GeoPlatform Portfolio Assets and Site Content.  To learn more about searching, please visit the <a href="<?php echo home_url('help/apps/search/'); ?>">Search Help page</a>.</p>
 						</div>
 						<div class="article__actions">
 								<div class="flex-1 d-flex flex-justify-between flex-align-center">
@@ -61,7 +69,7 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 														aria-label="Search GeoPlatform <?php _e(sanitize_text_field(ucfirst($geopportal_resource_search_title)), 'geoplatform-ccb') ?>"
 														placeholder="Search GeoPlatform <?php _e(sanitize_text_field(ucfirst($geopportal_resource_search_title)), 'geoplatform-ccb') ?>">
 										</form>
-										<button type="button" class="btn btn-primary" id="geopportal_resource_search_button">SEARCH</button>
+										<button type="button" class="btn btn-secondary" id="geopportal_resource_search_button">SEARCH</button>
 								</div>&nbsp;&nbsp;
 						</div>
 				</article>
