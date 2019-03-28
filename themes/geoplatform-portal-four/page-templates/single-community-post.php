@@ -148,14 +148,16 @@ get_template_part( 'sub-header-com', get_post_format() );
               ?>
           </div>
       </div>
-      <?php } ?>
+      <?php }
 
-      <div class="m-article">
-          <div class="m-article__heading">Additional Info</div>
-          <div class="m-article__desc">
-            <?php echo the_excerpt() ?>
-          </div>
-      </div>
+      if ( has_excerpt() ){
+        echo "<div class='m-article'>";
+          echo "<div class='m-article__heading'>Additional Info</div>";
+          echo "<div class='m-article__desc'>";
+            echo the_excerpt();
+          echo "</div>";
+        echo "</div>";
+      } ?>
 
 
   </div>
