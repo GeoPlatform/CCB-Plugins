@@ -41,20 +41,20 @@ import {
 export function initializeApp() {
   return () => {
 
-      console.log("Initializing App...");
+      // console.log("Initializing App...");
       Config.configure(environment);
 
       let gpGlobal = (<any>window).GeoPlatform;
       //optionally, if run-time environment variables specified,
       // add those (overwriting any duplicates)
       if(gpGlobal && gpGlobal.config) {
-          console.log("Configuring app using run-time values");
-          console.log(gpGlobal.config);
+          // console.log("Configuring app using run-time values");
+          // console.log(gpGlobal.config);
           Config.configure(gpGlobal.config);
       }
 
-      console.log("Configured App using:");
-      console.log(Config);
+      // console.log("Configured App using:");
+      // console.log(Config);
 
   }
 }

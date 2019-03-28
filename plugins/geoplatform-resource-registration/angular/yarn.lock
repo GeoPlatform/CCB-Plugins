@@ -2537,7 +2537,7 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
+"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#0.2.1":
   version "0.2.1"
   resolved "git+http://github.com/GeoPlatform/client-api.git#16f15d42a20c43888b08b201f23cf1980dad8952"
   dependencies:
@@ -2545,9 +2545,9 @@ generate-object-property@^1.1.0:
     q "1.1.2"
     request "^2.75.0"
 
-"geoplatform.ngoauth@git+https://github.com/GeoPlatform/ng-gpoauth.git#develop":
+"geoplatform.ngoauth@git+https://github.com/GeoPlatform/ng-gpoauth.git#0.1.0":
   version "0.0.0"
-  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#ca759f7948286db207a612f677eab14f9693a6ec"
+  resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#dfaf6323b0d3bb39bfb4c0e009a5018e6d151f64"
 
 "geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
   version "2.0.0"
