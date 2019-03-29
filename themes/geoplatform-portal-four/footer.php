@@ -56,7 +56,7 @@
                   <div class="m-megamenu__heading">Explore Data</div>
                   <ul class="menu" role="menu">
                       <li role="menuitem">
-                          <a href="<?php echo $GLOBALS['geopccb_oe_url']; ?>" target="_blank">
+                          <a href="<?php echo geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov"); ?>" target="_blank">
                               Object Editor
                               <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                           </a>
@@ -68,18 +68,18 @@
                         </a>
                     </li>
                     <li role="menuitem">
-                        <a href="<?php echo $GLOBALS['geopccb_ckan_url']; ?>" target="_blank">
+                        <a href="<?php echo geop_ccb_getEnv('ckan_url',"https://data.geoplatform.gov/"); ?>" target="_blank">
                             Search Data.gov
                             <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li role="menuitem">
-                        <a href="<?php echo $GLOBALS['geopccb_ckan_mp_url']; ?>" target="_blank">
+                        <a href="<?php echo geop_ccb_getEnv('ckan_mp_url',"https://data.geoplatform.gov/#/?progress=planned&h=Marketplace"); ?>" target="_blank">
                             Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
                     <li role="menuitem">
-                        <a href="<?php echo $GLOBALS['geopccb_cms_url']; ?>" target="_blank">
+                        <a href="<?php echo home_url('resources'); ?>" target="_blank">
                             Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                         </a>
                     </li>
@@ -88,25 +88,25 @@
                   <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_apps')); ?>">Apps &amp; Services</a>
                   <ul class="menu" role="menu">
                       <li role="menuitem">
-                          <a href="<?php echo $GLOBALS['geopccb_viewer_url']; ?>" target="_blank">
+                          <a href="<?php echo geop_ccb_getEnv('viewer_url', 'https://viewer.geoplatform.gov'); ?>" target="_blank">
                               Map Viewer
                               <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                           </a>
                       </li>
                       <li role="menuitem">
-                          <a href="<?php echo $GLOBALS['geopccb_maps_url']; ?>" target="_blank">
+                          <a href="<?php echo geop_ccb_getEnv('maps_url', 'https://maps.geoplatform.gov'); ?>" target="_blank">
                               Map Manager
                               <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                           </a>
                       </li>
                       <li role="menuitem">
-                          <a href="<?php echo $GLOBALS['geopccb_marketplace_url']; ?>" target="_blank">
+                          <a href="<?php echo geop_ccb_getEnv('marketplace_url',"https://marketplace.geoplatform.gov"); ?>" target="_blank">
                               Marketplace Preview
                               <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                           </a>
                       </li>
                       <li role="menuitem">
-                          <a href="<?php echo $GLOBALS['geopccb_dashboard_url'] . '#/lma?surveyId=8&amp;page=0&amp;size=500&amp;sortElement=title&amp;sortOrder=asc&amp;colorTheme=green' ?>" target="_blank">
+                          <a href="<?php echo geop_ccb_getEnv('dashboard_url',"https://dashboard.geoplatform.gov/#/lma?surveyId=8&page=0&size=500&sortElement=title&sortOrder=asc&colorTheme=green"); ?>" target="_blank">
                               Performance Dashboard
                               <sup><span class="glyphicon glyphicon-new-window"></span></sup>
                           </a>
