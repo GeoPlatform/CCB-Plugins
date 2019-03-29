@@ -13,7 +13,7 @@
 		?>
 
         <div class="pull-right">
-            <a class="btn btn-sm btn-default" href="<?php echo $GLOBALS["geopccb_accounts_url"]?>/profile" title="Edit Account Details">
+            <a class="btn btn-sm btn-default" href="<?php echo gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov") ?>/profile" title="Edit Account Details">
                 <span class="glyphicon glyphicon-wrench"></span>
             </a>
             <a class="btn btn-sm btn-warning" href="<?php echo wp_logout_url( get_permalink() ); ?>" title="Log Out">
@@ -35,7 +35,7 @@
 	<p class="section-desc">Don't have an account? Register a new account using the button below. It's quick, free, and available to everyone!</p>
         <div class="row">
             <div class="col-md-12">
-                <a class="btn btn-accent" href="<?php echo $GLOBALS["geopccb_accounts_url"]?>/register">Register</a>
+                <a class="btn btn-accent" href="<?php echo gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov") ?>/register">Register</a>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
 
 	   if(!($current_user->ID == 0)) {
 		    $ch = curl_init();
-        $url = $GLOBALS['geopccb_ual_url'] . "/api/items?createdBy=" . $current_user->user_login . "&size=3&sort=_modified,desc&type=Map&fields=*";
+        $url = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov") . "/api/items?createdBy=" . $current_user->user_login . "&size=3&sort=_modified,desc&type=Map&fields=*";
 		    curl_setopt($ch, CURLOPT_URL, $url);
 		    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		    $response = curl_exec($ch);
@@ -75,16 +75,16 @@
 
               //incorporate for AGOL maps
               if (empty($agol_url))
-                $map_reference_url = $GLOBALS['geopccb_viewer_url'] . '/?id=' . $item['id'];
+                $map_reference_url = geop_ccb_getEnv('viewer_url', 'https://viewer.geoplatform.gov') . '/?id=' . $item['id'];
               else
                 $map_reference_url = $agol_url;
 
-              $thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+              $thumb = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov") . '/api/maps/' . $item['id'] . '/thumbnail';
 
               if(empty($thumb))
-                $thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+                $thumb = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov") . '/api/maps/' . $item['id'] . '/thumbnail';
               else if(!(strpos($thumb, 'http') == 0 ))
-                $thumb = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $item['id'] . '/thumbnail';
+                $thumb = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov") . '/api/maps/' . $item['id'] . '/thumbnail';
 
 					    $map_activity_date = gmdate("M d Y", $item['modified'] / 1000);
 
