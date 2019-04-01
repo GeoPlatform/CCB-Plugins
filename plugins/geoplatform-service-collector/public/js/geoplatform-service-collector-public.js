@@ -97,13 +97,12 @@ function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_i
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // #param geopserve_icon_in: asset's icon class
 // #param geopserve_ual_domain_in: UAL source to draw from.
-// #param geopserve_ual_endpoint_in: UAL extension for explicit asset type
 // #param geopserve_redirect_in: Panel base URL for this particular asset type.
 // #param geopserve_new_tab: Determines if a pane opens in a new window or not.
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
 //
-function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_ual_endpoint_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
 
 	// Service collection setup.
 	const Query = GeoPlatform.Query;
@@ -157,8 +156,8 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 				var geopserve_label_text = geopserve_results[i].label;
 
 				// Sets thumbnail url.
-				var geopserve_thumb_src = geopserve_ual_domain_in + geopserve_ual_endpoint_in + geopserve_results[i].id + "/thumbnail";
-
+				var geopserve_thumb_src = geopserve_ual_domain_in + "/api/items/" + geopserve_results[i].id + "/thumbnail";
+				console.log(geopserve_thumb_src);
 				// Determines singular version of the asset type and icon.
 				var geopserve_under_label_type = "";
 				var geopserve_under_label_icon = "";
@@ -250,9 +249,6 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 // #param geopserve_label_text: Title of the asset.
 // #param geopserve_master_div: String for the ID of the div containing the assets.
 // #param geopserve_thumb_error: string for the 404 error image if no thumb exists.
-// #param geopserve_ual_domain_in: UAL source to draw from.
-// #param geopserve_ual_endpoint_in: UAL extension for explicit asset type
-// #param geopserve_redirect_in: Panel base URL for this particular asset type.
 // #param geopserve_new_tab: Determines if a pane opens in a new window or not.
 // #param geopserve_under_label_array: Array of elements for the text under the title.
 //
