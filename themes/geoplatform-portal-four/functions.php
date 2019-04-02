@@ -850,6 +850,57 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_thirteen' ) ) {
 }
 
 /**
+ * Widgetizing Explore Resources page fourteen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_fourteen' ) ) {
+	function geop_ccb_explore_resources_widgets_fourteen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-fourteen',
+			'name' => __( 'Resources Concepts Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Concept Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_fourteen' );
+}
+
+/**
+ * Widgetizing Explore Resources page fifteen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_fifteen' ) ) {
+	function geop_ccb_explore_resources_widgets_fifteen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-fifteen',
+			'name' => __( 'Resources Concept Schemes Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Concept Scheme Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_fifteen' );
+}
+
+/**
+ * Widgetizing Explore Resources page sixteen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_sixteen' ) ) {
+	function geop_ccb_explore_resources_widgets_sixteen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-sixteen',
+			'name' => __( 'Resources Right Statements Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Right Statement Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_sixteen' );
+}
+
+/**
  * Adds sidebar contact form widget.
  */
 class Geopportal_Contact_Widget extends WP_Widget {
