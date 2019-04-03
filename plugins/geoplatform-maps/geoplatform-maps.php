@@ -108,7 +108,7 @@ function geopmap_shortcode_creation($geopmap_atts){
     'url' => '',
 		'width' => '0',
 		'height' => '0',
-		'title' => 'on',
+		'use' => 'on',
   ), $geopmap_atts);
   ob_start();
 
@@ -326,12 +326,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	if ($geopmap_theme == 'F'){
 		$geopmap_layer_icon = 'fas fa-bars';
 	}
-
-	// GeoPlatform Portal 4 theme detection, which will determine explicit output
-	// for that theme.
-	$geopportal_theme = 'F';
-	if (strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform-portal-four') !== false)
-		$geopportal_theme = 'T';
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -347,11 +341,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 are set initially to those of the width as passed by array.-->
 	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
 
-
-
-
-
-
  <!-- Name, link, and layer control card. Provides a link to the map with the
  			title text and link to the object editor with the info icon link. -->
 			<?php
@@ -366,7 +355,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					<div>
 
 						<?php
-						if (esc_attr($geopmap_shortcode_array['title']) != 'main'){
+						if (esc_attr($geopmap_shortcode_array['use']) != 'featured'){
 							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn-sm' style='margin-right:.5em;'>";
 								echo "<span class='geop-redirect-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
 							echo "</button>";
@@ -432,7 +421,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
 			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
 		}
-		if ('<?php echo esc_attr($geopmap_shortcode_array['title']); ?>' == 'main'){
+		if ('<?php echo esc_attr($geopmap_shortcode_array['use']); ?>' == 'featured'){
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height('100%');
 		}
 		if (jQuery('#middle_<?php echo $geopmap_divrand; ?>').width() <= 400)
