@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.1.1
+ * @since             1.1.2
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.1.1' );
+define( 'GEOPMAP_PLUGIN', '1.1.2' );
 
 /**
  * The code that runs during plugin activation.
@@ -108,7 +108,7 @@ function geopmap_shortcode_creation($geopmap_atts){
     'url' => '',
 		'width' => '0',
 		'height' => '0',
-		'use' => 'on',
+		'use' => 'page',
   ), $geopmap_atts);
   ob_start();
 
@@ -267,7 +267,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').width('100%');
 		}
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
-			jQuery('#middle_<?php echo $geopmap_divrand; ?>').height('98%');
+			jQuery('#middle_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.40);
 		}
 
 		// Error report handler. If there is content in error_report, that string
@@ -398,6 +398,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 <!-- Javascript region. -->
 	<script>
 	jQuery('document').ready(function(){
+		console.log(widthGrab);
 
 		// Error report string, which will be filled for display if necessary.
 		var geopmap_error_report = "<?php echo $geopmap_error_text ?>";
@@ -418,8 +419,8 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		if (<?php echo esc_attr($geopmap_shortcode_array['width']); ?> == 0 || <?php echo esc_attr($geopmap_shortcode_array['width']); ?> > widthGrab)
 			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('98%');
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
-			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
-			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
+			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.40);
+			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.40);
 		}
 		if ('<?php echo esc_attr($geopmap_shortcode_array['use']); ?>' == 'featured'){
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height('100%');

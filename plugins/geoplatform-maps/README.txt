@@ -6,7 +6,7 @@ Tags: map, maps, Open Map, GeoPlatform, Geoplatform, geoplatform, Shortcode, sho
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 5.0.1
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -75,6 +75,9 @@ If you were able to successfully add a map to your shortcode collection but not 
 3. Enjoy full pan and zoom control over your maps, toggle layers, view layer details, and launch the map in a separate application in your browser.
 
 == Changelog ==
+
+= 1.1.2 =
+* Fixed bug causing uncontrolled vertical spanning.
 
 = 1.1.1 =
 * Tweaks for production.
