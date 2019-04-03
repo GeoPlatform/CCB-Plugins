@@ -4,7 +4,7 @@
  * This class is called by the Remove Map button in the display.php class.
  *
  * @link       www.geoplatform.gov
- * @since      1.1.0
+ * @since      1.1.1
  *
  */
 
