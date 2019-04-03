@@ -102,7 +102,8 @@ run_geoplatform_service_collector();
 // carousel. This is handled below.
 function geopserve_com_shortcodes_creation($geopserve_atts){
 
-	?><script type="text/javascript">
+	?>
+	<script type="text/javascript">
 		jQuery(document).ready(function() {
 
 			// Button color controls, because the CSS doesn't work for plugins. On
@@ -134,7 +135,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				);
 			});
 		});
-	</script><?php
+	</script>
+	<?php
 
 	// Establishes a base array with default values required for shortcode creation
 	// and overwrites them with values from $geopserve_atts.
