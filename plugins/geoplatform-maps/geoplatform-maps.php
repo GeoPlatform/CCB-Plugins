@@ -267,7 +267,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').width('100%');
 		}
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
-			jQuery('#middle_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.40);
+			jQuery('#middle_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.56);
 		}
 
 		// Error report handler. If there is content in error_report, that string
@@ -419,8 +419,8 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		if (<?php echo esc_attr($geopmap_shortcode_array['width']); ?> == 0 || <?php echo esc_attr($geopmap_shortcode_array['width']); ?> > widthGrab)
 			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('98%');
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
-			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.40);
-			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.40);
+			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.56);
+			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.56);
 		}
 		if ('<?php echo esc_attr($geopmap_shortcode_array['use']); ?>' == 'featured'){
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height('100%');
