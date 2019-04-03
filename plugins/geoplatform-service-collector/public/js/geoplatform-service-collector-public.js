@@ -132,11 +132,17 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 	if (geopserve_id_in) {
 		query.usedBy(geopserve_id_in);
 	}
-	// query.setQ("");
+
+	// Adds thumbnails to the query return.
+	var fields = query.getFields();
+	fields.push("thumbnail");
+	query.setFields(fields);
 
 	// Performs the query grab.
 	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
 		.then(function (response) {
+
+			// ItemService.search(thumb_query).then( thumb_response => thumb_response.results.forEach( item => item.thumbnail ? console.log(buildThumb(item.thumbnail)) : doNothing(); ) );
 
 			// Gets the results.
 			var geopserve_results = response.results;
@@ -155,9 +161,15 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 				// Sets the title of the asset.
 				var geopserve_label_text = geopserve_results[i].label;
 
-				// Sets thumbnail url.
-				var geopserve_thumb_src = geopserve_ual_domain_in + "/api/items/" + geopserve_results[i].id + "/thumbnail";
-				console.log(geopserve_thumb_src);
+				// Sets thumbnail to undefined, then replaces with the thumbnail namespace
+				// from UAL if the asset has a valid one.
+				var geopserve_thumb_src = 'undefined';
+				if (geopserve_results[i].hasOwnProperty('thumbnail')){
+					if (geopserve_results[i].thumbnail.hasOwnProperty('url') || geopserve_results[i].thumbnail.hasOwnProperty('contentData')){
+						geopserve_thumb_src = geopserve_ual_domain_in + "/api/items/" + geopserve_results[i].id + "/thumbnail";
+					}
+				}
+
 				// Determines singular version of the asset type and icon.
 				var geopserve_under_label_type = "";
 				var geopserve_under_label_icon = "";
@@ -271,7 +283,10 @@ function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, g
 	var second_gap = document.createTextNode(" | ");
 	var bottom_span = geopserve_createEl({type: 'span', html: geopserve_under_label_array[5]});
 	var sub_div = geopserve_createEl({type: 'div', class: 'm-results-item__description', html: geopserve_under_label_array[6]});
-	var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: 'Thumbnail', src: geopserve_thumb_src, onerror: geopserve_thumb_error});
+
+	// Creates thumbnail image only if asset possesses a thumbnail.
+	if (geopserve_thumb_src !== 'undefined')
+		var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: 'Thumbnail', src: geopserve_thumb_src, onerror: geopserve_thumb_error});
 
 	// Appends them to each-other in the desired order.
 	icon_div.appendChild(icon_span);
@@ -293,7 +308,10 @@ function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, g
 
 	main_div.appendChild(icon_div);
 	main_div.appendChild(body_div);
-	main_div.appendChild(thumb_img);
+
+	// Attaches the thumbnail image only if it exists.
+	if (geopserve_thumb_src !== 'undefined')
+		main_div.appendChild(thumb_img);
 
 	master_div.appendChild(main_div);
 
