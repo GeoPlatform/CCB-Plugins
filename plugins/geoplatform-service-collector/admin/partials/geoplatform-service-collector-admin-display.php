@@ -50,6 +50,7 @@
         &nbsp&nbsp&nbsp&nbspResult Count:&nbsp
         <input type="number" class="regular-text" id="serve_count" value="6" name="<?php echo $this->plugin_name; ?>[serve_count]" style="width:5em;"/>
       </p>
+      <hr>
       <p>Choose to capture results by community or theme
         <table>
           <tr>
@@ -62,6 +63,7 @@
           </tr>
         </table>
       </p>
+      <hr>
       <p>Select the items to include in the output
         <table>
           <tr>
@@ -86,8 +88,8 @@
     </fieldset>
 
 <!-- Add Carousel Button -->
+    <hr>
     <input type="submit" id="geopserve_add_action" value="Add Carousel"/>
-
  <!-- Procedural table creation block.  Here the carousel collection output is
       set. It begins with the header of the table.-->
       <p><strong>Carousel Details Table</strong></p>

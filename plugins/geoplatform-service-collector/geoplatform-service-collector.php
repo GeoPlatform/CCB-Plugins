@@ -145,6 +145,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
     'id' => '',
     'cat' => 'TFFFFFF',
 		'count' => '6',
+		'source' => 'community',
 		'hide' => 'F',
   ), $geopserve_atts);
   ob_start();
@@ -317,6 +318,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				<!-- Carousel pane generation script. -->
 				<script type="text/javascript">
 					var geopserve_community_id = "<?php echo $geopserve_shortcode_array['id'] ?>";
+					var geopserve_source = "<?php echo $geopserve_shortcode_array['source'] ?>";
 					var geopserve_asset_name = "<?php echo $geopserve_generation_array[$i]['title'] ?>";
 					var geopserve_result_count = "<?php echo $geopserve_shortcode_array['count'] ?>";
 					var geopserve_iter = "<?php echo $i ?>";
@@ -328,11 +330,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 					var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
 					// Asset list creation.
-					geopserve_gen_list(geopserve_community_id, geopserve_asset_name, geopserve_result_count, geopserve_iter,
+					geopserve_gen_list(geopserve_community_id, geopserve_source, geopserve_asset_name, geopserve_result_count, geopserve_iter,
 						geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_failsafe);
 
 					// Search bar count applicator.
-					geopserve_gen_count(geopserve_community_id, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);
+					geopserve_gen_count(geopserve_community_id, geopserve_source, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);
 				</script>
 				<?php
 
