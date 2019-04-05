@@ -221,7 +221,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 			// Generates the top buttons, but only if there are at least two data
 			// types to provide output for.
 			if (sizeof($geopserve_generation_array) > 1){
-					echo "<ol class='carousel-indicators u-mg-bottom--xlg'>";
+					echo "<ol class='carousel-indicators carousel-indicators-override u-mg-bottom--xlg'>";
 					for ($i = 0; $i < sizeof($geopserve_generation_array); $i++){
 						if ($i == 0){
 							echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base geopserve-carousel-active active' title='" . $geopserve_generation_array[$i]['title'] . "'>";
@@ -272,7 +272,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 				// Displays the current carousel item title, if not hidden.
 				if ($geopserve_shortcode_array['hide'] != 'T')
-					echo "<div class='m-article__heading u-text--sm'>Recent " . strtolower($geopserve_generation_array[$i]['title']) . "</div>";
+					echo "<div class='m-article__heading u-text--sm' style='text-align:center;'>Recent " . strtolower($geopserve_generation_array[$i]['title']) . "</div>";
 
 				// More container divs, including the carousel div that assets will be applied to.
 				echo "<div class='m-article__desc'>";
