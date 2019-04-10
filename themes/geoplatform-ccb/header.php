@@ -14,6 +14,15 @@
 
 // Getting theme mods for search bar and mega-menu hiding checks.
 $geopccb_theme_options = geop_ccb_get_theme_mods();
+
+// Bootstrap determination logic.
+$geopccb_bootstrap_use = true;
+if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) == 'gone')
+  $geopccb_bootstrap_use = false;
+elseif (isset($post)){
+  if ( $post->post_name == 'geoplatform-search' || $post->post_name == 'register' || $post->post_name == 'geoplatform-items' )
+    $geopccb_bootstrap_use = false;
+}
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
@@ -62,45 +71,39 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
 
           <!-- Checks for a lack of mega-menu button and adjusts height to keep it consistant. -->
               <?php
-              if (isset($post)){
-                if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone' && $post->post_name != 'geoplatform-search' && $post->post_name != 'register' && $post->post_name != 'geoplatform-items'){
-                  ?>
-                  <ul role="menu" class="header__menu">
-                  <?php
-                } else {
-                  ?>
-                  <ul role="menu" class="header__menu" style="margin-top:0.5em;">
-                  <?php
-                }
+              if ($geopccb_bootstrap_use)
+                echo "<ul role='menu' class='header__menu'>";
+              else
+                echo "<ul role='menu' class='header__menu' style='margin-top:0.5em;'>";
 
-                $geopccb_search_format = get_theme_mod('searchbar_controls', $geopccb_theme_options['searchbar_controls']);
-                if ($geopccb_search_format == 'gp' && !in_array('geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())))
-                  $geopccb_search_format = 'wp';
+              // Search bar format determination.
+              $geopccb_search_format = get_theme_mod('searchbar_controls', $geopccb_theme_options['searchbar_controls']);
+              if ($geopccb_search_format == 'gp' && !in_array('geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())))
+                $geopccb_search_format = 'wp';
 
-                // Checks the search bar settings and switches them out as needed.
-                if ($geopccb_search_format == 'wp'){
-                  ?>
-                  <li><?php get_search_form(); ?></li>
-                  <?php
-                } elseif ($geopccb_search_format == 'gp'){
-                  ?>
-                  <li><?php get_template_part( 'gpsearch', get_post_format() ); ?></li>
-                  <?php
-                }
+              // Checks the search bar settings and switches them out as needed.
+              if ($geopccb_search_format == 'wp'){
+                echo "<li>";
+                get_search_form();
+                echo "</li>";
+              }
+              elseif ($geopccb_search_format == 'gp'){
+                echo "<li>";
+                get_template_part( 'gpsearch', get_post_format() );
+                echo "</li>";
+              }
 
-                      if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) != 'gone' && $post->post_name != 'geoplatform-search' && $post->post_name != 'register' && $post->post_name != 'geoplatform-items'){
-                        ?>
-                        <li>
-                        <!-- mega menu toggle -->
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-link header__btn dropdown-toggle"
-                                  data-toggle="dropdown" data-target="#megamenu" aria-expanded="false">
-                              <span class="icon-hamburger-menu t-light"></span>
-                              <span class="hidden-xs"><?php _e( 'Menu', 'geoplatform-ccb'); ?><span class="caret"></span></span>
-                            </button>
-                          </div>
-                        </li>
-                      <?php } ?>
+              // mega menu toggle
+              if ($geopccb_bootstrap_use){
+                echo "<li>";
+                  echo "<div class='btn-group'>";
+                    echo "<button type='button' class='btn btn-link header__btn dropdown-toggle' data-toggle='dropdown' data-target='#megamenu' aria-expanded='false'>";
+                      echo "<span class='icon-hamburger-menu t-light'></span>";
+                      echo "<span class='hidden-xs'>" . __( 'Menu', 'geoplatform-ccb') . "<span class='caret'></span></span>";
+                    echo "</button>";
+                  echo "</div>";
+                echo "</li>";
+              } ?>
                       <!-- login button toggle -->
                       <!-- Disable for now, re-enable for authentication -->
                       <li class="hidden-xs">
@@ -134,7 +137,6 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                       <?php echo esc_html(get_bloginfo( 'name' )); ?>
                     </a>
                   </h4>
-              <?php } ?>
             </div><!--#col-md-12-->
         </div><!--#row-->
 </header>
