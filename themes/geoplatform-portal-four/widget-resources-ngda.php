@@ -100,7 +100,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		      </a>
 		      <a href="<?php echo home_url('ngda/waterocean/'); ?>" class="u-text--center">
 						<span class="fas t-fg--blue-dk flaticon-wave"></span><br>
-						<span class="u-text--sm">Water - Oceans &amp; Coasts</span>
+						<span class="u-text--sm">Water - Oceans and Coasts</span>
 		      </a>
 		    </div>
 		  </div>
