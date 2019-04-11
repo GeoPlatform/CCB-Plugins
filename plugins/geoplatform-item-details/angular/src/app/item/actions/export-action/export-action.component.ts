@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ItemTypes, Config, ItemService } from "geoplatform.client";
+import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
 
 const FORMATS = buildFormats();
@@ -47,7 +48,7 @@ export class ExportActionComponent implements OnInit {
     @Input() item : any;
     @Input() service : ItemService;
 
-    constructor() { }
+    constructor( private rpm: RPMService) { }
 
     ngOnInit() {
     }
@@ -63,6 +64,10 @@ export class ExportActionComponent implements OnInit {
     doAction(format) {
         if(!this.item || !this.service) return;
         window.open(Config.ualUrl + '/api/items/' + this.item.id + '/export?format=' + format, '_blank');
+
+        // RPM : Asset Exported
+        const TYPE = this.item.type.replace(/.+:/,'')
+        this.rpm.logEvent(TYPE, 'Exported', this.item.id);
     }
 
 
