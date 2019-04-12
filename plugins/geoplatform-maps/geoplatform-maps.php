@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.1.1
+ * @since             1.1.2
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.1.1' );
+define( 'GEOPMAP_PLUGIN', '1.1.2' );
 
 /**
  * The code that runs during plugin activation.
@@ -108,7 +108,7 @@ function geopmap_shortcode_creation($geopmap_atts){
     'url' => '',
 		'width' => '0',
 		'height' => '0',
-		'title' => 'on',
+		'use' => 'page',
   ), $geopmap_atts);
   ob_start();
 
@@ -267,7 +267,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			jQuery('#errorbox_<?php echo $geopmap_divrand; ?>').width('100%');
 		}
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
-			jQuery('#middle_<?php echo $geopmap_divrand; ?>').height('98%');
+			jQuery('#middle_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.56);
 		}
 
 		// Error report handler. If there is content in error_report, that string
@@ -326,12 +326,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	if ($geopmap_theme == 'F'){
 		$geopmap_layer_icon = 'fas fa-bars';
 	}
-
-	// GeoPlatform Portal 4 theme detection, which will determine explicit output
-	// for that theme.
-	$geopportal_theme = 'F';
-	if (strpos(strtolower(wp_get_theme()->get('Name')), 'geoplatform-portal-four') !== false)
-		$geopportal_theme = 'T';
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -347,11 +341,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 are set initially to those of the width as passed by array.-->
 	  <div class="geop-display-main" id="middle_<?php echo $geopmap_divrand; ?>" style="width:<?php echo $geopmap_shortcode_array['width']; ?>px;">
 
-
-
-
-
-
  <!-- Name, link, and layer control card. Provides a link to the map with the
  			title text and link to the object editor with the info icon link. -->
 			<?php
@@ -366,7 +355,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					<div>
 
 						<?php
-						if (esc_attr($geopmap_shortcode_array['title']) != 'main'){
+						if (esc_attr($geopmap_shortcode_array['use']) != 'featured'){
 							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn-sm' style='margin-right:.5em;'>";
 								echo "<span class='geop-redirect-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
 							echo "</button>";
@@ -429,10 +418,10 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		if (<?php echo esc_attr($geopmap_shortcode_array['width']); ?> == 0 || <?php echo esc_attr($geopmap_shortcode_array['width']); ?> > widthGrab)
 			jQuery('#middle_<?php echo $geopmap_divrand; ?>').width('98%');
 		if (<?php echo esc_attr($geopmap_shortcode_array['height']); ?> == 0){
-			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
-			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.75);
+			jQuery('#container_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.56);
+			jQuery('#layerbox_<?php echo $geopmap_divrand; ?>').height(widthGrab * 0.56);
 		}
-		if ('<?php echo esc_attr($geopmap_shortcode_array['title']); ?>' == 'main'){
+		if ('<?php echo esc_attr($geopmap_shortcode_array['use']); ?>' == 'featured'){
 			jQuery('#container_<?php echo $geopmap_divrand; ?>').height('100%');
 		}
 		if (jQuery('#middle_<?php echo $geopmap_divrand; ?>').width() <= 400)

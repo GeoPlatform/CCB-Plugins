@@ -4,7 +4,7 @@
  * class is called by the Add Carousel button in the display.php class.
  *
  * @link       www.geoplatform.gov
- * @since      1.1.0
+ * @since      1.1.1
  *
  */
 

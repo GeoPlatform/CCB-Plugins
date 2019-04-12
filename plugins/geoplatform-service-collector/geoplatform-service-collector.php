@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.1.0
+ * @since             1.1.1
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -48,10 +48,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 /**
  * Currently plugin version.
- * Start at version 1.1.0 and use SemVer - https://semver.org
+ * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSERVE_PLUGIN', '1.1.0' );
+define( 'GEOSERVE_PLUGIN', '1.1.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -87,7 +87,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-service-collec
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.1.0
+ * @since    1.1.1
  */
 function run_geoplatform_service_collector() {
 
@@ -102,7 +102,8 @@ run_geoplatform_service_collector();
 // carousel. This is handled below.
 function geopserve_com_shortcodes_creation($geopserve_atts){
 
-	?><script type="text/javascript">
+	?>
+	<script type="text/javascript">
 		jQuery(document).ready(function() {
 
 			// Button color controls, because the CSS doesn't work for plugins. On
@@ -134,7 +135,8 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				);
 			});
 		});
-	</script><?php
+	</script>
+	<?php
 
 	// Establishes a base array with default values required for shortcode creation
 	// and overwrites them with values from $geopserve_atts.
@@ -154,7 +156,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Datasets',
 				'query' => '&types=dcat:Dataset&q=',
-				'uri' => '/api/datasets/',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/dataset.svg',
 				'icon' => 'icon-dataset',
 			)
@@ -164,7 +165,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Services',
 				'query' => '&types=regp:Service&q=',
-				'uri' => '/api/services/',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/service.svg',
 				'icon' => 'icon-service',
 			)
@@ -174,7 +174,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Layers',
 				'query' => '&types=Layer&q=',
-				'uri' => '/api/layers/',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/layer.svg',
 				'icon' => 'icon-layer',
 			)
@@ -184,7 +183,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Maps',
 				'query' => '&types=Map&q=',
-				'uri' => '/api/maps/',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/map.svg',
 				'icon' => 'icon-map',
 			)
@@ -194,7 +192,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 		array_push( $geopserve_generation_array, array(
 				'title' => 'Galleries',
 				'query' => '&types=Gallery&q=',
-				'uri' => '/api/galleries/',
 				'thumb' => plugin_dir_url(__FILE__) . 'public/assets/gallery.svg',
 				'icon' => 'icon-gallery',
 			)
@@ -325,15 +322,14 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 					var geopserve_iter = "<?php echo $i ?>";
 					var geopserve_icon = "<?php echo $geopserve_generation_array[$i]['icon'] ?>";
 					var geopserve_ual_domain = "<?php echo $geopserve_ual_domain ?>";
-					var geopserve_ual_endpoint = "<?php echo $geopserve_generation_array[$i]['uri'] ?>";
 					var geopserve_redirect = "<?php echo $geopserve_redirect_url ?>";
 					var geopserve_new_tab = "<?php echo $geopserve_shortcode_array['hide'] ?>";
 					var geopserve_home = "<?php echo home_url() ?>";
-					var geopserve_fourohfour = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
+					var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
 					// Asset list creation.
-					geopserve_gen_list(geopserve_community_id, geopserve_asset_name, geopserve_result_count, geopserve_iter, geopserve_icon,
-						geopserve_ual_domain, geopserve_ual_endpoint, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_fourohfour);
+					geopserve_gen_list(geopserve_community_id, geopserve_asset_name, geopserve_result_count, geopserve_iter,
+						geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_failsafe);
 
 					// Search bar count applicator.
 					geopserve_gen_count(geopserve_community_id, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);

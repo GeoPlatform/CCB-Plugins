@@ -4,7 +4,7 @@
  * The public-facing functionality of the plugin.
  *
  * @link       https://www.imagemattersllc.com
- * @since      1.1.0
+ * @since      1.1.1
  *
  * @package    Geoplatform_Service_Collector
  * @subpackage Geoplatform_Service_Collector/public
@@ -25,7 +25,7 @@ class Geoplatform_Service_Collector_Public {
 	/**
 	 * The ID of this plugin.
 	 *
-	 * @since    1.1.0
+	 * @since    1.1.1
 	 * @access   private
 	 * @var      string    $plugin_name    The ID of this plugin.
 	 */
@@ -34,7 +34,7 @@ class Geoplatform_Service_Collector_Public {
 	/**
 	 * The version of this plugin.
 	 *
-	 * @since    1.1.0
+	 * @since    1.1.1
 	 * @access   private
 	 * @var      string    $version    The current version of this plugin.
 	 */
@@ -43,7 +43,7 @@ class Geoplatform_Service_Collector_Public {
 	/**
 	 * Initialize the class and set its properties.
 	 *
-	 * @since    1.1.0
+	 * @since    1.1.1
 	 * @param      string    $plugin_name       The name of the plugin.
 	 * @param      string    $version    The version of this plugin.
 	 */
@@ -57,7 +57,7 @@ class Geoplatform_Service_Collector_Public {
 	/**
 	 * Register the stylesheets for the public-facing side of the site.
 	 *
-	 * @since    1.1.0
+	 * @since    1.1.1
 	 */
 	public function enqueue_styles() {
 
@@ -79,7 +79,7 @@ class Geoplatform_Service_Collector_Public {
 	/**
 	 * Register the JavaScript for the public-facing side of the site.
 	 *
-	 * @since    1.1.0
+	 * @since    1.1.1
 	 */
 	public function enqueue_scripts() {
 
@@ -97,6 +97,7 @@ class Geoplatform_Service_Collector_Public {
 
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-service-collector-public.js', array( 'jquery' ), $this->version, false );
+		// wp_enqueue_script( 'geop_client_api_min', 'https://github.com/GeoPlatform/client-api/blob/master/dist/js/geoplatform.client.js' );
 		wp_enqueue_script( 'geop_client_api_min', plugin_dir_url( __FILE__ ) . 'js/geoplatform.client.min.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'js/geoplatform.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_q', plugin_dir_url( __FILE__ ) . 'js/q_2.0.3.js', array(), $this->version, false );

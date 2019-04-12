@@ -60,8 +60,8 @@ get_template_part( 'sub-header-post', get_post_format() );
  				$geopportal_archive_disp_thumb = get_the_post_thumbnail_url($geopportal_post);
 
  			// To prevent entries overlapping their blocks, sets min height to match thumb.
- 			list($width, $height) = getimagesize($geopportal_archive_disp_thumb);
- 			$geopportal_archive_scaled_height = ((350 * $height) / $width) + 30;
+ 			// list($width, $height) = getimagesize($geopportal_archive_disp_thumb);
+ 			// $geopportal_archive_scaled_height = ((350 * $height) / $width) + 30;
     	?>
 
 			<div class="m-article m-article--flex">
