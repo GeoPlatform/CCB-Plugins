@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.1.2
+ * @since             1.1.3
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.1.2
+ * Version:           1.1.3
  * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.1.2' );
+define( 'GEOPMAP_PLUGIN', '1.1.3' );
 
 /**
  * The code that runs during plugin activation.
@@ -224,10 +224,12 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 		<div>
 
 					<?php
-					if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
+					if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
 						echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
-						echo "<span style='color: #212529'>View Details</span></a>";
-					}?>
+					else
+						echo "<a href='https://www.geoplatform.gov/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
+					echo "<span style='color: #212529'>View Details</span></a>";
+					?>
 
 		 			<a href="<?php echo esc_url($geopmap_landing_page); ?>" target="_blank" class="btn btn-info btn-sm geop-sub-buttons">
 		 				<span>Open Map</span>
@@ -361,10 +363,12 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 							echo "</button>";
 						}
 
-						if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) ){
+						if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
 							echo "<a href='" . home_url() . "/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
-							echo "<span style='color: #212529'>View Details</span></a>";
-						}?>
+						else
+							echo "<a href='https://www.geoplatform.gov/resources/maps/" . esc_attr($geopmap_shortcode_array['id']) . "' target='_blank' class='geop-sub-buttons btn btn-light btn-sm'>";
+						echo "<span style='color: #212529'>View Details</span></a>";
+						?>
 
 						<a href="<?php echo $geopmap_viewer_url . '/?id=' . esc_attr($geopmap_shortcode_array['id']); ?>" target="_blank" class="geop-sub-buttons btn btn-info btn-sm">
 							<span>Open Map</span>
