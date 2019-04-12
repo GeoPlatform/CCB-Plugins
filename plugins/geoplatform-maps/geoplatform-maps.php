@@ -398,7 +398,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 <!-- Javascript region. -->
 	<script>
 	jQuery('document').ready(function(){
-		console.log(widthGrab);
 
 		// Error report string, which will be filled for display if necessary.
 		var geopmap_error_report = "<?php echo $geopmap_error_text ?>";

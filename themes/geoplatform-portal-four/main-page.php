@@ -54,8 +54,8 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_disp_fifth_tags = get_the_category($geopportal_mainpage_disp_fifth_page->ID);
 
 		// Makes sure browse all count is a number.
-		$geopportal_mainpage_disp_more_count = get_theme_mod('featured_more_count');
-		if (!is_numeric($geopportal_mainpage_disp_more_count) || $geopportal_mainpage_disp_more_count <= 0)
+		// $geopportal_mainpage_disp_more_count = get_theme_mod('featured_more_count');
+		// if (!is_numeric($geopportal_mainpage_disp_more_count) || $geopportal_mainpage_disp_more_count <= 0)
 			$geopportal_mainpage_disp_more_count = 6;
 
 		// Makes array of slug names for more content filtering.

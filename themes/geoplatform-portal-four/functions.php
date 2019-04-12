@@ -501,17 +501,17 @@ function geop_ccb_featured_register( $wp_customize ){
 		'priority' => 40,
 	));
 
-	$wp_customize->add_setting('featured_more_count',array(
-		'default' => '',
-		'sanitize_callback' => 'sanitize_text_field'
-	));
-
-	$wp_customize->add_control('featured_more_count',array(
-		'type' => 'number',
-		'label' => "More Content Count",
-		'section' => 'featured_posts',
-		'priority' => 45,
-	));
+	// $wp_customize->add_setting('featured_more_count',array(
+	// 	'default' => '',
+	// 	'sanitize_callback' => 'sanitize_text_field'
+	// ));
+	//
+	// $wp_customize->add_control('featured_more_count',array(
+	// 	'type' => 'number',
+	// 	'label' => "More Content Count",
+	// 	'section' => 'featured_posts',
+	// 	'priority' => 45,
+	// ));
 
 	$wp_customize->add_setting('featured_browse_slug',array(
 		'default' => '',
