@@ -40,7 +40,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		      </a>
 		      <a href="<?php echo home_url('ngda/biodiversity/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-frog t-fg--blue-dk"></span><br>
-						<span class="u-text--sm">Biodiversity &amp; Ecosystems</span>
+						<span class="u-text--sm">Biodiversity and Ecosystems</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/cadastre/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-scroll t-fg--blue-dk"></span><br>
@@ -48,7 +48,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		      </a>
 		      <a href="<?php echo home_url('ngda/climate/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-cloud-sun-rain t-fg--blue-dk"></span><br>
-						<span class="u-text--sm">Climate &amp; Weather</span>
+						<span class="u-text--sm">Climate and Weather</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/cultural/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-landmark t-fg--blue-dk"></span><br>
@@ -68,7 +68,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		      </a>
 		      <a href="<?php echo home_url('ngda/govunits/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-flag-usa t-fg--blue-dk"></span><br>
-						<span class="u-text--sm">Government Units and Administrative & Statistical Boundaries</span>
+						<span class="u-text--sm">Governmental Units and Administrative and Statistical Boundaries</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/imagery/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-images t-fg--blue-dk"></span><br>
@@ -100,7 +100,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		      </a>
 		      <a href="<?php echo home_url('ngda/waterocean/'); ?>" class="u-text--center">
 						<span class="fas t-fg--blue-dk flaticon-wave"></span><br>
-						<span class="u-text--sm">Water - Oceans and Coasts</span>
+						<span class="u-text--sm">Water - Oceans &amp; Coasts</span>
 		      </a>
 		    </div>
 		  </div>
