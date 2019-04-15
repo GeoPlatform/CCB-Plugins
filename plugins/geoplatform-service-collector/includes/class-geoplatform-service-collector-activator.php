@@ -43,6 +43,7 @@ class Geoplatform_Service_Collector_Activator {
 				serve_title varchar(255) NOT NULL,
 				serve_cat varchar(255) NOT NULL,
 				serve_count varchar(255) NOT NULL,
+				serve_source varchar(255) NOT NULL,
 				serve_shortcode varchar(255) NOT NULL,
 	      PRIMARY KEY  (id)
 	    ) $geopserve_charset_collate;";

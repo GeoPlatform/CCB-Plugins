@@ -50,6 +50,20 @@
         &nbsp&nbsp&nbsp&nbspResult Count:&nbsp
         <input type="number" class="regular-text" id="serve_count" value="6" name="<?php echo $this->plugin_name; ?>[serve_count]" style="width:5em;"/>
       </p>
+      <hr>
+      <p>Choose to capture results by community or theme
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_source_group" class="regular-text" id="serve_source_community" value="serve_source_community" checked>Community&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_source_group" class="regular-text" id="serve_source_theme" value="serve_source_theme">Theme&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p>
+      <hr>
       <p>Select the items to include in the output
         <table>
           <tr>
@@ -74,8 +88,8 @@
     </fieldset>
 
 <!-- Add Carousel Button -->
+    <hr>
     <input type="submit" id="geopserve_add_action" value="Add Carousel"/>
-
  <!-- Procedural table creation block.  Here the carousel collection output is
       set. It begins with the header of the table.-->
       <p><strong>Carousel Details Table</strong></p>
@@ -86,6 +100,7 @@
             <th><?php esc_attr_e( 'Community', 'geoplatform-serves' ); ?></th>
         		<th><?php esc_attr_e( 'Output Types', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Output Count', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Source Format', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Shortcode', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Controls', 'geoplatform-serves' ); ?></th>
         	</tr>
@@ -112,12 +127,15 @@
             (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
             (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
             $geopserve_cat_out = implode(", ", $geopserve_cat_array);
+
+            (is_null($geopserve_entry->serve_source) || empty($geopserve_entry->serve_source)) ? $geopserve_source_out = 'Community' : $geopserve_source_out = ucfirst($geopserve_entry->serve_source);
             ?>
             <tr>
           		<td><?php echo esc_attr($geopserve_entry->serve_title); ?></td>
               <td><?php echo esc_attr($geopserve_entry->serve_name); ?></td>
               <td><?php echo esc_attr($geopserve_cat_out); ?></td>
           		<td><?php echo esc_attr($geopserve_entry->serve_count); ?></td>
+              <td><?php echo esc_attr($geopserve_source_out); ?></td>
               <td><code><?php echo esc_attr($geopserve_entry->serve_shortcode); ?></code></td>
               <td>
                 <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_num; ?>">Remove Carousel</button>

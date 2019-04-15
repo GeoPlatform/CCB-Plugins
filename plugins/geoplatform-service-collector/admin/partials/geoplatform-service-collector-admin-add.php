@@ -17,6 +17,7 @@ global $wpdb;
 $geopserve_title = $_POST["serve_name"];
 $geopserve_id = sanitize_key($_POST["serve_id"]);
 $geopserve_count = sanitize_key($_POST["serve_count"]);
+$geopserve_source_in = sanitize_key($_POST["serve_source"]);
 $geopserve_cat_dat = sanitize_key($_POST["serve_cat_dat"]);
 $geopserve_cat_ser = sanitize_key($_POST["serve_cat_ser"]);
 $geopserve_cat_lay = sanitize_key($_POST["serve_cat_lay"]);
@@ -41,7 +42,7 @@ $geopserve_ual_url = 'https://ual.geoplatform.gov';
 // here switches invalid_bool to true.
 if (!ctype_xdigit($geopserve_id) || strlen($geopserve_id) != 32){
   $geopserve_invalid_bool = true;
-  echo "Addition failed. Invalid community ID format.";
+  echo "Addition failed. Invalid ID format.";
 }
 
 // Count validation, which must be at least one.
@@ -80,7 +81,7 @@ if (!$geopserve_invalid_bool){
   // trigger invalid_bool and cause an echo back for user error reporting.
   if (!$geopserve_invalid_bool && array_key_exists('statusCode', $geopserve_result) && $geopserve_result['statusCode'] == "404"){
     $geopserve_invalid_bool = true;
-    echo "Addition failed. No community with this ID exists.";
+    echo "Addition failed. No community or theme with this ID exists.";
   }
 
   // Validity and duplication checks.
@@ -108,11 +109,12 @@ if (!$geopserve_invalid_bool){
     $geopserve_cats .= ($geopserve_cat_lay == 'true') ? 'T' : 'F';
     $geopserve_cats .= ($geopserve_cat_map == 'true') ? 'T' : 'F';
     $geopserve_cats .= ($geopserve_cat_gal == 'true') ? 'T' : 'F';
+    $geopserve_source = ($geopserve_source_in == 'true') ? 'theme' : 'community';
 
     $geopserve_shortcode = "[geopserve ";
     if ($geopserve_title != "N/A")
       $geopserve_shortcode .= "title='" . $geopserve_title . "' ";
-    $geopserve_shortcode .= "id='" . $geopserve_id . "' cat='" . $geopserve_cats . "' count='" . $geopserve_count . "']";
+    $geopserve_shortcode .= "id='" . $geopserve_id . "' cat='" . $geopserve_cats . "' count='" . $geopserve_count . "' source='" . $geopserve_source . "']";
 
     // echo $geopserve_title . "-" . $geopserve_name . "-" . $geopserve_id . "-" . $geopserve_count . "-" . $geopserve_cats . "-" . $geopserve_rand . "-" . $geopserve_shortcode;
 
@@ -125,6 +127,7 @@ if (!$geopserve_invalid_bool){
         'serve_title' => $geopserve_title,
         'serve_cat' => $geopserve_cats,
         'serve_count' => $geopserve_count,
+        'serve_source' => $geopserve_source,
         'serve_shortcode' => $geopserve_shortcode
       )
     );
