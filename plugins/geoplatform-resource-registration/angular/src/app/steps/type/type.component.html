@@ -131,16 +131,34 @@
                     [filterFn]="filterResourceTypes">
                 </gprr-autocomplete-mat-chip>
 
-
-                <mat-form-field floatLabel="always">
+                <!-- if user selects Map type -->
+                <div *ngIf="currentType==='Map'">
+                  <mat-form-field floatLabel="always">
                     <mat-label>Landing Page</mat-label>
                     <mat-icon matPrefix>link</mat-icon>
                     <input matInput formControlName="landingPage"
-                        placeholder="Specify the landing page of the resource"
-                        [required]="currentType==='Map'">
+                           placeholder="Specify the landing page of the resource"
+                           [required]="currentType==='Map'">
                     <mat-hint>A website where more information can be gathered</mat-hint>
                     <mat-error *ngIf="isInvalid('landingPage')">{{getErrorMessage('landingPage')}}</mat-error>
-                </mat-form-field>
+                  </mat-form-field>
+                </div>
+
+
+                <!-- if user selects Application type -->
+                <div *ngIf="currentType==='Application'">
+
+                  <mat-form-field floatLabel="always">
+                    <mat-label>Access URL</mat-label>
+                    <mat-icon matPrefix>link</mat-icon>
+                    <input matInput formControlName="landingPage"
+                           placeholder="Specify the access URL of the Application"
+                           [required]="currentType==='Application'">
+                    <mat-hint>A website where more information can be gathered</mat-hint>
+                    <mat-error *ngIf="isInvalid('landingPage')">{{getErrorMessage('landingPage')}}</mat-error>
+                  </mat-form-field>
+
+                </div>
 
 
             </div>
