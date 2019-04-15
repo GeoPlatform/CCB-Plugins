@@ -64,10 +64,21 @@ add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 function geop_ccb_header_customize_css(){}
 add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
-//Disable admin bar (un-comment for prod sites)
+// Disable admin bar (un-comment for prod sites)
 if ( !current_user_can('administrator')){
 	add_filter('show_admin_bar', '__return_false');
 }
+
+// If the homepage is navigated to via communities.geoplatform.gov, this function
+// will ensure that the user is redirected to the communities resource page.
+function geop_portal_redirect(){
+	$geopportal_domain = $_SERVER["SERVER_NAME"];
+	if ($geopportal_domain == "communities.geoplatform.gov"){
+		wp_redirect(home_url() . '/resources/communities/');
+		exit;
+	}
+}
+add_action( 'wp_loaded', 'geop_portal_redirect');
 
 //--------------------------
 //Support adding Menus for header and footer

@@ -11,7 +11,13 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <meta name="author" content="">
   <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
 
-  <?php wp_head();?>
+  <?php
+  wp_head();
+
+
+
+
+  ?>
 
 </head>
 <header class="o-header o-header--sticky" role="banner">
