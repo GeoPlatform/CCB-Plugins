@@ -44,7 +44,6 @@ function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in
 	const Query = GeoPlatformClient.Query;
 	const ItemTypes = GeoPlatformClient.ItemTypes;
 	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
-	// var ItemService = GeoPlatform.ItemService;
 
 	var query = new Query();
 
@@ -112,7 +111,6 @@ function geopserve_gen_list(geopserve_id_in, geopserve_source, geopserve_cat_in,
 	const Query = GeoPlatformClient.Query;
 	const ItemTypes = GeoPlatformClient.ItemTypes;
 	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
-	// var ItemService = GeoPlatform.ItemService;
 
 	var query = new Query();
 
@@ -149,10 +147,6 @@ function geopserve_gen_list(geopserve_id_in, geopserve_source, geopserve_cat_in,
 	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
 	itemSvc.search(query)
 		.then(function (response) {
-
-			console.log(response);
-
-			// ItemService.search(thumb_query).then( thumb_response => thumb_response.results.forEach( item => item.thumbnail ? console.log(buildThumb(item.thumbnail)) : doNothing(); ) );
 
 			// Gets the results.
 			var geopserve_results = response.results;
