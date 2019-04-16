@@ -485,7 +485,6 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			// each layer and creates local variables in the form of html elements.
 			if (geopmap_layerStates.length > 0){
 				for (var i = 0; i < geopmap_layerStates.length; i++){
-					console.log(geopmap_layerStates[i]);
 
 					// While in a layer loop, may as well dictate opacity.
 					GeopMapInstance.updateLayerOpacity(geopmap_layerStates[i].layer_id, geopmap_layerStates[i].opacity);
