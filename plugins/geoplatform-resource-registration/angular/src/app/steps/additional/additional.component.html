@@ -46,29 +46,40 @@
                     <div class="u-text--sm t-text--bold t-fg--gray-md">Thumbnail</div>
                     <div class="thumbnail__container">
                         <div class="thumbnail__form">
-                            <div>
-                                <input type="file" accept="image/*" style="display:none"
-                                    #thumbFileInput (change)="onFileUpload()">
-                                <input type="hidden" formControlName="thumbnailContent">
-                                <button mat-raised-button (click)="triggerFileUpload()">
-                                    <mat-icon>image</mat-icon> Use a File
-                                </button>
-                                <span *ngIf="thumbFileInput.nativeElement?.files?.length">
-                                    {{thumbFileInput.nativeElement?.files[0].name}}
-                                </span>
+                            <div class="d-flex">
+                                <!-- File Upload -->
+                                <div>
+                                    <input type="file" accept="image/*" style="display:none"
+                                        #thumbFileInput (change)="onFileUpload()">
+                                    <input type="hidden" formControlName="thumbnailContent">
+                                    <button mat-raised-button (click)="triggerFileUpload()">
+                                        <mat-icon>image</mat-icon> Use a File
+                                    </button>
+                                    <span *ngIf="thumbFileInput.nativeElement?.files?.length">
+                                        {{thumbFileInput.nativeElement?.files[0].name}}
+                                    </span>
+                                </div>
+
+                                <!-- URL -->
+                                <div class="flex-1 u-mg-left--md">
+                                    <mat-form-field floatLabel="always">
+                                        <mat-label>Use URL</mat-label>
+                                        <mat-icon matPrefix>link</mat-icon>
+                                        <input type="url" matInput
+                                            formControlName="thumbnailUrl"
+                                            (keyup)="onThumbnailUrlChange($event)"
+                                            placeholder="Specify a thumbnail image">
+                                        <mat-hint>Specify the URL of an image to use as the thumbnail of the resource</mat-hint>
+                                        <mat-error *ngIf="isInvalid('thumbnailUrl')">{{getErrorMessage('thumbnailUrl')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
                             </div>
-                            <div>
-                                <mat-form-field floatLabel="always">
-                                    <mat-label>Use URL</mat-label>
-                                    <mat-icon matPrefix>link</mat-icon>
-                                    <input type="url" matInput
-                                        formControlName="thumbnailUrl"
-                                        (keyup)="onThumbnailUrlChange($event)"
-                                        placeholder="Specify a thumbnail image">
-                                    <mat-hint>Specify the URL of an image to use as the thumbnail of the resource</mat-hint>
-                                    <mat-error *ngIf="isInvalid('thumbnailUrl')">{{getErrorMessage('thumbnailUrl')}}</mat-error>
-                                </mat-form-field>
-                            </div>
+                            <mat-error *ngIf="thumbError" class="u-mg-left--md u-text--sm">
+                                {{thumbError}}.
+                                <button type="button" class="btn btn-sm btn-danger"
+                                    (click)="thumbError=null;">dismiss</button>
+                            </mat-error>
+
                         </div>
                         <div class="thumbnail__preview" *ngIf="hasValue('thumbnailUrl')||hasValue('thumbnailContent')">
                             <div class="u-text--sm t-text--bold t-fg--gray-md">Selected Thumbnail</div>
