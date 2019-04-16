@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.1.3
+ * @since             1.1.4
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.1.3
+ * Version:           1.1.4
  * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.1.3' );
+define( 'GEOPMAP_PLUGIN', '1.1.4' );
 
 /**
  * The code that runs during plugin activation.
@@ -435,30 +435,30 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		// being our GeoPlatform map. This section is wrapped in a try-catch block
 		// to catch any errors that may come. As of now, it's a pure error output
 		// concatenated to error_report.
-		var GeopMapInstance;
 		try {
 			var geopmap_lat = 38.8282;
 			var geopmap_lng = -98.5795;
 			var geopmap_zoom = 3;
 			var geopmap_mapCode = "<?php echo esc_attr($geopmap_shortcode_array['id']); ?>";
-			var geopmap_leafBase = L.map("container_<?php echo $geopmap_divrand;?>", {
+			var geopmap_options ={
 				minZoom: 2,
 				maxZoom: 21,
 				attributionControl: false
-			});
+			};
+			var geopmap_leafBase = L.map("container_<?php echo $geopmap_divrand;?>", geopmap_options);
 
 			// Instantiates GeopMapInstance, passing the leaflet map and view constants.
-			GeopMapInstance = GeoPlatform.MapFactory.get();
+			var GeopMapInstance = GeoPlatformMapCore.MapFactory.get();
 			GeopMapInstance.setMap(geopmap_leafBase);
 			GeopMapInstance.setView(51.505, -0.09, 13);
 
       // Actual attribute setting function including layer grab function, which
 			// cycles through the layers and populates the layer control sidebar. Also
 			// has error catching to grab errors through the promise system.
-			var geopmap_layerStates;
-			GeopMapInstance.loadMap(geopmap_mapCode).then( function(){
+			// var geopmap_layerStates;
+			GeopMapInstance.loadMap(geopmap_mapCode).then( mapObj => {
 				var geopmap_baseLayer = GeopMapInstance.getBaseLayer();
-				geopmap_layerStates = GeopMapInstance.getLayers();
+				var geopmap_layerStates = GeopMapInstance.getLayers();
 				geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_item_details_base);
 			}).catch( function(error){
 				geopmap_error_report += (error + "<BR>");
@@ -485,12 +485,20 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			// each layer and creates local variables in the form of html elements.
 			if (geopmap_layerStates.length > 0){
 				for (var i = 0; i < geopmap_layerStates.length; i++){
+
+					// While in a layer loop, may as well dictate opacity.
+					GeopMapInstance.updateLayerOpacity(geopmap_layerStates[i].layer_id, geopmap_layerStates[i].opacity);
+
 					var main_table = geopmap_createEl({type: 'table', class: 'geop-layer-box', style: 'width:100%'});
 					var table_row = geopmap_createEl({type: 'tr', class: 'geop-no-border'});
 					var first_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
-					var check_button = geopmap_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $geopmap_divrand; ?>', id: 'layer_button_id_<?php echo $geopmap_divrand; ?>', style: 'width:auto', opac: '1.0', text: geopmap_layerStates[i].layer_id});
-					var check_icon = geopmap_createEl({type: 'span', class: 'layer_button_icon_<?php echo $geopmap_divrand; ?> <?php echo $geopmap_base_icon . " " . $geopmap_check_icon ?>', style: 'color:black;'});
-					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', html: geopmap_layerStates[i].layer.label});
+					var check_button = geopmap_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $geopmap_divrand; ?>', id: 'layer_button_id_<?php echo $geopmap_divrand; ?>', style: 'width:auto', opac: geopmap_layerStates[i].opacity, text: geopmap_layerStates[i].layer_id});
+
+					if (geopmap_layerStates[i].visibility == true)
+						var check_icon = geopmap_createEl({type: 'span', class: 'layer_button_icon_<?php echo $geopmap_divrand; ?> <?php echo $geopmap_base_icon . " " . $geopmap_check_icon ?>', style: 'color:black;'});
+					else
+						var check_icon = geopmap_createEl({type: 'span', class: 'layer_button_icon_<?php echo $geopmap_divrand; ?> <?php echo $geopmap_base_icon . " " . $geopmap_uncheck_icon ?>', style: 'color:black;'});
+
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
 					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank"})
@@ -507,13 +515,13 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					table_row.appendChild(third_td);
 					main_table.appendChild(table_row);
 					document.getElementById('layerbox_<?php echo $geopmap_divrand; ?>').appendChild(main_table);
+
 				}
 
 				// Layer toggle detector and executor. Must be put placed here as the
 				// elements involved cannot be manipulated outside of the promise stack.
 				jQuery('.layer_button_class_<?php echo $geopmap_divrand; ?>').click(function(){
-					jQuery(this).attr('opac', 1 - jQuery(this).attr('opac'));
-					GeopMapInstance.updateLayerOpacity(jQuery(this).attr('text'), jQuery(this).attr('opac'));
+					GeopMapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
 					jQuery(this).children().toggleClass('<?php echo $geopmap_check_icon . " " . $geopmap_uncheck_icon ?>');
 				});
 			}

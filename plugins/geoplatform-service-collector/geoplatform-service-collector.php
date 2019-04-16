@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.1.1
+ * @since             1.1.2
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSERVE_PLUGIN', '1.1.1' );
+define( 'GEOSERVE_PLUGIN', '1.1.2' );
 
 /**
  * The code that runs during plugin activation.
@@ -87,7 +87,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-service-collec
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.1.1
+ * @since    1.1.2
  */
 function run_geoplatform_service_collector() {
 
