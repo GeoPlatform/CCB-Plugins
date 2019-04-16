@@ -487,6 +487,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				for (var i = 0; i < geopmap_layerStates.length; i++){
 					console.log(geopmap_layerStates[i]);
 
+					// While in a layer loop, may as well dictate opacity.
+					GeopMapInstance.updateLayerOpacity(geopmap_layerStates[i].layer_id, geopmap_layerStates[i].opacity);
+
 					var main_table = geopmap_createEl({type: 'table', class: 'geop-layer-box', style: 'width:100%'});
 					var table_row = geopmap_createEl({type: 'tr', class: 'geop-no-border'});
 					var first_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
@@ -513,12 +516,12 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					table_row.appendChild(third_td);
 					main_table.appendChild(table_row);
 					document.getElementById('layerbox_<?php echo $geopmap_divrand; ?>').appendChild(main_table);
+
 				}
 
 				// Layer toggle detector and executor. Must be put placed here as the
 				// elements involved cannot be manipulated outside of the promise stack.
 				jQuery('.layer_button_class_<?php echo $geopmap_divrand; ?>').click(function(){
-					// jQuery(this).attr('opac', 1 - jQuery(this).attr('opac'));
 					GeopMapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
 					jQuery(this).children().toggleClass('<?php echo $geopmap_check_icon . " " . $geopmap_uncheck_icon ?>');
 				});
