@@ -101,8 +101,8 @@ class Geop_Maps_Public {
 		wp_enqueue_script( 'geop_esri', plugin_dir_url( __FILE__ ) . 'assets/esri-leaflet_2.1.3.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_timedimension_js', plugin_dir_url( __FILE__ ) . 'assets/leaflet.timedimension.src_1.1.0.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.js', array(), $this->version, false );
-		// wp_enqueue_script( 'geop_client_api', 'http://geoplatform-cdn.s3-website-us-east-1.amazonaws.com/geoplatform.client/0.2.1/js/geoplatform.client.js' );
-		wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.client.js', array(), $this->version, false );
+		wp_enqueue_script( 'geop_client_api', 'http://geoplatform-cdn.s3-website-us-east-1.amazonaws.com/geoplatform.client/2.0.0/js/geoplatform.client.js' );
+		// wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.client.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_mapcore', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.mapcore.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-maps-public.js', array(), $this->version, false );
 	}

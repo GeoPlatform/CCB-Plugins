@@ -41,12 +41,12 @@
 function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
 
 	// Service collection setup.
-	const Query = GeoPlatform.Query;
-	const ItemTypes = GeoPlatform.ItemTypes;
-	const QueryParameters = GeoPlatform.QueryParameters;
-	var ItemService = GeoPlatform.ItemService;
+	const Query = GeoPlatformClient.Query;
+	const ItemTypes = GeoPlatformClient.ItemTypes;
+	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
+	// var ItemService = GeoPlatform.ItemService;
 
-	var query = new GeoPlatform.Query();
+	var query = new Query();
 
 	// Sets type of asset type to grab.
 	if (geopserve_cat_in == "Datasets")
@@ -69,7 +69,8 @@ function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in
 	}
 
 	// Performs the query grab.
-	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	itemSvc.search(query)
 	.then(function (response) {
 
 		// Variables for the text and page element it's to be attached to.
@@ -108,12 +109,12 @@ function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in
 function geopserve_gen_list(geopserve_id_in, geopserve_source, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
 
 	// Service collection setup.
-	const Query = GeoPlatform.Query;
-	const ItemTypes = GeoPlatform.ItemTypes;
-	const QueryParameters = GeoPlatform.QueryParameters;
-	var ItemService = GeoPlatform.ItemService;
+	const Query = GeoPlatformClient.Query;
+	const ItemTypes = GeoPlatformClient.ItemTypes;
+	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
+	// var ItemService = GeoPlatform.ItemService;
 
-	var query = new GeoPlatform.Query();
+	var query = new Query();
 
 	// Sets type of asset type to grab.
 	if (geopserve_cat_in == "Datasets")
@@ -145,8 +146,11 @@ function geopserve_gen_list(geopserve_id_in, geopserve_source, geopserve_cat_in,
 	query.setFields(fields);
 
 	// Performs the query grab.
-	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	itemSvc.search(query)
 		.then(function (response) {
+
+			console.log(response);
 
 			// ItemService.search(thumb_query).then( thumb_response => thumb_response.results.forEach( item => item.thumbnail ? console.log(buildThumb(item.thumbnail)) : doNothing(); ) );
 
