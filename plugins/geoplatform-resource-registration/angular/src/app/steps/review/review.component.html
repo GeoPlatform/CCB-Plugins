@@ -24,27 +24,27 @@
 
                 <div class="a-property-display">
                     <label>Type:</label>
-                    <span class="a-property-value" *ngIf="data.type">{{getTypeDisplayValue(data.type)}}</span>
+                    <span class="a-property-value" *ngIf="data[PROPS.TYPE]">{{getTypeDisplayValue(data[PROPS.TYPE])}}</span>
                 </div>
                 <div class="a-property-display">
                     <label>Title:</label>
-                    <span class="a-property-value">{{data.title}}</span>
+                    <span class="a-property-value">{{data[PROPS.TITLE]}}</span>
                 </div>
                 <div class="a-property-display">
                     <label>Description:</label>
                     <div class="a-property-value">
-                        <span *ngIf="data.description">{{data.description}}</span>
-                        <span *ngIf="!data.description"><em>not specified</em></span>
+                        <span *ngIf="data[PROPS.DESCRIPTION]">{{data[PROPS.DESCRIPTION]}}</span>
+                        <span *ngIf="!data[PROPS.DESCRIPTION]"><em>not specified</em></span>
                     </div>
                 </div>
                 <div class="a-property-display">
                     <label>Landing Page:</label>
                     <div class="a-property-value">
-                        <a *ngIf="data.landingPage" class="u-break--all"
-                            href="{{data.landingPage}}" target="_blank">
-                            {{data.landingPage}}
+                        <a *ngIf="data[PROPS.LANDING_PAGE]" class="u-break--all"
+                            href="{{data[PROPS.LANDING_PAGE]}}" target="_blank">
+                            {{data[PROPS.LANDING_PAGE]}}
                         </a>
-                        <span *ngIf="!data.landingPage"><em>not specified</em></span>
+                        <span *ngIf="!data[PROPS.LANDING_PAGE]"><em>not specified</em></span>
                     </div>
                 </div>
                 <div class="a-property-display">
@@ -70,38 +70,38 @@
                 <div class="a-property-display">
                     <label>Keywords:</label>
                     <div class="a-property-value">
-                        <mat-chip-list *ngIf="data.keywords && data.keywords.length" selectable="false">
-                            <mat-chip *ngFor="let key of data.keywords">{{key}}</mat-chip>
+                        <mat-chip-list *ngIf="data[PROPS.KEYWORDS] && data[PROPS.KEYWORDS].length" selectable="false">
+                            <mat-chip *ngFor="let key of data[PROPS.KEYWORDS]">{{key}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!data.keywords||!data.keywords.length"><em>none specified</em></span>
+                        <span *ngIf="!data[PROPS.KEYWORDS]||!data[PROPS.KEYWORDS].length"><em>none specified</em></span>
                     </div>
                 </div>
                 <div class="a-property-display">
                     <label>Specializations:</label>
                     <div class="a-property-value">
-                        <mat-chip-list *ngIf="data.resourceTypes" selectable="false">
-                            <mat-chip *ngFor="let resType of data.resourceTypes">{{resType}}</mat-chip>
+                        <mat-chip-list *ngIf="data[PROPS.RESOURCE_TYPES]" selectable="false">
+                            <mat-chip *ngFor="let resType of data[PROPS.RESOURCE_TYPES]">{{resType}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!data.resourceTypes||!data.resourceTypes.length"><em>none specified</em></span>
+                        <span *ngIf="!data[PROPS.RESOURCE_TYPES]||!data[PROPS.RESOURCE_TYPES].length"><em>none specified</em></span>
                     </div>
                 </div>
 
                 <div class="a-property-display">
                     <label>Publishers:</label>
                     <div class="a-property-value">
-                        <mat-chip-list *ngIf="data.publishers" selectable="false">
-                            <mat-chip *ngFor="let pub of data.publishers">{{pub.label}}</mat-chip>
+                        <mat-chip-list *ngIf="data[PROPS.PUBLISHERS]" selectable="false">
+                            <mat-chip *ngFor="let pub of data[PROPS.PUBLISHERS]">{{pub.label}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!data.publishers||!data.publishers.length"><em>none specified</em></span>
+                        <span *ngIf="!data[PROPS.PUBLISHERS]||!data[PROPS.PUBLISHERS].length"><em>none specified</em></span>
                     </div>
                 </div>
                 <div class="a-property-display">
                     <label>Communities:</label>
                     <div class="a-property-value">
-                        <mat-chip-list *ngIf="data.usedBy" selectable="false">
-                            <mat-chip *ngFor="let com of data.usedBy">{{com.label}}</mat-chip>
+                        <mat-chip-list *ngIf="data[PROPS.COMMUNITIES]" selectable="false">
+                            <mat-chip *ngFor="let com of data[PROPS.COMMUNITIES]">{{com.label}}</mat-chip>
                         </mat-chip-list>
-                        <span *ngIf="!data.usedBy||!data.usedBy.length"><em>none specified</em></span>
+                        <span *ngIf="!data[PROPS.COMMUNITIES]||!data[PROPS.COMMUNITIES].length"><em>none specified</em></span>
                     </div>
                 </div>
 
@@ -110,21 +110,21 @@
 
             <div class="m-review__section">
 
-                <div class="a-review__heading">{{getTypeDisplayValue(data.type)}} Details</div>
+                <div class="a-review__heading">{{getTypeDisplayValue(data[PROPS.TYPE])}} Details</div>
 
                 <!-- Dataset-oriented properties -->
-                <div *ngIf="'dcat:Dataset'===data.type">
+                <div *ngIf="'dcat:Dataset'===data[PROPS.TYPE]">
 
                     <div class="a-property-display">
                         <label>Download URL:</label>
                         <div class="a-property-value">
-                            <span *ngIf="data.distributions && data.distributions.length">
-                                <a href="{{data.distributions[0].accessURL}}" target="_blank"
+                            <span *ngIf="data[PROPS.DISTRIBUTIONS] && data[PROPS.DISTRIBUTIONS].length">
+                                <a href="{{data[PROPS.DISTRIBUTIONS][0][PROPS.ACCESS_URL]}}" target="_blank"
                                      class="u-break--all">
-                                    {{data.distributions[0].accessURL}}
+                                    {{data[PROPS.DISTRIBUTIONS][0][PROPS.ACCESS_URL]}}
                                 </a>
                             </span>
-                            <span *ngIf="!data.distributions || !data.distributions.length">
+                            <span *ngIf="!data[PROPS.DISTRIBUTIONS] || !data[PROPS.DISTRIBUTIONS].length">
                                 <em>not specified</em>
                             </span>
                         </div>
@@ -132,35 +132,45 @@
                 </div>
 
                 <!-- Service-oriented properties -->
-                <div  *ngIf="'regp:Service' === data.type" >
+                <div  *ngIf="'regp:Service' === data[PROPS.TYPE]" >
 
                     <div class="a-property-display">
                         <label>Service URL:</label>
                         <div class="a-property-value">
-                            <a href="{{data.href}}" target="_blank" class="u-break--all">{{data.href}}</a>
+                            <a href="{{data[PROPS.ACCESS_URL]}}" target="_blank" class="u-break--all">{{data[PROPS.ACCESS_URL]}}</a>
                         </div>
                     </div>
-                    <div class="a-property-display" *ngIf="'regp:Service' === data.type">
+                    <div class="a-property-display" *ngIf="'regp:Service' === data[PROPS.TYPE]">
                         <label>Service Type:</label>
                         <div class="a-property-value">
-                            <span *ngIf="data.serviceType">{{data.serviceType.label}}</span>
-                            <span *ngIf="!data.serviceType"><em>not specified</em></span>
+                            <span *ngIf="data[PROPS.SERVICE_TYPE]">{{data[PROPS.SERVICE_TYPE][PROPS.LABEL]}}</span>
+                            <span *ngIf="!data[PROPS.SERVICE_TYPE]"><em>not specified</em></span>
                         </div>
                     </div>
 
 
-                    <div class="a-property-display" *ngIf="'regp:Service'===data.type && data.layers">
+                    <div class="a-property-display" *ngIf="'regp:Service'===data[PROPS.TYPE] && data.layers">
                         <label>Service Layers</label>
                         <div class="a-property-value">
                             <span *ngIf="!data.layers || !data.layers.length"><em>none specified</em></span>
                             <div *ngIf="data.layers && data.layers.length">
                                 <p *ngFor="let layer of data.layers">
-                                    {{layer.label}}
+                                    {{layer[PROPS.LABEL]}}
                                 </p>
                             </div>
                         </div>
                     </div>
 
+                </div>
+
+                <!-- Non-dataset, non-service properties -->
+                <div  *ngIf="'dcat:Dataset'!==data[PROPS.TYPE] && 'regp:Service' !== data[PROPS.TYPE]" >
+                    <div class="a-property-display">
+                        <label>Access URL:</label>
+                        <div class="a-property-value">
+                            <a href="{{data[PROPS.ACCESS_URL]}}" target="_blank" class="u-break--all">{{data[PROPS.ACCESS_URL]}}</a>
+                        </div>
+                    </div>
                 </div>
 
             </div>

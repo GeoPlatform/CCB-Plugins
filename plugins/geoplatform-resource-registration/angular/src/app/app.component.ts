@@ -127,14 +127,12 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         if(ModelProperties.ACCESS_URL === key) {
             if(this.item.type === ItemTypes.DATASET) {
                 //set as distro link
-                this.item.distributions = [{
-                    type: 'dcat:Distribution',
-                    accessURL: value,
-                    title: "Dataset distribution link"
-                }];
+                let distro = {type: 'dcat:Distribution',title: "Dataset distribution link"};
+                distro[ModelProperties.ACCESS_URL] = value;
+                this.item.distributions = [distro];
 
-            } else if(this.item.type === ItemTypes.SERVICE) {
-                this.item.href = value;
+            } else {
+                this.item[ModelProperties.ACCESS_URL] = value;
             }
 
         } else if( ModelProperties.TITLE === key || ModelProperties.LABEL === key ) {
@@ -224,8 +222,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             this.applyItemData(key, ctrl.value);
         });
 
-        console.log("Item updated:");
-        console.log(this.item);
+        if(!environment.production) {
+            console.log("Item updated:");
+            console.log(this.item);
+        }
 
         this.triggerChangeDetection();
     }
@@ -278,7 +278,7 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // ----------------------------------
         };
         // if('development' === environment.env) {
-        //     this.item.createdBy = 'tester';
+        //    this.item.createdBy = 'tester';
         // }
         if(this.user) {
             this.item[ModelProperties.CREATED_BY] = this.user.username;

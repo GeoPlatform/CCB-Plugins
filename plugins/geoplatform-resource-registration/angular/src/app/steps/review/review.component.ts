@@ -33,6 +33,7 @@ import {
     itemServiceProvider, serviceServiceProvider
 } from '../../item-service.provider';
 import { AppError } from '../../model';
+import { ModelProperties } from '../../model';
 
 const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
     return k.indexOf("secondary")<0 && k.indexOf("community")<0
@@ -52,17 +53,14 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     @Output() onEvent : EventEmitter<StepEvent> = new EventEmitter<StepEvent>();
 
     public formGroup: FormGroup;
-
     //display final item for review
     public preview : string;
-
     public hasError : StepError;
-
     public status : any = {
         isSaving : false,
         isSaved : false
     };
-
+    public PROPS : any = ModelProperties;
 
     // httpClient : NG2HttpClient;
     private eventsSubscription: any;

@@ -75,6 +75,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         this.formOpts['$'+ModelProperties.KEYWORDS] = [''];
         this.formOpts[ModelProperties.COMMUNITIES] = [''];
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
+        this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.THUMBNAIL_URL] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.THUMBNAIL_CONTENT] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
@@ -113,6 +114,11 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                 if(data[ModelProperties.COMMUNITIES] && data[ModelProperties.COMMUNITIES].length) {
                     this.formGroup.get(ModelProperties.COMMUNITIES)
                         .setValue(data[ModelProperties.COMMUNITIES]);
+                }
+
+                if(data[ModelProperties.LANDING_PAGE]) {
+                    this.formGroup.get(ModelProperties.LANDING_PAGE)
+                        .setValue(data[ModelProperties.LANDING_PAGE]);
                 }
 
                 if(data[ModelProperties.THUMBNAIL_URL]) {

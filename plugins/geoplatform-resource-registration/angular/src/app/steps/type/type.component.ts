@@ -64,6 +64,8 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     public hasError : StepError = null;
     public doesExist : string;
 
+    public PROPS : any = ModelProperties;
+
 
     private formListener : any;
     private typeListener : any;
@@ -85,7 +87,6 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.formOpts[ModelProperties.TITLE] = ['', Validators.required];
         this.formOpts[ModelProperties.DESCRIPTION] = [''];
         this.formOpts[ModelProperties.ACCESS_URL] = ['', URL_VALIDATOR];
-        this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.SERVICE_TYPE] = [''];
         this.formOpts[ModelProperties.RESOURCE_TYPES] = [''];
         this.formOpts['$'+ModelProperties.RESOURCE_TYPES] = [''];   //temp field for autocomplete
@@ -136,7 +137,6 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 this.setValue(ModelProperties.TITLE, data[ModelProperties.TITLE]||null );
                 this.setValue(ModelProperties.DESCRIPTION, data[ModelProperties.DESCRIPTION]||null );
                 this.setValue(ModelProperties.SERVICE_TYPE, data[ModelProperties.SERVICE_TYPE]||null );
-                this.setValue(ModelProperties.LANDING_PAGE, data[ModelProperties.LANDING_PAGE]||null );
                 this.setValue(ModelProperties.CREATED_BY, data[ModelProperties.CREATED_BY]||null);
 
                 if(data[ModelProperties.RESOURCE_TYPES] && data[ModelProperties.RESOURCE_TYPES].length) {
@@ -155,12 +155,11 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 if(ItemTypes.DATASET === data[ModelProperties.TYPE] &&
                     data[ModelProperties.DISTRIBUTIONS] &&
                     data[ModelProperties.DISTRIBUTIONS].length &&
-                    data[ModelProperties.DISTRIBUTIONS][0].accessURL) {
-                    url = data[ModelProperties.DISTRIBUTIONS][0].accessURL;
+                    data[ModelProperties.DISTRIBUTIONS][0][ModelProperties.ACCESS_URL]) {
+                    url = data[ModelProperties.DISTRIBUTIONS][0][ModelProperties.ACCESS_URL];
 
-                } else if(ItemTypes.SERVICE === data[ModelProperties.TYPE] &&
-                    data[ModelProperties.HREF]) {
-                    url = data[ModelProperties.HREF];
+                } else if( data[ModelProperties.ACCESS_URL] ) {
+                    url = data[ModelProperties.ACCESS_URL];
                 }
                 this.setValue(ModelProperties.ACCESS_URL, url);
 
@@ -249,7 +248,6 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         let urlField     = this.formGroup.get(ModelProperties.ACCESS_URL);
         let svcTypeField = this.formGroup.get(ModelProperties.SERVICE_TYPE);
-        let landingField = this.formGroup.get(ModelProperties.LANDING_PAGE);
         let resTypeField = this.formGroup.get(ModelProperties.RESOURCE_TYPES);
         let tempResTypeField = this.formGroup.get('$'+ModelProperties.RESOURCE_TYPES);
 
@@ -276,16 +274,9 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         }
 
-        if(type && ItemTypes.MAP === type) {
-            landingField.setValidators([Validators.required, URL_VALIDATOR]);
-        } else {
-            landingField.setValidators(URL_VALIDATOR);
-        }
-
         //after changing validators, must re-evaluate to clear previous errors
         urlField.updateValueAndValidity();
         svcTypeField.updateValueAndValidity();
-        landingField.updateValueAndValidity();
     }
 
 

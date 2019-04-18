@@ -76,9 +76,9 @@
                     <mat-form-field floatLabel="always">
                         <mat-label>Download URL</mat-label>
                         <mat-icon matPrefix>link</mat-icon>
-                        <input type="url" matInput formControlName="accessURL" placeholder="Specify a download URL">
+                        <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Specify a download URL">
                         <mat-hint>If the dataset is downloadable via a web-accessible URL</mat-hint>
-                        <mat-error *ngIf="isInvalid('accessURL')">{{getErrorMessage('accessURL')}}</mat-error>
+                        <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
                     </mat-form-field>
 
                 </div>
@@ -90,9 +90,9 @@
                     <mat-form-field floatLabel="always">
                         <mat-label>Service URL</mat-label>
                         <mat-icon matPrefix>link</mat-icon>
-                        <input type="url" matInput formControlName="accessURL" placeholder="Provide the service's URL" required>
+                        <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Provide the service's URL" required>
                         <mat-hint>The web-accessible URL to the service's API</mat-hint>
-                        <mat-error *ngIf="isInvalid('accessURL')">{{getErrorMessage('accessURL')}}</mat-error>
+                        <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
                     </mat-form-field>
 
                     <mat-form-field floatLabel="always">
@@ -122,6 +122,29 @@
 
                 </div>
 
+                <!-- if user selects Application type -->
+                <div *ngIf="currentType==='Application'">
+
+                  <mat-form-field floatLabel="always">
+                    <mat-label>Access URL</mat-label>
+                    <mat-icon matPrefix>link</mat-icon>
+                    <input matInput formControlName="{{PROPS.ACCESS_URL}}"
+                           placeholder="Specify the access URL of the Application"
+                           [required]="currentType==='Application'">
+                    <mat-hint>A website where more information can be gathered</mat-hint>
+                    <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
+                  </mat-form-field>
+
+                </div>
+
+
+                <!--
+                    Other type-specific fields go here 
+                -->
+
+
+                <!-- Type-less fields -->
+
                 <gprr-autocomplete-mat-chip
                     [label]="'Specialization'"
                     [placeholder]="'Specify resource specialization(s)'"
@@ -130,36 +153,6 @@
                     [formGroup]="formGroup"
                     [filterFn]="filterResourceTypes">
                 </gprr-autocomplete-mat-chip>
-
-                <!-- if user selects Map type -->
-                <div *ngIf="currentType==='Map'">
-                  <mat-form-field floatLabel="always">
-                    <mat-label>Landing Page</mat-label>
-                    <mat-icon matPrefix>link</mat-icon>
-                    <input matInput formControlName="landingPage"
-                           placeholder="Specify the landing page of the resource"
-                           [required]="currentType==='Map'">
-                    <mat-hint>A website where more information can be gathered</mat-hint>
-                    <mat-error *ngIf="isInvalid('landingPage')">{{getErrorMessage('landingPage')}}</mat-error>
-                  </mat-form-field>
-                </div>
-
-
-                <!-- if user selects Application type -->
-                <div *ngIf="currentType==='Application'">
-
-                  <mat-form-field floatLabel="always">
-                    <mat-label>Access URL</mat-label>
-                    <mat-icon matPrefix>link</mat-icon>
-                    <input matInput formControlName="landingPage"
-                           placeholder="Specify the access URL of the Application"
-                           [required]="currentType==='Application'">
-                    <mat-hint>A website where more information can be gathered</mat-hint>
-                    <mat-error *ngIf="isInvalid('landingPage')">{{getErrorMessage('landingPage')}}</mat-error>
-                  </mat-form-field>
-
-                </div>
-
 
             </div>
 
