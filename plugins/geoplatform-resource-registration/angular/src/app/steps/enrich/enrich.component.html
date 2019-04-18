@@ -16,7 +16,7 @@
                     [label]="'Purpose'"
                     [placeholder]="'Specify purpose(s) for this resource'"
                     [hint]="'Find purposes using the typeahead and select them to associate'"
-                    [fieldName]="'purpose'"
+                    [fieldName]="{{PROPS.CLASSIFIERS_PURPOSE}}"
                     [formGroup]="formGroup"
                     [filterFn]="filterPurposes">
                     <ng-template let-option>
@@ -32,7 +32,7 @@
                     [label]="'Function'"
                     [placeholder]="'Specify function(s) for this resource'"
                     [hint]="'Find functions using the typeahead and select them to associate'"
-                    [fieldName]="'function'"
+                    [fieldName]="{{PROPS.CLASSIFIERS_FUNCTION}}"
                     [formGroup]="formGroup"
                     [filterFn]="filterFunctions">
                     <ng-template let-option>
@@ -54,7 +54,7 @@
                     [label]="'Topic'"
                     [placeholder]="'Specify topic(s) for this resource'"
                     [hint]="'Find topics using the typeahead and select them to associate'"
-                    [fieldName]="'primaryTopic'"
+                    [fieldName]="{{PROPS.CLASSIFIERS_TOPIC_PRIMARY}}"
                     [formGroup]="formGroup"
                     [filterFn]="filterTopics">
                     <ng-template let-option>
@@ -70,7 +70,7 @@
                     [label]="'Subject'"
                     [placeholder]="'Specify subject(s) for this resource'"
                     [hint]="'Find subjects using the typeahead and select them to associate'"
-                    [fieldName]="'primarySubject'"
+                    [fieldName]="{{PROPS.CLASSIFIERS_SUBJECT_PRIMARY}}"
                     [formGroup]="formGroup"
                     [filterFn]="filterSubjects">
                     <ng-template let-option>
@@ -92,7 +92,7 @@
                     [label]="'Place'"
                     [placeholder]="'Specify place(s) for this resource'"
                     [hint]="'Find places using the typeahead and select them to associate'"
-                    [fieldName]="'place'"
+                    [fieldName]="{{PROPS.CLASSIFIERS_PLACE}}"
                     [formGroup]="formGroup"
                     [filterFn]="filterPlaces">
                     <ng-template let-option>
@@ -108,7 +108,7 @@
                     [label]="'Category'"
                     [placeholder]="'Specify categories for this resource'"
                     [hint]="'Find categories using the typeahead and select them to associate'"
-                    [fieldName]="'category'"
+                    [fieldName]="{{PROPS.CLASSIFIERS_CATEGORY}}"
                     [formGroup]="formGroup"
                     [filterFn]="filterCategories">
                     <ng-template let-option>
@@ -129,7 +129,7 @@
                     [label]="'Audience'"
                     [placeholder]="'Specify audience(s) for this resource'"
                     [hint]="'Find audiences using the typeahead and select them to associate'"
-                    [fieldName]="'audience'"
+                    [fieldName]="{{PROPS.CLASSIFIERS_AUDIENCE}}"
                     [formGroup]="formGroup"
                     [filterFn]="filterAudiences">
                     <ng-template let-option>
@@ -149,7 +149,7 @@
         <div class="m-step__buttons">
             <button mat-raised-button matStepperPrevious>Back</button>
             <button mat-raised-button color="primary" matStepperNext
-                [disabled]="formGroup.invalid || !data.createdBy">Continue</button>
+                [disabled]="formGroup.invalid || !data[PROPS.CREATED_BY]">Continue</button>
         </div>
     </mat-card-actions>
 

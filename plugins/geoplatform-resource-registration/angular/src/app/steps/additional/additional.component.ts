@@ -26,7 +26,7 @@ import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
-import { ModelProperties } from '../../model';
+import { ModelProperties, AppEventTypes } from '../../model';
 import { itemServiceProvider } from '../../item-service.provider';
 
 
@@ -55,6 +55,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     public formGroup: FormGroup;
     public hasError : StepError;
     public thumbError : Error;
+    public PROPS : any = ModelProperties;
+
 
     private eventsSubscription: any;
     private authToken : string;
@@ -121,17 +123,15 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                         .setValue(data[ModelProperties.LANDING_PAGE]);
                 }
 
-                if(data[ModelProperties.THUMBNAIL_URL]) {
-                    this.formGroup.get(ModelProperties.THUMBNAIL_URL)
-                        .setValue(data[ModelProperties.THUMBNAIL_URL]);
-                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(null);
+                if(data.thumbnail) {
+                    if(data.thumbnail.url) {
+                        this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(data.thumbnail.url);
+                        this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(null);
+                    } else if(data.thumbnail.contentData) {
+                        this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(data.thumbnail.contentData);
+                        this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
+                    }
                 }
-                if(data[ModelProperties.THUMBNAIL_CONTENT]) {
-                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT)
-                        .setValue(data[ModelProperties.THUMBNAIL_CONTENT]);
-                    this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
-                }
-
             }
         }
     }
@@ -168,18 +168,18 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     addKeyword(event: MatChipInputEvent): void {
 
-        const type = ModelProperties.KEYWORDS;
+        const field = ModelProperties.KEYWORDS;
         const input = event.input;
         const value = event.value;
 
         // Add our value
         if (value) {
             let val = value;
-            if(typeof(value) === 'string') val = value.trim();
-            let existing = this.formGroup.get(type).value || [];
+            if( typeof(value) === 'string' ) val = value.trim();
+            let existing = this.formGroup.get(field).value || [];
             if(existing.indexOf(value) < 0) {
                 existing.push(val);
-                this.formGroup.get(type).setValue(existing);
+                this.formGroup.get(field).setValue(existing);
             }
         }
 
@@ -190,7 +190,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         }
 
         //clear the local form group so the autocomplete empties
-        this.formGroup.get('$'+type).setValue(null);
+        this.formGroup.get('$'+field).setValue(null);
 
     }
 
@@ -204,30 +204,31 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         }
     }
 
-
     get keywords() {
         return this.formGroup.get(ModelProperties.KEYWORDS).value || [];
     }
 
-    public getValues ( key : string ) : any[] {
-        let existing = this.formGroup.get(key).value;
-        if(!existing) return [];
-        if(!Array.isArray(existing)) return [existing];
-        return existing;
-    }
 
     onAppEvent( event : AppEvent ) {
         console.log("AdditionalStep: App Event: " + event.type);
         switch(event.type) {
-            case 'reset':
+            case AppEventTypes.RESET:
                 this.hasError = null;
                 this.clearThumbnailFile();
                 this.thumbError = null;
                 break;
-            case 'auth':
+            case AppEventTypes.AUTH:
                 this.authToken = event.value.token;
                 break;
         }
+    }
+
+
+    public getValues ( field : string ) : any[] {
+        let existing = this.formGroup.get(field).value;
+        if(!existing) return [];
+        if(!Array.isArray(existing)) return [existing];
+        return existing;
     }
 
     /**

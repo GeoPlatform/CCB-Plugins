@@ -16,14 +16,18 @@ import { ReviewComponent } from './steps/review/review.component';
 import { AuthenticatedComponent } from './authenticated.component';
 import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
-import { ModelProperties } from './model';
+import {
+    ModelProperties, AppEventTypes, StepEventTypes
+} from './model';
 import { environment } from '../environments/environment';
+
+
+
 
 export interface AppEvent {
     type   : string;
     value ?: any;
 }
-
 
 
 @Component({
@@ -33,8 +37,7 @@ export interface AppEvent {
 })
 export class AppComponent extends AuthenticatedComponent implements OnInit {
 
-    @Output() appEvents: Subject<AppEvent>
-        = new Subject<AppEvent>();
+    @Output() appEvents: Subject<AppEvent> = new Subject<AppEvent>();
 
     @ViewChild('stepper')           stepper: MatStepper;
     @ViewChild(TypeComponent)       step1: StepComponent;
@@ -100,7 +103,8 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         Object.keys(data).forEach( key => {
             if( typeof(data[key]) !== 'undefined' &&
                 data[key] !== null &&
-                'serviceType' !== key && 'href' !== key
+                ModelProperties.SERVICE_TYPE !== key &&
+                ModelProperties.ACCESS_URL !== key
             ) {
 
                 //if user provided a title, ignore whatever the harvest returned for label
@@ -237,7 +241,7 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
     onStepEvent( event : StepEvent ) {
         switch(event.type) {
 
-            case 'app.reset' :
+            case StepEventTypes.RESET :
 
             this.stepper.reset();
 
@@ -248,12 +252,15 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             //reset stepper to first step
             // this.stepper.selectedIndex = 0;
 
-            let appEvent : AppEvent = { type:'reset', value: true };
+            let appEvent : AppEvent = {
+                type: AppEventTypes.RESET,
+                value: true
+            };
             this.appEvents.next(appEvent);
             break;
 
 
-            case 'service.about' :
+            case StepEventTypes.SERVICE_INFO :
             // console.log("Caching service harvest for steps : ");
             // console.log(event.value);
 

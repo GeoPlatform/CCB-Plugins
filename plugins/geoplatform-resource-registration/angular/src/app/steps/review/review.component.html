@@ -247,7 +247,7 @@
 
             <!-- register the resource -->
             <button mat-raised-button color="primary"
-                [disabled]="!data.createdBy || status.isSaving || status.isSaved"
+                [disabled]="!data[PROPS.CREATED_BY] || status.isSaving || status.isSaved"
                 (click)="registerResource()">
                 <mat-spinner [diameter]="30" *ngIf="status.isSaving" style="display:inline-block"></mat-spinner>
                 Register

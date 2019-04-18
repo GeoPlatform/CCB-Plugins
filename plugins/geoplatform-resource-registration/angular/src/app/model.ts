@@ -13,6 +13,10 @@ export const ModelProperties = {
     KEYWORDS:       'keywords',
     PUBLISHERS:     'publishers',
     COMMUNITIES:    'usedBy',
+
+    //not actual properties on the model, but
+    // they map to 'thumbnail.url' and 'thumbnail.contentData'
+    // which are in the model
     THUMBNAIL_URL:  'thumbnailUrl',
     THUMBNAIL_CONTENT: 'thumbnailContent',
 
@@ -55,4 +59,18 @@ export class AppError extends Error {
         if(label) this.label = label;
     }
 
+}
+
+
+
+
+export const AppEventTypes = {
+    RESET   : "reset",
+    AUTH    : "auth"
+}
+
+
+export const StepEventTypes = {
+    RESET           : 'app.reset',
+    SERVICE_INFO    : 'service.about'
 }

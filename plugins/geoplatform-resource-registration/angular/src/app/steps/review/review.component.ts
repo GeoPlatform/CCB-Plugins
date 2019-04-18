@@ -33,7 +33,7 @@ import {
     itemServiceProvider, serviceServiceProvider
 } from '../../item-service.provider';
 import { AppError } from '../../model';
-import { ModelProperties } from '../../model';
+import { ModelProperties, AppEventTypes } from '../../model';
 
 const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
     return k.indexOf("secondary")<0 && k.indexOf("community")<0
@@ -248,12 +248,12 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     onAppEvent( event : AppEvent ) {
         // console.log("ReviewStep: App Event: " + event.type);
         switch(event.type) {
-            case 'reset':
+            case AppEventTypes.RESET:
                 this.hasError = null;
                 this.status.isSaved = false;
                 this.status.isSaving = false;
                 break;
-            case 'auth':
+            case AppEventTypes.AUTH:
                 let token = event.value.token;
                 this.itemService.client.setAuthToken( token as string);
                 break;
