@@ -44,6 +44,7 @@
 				serve_name: jQuery("#serve_name_in").val(),
 	      serve_id: jQuery("#serve_id_in").val(),
 	      serve_count: jQuery("#serve_count").val(),
+				serve_source: jQuery("#serve_source_theme").is(":checked"),
 				serve_cat_dat: jQuery("#serve_cat_data").is(":checked"),
 				serve_cat_ser: jQuery("#serve_cat_serve").is(":checked"),
 				serve_cat_lay: jQuery("#serve_cat_layer").is(":checked"),

@@ -38,15 +38,14 @@
 // #param geopserve_cat_in: data type for the query.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // #param geopserve_ual_domain_in: UAL source to draw from.
-function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
+function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
 
 	// Service collection setup.
-	const Query = GeoPlatform.Query;
-	const ItemTypes = GeoPlatform.ItemTypes;
-	const QueryParameters = GeoPlatform.QueryParameters;
-	var ItemService = GeoPlatform.ItemService;
+	const Query = GeoPlatformClient.Query;
+	const ItemTypes = GeoPlatformClient.ItemTypes;
+	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
 
-	var query = new GeoPlatform.Query();
+	var query = new Query();
 
 	// Sets type of asset type to grab.
 	if (geopserve_cat_in == "Datasets")
@@ -60,13 +59,17 @@ function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_i
 	if (geopserve_cat_in == "Galleries")
 		query.setTypes(ItemTypes.GALLERY);
 
-	// Restricts results to a single community, if provided.
+	// Restricts results to a single source, if provided.
 	if (geopserve_id_in) {
-		query.usedBy(geopserve_id_in);
+		if (geopserve_source == 'theme')
+			query.setThemes(geopserve_id_in);
+		else
+			query.usedBy(geopserve_id_in);
 	}
 
 	// Performs the query grab.
-	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	itemSvc.search(query)
 	.then(function (response) {
 
 		// Variables for the text and page element it's to be attached to.
@@ -102,15 +105,14 @@ function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_i
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
 //
-function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_id_in, geopserve_source, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
 
 	// Service collection setup.
-	const Query = GeoPlatform.Query;
-	const ItemTypes = GeoPlatform.ItemTypes;
-	const QueryParameters = GeoPlatform.QueryParameters;
-	var ItemService = GeoPlatform.ItemService;
+	const Query = GeoPlatformClient.Query;
+	const ItemTypes = GeoPlatformClient.ItemTypes;
+	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
 
-	var query = new GeoPlatform.Query();
+	var query = new Query();
 
 	// Sets type of asset type to grab.
 	if (geopserve_cat_in == "Datasets")
@@ -128,9 +130,12 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 	query.setPageSize(geopserve_count_in);
 	query.setSort('modified,desc');
 
-	// Restricts results to a single community, if provided.
+	// Restricts results to a single source, if provided.
 	if (geopserve_id_in) {
-		query.usedBy(geopserve_id_in);
+		if (geopserve_source == 'theme')
+			query.setThemes(geopserve_id_in);
+		else
+			query.usedBy(geopserve_id_in);
 	}
 
 	// Adds thumbnails to the query return.
@@ -139,10 +144,9 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 	query.setFields(fields);
 
 	// Performs the query grab.
-	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	itemSvc.search(query)
 		.then(function (response) {
-
-			// ItemService.search(thumb_query).then( thumb_response => thumb_response.results.forEach( item => item.thumbnail ? console.log(buildThumb(item.thumbnail)) : doNothing(); ) );
 
 			// Gets the results.
 			var geopserve_results = response.results;

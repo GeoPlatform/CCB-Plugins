@@ -17,6 +17,7 @@
   text-align: center;
   color: #747474;
   background: #fff;
+  bottom: 0px !important;
 }
 .geopserve-carousel-active {
   background-color: #2079c5 !important;
@@ -24,4 +25,13 @@
 }
 .geopserve-carousel-browse {
   border-right: 1px solid #ddd;
+}
+.carousel-indicators-override {
+  position: relative !important;
+  text-align: left !important;
+  bottom: unset !important;
+}
+
+.carousel-indicators li {
+  display: block;
 }

@@ -54,8 +54,8 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_disp_fifth_tags = get_the_category($geopportal_mainpage_disp_fifth_page->ID);
 
 		// Makes sure browse all count is a number.
-		$geopportal_mainpage_disp_more_count = get_theme_mod('featured_more_count');
-		if (!is_numeric($geopportal_mainpage_disp_more_count) || $geopportal_mainpage_disp_more_count <= 0)
+		// $geopportal_mainpage_disp_more_count = get_theme_mod('featured_more_count');
+		// if (!is_numeric($geopportal_mainpage_disp_more_count) || $geopportal_mainpage_disp_more_count <= 0)
 			$geopportal_mainpage_disp_more_count = 6;
 
 		// Makes array of slug names for more content filtering.
@@ -132,7 +132,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 							$geopportal_mainpage_map_name = esc_attr(get_theme_mod('featured_map_title'));
 							if (empty($geopportal_mainpage_map_id))
 								$geopportal_mainpage_map_id = "1";
-							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . $geopportal_mainpage_map_id . " name='" . $geopportal_mainpage_map_name . "' title=main]";
+							$geopportal_mainpage_disp_map_short_final = "[geopmap id=" . $geopportal_mainpage_map_id . " name='" . $geopportal_mainpage_map_name . "' use=featured]";
 						?>
 		        <div class="o-featured__map">
 		            <div class="m-map" id="featuredMap">
@@ -231,24 +231,23 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		    </div>
 
 		    <div class="o-featured__side">
-					<div class="a-heading">More Featured Content</div>
-					<div class="o-featured__tertiary">
+					<!-- <div class="a-heading">More Featured Content</div> -->
+					<!-- <div class="o-featured__tertiary"> -->
 
 						<?php
 						// Outputs posts.
-						if (count($geopportal_pages_sort) > 0){
-							foreach ($geopportal_pages_sort as $geopccb_post){?>
-								<div class="m-tile">
-			            	<a class="is-linkless m-tile__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post); ?></a>
-			            	<span class="m-tile__timestamp"><?php echo get_the_date("F j, Y", $geopccb_post->ID); ?></span>
-			        	</div>
-								<?php
-							}
-						}
+						// if (count($geopportal_pages_sort) > 0){
+						// 	foreach ($geopportal_pages_sort as $geopccb_post){
+						// 		echo "<div class='m-tile'>";
+			      //       echo "<a class='is-linkless m-tile__heading' href='" . get_the_permalink($geopccb_post) . "'>" . get_the_title($geopccb_post) . "</a>";
+			      //       echo "<span class='m-tile__timestamp'>" . get_the_date("F j, Y", $geopccb_post->ID) . "</span>";
+			      //   	echo "</div>";
+						// 	}
+						// }
 						?>
-					</div>
+					<!-- </div> -->
 
-	      <a class="btn btn-light is-linkless" href="<?php echo esc_url($geopportal_mainpage_browse_url); ?>">Browse All</a>
+	      <a class="btn btn-light is-linkless" href="<?php echo esc_url($geopportal_mainpage_browse_url); ?>">Browse All Featured Content</a>
 			</div>
 		</div>
     <?php

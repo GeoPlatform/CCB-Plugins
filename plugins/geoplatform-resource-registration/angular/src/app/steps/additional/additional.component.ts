@@ -32,6 +32,8 @@ import { itemServiceProvider } from '../../item-service.provider';
 
 const URL_VALIDATOR = Validators.pattern("https?://.+");
 
+interface ISize { width: number; height: number; }
+
 
 @Component({
   selector: 'wizard-step-additional',
@@ -52,8 +54,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     //for storing model values for usage in the workflow proper
     public formGroup: FormGroup;
     public hasError : StepError;
+    public thumbError : Error;
 
-    // private itemService : ItemService = null;
     private eventsSubscription: any;
     private authToken : string;
 
@@ -214,6 +216,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
             case 'reset':
                 this.hasError = null;
                 this.clearThumbnailFile();
+                this.thumbError = null;
                 break;
             case 'auth':
                 this.authToken = event.value.token;
@@ -262,12 +265,28 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         let file = this.thumbFile.nativeElement.files[0];
         var reader = new FileReader();
         reader.onload = (e) => {
-            let encoded = reader.result.replace(/^data:(.*;base64,)?/, '');
-            if ((encoded.length % 4) > 0) {
-                encoded += '='.repeat(4 - (encoded.length % 4));
-            }
-            this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
-            this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(encoded);
+
+            this.getImgSize(reader.result).subscribe( (dims) => {
+
+                if(dims.width > 800 || dims.height > 600) {
+                    this.thumbError = new Error(
+                        "Image size is too large. Either reduce it's size, " +
+                        "choose another image to use, or use the URL of a " +
+                        "web-accessible image. Max size is 800px x 600px"
+                    );
+
+                } else {
+                    this.thumbError = null;
+                    let encoded = reader.result.replace(/^data:(.*;base64,)?/, '');
+                    if ((encoded.length % 4) > 0) {
+                        encoded += '='.repeat(4 - (encoded.length % 4));
+                    }
+                    this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
+                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(encoded);
+                }
+            });
+
+
         };
         reader.readAsDataURL(file);
 
@@ -282,5 +301,22 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
             this.thumbFile.nativeElement.value = "";
             this.setValue(ModelProperties.THUMBNAIL_CONTENT, null);
         }
+    }
+
+    /**
+     * @param imageSrc - base64 encoded datastr or URL of image to load to determine size
+     * @return Observable resolving loaded image size
+     */
+    getImgSize(imageSrc: string): Observable<ISize> {
+        let mapLoadedImage = (event): ISize => {
+            return {
+                width: event.target.width,
+                height: event.target.height
+            };
+        }
+        var image = new Image();
+        let $loadedImg = Observable.fromEvent(image, "load").take(1).map(mapLoadedImage);
+        image.src = imageSrc;
+        return $loadedImg;
     }
 }

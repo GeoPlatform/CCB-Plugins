@@ -121,6 +121,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Clarified featured section verbage and Front Page category interaction.
 - Fixed bug with wysiwyg section not saving empty input.
 - Revamped blog page appearance and added count control under GeoPlatform Controls.
+- Fixed poor banner logic concerning header bar display.
 
 ### 3.2.3 ###
 * Release January 17, 2019

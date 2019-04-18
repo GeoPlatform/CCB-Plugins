@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.1.1
+ * @since             1.1.2
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSERVE_PLUGIN', '1.1.1' );
+define( 'GEOSERVE_PLUGIN', '1.1.2' );
 
 /**
  * The code that runs during plugin activation.
@@ -87,7 +87,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-service-collec
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  *
- * @since    1.1.1
+ * @since    1.1.2
  */
 function run_geoplatform_service_collector() {
 
@@ -145,6 +145,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
     'id' => '',
     'cat' => 'TFFFFFF',
 		'count' => '6',
+		'source' => 'community',
 		'hide' => 'F',
   ), $geopserve_atts);
   ob_start();
@@ -221,7 +222,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 			// Generates the top buttons, but only if there are at least two data
 			// types to provide output for.
 			if (sizeof($geopserve_generation_array) > 1){
-					echo "<ol class='carousel-indicators u-mg-bottom--xlg'>";
+					echo "<ol class='carousel-indicators carousel-indicators-override u-mg-bottom--xlg'>";
 					for ($i = 0; $i < sizeof($geopserve_generation_array); $i++){
 						if ($i == 0){
 							echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base geopserve-carousel-active active' title='" . $geopserve_generation_array[$i]['title'] . "'>";
@@ -272,7 +273,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 				// Displays the current carousel item title, if not hidden.
 				if ($geopserve_shortcode_array['hide'] != 'T')
-					echo "<div class='m-article__heading u-text--sm'>Recent " . strtolower($geopserve_generation_array[$i]['title']) . "</div>";
+					echo "<div class='m-article__heading u-text--sm' style='text-align:center;'>Recent " . strtolower($geopserve_generation_array[$i]['title']) . "</div>";
 
 				// More container divs, including the carousel div that assets will be applied to.
 				echo "<div class='m-article__desc'>";
@@ -283,9 +284,6 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				// Generates and outputs the search bar if not hidden.
 				if ($geopserve_shortcode_array['hide'] != 'T'){
 
-					// Redirect href for viewing additional assets.
-					$geopserve_browse_href = home_url() . "/geoplatform-search/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'];
-
 					// Placeholder text setup, establishing a default that's overwritten
 					// if within a Portal 4 custom post type.
 					$geopserve_search_placeholder = "Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_generation_array[$i]['title']);
@@ -294,16 +292,22 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 					elseif (get_post_type() == 'ngda-post')
 						$geopserve_search_placeholder = "Search theme " . strtolower($geopserve_generation_array[$i]['title']);
 
+					// Search query construction, changes depending upon whether the assets
+					// are sourced by theme or community.
+					$geopserve_search_query_prefix = "/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'];
+					if ($geopserve_shortcode_array['source'] == 'theme')
+						$geopserve_search_query_prefix = "/#/?themes=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'];
+
 					echo "<div class='m-results-item'>";
 						echo "<div class='m-results-item__body flex-align-center'>";
-							echo "<a href='" . $geopserve_browse_href . "' class='u-pd-right--md u-mg-right--md geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "'></a>";
+							echo "<a href='" . home_url() . "/geoplatform-search" . $geopserve_search_query_prefix . "' class='u-pd-right--md u-mg-right--md geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "'></a>";
 							echo "<div class='flex-1 d-flex flex-justify-between flex-align-center'>";
 								echo "<div class='input-group-slick flex-1'>";
 									echo "<form class='input-group-slick flex-1 geopportal_port_community_search_form' grabs-from='geopportal_community_" . $geopserve_generation_array[$i]['title'] . "_search'>";
 									echo "<span class='icon fas fa-search'></span>";
 										echo "<input type='text' class='form-control' aria-label='Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_generation_array[$i]['title']) . "' " .
 												"id='geopportal_community_" . $geopserve_generation_array[$i]['title'] . "_search' " .
-												"query-prefix='/#/?communities=" . $geopserve_shortcode_array['id'] . $geopserve_generation_array[$i]['query'] . "' " .
+												"query-prefix='" . $geopserve_search_query_prefix . "' " .
 												"aria-label='Search " . $geopserve_generation_array[$i]['title'] . "' " .
 												"placeholder='" . $geopserve_search_placeholder . "'>";
 									echo "</form>";
@@ -317,6 +321,7 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 				<!-- Carousel pane generation script. -->
 				<script type="text/javascript">
 					var geopserve_community_id = "<?php echo $geopserve_shortcode_array['id'] ?>";
+					var geopserve_source = "<?php echo $geopserve_shortcode_array['source'] ?>";
 					var geopserve_asset_name = "<?php echo $geopserve_generation_array[$i]['title'] ?>";
 					var geopserve_result_count = "<?php echo $geopserve_shortcode_array['count'] ?>";
 					var geopserve_iter = "<?php echo $i ?>";
@@ -328,11 +333,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 					var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
 					// Asset list creation.
-					geopserve_gen_list(geopserve_community_id, geopserve_asset_name, geopserve_result_count, geopserve_iter,
+					geopserve_gen_list(geopserve_community_id, geopserve_source, geopserve_asset_name, geopserve_result_count, geopserve_iter,
 						geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_failsafe);
 
 					// Search bar count applicator.
-					geopserve_gen_count(geopserve_community_id, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);
+					geopserve_gen_count(geopserve_community_id, geopserve_source, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);
 				</script>
 				<?php
 

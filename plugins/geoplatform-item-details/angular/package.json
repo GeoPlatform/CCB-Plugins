@@ -30,7 +30,7 @@
     "geoplatform.client": "git+http://github.com/GeoPlatform/client-api.git#0.2.1",
     "geoplatform.mapcore": "git+http://github.com/GeoPlatform/map-core.git#0.2.0",
     "geoplatform.ngoauth": "git+https://github.com/GeoPlatform/ng-gpoauth.git#0.1.0",
-    "geoplatform.rpm": "git+https://github.com/GeoPlatform/rpm-js#0.2.3",
+    "geoplatform.rpm": "git+https://github.com/GeoPlatform/rpm-js#develop",
     "geoplatform.style": "git+http://github.com/GeoPlatform/style.git#2.0.0",
     "google-charts": "^2.0.0",
     "jquery": "^3.0.0",
