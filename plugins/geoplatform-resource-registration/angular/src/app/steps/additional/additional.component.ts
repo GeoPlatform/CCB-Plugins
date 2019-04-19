@@ -78,8 +78,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         this.formOpts[ModelProperties.COMMUNITIES] = [''];
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
         this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
-        this.formOpts[ModelProperties.THUMBNAIL_URL] = ['', URL_VALIDATOR];
-        this.formOpts[ModelProperties.THUMBNAIL_CONTENT] = [''];
+        this.formOpts[ModelProperties.FORM_THUMBNAIL_URL] = ['', URL_VALIDATOR];
+        this.formOpts[ModelProperties.FORM_THUMBNAIL_CONTENT] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
     }
@@ -123,13 +123,15 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                         .setValue(data[ModelProperties.LANDING_PAGE]);
                 }
 
-                if(data.thumbnail) {
-                    if(data.thumbnail.url) {
-                        this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(data.thumbnail.url);
-                        this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(null);
-                    } else if(data.thumbnail.contentData) {
-                        this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(data.thumbnail.contentData);
-                        this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
+                if(data[ModelProperties.THUMBNAIL]) {
+                    if(data[ModelProperties.THUMBNAIL].url) {
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_URL)
+                            .setValue(data[ModelProperties.THUMBNAIL].url);
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_CONTENT).setValue(null);
+                    } else if(data[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_CONTENT]) {
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_CONTENT)
+                            .setValue(data[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_CONTENT]);
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_URL).setValue(null);
                     }
                 }
             }
@@ -288,8 +290,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                     if ((encoded.length % 4) > 0) {
                         encoded += '='.repeat(4 - (encoded.length % 4));
                     }
-                    this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
-                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(encoded);
+                    this.formGroup.get(ModelProperties.FORM_THUMBNAIL_URL).setValue(null);
+                    this.formGroup.get(ModelProperties.FORM_THUMBNAIL_CONTENT).setValue(encoded);
                 }
             });
 
@@ -306,7 +308,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     clearThumbnailFile() {
         if(this.thumbFile) {
             this.thumbFile.nativeElement.value = "";
-            this.setValue(ModelProperties.THUMBNAIL_CONTENT, null);
+            this.setValue(ModelProperties.FORM_THUMBNAIL_CONTENT, null);
         }
     }
 

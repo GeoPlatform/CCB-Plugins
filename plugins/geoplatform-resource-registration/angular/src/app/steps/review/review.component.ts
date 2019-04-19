@@ -33,7 +33,7 @@ import {
     itemServiceProvider, serviceServiceProvider
 } from '../../item-service.provider';
 import { AppError } from '../../model';
-import { ModelProperties, AppEventTypes } from '../../model';
+import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
 
 const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
     return k.indexOf("secondary")<0 && k.indexOf("community")<0
@@ -144,7 +144,7 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
      */
     startOver() {
         //reset all forms
-        this.onEvent.emit( { type:'app.reset', value:true } );
+        this.onEvent.emit( { type:StepEventTypes.RESET, value:true } );
     }
 
     /**
@@ -262,9 +262,9 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
 
     getThumbnailBackground() {
-        let thumbnail = this.data.thumbnail;
-        let type = thumbnail.mediaType || 'image/png';
-        let content = thumbnail.contentData;
+        let thumbnail = this.data[ModelProperties.THUMBNAIL];
+        let type = thumbnail[ModelProperties.THUMBNAIL_TYPE] || 'image/png';
+        let content = thumbnail[ModelProperties.THUMBNAIL_CONTENT];
         return this.sanitizer.bypassSecurityTrustStyle(`url(data:${type};base64,${content})`);
     }
 }

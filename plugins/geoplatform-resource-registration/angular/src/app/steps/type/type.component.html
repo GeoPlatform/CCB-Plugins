@@ -157,7 +157,7 @@
                     [label]="'Specialization'"
                     [placeholder]="'Specify resource specialization(s)'"
                     [hint]="'Resources can be specialized to enhance search, discovery, and usage by other users. Specializations are type-specific and may not exist for all types.'"
-                    [fieldName]="{{PROPS.RESOURCE_TYPES}}"
+                    [fieldName]="PROPS.RESOURCE_TYPES"
                     [formGroup]="formGroup"
                     [filterFn]="filterResourceTypes">
                 </gprr-autocomplete-mat-chip>

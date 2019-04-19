@@ -13,12 +13,17 @@ export const ModelProperties = {
     KEYWORDS:       'keywords',
     PUBLISHERS:     'publishers',
     COMMUNITIES:    'usedBy',
+    THUMBNAIL:      'thumbnail',
+    THUMBNAIL_URL:  'url',
+    THUMBNAIL_CONTENT: 'contentData',
+    THUMBNAIL_TYPE: 'mediaType',
+    CLASSIFIERS:    'classifiers',
+    LAYERS:         'layers',
 
-    //not actual properties on the model, but
-    // they map to 'thumbnail.url' and 'thumbnail.contentData'
-    // which are in the model
-    THUMBNAIL_URL:  'thumbnailUrl',
-    THUMBNAIL_CONTENT: 'thumbnailContent',
+    //not actual properties on the model, but are used by internal
+    // form groups to represent THUMBNAIL_XXXX properties while being edited
+    FORM_THUMBNAIL_URL:  'thumbnailUrl',
+    FORM_THUMBNAIL_CONTENT: 'thumbnailContent',
 
     CLASSIFIERS_PURPOSE             : 'purpose',
     CLASSIFIERS_FUNCTION            : 'function',
@@ -34,23 +39,23 @@ export const ModelProperties = {
 
 
 export const ClassifierTypes = {
-    purpose:    'Purpose',
-    function:   'Function',
-    primaryTopic: 'Topic',
-    secondaryTopic: 'Topic',
-    primarySubject: 'Subject',
-    secondarySubject: 'Subject',
-    community:  'Community',
-    audience: 'Audience',
-    place: 'Place',
-    category: 'Category'
+    place            : 'Place',
+    purpose          : 'Purpose',
+    function         : 'Function',
+    audience         : 'Audience',
+    category         : 'Category',
+    community        : 'Community',
+    primaryTopic     : 'Topic',
+    secondaryTopic   : 'Topic',
+    primarySubject   : 'Subject',
+    secondarySubject : 'Subject'
 };
 
 
 
 export class AppError extends Error {
 
-    public label : string;
+    public label  : string;
     public status : number = 500;
 
     constructor(message : string, status?:number, label?:string) {
@@ -68,7 +73,6 @@ export const AppEventTypes = {
     RESET   : "reset",
     AUTH    : "auth"
 }
-
 
 export const StepEventTypes = {
     RESET           : 'app.reset',

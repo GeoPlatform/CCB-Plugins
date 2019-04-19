@@ -165,20 +165,20 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // them as uris, so we have to transform them
             this.item[key] = value.map(v => v.uri);
 
-        } else if(ModelProperties.THUMBNAIL_URL === key) {
+        } else if(ModelProperties.FORM_THUMBNAIL_URL === key) {
             if(value && value.length) {
-                this.item.thumbnail = this.item.thumbnail || {};
-                this.item.thumbnail.url = value;
+                this.item[ModelProperties.THUMBNAIL] = this.item[ModelProperties.THUMBNAIL] || {};
+                this.item[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_URL] = value;
             } else {
-                this.item.thumbnail = null;
+                this.item[ModelProperties.THUMBNAIL] = null;
             }
 
-        } else if(ModelProperties.THUMBNAIL_CONTENT === key) {
+        } else if(ModelProperties.FORM_THUMBNAIL_CONTENT === key) {
             if(value && value.length) {
-                this.item.thumbnail = this.item.thumbnail || {};
-                this.item.thumbnail.contentData = value;
+                this.item[ModelProperties.THUMBNAIL] = this.item[ModelProperties.THUMBNAIL] || {};
+                this.item[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_CONTENT] = value;
             } else {
-                this.item.thumbnail = null;
+                this.item[ModelProperties.THUMBNAIL] = null;
             }
 
         } else { //generic property
@@ -301,6 +301,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
 
             if(params.type) {
                 this.item.type = params.type;
+            }
+
+            if(params.createdBy && 'development' === environment.env) {
+                this.item.createdBy = params.createdBy;
             }
         }
     }
