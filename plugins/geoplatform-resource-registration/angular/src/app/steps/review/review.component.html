@@ -90,6 +90,16 @@
                 </div>
 
                 <div class="a-property-display">
+                    <label>Themes:</label>
+                    <div class="a-property-value">
+                        <mat-chip-list *ngIf="data[PROPS.THEMES]" selectable="false">
+                            <mat-chip *ngFor="let theme of data[PROPS.THEMES]">{{theme.label}}</mat-chip>
+                        </mat-chip-list>
+                        <span *ngIf="!data[PROPS.THEMES]||!data[PROPS.THEMES].length"><em>none specified</em></span>
+                    </div>
+                </div>
+
+                <div class="a-property-display">
                     <label>Publishers:</label>
                     <div class="a-property-value">
                         <mat-chip-list *ngIf="data[PROPS.PUBLISHERS]" selectable="false">
@@ -98,6 +108,7 @@
                         <span *ngIf="!data[PROPS.PUBLISHERS]||!data[PROPS.PUBLISHERS].length"><em>none specified</em></span>
                     </div>
                 </div>
+
                 <div class="a-property-display">
                     <label>Communities:</label>
                     <div class="a-property-value">
@@ -107,6 +118,17 @@
                         <span *ngIf="!data[PROPS.COMMUNITIES]||!data[PROPS.COMMUNITIES].length"><em>none specified</em></span>
                     </div>
                 </div>
+
+                <div class="a-property-display">
+                    <label>Topics:</label>
+                    <div class="a-property-value">
+                        <mat-chip-list *ngIf="data[PROPS.TOPICS]" selectable="false">
+                            <mat-chip *ngFor="let topic of data[PROPS.TOPICS]">{{topic.label}}</mat-chip>
+                        </mat-chip-list>
+                        <span *ngIf="!data[PROPS.TOPICS]||!data[PROPS.TOPICS].length"><em>none specified</em></span>
+                    </div>
+                </div>
+
 
             </div>
 

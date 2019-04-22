@@ -77,6 +77,10 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         this.formOpts['$'+ModelProperties.KEYWORDS] = [''];
         this.formOpts[ModelProperties.COMMUNITIES] = [''];
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
+        this.formOpts[ModelProperties.THEMES] = [''];
+        this.formOpts['$'+ModelProperties.THEMES] = [''];
+        this.formOpts[ModelProperties.TOPICS] = [''];
+        this.formOpts['$'+ModelProperties.TOPICS] = [''];
         this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.FORM_THUMBNAIL_URL] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.FORM_THUMBNAIL_CONTENT] = [''];
@@ -108,20 +112,18 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
             } else {
 
-                if(data[ModelProperties.KEYWORDS] && data[ModelProperties.KEYWORDS].length) {
-                    this.formGroup.get(ModelProperties.KEYWORDS)
-                        .setValue(data[ModelProperties.KEYWORDS]);
-                }
 
-                if(data[ModelProperties.COMMUNITIES] && data[ModelProperties.COMMUNITIES].length) {
-                    this.formGroup.get(ModelProperties.COMMUNITIES)
-                        .setValue(data[ModelProperties.COMMUNITIES]);
-                }
+                let props = [
+                    ModelProperties.KEYWORDS, ModelProperties.COMMUNITIES,
+                    ModelProperties.THEMES, ModelProperties.ASSETS,
+                    ModelProperties.LANDING_PAGE
+                ];
+                props.forEach( property => {
+                    if(data[property] && data[property].length) {
+                        this.formGroup.get(property).setValue(data[property]);
+                    }
+                });
 
-                if(data[ModelProperties.LANDING_PAGE]) {
-                    this.formGroup.get(ModelProperties.LANDING_PAGE)
-                        .setValue(data[ModelProperties.LANDING_PAGE]);
-                }
 
                 if(data[ModelProperties.THUMBNAIL]) {
                     if(data[ModelProperties.THUMBNAIL].url) {
@@ -146,7 +148,9 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     }
 
 
-    // private filterCommunities(value: string): Promise<string[]> {
+    /**
+     * Filter function for autocompleting communities
+     */
     filterCommunities = (value: string) : Promise<string[]> => {
         let current = this.getValues(ModelProperties.COMMUNITIES);
         current = current.map(c=>c.id);
@@ -164,6 +168,52 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         .catch(e => {
             //display error message indicating an issue searching...
             this.hasError = new StepError("Error Searching Communities", e.message);
+        });
+    }
+
+    /**
+     * Filter function for autocompleting themes
+     */
+    filterThemes = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.THEMES);
+        current = current.map(c=>c.id);
+
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.CONCEPT).q(filterValue);
+        return this.itemService.search(query)
+        .then( response => {
+            let hits = response.results;
+            if(current && current.length) {
+                hits = hits.filter(o => { return current.indexOf(o.id)<0; });
+            }
+            return hits;
+        })
+        .catch(e => {
+            //display error message indicating an issue searching...
+            this.hasError = new StepError("Error Searching Themes", e.message);
+        });
+    }
+
+    /**
+     * Filter function for autocompleting topics
+     */
+    filterTopics = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.TOPICS);
+        current = current.map(c=>c.id);
+
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.TOPIC).q(filterValue);
+        return this.itemService.search(query)
+        .then( response => {
+            let hits = response.results;
+            if(current && current.length) {
+                hits = hits.filter(o => { return current.indexOf(o.id)<0; });
+            }
+            return hits;
+        })
+        .catch(e => {
+            //display error message indicating an issue searching...
+            this.hasError = new StepError("Error Searching Topics", e.message);
         });
     }
 

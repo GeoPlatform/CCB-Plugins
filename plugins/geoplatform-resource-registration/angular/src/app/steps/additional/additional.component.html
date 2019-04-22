@@ -41,6 +41,27 @@
                     [filterFn]="filterCommunities">
                 </gprr-autocomplete-mat-chip>
 
+                <gprr-autocomplete-mat-chip
+                    [label]="'Themes'"
+                    [placeholder]="'Associate themes'"
+                    [hint]="'Find themes using the typeahead and select them to associate'"
+                    [fieldName]="PROPS.THEMES"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterThemes">
+                </gprr-autocomplete-mat-chip>
+
+                <gprr-autocomplete-mat-chip
+                    [label]="'Topics'"
+                    [placeholder]="'Associate topics'"
+                    [hint]="'Find topics using the typeahead and select them to associate'"
+                    [fieldName]="PROPS.TOPICS"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterTopics">
+                </gprr-autocomplete-mat-chip>
+
+            </div>
+
+            <div class="additional__section">
 
                 <mat-form-field floatLabel="always">
                   <mat-label>Landing Page</mat-label>
@@ -101,8 +122,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
             </div>
 

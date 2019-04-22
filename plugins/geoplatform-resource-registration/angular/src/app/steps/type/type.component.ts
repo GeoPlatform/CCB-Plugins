@@ -135,6 +135,8 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
             } else { //update content
 
+                console.log("TypeStep.onChanges() - Data changed!");
+
                 this.setValue(ModelProperties.TYPE, data[ModelProperties.TYPE]||null );
                 this.setValue(ModelProperties.TITLE, data[ModelProperties.TITLE]||null );
                 this.setValue(ModelProperties.DESCRIPTION, data[ModelProperties.DESCRIPTION]||null );
@@ -355,6 +357,10 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 let user = event.value.user;
                 // console.log("Setting user in form as '" + JSON.stringify(user) + "'");
                 this.setValue(ModelProperties.CREATED_BY, user.username);
+                break;
+            case AppEventTypes.CHANGE:
+                this.onTypeSelection( this.data[ModelProperties.TYPE]||null );
+                this.checkExists();
                 break;
         }
     }

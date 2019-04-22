@@ -11,6 +11,7 @@ export const ModelProperties = {
     LANDING_PAGE:   "landingPage",
     DISTRIBUTIONS:  "distributions",
     KEYWORDS:       'keywords',
+    THEMES:         'themes',
     PUBLISHERS:     'publishers',
     COMMUNITIES:    'usedBy',
     THUMBNAIL:      'thumbnail',
@@ -19,6 +20,8 @@ export const ModelProperties = {
     THUMBNAIL_TYPE: 'mediaType',
     CLASSIFIERS:    'classifiers',
     LAYERS:         'layers',
+    ASSETS:         'assets',
+    TOPICS:         'topics',
 
     //not actual properties on the model, but are used by internal
     // form groups to represent THUMBNAIL_XXXX properties while being edited
@@ -71,7 +74,8 @@ export class AppError extends Error {
 
 export const AppEventTypes = {
     RESET   : "reset",
-    AUTH    : "auth"
+    AUTH    : "auth",
+    CHANGE  : "change"
 }
 
 export const StepEventTypes = {

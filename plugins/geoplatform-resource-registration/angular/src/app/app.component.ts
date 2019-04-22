@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable, Subject } from 'rxjs';
-
 import { MatStepper } from '@angular/material';
-import { ItemTypes } from 'geoplatform.client';
+import { ItemTypes, ItemService } from 'geoplatform.client';
+import * as Q from "q";
 
-
+import { itemServiceProvider } from './item-service.provider';
 import { StepComponent, StepEvent } from './steps/step.component';
 import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
@@ -23,7 +23,6 @@ import { environment } from '../environments/environment';
 
 
 
-
 export interface AppEvent {
     type   : string;
     value ?: any;
@@ -33,7 +32,8 @@ export interface AppEvent {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
+  providers: [ itemServiceProvider ]
 })
 export class AppComponent extends AuthenticatedComponent implements OnInit {
 
@@ -47,7 +47,11 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
 
     public item : any;
 
-    constructor( private formBuilder: FormBuilder ) {
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private itemService : ItemService
+    ) {
         super();
     }
 
@@ -291,21 +295,117 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             this.item[ModelProperties.CREATED_BY] = this.user.username;
         }
 
-        let searchParams = window.location.search;
+        //pre-populate some fields based upon query parameters provided
+        let searchParams: string = window.location.search;
         if(searchParams) {
-            let params : any = {};
+            let params : { [key:string]:any } = {} as { [key:string]:any };
             searchParams.replace('?','').split('&').forEach(p => {
                 let param = p.split('='), key = param[0], value = param[1];
                 params[key] = value;
             });
 
-            if(params.type) {
-                this.item.type = params.type;
-            }
+            this.applyPresets(params)
+            .then( () => {
 
-            if(params.createdBy && 'development' === environment.env) {
-                this.item.createdBy = params.createdBy;
-            }
+                if(!environment.production) {
+                    console.log("Item Initialized:");
+                    console.log(this.item);
+                }
+                this.triggerChangeDetection();
+
+                //notify children that the item has changed and
+                // should trigger a refresh
+                let appEvent : AppEvent = {
+                    type: AppEventTypes.CHANGE,
+                    value: this.item
+                };
+                this.appEvents.next(appEvent);
+            });
         }
+
+    }
+
+
+    /**
+     *
+     */
+    applyPresets(params : { [key:string]:any } ) : Promise<void> {
+
+        if(params.type) {
+            this.item[ModelProperties.TYPE] = params.type;
+        }
+
+        if(params.title) {
+            this.item[ModelProperties.TITLE] =
+                this.item[ModelProperties.LABEL] =
+                    (decodeURIComponent(params.title) || "").trim();
+        }
+
+        let keys = params.keywords || params.keyword;
+        this.item[ModelProperties.KEYWORDS] = Array.isArray(keys) ? keys : [];
+
+
+        if(params.createdBy && 'development' === environment.env) {
+            this.item[ModelProperties.CREATED_BY] = params.createdBy;
+        }
+
+
+        //Now, resolve any presets that are assets (values are IDs but we need
+        //to fetch their full object representation before setting)
+
+        let cids = params.communities || params.community;
+        if(cids && !Array.isArray(cids)) cids = [cids];
+
+        let thids = params.themes || params.theme;
+        if(thids && !Array.isArray(thids)) thids = [thids];
+
+        let toids = params.topics || params.topic;
+        if(toids && !Array.isArray(toids)) toids = [toids];
+
+
+        let tbd = [].concat(cids||[], thids||[], toids||[]);
+
+        if(!tbd.length) return Promise.resolve();
+
+        return this.itemService.getMultiple(tbd)
+        .then( ( results : {[key:string]:any}[] ) => {
+
+            results.forEach( result => {
+                //TODO eventually the items being resolved will be of the same type
+                // but for different association properties. but for now, each
+                // association is of a specific type, so we determine where to put
+                // each resolved asset according to its type...
+                switch(result.type) {
+                    case ItemTypes.COMMUNITY :
+                    if(!this.item[ModelProperties.COMMUNITIES])
+                        this.item[ModelProperties.COMMUNITIES] = [];
+                    this.item[ModelProperties.COMMUNITIES].push(result);
+                    break;
+                    case ItemTypes.CONCEPT :
+                    if(!this.item[ModelProperties.THEMES])
+                        this.item[ModelProperties.THEMES] = [];
+                    this.item[ModelProperties.THEMES].push(result);
+                    break;
+                    case ItemTypes.ORGANIZATION :
+                    if(!this.item[ModelProperties.PUBLISHERS])
+                        this.item[ModelProperties.PUBLISHERS] = [];
+                    this.item[ModelProperties.PUBLISHERS].push(result);
+                    break;
+                    case ItemTypes.TOPIC :
+                    if(this.item[ModelProperties.ASSETS])
+                        this.item[ModelProperties.ASSETS] = [];
+                    this.item[ModelProperties.ASSETS].push(result);
+                }
+            });
+
+            return;
+
+        })
+        .catch( (error:Error) => {
+            console.log("Error resolving preset assets: " + error.message);
+            //TODO display warning to user that some values couldn't be preset...
+            return Promise.resolve();
+        })
+
     }
 }
