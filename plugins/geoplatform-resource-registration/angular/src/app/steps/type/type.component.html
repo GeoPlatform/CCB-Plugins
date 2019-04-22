@@ -43,20 +43,13 @@
 
                 <gprr-autocomplete-mat-chip
                     [label]="'Publishers'"
+                    [icon]="'icon-organization'"
                     [placeholder]="'Associate publishing agencies'"
                     [hint]="'Find publishers using the typeahead and select them to associate'"
                     [fieldName]="PROPS.PUBLISHERS"
                     [formGroup]="formGroup"
                     [filterFn]="filterPublishers">
                 </gprr-autocomplete-mat-chip>
-
-                <!-- <mat-form-field floatLabel="always">
-                    <mat-label>Created By</mat-label>
-                    <input matInput formControlName="{{PROPS.CREATED_BY}}" required disabled="disabled">
-                    <mat-error *ngIf="isInvalid(PROPS.CREATED_BY)">You must be signed in to register resources</mat-error>
-                </mat-form-field> -->
-
-              <!-- this is a test -->
 
             </div>
 
@@ -74,8 +67,10 @@
                 <div *ngIf="currentType==='dcat:Dataset'">
 
                     <mat-form-field floatLabel="always">
-                        <mat-label>Download URL</mat-label>
-                        <mat-icon matPrefix>link</mat-icon>
+                        <mat-label>
+                            <mat-icon matPrefix>link</mat-icon>
+                            Download URL
+                        </mat-label>
                         <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Specify a download URL">
                         <mat-hint>If the dataset is downloadable via a web-accessible URL</mat-hint>
                         <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
@@ -88,8 +83,10 @@
                 <div *ngIf="currentType==='regp:Service'">
 
                     <mat-form-field floatLabel="always">
-                        <mat-label>Service URL</mat-label>
-                        <mat-icon matPrefix>link</mat-icon>
+                        <mat-label>
+                            <mat-icon matPrefix>link</mat-icon>
+                            Service URL
+                        </mat-label>
                         <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Provide the service's URL" required>
                         <mat-hint>The web-accessible URL to the service's API</mat-hint>
                         <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">
@@ -132,8 +129,10 @@
                 <div *ngIf="currentType==='Application'">
 
                   <mat-form-field floatLabel="always">
-                    <mat-label>Access URL</mat-label>
-                    <mat-icon matPrefix>link</mat-icon>
+                    <mat-label>
+                        <mat-icon matPrefix>link</mat-icon>
+                        Access URL
+                    </mat-label>
                     <input matInput formControlName="{{PROPS.ACCESS_URL}}"
                            placeholder="Specify the access URL of the Application"
                            [required]="currentType==='Application'">

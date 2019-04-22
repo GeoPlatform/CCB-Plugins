@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable, Subject } from 'rxjs';
-import { MatStepper } from '@angular/material';
+import { MatStepper, MatIconRegistry } from '@angular/material';
 import { ItemTypes, ItemService } from 'geoplatform.client';
 import * as Q from "q";
 
@@ -50,9 +50,14 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
 
     constructor(
         private formBuilder: FormBuilder,
-        private itemService : ItemService
+        private itemService : ItemService,
+        matIconRegistry: MatIconRegistry
     ) {
         super();
+
+        matIconRegistry.registerFontClassAlias('fontawesome', 'fas');
+        matIconRegistry.registerFontClassAlias('geoplatform-icons-font', 'gp');
+
     }
 
     ngOnInit() {
@@ -184,6 +189,9 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             } else {
                 this.item[ModelProperties.THUMBNAIL] = null;
             }
+
+        } else if(ModelProperties.THEME_SCHEME === key) {
+            //ignore
 
         } else { //generic property
             this.item[key] = value;

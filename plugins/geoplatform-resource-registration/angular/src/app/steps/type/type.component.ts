@@ -135,7 +135,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
             } else { //update content
 
-                console.log("TypeStep.onChanges() - Data changed!");
+                // console.log("TypeStep.onChanges() - Data changed!");
 
                 this.setValue(ModelProperties.TYPE, data[ModelProperties.TYPE]||null );
                 this.setValue(ModelProperties.TITLE, data[ModelProperties.TITLE]||null );

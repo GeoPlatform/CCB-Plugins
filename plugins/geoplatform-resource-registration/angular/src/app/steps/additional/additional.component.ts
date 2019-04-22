@@ -57,7 +57,6 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     public thumbError : Error;
     public PROPS : any = ModelProperties;
 
-
     private eventsSubscription: any;
     private authToken : string;
 
@@ -79,6 +78,10 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
         this.formOpts[ModelProperties.THEMES] = [''];
         this.formOpts['$'+ModelProperties.THEMES] = [''];
+
+        this.formOpts[ModelProperties.THEME_SCHEME] = [''];
+        this.formOpts['$' + ModelProperties.THEME_SCHEME] = [''];
+
         this.formOpts[ModelProperties.TOPICS] = [''];
         this.formOpts['$'+ModelProperties.TOPICS] = [''];
         this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
@@ -149,14 +152,11 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
 
     /**
-     * Filter function for autocompleting communities
+     * @param query - Query object to use to filter results
+     * @param current - currently-selected values
+     * @return Promise of an array of strings
      */
-    filterCommunities = (value: string) : Promise<string[]> => {
-        let current = this.getValues(ModelProperties.COMMUNITIES);
-        current = current.map(c=>c.id);
-
-        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue);
+    filterValues(query : Query, current : string[]) : Promise<string[]> {
         return this.itemService.search(query)
         .then( response => {
             let hits = response.results;
@@ -167,8 +167,20 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         })
         .catch(e => {
             //display error message indicating an issue searching...
-            this.hasError = new StepError("Error Searching Communities", e.message);
+            this.hasError = new StepError("Error searching " + query.getTypes().join(', '), e.message);
         });
+    }
+
+
+    /**
+     * Filter function for autocompleting communities
+     */
+    filterCommunities = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.COMMUNITIES);
+        current = current.map(c=>c.id);
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue);
+        return this.filterValues(query, current);
     }
 
     /**
@@ -177,21 +189,26 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     filterThemes = (value: string) : Promise<string[]> => {
         let current = this.getValues(ModelProperties.THEMES);
         current = current.map(c=>c.id);
-
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
         let query = new Query().types(ItemTypes.CONCEPT).q(filterValue);
-        return this.itemService.search(query)
-        .then( response => {
-            let hits = response.results;
-            if(current && current.length) {
-                hits = hits.filter(o => { return current.indexOf(o.id)<0; });
-            }
-            return hits;
-        })
-        .catch(e => {
-            //display error message indicating an issue searching...
-            this.hasError = new StepError("Error Searching Themes", e.message);
-        });
+
+        let inScheme = this.getValues(ModelProperties.THEME_SCHEME);
+        if(inScheme && inScheme.length) {
+            query.setSchemes(inScheme.map(s=>s.id));
+        }
+
+        return this.filterValues(query, current);
+    }
+
+    /**
+     * Filter function for autocompleting concept schemes
+     */
+    filterSchemes = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.THEME_SCHEME);
+        current = current.map(c=>c.id);
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.CONCEPT_SCHEME).q(filterValue);
+        return this.filterValues(query, current);
     }
 
     /**
@@ -200,21 +217,9 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     filterTopics = (value: string) : Promise<string[]> => {
         let current = this.getValues(ModelProperties.TOPICS);
         current = current.map(c=>c.id);
-
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
         let query = new Query().types(ItemTypes.TOPIC).q(filterValue);
-        return this.itemService.search(query)
-        .then( response => {
-            let hits = response.results;
-            if(current && current.length) {
-                hits = hits.filter(o => { return current.indexOf(o.id)<0; });
-            }
-            return hits;
-        })
-        .catch(e => {
-            //display error message indicating an issue searching...
-            this.hasError = new StepError("Error Searching Topics", e.message);
-        });
+        return this.filterValues(query, current);
     }
 
 
