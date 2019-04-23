@@ -9,10 +9,6 @@
 function gpp_getEnv($name, $def){
 	return isset($_ENV[$name]) ? $_ENV[$name] : $def;
 }
-// set additional env variables
-$geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
-$geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
-
 
 /**
  * Establish this as a child theme of GeoPlatform CCB.
@@ -22,20 +18,19 @@ function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
 	wp_enqueue_style( 'flaticons-css', get_stylesheet_directory_uri() . '/font/flaticon.css');
-	wp_enqueue_style( 'geop-root-css', get_stylesheet_directory_uri() . '/css/root-css.css');
-	wp_enqueue_style( 'geop-style', get_stylesheet_directory_uri() . '/css/geop-style.css');
+	wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
+	wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( $parent_style ), wp_get_theme()->get('Version'));
 
 	if (is_page_template('page-templates/page_style-guide.php'))
 		wp_enqueue_style( 'styleguide-css', get_stylesheet_directory_uri() . '/css/styleguide.css');
 
-	wp_enqueue_script( 'popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' );
+	// wp_enqueue_script( 'popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' );
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
-	wp_enqueue_script( 'geop-prism-js', get_stylesheet_directory_uri() . '/js/prism.js' );
+	wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
 	wp_enqueue_script( 'geop-styleguide-js', get_stylesheet_directory_uri() . '/js/styleguide.js' );
   wp_enqueue_script( 'auth', get_stylesheet_directory_uri() . '/scripts/authentication.js' );
-  wp_enqueue_script( 'fixedScroll', get_stylesheet_directory_uri() . '/scripts/fixed_scroll.js');
   wp_enqueue_script( 'jquery' );
 }
 add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
@@ -43,7 +38,7 @@ add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
 // Loads bootstrap resources, but only for pages that aren't Angular with bundled bootstrap.
 function geopportal_enqueue_bootstrap() {
 	if ( !is_page( array('geoplatform-search', 'geoplatform-items', 'register' ) ) ){
-		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' );
+		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
 		wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
 	}
 }
@@ -57,12 +52,12 @@ function geop_ccb_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 
-function geop_ccb_header_image_method() {}
-add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
+// function geop_ccb_header_image_method() {}
+// add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
 
 
-function geop_ccb_header_customize_css(){}
-add_action( 'wp_head', 'geop_ccb_header_customize_css');
+// function geop_ccb_header_customize_css(){}
+// add_action( 'wp_head', 'geop_ccb_header_customize_css');
 
 // Disable admin bar (un-comment for prod sites)
 if ( !current_user_can('administrator')){
@@ -89,12 +84,7 @@ function geop_ccb_register_menus() {
     array(
       'headfoot-featured' => __( 'HF - Featured' ),
       'headfoot-getInvolved' => __( 'HF - Get Involved' ),
-			// 'headfoot-exploreData' => __(' HF - Explore Data'),
-      // 'headfoot-appservices' => __( 'HF - Apps and Services' ),
       'headfoot-about' => __( 'HF - About' ),
-      //'headfoot-aboutR' => __( 'HF - About Right' ),
-      // 'headfoot-help' => __( 'HF - Help' ),
-      // 'headfoot-themes' => __( 'HF - Themes')
     )
   );
 }
@@ -254,10 +244,6 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'priority' => 60,
 		'default' => 'geoplatform-items'
 	));
-
-
-
-
 
 	$wp_customize->add_setting('headlink_help',array(
 		'default' => '',
@@ -536,19 +522,8 @@ function geop_ccb_featured_register( $wp_customize ){
 		'priority' => 50,
 	));
 
-
-
-
 }
 add_action( 'customize_register', 'geop_ccb_featured_register');
-
-
-
-function geop_ccb_sanitize_fonts( $geop_portal_value ) {
-  if ( $geop_portal_value == '' )
-    $geop_portal_value = home_url();
-  return $geop_portal_value;
-}
 
 // Bootstrap controls are removed due to irrelevance.
 function geop_ccb_bootstrap_register($wp_customize){}
@@ -620,23 +595,6 @@ if ( ! function_exists ( 'geop_ccb_newpage' ) ) {
 		);
 	}
 	add_action( 'widgets_init', 'geop_ccb_newpage' );
-}
-
-/**
- * Widgetizing the sidebar
- */
-if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
-	function geop_ccb_sidebar() {
-		register_sidebar(
-		array(
-			'id' => 'geoplatform-widgetized-page-sidebar',
-			'name' => __( 'Sidebar Widgets', 'geoplatform-portal-four' ),
-			'description' => __( "Widgets that go in the sidebar can be added here.", 'geoplatform-ccb' ),
-			'class' => 'widget-class'
-		)
-		);
-	}
-	add_action( 'widgets_init', 'geop_ccb_sidebar' );
 }
 
 /**
