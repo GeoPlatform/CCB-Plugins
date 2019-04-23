@@ -1322,8 +1322,10 @@ function geopportal_breadcrumb_post_data($post_id) {
 }
 add_action( 'save_post', 'geopportal_breadcrumb_post_data' );
 
-
-
+// Overriding identical functions in CCB theme to preserve existing metadata.
+function geopccb_add_breadcrumb_title(){};
+function geopccb_breadcrumb_box_content($post){};
+function geopccb_breadcrumb_post_data($post_id){};
 
 /**
  * Breadcrumb customization for categories.

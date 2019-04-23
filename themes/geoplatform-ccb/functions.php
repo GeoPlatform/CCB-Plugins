@@ -26,8 +26,8 @@ $geopccb_idp_url = geop_ccb_getEnv('idp_url',"https://idp.geoplatform.gov");
 $geopccb_oe_url = geop_ccb_getEnv('oe_url',"https://oe.geoplatform.gov");
 $geopccb_sd_url = geop_ccb_getEnv('sd_url',"servicedesk@geoplatform.gov");
 $geopccb_ga_code = geop_ccb_getEnv('ga_code','UA-42040723-1');
-$geopccb_comm_url = gpp_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
-$geopccb_accounts_url = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
+$geopccb_comm_url = geop_ccb_getEnv('comm_url',"https://www.geoplatform.gov/communities/");
+$geopccb_accounts_url = geop_ccb_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
 /**
  * Add scripts to header
@@ -1071,6 +1071,7 @@ if ( ! function_exists ( 'geop_ccb_remove_theme_caps' ) ) {
 	}
 	add_action('switch_theme', 'geop_ccb_remove_theme_caps');
 }
+
 /**
  * Private pages and posts show up in search for correct roles
  *
@@ -1284,6 +1285,52 @@ $GP_TAX_META -> init();
 
 
 /**
+ * Breadcrumb Customization for posts, pages, and community posts.
+ */
+
+// register the meta box
+if ( ! function_exists ( 'geopccb_add_breadcrumb_title' ) ) {
+  function geopccb_add_breadcrumb_title() {
+      add_meta_box(
+          'geopccb_breadcrumb_title_id',          // this is HTML id of the box on edit screen
+          'Breadcrumb and Tile Title',    // title of the box
+          'geopccb_breadcrumb_box_content',   // function to be called to display the checkboxes, see the function below
+  				array(
+  					'post',
+  					'page',
+  					'community-post',
+  					'ngda-post',
+  				),
+          // 'post',        // on which edit screen the box should appear
+          'normal',      // part of page where the box should appear
+          'default'      // priority of the box
+    );
+  }
+  add_action( 'add_meta_boxes', 'geopccb_add_breadcrumb_title' );
+}
+
+// display the metabox
+if ( ! function_exists ( 'geopccb_breadcrumb_box_content' ) ) {
+  function geopccb_breadcrumb_box_content($post) {
+  	echo "<input type='text' name='geopccb_breadcrumb_title' id='geopccb_breadcrumb_title' value='" . $post->geopccb_breadcrumb_title . "' style='width:30%;'>";
+  	echo "<p class='description'>Assign an optional title for the post to be displayed in the header breadcrumbs and in Resource Elements panes.<br>If left blank, the breadcrumbs and panes will display the post's proper title.</p>";
+  }
+}
+
+// save data from checkboxes
+if ( ! function_exists ( 'geopccb_breadcrumb_post_data' ) ) {
+  function geopccb_breadcrumb_post_data($post_id) {
+    if ( !isset( $_POST['geopccb_breadcrumb_title'] ) || is_null( $_POST['geopccb_breadcrumb_title']) || empty( $_POST['geopccb_breadcrumb_title'] ))
+      update_post_meta( $post_id, 'geopccb_breadcrumb_title', '' );
+    else
+  		update_post_meta( $post_id, 'geopccb_breadcrumb_title', $_POST['geopccb_breadcrumb_title'] );
+  }
+  add_action( 'save_post', 'geopccb_breadcrumb_post_data' );
+}
+
+
+
+/**
  * Thumbnail column added to category admin.
  *
  * Functionality inspired by categories-images plugin.
@@ -1380,10 +1427,6 @@ if ( ! function_exists ( 'geop_ccb_get_theme_mods' ) ) {
 		);
 	}
 }
-
-
-
-
 
 
 

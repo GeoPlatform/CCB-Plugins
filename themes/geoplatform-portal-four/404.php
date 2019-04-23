@@ -1,10 +1,11 @@
-<!-- STILL NEEDS UPDATE -->
+<?php
+/**
+ * The template for displaying 404 pages (not found)
+ *
+ * @link https://codex.wordpress.org/Creating_an_Error_404_Page
+ */
 
-<?php get_header(); ?>
-<?php //get_template_part( 'sub-header-post', get_post_format() ); ?>
-
-<?php //get_template_part( 'mega-menu', get_post_format() ); ?>
-<?php //get_template_part( 'single-banner', get_post_format() ); ?>
+get_header(); ?>
 
 <ul class="m-page-breadcrumbs">
   <li><a href="<?php echo home_url() ?>/">Home</a></li>
