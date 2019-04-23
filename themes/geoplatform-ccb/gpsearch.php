@@ -3,7 +3,7 @@
 
 <form id="geoplatformsearchform">
   <div class="input-group-slick">
-    <span class="glyphicon glyphicon-search"></span>
+    <span class="icon fas fa-search"></span>
     <input type="text" class="form-control" id="geoplatformsearchfield" placeholder="<?php echo esc_attr( 'Search GeoPlatform...', 'geoplatform-ccb' ); ?>"/>
     <button type="submit" class="btn btn-default" id="geoplatformsearchbutton"><?php _e( 'Search', 'geoplatform-ccb'); ?></button>
   </div>
