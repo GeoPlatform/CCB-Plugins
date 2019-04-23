@@ -37,7 +37,11 @@ import {map, flatMap, startWith} from 'rxjs/operators';
   template: `
   <div *ngIf="hiddenFieldName">
       <mat-form-field floatLabel="always" [formGroup]="formGroup">
-          <mat-label>{{label}}</mat-label>
+          <mat-label>
+              <mat-icon *ngIf="icon" fontSet="{{iconFamily||'gp'}}" fontIcon="{{icon}}"></mat-icon>
+              {{label}}
+          </mat-label>
+
           <mat-chip-list #valChipList>
               <mat-chip
                   *ngFor="let val of values"
@@ -85,6 +89,8 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
     @Input() filterFn : (value: string) => Promise<string[]>;
     @Input() placeholder : string;
     @Input() hint : string;
+    @Input() iconFamily : string;
+    @Input() icon : string;
 
     public hiddenFieldName : string;
     public filteredOptions: Observable<string[]>;

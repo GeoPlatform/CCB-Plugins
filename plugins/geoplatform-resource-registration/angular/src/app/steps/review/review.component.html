@@ -60,13 +60,13 @@
                 </div>
                 <div class="a-property-display">
                     <label>Thumbnail:</label>
-                    <div class="a-property-value">
-                        <a *ngIf="data.thumbnail?.url" class="u-break--all"
-                            href="{{data.thumbnail.url}}" target="_blank">
-                            <img src="{{data.thumbnail.url}}" style="max-width:100%;max-height:200px">
-                            <br>{{data.thumbnail.url}}
+                    <div class="a-property-value" *ngIf="data[PROPS.THUMBNAIL]">
+                        <a  *ngIf="data[PROPS.THUMBNAIL][PROPS.THUMBNAIL_URL]" class="u-break--all"
+                            href="{{data[PROPS.THUMBNAIL][PROPS.THUMBNAIL_URL]}}" target="_blank">
+                            <img src="{{data[PROPS.THUMBNAIL][PROPS.THUMBNAIL_URL]}}" style="max-width:100%;max-height:200px">
+                            <br>{{data[PROPS.THUMBNAIL][PROPS.THUMBNAIL_URL]}}
                         </a>
-                        <div *ngIf="data.thumbnail?.contentData" style="max-width:100%;max-height:200px">
+                        <div *ngIf="data[PROPS.THUMBNAIL][PROPS.THUMBNAIL_CONTENT]" style="max-width:100%;max-height:200px">
                             <div
                                 [style.backgroundImage]="getThumbnailBackground()"
                                 [style.backgroundSize]="'contain'"
@@ -75,8 +75,11 @@
                                 [style.maxWidth]="'100%'">
                             </div>
                         </div>
-                        <span *ngIf="!data.thumbnail||(!data.thumbnail.url&&!data.thumbnail.contentData)"><em>not specified</em></span>
+                        <span *ngIf="!data[PROPS.THUMBNAIL][PROPS.THUMBNAIL_URL] && !data[PROPS.THUMBNAIL][PROPS.THUMBNAIL_CONTENT]">
+                            <em>not specified</em>
+                        </span>
                     </div>
+                    <div class="a-property-value" *ngIf="!data[PROPS.THUMBNAIL]"><em>not specified</em></div>
                 </div>
                 <div class="a-property-display">
                     <label>Keywords:</label>
@@ -98,6 +101,16 @@
                 </div>
 
                 <div class="a-property-display">
+                    <label>Themes:</label>
+                    <div class="a-property-value">
+                        <mat-chip-list *ngIf="data[PROPS.THEMES]" selectable="false">
+                            <mat-chip *ngFor="let theme of data[PROPS.THEMES]">{{theme.label}}</mat-chip>
+                        </mat-chip-list>
+                        <span *ngIf="!data[PROPS.THEMES]||!data[PROPS.THEMES].length"><em>none specified</em></span>
+                    </div>
+                </div>
+
+                <div class="a-property-display">
                     <label>Publishers:</label>
                     <div class="a-property-value">
                         <mat-chip-list *ngIf="data[PROPS.PUBLISHERS]" selectable="false">
@@ -106,6 +119,7 @@
                         <span *ngIf="!data[PROPS.PUBLISHERS]||!data[PROPS.PUBLISHERS].length"><em>none specified</em></span>
                     </div>
                 </div>
+
                 <div class="a-property-display">
                     <label>Communities:</label>
                     <div class="a-property-value">
@@ -115,6 +129,17 @@
                         <span *ngIf="!data[PROPS.COMMUNITIES]||!data[PROPS.COMMUNITIES].length"><em>none specified</em></span>
                     </div>
                 </div>
+
+                <div class="a-property-display">
+                    <label>Topics:</label>
+                    <div class="a-property-value">
+                        <mat-chip-list *ngIf="data[PROPS.TOPICS]" selectable="false">
+                            <mat-chip *ngFor="let topic of data[PROPS.TOPICS]">{{topic.label}}</mat-chip>
+                        </mat-chip-list>
+                        <span *ngIf="!data[PROPS.TOPICS]||!data[PROPS.TOPICS].length"><em>none specified</em></span>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -160,12 +185,12 @@
                     </div>
 
 
-                    <div class="a-property-display" *ngIf="'regp:Service'===data[PROPS.TYPE] && data.layers">
+                    <div class="a-property-display" *ngIf="'regp:Service'===data[PROPS.TYPE] && data[PROPS.LAYERS]">
                         <label>Service Layers</label>
                         <div class="a-property-value">
-                            <span *ngIf="!data.layers || !data.layers.length"><em>none specified</em></span>
-                            <div *ngIf="data.layers && data.layers.length">
-                                <p *ngFor="let layer of data.layers">
+                            <span *ngIf="!data[PROPS.LAYERS] || !data[PROPS.LAYERS].length"><em>none specified</em></span>
+                            <div *ngIf="data[PROPS.LAYERS] && data[PROPS.LAYERS].length">
+                                <p *ngFor="let layer of data[PROPS.LAYERS]">
                                     {{layer[PROPS.LABEL]}}
                                 </p>
                             </div>
@@ -195,10 +220,10 @@
                 <div *ngFor="let kgp of getClassifierProperties()"
                     class="a-property-display">
                     <label>{{kgp}}:</label>
-                    <div class="a-property-value" *ngIf="!data.classifiers||!data.classifiers[kgp]||!data.classifiers[kgp].length"><em>none specified</em></div>
-                    <div class="a-property-value" *ngIf="data.classifiers&&data.classifiers[kgp]&&data.classifiers[kgp].length">
+                    <div class="a-property-value" *ngIf="!data[PROPS.CLASSIFIERS]||!data[PROPS.CLASSIFIERS][kgp]||!data[PROPS.CLASSIFIERS][kgp].length"><em>none specified</em></div>
+                    <div class="a-property-value" *ngIf="data[PROPS.CLASSIFIERS]&&data[PROPS.CLASSIFIERS][kgp]&&data[PROPS.CLASSIFIERS][kgp].length">
                         <mat-chip-list selectable="false">
-                            <mat-chip *ngFor="let val of data.classifiers[kgp]" title="{{val.uri}}">{{val.label}}</mat-chip>
+                            <mat-chip *ngFor="let val of data[PROPS.CLASSIFIERS][kgp]" title="{{val.uri}}">{{val.label}}</mat-chip>
                         </mat-chip-list>
                     </div>
                 </div>
@@ -258,7 +283,7 @@
 
             <!-- register the resource -->
             <button mat-raised-button color="primary"
-                [disabled]="!data.createdBy || status.isSaving || status.isSaved"
+                [disabled]="!data[PROPS.CREATED_BY] || status.isSaving || status.isSaved"
                 (click)="registerResource()">
                 <mat-spinner [diameter]="30" *ngIf="status.isSaving" style="display:inline-block"></mat-spinner>
                 Register

@@ -14,7 +14,7 @@
 
                 <mat-form-field floatLabel="always">
                     <mat-label>Type</mat-label>
-                    <mat-select placeholder="Select Type" formControlName="type" required>
+                    <mat-select placeholder="Select Type" formControlName="{{PROPS.TYPE}}" required>
                         <mat-option [value]="'dcat:Dataset'">Dataset</mat-option>
                         <mat-option [value]="'regp:Service'">Service</mat-option>
                         <mat-option [value]="'Map'">Map</mat-option>
@@ -23,19 +23,19 @@
                         <mat-option [value]="'WebSite'">Website</mat-option>
                     </mat-select>
                     <mat-hint>You must specify a resource type before proceeding</mat-hint>
-                    <mat-error *ngIf="isInvalid('type')">{{getErrorMessage('type')}}</mat-error>
+                    <mat-error *ngIf="isInvalid(PROPS.TYPE)">{{getErrorMessage(PROPS.TYPE)}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field floatLabel="always">
                     <mat-label>Title</mat-label>
-                    <input matInput formControlName="title" placeholder="Name the resource" required>
+                    <input matInput formControlName="{{PROPS.TITLE}}" placeholder="Name the resource" required>
                     <mat-hint>You must provide a name for the resource</mat-hint>
-                    <mat-error *ngIf="isInvalid('title')">{{getErrorMessage('title')}}</mat-error>
+                    <mat-error *ngIf="isInvalid(PROPS.TITLE)">{{getErrorMessage(PROPS.TITLE)}}</mat-error>
                 </mat-form-field>
 
                 <mat-form-field floatLabel="always">
                     <mat-label>Description</mat-label>
-                    <textarea matInput formControlName="description"
+                    <textarea matInput formControlName="{{PROPS.DESCRIPTION}}"
                         placeholder="Provide a description of the resource">
                     </textarea>
                     <mat-hint>A rich description helps others discover your resource</mat-hint>
@@ -43,20 +43,13 @@
 
                 <gprr-autocomplete-mat-chip
                     [label]="'Publishers'"
+                    [icon]="'icon-organization'"
                     [placeholder]="'Associate publishing agencies'"
                     [hint]="'Find publishers using the typeahead and select them to associate'"
-                    [fieldName]="'publishers'"
+                    [fieldName]="PROPS.PUBLISHERS"
                     [formGroup]="formGroup"
                     [filterFn]="filterPublishers">
                 </gprr-autocomplete-mat-chip>
-
-                <!-- <mat-form-field floatLabel="always">
-                    <mat-label>Created By</mat-label>
-                    <input matInput formControlName="createdBy" required disabled="disabled">
-                    <mat-error *ngIf="isInvalid('createdBy')">You must be signed in to register resources</mat-error>
-                </mat-form-field> -->
-
-              <!-- this is a test -->
 
             </div>
 
@@ -74,8 +67,10 @@
                 <div *ngIf="currentType==='dcat:Dataset'">
 
                     <mat-form-field floatLabel="always">
-                        <mat-label>Download URL</mat-label>
-                        <mat-icon matPrefix>link</mat-icon>
+                        <mat-label>
+                            <mat-icon matPrefix>link</mat-icon>
+                            Download URL
+                        </mat-label>
                         <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Specify a download URL">
                         <mat-hint>If the dataset is downloadable via a web-accessible URL</mat-hint>
                         <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
@@ -88,23 +83,31 @@
                 <div *ngIf="currentType==='regp:Service'">
 
                     <mat-form-field floatLabel="always">
-                        <mat-label>Service URL</mat-label>
-                        <mat-icon matPrefix>link</mat-icon>
+                        <mat-label>
+                            <mat-icon matPrefix>link</mat-icon>
+                            Service URL
+                        </mat-label>
                         <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Provide the service's URL" required>
                         <mat-hint>The web-accessible URL to the service's API</mat-hint>
-                        <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
+                        <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">
+                            {{getErrorMessage(PROPS.ACCESS_URL)}}
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field floatLabel="always">
                         <mat-label>Service Type</mat-label>
                         <mat-select placeholder="Select Type"
-                            formControlName="serviceType"
+                            formControlName="{{PROPS.SERVICE_TYPE}}"
                             [compareWith]="compareServiceTypes"
                             required>
-                            <mat-option *ngFor="let type of serviceTypes" [value]="type">{{type.label}}</mat-option>
+                            <mat-option *ngFor="let type of serviceTypes" [value]="type">
+                                {{type[PROPS.LABEL]}}
+                            </mat-option>
                         </mat-select>
                         <mat-hint>The type of web service</mat-hint>
-                        <mat-error *ngIf="isInvalid('serviceType')">{{getErrorMessage('serviceType')}}</mat-error>
+                        <mat-error *ngIf="isInvalid(PROPS.SERVICE_TYPE)">
+                            {{getErrorMessage(PROPS.SERVICE_TYPE)}}
+                        </mat-error>
                     </mat-form-field>
 
                     <div class="u-mg-bottom--xxxlg">
@@ -126,13 +129,17 @@
                 <div *ngIf="currentType==='Application'">
 
                   <mat-form-field floatLabel="always">
-                    <mat-label>Access URL</mat-label>
-                    <mat-icon matPrefix>link</mat-icon>
+                    <mat-label>
+                        <mat-icon matPrefix>link</mat-icon>
+                        Access URL
+                    </mat-label>
                     <input matInput formControlName="{{PROPS.ACCESS_URL}}"
                            placeholder="Specify the access URL of the Application"
                            [required]="currentType==='Application'">
                     <mat-hint>A website where more information can be gathered</mat-hint>
-                    <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
+                    <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">
+                        {{getErrorMessage(PROPS.ACCESS_URL)}}
+                    </mat-error>
                   </mat-form-field>
 
                 </div>
@@ -163,7 +170,7 @@
                     [label]="'Specialization'"
                     [placeholder]="'Specify resource specialization(s)'"
                     [hint]="'Resources can be specialized to enhance search, discovery, and usage by other users. Specializations are type-specific and may not exist for all types.'"
-                    [fieldName]="'resourceTypes'"
+                    [fieldName]="PROPS.RESOURCE_TYPES"
                     [formGroup]="formGroup"
                     [filterFn]="filterResourceTypes">
                 </gprr-autocomplete-mat-chip>
@@ -198,7 +205,7 @@
     <mat-card-actions>
         <div class="m-step__buttons">
             <button mat-raised-button color="primary" matStepperNext
-                [disabled]="formGroup.invalid || !data.createdBy">
+                [disabled]="formGroup.invalid || !data[PROPS.CREATED_BY]">
                 Continue
             </button>
         </div>

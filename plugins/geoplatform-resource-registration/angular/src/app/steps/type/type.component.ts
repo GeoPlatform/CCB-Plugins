@@ -22,11 +22,13 @@ import {
 } from 'geoplatform.client';
 
 import { AppEvent } from '../../app.component';
-import { StepComponent, StepEvent, StepError } from '../step.component';
+import {
+    StepComponent, StepEvent, StepError
+} from '../step.component';
 import { NG2HttpClient } from '../../http-client';
 import { environment } from '../../../environments/environment';
 
-import { ModelProperties } from '../../model';
+import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
 import {
     itemServiceProvider, serviceServiceProvider, utilsServiceProvider
 } from '../../item-service.provider';
@@ -141,6 +143,8 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
             } else { //update content
 
+                // console.log("TypeStep.onChanges() - Data changed!");
+
                 this.setValue(ModelProperties.TYPE, data[ModelProperties.TYPE]||null );
                 this.setValue(ModelProperties.TITLE, data[ModelProperties.TITLE]||null );
                 this.setValue(ModelProperties.DESCRIPTION, data[ModelProperties.DESCRIPTION]||null );
@@ -198,7 +202,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         //fetch list of supported service types
         let stq = new Query()
-            .types('dct:Standard')
+            .types(ItemTypes.STANDARD)
             .resourceTypes('ServiceType')
             .pageSize(50)
             .sort('label,asc');
@@ -210,7 +214,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         });
 
         //fetch list of resource types
-        this.utilsService.capabilities('resourceTypes')
+        this.utilsService.capabilities(ModelProperties.RESOURCE_TYPES)
         .then( response => {
             response.results.forEach( type => {
                 this.availableResourceTypes[type.assetType] = this.availableResourceTypes[type.assetType] || [];
@@ -313,7 +317,10 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             if(response) {            //pre-populate fields with harvested info
 
                 //notify parent so values can be injected into other steps when needed
-                let evt : StepEvent = { type: 'service.about', value: response } as StepEvent;
+                let evt : StepEvent = {
+                    type: StepEventTypes.SERVICE_INFO,
+                    value: response
+                } as StepEvent;
                 this.onEvent.emit(evt);
 
                 let titleField = this.formGroup.get(ModelProperties.TITLE);
@@ -354,14 +361,18 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     onAppEvent( event : AppEvent ) {
         console.log("TypeStep: App Event: " + event.type);
         switch(event.type) {
-            case 'reset':
+            case AppEventTypes.RESET:
                 this.hasError = null;
                 this.status.isFetchingServiceInfo = false;
                 break;
-            case 'auth':
+            case AppEventTypes.AUTH:
                 let user = event.value.user;
                 // console.log("Setting user in form as '" + JSON.stringify(user) + "'");
                 this.setValue(ModelProperties.CREATED_BY, user.username);
+                break;
+            case AppEventTypes.CHANGE:
+                this.onTypeSelection( this.data[ModelProperties.TYPE]||null );
+                this.checkExists();
                 break;
         }
     }

@@ -21,12 +21,18 @@ import {
 } from 'geoplatform.client';
 
 import { AppEvent } from '../../app.component';
-import { StepComponent, StepEvent, StepError } from '../step.component';
+import {
+    StepComponent, StepEvent, StepError
+} from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
-import { ModelProperties, ClassifierTypes } from '../../model';
+import {
+    ModelProperties, ClassifierTypes, AppEventTypes
+} from '../../model';
 import { kgServiceProvider } from '../../item-service.provider';
+
+
 
 @Component({
   selector: 'wizard-step-enrich',
@@ -44,6 +50,7 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     public formGroup: FormGroup;
     public hasError: StepError;
     public filteredOptions : any = {};
+    public PROPS : any = ModelProperties;
 
     private eventsSubscription: any;
 
@@ -167,7 +174,7 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     onAppEvent( event : AppEvent ) {
         console.log("EnrichStep: App Event: " + event.type);
         switch(event.type) {
-            case 'reset':
+            case AppEventTypes.RESET:
                 this.hasError = null;
                 break;
         }

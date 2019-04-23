@@ -26,7 +26,7 @@ import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 
-import { ModelProperties } from '../../model';
+import { ModelProperties, AppEventTypes } from '../../model';
 import { itemServiceProvider } from '../../item-service.provider';
 
 
@@ -55,6 +55,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     public formGroup: FormGroup;
     public hasError : StepError;
     public thumbError : Error;
+    public PROPS : any = ModelProperties;
 
     private eventsSubscription: any;
     private authToken : string;
@@ -75,9 +76,17 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         this.formOpts['$'+ModelProperties.KEYWORDS] = [''];
         this.formOpts[ModelProperties.COMMUNITIES] = [''];
         this.formOpts['$'+ModelProperties.COMMUNITIES] = [''];
+        this.formOpts[ModelProperties.THEMES] = [''];
+        this.formOpts['$'+ModelProperties.THEMES] = [''];
+
+        this.formOpts[ModelProperties.THEME_SCHEME] = [''];
+        this.formOpts['$' + ModelProperties.THEME_SCHEME] = [''];
+
+        this.formOpts[ModelProperties.TOPICS] = [''];
+        this.formOpts['$'+ModelProperties.TOPICS] = [''];
         this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
-        this.formOpts[ModelProperties.THUMBNAIL_URL] = ['', URL_VALIDATOR];
-        this.formOpts[ModelProperties.THUMBNAIL_CONTENT] = [''];
+        this.formOpts[ModelProperties.FORM_THUMBNAIL_URL] = ['', URL_VALIDATOR];
+        this.formOpts[ModelProperties.FORM_THUMBNAIL_CONTENT] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
     }
@@ -106,32 +115,30 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
             } else {
 
-                if(data[ModelProperties.KEYWORDS] && data[ModelProperties.KEYWORDS].length) {
-                    this.formGroup.get(ModelProperties.KEYWORDS)
-                        .setValue(data[ModelProperties.KEYWORDS]);
-                }
 
-                if(data[ModelProperties.COMMUNITIES] && data[ModelProperties.COMMUNITIES].length) {
-                    this.formGroup.get(ModelProperties.COMMUNITIES)
-                        .setValue(data[ModelProperties.COMMUNITIES]);
-                }
+                let props = [
+                    ModelProperties.KEYWORDS, ModelProperties.COMMUNITIES,
+                    ModelProperties.THEMES, ModelProperties.ASSETS,
+                    ModelProperties.LANDING_PAGE
+                ];
+                props.forEach( property => {
+                    if(data[property] && data[property].length) {
+                        this.formGroup.get(property).setValue(data[property]);
+                    }
+                });
 
-                if(data[ModelProperties.LANDING_PAGE]) {
-                    this.formGroup.get(ModelProperties.LANDING_PAGE)
-                        .setValue(data[ModelProperties.LANDING_PAGE]);
-                }
 
-                if(data[ModelProperties.THUMBNAIL_URL]) {
-                    this.formGroup.get(ModelProperties.THUMBNAIL_URL)
-                        .setValue(data[ModelProperties.THUMBNAIL_URL]);
-                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(null);
+                if(data[ModelProperties.THUMBNAIL]) {
+                    if(data[ModelProperties.THUMBNAIL].url) {
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_URL)
+                            .setValue(data[ModelProperties.THUMBNAIL].url);
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_CONTENT).setValue(null);
+                    } else if(data[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_CONTENT]) {
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_CONTENT)
+                            .setValue(data[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_CONTENT]);
+                        this.formGroup.get(ModelProperties.FORM_THUMBNAIL_URL).setValue(null);
+                    }
                 }
-                if(data[ModelProperties.THUMBNAIL_CONTENT]) {
-                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT)
-                        .setValue(data[ModelProperties.THUMBNAIL_CONTENT]);
-                    this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
-                }
-
             }
         }
     }
@@ -144,13 +151,12 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     }
 
 
-    // private filterCommunities(value: string): Promise<string[]> {
-    filterCommunities = (value: string) : Promise<string[]> => {
-        let current = this.getValues(ModelProperties.COMMUNITIES);
-        current = current.map(c=>c.id);
-
-        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue);
+    /**
+     * @param query - Query object to use to filter results
+     * @param current - currently-selected values
+     * @return Promise of an array of strings
+     */
+    filterValues(query : Query, current : string[]) : Promise<string[]> {
         return this.itemService.search(query)
         .then( response => {
             let hits = response.results;
@@ -161,25 +167,76 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         })
         .catch(e => {
             //display error message indicating an issue searching...
-            this.hasError = new StepError("Error Searching Communities", e.message);
+            this.hasError = new StepError("Error searching " + query.getTypes().join(', '), e.message);
         });
+    }
+
+
+    /**
+     * Filter function for autocompleting communities
+     */
+    filterCommunities = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.COMMUNITIES);
+        current = current.map(c=>c.id);
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue);
+        return this.filterValues(query, current);
+    }
+
+    /**
+     * Filter function for autocompleting themes
+     */
+    filterThemes = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.THEMES);
+        current = current.map(c=>c.id);
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.CONCEPT).q(filterValue);
+
+        let inScheme = this.getValues(ModelProperties.THEME_SCHEME);
+        if(inScheme && inScheme.length) {
+            query.setSchemes(inScheme.map(s=>s.id));
+        }
+
+        return this.filterValues(query, current);
+    }
+
+    /**
+     * Filter function for autocompleting concept schemes
+     */
+    filterSchemes = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.THEME_SCHEME);
+        current = current.map(c=>c.id);
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.CONCEPT_SCHEME).q(filterValue);
+        return this.filterValues(query, current);
+    }
+
+    /**
+     * Filter function for autocompleting topics
+     */
+    filterTopics = (value: string) : Promise<string[]> => {
+        let current = this.getValues(ModelProperties.TOPICS);
+        current = current.map(c=>c.id);
+        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+        let query = new Query().types(ItemTypes.TOPIC).q(filterValue);
+        return this.filterValues(query, current);
     }
 
 
     addKeyword(event: MatChipInputEvent): void {
 
-        const type = ModelProperties.KEYWORDS;
+        const field = ModelProperties.KEYWORDS;
         const input = event.input;
         const value = event.value;
 
         // Add our value
         if (value) {
             let val = value;
-            if(typeof(value) === 'string') val = value.trim();
-            let existing = this.formGroup.get(type).value || [];
+            if( typeof(value) === 'string' ) val = value.trim();
+            let existing = this.formGroup.get(field).value || [];
             if(existing.indexOf(value) < 0) {
                 existing.push(val);
-                this.formGroup.get(type).setValue(existing);
+                this.formGroup.get(field).setValue(existing);
             }
         }
 
@@ -190,7 +247,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         }
 
         //clear the local form group so the autocomplete empties
-        this.formGroup.get('$'+type).setValue(null);
+        this.formGroup.get('$'+field).setValue(null);
 
     }
 
@@ -204,30 +261,31 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         }
     }
 
-
     get keywords() {
         return this.formGroup.get(ModelProperties.KEYWORDS).value || [];
     }
 
-    public getValues ( key : string ) : any[] {
-        let existing = this.formGroup.get(key).value;
-        if(!existing) return [];
-        if(!Array.isArray(existing)) return [existing];
-        return existing;
-    }
 
     onAppEvent( event : AppEvent ) {
         console.log("AdditionalStep: App Event: " + event.type);
         switch(event.type) {
-            case 'reset':
+            case AppEventTypes.RESET:
                 this.hasError = null;
                 this.clearThumbnailFile();
                 this.thumbError = null;
                 break;
-            case 'auth':
+            case AppEventTypes.AUTH:
                 this.authToken = event.value.token;
                 break;
         }
+    }
+
+
+    public getValues ( field : string ) : any[] {
+        let existing = this.formGroup.get(field).value;
+        if(!existing) return [];
+        if(!Array.isArray(existing)) return [existing];
+        return existing;
     }
 
     /**
@@ -287,8 +345,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
                     if ((encoded.length % 4) > 0) {
                         encoded += '='.repeat(4 - (encoded.length % 4));
                     }
-                    this.formGroup.get(ModelProperties.THUMBNAIL_URL).setValue(null);
-                    this.formGroup.get(ModelProperties.THUMBNAIL_CONTENT).setValue(encoded);
+                    this.formGroup.get(ModelProperties.FORM_THUMBNAIL_URL).setValue(null);
+                    this.formGroup.get(ModelProperties.FORM_THUMBNAIL_CONTENT).setValue(encoded);
                 }
             });
 
@@ -305,7 +363,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     clearThumbnailFile() {
         if(this.thumbFile) {
             this.thumbFile.nativeElement.value = "";
-            this.setValue(ModelProperties.THUMBNAIL_CONTENT, null);
+            this.setValue(ModelProperties.FORM_THUMBNAIL_CONTENT, null);
         }
     }
 

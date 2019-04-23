@@ -15,7 +15,7 @@ import {
     MatListModule, MatStepperModule, MatFormFieldModule,
     MatDatepickerModule, MatNativeDateModule, MatSelectModule,
     MatCheckboxModule, MatAutocompleteModule, MatIconModule,
-    MatChipsModule, MatProgressSpinnerModule
+    MatChipsModule, MatProgressSpinnerModule, MatIconRegistry
 } from '@angular/material';
 
 import { AuthenticatedComponent } from './authenticated.component';
@@ -124,7 +124,8 @@ export class PrettyJsonPipe implements PipeTransform {
         itemServiceProvider,
         serviceServiceProvider,
         utilsServiceProvider,
-        kgServiceProvider
+        kgServiceProvider,
+        MatIconRegistry
     ],
     bootstrap: [AppComponent]
 })
