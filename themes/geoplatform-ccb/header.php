@@ -128,9 +128,7 @@ if ( is_singular() ) wp_enqueue_script( 'comment-reply' ); ?>
                       the_custom_logo();
                     }
                     else{
-                      echo '<h4 class="brand"><a href="';
-                      echo esc_url($GLOBALS['geopccb_wpp_url']);
-                      echo '" title="' . __( 'Go to the Geoplatform Home Page', 'geoplatform-ccb') . '><span class="icon-gp"></span>GeoPlatform:</a>';
+                      echo "<h4 class='brand'><a href='" . esc_url($GLOBALS['geopccb_wpp_url']) . "' title='" . __( 'Go to the Geoplatform Home Page', 'geoplatform-ccb') . "'><span class='icon-gp'></span>GeoPlatform:</a>";
                     }?>
                     <!-- This will be the "Site Title" in the Customizer Site Identity tab -->
                     <a href="<?php echo esc_url(get_site_url());?>" title="Go to the <?php echo esc_html(get_bloginfo( 'name' )); ?> Home Page">
