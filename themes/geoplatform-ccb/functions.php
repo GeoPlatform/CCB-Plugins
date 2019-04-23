@@ -44,6 +44,7 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
     wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
     wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
 
+    wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js' );
     wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
     wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
   }
@@ -549,6 +550,32 @@ function geop_ccb_customize_register( $wp_customize ) {
   }
   add_action( 'customize_register', 'geop_ccb_customize_register');
 }
+
+
+/**
+ * Custom arguments for wp_nam_menu to allow addition of 'class' and 'role' HTML
+ * attributes to the <a> tags created.
+ *
+ * @link https://stackoverflow.com/questions/26180688/how-to-add-class-to-link-in-wp-nav-menu
+ */
+function add_menu_link_class( $atts, $item, $args ) {
+  if (property_exists($args, 'link_class')) {
+    $atts['class'] = $args->link_class;
+  }
+  return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'add_menu_link_class', 1, 3 );
+
+function add_menu_link_role( $atts, $item, $args ) {
+  if (property_exists($args, 'link_role')) {
+    $atts['role'] = $args->link_role;
+  }
+  return $atts;
+}
+add_filter( 'nav_menu_link_attributes', 'add_menu_link_role', 1, 3 );
+
+
+
 
 /**
  * Sanitization callback functions for customizer fonts
