@@ -143,8 +143,20 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
      *
      */
     startOver() {
+
+        //should just reload page (minus any search parameters)
+        // because we would have to remove the parameters anyway
+        // in order to really start over from scratch
+        let wdw = (window as any);
+        let url = wdw.location.href;
+        let qsidx = url.indexOf("?");
+        if(qsidx > 0) {
+            url = url.substring(0, qsidx);
+        }
+        wdw.location.href = url;
+
         //reset all forms
-        this.onEvent.emit( { type:StepEventTypes.RESET, value:true } );
+        // this.onEvent.emit( { type:StepEventTypes.RESET, value:true } );
     }
 
     /**

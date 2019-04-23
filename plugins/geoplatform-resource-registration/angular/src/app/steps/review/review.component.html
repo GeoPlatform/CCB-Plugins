@@ -38,16 +38,6 @@
                     </div>
                 </div>
 
-              <div class="a-property-display" *ngIf="'Topic'===data[PROPS.TYPE]">
-                <label>Parent Topics</label>
-                <div class="a-property-value">
-                  <mat-chip-list *ngIf="data[PROPS.SUBTOPIC_OF]" selectable="false">
-                    <mat-chip *ngFor="let pub of data[PROPS.SUBTOPIC_OF]">{{pub.label}}</mat-chip>
-                  </mat-chip-list>
-                  <span *ngIf="!data[PROPS.SUBTOPIC_OF]||!data[PROPS.SUBTOPIC_OF].length"><em>none specified</em></span>
-                </div>
-              </div>
-
                 <div class="a-property-display">
                     <label>Landing Page:</label>
                     <div class="a-property-value">
@@ -199,12 +189,31 @@
 
                 </div>
 
+                <div *ngIf="'Topic' === data[PROPS.TYPE]">
+                    <div class="a-property-display">
+                      <label>Parent Topic(s)</label>
+                      <div class="a-property-value">
+                        <mat-chip-list *ngIf="data[PROPS.SUBTOPIC_OF]" selectable="false">
+                          <mat-chip *ngFor="let pub of data[PROPS.SUBTOPIC_OF]">{{pub.label}}</mat-chip>
+                        </mat-chip-list>
+                        <span *ngIf="!data[PROPS.SUBTOPIC_OF]||!data[PROPS.SUBTOPIC_OF].length">
+                            <em>none specified</em>
+                        </span>
+                      </div>
+                    </div>
+
+                </div>
+
                 <!-- Non-dataset, non-service properties -->
                 <div  *ngIf="'dcat:Dataset'!==data[PROPS.TYPE] && 'regp:Service' !== data[PROPS.TYPE]" >
                     <div class="a-property-display">
                         <label>Access URL:</label>
                         <div class="a-property-value">
-                            <a href="{{data[PROPS.ACCESS_URL]}}" target="_blank" class="u-break--all">{{data[PROPS.ACCESS_URL]}}</a>
+                            <a *ngIf="data[PROPS.ACCESS_URL]" href="{{data[PROPS.ACCESS_URL]}}"
+                                target="_blank" class="u-break--all">
+                                {{data[PROPS.ACCESS_URL]}}
+                            </a>
+                            <span *ngIf="!data[PROPS.ACCESS_URL]"><em>none specified</em></span>
                         </div>
                     </div>
                 </div>

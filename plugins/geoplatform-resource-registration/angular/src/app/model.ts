@@ -1,38 +1,38 @@
 
 export const ModelProperties = {
-    TYPE:           "type",
-    TITLE:          'title',
-    LABEL:          'label',
-    DESCRIPTION:    "description",
-    CREATED_BY:     'createdBy',
-    ACCESS_URL:     'href',
-    SERVICE_TYPE:   'serviceType',
-    RESOURCE_TYPES: "resourceTypes",
-    LANDING_PAGE:   "landingPage",
-    DISTRIBUTIONS:  "distributions",
-    KEYWORDS:       'keywords',
-    THEMES:         'themes',
-    PUBLISHERS:     'publishers',
-    SUBTOPIC_OF:    'subTopicOf',
-    COMMUNITIES:    'usedBy',
-    THUMBNAIL:      'thumbnail',
-    THUMBNAIL_URL:  'url',
+    TYPE:               "type",
+    TITLE:              'title',
+    LABEL:              'label',
+    DESCRIPTION:        "description",
+    CREATED_BY:         'createdBy',
+    ACCESS_URL:         'href',
+    SERVICE_TYPE:       'serviceType',
+    RESOURCE_TYPES:     "resourceTypes",
+    LANDING_PAGE:       "landingPage",
+    DISTRIBUTIONS:      "distributions",
+    KEYWORDS:           'keywords',
+    THEMES:             'themes',
+    PUBLISHERS:         'publishers',
+    SUBTOPIC_OF:        'subTopicOf',
+    COMMUNITIES:        'usedBy',
+    THUMBNAIL:          'thumbnail',
+    THUMBNAIL_URL:      'url',
     THUMBNAIL_CONTENT: 'contentData',
-    THUMBNAIL_TYPE: 'mediaType',
-    CLASSIFIERS:    'classifiers',
-    LAYERS:         'layers',
-    ASSETS:         'assets',
-    TOPICS:         'topics',
+    THUMBNAIL_TYPE:     'mediaType',
+    CLASSIFIERS:        'classifiers',
+    LAYERS:             'layers',
+    ASSETS:             'assets',
+    TOPICS:             'topics',
 
     //not actual properties on the model, but are used by internal
     // form groups to represent THUMBNAIL_XXXX properties while being edited
-    FORM_THUMBNAIL_URL:  'thumbnailUrl',
+    FORM_THUMBNAIL_URL:     'thumbnailUrl',
     FORM_THUMBNAIL_CONTENT: 'thumbnailContent',
 
     //not actual property on the model, but used by internal form groups to
     // represent a constraining concept scheme when filtering themes
-    THEME_SCHEME : 'themeScheme',
-    
+    THEME_SCHEME :          'themeScheme',
+
 
     CLASSIFIERS_PURPOSE             : 'purpose',
     CLASSIFIERS_FUNCTION            : 'function',
