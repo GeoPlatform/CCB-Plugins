@@ -1,3 +1,10 @@
+<?php
+/**
+ * A GeoPlatform Footer Template
+ *
+ * @link https://codex.wordpress.org/Theme_Development#Footer_.28footer.php.29
+ */
+?>
 <div>
   <footer class="o-footer">
 

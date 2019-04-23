@@ -3,15 +3,14 @@
  * Template Name: Full Width Page
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
- * 
+ *
  * @package Geoplatform CCB
- * 
+ *
  * @since 2.0.0
  */
  ?>
 
  <?php get_header(); ?>
- <?php get_template_part( 'mega-menu', get_post_format() ); ?>
  <!--Used for the Main banner background to show up properly-->
  <?php get_template_part( 'single-banner', get_post_format() ); ?>
 

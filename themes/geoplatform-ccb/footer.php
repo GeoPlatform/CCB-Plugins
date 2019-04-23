@@ -8,71 +8,112 @@
  *
  * @since 3.1.3
  */
+$geopccb_theme_options = geop_ccb_get_theme_mods();
 ?>
-<footer>
-    <div class="container-fluid top-link-row">
-        <div class="row">
-            <div class="col-md-12">
-                <a class="pull-right" href="#"> &#8593; top</a>
-            </div><!--#col-md-12-->
-        </div><!--#row-->
-    </div><!--#container-fluid top-link-row-->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h3>
-                    <!--<img src="/img/GeoPlatform_logo_sm.png" alt="GeoPlatform Logo" style="height: 1.5rem; vertical-align: bottom;">-->
-                    <a href="<?php echo esc_url($GLOBALS['geopccb_wpp_url']); ?>" title="<?php _e( 'Go to the Geoplatform Home Page', 'geoplatform-ccb'); ?>">
-                        <span class="icon-gp"></span>
-                        <?php _e( 'GeoPlatform', 'geoplatform-ccb'); ?>
-                    </a>
-                    <?php $geop_ccb_home_name = esc_html(get_bloginfo( 'name' )); ?>
-                    <a href="<?php echo esc_url(get_site_url());?>" title="<?php printf( __( 'Go to the %s Home Page', 'geoplatform-ccb'), $geop_ccb_home_name); ?>">
-                    <?php echo esc_html(get_bloginfo( 'name' )); ?>
-                  </a>
-                </h3>
-            </div><!--#col-md-6-->
-        </div><!--#row-->
-        <hr/>
-        <div class="row">
-            <div class="col-md-4 col-sm-4 col-xs-12">
-              <!--Featured location-->
-                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : _e( 'Example Menu Title', 'geoplatform-ccb'); ?></h4>
-                    <?php wp_nav_menu( array( 'theme_location' => 'footer-left' ) ); ?>
-            </div><!--#col-md-4 col-sm-4 col-xs-12-->
-            <div class="col-md-4 col-sm-4 col-xs-12">
-              <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : _e( 'Example Menu Title', 'geoplatform-ccb'); ?></h4>
-              <?php wp_nav_menu( array( 'theme_location' => 'footer-center' ) ); ?>
-            </div><!--#col-md-4 col-sm-4 col-xs-12-->
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <h4 style="color:white"><?php echo esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : _e( 'Example Menu Title', 'geoplatform-ccb'); ?></h4>
-                <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <?php wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) ); ?>
-                    </div><!--#col-md-6 col-sm-12 col-xs-12-->
-                    <div class="col-md-6 col-sm-12 col-xs-12">
-                      <?php wp_nav_menu( array( 'theme_location' => 'footer-right-col2' ) ); ?>
-                    </div><!--#col-md-6 col-sm-12 col-xs-12-->
-                </div><!--#row-->
-                <br class="hidden-xs">
-            </div><!--#col-md-4 col-sm-4 col-xs-12-->
-        </div><!--#row-->
-        <hr>
-        <div class="row">
-            <div class="col-md-8 col-sm-7 col-xs-12">
-                <p><?php _e( 'Implementation of the GeoPlatform embodies the principles and spirit of Open Government, emphasizing government-to-citizen communication, accountability, and transparency. The GeoPlatform supports open formats, data standards, and common core and extensible metadata. The portfolio of data, applications, and services provided here is stewarded through the use of open licenses and careful review and hosted on an infrastructure that maximizes interoperability. Increased sharing and reuse of resources facilitated by the GeoPlatform will reduce costs, result in savings and wise investments, and stimulate innovation and entrepreneurship. On balance, the integrated approach of the GeoPlatform means that the federal portfolio of geospatial data is better managed, serves a broader audience, and is easier to use.', 'geoplatform-ccb'); ?></p>
-                <p>
-                <?php _e( 'The GeoPlatform was developed by the member agencies of the Federal Geographic Data Committee (FGDC) through collaboration with partners and stakeholders. The target audience for the GeoPlatform includes Federal agencies, State, local, and Tribal governments, private sector, academia, and the general public.', 'geoplatform-ccb'); ?>
-                </p>
-            </div><!--#col-md-4 col-sm-5 col-xs-12-->
-            <div class="col-md-4 col-sm-5 col-xs-12">
-                <a href="<?php echo esc_url("https://www.fgdc.gov"); ?>" target="_blank">
-                    <img src="<?php echo esc_url("" . get_template_directory_uri() . "/img/fgdc_logo_dkbg.png"); ?>" target="_blank" alt="FGDC Logo">
-                </a>
-            </div><!--#col-md-4 col-sm-5 col-xs-12-->
-        </div><!--#row-->
-    </div><!--#container-->
-</footer>
+<div>
+  <footer class="o-footer">
+
+      <a class="u-float--right" href="#">
+          <span class="fas fa-arrow-up"></span>
+          to top
+      </a>
+
+      <div>
+          <a onClick="toggleClass('#footer-megamenu','is-collapsed')">
+              <span class="fas fa-angle-down"></span>
+              Menu
+          </a>
+          <hr>
+      </div>
+
+      <nav class="m-megamenu is-collapsed" id="footer-megamenu">
+
+          <div class="m-megamenu__content">
+
+            <div class="col">
+
+              <div class="d-lg-none d-xl-none">
+                  <div class="m-megamenu__heading">Navigation</div>
+                  <ul class="menu" role="menu">
+                    <?php
+                    if (get_theme_mod('searchbar_controls', $geopccb_theme_options['searchbar_controls']) == 'gp'){
+                      echo "<li role='menuitem'>";
+                      echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
+                      echo "</li>";
+                    }
+
+                    wp_nav_menu( array( 'theme_location' => 'community-links' ) );
+                    ?>
+
+                  </ul>
+                  <br>
+              </div>
+
+              <?php
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : 'Example Menu Title') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-left' ) );
+            echo "</div>";
+
+            echo "<div class='col'>";
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : 'Example Menu Title') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-center' ) );
+            echo "</div>";
+
+            echo "<div class='col'>";
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : 'Example Menu Title') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) );
+            echo "</div>";
+
+            echo "<div class='col'>";
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col2')) ? esc_html(wp_get_nav_menu_name('footer-right-col2')) : 'Example Menu Title') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-right-col2' ) );
+            echo "</div>";
+            ?>
+          </div>
+
+          <hr>
+
+      </nav>
+
+      <div class="l-flex-container flex-justify-between flex-align-center">
+          <div class="a-brand u-mg-right--xlg">
+              <img alt="GP" src="<?php echo get_stylesheet_directory_uri() . '/img/logo.svg' ?>" style="width:1em">
+              <a href="<?php echo home_url() ?>/">GeoPlatform.gov</a>
+          </div>
+
+          <div>
+            <?php
+            $geopccb_head_menu_array = array(
+              'menu' => 'community-links',
+              'container' => false,
+              'echo' => false,
+              // 'container_class' => 'a-nav__collapsible-menu',
+              'items_wrap' => '%3$s',
+              'depth' => 0,
+              'fallback_cb' => false,
+              'link_class' => 'is-hidden--xs is-hidden--sm',
+              'link_role' => 'menuitem',
+            );
+
+            echo str_replace('</a>' , '</a>&nbsp&nbsp;|&nbsp' , strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' ));
+            ?>
+          </div>
+      </div>
+
+      <br>
+
+      <small>
+          The GeoPlatform was developed by the member agencies of the
+          Federal Geographic Data Committee (FGDC) through collaboration
+          with partners and stakeholders. The target audience for the
+          GeoPlatform includes Federal agencies, State, local, and
+          Tribal governments, private sector, academia, and the general
+          public.
+      </small>
+
+  </footer>
+
+</div>
 
 
 <?php wp_footer();?>

@@ -3,14 +3,14 @@
  * The template for Single posts
  *
  * @link https://developer.wordpress.org/themes/template-files-section/post-template-files/
- * 
+ *
  * @package GeoPlatform CCB
- * 
+ *
  * @since 3.0.0
  */
 
 get_header();
-get_template_part( 'mega-menu', get_post_format() );
+// get_template_part( 'mega-menu', get_post_format() );
 get_template_part( 'single-banner', get_post_format() );
 ?>
 <div class="container">

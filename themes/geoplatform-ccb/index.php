@@ -10,7 +10,7 @@
  */
 
 get_header();
-get_template_part( 'mega-menu', get_post_format() );
+// get_template_part( 'mega-menu', get_post_format() );
 get_template_part( 'gp_intro', get_post_format() );
 get_template_part( 'main-page', get_post_format() );
 

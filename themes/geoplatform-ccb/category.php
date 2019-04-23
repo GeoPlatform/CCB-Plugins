@@ -10,7 +10,7 @@
  */
 
 get_header();
-get_template_part( 'mega-menu', get_post_format() );
+// get_template_part( 'mega-menu', get_post_format() );
 //Used for the Main banner background to show up properly
 get_template_part( 'cat-banner', get_post_format() );
 ?>
