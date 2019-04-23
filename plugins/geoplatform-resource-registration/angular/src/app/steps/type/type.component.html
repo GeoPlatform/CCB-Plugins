@@ -137,9 +137,23 @@
 
                 </div>
 
+              <!-- if user selects Topic type -->
+              <div *ngIf="currentType==='Topic'">
+
+                <gprr-autocomplete-mat-chip
+                  [label]="'Parent Topics'"
+                  [placeholder]="'Associate parent topics of the topic being registered'"
+                  [hint]="'Find parent topics using the typeahead and select them to associate'"
+                  [fieldName]="'subTopicOf'"
+                  [formGroup]="formGroup"
+                  [filterFn]="filterParentTopics">
+                </gprr-autocomplete-mat-chip>
+
+              </div>
+
 
                 <!--
-                    Other type-specific fields go here 
+                    Other type-specific fields go here
                 -->
 
 

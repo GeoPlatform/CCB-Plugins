@@ -12,6 +12,7 @@ export const ModelProperties = {
     DISTRIBUTIONS:  "distributions",
     KEYWORDS:       'keywords',
     PUBLISHERS:     'publishers',
+    SUBTOPIC_OF:    'subTopicOf',
     COMMUNITIES:    'usedBy',
     THUMBNAIL_URL:  'thumbnailUrl',
     THUMBNAIL_CONTENT: 'thumbnailContent',

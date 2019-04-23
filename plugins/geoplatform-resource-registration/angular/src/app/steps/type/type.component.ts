@@ -39,6 +39,11 @@ interface ResourceType {
     uri:string;
 }
 
+interface Topics {
+  label:string;
+   uri:string;
+}
+
 
 @Component({
   selector: 'wizard-step-type',
@@ -73,6 +78,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     private availableResourceTypes: { type: string; values: ResourceType[]; } =
         {} as { type: string; values: ResourceType[]; };
 
+
     formOpts: any = {};
 
 
@@ -92,6 +98,8 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.formOpts['$'+ModelProperties.RESOURCE_TYPES] = [''];   //temp field for autocomplete
         this.formOpts[ModelProperties.PUBLISHERS] = [''];
         this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];   //for autocomplete
+        this.formOpts[ModelProperties.SUBTOPIC_OF] = [''];
+        this.formOpts['$'+ModelProperties.SUBTOPIC_OF] = [''];   //for autocomplete
         this.formOpts[ModelProperties.CREATED_BY] = ['', Validators.required];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
@@ -149,6 +157,10 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 if(data[ModelProperties.PUBLISHERS] && data[ModelProperties.PUBLISHERS].length) {
                     this.formGroup.get(ModelProperties.PUBLISHERS)
                         .setValue(data[ModelProperties.PUBLISHERS]);
+                }
+                if(data[ModelProperties.SUBTOPIC_OF] && data[ModelProperties.SUBTOPIC_OF].length) {
+                  this.formGroup.get(ModelProperties.SUBTOPIC_OF)
+                    .setValue(data[ModelProperties.SUBTOPIC_OF]);
                 }
 
                 let url = null;
@@ -393,6 +405,33 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             //display error message indicating an issue searching...
             this.hasError = new StepError("Error Searching Publishers", e.message);
         });
+    }
+
+
+  /**
+   * Retrieve all existing Topic instances so they can be linked as parent topics
+   * @param value
+   * @return Query of ItemTypes.Topic
+   */
+  filterParentTopics = (value:string) : Promise<string[]> => {
+
+       let current = this.getValue(ModelProperties.SUBTOPIC_OF) || [];
+       current = current.map(c=>c.id);
+
+       const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+       let query = new Query().types(ItemTypes.TOPIC).q(filterValue);
+       return this.itemService.search(query)
+       .then( response => {
+                  let hits = response.results;
+                  if(current && current.length) {
+                      hits = hits.filter(o => { return current.indexOf(o.id)<0; });
+                  }
+                  return hits;
+              })
+       .catch(e => {
+                  //display error message indicating an issue searching...
+                  this.hasError = new StepError("Error Searching Topics", e.message);
+              });
     }
 
     getValue(field) { return this.formGroup.get(field).value; }

@@ -37,6 +37,17 @@
                         <span *ngIf="!data[PROPS.DESCRIPTION]"><em>not specified</em></span>
                     </div>
                 </div>
+
+              <div class="a-property-display" *ngIf="'Topic'===data[PROPS.TYPE]">
+                <label>Parent Topics</label>
+                <div class="a-property-value">
+                  <mat-chip-list *ngIf="data[PROPS.SUBTOPIC_OF]" selectable="false">
+                    <mat-chip *ngFor="let pub of data[PROPS.SUBTOPIC_OF]">{{pub.label}}</mat-chip>
+                  </mat-chip-list>
+                  <span *ngIf="!data[PROPS.SUBTOPIC_OF]||!data[PROPS.SUBTOPIC_OF].length"><em>none specified</em></span>
+                </div>
+              </div>
+
                 <div class="a-property-display">
                     <label>Landing Page:</label>
                     <div class="a-property-value">

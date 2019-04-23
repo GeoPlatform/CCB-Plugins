@@ -2537,9 +2537,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#0.2.1":
-  version "0.2.1"
-  resolved "git+http://github.com/GeoPlatform/client-api.git#16f15d42a20c43888b08b201f23cf1980dad8952"
+"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
+  version "0.2.2"
+  resolved "git+http://github.com/GeoPlatform/client-api.git#e7d05f22f45d43e7ab10dbf496f3907ca1c789e5"
   dependencies:
     jquery "^3.3.1"
     q "1.1.2"
@@ -2549,9 +2549,9 @@ generate-object-property@^1.1.0:
   version "0.0.0"
   resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#dfaf6323b0d3bb39bfb4c0e009a5018e6d151f64"
 
-"geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.0":
-  version "2.0.0"
-  resolved "git+http://github.com/GeoPlatform/style.git#29f5e9be1787aa5c085e28c1059b2a70fc6d4997"
+"geoplatform.style@git+http://github.com/GeoPlatform/style.git#develop":
+  version "2.0.1"
+  resolved "git+http://github.com/GeoPlatform/style.git#25628cd502b84884bb334a2bd99b8f5cbdc673f7"
   dependencies:
     grunt-cli "~0.1.13"
 
@@ -3501,9 +3501,14 @@ jasminewd2@^2.1.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/jasminewd2/-/jasminewd2-2.2.0.tgz#e37cf0b17f199cce23bea71b2039395246b4ec4e"
 
-jquery@^3.0.0, jquery@^3.3.1:
+jquery@^3.0.0:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
+jquery@^3.3.1:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.4.0.tgz#8de513fa0fa4b2c7d2e48a530e26f0596936efdf"
+  integrity sha512-ggRCXln9zEqv6OqAGXFEcshF5dSBvCkzj6Gm2gzuR5fWawaX8t7cxKVkkygKODrDAzKdoYw3l/e3pm3vlT4IbQ==
 
 js-base64@^2.1.8:
   version "2.4.9"
@@ -4046,14 +4051,14 @@ miller-rabin@^4.0.0:
     bn.js "^4.0.0"
     brorand "^1.0.1"
 
+mime-db@1.40.0:
+  version "1.40.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.40.0.tgz#a65057e998db090f732a68f6c276d387d4126c32"
+  integrity sha512-jYdeOMPy9vnxEqFRRo6ZvTZ8d9oPb+k18PKoYNYUe2stVEBPPwsln/qWzdbmaIvnhZ9v2P+CuecK+fpUfsV2mA==
+
 "mime-db@>= 1.36.0 < 2", mime-db@~1.37.0:
   version "1.37.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.37.0.tgz#0b6a0ce6fdbe9576e25f1f2d2fde8830dc0ad0d8"
-
-mime-db@~1.38.0:
-  version "1.38.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.38.0.tgz#1a2aab16da9eb167b49c6e4df2d9c68d63d8e2ad"
-  integrity sha512-bqVioMFFzc2awcdJZIzR3HjZFX20QhilVS7hytkKrv7xFAn8bM1gzc/FOX2awLISvWe0PV8ptFKcon+wZ5qYkg==
 
 mime-types@^2.1.11, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.7:
   version "2.1.21"
@@ -4062,11 +4067,11 @@ mime-types@^2.1.11, mime-types@~2.1.17, mime-types@~2.1.18, mime-types@~2.1.7:
     mime-db "~1.37.0"
 
 mime-types@^2.1.12, mime-types@~2.1.19:
-  version "2.1.22"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.22.tgz#fe6b355a190926ab7698c9a0556a11199b2199bd"
-  integrity sha512-aGl6TZGnhm/li6F7yx82bJiBZwgiEa4Hf6CNr8YO+r5UHr53tSTYZb102zyU50DOWWKeOv0uQLRL0/9EiKWCog==
+  version "2.1.24"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.24.tgz#b6f8d0b3e951efb77dedeca194cff6d16f676f81"
+  integrity sha512-WaFHS3MCl5fapm3oLxU4eYDw77IQM2ACcxQ9RIxfaC3ooc6PFuBMGZZsYpvoXS5D5QTWPieo1jjLdAm3TBP3cQ==
   dependencies:
-    mime-db "~1.38.0"
+    mime-db "1.40.0"
 
 mime@1.4.1:
   version "1.4.1"
