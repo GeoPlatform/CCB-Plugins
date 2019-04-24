@@ -106,7 +106,7 @@ class Geoplatform_Map_Preview_Admin {
 	 * @since    1.0.0
 	*/
 
-	public function geopitems_add_plugin_admin_menu() {
+	public function geopmappreview_add_plugin_admin_menu() {
 	  /*
 	   * Add a settings page for this plugin to the Settings menu.
 		 *
