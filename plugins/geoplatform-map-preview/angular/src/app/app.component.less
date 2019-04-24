@@ -1,0 +1,35 @@
+
+:host {
+
+    position: relative;
+    flex: 1;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.m-page-breadcrumbs__label {
+    max-width:      8em;
+    overflow:       hidden;
+    display:        inline-block;
+    white-space:    nowrap;
+    vertical-align: bottom;
+    text-overflow:  ellipsis;
+}
+@media(min-width: 768px) {
+    .m-page-breadcrumbs__label {
+        max-width:      15em;
+    }
+}
+@media(min-width: 992px) {
+    .m-page-breadcrumbs__label {
+        max-width:      25em;
+    }
+}
+@media(min-width: 1200px) {
+    .m-page-breadcrumbs__label {
+        max-width:      31em;
+    }
+}

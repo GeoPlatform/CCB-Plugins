@@ -1,0 +1,85 @@
+<div class="o-map-details" [ngClass]="{'is-collapsed':isCollapsed}">
+
+    <div class="m-article">
+
+        <div class="m-article__heading d-flex flex-justify-between flex-align-center">
+            <span class="flex-1">
+                <button type="button" class="btn btn-link btn-sm"
+                    title="Save the map"
+                    (click)="isCollapsed = !isCollapsed">
+                    <span class="fas fa-save" *ngIf="isCollapsed"></span>
+                    <span class="fas fa-info-circle" *ngIf="!isCollapsed"></span>
+                </button>
+                <span *ngIf="!isCollapsed">Map Details</span>
+            </span>
+            <button type="button" class="btn btn-link btn-sm"
+                (click)="isCollapsed = !isCollapsed">
+                <span class="fas fa-times"></span>
+            </button>
+        </div>
+
+        <div class="o-map-details__content">
+
+            <div class="m-article__desc">
+                <div class="a-heading">Title <sup class="t-fg--danger">*</sup></div>
+                <div class="input-group-slick">
+                    <input type="text" class="form-control" [(ngModel)]="mapItem.title"
+                        placeholder="A title is required">
+                    <span *ngIf="!mapItem.title || !mapItem.title.length"
+                        class="fas fa-exclamation-circle t-fg--danger"></span>
+                </div>
+                <div class="u-text--sm t-fg--gray-md">Provide a brief but unique name for the map</div>
+            </div>
+
+            <div class="m-article__desc">
+                <div class="a-heading">Description</div>
+                <textarea rows="3" class="form-control"
+                    [(ngModel)]="mapItem.description"
+                    placeholder="A description is recommended"></textarea>
+                <div class="u-text--sm t-fg--gray-md">Provide a description of the map</div>
+            </div>
+
+            <div class="m-article__desc">
+                <div class="a-heading">
+                    Keywords ({{mapItem.keywords.length||0}})
+                    <button type="button" class="btn btn-sm btn-link"
+                        (click)="isKeywordsCollapsed=!isKeywordsCollapsed">
+                        <span *ngIf="isKeywordsCollapsed" class="fas fa-chevron-down"></span>
+                        <span *ngIf="!isKeywordsCollapsed" class="fas fa-chevron-up"></span>
+                    </button>
+                </div>
+                <div *ngIf="!isKeywordsCollapsed">
+                    <span *ngFor="let key of mapItem.keywords" class="a-keyword">
+                        {{key}}
+                    </span>
+                    <div class="input-group-slick">
+                        <input type="text" class="form-control"
+                            [(ngModel)]="keyword" (keyup.enter)="addKeyword($event)">
+                        <button type="button" class="btn btn-secondary" (click)="addKeyword()">
+                            <span class="fas fa-plus"></span>
+                        </button>
+                    </div>
+                    <div class="u-text--sm t-fg--gray-md">Provide keywords for the map</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="o-map-details__footer">
+
+        <div *ngIf="!getUser()" class='a-message--warning'>
+            You must be signed in to a GeoPlatform account in order to create this map.
+        </div>
+
+        <div class="m-article__desc" *ngIf="getUser()">
+            <button type="button" class="btn btn-primary"
+                (click)="createMap()">
+                Create
+            </button>
+        </div>
+
+    </div>
+
+</div>
