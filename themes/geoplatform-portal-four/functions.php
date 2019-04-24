@@ -29,7 +29,7 @@ function geopportal_enqueue_scripts() {
 	// wp_enqueue_script( 'popper-js', 'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' );
 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
 	wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
-	wp_enqueue_script( 'geop-styleguide-js', get_stylesheet_directory_uri() . '/js/styleguide.js' );
+	wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js' );
   wp_enqueue_script( 'auth', get_stylesheet_directory_uri() . '/scripts/authentication.js' );
   wp_enqueue_script( 'jquery' );
 }
