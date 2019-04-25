@@ -97,24 +97,18 @@ register_deactivation_hook( __FILE__, 'deactivate_geoplatform_map_preview' );
 
 
 // Rule rewrites to control the URL of the items page.
-// function geopmappreview_add_rewrite_rules( $wp_rewrite )
-// {
-// 	$geop_items_namespaces = 'dataset|datasets|service|services|layer|layers|map|maps|gallery|galleries|community|communities|organization|organizations|contact|contacts|person|persons|people|concept|concepts|conceptscheme|conceptschemes|webapp|webapps|website|websites|topic|topics|application|applications|rightstatement|rightstatements|rightsstatement|rightsstatements';
-// 	$geop_items_key = 'resources\/(' . $geop_items_namespaces . ')\/([a-f\d]*)\/?';
-// 	$geop_items_value = 'index.php?pagename=geoplatform-map-preview&q=' . $wp_rewrite->preg_index(1);
-//   // $geop_items_new_rules = array( 'resources/([a-f\d]{32})/?' => 'index.php?pagename=' . get_theme_mod('headlink_items') . '&q=' . $wp_rewrite->preg_index(1) );
-// 	$geop_items_new_rules = array( $geop_items_key => $geop_items_value );
-//
-//   // Add the new rewrite rule into the top of the global rules array
-//   $wp_rewrite->rules = $geop_items_new_rules + $wp_rewrite->rules;
-// }
-// add_action('generate_rewrite_rules', 'geopmappreview_add_rewrite_rules');
+function geopmappreview_add_rewrite_rules( $wp_rewrite )
+{
+	$geop_map_preview_namespaces = 'dataset|datasets|service|services|layer|layers';
+	$geop_map_preview_key = 'resources\/(' . $geop_map_preview_namespaces . ')\/([a-f\d]*)\/map\/?';
+	$geop_map_preview_value = 'index.php?pagename=geoplatform-map-preview&q=' . $wp_rewrite->preg_index(1);
+  	$geop_map_preview_new_rules = array( $geop_map_preview_key => $geop_map_preview_value );
 
-// Deprecated function.
-function myplugin_rewrite_tag() {
-	add_rewrite_tag( '%q%', '([^/]+)' );
+    // Add the new rewrite rule into the top of the global rules array
+    $wp_rewrite->rules = $geop_map_preview_new_rules + $wp_rewrite->rules;
 }
-// add_action('init', 'myplugin_rewrite_tag', 10, 0);
+add_action('generate_rewrite_rules', 'geopmappreview_add_rewrite_rules');
+
 
 
 // Additional dependency enqueues.
