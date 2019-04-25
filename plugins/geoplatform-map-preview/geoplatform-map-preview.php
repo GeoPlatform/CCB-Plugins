@@ -16,7 +16,7 @@
  * Plugin Name:       GeoPlatform Map Preview
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       View preview maps of GeoPlatform Assets
- * Version:           1.0.2
+ * Version:           1.0.0
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           Apache 2.0
