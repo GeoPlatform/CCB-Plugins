@@ -915,6 +915,22 @@ if ( ! function_exists ( 'geop_ccb_tags_categories_support_query' ) ) {
  * @return void
  */
 
+/**
+ * Widgetizing the front page
+ */
+if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
+ 	function geop_ccb_frontpage() {
+ 		register_sidebar(
+ 		array(
+ 			'id' => 'geoplatform-widgetized-page',
+ 			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-four' ),
+ 			'description' => __( 'Widgets that go on the portal front page can be added here.', 'geoplatform-ccb' ),
+ 			'class' => 'widget-class'
+ 		)
+ 		);
+ 	}
+	add_action( 'widgets_init', 'geop_ccb_frontpage' );
+}
 
 /**
  * Widgetizing the sidebar
@@ -932,26 +948,6 @@ if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
  	}
  	add_action( 'widgets_init', 'geop_ccb_sidebar' );
 }
-
-
-// if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
-// 	function geop_ccb_sidebar() {
-// 		register_sidebar(
-// 		array(
-// 			'id' => 'geoplatform-widgetized-area',
-// 			'name' => __( 'Sidebar Widgets', 'geoplatform-ccb' ),
-// 			'description' => __( 'Widgets that go in the sidebar can be added here', 'geoplatform-ccb' ),
-// 			'class' => 'widget-class',
-// 			'before_widget' => '<div id="%1$s" class="card widget %2$s">',
-// 				'after_widget'  => '</div>',
-// 				'before_title'  => '<h4>',
-// 				'after_title'   => '</h4>'
-// 		)
-// 		);
-// 	}
-// 	add_action( 'widgets_init', 'geop_ccb_sidebar' );
-// }
-
 
 /**
  * Global Content Width
@@ -1119,6 +1115,38 @@ if ( ! function_exists ( 'geop_ccb_filter_search' ) ) {
 	}
 	add_action('pre_get_posts','geop_ccb_filter_search');
 }
+
+
+
+
+
+
+
+
+
+// Widget incorporation
+get_template_part( 'widget-front-featured', get_post_format() );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * Filter the "read more" excerpt string link to the post.

@@ -4,7 +4,6 @@
 
 <!--Sectioning of pages, the Loop setup, pagination, and general flow of a lot of this theme came from
 https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/ -->
-<?php //get_template_part( 'mega-menu', get_post_format() ); ?>
 
 <div class="l-body p-landing-page" role="main">
 

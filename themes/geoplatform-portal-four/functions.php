@@ -547,23 +547,6 @@ function wpsites_before_post_widget( $content ) {
 add_filter( 'the_content', 'wpsites_before_post_widget' );
 
 /**
- * Widgetizing the front page
- */
-if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
-	function geop_ccb_frontpage() {
-		register_sidebar(
-		array(
-			'id' => 'geoplatform-widgetized-page',
-			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-four' ),
-			'description' => __( 'Widgets that go on the portal front page can be added here.', 'geoplatform-ccb' ),
-			'class' => 'widget-class'
-		)
-		);
-	}
-	add_action( 'widgets_init', 'geop_ccb_frontpage' );
-}
-
-/**
  * Widgetizing the data page
  */
 if ( ! function_exists ( 'geop_ccb_datapage' ) ) {

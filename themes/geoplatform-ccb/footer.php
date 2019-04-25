@@ -87,7 +87,6 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
               'menu' => 'community-links',
               'container' => false,
               'echo' => false,
-              // 'container_class' => 'a-nav__collapsible-menu',
               'items_wrap' => '%3$s',
               'depth' => 0,
               'fallback_cb' => false,
@@ -95,6 +94,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
               'link_role' => 'menuitem',
             );
 
+            // http://biostall.com/add-character-between-menu-items-in-wordpress-using-wp_nav_menu-function/
             echo str_replace('</a>' , '</a>&nbsp&nbsp;|&nbsp' , strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' ));
             ?>
           </div>
