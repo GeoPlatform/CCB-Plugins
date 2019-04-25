@@ -1,0 +1,57 @@
+<div class="c-constraint__editor">
+    <p>Select one or more topics from the list below and click "Apply"</p>
+    <br>
+
+    <label for="topicsFilter">Find topic(s) to use in filtering search results</label>
+    <div class="input-group-slick">
+        <span class="fa fa-search"></span>
+        <input type="text" id="topicsFilter"
+            class="form-control"
+            placeholder="Specify topics..."
+            [(ngModel)]="listFilter"
+            (keyup)="onKeywordChange($event.target.value)">
+        <span class="fa fa-times" *ngIf="listFilter?.length"
+            (click)="clearKeywords()">
+        </span>
+    </div>
+    <hr>
+
+  <!-- display error message if one is encountered -->
+  <div *ngIf="error" class="c-message--error">
+      <header>{{error.error}}</header>
+      <main>{{error.message}}</main>
+      <footer><a (click)="error=null">DISMISS</a></footer>
+  </div>
+
+  <!-- paging controls for list options -->
+  <div class="c-pagination">
+      <span>{{totalResults}} total</span>
+      <span> (<em>{{listQuery.getPageSize()}} per page</em>)</span>
+      <div>
+          <span class="u-text--sm t-fg--gray-md">
+              Showing {{getPageStart()}} - {{getPageEnd()}}
+          </span>
+          <button type="button" class="btn btn-link btn-sm"
+            *ngIf="listQuery.getPage()>0" (click)="previousPage()">
+            &lt;&lt;
+          </button>
+          <button type="button" class="btn btn-link btn-sm"
+            *ngIf="hasNext()" (click)="nextPage()">
+            &gt;&gt;
+          </button>
+      </div>
+  </div>
+
+  <!-- results of list population -->
+  <a *ngFor="let topic of resultsObs$ | async"
+    class="list-item"
+    [ngClass]="{selected:isSelected(topic)}"
+    (click)="select(topic)">
+      {{topic.label}}
+  </a>
+
+  <footer>
+      <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
+  </footer>
+
+</div>
