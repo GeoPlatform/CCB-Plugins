@@ -403,7 +403,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         current = current.map(c=>c.id);
 
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue);
+        let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue).sort("_score,desc");
         return this.itemService.search(query)
         .then( response => {
             let hits = response.results;
@@ -430,7 +430,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
        current = current.map(c=>c.id);
 
        const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-       let query = new Query().types(ItemTypes.TOPIC).q(filterValue);
+       let query = new Query().types(ItemTypes.TOPIC).q(filterValue).sort("_score,desc");
        return this.itemService.search(query)
        .then( response => {
                   let hits = response.results;

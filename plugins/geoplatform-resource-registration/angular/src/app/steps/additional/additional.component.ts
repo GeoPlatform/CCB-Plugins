@@ -179,7 +179,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         let current = this.getValues(ModelProperties.COMMUNITIES);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue);
+        let query = new Query().types(ItemTypes.COMMUNITY).q(filterValue).sort("_score,desc");
         return this.filterValues(query, current);
     }
 
@@ -190,7 +190,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         let current = this.getValues(ModelProperties.THEMES);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.CONCEPT).q(filterValue);
+        let query = new Query().types(ItemTypes.CONCEPT).q(filterValue).sort("_score,desc");
 
         let inScheme = this.getValues(ModelProperties.THEME_SCHEME);
         if(inScheme && inScheme.length) {
@@ -207,7 +207,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         let current = this.getValues(ModelProperties.THEME_SCHEME);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.CONCEPT_SCHEME).q(filterValue);
+        let query = new Query().types(ItemTypes.CONCEPT_SCHEME).q(filterValue).sort("_score,desc");
         return this.filterValues(query, current);
     }
 
@@ -218,7 +218,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         let current = this.getValues(ModelProperties.TOPICS);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.TOPIC).q(filterValue);
+        let query = new Query().types(ItemTypes.TOPIC).q(filterValue).sort("_score,desc");
         return this.filterValues(query, current);
     }
 
