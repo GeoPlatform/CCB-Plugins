@@ -190,7 +190,7 @@ elseif (isset($post)){
         } elseif (is_category()) {
           echo "<div class='a-page__title'>" . esc_html(single_cat_title()) . "</div>";
         } else {
-          echo "<div class='a-page__title'>" . the_title() . "</div>";
+          echo "<div class='a-page__title'>" . get_the_title() . "</div>";
         } ?>
 
     </div>
