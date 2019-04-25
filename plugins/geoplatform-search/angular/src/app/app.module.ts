@@ -44,6 +44,7 @@ import {
     CurrentComponent,
     KeywordsComponent,
     ThemeComponent,
+    TopicComponent,
     ContactComponent,
     CreatorComponent,
     PublisherComponent,
@@ -124,6 +125,7 @@ export function initializeApp() {
     ConstraintDirective,
     KeywordsComponent,
     ThemeComponent,
+    TopicComponent,
     CurrentComponent,
     ResultsComponent,
     PublisherComponent,
@@ -189,6 +191,7 @@ export function initializeApp() {
   entryComponents: [
       KeywordsComponent,
       ThemeComponent,
+      TopicComponent,
       ContactComponent,
       CreatorComponent,
       PublisherComponent,

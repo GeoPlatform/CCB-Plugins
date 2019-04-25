@@ -82,7 +82,8 @@ import {
 
 import { RPMStatsService } from './shared/rpmstats.service';
 import { DownloadComponent } from './item/actions/download/download.component';
-import { ThemesComponent } from './item/collections/themes/themes.component'
+import { ThemesComponent } from './item/collections/themes/themes.component';
+import { TopicsComponent } from './item/collections/topics/topics.component'
 let RPMStatsServiceFactory = (http: HttpClient) => {
     return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
 }
@@ -157,7 +158,8 @@ export function initializeApp() {
         UseConstraintsComponent,
         PropertyComponent,
         DownloadComponent,
-        ThemesComponent
+        ThemesComponent,
+        TopicsComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),

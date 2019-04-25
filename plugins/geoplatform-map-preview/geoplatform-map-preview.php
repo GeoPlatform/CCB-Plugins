@@ -113,7 +113,7 @@ add_action('generate_rewrite_rules', 'geopmappreview_add_rewrite_rules');
 
 // Additional dependency enqueues.
 function geopmappreview_page_enqueues(){
-	if (is_page('geoplatform-items')){
+	if (is_page('geoplatform-map-preview')){
 		wp_enqueue_script( 'inline_bundle', plugin_dir_url( __FILE__ ) . 'public/js/inline.bundle.js', array(), false, true );
 		wp_enqueue_script( 'polyfills_bundle', plugin_dir_url( __FILE__ ) . 'public/js/polyfills.bundle.js', array(), false, true );
 		wp_enqueue_script( 'scripts_bundle', plugin_dir_url( __FILE__ ) . 'public/js/scripts.bundle.js', array(), false, true );

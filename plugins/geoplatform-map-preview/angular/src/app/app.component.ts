@@ -8,6 +8,9 @@ import { ItemHelper } from './shared/item-helper';
 import { AuthenticatedComponent } from './shared/authenticated.component';
 
 
+const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)\/map/i;
+
+
 
 @Component({
   selector: 'app-root',
@@ -29,26 +32,15 @@ export class AppComponent extends AuthenticatedComponent implements OnInit, OnDe
     ngOnInit() {
         super.ngOnInit();
 
-        let searchParams: string = window.location.search;
-        if(!searchParams) {
-            this.error = new Error("No parameters provided. Must specify an id " +
-                "of a GeoPlatform item to preview");
+        let match = this.parseURL();
+        if(!match || !match.id) {
+            this.error = new Error(
+                "The URL provided did not contain a valid GeoPlatform resource identifier"
+            );
             return;
         }
 
-        let params : { [key:string]:any } = {} as { [key:string]:any };
-        searchParams.replace('?','').split('&').forEach(p => {
-            let param = p.split('='), key = param[0], value = param[1];
-            params[key] = value;
-        });
-
-        if(!params.id) {
-            this.error = new Error("Must specify an id " +
-                "of a GeoPlatform item to preview");
-            return;
-        }
-
-        this.itemService.get(params.id)
+        this.itemService.get(match.id)
         .then( (item : any) => {
             this.item = item;
             this.processItem(this.item);    //process item into data...
@@ -64,6 +56,25 @@ export class AppComponent extends AuthenticatedComponent implements OnInit, OnDe
         this.item = null;
         this.error = null;
     }
+
+
+    parseURL() : { id: string, type: string } {
+
+        let url = window.location.href;
+        let matches = URL_REGEX.exec(url);
+        if(matches && matches.length) {
+            let type = matches[1];
+            // console.log(`TYPE: ${type}`);
+            let id = matches[2];
+            // console.log(`ID: ${id}`);
+
+            return { id:id, type:type };
+        }
+
+        return null;
+    }
+
+
 
     onUserChange(user) {
         console.log("User auth status has changed!: " + user);

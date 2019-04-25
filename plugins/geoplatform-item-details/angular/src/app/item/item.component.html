@@ -109,6 +109,12 @@
                     <gpid-themes *ngIf="isAsset()" [themes]="item?.themes"></gpid-themes>
                 </div>
 
+                <!-- Topics (hasTopic) -->
+                <div class="m-article__desc" *ngIf="isAsset()">
+                    <gpid-topics [topics]="item?.topics"></gpid-topics>
+                </div>
+
+
                 <!-- end all Assets -->
 
 
