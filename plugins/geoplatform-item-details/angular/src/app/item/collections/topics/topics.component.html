@@ -1,0 +1,24 @@
+<div>
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Topics ({{topics?.length||0}})</strong>
+</div>
+
+<div [ngClass]="{'is-hidden':!isCollapsed}">
+    Expand to see topics referenced by this resource
+</div>
+
+<div [ngClass]="{'is-hidden':isCollapsed}">
+
+    <div *ngIf="!topics || !topics.length">
+        <em>None specified</em>
+    </div>
+
+    <div class="m-list">
+        <gpid-resource-link *ngFor="let it of topics" [item]="it" class="m-list__item">
+        </gpid-resource-link>
+    </div>
+
+</div>
