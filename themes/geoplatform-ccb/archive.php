@@ -12,79 +12,46 @@
  */
 
 get_header();
-// get_template_part( 'mega-menu', get_post_format() );
-get_template_part( 'single-banner', get_post_format() );
+get_template_part( 'sub-header-post', get_post_format() );
 
 ?>
-<div class="container">
+<div class="l-body l-body--two-column">
+	<div class="l-body__main-column">
+	<?php
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main">
-			<br>
-			<?php
+		$geopccb_posts = get_posts(array(
+			'post_type' => 'post',
+			'orderby' => 'date',
+			'order' => 'DSC',
+			'numberposts' => -1,
+		) );
 
-			$geopccb_posts = get_posts(array(
-				'post_type' => 'post',
-				'orderby' => 'date',
-				'order' => 'DSC',
-				'numberposts' => -1,
-			) );
+		foreach($geopccb_posts as $geopccb_post){
 
-			foreach($geopccb_posts as $geopccb_post){
+			// Grabs default 404 image as thumb and overwrites if the post has one.
+			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
+			if ( has_post_thumbnail($geopccb_post) )
+				$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($geopccb_post);
 
-				// Checks if there's data in the excerpt and, if so, assigns it to be displayed.
-        // If not, grabs post content and clips it at 90 characters.
-        if (!empty($geopccb_post->post_excerpt))
-          $geopccb_excerpt = esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt));
-        else{
-          $geopccb_excerpt = esc_attr(wp_strip_all_tags($geopccb_post->post_content));
-          if (strlen($geopccb_excerpt) > 90)
-            $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 90) . '...');
-        }
+			// To prevent entries overlapping their blocks, sets min height to match thumb.
+			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
+			$geopccb_archive_scaled_height = ((350 * $height) / $width) + 30;
+   		?>
 
-				?>
-				<div class="col-sm-6 col-md-4">
-				<div class="gp-ui-card gp-ui-card--md gp-ui-card">
-				<?php if ( has_post_thumbnail($geopccb_post) ) {?>
-				  <a class="media embed-responsive embed-responsive-16by9" href="<?php echo get_the_permalink($geopccb_post); ?>"
-				      title="<?php _e( 'Register for the Geospatial Platform Workshop', 'geoplatform-ccb') ?> ">
-
-				      <img class="embed-responsive-item" src="<?php echo get_the_post_thumbnail_url($geopccb_post); ?>" >
-				  </a>
-				  <div class="gp-ui-card__body">
-				    <div class="text--primary"><?php echo get_the_title($geopccb_post); ?></div>
-				    <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post); ?></div>
-				    <div class="text--supporting">
-				      <?php echo $geopccb_excerpt; ?>
-				    </div>
-				  </div>
-		    	<div class="gp-ui-card__footer">
-				    <div class="pull-right">
-				        <a href="<?php echo get_the_permalink($geopccb_post); ?>" class="btn btn-link pull-right"><?php _e( 'Learn More', 'geoplatform-ccb'); ?></a>
-				    </div>
-				  </div>
-
-				<?php } else {?>
-				  <div class="gp-ui-card__body">
-				    <div class="text--primary"><?php echo get_the_title($geopccb_post); ?></div>
-				    <div class="text--secondary"><?php echo get_the_date("F j, Y", $geopccb_post); ?></div>
-				    <div class="text--supporting">
-				      <?php echo $geopccb_excerpt; ?>
-				    </div>
-				  </div>
-				  <div class="gp-ui-card__footer">
-				    <div class="pull-right">
-				      <a href="<?php echo get_the_permalink($geopccb_post); ?>" class="btn btn-link pull-right"><?php _e( 'Learn More', 'geoplatform-ccb'); ?></a>
-				    </div>
-				  </div>
-				<?php } ?>
+			<div class="m-article m-article--flex">
+				<a class="m-article__thumbnail is-16x9" href="<?php echo get_the_permalink($geopccb_post); ?>">
+					<img alt="Article Heading" src="<?php echo $geopccb_archive_disp_thumb ?>">
+				</a>
+				<div class="m-article__body">
+					<a class="m-article__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post) ?></a>
+					<div class="m-article__desc"><?php echo get_the_date("F j, Y", $geopccb_post->ID) ?></div>
+					<div class="m-article__desc"><?php echo esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) ?></div>
 				</div>
 			</div>
-		  <?php } ?>
-		</main><!-- #main -->
-	</div><!-- #primary -->
-</div><!-- #container -->
 
-<?php
-//get_sidebar();
-get_footer();
+		<?php } ?>
+
+  </div>
+  <?php get_template_part( 'sidebar', get_post_format() ); ?>
+</div>
+<?php get_footer(); ?>
