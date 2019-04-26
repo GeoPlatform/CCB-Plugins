@@ -1,9 +1,9 @@
 
 <ul class="m-page-breadcrumbs">
     <li><a href="/">Home</a></li>
-    <li><a href="/resources">Resources</a></li>
-    <li><a href="/resources/{{getTypeKey()}}">{{item?.type|friendlyType}}</a></li>
-    <li >
+    <li class="d-none d-md-inline-block"><a href="/resources">Resources</a></li>
+    <li class="d-none d-sm-inline-block"><a href="/resources/{{getTypeKey()}}">{{item?.type|friendlyType}}</a></li>
+    <li class="d-none d-sm-inline-block">
         <a class="m-page-breadcrumbs__label" href="/resources/{{getTypeKey()}}/{{item?.id}}">{{item?.label}}</a>
     </li>
     <li class="is-active"><a>Map Preview</a></li>

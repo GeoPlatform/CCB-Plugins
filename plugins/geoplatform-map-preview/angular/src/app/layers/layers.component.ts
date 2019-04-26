@@ -140,7 +140,7 @@ export class LayersComponent implements OnInit {
                 </button>
                 <span class="flex-1 d-flex flex-justify-between flex-align-center">
                     <span *ngIf="item.layer.parentLayer"
-                        class="u-mg-left--sm fas fa-level-up-alt fa-rotate-90 t-fg--gray-md">
+                        class="u-mg-left--sm u-mg-right--xs fas fa-level-up-alt fa-rotate-90 t-fg--gray-md">
                     </span>
                     <span class="flex-1">{{item.layer.label}}</span>
                     <a href="/resources/layers/{{item.layer.id}}" target="_blank"

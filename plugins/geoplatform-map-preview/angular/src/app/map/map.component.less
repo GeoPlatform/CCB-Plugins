@@ -1,6 +1,19 @@
+
+@import (reference) "../../../node_modules/geoplatform.style/src/less/variables.less";
+
 :host {
-    width: 100%;
+    width: 90%;
     flex: 1;
+    margin-left: 5%;
+    border-bottom: 1px solid @color-gray-xlt;
+}
+
+@media(min-width:768px) {
+    :host {
+        width: 100%;
+        height: calc(50vw);  //calc( (100vw/2 - 3%) / 1);
+        margin-left: 0;
+    }
 }
 
 .o-map-container {
