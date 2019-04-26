@@ -1126,6 +1126,7 @@ if ( ! function_exists ( 'geop_ccb_filter_search' ) ) {
 
 // Widget incorporation
 get_template_part( 'widget-front-featured', get_post_format() );
+get_template_part( 'widget-front-banner', get_post_format() );
 
 
 
