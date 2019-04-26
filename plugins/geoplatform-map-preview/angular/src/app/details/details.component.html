@@ -1,24 +1,8 @@
-<div class="o-map-details" [ngClass]="{'is-collapsed':isCollapsed}">
+<div class="o-map-details"  *ngIf="!isCollapsed">
 
-    <div class="m-article">
+    <div class="o-map-details__content">
 
-        <div class="m-article__heading d-flex flex-justify-between flex-align-center">
-            <span class="flex-1">
-                <button type="button" class="btn btn-link btn-sm"
-                    title="Save the map"
-                    (click)="isCollapsed = !isCollapsed">
-                    <span class="fas fa-save" *ngIf="isCollapsed"></span>
-                    <span class="fas fa-info-circle" *ngIf="!isCollapsed"></span>
-                </button>
-                <span *ngIf="!isCollapsed">Map Details</span>
-            </span>
-            <button type="button" class="btn btn-link btn-sm"
-                (click)="isCollapsed = !isCollapsed">
-                <span class="fas fa-times"></span>
-            </button>
-        </div>
-
-        <div class="o-map-details__content">
+        <div class="m-article">
 
             <div class="m-article__desc">
                 <div class="a-heading">Title <sup class="t-fg--danger">*</sup></div>
@@ -41,7 +25,8 @@
 
             <div class="m-article__desc">
                 <div class="a-heading">
-                    Keywords ({{mapItem.keywords.length||0}})
+                    <span class="fas fa-tag"></span>
+                    Keywords ({{mapItem.keywords?.length||0}})
                     <button type="button" class="btn btn-sm btn-link"
                         (click)="isKeywordsCollapsed=!isKeywordsCollapsed">
                         <span *ngIf="isKeywordsCollapsed" class="fas fa-chevron-down"></span>
@@ -62,6 +47,45 @@
                     <div class="u-text--sm t-fg--gray-md">Provide keywords for the map</div>
                 </div>
             </div>
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'themes'"
+                [label]="'Themes'"
+                [iconClass]="'icon-concept'"
+                [value]="mapItem?.themes">
+            </gpmp-array-property>
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'topics'"
+                [label]="'Topics'"
+                [iconClass]="'icon-topic'"
+                [value]="mapItem?.topics">
+            </gpmp-array-property>
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'publishers'"
+                [label]="'Publishers'"
+                [iconClass]="'icon-organization'"
+                [value]="mapItem?.publishers">
+            </gpmp-array-property>
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'usedBy'"
+                [label]="'Communities'"
+                [iconClass]="'icon-community'"
+                [value]="mapItem?.usedBy">
+            </gpmp-array-property>
+            <br>
+
+
         </div>
 
     </div>
@@ -69,7 +93,7 @@
 
     <div class="o-map-details__footer">
 
-        <div *ngIf="!getUser()" class='a-message--warning'>
+        <div *ngIf="!getUser()" class='m-message--warning'>
             You must be signed in to a GeoPlatform account in order to create this map.
         </div>
 

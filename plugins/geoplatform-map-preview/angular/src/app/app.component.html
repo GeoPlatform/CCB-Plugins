@@ -1,20 +1,31 @@
 
 <ul class="m-page-breadcrumbs">
     <li><a href="/">Home</a></li>
-    <li class="d-none d-md-inline-block"><a href="/resources">Resources</a></li>
-    <li class="d-none d-sm-inline-block"><a href="/resources/{{getTypeKey()}}">{{item?.type|friendlyType}}</a></li>
-    <li class="d-none d-sm-inline-block">
-        <a class="m-page-breadcrumbs__label" href="/resources/{{getTypeKey()}}/{{item?.id}}">{{item?.label}}</a>
+    <li class="d-none d-md-inline-block">
+        <a href="/resources">Resources</a>
     </li>
-    <li class="is-active"><a>Map Preview</a></li>
+    <li class="d-none d-sm-inline-block" *ngIf="item">
+        <a href="/resources/{{getTypeKey()}}">{{item?.type|friendlyType}}</a>
+    </li>
+    <li class="d-none d-sm-inline-block" *ngIf="item">
+        <a class="m-page-breadcrumbs__label"
+            href="/resources/{{getTypeKey()}}/{{item?.id}}">{{item?.label}}
+        </a>
+    </li>
+    <li class="is-active" *ngIf="item"><a>Map Preview</a></li>
 </ul>
 
-<div *ngIf="error" class="t-bg--danger t-fg--white u-pd--xxlg">
-    <div class="t-text--bold">Error</div>
-    <div>{{error.message}}</div>
+<div class="p-map-preview">
+
+    <div *ngIf="error" class="u-pd--md flex-1" style="margin: 5% 20%;">
+        <div class="m-message--error u-text--lg">
+            <div class="t-text--bold">Error</div>
+            <div>{{error.message}}</div>
+        </div>
+    </div>
+
+    <gpmp-map *ngIf="!error" [data]="data"></gpmp-map>
+
+    <gpmp-sidebar *ngIf="!error" [data]="data"></gpmp-sidebar>
+
 </div>
-
-<gpmp-map *ngIf="!error" [data]="data"></gpmp-map>
-
-<gpmp-map-details [data]="data"></gpmp-map-details>
-<gpmp-layer-list [data]="data"></gpmp-layer-list>

@@ -67,7 +67,10 @@ import {
     AvailableLayerComponent,
     SelectedLayerComponent
 } from './layers/layers.component';
-import { DetailsComponent } from './details/details.component';
+import {
+    DetailsComponent, ArrayPropertyComponent 
+} from './details/details.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 
 @NgModule({
@@ -80,7 +83,9 @@ import { DetailsComponent } from './details/details.component';
     LayersComponent,
     AvailableLayerComponent,
     SelectedLayerComponent,
-    DetailsComponent
+    DetailsComponent,
+    ArrayPropertyComponent,
+    SidebarComponent
   ],
   imports: [
       BrowserModule,

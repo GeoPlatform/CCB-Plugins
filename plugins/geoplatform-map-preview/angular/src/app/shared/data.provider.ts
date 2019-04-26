@@ -26,6 +26,23 @@ export interface Extent {
     maxy: number;
 }
 
+export interface Item {
+    uri         : string;
+    type        : string;
+    title       : string;
+    description : string;
+    createdBy   : string;
+    keywords   ?: string[];
+    themes     ?: any[];
+    topics     ?: any[];
+    usedBy     ?: any[];
+    publishers ?: any[];
+    classifiers?: {[key:string]:any};
+}
+
+export interface MapItem extends Item {
+    layers      : any[];
+}
 
 
 export class DataProvider {
@@ -34,7 +51,20 @@ export class DataProvider {
     private itemService : ItemService;
 
     //object holding map metadata (title, etc)
-    private details : {[key:string]:any} = {};
+    private details : MapItem = {
+        uri         : null,
+        type        : ItemTypes.MAP,
+        title       : null,
+        description : null,
+        createdBy   : null,
+        keywords    : [],
+        layers      : [],
+        themes      : [],
+        topics      : [],
+        publishers  : [],
+        usedBy      : [],
+        classifiers : {}
+    };
 
     //object holding spatial extent of all data
     private extent : Extent;
@@ -61,10 +91,43 @@ export class DataProvider {
     /**
      *
      */
-    setDetails( properties : {[key:string]:any} ) {
-        this.details.title = properties.title || properties.label || null;
-        this.details.description = properties.description || null;
-        this.details.keywords = properties.keywords || [];
+    setDetails( item : Item ) {
+        // this.details.title = item.title || item.label || null;
+        // this.details.description = item.description || null;
+        // this.details.keywords = item.keywords || [];
+
+        Object.keys( this.details ).forEach( property => {
+            let value = item[property] || null;
+
+            if(!this.details[property]) {
+                this.details[property] = value;
+
+            } else {    //existing value, merge
+
+                if(Array.isArray(value)) {
+
+                    let isObj = 'keywords' !== property;
+                    let arr = (this.details[property]||[]).concat(value);
+
+                    if(isObj) {
+                        let distinct = [];
+                        const map = new Map();
+                        for (const item of arr) {
+                            if(!map.has(item.id)){
+                                map.set(item.id, true);    // set any value to Map
+                                distinct.push(item);
+                            }
+                        }
+                        this.details[property] = distinct;
+                    } else {
+                        this.details[property] = [ ... Array.from(new Set(arr)) ];
+                    }
+
+                }
+            }
+
+            // this.mapItem[property] = value;
+        });
     }
 
 
@@ -93,7 +156,7 @@ export class DataProvider {
             }
 
             if(!this.details.title) {
-                this.setDetails(it as {[key:string]:any});
+                this.setDetails(it as Item);
             }
 
 
@@ -155,7 +218,7 @@ export class DataProvider {
 
         let page : number = query.getPage() as number;
         let pageSize : number  = query.getPageSize() as number;
-        console.log("Searching page #" + page + " (" + pageSize + ")")
+        // console.log("Searching page #" + page + " (" + pageSize + ")")
 
         this.itemService.search(query).then( (response : any) => {
 

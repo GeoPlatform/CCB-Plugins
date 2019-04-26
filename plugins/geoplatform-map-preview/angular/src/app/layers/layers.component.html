@@ -1,22 +1,9 @@
-<div class="o-map-layers" [ngClass]="{'is-collapsed':isCollapsed}">
+<div class="o-map-layers" *ngIf="!isCollapsed">
 
     <div class="m-article o-map-layers__container">
-        <div class="m-article__heading d-flex flex-justify-between flex-align-center">
-            <span class="flex-1">
-                <button type="button" class="btn btn-link btn-sm"
-                    (click)="isCollapsed = !isCollapsed">
-                    <span class="icon-layer"></span>
-                </button>
-                <span *ngIf="!isCollapsed">Layers</span>
-            </span>
-            <button type="button" class="btn btn-link btn-sm"
-                (click)="isCollapsed = !isCollapsed">
-                <span class="fas fa-times"></span>
-            </button>
-        </div>
         <div class="m-article__desc flex-1 d-flex flex-column flex-align-stretch">
 
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-pills">
                 <li class="nav-item">
                     <a class="nav-link"
                         (click)="currentSection=Sections.MAP"
@@ -28,7 +15,7 @@
                     <a class="nav-link"
                         (click)="currentSection=Sections.AVAILABLE"
                         [ngClass]="{active:Sections.AVAILABLE===currentSection}">
-                        Available ({{data?.getData().length}})
+                        Available ({{available.length}})
                     </a>
                 </li>
             </ul>
@@ -70,10 +57,13 @@
                     <div *ngIf="warning" class="a-message--warning">{{warning}}</div>
 
                     <!-- list of available layers for selection -->
-                    <gpmp-layer-available *ngFor="let item of available"
-                        [item]="item" [isSelected]="data.getDataState(item)"
-                        (onActivate)="toggleLayer($event)">
-                    </gpmp-layer-available>
+                    <div *ngFor="let item of available">
+                        <gpmp-layer-available
+                            [item]="item"
+                            [isSelected]="data.getDataState(item)"
+                            (onActivate)="toggleLayer($event)">
+                        </gpmp-layer-available>
+                    </div>
 
                 </div>
 

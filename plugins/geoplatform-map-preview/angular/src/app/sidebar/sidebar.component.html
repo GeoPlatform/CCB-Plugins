@@ -1,0 +1,26 @@
+<div class="o-map-sidebar">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link"
+                (click)="activeTab=Tabs.DETAILS"
+                [ngClass]="{active:Tabs.DETAILS===activeTab}">
+                Map Details
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link"
+                (click)="activeTab=Tabs.LAYERS"
+                [ngClass]="{active:Tabs.LAYERS===activeTab}">
+                Layers
+            </a>
+        </li>
+    </ul>
+
+    <gpmp-map-details [data]="data" [isCollapsed]="Tabs.DETAILS!==activeTab">
+    </gpmp-map-details>
+
+    <gpmp-layer-list [data]="data" [isCollapsed]="Tabs.LAYERS!==activeTab">
+    </gpmp-layer-list>
+
+</div>

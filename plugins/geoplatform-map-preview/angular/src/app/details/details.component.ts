@@ -1,10 +1,17 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+    Component, OnInit, OnDestroy, OnChanges, SimpleChanges,
+    Input, HostBinding
+} from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
 import { ItemService, ItemTypes } from 'geoplatform.client';
 
-import { DataProvider, DataEvent, Events } from '../shared/data.provider';
+import {
+    DataProvider, DataEvent, Events, MapItem
+} from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { itemServiceProvider } from '../shared/service.provider';
+
+
 
 
 @Component({
@@ -16,25 +23,25 @@ import { itemServiceProvider } from '../shared/service.provider';
 export class DetailsComponent extends AuthenticatedComponent implements OnInit, OnDestroy {
 
     @Input() data : DataProvider;
-    public isCollapsed : boolean = true;
+    @Input() isCollapsed : boolean = false;
+    @HostBinding('class.isCollapsed') hostCollapsed: boolean = false;
+
     public isKeywordsCollapsed : boolean = true;
 
-    public mapItem : {
-        uri         : string;
-        type        : string;
-        title       : string;
-        description : string;
-        keywords   ?: string[];
-        createdBy   : string;
-        layers      : any[];
-    } = {
+
+    public mapItem : MapItem = {
         uri         : null,
         type        : ItemTypes.MAP,
         title       : "My New Map",
         description : "This map needs a description",
         keywords    : [],
         createdBy   : "tester",
-        layers      : []
+        layers      : [],
+        themes      : [],
+        topics      : [],
+        publishers  : [],
+        usedBy      : [],
+        classifiers : {}
     };
 
     public keyword : string;
@@ -51,6 +58,12 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
             this.dataSubscription = this.data.subscribe( (event : DataEvent) => {
                 this.onDataEvent(event);
             });
+        }
+    }
+
+    ngOnChanges (changes : SimpleChanges) {
+        if(changes.isCollapsed) {
+            this.hostCollapsed = changes.isCollapsed.currentValue;
         }
     }
 
@@ -87,7 +100,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         .then( map => {
             //store selected layers onto map being created
             this.mapItem.layers = this.data.getDataWithState(true);
-            return this.itemService.save(map) 
+            return this.itemService.save(map)
         })
         .then( created => {
             //TODO display success message!
@@ -137,12 +150,63 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
      * @param details - object defining metadata for the new map
      */
     updateDetails( details : {[key:string]:any} ) {
-        if(details.title) {
-            let title = "Map of " + details.title;
-            this.mapItem.title = title;
-        }
-        if(details.description) this.mapItem.description = details.description;
-        if(details.keywords) this.mapItem.keywords = details.keywords;
+        // if(details.title) {
+        //     let title = "Map of " + details.title;
+        //     this.mapItem.title = title;
+        // }
+        // if(details.description) this.mapItem.description = details.description;
+        // if(details.keywords) this.mapItem.keywords = details.keywords;
+
+        Object.keys(this.mapItem).forEach( property => {
+            let value = details[property] || null;
+            if('title' === property) {
+                value = 'Map of ' + value;
+            }
+            this.mapItem[property] = value;
+        });
+
     }
 
+
+}
+
+
+
+
+
+
+
+
+
+@Component({
+  selector: 'gpmp-array-property',
+  template: `
+      <div class="m-article__desc">
+          <div class="a-heading">
+              <span *ngIf="iconClass" class="{{iconClass}}"></span>
+              {{label}} ({{value?.length||0}})
+              <button type="button" class="btn btn-sm btn-link"
+                  (click)="isCollapsed=!isCollapsed">
+                  <span *ngIf="isCollapsed" class="fas fa-chevron-down"></span>
+                  <span *ngIf="!isCollapsed" class="fas fa-chevron-up"></span>
+              </button>
+          </div>
+          <div *ngIf="!isCollapsed">
+              <span *ngFor="let val of value" class="a-keyword">{{val.label||"Untitled Resource"}}</span>
+          </div>
+      </div>
+  `
+})
+export class ArrayPropertyComponent {
+
+    @Input() field : string;
+    @Input() label : string;
+    @Input() value : any[];
+    @Input() iconClass : string;
+
+    public isCollapsed : boolean = true;
+
+    constructor() {
+
+    }
 }

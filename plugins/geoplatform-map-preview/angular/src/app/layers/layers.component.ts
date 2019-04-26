@@ -1,4 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+    Component, OnInit, OnDestroy, OnChanges,
+    Input, Output, EventEmitter, SimpleChanges, HostBinding
+} from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
 
 import { DataProvider, DataEvent, Events } from '../shared/data.provider';
@@ -19,7 +22,8 @@ const SECTIONS = {
 export class LayersComponent implements OnInit {
 
     @Input() data : DataProvider;
-    public isCollapsed : boolean = true;
+    @Input() isCollapsed: boolean = true;
+    @HostBinding('class.isCollapsed') hostCollapsed: boolean = true;
     public currentSection : string = SECTIONS.AVAILABLE;
     public Sections = SECTIONS;
     public warning : string;
@@ -36,6 +40,17 @@ export class LayersComponent implements OnInit {
                 this.onDataEvent(event);
             });
         }
+    }
+
+    ngOnChanges (changes : SimpleChanges) {
+        if(changes.isCollapsed) {
+            this.hostCollapsed = changes.isCollapsed.currentValue;
+        }
+    }
+
+    ngOnDestroy() {
+        this.dataSubscription.unsubscribe();
+        this.dataSubscription = null;
     }
 
     toggleLayer( item : any ) {

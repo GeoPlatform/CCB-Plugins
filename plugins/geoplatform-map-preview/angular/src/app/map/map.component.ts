@@ -88,7 +88,7 @@ export class MapComponent implements OnInit, OnChanges {
         if(this.dataSubscription) this.dataSubscription.unsubscribe();
         if(this.data) this.data = null;
         if(this.map) {
-            this.map.remove();
+            this.map.destroyMap();
             this.map = null;
         }
     }
