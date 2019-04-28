@@ -188,7 +188,7 @@ elseif (isset($post)){
         } elseif (is_404()) {
           echo "<div class='a-page__title'>Page Not Found</div>";
         } elseif (is_category()) {
-          echo "<div class='a-page__title'>" . esc_html(single_cat_title()) . "</div>";
+          echo "<div class='a-page__title'>" . esc_html(single_cat_title('', false)) . "</div>";
         } else {
           echo "<div class='a-page__title'>" . get_the_title() . "</div>";
         } ?>
