@@ -84,7 +84,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           <div>
             <?php
             $geopccb_head_menu_array = array(
-              'menu' => 'community-links',
+              'theme_location' => 'footer-bar',
               'container' => false,
               'echo' => false,
               'items_wrap' => '%3$s',

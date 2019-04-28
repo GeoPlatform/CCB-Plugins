@@ -84,7 +84,7 @@ elseif (isset($post)){
           echo "<div class='a-nav__collapsible-menu'>";
 
             $geopccb_head_menu_array = array(
-              'menu' => 'community-links',
+              'theme_location' => 'community-links',
               'container' => false,
               'echo' => false,
               // 'container_class' => 'a-nav__collapsible-menu',
