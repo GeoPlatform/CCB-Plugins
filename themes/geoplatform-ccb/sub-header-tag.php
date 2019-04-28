@@ -3,11 +3,11 @@
 global $wp;
 
 // gets current category.
-$geopccb_breadcrumb_cat = get_category($wp_query->get_queried_object_id());
-$geopccb_breadcrumb_array = array($geopccb_breadcrumb_cat);
-while ($geopccb_breadcrumb_cat->parent){
-  $geopccb_breadcrumb_cat = get_category($geopccb_breadcrumb_cat->parent);
-  array_push($geopccb_breadcrumb_array, $geopccb_breadcrumb_cat);
+$geopccb_breadcrumb_tag = get_tag($wp_query->get_queried_object_id());
+$geopccb_breadcrumb_array = array($geopccb_breadcrumb_tag);
+while ($geopccb_breadcrumb_tag->parent){
+  $geopccb_breadcrumb_tag = get_tag($geopccb_breadcrumb_tag->parent);
+  array_push($geopccb_breadcrumb_array, $geopccb_breadcrumb_tag);
 }
 ?>
 
@@ -24,10 +24,10 @@ while ($geopccb_breadcrumb_cat->parent){
 
 <!-- Second part of excerpt will only show if the second excerpt string is populated. -->
 <?php
-$geopccb_breadcrumb_cat = get_category($wp_query->get_queried_object_id());
-if (esc_attr($geopccb_breadcrumb_cat->description) != '' ){
+$geopccb_breadcrumb_tag = get_tag($wp_query->get_queried_object_id());
+if (esc_attr($geopccb_breadcrumb_tag->description) != '' ){
 ?>
   <div class="m-page-overview">
-    <?php echo esc_attr($geopccb_breadcrumb_cat->description); ?>
+    <?php echo esc_attr($geopccb_breadcrumb_tag->description); ?>
   </div>
 <?php } ?>
