@@ -6,15 +6,15 @@
     </span>
     <strong>Datasets ({{datasets.length||0}})</strong>
 
-    <div [ngClass]="{'is-hidden':!isCollapsed}">
+    <div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
         Expand to see datasets referenced by this resource
     </div>
 
     <div [ngClass]="{'is-hidden':isCollapsed}" class="m-list">
-        <div *ngIf="!datasets.length" class="m-list__item t-fg--warning">
+        <em *ngIf="!datasets.length" class="m-list__item t-fg--warning">
             <span class="fas fa-exclamation-triangle"></span>
             No datasets associated with this resource
-        </div>
+        </em>
         <div *ngFor="let ds of datasets" class="m-list__item">
             <gpid-resource-link [item]="ds"></gpid-resource-link>
         </div>

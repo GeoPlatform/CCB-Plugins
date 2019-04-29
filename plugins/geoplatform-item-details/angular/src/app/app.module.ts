@@ -57,19 +57,26 @@ import { GalleryItemsComponent } from './item/collections/gallery-items/gallery-
 import { MapLayersComponent } from './item/collections/map-layers/map-layers.component';
 import { CommunityMembersComponent } from './item/collections/community-members/community-members.component';
 import { DatasetDistributionsComponent } from './item/collections/dataset-distributions/dataset-distributions.component';
+import { ServicesComponent } from './item/collections/services/services.component';
+import { DatasetsComponent } from './item/collections/datasets/datasets.component';
+import { ThemesComponent } from './item/collections/themes/themes.component';
+import { TopicsComponent } from './item/collections/topics/topics.component';
+
+import { AssetDetailsComponent } from './item/details/asset/asset.component'
+import { ServiceDetailsComponent } from './item/details/service/service-details.component';
+import { LayerDetailsComponent } from './item/details/layer/layer-details.component';
+import { DatasetDetailsComponent } from './item/details/dataset/dataset-details.component';
+import { ContactDetailsComponent } from './item/details/contact/contact-details.component';
+import { RelatedDetailsComponent } from './item/details/related/related.component';
 
 import { PrimaryActionComponent } from './item/actions/primary-action/primary-action.component';
 import { ExportActionComponent } from './item/actions/export-action/export-action.component';
 import { EditActionComponent } from './item/actions/edit-action/edit-action.component';
 import { DeleteActionComponent } from './item/actions/delete-action/delete-action.component';
 import { LikeActionComponent } from './item/actions/like-action/like-action.component';
+import { DownloadActionComponent } from './item/actions/download/download.component';
+import { PreviewActionComponent } from './item/actions/preview/preview.component';
 
-import { ServiceDetailsComponent } from './item/details/service/service-details.component';
-import { LayerDetailsComponent } from './item/details/layer/layer-details.component';
-import { DatasetDetailsComponent } from './item/details/dataset/dataset-details.component';
-import { ContactDetailsComponent } from './item/details/contact/contact-details.component';
-import { ServicesComponent } from './item/collections/services/services.component';
-import { DatasetsComponent } from './item/collections/datasets/datasets.component';
 
 import { PluginAuthService } from './shared/auth.service';
 
@@ -80,10 +87,12 @@ import {
     kgServiceProvider
 } from './shared/service.provider';
 
+
+
+
+
+
 import { RPMStatsService } from './shared/rpmstats.service';
-import { DownloadComponent } from './item/actions/download/download.component';
-import { ThemesComponent } from './item/collections/themes/themes.component';
-import { TopicsComponent } from './item/collections/topics/topics.component'
 let RPMStatsServiceFactory = (http: HttpClient) => {
     return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
 }
@@ -138,26 +147,29 @@ export function initializeApp() {
         MapLayersComponent,
         CoverageMapComponent,
         CommunityMembersComponent,
+        ResourceLinkComponent,
         PrimaryActionComponent,
         ExportActionComponent,
-        ResourceLinkComponent,
+        LikeActionComponent,
         EditActionComponent,
         DeleteActionComponent,
+        DownloadActionComponent,
+        PreviewActionComponent,
         DatasetDistributionsComponent,
-        LikeActionComponent,
         UsedByComponent,
         RelatedComponent,
         ServiceDetailsComponent,
         LayerDetailsComponent,
         DatasetDetailsComponent,
         ContactDetailsComponent,
+        AssetDetailsComponent,
+        RelatedDetailsComponent,
         ServicesComponent,
         DatasetsComponent,
         AltTitlesComponent,
         AltIdsComponent,
         UseConstraintsComponent,
         PropertyComponent,
-        DownloadComponent,
         ThemesComponent,
         TopicsComponent
     ],

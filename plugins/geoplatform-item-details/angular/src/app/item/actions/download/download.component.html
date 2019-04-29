@@ -1,9 +1,8 @@
-<div *ngIf="item && item.source">
+<div *ngIf="item && item.source" class="m-action">
     <div class="u-text--justify u-mg-bottom--md u-text--sm">
         Download the source metadata for this resource
     </div>
     <button type="button" class="btn btn-secondary btn-block" (click)="doAction()">
         Download Source Metadata
     </button>
-    <br>
 </div>

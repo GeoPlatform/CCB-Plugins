@@ -26,6 +26,7 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
 
     public hasLongDescription : boolean = false;
     public descriptionCollapsed: boolean = true;
+    public TYPES = ItemTypes;
 
     constructor(private el: ElementRef, private itemService: ItemService) {
         super();

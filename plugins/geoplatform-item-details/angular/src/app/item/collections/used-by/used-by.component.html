@@ -6,15 +6,13 @@
     <strong>Communities ({{communities?.length||0}})</strong>
 </div>
 
-<div [ngClass]="{'is-hidden':!isCollapsed}">
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
     Expand to see communities which reference this resource
 </div>
 
 <div [ngClass]="{'is-hidden':isCollapsed}">
 
-    <div *ngIf="!communities || !communities.length">
-        <em>None specified</em>
-    </div>
+    <em *ngIf="!communities || !communities.length">None specified</em>
 
     <div class="m-list">
         <gpid-resource-link *ngFor="let it of communities" [item]="it" class="m-list__item">

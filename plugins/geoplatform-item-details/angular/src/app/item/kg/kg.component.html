@@ -6,7 +6,7 @@
         </span>
         Knowledge Graph
     </div>
-    <div class="m-article__desc" *ngIf="isCollapsed">
+    <div class="m-article__desc" *ngIf="isCollapsed" class="t-fg--gray-md">
         Expand to see knowledge enrichment of this item
     </div>
 
@@ -26,13 +26,10 @@
             </strong>
 
             <div *ngIf="classifiers && classifiers[key] && classifiers[key].length"
-                [ngClass]="{'is-hidden':!isClassifierCollapsed[key]}">
+                [ngClass]="{'is-hidden':!isClassifierCollapsed[key]}" class="t-fg--gray-md">
                 Expand to see values for this classifier
             </div>
             <div [ngClass]="{'is-hidden':isClassifierCollapsed[key]}">
-                <!-- <div *ngIf="!classifiers || !classifiers[key]">
-                    <em>None specified</em>
-                </div> -->
                 <div *ngIf="classifiers && classifiers[key]">
                     <div *ngFor="let val of classifiers[key]">
                         <gpid-resource-link [item]="val"></gpid-resource-link>
@@ -41,45 +38,6 @@
             </div>
 
         </div>
-
-        <!-- <ul class="nav nav-pills" id="myTab" role="tablist">
-            <li class="nav-item" *ngFor="let key of getKeys()">
-                <a class="nav-link"
-                    [ngClass]="{active:key===activeTab}"
-                    (click)="changeTab(key)"
-                    id="kg-{{key}}-tab"
-                    role="tab"
-                    [attr.aria-controls]="key"
-                    [attr.aria-selected]="key===activeTab">
-                    {{classifierLabels[key]}}
-                    <sup *ngIf="classifiers && classifiers[key] && classifiers[key].length">
-                        ({{classifiers[key].length}})
-                    </sup>
-                </a>
-            </li>
-        </ul>
-
-
-        <div class="tab-content" id="myTabContent" style="width:100%">
-
-            <div *ngFor="let key of getKeys()"
-                class="tab-pane"
-                [ngClass]="{active:key===activeTab}"
-                role="tabpanel"
-                [attr.aria-labelledby]="'kg-' + key + '-tab'">
-
-                <div *ngIf="!classifiers || !classifiers[key]">
-                    <em>None specified</em>
-                </div>
-
-                <div *ngIf="classifiers && classifiers[key]">
-                    <div *ngFor="let val of classifiers[key]">
-                        <gpid-resource-link [item]="val"></gpid-resource-link>
-                    </div>
-                </div>
-
-            </div>
-
-        </div> -->
+        
     </div>
 </div>

@@ -7,7 +7,7 @@ import { Config, ItemTypes } from "geoplatform.client";
   templateUrl: './download.component.html',
   styleUrls: ['./download.component.less']
 })
-export class DownloadComponent implements OnInit {
+export class DownloadActionComponent implements OnInit {
 
     @Input() item : any;
 

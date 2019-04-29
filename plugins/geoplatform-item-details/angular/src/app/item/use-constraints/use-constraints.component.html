@@ -6,6 +6,6 @@
     <strong>Use Constraints</strong>
 </div>
 <div *ngIf="!isCollapsed">
-    <div *ngIf="!rights || !rights.length">None specified</div>
+    <em *ngIf="!rights || !rights.length">None specified</em>
     <div *ngFor="let use of rights">{{use.description||"not defined"}}</div>
 </div>

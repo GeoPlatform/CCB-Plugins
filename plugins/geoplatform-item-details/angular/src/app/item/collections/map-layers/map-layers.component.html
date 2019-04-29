@@ -6,7 +6,7 @@
     <strong>Map Layers</strong>
 </div>
 
-<div [ngClass]="{'is-hidden':!isCollapsed}">
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
     Expand to see layers refenced by this map
 </div>
 
@@ -15,10 +15,10 @@
 
     <strong class="t-fg--gray-md">Overlay Layers</strong>
 
-    <div *ngIf="!map?.layers || !map?.layers.length" class="t-fg--warning">
+    <em *ngIf="!map?.layers || !map?.layers.length" class="t-fg--warning">
         <span class="fas fa-exclamation-triangle"></span>
         No overlay layers specified
-    </div>
+    </em>
 
     <div *ngIf="map?.layers" class="m-list">
         <div *ngFor="let state of map?.layers" class="m-list__item">
@@ -34,10 +34,10 @@
 
     <strong class="t-fg--gray-md">Base Layer</strong>
 
-    <div *ngIf="!map.baseLayer" class="t-fg--warning">
+    <em *ngIf="!map.baseLayer" class="t-fg--warning">
         <span class="fas fa-exclamation-triangle"></span>
         No base layer specified
-    </div>
+    </em>
 
     <div *ngIf="map.baseLayer" class="m-list">
         <gpid-resource-link [item]="map.baseLayer" class="m-list__item"></gpid-resource-link>

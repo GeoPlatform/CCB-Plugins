@@ -5,10 +5,9 @@
     </span>
     <strong>Community Members ({{members?.length||0}})</strong>
 </div>
-<div [ngClass]="{'is-hidden':!isCollapsed}">
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
     Expand to see communities which reference this resource
 </div>
-
 <div [ngClass]="{'is-hidden':isCollapsed}">
     <em *ngIf="!members||!members.length">None specified</em>
     <div *ngIf="members?.length" class="m-list">

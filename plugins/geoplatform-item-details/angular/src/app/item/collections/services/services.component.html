@@ -19,15 +19,15 @@
     </span>
     <strong>Services ({{item?.services?.length||0}})</strong>
 
-    <div [ngClass]="{'is-hidden':!isCollapsed}">
+    <div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
         Expand to see services referenced by this dataset
     </div>
 
     <div [ngClass]="{'is-hidden':isCollapsed}" class="m-list">
-        <div *ngIf="!item?.services && !item?.services?.length" class="m-list__item t-fg--warning">
+        <em *ngIf="!item?.services && !item?.services?.length" class="m-list__item t-fg--warning">
             <span class="fas fa-exclamation-triangle"></span>
             No services associated with this resource
-        </div>
+        </em>
         <div *ngFor="let svc of item?.services; let $idx=index;" class="m-list__item">
             <gpid-resource-link [item]="item.services[$idx]"></gpid-resource-link>
         </div>

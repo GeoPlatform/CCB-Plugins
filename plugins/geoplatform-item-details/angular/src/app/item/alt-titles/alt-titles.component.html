@@ -1,11 +1,14 @@
-<div>
+<div class="m-article__desc">
     <span class="fas"
         [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
         (click)="toggleCollapsed()">
     </span>
     <strong>Alternate Titles ({{titles?.length||0}})</strong>
 </div>
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
+    Expand to see alternate titles for this resource
+</div>
 <div *ngIf="!isCollapsed">
-    <div *ngIf="!titles || !titles.length">None specified</div>
+    <em *ngIf="!titles || !titles.length">None specified</em>
     <div *ngFor="let alt of titles">{{alt}}</div>
 </div>
