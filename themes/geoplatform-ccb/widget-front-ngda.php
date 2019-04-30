@@ -1,12 +1,12 @@
 <?php
-class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
+class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
 
   // Constructor. Simple.
 	function __construct() {
 		parent::__construct(
-			'geopccb_front_featured_widget', // Base ID
-			esc_html__( 'GeoPlatform Front Page Featured', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Featured widget for the front page. Takes a category as input and displays its content, along with their featured images, in a tile format.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			'geopccb_front_ngda_widget', // Base ID
+			esc_html__( 'GeoPlatform Front Page NGDA', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform NGDA widget for the front page. Takes a category as input and displays its content, along with their featured images, in a tile format. Also includes the NGDA card.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -15,14 +15,38 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
     // Checks to see if the widget admin boxes are empty. If so, uses default
     // values. If not, pulls the values from the boxes.
-		// if (array_key_exists('geopccb_featured_title', $instance) && isset($instance['geopccb_featured_title']) && !empty($instance['geopccb_featured_title']))
-    //   $geopccb_featured_title = apply_filters('widget_title', $instance['geopccb_featured_title']);
-		// else
-    //   $geopccb_featured_title = "";
 		if (array_key_exists('geopccb_community_link', $instance) && isset($instance['geopccb_community_link']) && !empty($instance['geopccb_community_link']))
       $geopccb_community_link = apply_filters('widget_title', $instance['geopccb_community_link']);
 		else
     	$geopccb_community_link = "Front Page";
+
+		if (array_key_exists('geopccb_ngda_name', $instance) && isset($instance['geopccb_ngda_name']) && !empty($instance['geopccb_ngda_name']))
+      $geopccb_ngda_name = apply_filters('widget_title', $instance['geopccb_ngda_name']);
+		else
+    	$geopccb_ngda_name = "NGDA Theme Name";
+		if (array_key_exists('geopccb_ngda_type', $instance) && isset($instance['geopccb_ngda_type']) && !empty($instance['geopccb_ngda_type']))
+      $geopccb_ngda_type = apply_filters('widget_title', $instance['geopccb_ngda_type']);
+		else
+    	$geopccb_ngda_type = "NGDA";
+		if (array_key_exists('geopccb_ngda_sponsor', $instance) && isset($instance['geopccb_ngda_sponsor']) && !empty($instance['geopccb_ngda_sponsor']))
+      $geopccb_ngda_sponsor = apply_filters('widget_title', $instance['geopccb_ngda_sponsor']);
+		else
+    	$geopccb_ngda_sponsor = "FGDC";
+		if (array_key_exists('geopccb_ngda_email', $instance) && isset($instance['geopccb_ngda_email']) && !empty($instance['geopccb_ngda_email']))
+      $geopccb_ngda_email = apply_filters('widget_title', $instance['geopccb_ngda_email']);
+		else
+    	$geopccb_ngda_email = "servicedesk@geoplatform.gov";
+		if (array_key_exists('geopccb_ngda_agency', $instance) && isset($instance['geopccb_ngda_agency']) && !empty($instance['geopccb_ngda_agency']))
+      $geopccb_ngda_agency = apply_filters('widget_title', $instance['geopccb_ngda_agency']);
+		else
+    	$geopccb_ngda_agency = "Theme lead agency info needed.";
+		if (array_key_exists('geopccb_ngda_lead', $instance) && isset($instance['geopccb_ngda_lead']) && !empty($instance['geopccb_ngda_lead']))
+      $geopccb_ngda_lead = apply_filters('widget_title', $instance['geopccb_ngda_lead']);
+		else
+    	$geopccb_ngda_lead = "Theme lead names needed.";
+
+
+
 
     // Sets default image.
     $geopccb_category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
@@ -124,8 +148,8 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     // value grab functiosn. Feed a post/category into the respective
     // function and it returns a 3-value array of the object values
     // in name-thumbnail-url format.
-		if ( ! function_exists ( 'geopccb_add_featured_post' ) ) {
-	    function geopccb_add_featured_post($geopccb_post){
+		if ( ! function_exists ( 'geopccb_add_ngda_post' ) ) {
+	    function geopccb_add_ngda_post($geopccb_post){
 	      $geopccb_temp_array = array();
 
 	      $geopccb_temp_array['name'] = get_the_title($geopccb_post);
@@ -144,8 +168,8 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    }
 		}
 
-		if ( ! function_exists ( 'geopccb_add_featured_category' ) ) {
-	    function geopccb_add_featured_category($geopccb_cat){
+		if ( ! function_exists ( 'geopccb_add_ngda_category' ) ) {
+	    function geopccb_add_ngda_category($geopccb_cat){
 	      $geopccb_temp_array = array();
 
 	      $geopccb_temp_array['name'] = $geopccb_cat->name;
@@ -165,11 +189,11 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
       // Pages added.
       foreach ($geopccb_pages_trimmed as $geopccb_post)
-        array_push($geopccb_final_objects_array, geopccb_add_featured_post($geopccb_post));
+        array_push($geopccb_final_objects_array, geopccb_add_ngda_post($geopccb_post));
 
       // Categories added.
       foreach ($geopccb_categories_trimmed as $geopccb_cat)
-        array_push($geopccb_final_objects_array, geopccb_add_featured_category($geopccb_cat));
+        array_push($geopccb_final_objects_array, geopccb_add_ngda_category($geopccb_cat));
     }
     else {
 
@@ -215,9 +239,9 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
         // Check and action. Page victory in first check, cats in else.
         if ($geopccb_cat_val == 0 || ($geopccb_page_val > 0 && ($geopccb_page_val < $geopccb_cat_val)))
-          array_push($geopccb_final_objects_array, geopccb_add_featured_post(array_shift($geopccb_pages_trimmed)));
+          array_push($geopccb_final_objects_array, geopccb_add_ngda_post(array_shift($geopccb_pages_trimmed)));
         else
-          array_push($geopccb_final_objects_array, geopccb_add_featured_category(array_shift($geopccb_categories_trimmed)));
+          array_push($geopccb_final_objects_array, geopccb_add_ngda_category(array_shift($geopccb_categories_trimmed)));
       }
     }
 
@@ -252,33 +276,70 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     // Checks for entries in the widget admin boxes and provides defaults if empty.
 		// $geopccb_featured_title = ! empty( $instance['geopccb_featured_title'] ) ? $instance['geopccb_featured_title'] : '';
 		$geopccb_community_link = ! empty( $instance['geopccb_community_link'] ) ? $instance['geopccb_community_link'] : 'Front Page';
+		$geopccb_ngda_name = ! empty( $instance['geopccb_ngda_name'] ) ? $instance['geopccb_ngda_name'] : 'NGDA Theme Name';
+		$geopccb_ngda_type = ! empty( $instance['geopccb_ngda_type'] ) ? $instance['geopccb_ngda_type'] : 'NGDA';
+		$geopccb_ngda_sponsor = ! empty( $instance['geopccb_ngda_sponsor'] ) ? $instance['geopccb_ngda_sponsor'] : 'FGDC';
+		$geopccb_ngda_email = ! empty( $instance['geopccb_ngda_email'] ) ? $instance['geopccb_ngda_email'] : 'servicedesk@geoplatform.gov';
+		$geopccb_ngda_agency = ! empty( $instance['geopccb_ngda_agency'] ) ? $instance['geopccb_ngda_agency'] : 'Theme lead agency info needed.';
+		$geopccb_ngda_lead = ! empty( $instance['geopccb_ngda_lead'] ) ? $instance['geopccb_ngda_lead'] : 'Theme lead names needed.';
 
-		// HTML for the widget control box.
+    // HTML for the widget control box.
 		echo "<p>";
 			_e('Ensure to use a valid category name, not a slug.', 'geoplatform-ccb');
 		echo "</p>";
 		// echo "<p>";
-		// 	echo "<label for='" . $this->get_field_id( 'geopccb_featured_title' ) . "'>Section Title:</label>";
-		// 	echo "<input type='text' id='" . $this->get_field_id( 'geopccb_featured_title' ) . "' name='" . $this->get_field_name( 'geopccb_featured_title' ) . "' value='" . esc_attr( $geopccb_featured_title ) . "' />";
-		// echo "</p>";
+    //   echo "<label for='" . $this->get_field_id( 'geopccb_featured_title' ) . "'>Section Title:</label>";
+    //   echo "<input type='text' id='" . $this->get_field_id( 'geopccb_featured_title' ) . "' name='" . $this->get_field_name( 'geopccb_featured_title' ) . "' value='" . esc_attr( $geopccb_featured_title ) . "' />";
+    // echo "</p>";
 		echo "<p>";
-			echo "<label for='" . $this->get_field_id( 'geopccb_community_link' ) . "'>Source Category:</label>";
-			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_community_link' ) . "' name='" . $this->get_field_name( 'geopccb_community_link' ) . "' value='" . esc_attr( $geopccb_community_link ) . "' />";
-		echo "</p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_community_link' ) . "'>Source Category:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopccb_community_link' ) . "' name='" . $this->get_field_name( 'geopccb_community_link' ) . "' value='" . esc_attr( $geopccb_community_link ) . "' />";
+    echo "</p>";
+		echo "<hr>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_ngda_name' ) . "'>Theme Name:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopccb_ngda_name' ) . "' name='" . $this->get_field_name( 'geopccb_ngda_name' ) . "' value='" . esc_attr( $geopccb_ngda_name ) . "' />";
+    echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_ngda_type' ) . "'>Community Type:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopccb_ngda_type' ) . "' name='" . $this->get_field_name( 'geopccb_ngda_type' ) . "' value='" . esc_attr( $geopccb_ngda_type ) . "' />";
+    echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_ngda_sponsor' ) . "'>Sponsor:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopccb_ngda_sponsor' ) . "' name='" . $this->get_field_name( 'geopccb_ngda_sponsor' ) . "' value='" . esc_attr( $geopccb_ngda_sponsor ) . "' />";
+    echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_ngda_email' ) . "'>Sponsor Email:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopccb_ngda_email' ) . "' name='" . $this->get_field_name( 'geopccb_ngda_email' ) . "' value='" . esc_attr( $geopccb_ngda_email ) . "' />";
+    echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_ngda_agency' ) . "'>Theme Lead Agency:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopccb_ngda_agency' ) . "' name='" . $this->get_field_name( 'geopccb_ngda_agency' ) . "' value='" . esc_attr( $geopccb_ngda_agency ) . "' />";
+    echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_ngda_lead' ) . "'>Theme Lead:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopccb_ngda_lead' ) . "' name='" . $this->get_field_name( 'geopccb_ngda_lead' ) . "' value='" . esc_attr( $geopccb_ngda_lead ) . "' />";
+    echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		// $instance[ 'geopccb_featured_title' ] = strip_tags( $new_instance[ 'geopccb_featured_title' ] );
+		$instance[ 'geopccb_featured_title' ] = strip_tags( $new_instance[ 'geopccb_featured_title' ] );
 		$instance[ 'geopccb_community_link' ] = strip_tags( $new_instance[ 'geopccb_community_link' ] );
+		$instance[ 'geopccb_ngda_name' ] = strip_tags( $new_instance[ 'geopccb_ngda_name' ] );
+		$instance[ 'geopccb_ngda_type' ] = strip_tags( $new_instance[ 'geopccb_ngda_type' ] );
+		$instance[ 'geopccb_ngda_sponsor' ] = strip_tags( $new_instance[ 'geopccb_ngda_sponsor' ] );
+		$instance[ 'geopccb_ngda_email' ] = strip_tags( $new_instance[ 'geopccb_ngda_email' ] );
+		$instance[ 'geopccb_ngda_agency' ] = strip_tags( $new_instance[ 'geopccb_ngda_agency' ] );
+		$instance[ 'geopccb_ngda_lead' ] = strip_tags( $new_instance[ 'geopccb_ngda_lead' ] );
 
 		return $instance;
 	}
 }
 
 // Registers and enqueues the widget.
-function geopccb_register_frong_page_featured_widget() {
-		register_widget( 'Geopccb_Front_Page_Featured_Widget' );
+function geopccb_register_frong_page_ngda_widget() {
+		register_widget( 'Geopccb_Front_Page_NGDA_Widget' );
 }
-add_action( 'widgets_init', 'geopccb_register_frong_page_featured_widget' );
+add_action( 'widgets_init', 'geopccb_register_frong_page_ngda_widget' );
