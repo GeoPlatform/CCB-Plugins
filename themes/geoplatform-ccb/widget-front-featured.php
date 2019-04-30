@@ -15,10 +15,10 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
     // Checks to see if the widget admin boxes are empty. If so, uses default
     // values. If not, pulls the values from the boxes.
-		if (array_key_exists('geopccb_featured_title', $instance) && isset($instance['geopccb_featured_title']) && !empty($instance['geopccb_featured_title']))
-      $geopccb_featured_title = apply_filters('widget_title', $instance['geopccb_featured_title']);
-		else
-      $geopccb_featured_title = "";
+		// if (array_key_exists('geopccb_featured_title', $instance) && isset($instance['geopccb_featured_title']) && !empty($instance['geopccb_featured_title']))
+    //   $geopccb_featured_title = apply_filters('widget_title', $instance['geopccb_featured_title']);
+		// else
+    //   $geopccb_featured_title = "";
 		if (array_key_exists('geopccb_community_link', $instance) && isset($instance['geopccb_community_link']) && !empty($instance['geopccb_community_link']))
       $geopccb_community_link = apply_filters('widget_title', $instance['geopccb_community_link']);
 		else

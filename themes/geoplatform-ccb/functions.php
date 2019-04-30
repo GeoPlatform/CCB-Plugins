@@ -43,6 +43,7 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
     wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
+    wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
 
     wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js' );
     wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
@@ -66,6 +67,8 @@ if ( ! function_exists ( 'geopccb_enqueue_bootstrap' ) ) {
   add_action( 'wp_enqueue_scripts', 'geopccb_enqueue_bootstrap' );
 }
 
+
+
 /**
  * Override banner background-image as the custom header
  *
@@ -81,7 +84,7 @@ if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
         $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
 
 			$geopccb_custom_css = "
-					.banner{
+					.widget-banner-main{
 							background-image: url({$geopccb_headerImage});
 					}";
 			wp_add_inline_style( 'custom-style', $geopccb_custom_css );
@@ -450,72 +453,72 @@ function geop_ccb_customize_register( $wp_customize ) {
 		));
 
 		// //Banner Intro Text editor section, settings, and controls
-		// $wp_customize->add_section( 'banner_text_section' , array(
-		// 		'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
-		// 		'priority' => 50
-		// 	) );
-    //
-    //      // Add a text editor control
-    //      require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
-    //      $wp_customize->add_setting( 'text_editor_setting', array(
-    //         'default'   => $geopccb_theme_options['text_editor_setting'],
-		// 	'transport' => 'refresh',
-		// 	'type' 		=> 'theme_mod',
-		// 	'sanitize_callback' => 'wp_kses_post'
-    //      ) );
-    //      $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'text_editor_setting', array(
-    //          'label'   => __( 'Banner Text Editor', 'geoplatform-ccb' ),
-    //          'section' => 'banner_text_section',
-    //          'settings'   => 'text_editor_setting',
-    //          'priority' => 10
-    //      ) ) );
-    //
-		// 		 //Call to action button (formerly "Learn More" button)
-		// 		 $wp_customize->add_setting('call2action_button_setting', array(
-		// 			 'default' => $geopccb_theme_options['call2action_button_setting'],
-		// 			 'transport' => 'refresh',
-    //        			'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
-		// 		 ) );
-    //
-		// 		 $wp_customize->add_control('call2action_button_control', array(
-		// 			 'section' => 'banner_text_section',
-		// 			 'label' =>__( 'Show Call to Action button?', 'geoplatform-ccb' ),
-		// 			 'type' => 'checkbox',
-		// 			 'settings' => 'call2action_button_setting',
-		// 			 'priority' => 20,
-		// 		 ) );
-    //
-		// 		 $wp_customize->add_setting('call2action_text_setting', array(
-		// 			 'default' => $geopccb_theme_options['call2action_text_setting'],
-		// 			 'transport' => 'refresh',
-		// 			 'sanitize_callback' => 'sanitize_text_field',
-		// 		 ));
-		// 		 $wp_customize->add_control('call2action_text_control', array(
-		// 			 'section' => 'banner_text_section',
-		// 			 'label' =>__( 'Button Text', 'geoplatform-ccb' ),
-		// 			 'type' => 'text',
-		// 			 'settings' => 'call2action_text_setting',
-		// 			 'priority' => 30,
-		// 			 'input_attrs' => array(
-		// 				'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ccb' ),
-		// 			),
-		// 		 ) );
-    //
-		// 		 $wp_customize->add_setting('call2action_url_setting', array(
-		// 			'default' => $geopccb_theme_options['call2action_url_setting'],
-		// 			'transport' => 'refresh',
-		// 			'sanitize_callback' => 'esc_url_raw',
-		// 		));
-		// 		$wp_customize->add_control('call2action_url_control', array(
-		// 			'section' => 'banner_text_section',
-		// 			'label' =>__( 'Button URL', 'geoplatform-ccb' ),
-		// 			'type' => 'URL',
-		// 			'settings' => 'call2action_url_setting',
-		// 			'priority' => 40,
-		// 			'input_attrs' => array(
-		// 			 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
-		// 		 ),
-		// 		) );
+		$wp_customize->add_section( 'banner_text_section' , array(
+				'title'    => __( 'Banner Area', 'geoplatform-ccb' ),
+				'priority' => 50
+			) );
+
+         // Add a text editor control
+         require_once dirname(__FILE__) . '/text/text-editor-custom-control.php';
+         $wp_customize->add_setting( 'text_editor_setting', array(
+            'default'   => $geopccb_theme_options['text_editor_setting'],
+			'transport' => 'refresh',
+			'type' 		=> 'theme_mod',
+			'sanitize_callback' => 'wp_kses_post'
+         ) );
+         $wp_customize->add_control( new Text_Editor_Custom_Control( $wp_customize, 'text_editor_setting', array(
+             'label'   => __( 'Banner Text Editor', 'geoplatform-ccb' ),
+             'section' => 'banner_text_section',
+             'settings'   => 'text_editor_setting',
+             'priority' => 10
+         ) ) );
+
+				 //Call to action button (formerly "Learn More" button)
+				 $wp_customize->add_setting('call2action_button_setting', array(
+					 'default' => $geopccb_theme_options['call2action_button_setting'],
+					 'transport' => 'refresh',
+           			'sanitize_callback' => 'geop_ccb_sanitize_checkbox'
+				 ) );
+
+				 $wp_customize->add_control('call2action_button_control', array(
+					 'section' => 'banner_text_section',
+					 'label' =>__( 'Show Call to Action button?', 'geoplatform-ccb' ),
+					 'type' => 'checkbox',
+					 'settings' => 'call2action_button_setting',
+					 'priority' => 20,
+				 ) );
+
+				 $wp_customize->add_setting('call2action_text_setting', array(
+					 'default' => $geopccb_theme_options['call2action_text_setting'],
+					 'transport' => 'refresh',
+					 'sanitize_callback' => 'sanitize_text_field',
+				 ));
+				 $wp_customize->add_control('call2action_text_control', array(
+					 'section' => 'banner_text_section',
+					 'label' =>__( 'Button Text', 'geoplatform-ccb' ),
+					 'type' => 'text',
+					 'settings' => 'call2action_text_setting',
+					 'priority' => 30,
+					 'input_attrs' => array(
+						'placeholder' 		=> __( 'Place your text for the button here...', 'geoplatform-ccb' ),
+					),
+				 ) );
+
+				 $wp_customize->add_setting('call2action_url_setting', array(
+					'default' => $geopccb_theme_options['call2action_url_setting'],
+					'transport' => 'refresh',
+					'sanitize_callback' => 'esc_url_raw',
+				));
+				$wp_customize->add_control('call2action_url_control', array(
+					'section' => 'banner_text_section',
+					'label' =>__( 'Button URL', 'geoplatform-ccb' ),
+					'type' => 'URL',
+					'settings' => 'call2action_url_setting',
+					'priority' => 40,
+					'input_attrs' => array(
+					 'placeholder' 		=> __( 'Place your url for the button here...', 'geoplatform-ccb' ),
+				 ),
+				) );
 
 			// 	//Map Gallery Custom link section, settings, and controls
 			// $wp_customize->add_section( 'map_gallery_section' , array(
