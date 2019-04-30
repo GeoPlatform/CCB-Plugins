@@ -16,5 +16,6 @@
 }
 
 .widget-banner-container {
-  transform: translate(0%, 100%);
+  text-shadow: rgb(0, 0, 0) 0px 0px 5px;
+  transform: translate(0%, 50%);
 }

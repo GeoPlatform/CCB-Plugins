@@ -22,28 +22,28 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 		else
       $geopccb_banner_content = $geopccb_wysiwyg_default;
 
-		// if (array_key_exists('geopccb_community_link', $instance) && isset($instance['geopccb_community_link']) && !empty($instance['geopccb_community_link']))
-    //   $geopccb_community_link = apply_filters('widget_title', $instance['geopccb_community_link']);
-		// else
-    // 	$geopccb_community_link = "Front Page";
+		if (array_key_exists('geopccb_banner_cta_text', $instance) && isset($instance['geopccb_banner_cta_text']) && !empty($instance['geopccb_banner_cta_text']))
+      $geopccb_banner_cta_text = apply_filters('widget_title', $instance['geopccb_banner_cta_text']);
+		else
+    	$geopccb_banner_cta_text = "";
 
-    // Sets default image.
-    // $geopccb_category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
+		if (array_key_exists('geopccb_banner_cta_link', $instance) && isset($instance['geopccb_banner_cta_link']) && !empty($instance['geopccb_banner_cta_link']))
+      $geopccb_banner_cta_link = apply_filters('widget_title', $instance['geopccb_banner_cta_link']);
+		else
+    	$geopccb_banner_cta_link = "https://www.geoplatform.gov/";
 
 		// ELEMENTS
     echo "<div class='widget-banner-main'>";
 			echo "<div class='widget-banner-sub'>";
 				echo "<div class='widget-banner-container container'>";
-				echo $geopccb_banner_content;
-        // echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
-        //   echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
-        //   echo "<div class='m-tile__body'>";
-        //     echo "<div class='m-tile__heading'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
-        //     echo "<div class='m-tile-desc'>";
-        //       echo esc_attr( __( $geopccb_final_objects_array[$i]['excerpt'], 'geoplatform-ccb' ) );
-        //     echo "</div>";
-        //   echo "</div>";
-        // echo "</a>";
+					echo $geopccb_banner_content;
+					if ( !empty($geopccb_banner_cta_text) ){
+						echo "<div class='text-centered'>";
+							echo "<a href='" . esc_url($geopccb_banner_cta_link) . "' class='btn btn-lg btn-white-outline'>";
+								echo esc_html($geopccb_banner_cta_text);
+							echo "</a>";
+						echo "</div>";
+					}
 				echo "</div>";
 			echo "</div>";
     echo "</div>";
@@ -67,7 +67,8 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 
     // Checks for entries in the widget admin boxes and provides defaults if empty.
 		$geopccb_banner_content = ! empty( $instance['geopccb_banner_content'] ) ? $instance['geopccb_banner_content'] : $geopccb_wysiwyg_default;
-		// $geopccb_community_link = ! empty( $instance['geopccb_community_link'] ) ? $instance['geopccb_community_link'] : '';
+		$geopccb_banner_cta_text = ! empty( $instance['geopccb_banner_cta_text'] ) ? $instance['geopccb_banner_cta_text'] : '';
+		$geopccb_banner_cta_link = ! empty( $instance['geopccb_banner_cta_link'] ) ? $instance['geopccb_banner_cta_link'] : 'https://www.geoplatform.gov/';
 
 
 		printf(
@@ -86,10 +87,16 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 
 			wp_editor( $geopccb_banner_content, $geopccb_wysiwyg_id, $geopccb_wysiwyg_setting );
 
-			// echo "<input type='text' id='" . $this->get_field_id( 'geopccb_banner_content' ) . "' name='" . $this->get_field_name( 'geopccb_banner_content' ) . "' value='" . esc_attr( $geopccb_banner_content ) . "' />";
     echo "</p>";
 
-
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_banner_cta_text' ) . "'>Call to Action Text:</label>";
+			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_banner_cta_text' ) . "' name='" . $this->get_field_name( 'geopccb_banner_cta_text' ) . "' value='" . esc_attr( $geopccb_banner_cta_text ) . "' />";
+    echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_banner_cta_link' ) . "'>Call to Action URL:</label>";
+			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_banner_cta_link' ) . "' name='" . $this->get_field_name( 'geopccb_banner_cta_link' ) . "' value='" . esc_attr( $geopccb_banner_cta_link ) . "' />";
+    echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {
@@ -98,7 +105,9 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 		$geopccb_temp_rand = (int)$new_instance['geopccb_wysiwyg_rand'];
 		$geopccb_editor_content = $new_instance['wp_editor_' . $geopccb_temp_rand];
 		$instance[ 'geopccb_banner_content' ] = $geopccb_editor_content;
-		// $instance[ 'geopccb_community_link' ] = strip_tags( $new_instance[ 'geopccb_community_link' ] );
+
+  	$instance[ 'geopccb_banner_cta_text' ] = strip_tags( $new_instance[ 'geopccb_banner_cta_text' ] );
+		$instance[ 'geopccb_banner_cta_link' ] = strip_tags( $new_instance[ 'geopccb_banner_cta_link' ] );
 
 		return $instance;
 	}
