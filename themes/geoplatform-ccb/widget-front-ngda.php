@@ -254,6 +254,27 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
     if ($geopccb_featured_card_style == 'outline' || $geopccb_featured_card_style == 'both')
       $geopccb_featured_card_outline = "-webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #000000;";
 
+		$geopccb_ngda_array = array($geopccb_ngda_name, $geopccb_ngda_type, $geopccb_ngda_sponsor, $geopccb_ngda_email, $geopccb_ngda_agency, $geopccb_ngda_lead);
+
+		if ( ! function_exists ( 'geopccb_ngda_widget_gen_card' ) ) {
+	    function geopccb_ngda_widget_gen_card($geopccb_ngda_array){
+				echo "<div class='m-tile m-tile--16x9 widget-ngda-outer-card' >";
+					echo "<div class='m-tile__body widget-ngda-inner-card'>";
+						echo "<div>";
+							echo "<p><span class='fas fa-star'></span><strong>  " . $geopccb_ngda_array[0] . "</strong></p>";
+							echo "<p><strong>Community Type:   </strong>" . $geopccb_ngda_array[1] . "</p>";
+							echo "<p><strong>Sponsor:   </strong>" . $geopccb_ngda_array[2] . "</p>";
+							echo "<p><strong>Sponsor Email:   </strong>" . $geopccb_ngda_array[3] . "</p>";
+							echo "<p><strong>Theme Lead Agency:   </strong>" . $geopccb_ngda_array[4] . "</p>";
+							echo "<p><strong>Theme Lead:   </strong>" . $geopccb_ngda_array[5] . "</p>";
+						// echo "<div class='m-tile-desc'>";
+						//   echo esc_attr( __( $geopccb_final_objects_array[$i]['excerpt'], 'geoplatform-ccb' ) );
+						echo "</div>";
+					echo "</div>";
+				echo "</div>";
+	    }
+		}
+
 		// ELEMENTS
     echo "<div class='p-landing-page__community-menu'>";
       for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
@@ -267,6 +288,9 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
           echo "</div>";
         echo "</a>";
       }
+
+			geopccb_ngda_widget_gen_card($geopccb_ngda_array);
+
     echo "</div>";
 	}
 

@@ -19,3 +19,21 @@
   text-shadow: rgb(0, 0, 0) 0px 0px 5px;
   transform: translate(0%, 50%);
 }
+
+.widget-ngda-outer-card {
+  position: relative;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border-style: solid;
+  border-top-width: 2px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  border-color: #ddd;
+  box-shadow: none;
+}
+
+.widget-ngda-inner-card {
+  margin-top: 2em;
+  background-image: none;
+}
