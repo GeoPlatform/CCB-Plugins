@@ -277,7 +277,14 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
 
 		// ELEMENTS
     echo "<div class='p-landing-page__community-menu'>";
+
+			geopccb_ngda_widget_gen_card($geopccb_ngda_array);
+
       for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
+
+				if ($i == 2)
+					geopccb_ngda_widget_gen_card($geopccb_ngda_array);
+
         echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
           echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
           echo "<div class='m-tile__body'>";
@@ -289,7 +296,8 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
         echo "</a>";
       }
 
-			geopccb_ngda_widget_gen_card($geopccb_ngda_array);
+			if (count($geopccb_final_objects_array) < 2)
+				geopccb_ngda_widget_gen_card($geopccb_ngda_array);
 
     echo "</div>";
 	}
