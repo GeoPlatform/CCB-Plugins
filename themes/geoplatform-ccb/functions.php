@@ -44,6 +44,7 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
     wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
     wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
     wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
+    wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
 
     wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js' );
     wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
@@ -61,7 +62,6 @@ if ( ! function_exists ( 'geopccb_enqueue_bootstrap' ) ) {
   	if ( (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on')
         && ( !is_page( array('geoplatform-search', 'register') ) ) ){
   		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
-  		wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
   	}
   }
   add_action( 'wp_enqueue_scripts', 'geopccb_enqueue_bootstrap' );
@@ -619,7 +619,7 @@ if ( ! function_exists ( 'geop_ccb_sanitize_featured_card' ) ) {
  */
 if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
 	function geop_ccb_sanitize_bootstrap( $geop_ccb_value ) {
-		if ( ! in_array( $geop_ccb_value, array( 'on', 'off', 'gone' ) ) )
+		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
 			$geop_ccb_value = 'on';
 		return $geop_ccb_value;
 	}
@@ -2019,11 +2019,11 @@ if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
         'type' => 'radio',
         'label' => 'Bootstrap Controls',
         'section' => 'font_section',
-        'description' => "The GeoPlatform themes utilize Bootstrap for their dropdown menus, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here. The menu can also be disabled here if problems persist.",
+        'description' => "The GeoPlatform themes utilize Bootstrap for several operations, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here.",
         'choices' => array(
             'on' => __('Enabled', 'geoplatform-ccb'),
             'off' => __('Disabled',  'geoplatform-ccb'),
-            'gone' => __('No Menu', 'geoplatform-ccb')
+            // 'gone' => __('No Menu', 'geoplatform-ccb')
           ),
     ));
   }
