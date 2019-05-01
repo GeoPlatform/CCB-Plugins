@@ -51,6 +51,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 
 		<?php } ?>
 
+
   </div>
   <?php get_template_part( 'sidebar', get_post_format() ); ?>
 </div>

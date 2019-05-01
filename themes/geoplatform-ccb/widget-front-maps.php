@@ -75,6 +75,15 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 		// Further operations continue only if all validity checks pass.
 		if( !$geopccb_invalid_bool ) {
 
+			$geopccb_map_card_style = get_theme_mod('feature_controls', 'fade');
+	    $geopccb_map_card_fade = "linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0))";
+	    $geopccb_map_card_outline = "";
+
+			if ($geopccb_map_card_style == 'fade' || $geopccb_map_card_style == 'both')
+				$geopccb_map_card_fade = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))";
+			if ($geopccb_map_card_style == 'outline' || $geopccb_map_card_style == 'both')
+				$geopccb_map_card_outline = "-webkit-text-stroke-width: 0.3px; -webkit-text-stroke-color: #000000;";
+
 			echo "<div class='p-landing-page__community-menu'>";
 
 			foreach($geopccb_result['items'] as $geopccb_map){
@@ -113,7 +122,6 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 						$geopccb_thumbnail = $GLOBALS['geopccb_ual_url'] . '/api/maps/' . $geopccb_map_id . "/thumbnail";
 					}
 
-
 					$geopccb_href = "";
 					//use isset() to get rid of php notices
 					if (isset($geopccb_single_result['landingPage'])) {
@@ -125,11 +133,10 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 					}
 					$geopccb_label = $geopccb_map['label'];
 
-
 					echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_href ) . "' title='" . esc_attr( __( $geopccb_label, 'geoplatform-ccb' ) ) . "'>";
 	          echo "<div class='m-tile__thumbnail'><img alt='" . get_template_directory_uri() . "/img/img-404.png' src='" . esc_url($geopccb_thumbnail) . "'></div>";
-	          echo "<div class='m-tile__body'>";
-	            echo "<div class='m-tile__heading'>" . esc_attr( __( strtoupper($geopccb_label), 'geoplatform-ccb' ) ) . "</div>";
+	          echo "<div class='m-tile__body' style='background:" . $geopccb_map_card_fade . "'>";
+	            echo "<div class='m-tile__heading' style='" . $geopccb_map_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_label), 'geoplatform-ccb' ) ) . "</div>";
 	          echo "</div>";
 	        echo "</a>";
 

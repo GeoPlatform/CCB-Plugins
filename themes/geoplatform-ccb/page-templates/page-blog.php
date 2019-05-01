@@ -1,95 +1,69 @@
 <?php
-/*
-	Template Name: Blog
-*/
+/**
+ * The template for displaying archive pages
+ *
+ * @link https://codex.wordpress.org/Template_Hierarchy
+ *
+ * @package GeoPlatform CCB
+ *
+ * Template Name: Blog
+ *
+ * @since 3.0.0
+ */
+
+get_header();
+get_template_part( 'sub-header-post', get_post_format() );
+
 ?>
-<?php get_header(); ?>
-<!--Used for the Main banner background to show up properly-->
-<?php get_template_part( 'single-banner', get_post_format() ); ?>
-<div class="container-fluid">
-  <div class="row">
-	<br />
-    <div class="col-md-9">
+<div class="l-body l-body--two-column">
+	<div class="l-body__main-column">
+	<?php
 
-    		<?php // Display blog posts on any page @ https://m0n.co/l
-        $args = array(
-      		'posts_per_page' => get_theme_mod('blogcount_controls', 5),
-      		'paged' => $paged,
-      	);
-    		$wp_query = new WP_Query(); $wp_query->query($args);
-    		while ($wp_query->have_posts()) : $wp_query->the_post();
+	$args = array(
+		'posts_per_page' => get_theme_mod('blogcount_controls', 5),
+		'paged' => $paged,
+	);
+	$wp_query = new WP_Query(); $wp_query->query($args);
+	while ($wp_query->have_posts()) : $wp_query->the_post();
 
+		// Grabs default 404 image as thumb and overwrites if the post has one.
+ 		$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
+ 		if ( has_post_thumbnail() )
+ 			$geopccb_archive_disp_thumb = get_the_post_thumbnail_url();
+    ?>
 
-          // Checks if there's data in the excerpt and, if so, assigns it to be displayed.
-          // If not, grabs post content and clips it at 400 characters.
-          if (!empty(get_the_excerpt()))
-            $geopccb_excerpt = esc_attr(wp_strip_all_tags(get_the_excerpt()));
-          else{
-            $geopccb_excerpt = esc_attr(wp_strip_all_tags(get_the_excerpt()));
-            if (strlen($geopccb_excerpt) > 400)
-              $geopccb_excerpt = esc_attr(substr($geopccb_excerpt, 0, 400) . '...');
-          }
-          ?>
+		<div class="m-article m-article--flex">
+			<a class="m-article__thumbnail is-16x9" href="<?php the_permalink(); ?>">
+				<img alt="Article Heading" src="<?php echo $geopccb_archive_disp_thumb ?>">
+			</a>
+			<div class="m-article__body">
+				<a class="m-article__heading" href="<?php the_permalink(); ?>"><?php the_title() ?></a>
+				<div class="m-article__desc"><?php echo get_the_date("F j, Y") ?></div>
+				<div class="m-article__desc"><?php echo esc_attr(wp_strip_all_tags(get_the_excerpt())) ?></div>
+			</div>
+		</div>
 
-          <br/>
-          <?php if (has_post_thumbnail()){ ?>
-          <div class="svc-card">
-            <a title="<?php the_title(); ?>" class="svc-card__img">
-                <img src="<?php echo get_the_post_thumbnail_url(); ?>">
-            </a>
-            <div class="svc-card__body">
-                <div class="svc-card__title"><?php the_title(); ?></div><!--#svc-card__title-->
-                <p>
-                  <?php echo $geopccb_excerpt;?>
-                </p>
-                <br/>
-                <a class="btn btn-info" href="<?php the_permalink(); ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
-            </div><!--#svc-card__body-->
-          </div><!--#svc-card-->
-          <br />
+	<?php
+	endwhile;
+	if ($paged > 1) { ?>
 
-          <?php } else {?>
-          <div class="svc-card" style="padding:inherit; margin-right:-1em;">
-            <div class="svc-card__body" style="flex-basis:102%;">
-                <div class="svc-card__title"><?php the_title(); ?></div><!--#svc-card__title-->
-                <p>
-                  <?php echo $geopccb_excerpt;?>
-                </p>
-                <br>
-                <a class="btn btn-info" href="<?php the_permalink(); ?>"><?php _e( 'More Information', 'geoplatform-ccb'); ?></a>
-            </div><!--#svc-card__body-->
-          </div><!--#svc-card-->
-          <br /><?php
-          }
-        ?>
+		<nav id="nav-posts">
+			<br />
+			<div class="prev"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
+			<div class="next"><?php previous_posts_link('Newer Posts &raquo;'); ?></div>
+		</nav>
 
-    		<?php endwhile; ?>
+		<?php } else { ?>
 
-    		<?php if ($paged > 1) { ?>
+		<nav id="nav-posts">
+			<br />
+			<div class="prev"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
+		</nav>
 
-    		<nav id="nav-posts">
-          <br />
-    			<div class="prev"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
-    			<div class="next"><?php previous_posts_link('Newer Posts &raquo;'); ?></div>
-    		</nav>
+		<?php }
+		wp_reset_postdata(); ?>
 
-    		<?php } else { ?>
-
-    		<nav id="nav-posts">
-          <br />
-    			<div class="prev"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
-    		</nav>
-
-    		<?php } ?>
-
-    		<?php wp_reset_postdata(); ?>
-
-
-      </div><!--#col-md-9-->
-      <div class="col-md-3">
-          <?php get_template_part('sidebar'); ?>
-      </div><!--#col-md-3-->
-    </div><!--#row-->
-  	<br>
-  </div><!--#container-fluid-->
-  <?php get_footer(); ?>
+  </div>
+  <?php get_template_part( 'sidebar', get_post_format() ); ?>
+</div>
+<?php get_footer(); ?>

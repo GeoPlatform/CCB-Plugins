@@ -245,14 +245,14 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
       }
     }
 
-    $geopccb_featured_card_style = get_theme_mod('feature_controls', 'fade');
-    $geopccb_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0))";
-    $geopccb_featured_card_outline = "";
+		$geopccb_ngda_card_style = get_theme_mod('feature_controls', 'fade');
+		$geopccb_ngda_card_fade = "linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0))";
+		$geopccb_ngda_card_outline = "";
 
-    if ($geopccb_featured_card_style == 'fade' || $geopccb_featured_card_style == 'both')
-      $geopccb_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))";
-    if ($geopccb_featured_card_style == 'outline' || $geopccb_featured_card_style == 'both')
-      $geopccb_featured_card_outline = "-webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #000000;";
+		if ($geopccb_ngda_card_style == 'fade' || $geopccb_ngda_card_style == 'both')
+			$geopccb_ngda_card_fade = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))";
+		if ($geopccb_ngda_card_style == 'outline' || $geopccb_ngda_card_style == 'both')
+			$geopccb_ngda_card_outline = "-webkit-text-stroke-width: 0.3px; -webkit-text-stroke-color: #000000;";
 
 		$geopccb_ngda_array = array($geopccb_ngda_name, $geopccb_ngda_type, $geopccb_ngda_sponsor, $geopccb_ngda_email, $geopccb_ngda_agency, $geopccb_ngda_lead);
 
@@ -283,8 +283,8 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
 
         echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
           echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
-          echo "<div class='m-tile__body'>";
-            echo "<div class='m-tile__heading'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
+          echo "<div class='m-tile__body' style='background:" . $geopccb_ngda_card_fade . "'>";
+            echo "<div class='m-tile__heading' style='" . $geopccb_ngda_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
             // echo "<div class='m-tile-desc'>";
             //   echo esc_attr( __( $geopccb_final_objects_array[$i]['excerpt'], 'geoplatform-ccb' ) );
             // echo "</div>";
