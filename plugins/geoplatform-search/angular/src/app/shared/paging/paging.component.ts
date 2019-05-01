@@ -3,14 +3,20 @@ import {
     Input, Output, EventEmitter
 } from '@angular/core';
 
-import { Query } from "geoplatform.client";
-import { RPMService } from 'gp.rpm/src/iRPMService'
+import { Query, TrackingService, TrackingEvent } from "geoplatform.client";
 
 
 export interface PagingEvent {
     size?: number;
     page?: number;
 }
+
+const PAGE : string = "Page";
+const RESULTS_PER_PAGE : string = 'ResultsPerPage';
+const PREVIOUS : string = 'Previous';
+const NEXT : string = 'Next';
+const FIRST : string = 'First';
+
 
 
 @Component({
@@ -25,7 +31,9 @@ export class PagingComponent implements OnInit {
     @Output() onEvent : EventEmitter<PagingEvent> = new EventEmitter<PagingEvent>();
     public pageSize: number = 0;
 
-    constructor(private rpm: RPMService ) { }
+    constructor(
+        private trackingSvc : TrackingService
+    ) { }
 
     ngOnInit() {
     }
@@ -39,19 +47,19 @@ export class PagingComponent implements OnInit {
     onPageSizeChange() {
         let evt : PagingEvent = { size: this.pageSize };
         this.onEvent.emit(evt);
-        this.rpm.logEvent('Page', 'ResultsPerPage', this.pageSize)
+        this.logEvent(PAGE, RESULTS_PER_PAGE, this.pageSize);
     }
 
     previousPage() {
         let evt : PagingEvent = { page: this.query.getPage()-1 };
         this.onEvent.emit(evt);
-        this.rpm.logEvent('Page', 'Previous')
+        this.logEvent(PAGE, PREVIOUS);
     }
 
     nextPage() {
         let evt : PagingEvent = { page: this.query.getPage()+1 };
         this.onEvent.emit(evt);
-        this.rpm.logEvent('Page', 'Next')
+        this.logEvent(PAGE, NEXT);
     }
 
     hasNextPage() {
@@ -62,7 +70,12 @@ export class PagingComponent implements OnInit {
         let evt : PagingEvent = { page: page*1 };
         this.onEvent.emit(evt);
         if(page === 0)
-            this.rpm.logEvent('Page', 'First')
+        this.logEvent(PAGE, FIRST);
+    }
+
+    logEvent(category : string, type : string, value ?: any) {
+        let event : TrackingEvent = new TrackingEvent(category, type, value);
+        this.trackingSvc.logEvent(event);
     }
 
 }

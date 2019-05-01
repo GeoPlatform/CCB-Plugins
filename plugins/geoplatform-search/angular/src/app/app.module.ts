@@ -14,8 +14,12 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { environment } from '../environments/environment';
 
 // Adds window.RPMService to global namespace
-import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
-import { RPMService } from 'gp.rpm/src/iRPMService'
+import { RPMServiceFactory, RPMService } from 'geoplatform.rpm';
+
+
+import { TrackingService } from 'geoplatform.client';
+
+const trackingService = new TrackingService({ provider : RPMServiceFactory() })
 
 
 
@@ -173,6 +177,10 @@ export function initializeApp() {
       {
         provide: RPMService,
         useValue: RPMServiceFactory()
+      },
+      {
+          provide : TrackingService,
+          useValue : trackingService
       },
       {
           provide: APP_INITIALIZER,
