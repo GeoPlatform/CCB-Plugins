@@ -257,8 +257,8 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
 		$geopccb_ngda_array = array($geopccb_ngda_name, $geopccb_ngda_type, $geopccb_ngda_sponsor, $geopccb_ngda_email, $geopccb_ngda_agency, $geopccb_ngda_lead);
 
 		if ( ! function_exists ( 'geopccb_ngda_widget_gen_card' ) ) {
-	    function geopccb_ngda_widget_gen_card($geopccb_ngda_array){
-				echo "<div class='m-tile m-tile--16x9 widget-ngda-outer-card' >";
+	    function geopccb_ngda_widget_gen_card($geopccb_ngda_array, $geopccb_scale){
+				echo "<div class='m-tile m-tile--16x9 widget-ngda-outer-card " . $geopccb_scale . "' >";
 					echo "<div class='m-tile__body widget-ngda-inner-card'>";
 						echo "<div>";
 							echo "<p><span class='fas fa-star'></span><strong>  " . $geopccb_ngda_array[0] . "</strong></p>";
@@ -267,8 +267,6 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
 							echo "<p><strong>Sponsor Email:   </strong>" . $geopccb_ngda_array[3] . "</p>";
 							echo "<p><strong>Theme Lead Agency:   </strong>" . $geopccb_ngda_array[4] . "</p>";
 							echo "<p><strong>Theme Lead:   </strong>" . $geopccb_ngda_array[5] . "</p>";
-						// echo "<div class='m-tile-desc'>";
-						//   echo esc_attr( __( $geopccb_final_objects_array[$i]['excerpt'], 'geoplatform-ccb' ) );
 						echo "</div>";
 					echo "</div>";
 				echo "</div>";
@@ -278,12 +276,10 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
 		// ELEMENTS
     echo "<div class='p-landing-page__community-menu'>";
 
-			geopccb_ngda_widget_gen_card($geopccb_ngda_array);
-
       for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
 
 				if ($i == 2)
-					geopccb_ngda_widget_gen_card($geopccb_ngda_array);
+					geopccb_ngda_widget_gen_card($geopccb_ngda_array, 'is-hidden--xs is-hidden--sm');
 
         echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
           echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
@@ -297,7 +293,9 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
       }
 
 			if (count($geopccb_final_objects_array) < 2)
-				geopccb_ngda_widget_gen_card($geopccb_ngda_array);
+				geopccb_ngda_widget_gen_card($geopccb_ngda_array, '');
+			else
+				geopccb_ngda_widget_gen_card($geopccb_ngda_array, 'is-hidden--lg is-hidden--md');
 
     echo "</div>";
 	}
