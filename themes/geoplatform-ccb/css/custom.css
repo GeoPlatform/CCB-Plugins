@@ -37,3 +37,9 @@
   margin-top: 2em;
   background-image: none;
 }
+
+.widget-maps-error-out {
+  text-align: center;
+  padding-top: 2.5em;
+  padding-bottom: 2.5em;
+}
