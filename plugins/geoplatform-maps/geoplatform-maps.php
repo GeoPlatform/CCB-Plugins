@@ -456,7 +456,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			// cycles through the layers and populates the layer control sidebar. Also
 			// has error catching to grab errors through the promise system.
 			// var geopmap_layerStates;
-			GeopMapInstance.loadMap(geopmap_mapCode).then( mapObj => {
+			GeopMapInstance.loadMap(geopmap_mapCode).then( function(mapObj) {
 				var geopmap_baseLayer = GeopMapInstance.getBaseLayer();
 				var geopmap_layerStates = GeopMapInstance.getLayers();
 				geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_item_details_base);
