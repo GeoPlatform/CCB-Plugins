@@ -853,62 +853,6 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_sixteen' ) ) {
 }
 
 /**
- * Adds sidebar contact form widget.
- */
-class Geopportal_Contact_Widget extends WP_Widget {
-
-	/**
-	 * Register widget with WordPress.
-	 */
-	function __construct() {
-		parent::__construct(
-			'geopportal_contact_widget', // Base ID
-			esc_html__( 'GeoPlatform Sidebar Contact', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Contact widget for the sidebar. Simple contact information output. There are no customization options with this widget.', 'geoplatform-ccb' ), ) // Args
-		);
-	}
-
-	/**
-	 * Front-end display of widget. Just gets contact template.
-	 *
-	 * @see WP_Widget::widget()
-	 *
-	 * @param array $args     Widget arguments.
-	 * @param array $instance Saved values from database.
-	 */
-	public function widget( $args, $instance ) {
-		get_template_part( 'contact', get_post_format() );
-	}
-
-	/**
-	 * Back-end widget form. Just text.
-	 *
-	 * @see WP_Widget::form()
-	 *
-	 * @param array $instance Previously saved values from database.
-	 */
-	public function form( $instance ) {
-		?>
-		<p>
-		  <?php _e("This is the GeoPlatform theme contact information widget for the sidebar. There are no options to customize here.", "geoplatform-ccb"); ?>
-		</p>
-		<?php
-	}
-
-	/**
-	 * Sanitize widget form values as they are saved. N/A
-	 *
-	 * @see WP_Widget::update()
-	 *
-	 * @param array $new_instance Values just sent to be saved.
-	 * @param array $old_instance Previously saved values from database.
-	 *
-	 * @return array Updated safe values to be saved.
-	 */
-	public function update( $new_instance, $old_instance ) {}
-}
-
-/**
  * Adds gpsearch front-page widget.
  */
 class Geopportal_Graph_Widget extends WP_Widget {
@@ -948,10 +892,10 @@ get_template_part( 'partners', get_post_format() );
 // get_template_part( 'portfolio-resources-old', get_post_format() );
 // get_template_part( 'communities', get_post_format() );
 // get_template_part( 'themes', get_post_format() );
-get_template_part( 'side-content-text', get_post_format() );
-get_template_part( 'side-content-links', get_post_format() );
-get_template_part( 'side-content-preview', get_post_format() );
-get_template_part( 'side-content-featured', get_post_format() );
+// get_template_part( 'side-content-text', get_post_format() );
+// get_template_part( 'side-content-links', get_post_format() );
+// get_template_part( 'side-content-preview', get_post_format() );
+// get_template_part( 'side-content-featured', get_post_format() );
 get_template_part( 'widget-resources-elements', get_post_format() );
 get_template_part( 'widget-resources-search', get_post_format() );
 get_template_part( 'widget-resources-creation', get_post_format() );
@@ -959,15 +903,6 @@ get_template_part( 'widget-resources-community', get_post_format() );
 get_template_part( 'widget-resources-ngda', get_post_format() );
 get_template_part( 'widget-resources-comment', get_post_format() );
 
-
-/**
- * Registers simpler widgets.
- */
-function geopportal_register_portal_widgets() {
-	register_widget( 'Geopportal_Contact_Widget' );
-	// register_widget( 'Geopportal_Graph_Widget' );
-}
-add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 
 
 

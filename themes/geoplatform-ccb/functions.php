@@ -1125,14 +1125,97 @@ if ( ! function_exists ( 'geop_ccb_filter_search' ) ) {
 
 
 
+/**
+ * Adds sidebar contact form widget.
+ */
+class Geopportal_Contact_Widget extends WP_Widget {
 
+	/**
+	 * Register widget with WordPress.
+	 */
+	function __construct() {
+		parent::__construct(
+			'geopportal_contact_widget', // Base ID
+			esc_html__( 'GeoPlatform Sidebar Contact', 'geoplatform-ccb' ), // Name
+			array( 'description' => esc_html__( 'GeoPlatform Contact widget for the sidebar. Simple contact information output. There are no customization options with this widget.', 'geoplatform-ccb' ), ) // Args
+		);
+	}
+
+	/**
+	 * Front-end display of widget. Just gets contact template.
+	 *
+	 * @see WP_Widget::widget()
+	 *
+	 * @param array $args     Widget arguments.
+	 * @param array $instance Saved values from database.
+	 */
+	public function widget( $args, $instance ) {
+		?>
+		<article class="m-article">
+		  <div class="m-article__heading">Have Other Questions?</div>
+		  <div class="m-article__desc">
+		    Please check out our <a href="<?php echo home_url('faq') ?>">FAQ page</a> in case your
+		    question has already been addressed. If you still need help or want
+		    to report an issue, please send us an email at
+		    <a href="mailto:servicedesk@geoplatform.gov">servicedesk@geoplatform.gov</a>.
+		  </div>
+		  <div class="u-text--center t-text--strong u-mg-top--md u-mg-bottom--md">
+		    <a class="btn btn-info" href="mailto:servicedesk@geoplatform.gov">
+		      <span class="far fa-envelope"></span>
+		      Contact Us
+		    </a>
+		  </div>
+		  <div class="m-article__desc">
+		    For questions about the federal government not related to GeoPlatform, visit
+		    <a href="https://www.usa.gov">USA.gov</a> or call
+		    <a href="tel:18003334636">1-800-FED-INFO</a>
+		    (<em>1-800-333-4636</em>), 8am - 8pm ET Monday through Friday.
+		  </div>
+		</article>
+		<?php
+	}
+
+	/**
+	 * Back-end widget form. Just text.
+	 *
+	 * @see WP_Widget::form()
+	 *
+	 * @param array $instance Previously saved values from database.
+	 */
+	public function form( $instance ) {
+		?>
+		<p>
+		  <?php _e("This is the GeoPlatform theme contact information widget for the sidebar. There are no options to customize here.", "geoplatform-ccb"); ?>
+		</p>
+		<?php
+	}
+
+	/**
+	 * Sanitize widget form values as they are saved. N/A
+	 *
+	 * @see WP_Widget::update()
+	 *
+	 * @param array $new_instance Values just sent to be saved.
+	 * @param array $old_instance Previously saved values from database.
+	 *
+	 * @return array Updated safe values to be saved.
+	 */
+	public function update( $new_instance, $old_instance ) {}
+}
+function geopportal_register_portal_widgets() {
+	register_widget( 'Geopportal_Contact_Widget' );
+}
+add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 
 // Widget incorporation
 get_template_part( 'widget-front-featured', get_post_format() );
 get_template_part( 'widget-front-ngda', get_post_format() );
 get_template_part( 'widget-front-banner', get_post_format() );
 get_template_part( 'widget-front-maps', get_post_format() );
-
+get_template_part( 'widget-sidebar-text', get_post_format() );
+get_template_part( 'widget-sidebar-links', get_post_format() );
+get_template_part( 'widget-sidebar-preview', get_post_format() );
+get_template_part( 'widget-sidebar-featured', get_post_format() );
 
 
 
