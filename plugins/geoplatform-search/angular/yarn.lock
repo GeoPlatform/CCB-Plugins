@@ -4591,11 +4591,6 @@ math-random@^1.0.1:
   resolved "https://registry.yarnpkg.com/math-random/-/math-random-1.0.4.tgz#5dd6943c938548267016d4e34f057583080c514c"
   integrity sha512-rUxjysqif/BZQH2yhd5Aaq7vXMSx9NdEsQcyA07uEzIvxgI7zIr33gGsh+RU0/XjmQpCW7RsVof1vlkvQVCK5A==
 
-matomo-tracker@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/matomo-tracker/-/matomo-tracker-2.2.0.tgz#f1064977a7e96e6737f213bf8503b5390aaccfe3"
-  integrity sha512-kZIN4zRmuWRyG4S42kkMawMcsT6BQ/FYPK8IjeLNXAbN/CwPSlxlt7SdSyK/5k8F+S8nlmjXeUXf5SNFAXi8dA==
-
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -4908,6 +4903,11 @@ ng-inline-svg@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/ng-inline-svg/-/ng-inline-svg-6.2.1.tgz#9e1547d3152d5ecb9f07ec0377f27c5184635e09"
   integrity sha512-wuGep64vHBuqZ2mLZm6Txivzxiyc/LxZqATxFpF6gc3j+0Eybhp6eIXF2w3UZIfHC9I1kSzjAssXgA7lJor5pA==
+
+ngx-matomo@0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/ngx-matomo/-/ngx-matomo-0.1.3.tgz#d0fdd1e7708916a2b65bc325555fda15f032442d"
+  integrity sha512-SHKmGAL/IIcaWlXQDQrtsUFTtjsiQNZAxUEg2Xw+Fmytp2JNcagHmmI1gkA5GKvtuiP9/GuT29vhoGmQmXLSHA==
 
 no-case@^2.2.0:
   version "2.3.2"
