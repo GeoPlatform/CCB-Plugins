@@ -43,3 +43,19 @@
   padding-top: 2.5em;
   padding-bottom: 2.5em;
 }
+
+.header-grey-border {
+  border-bottom-color: rgb(221, 221, 221) !important;
+}
+
+.menu-border-grey {
+  border-right-color: rgb(116, 116, 116) !important;
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+@media (min-width: 992px) {
+  .community-link-menu-control {
+    margin-top: 70px;
+  }
+}

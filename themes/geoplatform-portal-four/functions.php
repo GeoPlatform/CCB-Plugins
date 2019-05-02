@@ -1443,7 +1443,8 @@ if ( ! isset( $content_width ) ) {
 // Killing search register functions from CCB that have no use in Portal.
 function geop_ccb_search_register(){};
 function geop_ccb_linkmenu_register(){};
-
+function geop_ccb_bootstrap_register(){};
+	
 // Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
 function geop_ccb_register_comlink_menus(){};

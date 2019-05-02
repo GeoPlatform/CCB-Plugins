@@ -44,8 +44,12 @@ elseif (isset($post)){
 
 </head>
 <header class="o-header o-header--sticky" role="banner">
-
-    <div class="o-header__primary" data-page-title="Welcome to the GeoPlatform!">
+<?php
+  if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above')
+    echo "<div class='header-grey-border o-header__primary' data-page-title='Welcome to the GeoPlatform!'>";
+  else
+    echo "<div class='o-header__primary' data-page-title='Welcome to the GeoPlatform!'>";
+  ?>
 
         <!--
             REMOVE THIS COMMENT WHEN IMPLEMENTING...
@@ -81,28 +85,30 @@ elseif (isset($post)){
           }
 
           // Menu area for the Header Links.
-          echo "<div class='a-nav__collapsible-menu'>";
+          if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'integrated'){
+            echo "<div class='a-nav__collapsible-menu'>";
 
-            $geopccb_head_menu_array = array(
-              'theme_location' => 'community-links',
-              'container' => false,
-              'echo' => false,
-              // 'container_class' => 'a-nav__collapsible-menu',
-              'items_wrap' => '%3$s',
-              'depth' => 0,
-              'fallback_cb' => false,
-              'link_class' => 'is-hidden--xs is-hidden--sm',
-              'link_role' => 'menuitem',
-            );
+              $geopccb_head_menu_array = array(
+                'theme_location' => 'community-links',
+                'container' => false,
+                'echo' => false,
+                // 'container_class' => 'a-nav__collapsible-menu',
+                'items_wrap' => '%3$s',
+                'depth' => 0,
+                'fallback_cb' => false,
+                'link_class' => 'is-hidden--xs is-hidden--sm',
+                'link_role' => 'menuitem',
+              );
 
-            echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
-            ?>
+              echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
+            echo "</div>";
+          }
+          ?>
           <!-- Megamenu opener/closer -->
-          </div>
-            <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
-                <span class="is-hidden--xs">More</span>
-                <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
-            </a>
+          <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+            <span class="is-hidden--xs">More</span>
+            <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
+          </a>
         </nav>
 
         <?php
@@ -179,7 +185,21 @@ elseif (isset($post)){
         </div>
     </div>
 
-    <div class="o-header__secondary">
+<?php
+    if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above'){
+
+      echo "<div class='community-link-menu-control'>";
+        geop_ccb_lower_community_links();
+      echo "</div>";
+      echo "<div class='o-header__secondary' style='margin-top:0px;'>";
+    } else {
+      echo "<div class='o-header__secondary'>";
+    }
+
+
+    ?>
+
+    <!-- <div class="o-header__secondary"> -->
 
         <?php
         // Various checks for the current page, changes title out as necessary.

@@ -436,21 +436,21 @@ function geop_ccb_customize_register( $wp_customize ) {
 				'priority' => 50
 		) );
 
-		$wp_customize->add_setting('font_choice',array(
-        'default' => 'lato',
-				'sanitize_callback' => 'geop_ccb_sanitize_fonts',
-  	));
-
-		$wp_customize->add_control('font_choice',array(
-        'type' => 'select',
-        'label' => 'Fonts',
-        'description' => "Select the font for this community.",
-        'section' => 'font_section',
-        'choices' => array(
-            'lato' => __('Lato', 'geoplatform-ccb'),
-            'slabo' => __('Slabo',  'geoplatform-ccb')
-					),
-		));
+		// $wp_customize->add_setting('font_choice',array(
+    //     'default' => 'lato',
+		// 		'sanitize_callback' => 'geop_ccb_sanitize_fonts',
+  	// ));
+    //
+		// $wp_customize->add_control('font_choice',array(
+    //     'type' => 'select',
+    //     'label' => 'Fonts',
+    //     'description' => "Select the font for this community.",
+    //     'section' => 'font_section',
+    //     'choices' => array(
+    //         'lato' => __('Lato', 'geoplatform-ccb'),
+    //         'slabo' => __('Slabo',  'geoplatform-ccb')
+		// 			),
+		// ));
 
 		// //Banner Intro Text editor section, settings, and controls
 		// $wp_customize->add_section( 'banner_text_section' , array(
@@ -626,6 +626,21 @@ if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
 }
 
 /**
+ * Sanitization callback functions for customizer breadcrumbs
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_breadcrumb' ) ) {
+	function geop_ccb_sanitize_breadcrumb( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
+			$geop_ccb_value = 'on';
+		return $geop_ccb_value;
+	}
+}
+
+/**
  * Sanitization callback functions for customizer blog count
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
@@ -645,13 +660,13 @@ if ( ! function_exists ( 'geop_ccb_sanitize_blogcount' ) ) {
  * @param [type] $geop_ccb_value
  * @return void
  */
-// if ( ! function_exists ( 'geop_ccb_sanitize_linkmenu' ) ) {
-// 	function geop_ccb_sanitize_linkmenu( $geop_ccb_value ) {
-// 		if ( ! in_array( $geop_ccb_value, array( 'tran', 'menu' ) ) )
-// 			$geop_ccb_value = 'tran';
-// 		return $geop_ccb_value;
-// 	}
-// }
+if ( ! function_exists ( 'geop_ccb_sanitize_linkmenu' ) ) {
+	function geop_ccb_sanitize_linkmenu( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'integrated', 'above', 'below' ) ) )
+			$geop_ccb_value = 'integrated';
+		return $geop_ccb_value;
+	}
+}
 
 /**
  * Sanitization callback functions for customizer searchbar
@@ -1548,6 +1563,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
       'font_choice' => 'lato',
       'bootstrap_controls' => 'on',
+      'breadcrumb_controls' => 'on',
       'blogcount_controls' => '5',
       'searchbar_controls' => 'wp',
       'linkmenu_controls' => 'tran',
@@ -2113,28 +2129,52 @@ if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
   add_action( 'customize_register', 'geop_ccb_bootstrap_register');
 }
 
+if ( ! function_exists ( 'geop_ccb_breadcrumb_register' ) ) {
+  function geop_ccb_breadcrumb_register($wp_customize){
 
-// if ( ! function_exists ( 'geop_ccb_linkmenu_register' ) ) {
-//   function geop_ccb_linkmenu_register($wp_customize){
-//
-//     $wp_customize->add_setting('linkmenu_controls',array(
-//         'default' => 'tran',
-//         'sanitize_callback' => 'geop_ccb_sanitize_linkmenu',
-//     ));
-//
-//     $wp_customize->add_control('linkmenu_controls',array(
-//         'type' => 'radio',
-//         'label' => 'Community Links Style',
-//         'section' => 'font_section',
-//         'description' => "The Community Links menu can be shown in two formats: unintrusive transparency or as a bold menu bar.",
-//         'choices' => array(
-//             'tran' => __('Transparent', 'geoplatform-ccb'),
-//             'menu' => __('Bold Menu',  'geoplatform-ccb'),
-//           ),
-//     ));
-//   }
-//   add_action( 'customize_register', 'geop_ccb_linkmenu_register');
-// }
+    $wp_customize->add_setting('breadcrumb_controls',array(
+        'default' => 'on',
+        'sanitize_callback' => 'geop_ccb_sanitize_breadcrumb',
+    ));
+
+    $wp_customize->add_control('breadcrumb_controls',array(
+        'type' => 'radio',
+        'label' => 'Breadcrumb Controls',
+        'section' => 'font_section',
+        'description' => "Breadcrumbs are bars near the top of every GeoPlatform theme page that shows parent pages, categories, and elements. Their presentation can be toggled on and off here.",
+        'choices' => array(
+            'on' => __('Enabled', 'geoplatform-ccb'),
+            'off' => __('Disabled',  'geoplatform-ccb'),
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_breadcrumb_register');
+}
+
+
+
+if ( ! function_exists ( 'geop_ccb_linkmenu_register' ) ) {
+  function geop_ccb_linkmenu_register($wp_customize){
+
+    $wp_customize->add_setting('linkmenu_controls',array(
+        'default' => 'integrated',
+        'sanitize_callback' => 'geop_ccb_sanitize_linkmenu',
+    ));
+
+    $wp_customize->add_control('linkmenu_controls',array(
+        'type' => 'radio',
+        'label' => 'Community Links Style',
+        'section' => 'font_section',
+        'description' => "The Community Links menu can be shown in three formats: Integrated with the header bar, or a solitary menu bar either above or below the page title.",
+        'choices' => array(
+            'integrated' => __('Header Bar Integration', 'geoplatform-ccb'),
+            'above' => __('Dedicated Bar Above',  'geoplatform-ccb'),
+            'below' => __('Dedicated Bar Below',  'geoplatform-ccb'),
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_linkmenu_register');
+}
 
 
 
@@ -2202,6 +2242,27 @@ if ( ! function_exists ( 'geop_ccb_custom_field_post_data' ) ) {
 
 // Excerpt option added to Pages
 add_post_type_support( 'page', 'excerpt' );
+
+if ( ! function_exists ( 'geop_ccb_lower_community_links' ) ) {
+  function geop_ccb_lower_community_links() {
+
+    echo "<ul class='m-page-breadcrumbs'>";
+
+      $geopccb_head_menu_array = array(
+        'theme_location' => 'community-links',
+        'container' => false,
+        'echo' => false,
+        'depth' => 0,
+        'fallback_cb' => false,
+        'link_class' => 'menu-border-grey bordered-right u-pd-right--md',
+        'link_role' => 'menuitem',
+      );
+
+      echo str_replace('</a>' , '</a>&nbsp&nbsp&nbsp' , strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' ));
+    echo "</ul>";
+  }
+}
+
 
 
 /**

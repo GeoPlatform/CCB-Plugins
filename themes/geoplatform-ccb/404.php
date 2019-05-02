@@ -8,13 +8,15 @@
  *
  * @since 3.0.0
  */
-
+$geopccb_theme_options = geop_ccb_get_theme_mods();
 get_header();
 
-echo "<ul class='m-page-breadcrumbs'>";
-  echo "<li><a href='" . home_url() . "/'>Home</a></li>";
-  echo "<li><a href='" . home_url($wp->request) . "'>404</a></li>";
-echo "</ul>";
+if (get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_controls']) == 'on'){
+  echo "<ul class='m-page-breadcrumbs'>";
+    echo "<li><a href='" . home_url() . "/'>Home</a></li>";
+    echo "<li><a href='" . home_url($wp->request) . "'>404</a></li>";
+  echo "</ul>";
+}
 
 echo "<div class='l-body l-body--one-column'>";
   echo "<div class='l-body__main-column'>";
