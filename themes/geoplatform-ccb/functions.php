@@ -78,7 +78,7 @@ if ( ! function_exists ( 'geopccb_enqueue_bootstrap' ) ) {
  */
 if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
 	function geop_ccb_header_image_method() {
-		wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/Geomain_style.css');
+		// wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/Geomain_style.css');
 			$geopccb_headerImage = get_header_image();
       if (! $geopccb_headerImage)
         $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
@@ -770,28 +770,28 @@ register_default_headers( array(
   ),
 ));
 
-/**
- * Override banner background-image as the custom header
- *
- * @link https://codex.wordpress.org/Function_Reference/wp_add_inline_style
- *
- * @return void
- */
-if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
-	function geop_ccb_header_image_method() {
-		wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/Geomain_style.css');
-			$geopccb_headerImage = get_header_image();
-      if (! $geopccb_headerImage)
-        $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
-
-			$geopccb_custom_css = "
-					.banner{
-							background-image: url({$geopccb_headerImage});
-					}";
-			wp_add_inline_style( 'custom-style', $geopccb_custom_css );
-		}
-		add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
-}
+// /**
+//  * Override banner background-image as the custom header
+//  *
+//  * @link https://codex.wordpress.org/Function_Reference/wp_add_inline_style
+//  *
+//  * @return void
+//  */
+// if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
+// 	function geop_ccb_header_image_method() {
+// 		wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/Geomain_style.css');
+// 			$geopccb_headerImage = get_header_image();
+//       if (! $geopccb_headerImage)
+//         $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
+//
+// 			$geopccb_custom_css = "
+// 					.banner{
+// 							background-image: url({$geopccb_headerImage});
+// 					}";
+// 			wp_add_inline_style( 'custom-style', $geopccb_custom_css );
+// 		}
+// 		add_action( 'wp_enqueue_scripts', 'geop_ccb_header_image_method' );
+// }
 
 /**
  * Give page and post banners a WYSIWYG editor
