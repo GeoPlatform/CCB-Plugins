@@ -525,10 +525,6 @@ function geop_ccb_featured_register( $wp_customize ){
 }
 add_action( 'customize_register', 'geop_ccb_featured_register');
 
-// Bootstrap controls are removed due to irrelevance.
-function geop_ccb_bootstrap_register($wp_customize){}
-
-
 //-------------------------------
 // Widgetizing the theme
 // https://codex.wordpress.org/Function_Reference/dynamic_sidebar
@@ -1444,7 +1440,10 @@ if ( ! isset( $content_width ) ) {
 function geop_ccb_search_register(){};
 function geop_ccb_linkmenu_register(){};
 function geop_ccb_bootstrap_register(){};
-	
+function geop_ccb_feature_card_register(){};
+function geop_ccb_breadcrumb_register(){};
+function geop_ccb_postbanner_register(){};
+
 // Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
 function geop_ccb_register_comlink_menus(){};
