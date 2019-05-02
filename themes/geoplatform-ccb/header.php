@@ -45,7 +45,18 @@ elseif (isset($post)){
 </head>
 <header class="o-header o-header--sticky" role="banner">
 <?php
-  if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above')
+
+  // Checks three criteria that may cause the header bar to touch a grey menu bar.
+  // 1) The community-links menu is above the title bar.
+  // 2) The blue title is removed due to post banner being enabled, the current
+  //    location is a singular, and criteria two-sub is true.
+  // 2-sub) The breadcrumbs are enabled OR the category-links menu isn't set to
+  //        "integrated", so at least one grey bar is below the header bar.
+  $geopccb_criteria_one = has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above';
+  $geopccb_criteria_two_sub = get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_controls']) == 'on' || (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) != 'integrated');
+  $geopccb_criteria_two = get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on' && is_singular() && $geopccb_criteria_two_sub;
+
+  if ( $geopccb_criteria_one || $geopccb_criteria_two )
     echo "<div class='header-grey-border o-header__primary' data-page-title='Welcome to the GeoPlatform!'>";
   else
     echo "<div class='o-header__primary' data-page-title='Welcome to the GeoPlatform!'>";
@@ -185,23 +196,17 @@ elseif (isset($post)){
         </div>
     </div>
 
-<?php
-    if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above'){
+    <?php
+    echo "<div class='community-link-menu-control'>";
+      if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above'){
+        echo "<div>";
+          geop_ccb_lower_community_links();
+        echo "</div>";
+      }
+      if ((get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'off') || !is_singular()){
 
-      echo "<div class='community-link-menu-control'>";
-        geop_ccb_lower_community_links();
-      echo "</div>";
-      echo "<div class='o-header__secondary' style='margin-top:0px;'>";
-    } else {
-      echo "<div class='o-header__secondary'>";
-    }
+        echo "<div class='o-header__secondary' style='margin-top:0px;'>";
 
-
-    ?>
-
-    <!-- <div class="o-header__secondary"> -->
-
-        <?php
         // Various checks for the current page, changes title out as necessary.
         if (is_front_page()){
           echo "<div class='a-page__title'>" . esc_html(get_bloginfo( 'name' )) . "</div>";
@@ -215,9 +220,13 @@ elseif (isset($post)){
           echo "<div class='a-page__title'>" . esc_html(ucwords(single_tag_title('', false))) . "</div>";
         } else {
           echo "<div class='a-page__title'>" . get_the_title() . "</div>";
-        } ?>
+        }
 
-    </div>
+        echo "</div>";
+      }
+    echo "</div>";
+
+    ?>
     <nav class="m-megamenu" id="header-megamenu">
         <div class="m-megamenu__content">
 

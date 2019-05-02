@@ -654,7 +654,7 @@ if ( ! function_exists ( 'geop_ccb_sanitize_blogcount' ) ) {
 }
 
 /**
- * Sanitization callback functions for linkmenu option
+ * Sanitization callback functions for link menu option
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
  * @param [type] $geop_ccb_value
@@ -681,6 +681,21 @@ if ( ! function_exists ( 'geop_ccb_sanitize_searchbar' ) ) {
 			$geop_ccb_value = 'wp';
     if (!in_array( 'geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())) && $geop_ccb_value == 'gp')
       $geop_ccb_value = 'wp';
+		return $geop_ccb_value;
+	}
+}
+
+/**
+ * Sanitization callback functions for post banner option
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_postbanner' ) ) {
+	function geop_ccb_sanitize_postbanner( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
+			$geop_ccb_value = 'off';
 		return $geop_ccb_value;
 	}
 }
@@ -1566,6 +1581,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
       'breadcrumb_controls' => 'on',
       'blogcount_controls' => '5',
       'searchbar_controls' => 'wp',
+      'postbanner_controls' => 'off',
       'linkmenu_controls' => 'tran',
 		);
 		return apply_filters( 'geop_ccb_option_defaults', $defaults );
@@ -2210,6 +2226,30 @@ if ( ! function_exists ( 'geop_ccb_search_register' ) ) {
   }
   add_action( 'customize_register', 'geop_ccb_search_register');
 }
+
+
+if ( ! function_exists ( 'geop_ccb_postbanner_register' ) ) {
+  function geop_ccb_postbanner_register($wp_customize){
+
+    $wp_customize->add_setting('postbanner_controls',array(
+        'default' => 'off',
+        'sanitize_callback' => 'geop_ccb_sanitize_postbanner',
+    ));
+
+    $wp_customize->add_control('postbanner_controls',array(
+        'type' => 'radio',
+        'label' => 'Page Banner Controls',
+        'section' => 'font_section',
+        'description' => "By default, pages use a minimalistic header. However, the user has the option of replacing this with the traditional post banner containing featured image and WYSIWYG text.",
+        'choices' => array(
+            'on' => __('Enabled',  'geoplatform-ccb'),
+            'off' => __('Disabled',  'geoplatform-ccb'),
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_postbanner_register');
+}
+
 
 if ( ! function_exists ( 'geop_ccb_blogcount_register' ) ) {
   function geop_ccb_blogcount_register($wp_customize){

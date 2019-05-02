@@ -54,20 +54,20 @@ if (get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_cont
   echo "</ul>";
 }
 
-if (wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)) != '' ){
+if ((wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)) != '' ) && (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'off')){
 ?>
-<div class="m-page-overview">
-  <?php echo $geop_portal_excerpt_one;
-  if ($geop_portal_excerpt_overflow){ ?>
-    <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
-      <span class="fas fa-caret-down"></span>
+  <div class="m-page-overview">
+    <?php echo $geop_portal_excerpt_one;
+    if ($geop_portal_excerpt_overflow){ ?>
+      <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
+        <span class="fas fa-caret-down"></span>
+      </div>
     </div>
+    <div class="m-page-overview__additional">
+      <?php echo $geop_portal_excerpt_two ?>
+      <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
+        <span class="fas fa-caret-down"></span>
+      </div>
+    <?php } ?>
   </div>
-  <div class="m-page-overview__additional">
-    <?php echo $geop_portal_excerpt_two ?>
-    <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
-      <span class="fas fa-caret-down"></span>
-    </div>
-  <?php } ?>
-</div>
 <?php } ?>
