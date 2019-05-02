@@ -1,0 +1,61 @@
+.widget-banner-main {
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-top: 0px !important;
+  position: relative;
+  min-height: 300px;
+}
+
+.widget-banner-sub {
+  min-height: 300px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.widget-banner-container {
+  text-shadow: rgb(0, 0, 0) 0px 0px 5px;
+  transform: translate(0%, 50%);
+}
+
+.widget-ngda-outer-card {
+  position: relative;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  border-style: solid;
+  border-top-width: 2px;
+  border-right-width: 2px;
+  border-bottom-width: 2px;
+  border-left-width: 2px;
+  border-color: #ddd;
+  box-shadow: none;
+}
+
+.widget-ngda-inner-card {
+  margin-top: 2em;
+  background-image: none;
+}
+
+.widget-maps-error-out {
+  text-align: center;
+  padding-top: 2.5em;
+  padding-bottom: 2.5em;
+}
+
+.header-grey-border {
+  border-bottom-color: rgb(221, 221, 221) !important;
+}
+
+.menu-border-grey {
+  border-right-color: rgb(116, 116, 116) !important;
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+@media (min-width: 992px) {
+  .community-link-menu-control {
+    margin-top: 70px;
+  }
+}
