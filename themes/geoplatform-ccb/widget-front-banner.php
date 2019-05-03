@@ -45,6 +45,7 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 						echo "</div>";
 					}
 				echo "</div>";
+				echo "<div class='u-mg-top--xxxlg'></div>";
 			echo "</div>";
     echo "</div>";
 	}

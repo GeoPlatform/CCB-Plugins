@@ -17,7 +17,8 @@
 
 .widget-banner-container {
   text-shadow: rgb(0, 0, 0) 0px 0px 5px;
-  transform: translate(0%, 50%);
+  padding-top: 4em;
+  padding-bottom: 2em;
 }
 
 .widget-ngda-outer-card {
