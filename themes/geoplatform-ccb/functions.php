@@ -1154,7 +1154,24 @@ if ( ! function_exists ( 'geop_ccb_filter_search' ) ) {
 	add_action('pre_get_posts','geop_ccb_filter_search');
 }
 
-
+/**
+ * Disables the Custom Fields option in edit post for all users but admins.
+ *
+ * @link https://wordpress.stackexchange.com/questions/110569/private-posts-pages-search
+ *
+ * @param array $query
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_filter_custom_fields' ) ) {
+	function geop_ccb_filter_custom_fields($query){
+		if ( !is_admin() ){
+      remove_meta_box( 'postcustom' , 'post' , 'normal' );
+      remove_meta_box( 'postcustom' , 'page' , 'normal' );
+      remove_meta_box( 'postcustom' , 'geopccb_catlink' , 'normal' );
+		}
+	}
+	add_action('admin_menu','geop_ccb_filter_custom_fields');
+}
 
 
 

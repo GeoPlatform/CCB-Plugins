@@ -4,7 +4,7 @@
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 4.9.6   
 **Stable tag:** 3.0.5   
-**Version:** 3.2.4
+**Version:** 4.0.0
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -112,8 +112,13 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
-### 3.2.4 ###
+### 4.0.0 ###
 * Release pending
+
+- TBD
+
+### 3.2.4 ###
+* Release April 10, 2019
 
 - Added option to switch Community Links menu between a transparency and block in the header.
 - Removed automated update feature.
