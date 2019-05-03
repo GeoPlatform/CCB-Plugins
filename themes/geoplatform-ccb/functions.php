@@ -1260,10 +1260,12 @@ function geopportal_register_portal_widgets() {
 add_action( 'widgets_init', 'geopportal_register_portal_widgets' );
 
 // Widget incorporation
-get_template_part( 'widget-front-featured', get_post_format() );
-get_template_part( 'widget-front-ngda', get_post_format() );
-get_template_part( 'widget-front-banner', get_post_format() );
-get_template_part( 'widget-front-maps', get_post_format() );
+if ( !is_child_theme() ){
+  get_template_part( 'widget-front-featured', get_post_format() );
+  get_template_part( 'widget-front-ngda', get_post_format() );
+  get_template_part( 'widget-front-banner', get_post_format() );
+  get_template_part( 'widget-front-maps', get_post_format() );
+}
 get_template_part( 'widget-sidebar-text', get_post_format() );
 get_template_part( 'widget-sidebar-links', get_post_format() );
 get_template_part( 'widget-sidebar-preview', get_post_format() );
