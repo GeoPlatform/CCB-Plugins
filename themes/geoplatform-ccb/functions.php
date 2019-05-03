@@ -801,7 +801,7 @@ register_default_headers( array(
 /**
  * Give page and post banners a WYSIWYG editor
  *
- * @link http://help4cms.com/add-wysiwyg-editor-in-wordpress-meta-box
+ * @link https://codex.wordpress.org/Function_Reference/remove_meta_box
  *
  * @return void
  */

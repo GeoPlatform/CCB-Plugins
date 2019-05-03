@@ -13,7 +13,7 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
   // Handles the widget output.
 	public function widget( $args, $instance ) {
 
-		$geopccb_wysiwyg_default = "<h1 style='text-align: center; color:white;'>Your Community Title</h1><p style='text-align: center'>Create and manage your own Dynamic Digital Community on the GeoPlatform!</p>";
+		$geopccb_wysiwyg_default = "<h1 style='text-align:center; color:white;'>Your Community Title</h1><p style='text-align:center; color:white;'>Create and manage your own Dynamic Digital Community on the GeoPlatform!</p>";
 
     // Checks to see if the widget admin boxes are empty. If so, uses default
     // values. If not, pulls the values from the boxes.
@@ -53,7 +53,7 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 	public function form( $instance ) {
 
 		$geopccb_wysiwyg_rand = rand(0, 999);
-		$geopccb_wysiwyg_default = "<h1 style='text-align: center; color:white;'>Your Community Title</h1><p style='text-align: center'>Create and manage your own Dynamic Digital Community on the GeoPlatform!</p>";
+		$geopccb_wysiwyg_default = "<h1 style='text-align: center; color:white;'>Your Community Title</h1><p style='text-align: center; color:white;'>Create and manage your own Dynamic Digital Community on the GeoPlatform!</p>";
 		// $geopccb_wysiwyg_content_grab = ! empty( $instance['geopccb_banner_content'] ) ? $instance['geopccb_banner_content'] : $geopccb_wysiwyg_default;
 		$geopccb_wysiwyg_id = $this->get_field_id( 'wp_editor_' . $geopccb_wysiwyg_rand );
 		$geopccb_wysiwyg_name = $this->get_field_name( 'wp_editor_' . $geopccb_wysiwyg_rand );
