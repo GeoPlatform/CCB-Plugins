@@ -259,7 +259,7 @@ class Geopccb_Front_Page_NGDA_Widget extends WP_Widget {
 		if ( ! function_exists ( 'geopccb_ngda_widget_gen_card' ) ) {
 	    function geopccb_ngda_widget_gen_card($geopccb_ngda_array, $geopccb_scale){
 				echo "<div class='m-tile m-tile--16x9 widget-ngda-outer-card " . $geopccb_scale . "' >";
-					echo "<div class='m-tile__body widget-ngda-inner-card'>";
+					echo "<div class='m-article__desc widget-ngda-inner-card u-text--lg'>";
 						echo "<div>";
 							echo "<p><span class='fas fa-star'></span><strong>  " . $geopccb_ngda_array[0] . "</strong></p>";
 							echo "<p><strong>Community Type:   </strong>" . $geopccb_ngda_array[1] . "</p>";

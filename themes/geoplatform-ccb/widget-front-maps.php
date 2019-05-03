@@ -6,7 +6,7 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 		parent::__construct(
 			'geopccb_front_maps_widget', // Base ID
 			esc_html__( 'GeoPlatform Front Page Maps', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Maps widget for the front page. Takes a gallery ID as input and displays four featured maps.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Maps widget for the front page. Takes a gallery ID as input and displays its maps.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
