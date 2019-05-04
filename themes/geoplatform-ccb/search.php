@@ -14,11 +14,8 @@
 get_header();
 get_template_part( 'sub-header-search', get_post_format() );
 
-?>
-<div class="l-body l-body--two-column">
-	<div class="l-body__main-column">
-	<?php
-
+echo "<div class='l-body l-body--two-column'>";
+	echo "<div class='l-body__main-column'>";
 
 	if ( have_posts() ) :
 
@@ -68,12 +65,9 @@ get_template_part( 'sub-header-search', get_post_format() );
 			echo "<br><br>";
 		echo "</article>";
 
-	endif; ?>
+	endif;
 
-
-
-
-  </div>
-  <?php get_template_part( 'sidebar', get_post_format() ); ?>
-</div>
-<?php get_footer(); ?>
+  echo "</div>";
+  get_template_part( 'sidebar', get_post_format() );
+echo "</div>";
+get_footer();

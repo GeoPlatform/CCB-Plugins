@@ -43,13 +43,11 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                     }
 
                     wp_nav_menu( array( 'theme_location' => 'community-links' ) );
-                    ?>
 
-                  </ul>
-                  <br>
-              </div>
+                  echo "</ul>";
+                echo "<br>";
+              echo "</div>";
 
-              <?php
               echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : 'Example Menu Title') . "</div>";
               wp_nav_menu( array( 'theme_location' => 'footer-left' ) );
             echo "</div>";

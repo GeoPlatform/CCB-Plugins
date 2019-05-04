@@ -78,7 +78,6 @@ if ( ! function_exists ( 'geopccb_enqueue_bootstrap' ) ) {
  */
 if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
 	function geop_ccb_header_image_method() {
-		// wp_enqueue_style('custom-style', get_template_directory_uri() . '/css/Geomain_style.css');
       $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
 
       if (is_singular() && get_the_post_thumbnail_url()){
