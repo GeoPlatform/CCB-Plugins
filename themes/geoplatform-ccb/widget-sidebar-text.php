@@ -13,6 +13,8 @@ class Geopportal_Side_Content_Text_Widget extends WP_Widget {
 	// Handles the widget output.
 	public function widget( $args, $instance ) {
 
+		$geopccb_side_wysiwyg_default = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
 		// Checks to see if the widget admin boxes are empty. If so, uses default
     // values. If not, pulls the values from the boxes.
 		if (array_key_exists('geopportal_side_cont_text_title', $instance) && isset($instance['geopportal_side_cont_text_title']) && !empty($instance['geopportal_side_cont_text_title']))
@@ -22,82 +24,65 @@ class Geopportal_Side_Content_Text_Widget extends WP_Widget {
 		if (array_key_exists('geopportal_side_cont_text_content', $instance) && isset($instance['geopportal_side_cont_text_content']) && !empty($instance['geopportal_side_cont_text_content']))
       $geopportal_side_cont_text_content = apply_filters('widget_title', $instance['geopportal_side_cont_text_content']);
 		else
-      $geopportal_side_cont_text_content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ";
-		?>
+      $geopportal_side_cont_text_content = $geopccb_side_wysiwyg_default;
 
-		<!--
-		SIDEBAR CONTENT TEXT SECTION
-		-->
-		<article class="m-article">
-      <div class="m-article__heading"><?php echo sanitize_text_field($geopportal_side_cont_text_title) ?></div>
-      <div class="m-article__desc">
-        <?php echo do_shortcode($geopportal_side_cont_text_content) ?>
-      </div>
-    </article>
-		<?php
+
+		// SIDEBAR CONTENT TEXT SECTION
+		echo "<article class='m-article'>";
+      echo "<div class='m-article__heading'>" . sanitize_text_field($geopportal_side_cont_text_title) . "</div>";
+      echo "<div class='m-article__desc'>";
+        echo esc_html($geopportal_side_cont_text_content);
+      echo "</div>";
+    echo "</article>";
 	}
 
 	// The admin side of the widget
 	public function form( $instance ) {
 
-		// Checks if the Content Boxes plugin is installed.
-		$geopportal_side_cont_text_cb_bool = false;
-		$geopportal_side_cont_text_cb_message = "Content Blocks plugin not found.";
-		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
-			$geopportal_side_cont_text_cb_bool = true;
-			$geopportal_side_cont_text_cb_message = "Click here to edit this content block";
-		}
+		$geopccb_side_wysiwyg_rand = rand(0, 999);
+		$geopccb_side_wysiwyg_default = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
+		$geopccb_side_wysiwyg_id = $this->get_field_id( 'wp_editor_' . $geopccb_side_wysiwyg_rand );
+		$geopccb_side_wysiwyg_name = $this->get_field_name( 'wp_editor_' . $geopccb_side_wysiwyg_rand );
+		$geopccb_side_wysiwyg_setting = array(
+			'tinymce' => false,
+			'media_buttons' => false,
+			'textarea_rows' => 8,
+      'textarea_name' => $geopccb_side_wysiwyg_name,
+			'quicktags' => false,
+		);
 		// Input boxes.
 		$geopportal_side_cont_text_title = ! empty( $instance['geopportal_side_cont_text_title'] ) ? $instance['geopportal_side_cont_text_title'] : 'Side Content';
-		$geopportal_side_cont_text_content = ! empty( $instance['geopportal_side_cont_text_content'] ) ? $instance['geopportal_side_cont_text_content'] : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.';
+		$geopportal_side_cont_text_content = ! empty( $instance['geopportal_side_cont_text_content'] ) ? $instance['geopportal_side_cont_text_content'] : $geopccb_side_wysiwyg_default;
 
-		// Sets up the content box link, or just a home link if invalid.
-		if (array_key_exists('geopportal_side_cont_text_content', $instance) && isset($instance['geopportal_side_cont_text_content']) && !empty($instance['geopportal_side_cont_text_content']) && $geopportal_side_cont_text_cb_bool){
-    	$geopportal_side_cont_text_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_side_cont_text_content' ]);
-    	if (is_numeric($geopportal_side_cont_text_temp_url))
-      	$geopportal_side_cont_text_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_side_cont_text_temp_url . "&action=edit";
-    	else
-      	$geopportal_side_cont_text_url = home_url();
-		}
-		else
-			$geopportal_side_cont_text_url = home_url();
- ?>
+		printf(
+		  '<input type="hidden" id="%s" name="%s" value="%d" />',
+		  $this->get_field_id( 'geopccb_side_wysiwyg_rand' ),
+		  $this->get_field_name( 'geopccb_side_wysiwyg_rand' ),
+		  $geopccb_side_wysiwyg_rand
+		);
 
-<!-- HTML for the widget control box. -->
-    <p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_side_cont_text_title' ); ?>">Main Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_side_cont_text_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_side_cont_text_title' ); ?>" value="<?php echo esc_attr( $geopportal_side_cont_text_title ); ?>" />
-    </p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_side_cont_text_content' ); ?>">Content Block Shortcode:</label><br>
-			<input type="text"  id="<?php echo $this->get_field_id( 'geopportal_side_cont_text_content' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_side_cont_text_content' ); ?>" value="<?php echo esc_attr($geopportal_side_cont_text_content); ?>" />
-			<a href="<?php echo esc_url($geopportal_side_cont_text_url); ?>" target="_blank"><?php _e($geopportal_side_cont_text_cb_message, 'geoplatform-ccb') ?></a><br>
-		</p>
-		<?php
+		// HTML for the widget control box.
+    echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_text_title' ) . "'>Main Title:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopportal_side_cont_text_title' ) . "' name='" . $this->get_field_name( 'geopportal_side_cont_text_title' ) . "' value='" . esc_attr( $geopportal_side_cont_text_title ) . "' />";
+    echo "</p>";
+		echo "<p>";
+			echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_text_content' ) . "'>Content Block Shortcode:</label><br>";
+
+			wp_editor( $geopportal_side_cont_text_content, $geopccb_side_wysiwyg_id, $geopccb_side_wysiwyg_setting );
+
+		echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		// Checks if the Content Boxes plugin is installed.
-		$geopportal_side_cont_text_cb_bool = false;
-		if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
-			$geopportal_side_cont_text_cb_bool = true;
+		$geopccb_temp_rand = (int)$new_instance['geopccb_side_wysiwyg_rand'];
+		$geopccb_editor_content = $new_instance['wp_editor_' . $geopccb_temp_rand];
+		$instance[ 'geopportal_side_cont_text_content' ] = $geopccb_editor_content;
 
 		$instance[ 'geopportal_side_cont_text_title' ] = strip_tags( $new_instance[ 'geopportal_side_cont_text_title' ] );
-	  $instance[ 'geopportal_side_cont_text_content' ] = strip_tags( $new_instance[ 'geopportal_side_cont_text_content' ] );
-
-	  // Validity check for the content box URL.
-		if (array_key_exists('geopportal_side_cont_text_content', $instance) && isset($instance['geopportal_side_cont_text_content']) && !empty($instance['geopportal_side_cont_text_content']) && $geopportal_side_cont_text_cb_bool){
-	  	$geopportal_side_cont_text_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_side_cont_text_content' ]);
-	  	if (is_numeric($geopportal_side_cont_text_temp_url))
-	    	$geopportal_side_cont_text_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_side_cont_text_temp_url . "&action=edit";
-	  	else
-	    	$geopportal_side_cont_text_url = home_url();
-		}
-		else
-			$geopportal_side_cont_text_url = home_url();
 
 	  return $instance;
 	}
