@@ -42,14 +42,14 @@ class Geopccb_Side_Content_NGDA_Widget extends WP_Widget {
 
 		// ELEMENTS
 		echo "<article class='m-article'>";
-      echo "<div class='m-article__heading'><span class='fas fa-star'></span>  " . $geopccb_ngda_name . "</div>";
+      echo "<div class='m-article__heading'><span class='fas fa-star'></span>  " . esc_attr($geopccb_ngda_name, 'geoplatform-ccb') . "</div>";
       echo "<div class='m-article__desc'>";
 				echo "<br>";
-				echo "<p><strong>Community Type: </strong>" . $geopccb_ngda_type . "</p>";
-				echo "<p><strong>Sponsor: </strong>" . $geopccb_ngda_sponsor . "</p>";
-				echo "<p><strong>Sponsor Email: </strong>" . $geopccb_ngda_email . "</p>";
-				echo "<p><strong>Theme Lead Agency: </strong>" . $geopccb_ngda_agency . "</p>";
-				echo "<p><strong>Theme Lead: </strong>" . $geopccb_ngda_lead . "</p>";
+				echo "<p><strong>Community Type: </strong>" . esc_attr($geopccb_ngda_type, 'geoplatform-ccb') . "</p>";
+				echo "<p><strong>Sponsor: </strong>" . esc_attr($geopccb_ngda_sponsor, 'geoplatform-ccb') . "</p>";
+				echo "<p><strong>Sponsor Email: </strong><a href='mailto:" . esc_html($geopccb_ngda_email, 'geoplatform-ccb') . "'>" . esc_attr($geopccb_ngda_email, 'geoplatform-ccb') . "</a></p>";
+				echo "<p><strong>Theme Lead Agency: </strong>" . esc_attr($geopccb_ngda_agency, 'geoplatform-ccb') . "</p>";
+				echo "<p><strong>Theme Lead: </strong>" . esc_attr($geopccb_ngda_lead, 'geoplatform-ccb') . "</p>";
       echo "</div>";
     echo "</article>";
 	}
@@ -67,7 +67,7 @@ class Geopccb_Side_Content_NGDA_Widget extends WP_Widget {
 
     // HTML for the widget control box.
 		echo "<p>";
-			_e('Ensure to use a valid category name, not a slug.', 'geoplatform-ccb');
+			_e('If you have an NGDA community, input its information here.', 'geoplatform-ccb');
 		echo "</p>";
 		echo "<p>";
       echo "<label for='" . $this->get_field_id( 'geopccb_ngda_name' ) . "'>Theme Name:</label>";

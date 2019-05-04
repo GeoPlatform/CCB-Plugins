@@ -165,10 +165,10 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 
 		// HTML for the widget control box.
 		echo "<p>";
-			_e('Ensure to use a valid category name, not a slug.', 'geoplatform-ccb');
+			_e('Please ensure that your gallery ID is valid. A full URL is not required.', 'geoplatform-ccb');
 		echo "</p>";
 		echo "<p>";
-			echo "<label for='" . $this->get_field_id( 'geopccb_gallery_id' ) . "'>Source Category:</label>";
+			echo "<label for='" . $this->get_field_id( 'geopccb_gallery_id' ) . "'>Gallery ID:</label>";
 			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_gallery_id' ) . "' name='" . $this->get_field_name( 'geopccb_gallery_id' ) . "' value='" . esc_attr( $geopccb_gallery_id ) . "' />";
 		echo "</p>";
 	}

@@ -6,7 +6,7 @@ class Geopportal_Side_Content_Text_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_side_content_text_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Text', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Text widget for the sidebar. Takes a content block shortcode as input and outputs it in the sidebar, with optional title. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Text widget for the sidebar. Allows text input into the associated box to appear alongside a title in the sidebar.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -63,12 +63,15 @@ class Geopportal_Side_Content_Text_Widget extends WP_Widget {
 		);
 
 		// HTML for the widget control box.
+		echo "<p>";
+			_e('Input a title and text for a text block that you would like to see in the sidebar.', 'geoplatform-ccb');
+		echo "</p>";
     echo "<p>";
       echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_text_title' ) . "'>Main Title:</label>";
       echo "<input type='text' id='" . $this->get_field_id( 'geopportal_side_cont_text_title' ) . "' name='" . $this->get_field_name( 'geopportal_side_cont_text_title' ) . "' value='" . esc_attr( $geopportal_side_cont_text_title ) . "' />";
     echo "</p>";
 		echo "<p>";
-			echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_text_content' ) . "'>Content Block Shortcode:</label><br>";
+			echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_text_content' ) . "'>Content Text:</label><br>";
 
 			wp_editor( $geopportal_side_cont_text_content, $geopccb_side_wysiwyg_id, $geopccb_side_wysiwyg_setting );
 

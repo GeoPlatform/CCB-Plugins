@@ -6,7 +6,7 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 		parent::__construct(
 			'geopportal_side_content_link_widget', // Base ID
 			esc_html__( 'GeoPlatform Sidebar Category', 'geoplatform-ccb' ), // Name
-			array( 'description' => esc_html__( 'GeoPlatform Content widget for the sidebar. Accepts and outputs Content Block shortcode, as well as a category slug to output its contents. Requires the Content Blocks plugin.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
+			array( 'description' => esc_html__( 'GeoPlatform Content widget for the sidebar. Accepts a section title and a category slug to output its contents.', 'geoplatform-ccb' ), 'customize_selective_refresh' => true) // Args
 		);
 	}
 
@@ -127,21 +127,19 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 		$geopportal_side_cont_link_title = ! empty( $instance['geopportal_side_cont_link_title'] ) ? $instance['geopportal_side_cont_link_title'] : 'Themes';
 		// $geopportal_side_cont_link_content = ! empty( $instance['geopportal_side_cont_link_content'] ) ? $instance['geopportal_side_cont_link_content'] : '';
 		$geopportal_side_cont_link_link = ! empty( $instance['geopportal_side_cont_link_link'] ) ? $instance['geopportal_side_cont_link_link'] : '';
-		?>
 
-<!-- HTML for the widget control box. -->
-		<p>
-			<?php _e('Ensure to use a valid category name, not a slug.', 'geoplatform-ccb'); ?>
-		</p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_side_cont_link_title' ); ?>">Widget Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_side_cont_link_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_side_cont_link_title' ); ?>" value="<?php echo esc_attr( $geopportal_side_cont_link_title ); ?>" />
-    </p>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'geopportal_side_cont_link_link' ); ?>">Source Category:</label>
-			<input type="text" id="<?php echo $this->get_field_id( 'geopportal_side_cont_link_link' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_side_cont_link_link' ); ?>" value="<?php echo esc_attr( $geopportal_side_cont_link_link ); ?>" />
-		</p>
-		<?php
+		// HTML for the widget control box.
+		echo "<p>";
+			_e('Ensure to use a valid category name, not a slug.', 'geoplatform-ccb');
+		echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_link_title' ) . "'>Widget Title:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopportal_side_cont_link_title' ) . "' name='" . $this->get_field_name( 'geopportal_side_cont_link_title' ) . "' value='" . esc_attr( $geopportal_side_cont_link_title ) . "' />";
+    echo "</p>";
+		echo "<p>";
+			echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_link_link' ) . "'>Source Category:</label>";
+			echo "<input type='text' id='" . $this->get_field_id( 'geopportal_side_cont_link_link' ) . "' name='" . $this->get_field_name( 'geopportal_side_cont_link_link' ) . "' value='" . esc_attr( $geopportal_side_cont_link_link ) . "' />";
+		echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {

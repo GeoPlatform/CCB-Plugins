@@ -81,10 +81,10 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 
 		// HTML for the widget control box.
 		echo "<p>";
-			_e('Ensure to use a valid category name, not a slug.', 'geoplatform-ccb');
+			_e('The text area can accept HTML and text elements. Please ensure that your HTML is tested before you input it into the Content Area text block.', 'geoplatform-ccb');
 		echo "</p>";
 		echo "<p>";
-      echo "<label for='" . $this->get_field_id( 'geopccb_banner_content' ) . "'>Section Title:</label>";
+      echo "<label for='" . $this->get_field_id( 'geopccb_banner_content' ) . "'>Content Area Text:</label>";
 
 			wp_editor( $geopccb_banner_content, $geopccb_wysiwyg_id, $geopccb_wysiwyg_setting );
 
