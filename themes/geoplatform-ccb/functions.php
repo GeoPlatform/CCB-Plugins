@@ -2310,18 +2310,18 @@ if ( ! function_exists ( 'geop_ccb_lower_community_links' ) ) {
   function geop_ccb_lower_community_links() {
 
     echo "<ul class='m-page-breadcrumbs'>";
-
+      echo "<a class='u-pd-right--md' href='" . home_url() . "'>Home</a>";
       $geopccb_head_menu_array = array(
         'theme_location' => 'community-links',
         'container' => false,
         'echo' => false,
         'depth' => 0,
         'fallback_cb' => false,
-        'link_class' => 'menu-border-grey bordered-right u-pd-right--md',
+        'link_class' => 'menu-border-head bordered-left u-pd-left--md u-pd-right--md',
         'link_role' => 'menuitem',
       );
 
-      echo str_replace('</a>' , '</a>&nbsp&nbsp&nbsp' , strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' ));
+      echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
     echo "</ul>";
   }
 }

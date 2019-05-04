@@ -90,12 +90,12 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
               'items_wrap' => '%3$s',
               'depth' => 0,
               'fallback_cb' => false,
-              'link_class' => 'is-hidden--xs is-hidden--sm',
+              'link_class' => 'is-hidden--xs is-hidden--sm menu-border-foot bordered-right u-pd-right--md u-mg-right--md',
               'link_role' => 'menuitem',
             );
 
             // http://biostall.com/add-character-between-menu-items-in-wordpress-using-wp_nav_menu-function/
-            echo str_replace('</a>' , '</a>&nbsp&nbsp;|&nbsp' , strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' ));
+            echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
             ?>
           </div>
       </div>

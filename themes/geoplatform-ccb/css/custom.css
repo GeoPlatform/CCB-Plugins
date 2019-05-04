@@ -49,10 +49,14 @@
   border-bottom-color: rgb(221, 221, 221) !important;
 }
 
-.menu-border-grey {
-  border-right-color: rgb(116, 116, 116) !important;
+.menu-border-head {
+  border-left-color: rgb(32, 121, 197) !important;
+  border-left-style: solid;
+}
+
+.menu-border-foot {
+  border-right-color: rgb(239, 239, 239) !important;
   border-right-style: solid;
-  border-right-width: 1px;
 }
 
 @media (min-width: 992px) {
