@@ -1269,7 +1269,6 @@ if ( !is_child_theme() ){
 get_template_part( 'widget-sidebar-text', get_post_format() );
 get_template_part( 'widget-sidebar-links', get_post_format() );
 get_template_part( 'widget-sidebar-preview', get_post_format() );
-get_template_part( 'widget-sidebar-featured', get_post_format() );
 
 
 
