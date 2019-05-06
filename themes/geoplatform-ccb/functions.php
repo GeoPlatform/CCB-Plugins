@@ -1489,7 +1489,7 @@ if ( ! function_exists ( 'geopccb_add_breadcrumb_title' ) ) {
   function geopccb_add_breadcrumb_title() {
       add_meta_box(
           'geopccb_breadcrumb_title_id',          // this is HTML id of the box on edit screen
-          'Breadcrumb and Tile Title',    // title of the box
+          'Breadcrumb Title',    // title of the box
           'geopccb_breadcrumb_box_content',   // function to be called to display the checkboxes, see the function below
   				array(
   					'post',
