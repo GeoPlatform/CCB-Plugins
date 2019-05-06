@@ -9,8 +9,8 @@ import { ISubscription } from "rxjs/Subscription";
 import { environment } from "../../environments/environment";
 import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 
-const V1_SEARCH_ENDPOINT = environment.wpUrl + '/wp-json/geoplatform-search/v1/gpsearch';
-const V2_USERS_ENDPOINT = environment.wpUrl + '/wp-json/wp/v2/users?per_page=100';
+const V1_SEARCH_ENDPOINT = Config.wpUrl + '/wp-json/geoplatform-search/v1/gpsearch';
+const V2_USERS_ENDPOINT = Config.wpUrl + '/wp-json/wp/v2/users?per_page=100';
 
 
 @Injectable()

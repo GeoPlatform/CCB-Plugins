@@ -13,10 +13,12 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
 
-import { MatomoModule } from 'ngx-matomo';
-
-// Adds window.RPMService to global namespace
-import { RPMServiceFactory, RPMService } from 'geoplatform.rpm';
+// import { MatomoModule } from 'ngx-matomo';
+//
+// // Adds window.RPMService to global namespace
+// import { RPMServiceFactory, RPMService } from 'geoplatform.rpm';
+import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
 
 import { TrackingService } from 'geoplatform.client';
@@ -166,8 +168,9 @@ export function initializeApp() {
     HttpClientModule,
     HttpClientJsonpModule,
     NgbModule.forRoot(),
-    InlineSVGModule,
-    MatomoModule
+    InlineSVGModule
+    // ,
+    // MatomoModule
   ],
   providers: [
       CCBService,
