@@ -6,11 +6,6 @@
  *
  * @since 3.0.0
  */
-// $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_array[$geopportal_counter]);
-// echo $geopportal_mainpage_disp_array[$geopportal_counter];
-// echo "  ";
-// echo get_the_title($geopportal_mainpage_feat_page);
-// echo "<br>"
 
 $geopportal_mainpage_feat_page = get_page_by_path($geopportal_mainpage_disp_post_array[$geopportal_counter], OBJECT, 'post');
 

@@ -1,4 +1,13 @@
 <?php
+/**
+ * A GeoPlatform Header template
+ *
+ * @link https://codex.wordpress.org/Designing_Headers
+ *
+ * enhanced comment display
+ * @link //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
+ */
+
 // Getting theme mods for search bar and mega-menu hiding checks.
 $geopccb_theme_options = geop_ccb_get_theme_mods();
 ?>
@@ -11,13 +20,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <meta name="author" content="">
   <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
 
-  <?php
-  wp_head();
-
-
-
-
-  ?>
+  <?php wp_head(); ?>
 
 </head>
 <header class="o-header o-header--sticky" role="banner">

@@ -3,8 +3,8 @@
 -Contributors: imagemattersllc, kevins713, lheazel
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 4.9.8
--Stable tag: 4.0.3
--Version: 4.0.3
+-Stable tag: 4.1.0
+-Version: 4.1.0
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -112,8 +112,14 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
 
-## 4.0.3
+## 4.1.0
 * Release pending
+
+- Upgrade of parent theme to version 4.
+- Movement of numerous operations and files to parent theme.
+
+## 4.0.3
+* Release April 19th, 2019
 
 - Addition of new resource templates.
 - All resource templates have been renamed to reflect intended resource pages.
