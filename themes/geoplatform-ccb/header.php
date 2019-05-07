@@ -203,7 +203,7 @@ elseif (isset($post)){
           geop_ccb_lower_community_links();
         echo "</div>";
       }
-      if ((get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'off') || !is_singular()){
+      if ((get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'off') || !is_singular() || is_404() || is_search() || is_tag() || is_archive()){
 
         echo "<div class='o-header__secondary' style='margin-top:0px;'>";
 
