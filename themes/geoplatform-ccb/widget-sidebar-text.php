@@ -1,4 +1,15 @@
 <?php
+/**
+ * Template Name: Widget Sidebar Text
+ *
+ * Widget for the sidebar, displays a title and WYSIWYG text.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 class Geopportal_Side_Content_Text_Widget extends WP_Widget {
 
 	// Constructor. Simple.

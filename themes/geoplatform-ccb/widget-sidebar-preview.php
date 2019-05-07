@@ -1,4 +1,15 @@
 <?php
+/**
+ * Template Name: Widget Sidebar Preview
+ *
+ * Widget for the sidebar, displays the featured image of the current post.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 
   // Constructor. Simple.
@@ -28,22 +39,13 @@ class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 				$geopportal_side_cont_prev_thumb = get_the_post_thumbnail_url($geopporatl_current_post);
 		}
 
-		$geopportal_side_cont_prev_excerpt = "";
-		// if (!empty($geopportal_side_cont_prev_page->post_excerpt))
-		//   $geopportal_side_cont_prev_excerpt = esc_attr(wp_strip_all_tags($geopportal_side_cont_prev_page->post_excerpt));
-		?>
-
-		<!--
-		SIDEBAR CONTENT PREVIEW
-		-->
-		<article class="m-article">
-      <div class="m-article__heading"><?php _e(sanitize_text_field($geopportal_side_cont_prev_title), 'geoplatform-ccb') ?></div>
-      <div class="m-article__desc" style="max-width:320px">
-        <img src="<?php echo $geopportal_side_cont_prev_thumb ?>">
-        <?php echo $geopportal_side_cont_prev_excerpt; ?>
-      </div>
-    </article>
-    <?php
+		// SIDEBAR CONTENT PREVIEW
+		echo "<article class='m-article'>";
+      echo "<div class='m-article__heading'>" . __(sanitize_text_field($geopportal_side_cont_prev_title), 'geoplatform-ccb') . "</div>";
+      echo "<div class='m-article__desc' style='max-width:320px'>";
+        echo "<img src='" . $geopportal_side_cont_prev_thumb . "'>";
+      echo "</div>";
+    echo "</article>";
 	}
 
   // The admin side of the widget.
@@ -51,26 +53,21 @@ class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 
     // Checks for entries in the widget admin boxes and provides defaults if empty.
 		$geopportal_side_cont_prev_title = ! empty( $instance['geopportal_side_cont_prev_title'] ) ? $instance['geopportal_side_cont_prev_title'] : '';
-		// $geopportal_side_cont_prev_link = ! empty( $instance['geopportal_side_cont_prev_link'] ) ? $instance['geopportal_side_cont_prev_link'] : '';
-		?>
 
-<!-- HTML for the widget control box. -->
-		<p>
-			<?php _e('The featured image of the current page will be displayed automatically. You may insert an optional title, but it will display on all pages with a sidebar.', 'geoplatform-ccb'); ?>
-		</p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_side_cont_prev_title' ); ?>">Widget Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_side_cont_prev_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_side_cont_prev_title' ); ?>" value="<?php echo esc_attr( $geopportal_side_cont_prev_title ); ?>" />
-    </p>
-		<?php
+ 		// HTML for the widget control box.
+		echo "<p>";
+			_e('The featured image of the current page will be displayed automatically. You may insert an optional title, but it will display on all pages with a sidebar.', 'geoplatform-ccb');
+		echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopportal_side_cont_prev_title' ) . "'>Widget Title:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopportal_side_cont_prev_title' ) . "' name='" . $this->get_field_name( 'geopportal_side_cont_prev_title' ) . "' value='" . esc_attr( $geopportal_side_cont_prev_title ) . "' />";
+    echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-    // $instance[ 'geopportal_side_cont_prev_title' ] = strip_tags( $new_instance[ 'geopportal_side_cont_prev_title' ] );
 		$instance[ 'geopportal_side_cont_prev_title' ] = strip_tags( $new_instance[ 'geopportal_side_cont_prev_title' ] );
-		// $instance[ 'geopportal_side_cont_prev_link' ] = strip_tags( $new_instance[ 'geopportal_side_cont_prev_link' ] );
 
 		return $instance;
 	}

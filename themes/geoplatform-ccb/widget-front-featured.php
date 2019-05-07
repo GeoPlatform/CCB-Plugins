@@ -1,4 +1,15 @@
 <?php
+/**
+ * Template Name: Widget Front Featured
+ *
+ * Widget for the front page, displays featured images in a tile format using a category.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
   // Constructor. Simple.
@@ -15,10 +26,6 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
     // Checks to see if the widget admin boxes are empty. If so, uses default
     // values. If not, pulls the values from the boxes.
-		// if (array_key_exists('geopccb_featured_title', $instance) && isset($instance['geopccb_featured_title']) && !empty($instance['geopccb_featured_title']))
-    //   $geopccb_featured_title = apply_filters('widget_title', $instance['geopccb_featured_title']);
-		// else
-    //   $geopccb_featured_title = "";
 		if (array_key_exists('geopccb_community_link', $instance) && isset($instance['geopccb_community_link']) && !empty($instance['geopccb_community_link']))
       $geopccb_community_link = apply_filters('widget_title', $instance['geopccb_community_link']);
 		else
@@ -70,8 +77,6 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 				}
 			}
 		}
-
-
 
     // getting the posts and pages
     // Get view perms.
@@ -144,6 +149,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    }
 		}
 
+		// Creates an array of key-values from a category input.
 		if ( ! function_exists ( 'geopccb_add_featured_category' ) ) {
 	    function geopccb_add_featured_category($geopccb_cat){
 	      $geopccb_temp_array = array();
@@ -161,6 +167,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    }
 		}
 
+		// Date-based array construction.
     if ($geopccb_featured_sort_format == 'date'){
 
       // Pages added.
@@ -250,17 +257,12 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	public function form( $instance ) {
 
     // Checks for entries in the widget admin boxes and provides defaults if empty.
-		// $geopccb_featured_title = ! empty( $instance['geopccb_featured_title'] ) ? $instance['geopccb_featured_title'] : '';
 		$geopccb_community_link = ! empty( $instance['geopccb_community_link'] ) ? $instance['geopccb_community_link'] : 'Front Page';
 
 		// HTML for the widget control box.
 		echo "<p>";
 			_e('Ensure to use a valid category name, not a slug.', 'geoplatform-ccb');
 		echo "</p>";
-		// echo "<p>";
-		// 	echo "<label for='" . $this->get_field_id( 'geopccb_featured_title' ) . "'>Section Title:</label>";
-		// 	echo "<input type='text' id='" . $this->get_field_id( 'geopccb_featured_title' ) . "' name='" . $this->get_field_name( 'geopccb_featured_title' ) . "' value='" . esc_attr( $geopccb_featured_title ) . "' />";
-		// echo "</p>";
 		echo "<p>";
 			echo "<label for='" . $this->get_field_id( 'geopccb_community_link' ) . "'>Source Category:</label>";
 			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_community_link' ) . "' name='" . $this->get_field_name( 'geopccb_community_link' ) . "' value='" . esc_attr( $geopccb_community_link ) . "' />";
@@ -270,7 +272,6 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		// $instance[ 'geopccb_featured_title' ] = strip_tags( $new_instance[ 'geopccb_featured_title' ] );
 		$instance[ 'geopccb_community_link' ] = strip_tags( $new_instance[ 'geopccb_community_link' ] );
 
 		return $instance;

@@ -1,5 +1,15 @@
 <?php
-// Secondary header, used for the home page.
+/**
+ * Template Name: Sub-Header-Search
+ *
+ * Secondary header for use with search result pages.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 global $wp;
 $geopccb_theme_options = geop_ccb_get_theme_mods();
 

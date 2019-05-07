@@ -1,6 +1,6 @@
 <?php
 /**
- * The main index page
+ * The main index page. Nothing is here of importance.
  *
  * @link https://codex.wordpress.org/Theme_Development#Index_.28index.php.29
  *

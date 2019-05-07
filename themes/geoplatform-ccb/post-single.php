@@ -7,8 +7,6 @@
  * @since 3.0.0
  */
 ?>
-
-
 <article class="m-article" id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<div class="m-article__desc">
 		<?php the_content('Read more...'); ?>

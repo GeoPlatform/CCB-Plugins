@@ -1,4 +1,15 @@
 <?php
+/**
+ * Template Name: Widget Front Banner
+ *
+ * Widget for the front page, displays the site's banner image with super-imposed text.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 
   // Constructor. Simple.
@@ -55,7 +66,6 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 
 		$geopccb_wysiwyg_rand = rand(0, 999);
 		$geopccb_wysiwyg_default = "<h1 style='text-align: center; color:white;'>Your Community Title</h1><p style='text-align: center; color:white;'>Create and manage your own Dynamic Digital Community on the GeoPlatform!</p>";
-		// $geopccb_wysiwyg_content_grab = ! empty( $instance['geopccb_banner_content'] ) ? $instance['geopccb_banner_content'] : $geopccb_wysiwyg_default;
 		$geopccb_wysiwyg_id = $this->get_field_id( 'wp_editor_' . $geopccb_wysiwyg_rand );
 		$geopccb_wysiwyg_name = $this->get_field_name( 'wp_editor_' . $geopccb_wysiwyg_rand );
 		$geopccb_wysiwyg_setting = array(
@@ -71,7 +81,7 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 		$geopccb_banner_cta_text = ! empty( $instance['geopccb_banner_cta_text'] ) ? $instance['geopccb_banner_cta_text'] : '';
 		$geopccb_banner_cta_link = ! empty( $instance['geopccb_banner_cta_link'] ) ? $instance['geopccb_banner_cta_link'] : 'https://www.geoplatform.gov/';
 
-
+		// Sets the random value that needs to be passed for content to be saved.
 		printf(
 		  '<input type="hidden" id="%s" name="%s" value="%d" />',
 		  $this->get_field_id( 'geopccb_wysiwyg_rand' ),

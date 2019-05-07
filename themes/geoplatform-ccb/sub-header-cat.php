@@ -1,6 +1,16 @@
 <?php
-// Secondary header, used for the home page.
-global $wp;
+/**
+ * Template Name: Sub-Header-Cat
+ *
+ * Secondary header for use with category pages.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
+ global $wp;
 $geopccb_theme_options = geop_ccb_get_theme_mods();
 
 if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'below')
