@@ -2,6 +2,8 @@
 /**
  * The template for displaying comments
  *
+ * THIS IS CURRENTLY DEPRECATED, BUT MAY BE RETURNED IF REQUESTED.
+ *
  * This is the template that displays the area of the page that contains both the current comments
  * and the comment form.
  *

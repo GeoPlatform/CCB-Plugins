@@ -36,23 +36,22 @@ get_template_part( 'sub-header-post', get_post_format() );
 			// To prevent entries overlapping their blocks, sets min height to match thumb.
 			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
 			$geopccb_archive_scaled_height = ((350 * $height) / $width) + 30;
-   		?>
-
-			<div class="m-article m-article--flex">
-				<a class="m-article__thumbnail is-16x9" href="<?php echo get_the_permalink($geopccb_post); ?>">
-					<img alt="Article Heading" src="<?php echo $geopccb_archive_disp_thumb ?>">
-				</a>
-				<div class="m-article__body">
-					<a class="m-article__heading" href="<?php echo get_the_permalink($geopccb_post); ?>"><?php echo get_the_title($geopccb_post) ?></a>
-					<div class="m-article__desc"><?php echo get_the_date("F j, Y", $geopccb_post->ID) ?></div>
-					<div class="m-article__desc"><?php echo esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) ?></div>
-				</div>
-			</div>
-
-		<?php } ?>
 
 
-  </div>
-  <?php get_template_part( 'sidebar', get_post_format() ); ?>
-</div>
-<?php get_footer(); ?>
+			echo "<div class='m-article m-article--flex'>";
+				echo "<a class='m-article__thumbnail is-16x9' href='" . get_the_permalink($geopccb_post) . "'>";
+					echo "<img alt='Article Heading' src='" . $geopccb_archive_disp_thumb . "'>";
+				echo "</a>";
+				echo "<div class='m-article__body'>";
+					echo "<a class='m-article__heading' href='" . get_the_permalink($geopccb_post) . "'>" . get_the_title($geopccb_post). "</a>";
+					echo "<div class='m-article__desc'>" . get_the_date("F j, Y", $geopccb_post->ID) . "</div>";
+					echo "<div class='m-article__desc'>" . esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) . "</div>";
+				echo "</div>";
+			echo "</div>";
+
+		}
+
+  echo "</div>";
+  get_template_part( 'sidebar', get_post_format() );
+echo "</div>";
+get_footer();

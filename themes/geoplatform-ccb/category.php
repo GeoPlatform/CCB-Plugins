@@ -12,10 +12,8 @@
 get_header();
 get_template_part( 'sub-header-cat', get_post_format() );
 
-?>
-<div class="l-body l-body--two-column">
-	<div class="l-body__main-column">
-		<?php
+echo "<div class='l-body l-body--two-column'>";
+	echo "<div class='l-body__main-column'>";
 
 		//gets id of current category
 		$geopccb_category = $wp_query->get_queried_object_id();
@@ -67,19 +65,18 @@ get_template_part( 'sub-header-cat', get_post_format() );
  			// To prevent entries overlapping their blocks, sets min height to match thumb.
  			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
  			$geopccb_archive_scaled_height = ((350 * $height) / $width) + 30;
-    	?>
 
-			<div class="m-article m-article--flex">
-				<a class="m-article__thumbnail is-16x9" href="<?php echo esc_url( get_category_link( $geopccb_cat_iter->term_id ) ); ?>">
-					<img alt="Article Heading" src="<?php echo $geopccb_archive_disp_thumb ?>">
-				</a>
-				<div class="m-article__body">
-					<a class="m-article__heading" href="<?php echo esc_url( get_category_link( $geopccb_cat_iter->term_id ) ); ?>"><?php echo esc_attr($geopccb_cat_iter->name); ?></a>
-					<div class="m-article__desc"><?php echo esc_attr($geopccb_cat_iter->description); ?></div>
-				</div>
-			</div>
-		<?php }
-
+			// Final output.
+			echo "<div class='m-article m-article--flex'>";
+				echo "<a class='m-article__thumbnail is-16x9' href='" . esc_url( get_category_link( $geopccb_cat_iter->term_id ) ) . "'>";
+					echo "<img alt='Article Heading' src='" . $geopccb_archive_disp_thumb . "'>";
+				echo "</a>";
+				echo "<div class='m-article__body'>";
+					echo "<a class='m-article__heading' href='" . esc_url( get_category_link( $geopccb_cat_iter->term_id ) ) . "'>" . esc_attr($geopccb_cat_iter->name) . "</a>";
+					echo "<div class='m-article__desc'>" . esc_attr($geopccb_cat_iter->description) . "</div>";
+				echo "</div>";
+			echo "</div>";
+		}
 
 		// Time for posts, pages, and cat links.
 		// Get view perms.
@@ -143,21 +140,21 @@ get_template_part( 'sub-header-cat', get_post_format() );
 			$geopccb_link_url = get_the_permalink($geopccb_post);
 			if (get_post_type($geopccb_post) == 'geopccb_catlink')
 				$geopccb_link_url = esc_url($geopccb_post->geop_ccb_cat_link_url);
-    	?>
 
-			<div class="m-article m-article--flex">
-				<a class="m-article__thumbnail is-16x9" href="<?php echo $geopccb_link_url; ?>">
-					<img alt="Article Heading" src="<?php echo $geopccb_archive_disp_thumb ?>">
-				</a>
-				<div class="m-article__body">
-					<a class="m-article__heading" href="<?php echo $geopccb_link_url; ?>"><?php echo get_the_title($geopccb_post) ?></a>
-					<div class="m-article__desc"><?php echo get_the_date("F j, Y", $geopccb_post->ID) ?></div>
-					<div class="m-article__desc"><?php echo esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) ?></div>
-				</div>
-			</div>
- 		<?php } ?>
+			// Final output.
+			echo "<div class='m-article m-article--flex'>";
+				echo "<a class='m-article__thumbnail is-16x9' href='" . $geopccb_link_url . "'>";
+					echo "<img alt='Article Heading' src='" . $geopccb_archive_disp_thumb . "'>";
+				echo "</a>";
+				echo "<div class='m-article__body'>";
+					echo "<a class='m-article__heading' href='" . $geopccb_link_url . "'>" . get_the_title($geopccb_post) . "</a>";
+					echo "<div class='m-article__desc'>" . get_the_date("F j, Y", $geopccb_post->ID) . "</div>";
+					echo "<div class='m-article__desc'>" . esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) . "</div>";
+				echo "</div>";
+			echo "</div>";
+ 		}
 
-  </div>
-  <?php get_template_part( 'sidebar', get_post_format() ); ?>
-</div>
-<?php get_footer(); ?>
+  echo "</div>";
+  get_template_part( 'sidebar', get_post_format() );
+echo "</div>";
+get_footer();

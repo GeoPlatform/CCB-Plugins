@@ -24,27 +24,40 @@ elseif (isset($post)){
     $geopccb_bootstrap_use = false;
 }
 ?>
+
+<!-- HTML head stuff -->
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
+<?php
+echo "<head>";
+  echo "<meta charset='utf-8'>";
+  echo "<meta http-equiv='X-UA-Compatible' content='IE=edge'>";
+  echo "<meta name='viewport' content='width=device-width, initial-scale=1'>";
+  // <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  echo "<meta name='description' content=''>";
+  echo "<meta name='author' content=''>";
+  echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />";
 
-  <?php
   //enabling enhanced comment display
   if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
 
   wp_head();
-  ?>
 
-</head>
-<header class="o-header o-header--sticky" role="banner">
-<?php
+echo "</head>";
+
+// Proper header stuff.
+echo "<header class='o-header o-header--sticky' role='banner'>";
+
+  // Minute checks for banner consideration. Current page is checked for being
+  // a plugin page, then for being a specific duty page. Used further down too.
+  $geopccb_plugin_page = false;
+  if (isset($post)){
+    if ( $post->post_name == 'geoplatform-search' || $post->post_name == 'register' || $post->post_name == 'geoplatform-items' )
+      $geopccb_plugin_page = true;
+    elseif (is_404() || is_search() || is_tag() || is_archive()) {
+      $geopccb_plugin_page = true;
+    }
+  }
 
   // Checks three criteria that may cause the header bar to touch a grey menu bar.
   // 1) The community-links menu is above the title bar.
@@ -56,154 +69,160 @@ elseif (isset($post)){
   $geopccb_criteria_two_sub = get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_controls']) == 'on' || (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) != 'integrated');
   $geopccb_criteria_two = get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on' && is_singular() && $geopccb_criteria_two_sub;
 
-  if ( $geopccb_criteria_one || $geopccb_criteria_two )
+  // The plugin_page criteria is included in case it is a fully-exempt page.
+  if ( ($geopccb_criteria_one || $geopccb_criteria_two) && !$geopccb_plugin_page)
     echo "<div class='header-grey-border o-header__primary' data-page-title='Welcome to the GeoPlatform!'>";
   else
     echo "<div class='o-header__primary' data-page-title='Welcome to the GeoPlatform!'>";
-  ?>
 
-        <!--
-            REMOVE THIS COMMENT WHEN IMPLEMENTING...
-            Use H1 on .a-brand b/c 508 requires an H1 to appear near the top of
-            a page for screen readers to know where to start. Note that the
-            .a-brand class overrides any styles set by H1-H6, so no worries as
-            long as no blanket styles are defined for H1-H6.
-        -->
-        <h1 class="a-brand">
-            <img alt="GP" src="<?php echo get_stylesheet_directory_uri() . '/img/logo.svg' ?>" style="width:1em">
-            <a href="<?php echo home_url() ?>/" title="Home">GeoPlatform.gov</a>
-        </h1>
+        // <!--
+        //     REMOVE THIS COMMENT WHEN IMPLEMENTING...
+        //     Use H1 on .a-brand b/c 508 requires an H1 to appear near the top of
+        //     a page for screen readers to know where to start. Note that the
+        //     .a-brand class overrides any styles set by H1-H6, so no worries as
+        //     long as no blanket styles are defined for H1-H6.
+        // -->
+    echo "<h1 class='a-brand'>";
+      echo "<img alt='GP' src='" . get_stylesheet_directory_uri() . "/img/logo.svg' style='width:1em'>";
+      echo "<a href='" . home_url() . "/' title='Home'>GeoPlatform.gov</a>";
+    echo "</h1>";
 
-        <!-- Banner stuff -->
-        <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
-          <?php
-          // Search bar format determination.
-          $geopccb_search_format = get_theme_mod('searchbar_controls', $geopccb_theme_options['searchbar_controls']);
-          if ($geopccb_search_format == 'gp' && !in_array('geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())))
-            $geopccb_search_format = 'wp';
+    //Banner stuff
+    echo "<nav class='a-nav' role='navigation' aria-label='High-level navigation links' role='menu'>";
 
-          // Checks the search bar settings and switches them out as needed.
-          if ($geopccb_search_format == 'wp'){
-            echo "<a role='menuitem' class='is-hidden--xs is-hidden--sm is-hidden--md'>";
-            get_search_form();
-            echo "</a>";
-          }
-          elseif ($geopccb_search_format == 'gp'){
-            echo "<a role='menuitem' class='is-hidden--xs is-hidden--sm is-hidden--md'>";
-            get_template_part( 'gpsearch', get_post_format() );
-            echo "</a>";
-            echo "<a role='menuitem' class='d-xl-none is-hidden--xs' href='" . home_url('geoplatform-search') . "'>Search</a>";
-          }
+      // Search bar format determination.
+      $geopccb_search_format = get_theme_mod('searchbar_controls', $geopccb_theme_options['searchbar_controls']);
+      if ($geopccb_search_format == 'gp' && !in_array('geoplatform-search/geoplatform-search.php', (array) get_option( 'active_plugins', array())))
+        $geopccb_search_format = 'wp';
 
-          // Menu area for the Header Links.
-          if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'integrated'){
-            echo "<div class='a-nav__collapsible-menu'>";
+      // Checks the search bar settings and switches them out as needed.
+      if ($geopccb_search_format == 'wp'){
+        echo "<a role='menuitem' class='is-hidden--xs is-hidden--sm is-hidden--md'>";
+        get_search_form();
+        echo "</a>";
+      }
+      elseif ($geopccb_search_format == 'gp'){
+        echo "<a role='menuitem' class='is-hidden--xs is-hidden--sm is-hidden--md'>";
+        get_template_part( 'gpsearch', get_post_format() );
+        echo "</a>";
+        echo "<a role='menuitem' class='d-xl-none is-hidden--xs' href='" . home_url('geoplatform-search') . "'>Search</a>";
+      }
 
-              $geopccb_head_menu_array = array(
-                'theme_location' => 'community-links',
-                'container' => false,
-                'echo' => false,
-                // 'container_class' => 'a-nav__collapsible-menu',
-                'items_wrap' => '%3$s',
-                'depth' => 0,
-                'fallback_cb' => false,
-                'link_class' => 'is-hidden--xs is-hidden--sm',
-                'link_role' => 'menuitem',
-              );
+      // Menu area for the Header Links.
+      if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'integrated'){
+        echo "<div class='a-nav__collapsible-menu'>";
 
-              echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
-            echo "</div>";
-          }
-          ?>
-          <!-- Megamenu opener/closer -->
-          <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
-            <span class="is-hidden--xs">More</span>
-            <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
-          </a>
-        </nav>
+          $geopccb_head_menu_array = array(
+            'theme_location' => 'community-links',
+            'container' => false,
+            'echo' => false,
+            'items_wrap' => '%3$s',
+            'depth' => 0,
+            'fallback_cb' => false,
+            'link_class' => 'is-hidden--xs is-hidden--sm',
+            'link_role' => 'menuitem',
+          );
 
-        <?php
-
-        // This ENTIRE section handles the user info section.
-        $geopccb_current_user = wp_get_current_user();
-
-        $geopccb_login_url;
-        if ( is_front_page() || is_404() ){ $geopccb_login_url = home_url(); }
-        elseif ( is_category() ){ $geopccb_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) ); }
-        else { $geopccb_login_url = get_permalink(); }
-
-        if($geopccb_current_user->ID != 0) {
-
-          $geopccb_front_username_text = "";
-          $geopccb_front_loginname_text = "";
-          $geopccb_front_user_redirect = geop_ccb_getEnv('accounts_url',"https://accounts.geoplatform.gov");
-
-          if (!empty($geopccb_current_user->user_firstname) && !empty($geopccb_current_user->user_lastname))
-            $geopccb_front_username_text = $geopccb_current_user->user_firstname . " " . $geopccb_current_user->user_lastname;
-          elseif (!empty($geopccb_current_user->user_firstname) && empty($geopccb_current_user->user_lastname))
-            $geopccb_front_username_text = $geopccb_current_user->user_firstname;
-          elseif (empty($geopccb_current_user->user_firstname) && !empty($geopccb_current_user->user_lastname))
-            $geopccb_front_username_text = $geopccb_current_user->user_lastname;
-          else
-            $geopccb_front_username_text = $geopccb_current_user->user_login;
-
-          $geopccb_front_loginname_text = $geopccb_current_user->user_login;
-          $geopccb_front_user_redirect = geop_ccb_getEnv('accounts_url',"https://accounts.geoplatform.gov");
-          ?>
-
-          <!-- User section continued, HTML area -->
-          <div class="dropdown" id="geopccb_header_user_dropdown_parent">
-              <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <span class="fas fa-user"></span>
-                  <span class="is-hidden--xs"><?php echo $geopccb_front_username_text ?></span>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right" id="geopccb_header_user_dropdown_child" aria-labelledby="userSignInButton">
-                  <div class="d-flex">
-                      <div class="col u-text--center">
-                          <span class="fas fa-user fa-5x"></span>
-                          <br>
-                          <?php
-                          if($geopccb_current_user->ID != 0) { ?>
-                            <div><strong><?php echo $geopccb_front_username_text ?></strong></div>
-                            <div class="u-text--sm"><em><?php echo $geopccb_front_loginname_text ?></em></div>
-                          <?php } else { ?>
-                            <div><strong><a href="<?php echo esc_url(wp_login_url( $geopccb_login_url ) ); ?>"><?php echo $geopccb_front_username_text ?></a></strong></div>
-                          <?php } ?>
-                      </div>
-                      <div class="col">
-                          <a class="dropdown-item" href="<?php echo $geopccb_front_user_redirect ?>/profile">Edit Profile</a>
-                          <a class="dropdown-item" href="<?php echo $geopccb_front_user_redirect ?>/updatepw">Change Password</a>
-                          <?php
-                          if($geopccb_current_user->ID != 0) { ?>
-                            <a class="dropdown-item" href="<?php echo esc_url(wp_logout_url( $geopccb_login_url ) ); ?>">Sign Out</a>
-                          <?php } ?>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a> -->
-              </div>
-            <?php } else { ?>
-              <div class="dropdown" id="geopccb_header_user_dropdown_parent">
-                  <a class="btn btn-link" href="<?php echo esc_url(wp_login_url( $geopccb_login_url ) ); ?>">
-                      <span class="fas fa-user"></span>
-                      <span class="is-hidden--xs">Sign In</span>
-                  </a>
-              </div>
-
-            <?php } ?>
-        </div>
-    </div>
-
-    <?php
-    echo "<div class='community-link-menu-control'>";
-      if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above'){
-        echo "<div>";
-          geop_ccb_lower_community_links();
+          echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
         echo "</div>";
       }
-      if ((get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'off') || !is_singular() || is_404() || is_search() || is_tag() || is_archive()){
+      ?>
+
+      <!-- Megamenu opener/closer, can't be PHP echoed. -->
+      <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+        <span class="is-hidden--xs">More</span>
+        <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
+      </a>
+
+      <?php
+    echo "</nav>";
+
+    // This ENTIRE section handles the user info logic.
+    $geopccb_current_user = wp_get_current_user();
+
+    $geopccb_login_url;
+    if ( is_front_page() || is_404() ){ $geopccb_login_url = home_url(); }
+    elseif ( is_category() ){ $geopccb_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) ); }
+    else { $geopccb_login_url = get_permalink(); }
+
+    // Trigger block for if the user is valid (not ID 0).
+    if($geopccb_current_user->ID != 0) {
+
+      $geopccb_front_username_text = "";
+      $geopccb_front_loginname_text = "";
+      $geopccb_front_user_redirect = geop_ccb_getEnv('accounts_url',"https://accounts.geoplatform.gov");
+
+      if (!empty($geopccb_current_user->user_firstname) && !empty($geopccb_current_user->user_lastname))
+        $geopccb_front_username_text = $geopccb_current_user->user_firstname . " " . $geopccb_current_user->user_lastname;
+      elseif (!empty($geopccb_current_user->user_firstname) && empty($geopccb_current_user->user_lastname))
+        $geopccb_front_username_text = $geopccb_current_user->user_firstname;
+      elseif (empty($geopccb_current_user->user_firstname) && !empty($geopccb_current_user->user_lastname))
+        $geopccb_front_username_text = $geopccb_current_user->user_lastname;
+      else
+        $geopccb_front_username_text = $geopccb_current_user->user_login;
+
+      $geopccb_front_loginname_text = $geopccb_current_user->user_login;
+      $geopccb_front_user_redirect = geop_ccb_getEnv('accounts_url',"https://accounts.geoplatform.gov");
+
+        // <!-- User section continued, HTML area -->
+      echo "<div class='dropdown' id='geopccb_header_user_dropdown_parent'>";
+        echo "<button class='btn btn-link dropdown-toggle' type='button' id='userSignInButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+          echo "<span class='fas fa-user'></span>";
+          echo "<span class='is-hidden--xs'>&nbsp". $geopccb_front_username_text . "</span>";
+        echo "</button>";
+
+        echo "<div class='dropdown-menu dropdown-menu-right' id='geopccb_header_user_dropdown_child' aria-labelledby='userSignInButton'>";
+          echo "<div class='d-flex'>";
+            echo "<div class='col u-text--center'>";
+              echo "<span class='fas fa-user fa-5x'></span>";
+              echo "<br>";
+
+              if($geopccb_current_user->ID != 0) {
+                echo "<div><strong>" . $geopccb_front_username_text . "</strong></div>";
+                echo "<div class='u-text--sm'><em>" . $geopccb_front_loginname_text . "</em></div>";
+              } else {
+                echo "<div><strong><a href='" . esc_url(wp_login_url( $geopccb_login_url ) ) . "'>" . $geopccb_front_username_text . "</a></strong></div>";
+              }
+
+            echo "</div>";
+            echo "<div class='col'>";
+              echo "<a class='dropdown-item' href='" . $geopccb_front_user_redirect . "/profile'>Edit Profile</a>";
+              echo "<a class='dropdown-item' href='" . $geopccb_front_user_redirect . "/updatepw'>Change Password</a>";
+
+              if($geopccb_current_user->ID != 0) {
+                echo "<a class='dropdown-item' href='" . esc_url(wp_logout_url( $geopccb_login_url ) ) . "'>Sign Out</a>";
+              }
+
+            echo "</div>";
+          echo "</div>";
+        echo "</div>";
+      echo "</div>";
+
+    } else {
+
+      // What's output if the user is not logged in.
+      echo "<div class='dropdown' id='geopccb_header_user_dropdown_parent'>";
+        echo "<a class='btn btn-link' href='" . esc_url(wp_login_url( $geopccb_login_url ) ) . "'>";
+          echo "<span class='fas fa-user'></span>";
+          echo "<span class='is-hidden--xs'>&nbspSign In</span>";
+        echo "</a>";
+      echo "</div>";
+    }
+    echo "</div>";
+  echo "</div>";
+
+  // Title bar portion.
+  echo "<div class='community-link-menu-control'>";
+    if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above'){
+      echo "<div>";
+        geop_ccb_lower_community_links();
+      echo "</div>";
+    }
+
+    // Current page is checked for banner being off, status as not a post, or
+    // whether it's one of the filtered posts above. If it passes any, the blue
+    // title card is shown.
+    if ((get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'off') || !is_singular() || $geopccb_plugin_page){
 
         echo "<div class='o-header__secondary' style='margin-top:0px;'>";
 
@@ -226,55 +245,50 @@ elseif (isset($post)){
       }
     echo "</div>";
 
-    ?>
-    <nav class="m-megamenu" id="header-megamenu">
-        <div class="m-megamenu__content">
+    // New Megamenu area.
+    echo "<nav class='m-megamenu' id='header-megamenu'>";
+      echo "<div class='m-megamenu__content'>";
+        echo "<div class='col'>";
+          echo "<div class='d-lg-none d-xl-none'>";
+            echo "<div class='m-megamenu__heading'>Navigation</div>";
+            echo "<ul class='menu' role='menu'>";
 
-            <div class="col">
+              if ($geopccb_search_format == 'gp'){
+                  echo "<li role='menuitem'>";
+                  echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
+                  echo "</li>";
+              }
+              wp_nav_menu( array( 'theme_location' => 'community-links' ) );
 
-              <div class="d-lg-none d-xl-none">
-                  <div class="m-megamenu__heading">Navigation</div>
-                  <ul class="menu" role="menu">
-                    <?php
-                    if ($geopccb_search_format == 'gp'){
-                      echo "<li role='menuitem'>";
-                      echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
-                      echo "</li>";
-                    }
-                    wp_nav_menu( array( 'theme_location' => 'community-links' ) );
-                    ?>
+            echo "</ul>";
+            echo "<br>";
+          echo "</div>";
 
-                  </ul>
-                  <br>
-              </div>
-
-              <?php
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-left')) ? esc_html(wp_get_nav_menu_name('header-left')) : 'Example Menu Title') . "</div>";
+          echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-left')) ? esc_html(wp_get_nav_menu_name('header-left')) : 'Example Menu Title') . "</div>";
               wp_nav_menu( array( 'theme_location' => 'header-left' ) );
-              ?>
-            </div>
+          echo "</div>";
 
-            <?php
-            echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-center')) ? esc_html(wp_get_nav_menu_name('header-center')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'header-center' ) );
-            echo "</div>";
+          echo "<div class='col'>";
+            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-center')) ? esc_html(wp_get_nav_menu_name('header-center')) : 'Example Menu Title') . "</div>";
+            wp_nav_menu( array( 'theme_location' => 'header-center' ) );
+          echo "</div>";
 
-            echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col1')) ? esc_html(wp_get_nav_menu_name('header-right-col1')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'header-right-col1' ) );
-            echo "</div>";
+          echo "<div class='col'>";
+            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col1')) ? esc_html(wp_get_nav_menu_name('header-right-col1')) : 'Example Menu Title') . "</div>";
+            wp_nav_menu( array( 'theme_location' => 'header-right-col1' ) );
+          echo "</div>";
 
-            echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col2')) ? esc_html(wp_get_nav_menu_name('header-right-col2')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'header-right-col2' ) );
-            echo "</div>";
-            ?>
-        </div>
+          echo "<div class='col'>";
+            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col2')) ? esc_html(wp_get_nav_menu_name('header-right-col2')) : 'Example Menu Title') . "</div>";
+            wp_nav_menu( array( 'theme_location' => 'header-right-col2' ) );
+          echo "</div>";
 
+        echo "</div>";
+
+        ?>
+        <!-- Another section that cannot be echoed. -->
         <button type="button" class="btn btn-link btn-block" onclick="toggleClass('#header-megamenu','is-open')">
-            <span class="fas fa-caret-up"></span>
+          <span class="fas fa-caret-up"></span>
         </button>
-    </nav>
-
+      </nav>
 </header>

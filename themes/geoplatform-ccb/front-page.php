@@ -1,9 +1,13 @@
 <?php
-get_header();
+/**
+ * The GeoPlatform Front Page file.
+ *
+ * @package GeoPlatform CCB
+ *
+ * @since 3.1.3
+ */
+ get_header();
 $geopccb_theme_options = geop_ccb_get_theme_mods();
-
-// Sectioning of pages, the Loop setup, pagination, and general flow of a lot of this theme came from
-// https://www.taniarascia.com/developing-a-wordpress-theme-from-scratch/
 
 echo "<div class='l-body p-landing-page' role='main'>";
 

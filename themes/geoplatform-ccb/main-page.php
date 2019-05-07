@@ -1,6 +1,9 @@
 <?php
 /**
- * The main page template to showcase Featured Categories
+ * The main page template to showcase Featured Categories.
+ *
+ * This page no longer servers a functional purpose, but must exist to a degree
+ * for the theme to properly function.
  *
  * pagination
  * @link https://stackoverflow.com/questions/36976897/paginate-category-list-wordpress
@@ -14,40 +17,28 @@
  */
 ?>
 
-<div class="whatsNew section--linked">
-  <div class="container-fluid">
-    <div class="col-lg-12">
-        <h4 class="heading text-centered">
-		        <div class="line"></div>
-                <div class="line-arrow"></div>
-              <div class="title darkened">
+<div class='whatsNew section--linked'>
+  <div class='container-fluid'>
+    <div class='col-lg-12'>
+        <h4 class='heading text-centered'>
+		        <div class='line'></div>
+                <div class='line-arrow'></div>
+              <div class='title darkened'>
                 <?php _e( 'Featured', 'geoplatform-ccb'); ?>
               </div>
         </h4>
-        <div class="row">
-          <div class="col-md-12">
+        <div class='row'>
+          <div class='col-md-12'>
             <?php
               $geopccb_category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
               $geopccb_default_text_template = __( "The category photo(s) above have a default image in them. If you would like to edit your category card photos, please navigate to Posts(or Pages)->Categories to edit and set your specfic category image", 'geoplatform-ccb');
               $geopccb_image_set = false;
-
-              //pagination
-              // if ( get_query_var('paged') ) {
-              //          $geopccb_paged = get_query_var('paged');
-              //      } else if ( get_query_var('page') ) {
-              //          $geopccb_paged = get_query_var('page');
-              //      } else {$geopccb_paged = 1;}
-              // $geopccb_per_page = 12;
-              // $geopccb_paged_offset = ($geopccb_paged - 1) * $geopccb_per_page;
 
               //getting the categories
               $geopccb_categories = get_categories( array(
                   'orderby'   => 'name',
                   'order'     => 'ASC',
                   'hide_empty'=> 0,
-                  // 'number'    => $geopccb_per_page,
-                  // 'paged'     => $geopccb_paged,
-                  // 'offset'    => $geopccb_paged_offset
               ) );
 
               // Excludes front-page category.
@@ -217,30 +208,22 @@
                 $geopccb_featured_card_outline = "-webkit-text-stroke-width: 0.5px; -webkit-text-stroke-color: #000000;";
 
 
-              // for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
-              //   echo '<ol>';
-              //   foreach($geopccb_final_objects_array[$i] as $text){
-              //     echo '<li>' . $text . "</li>";
-              //   };
-              //   echo '</ol>';
-              // }
-
               // Final output.
               for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
                 ?>
-                <div class="col-sm-6 col-md-6 col-lg-4 col-xlg-4">
-                  <div class="gp-ui-card gp-ui-card--md gp-ui-card text-center">
+                <div class='col-sm-6 col-md-6 col-lg-4 col-xlg-4'>
+                  <div class='gp-ui-card gp-ui-card--md gp-ui-card text-center'>
                     <a style="background-image:<?php echo $geopccb_featured_card_fade ?>, url(<?php echo esc_url($geopccb_final_objects_array[$i]['thumb']) ?>);"
                       href="<?php echo esc_url( $geopccb_final_objects_array[$i]['url'] ) ?>"
                       alt="<?php echo esc_attr( __( 'More information', 'geoplatform-ccb' ) ) ?>"
-                      class="media embed-responsive embed-responsive-16by9" id="module">
-                        <h3 id="mid"><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( __( $geopccb_final_objects_array[$i]['name'], 'geoplatform-ccb' ) ) ?></span></h3>
+                      class='media embed-responsive embed-responsive-16by9' id='module'>
+                        <h3 id='mid'><span style="<?php echo $geopccb_featured_card_outline ?>"><?php echo esc_attr( __( $geopccb_final_objects_array[$i]['name'], 'geoplatform-ccb' ) ) ?></span></h3>
                     </a>
                   </div><!--#gp-ui-card gp-ui-card-md gp-ui-card text-center-->
                 </div><!--#col-sm-6 col-md-6 col-lg-4 col-xlg-4-->
             <?php } //foreach ?>
 
-            <div class="col-md-12">
+            <div class='col-md-12'>
               <p>
                 <?php
                 // if ($geopccb_image_set == true) {
@@ -259,8 +242,8 @@
       </div><!-- #col-lg-12 -->
     </div><!-- #container-fluid -->
     <br>
-    <div class="footing">
-      <div class="line-cap"></div>
-      <div class="line"></div>
+    <div class='footing'>
+      <div class='line-cap'></div>
+      <div class='line'></div>
     </div><!-- #footing -->
 </div><!--whatsNew section-linked-->
