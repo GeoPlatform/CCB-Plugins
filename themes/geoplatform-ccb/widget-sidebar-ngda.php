@@ -1,4 +1,15 @@
 <?php
+/**
+ * Template Name: Widget Sidebar NGDA
+ *
+ * Widget for the sidebar, displays an NGDA info card.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 class Geopccb_Side_Content_NGDA_Widget extends WP_Widget {
 
   // Constructor. Simple.

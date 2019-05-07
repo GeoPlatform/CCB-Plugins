@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying Tag archive
+ * The template for displaying Tag the archive
  *
  * @package GeoPlatform CCB
  *
@@ -12,12 +12,10 @@
 get_header();
 get_template_part( 'sub-header-tag', get_post_format() );
 
-?>
-<div class="l-body l-body--two-column">
-	<div class="l-body__main-column">
-		<?php
+echo "<div class='l-body l-body--two-column'>";
+	echo "<div class='l-body__main-column'>";
 
-		//gets id of current category
+		//gets id of current tag
 		$geopccb_tag = $wp_query->get_queried_object();
 
 		// Time for posts, pages, and cat links.
@@ -37,7 +35,6 @@ get_template_part( 'sub-header-tag', get_post_format() );
       'tag'=> $geopccb_tag->id,
 			'post_status' => $geop_ccb_private_perm
     ));
-
 
     // Mimics the old way of populating, but functional. Grabs all pages.
     if ($geopccb_featured_sort_format == 'date'){
@@ -83,21 +80,20 @@ get_template_part( 'sub-header-tag', get_post_format() );
 			$geopccb_link_url = get_the_permalink($geopccb_post);
 			if (get_post_type($geopccb_post) == 'geopccb_catlink')
 				$geopccb_link_url = esc_url($geopccb_post->geop_ccb_cat_link_url);
-    	?>
 
-			<div class="m-article m-article--flex">
-				<a class="m-article__thumbnail is-16x9" href="<?php echo $geopccb_link_url; ?>">
-					<img alt="Article Heading" src="<?php echo $geopccb_archive_disp_thumb ?>">
-				</a>
-				<div class="m-article__body">
-					<a class="m-article__heading" href="<?php echo $geopccb_link_url; ?>"><?php echo get_the_title($geopccb_post) ?></a>
-					<div class="m-article__desc"><?php echo get_the_date("F j, Y", $geopccb_post->ID) ?></div>
-					<div class="m-article__desc"><?php echo esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) ?></div>
-				</div>
-			</div>
- 		<?php } ?>
+			echo "<div class='m-article m-article--flex'>";
+				echo "<a class='m-article__thumbnail is-16x9' href='" . $geopccb_link_url . "'>";
+					echo "<img alt='Article Heading' src='" . $geopccb_archive_disp_thumb . "'>";
+				echo "</a>";
+				echo "<div class='m-article__body'>";
+					echo "<a class='m-article__heading' href='" . $geopccb_link_url . "'>" . get_the_title($geopccb_post) . "</a>";
+					echo "<div class='m-article__desc'>" . get_the_date('F j, Y', $geopccb_post->ID) . "</div>";
+					echo "<div class='m-article__desc'>" . esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) . "</div>";
+				echo "</div>";
+			echo "</div>";
+ 		}
 
-  </div>
-  <?php get_template_part( 'sidebar', get_post_format() ); ?>
-</div>
-<?php get_footer(); ?>
+  echo "</div>";
+  get_template_part( 'sidebar', get_post_format() );
+echo "</div>";
+get_footer();

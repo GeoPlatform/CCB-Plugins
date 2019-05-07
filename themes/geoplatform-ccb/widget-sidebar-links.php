@@ -1,4 +1,15 @@
 <?php
+/**
+ * Template Name: Widget Sidebar Links
+ *
+ * Widget for the sidebar, displays a title and list of links from a category.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 
   // Constructor. Simple.
@@ -19,10 +30,6 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
       $geopportal_side_cont_link_title = apply_filters('widget_title', $instance['geopportal_side_cont_link_title']);
 		else
       $geopportal_side_cont_link_title = "Side Content";
-		// if (array_key_exists('geopportal_side_cont_link_content', $instance) && isset($instance['geopportal_side_cont_link_content']) && !empty($instance['geopportal_side_cont_link_content']))
-    //   $geopportal_side_cont_link_content = apply_filters('widget_title', $instance['geopportal_side_cont_link_content']);
-		// else
-    //   $geopportal_side_cont_link_content = "";
 		if (array_key_exists('geopportal_side_cont_link_link', $instance) && isset($instance['geopportal_side_cont_link_link']) && !empty($instance['geopportal_side_cont_link_link']))
       $geopportal_side_cont_link_link = apply_filters('widget_title', $instance['geopportal_side_cont_link_link']);
 		else
@@ -75,19 +82,12 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
       }
       $geopportal_pages_final = $geopportal_pages_trimmed;
     }
-		?>
 
-		<!--
-		SIDEBAR CONTENT LINKS
-		-->
-		<article class="m-article">
-      <div class="m-article__heading"><?php _e(sanitize_text_field($geopportal_side_cont_link_title), 'geoplatform-ccb') ?></div>
-      <!-- <div class="m-article__desc"> -->
-				<?php //echo do_shortcode($geopportal_side_cont_link_content) ?>
-      <!-- </div> -->
-      <div class="m-article__desc m-list">
+		// SIDEBAR CONTENT LINKS
+		echo "<article class='m-article'>";
+      echo "<div class='m-article__heading'>" . __(sanitize_text_field($geopportal_side_cont_link_title), 'geoplatform-ccb') . "</div>";
+      echo "<div class='m-article__desc m-list'>";
 
-				<?php
 				foreach ($geopportal_pages_final as $geopportal_post){
 
 					// Makes sure the excerpt is only one sentence.
@@ -97,35 +97,23 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 						$geopportal_post_explode = explode('.', $geopportal_post->post_excerpt);
 						$geopportal_post_excerpt = $geopportal_post_explode[0] . ".";
 					}
-				?>
 
-        <div class="m-list__item">
-          <a class="is-linkless" href="<?php echo get_the_permalink($geopportal_post); ?>"><?php echo get_the_title($geopportal_post); ?></a>
-          <div class="m-list__item__text"><?php _e(sanitize_text_field($geopportal_post_excerpt), 'geoplatform-ccb') ?></div>
-        </div>
+        echo "<div class='m-list__item'>";
+          echo "<a class='is-linkless' href='" . get_the_permalink($geopportal_post) . "'>" . get_the_title($geopportal_post) . "</a>";
+          echo "<div class='m-list__item__text'>" . __(sanitize_text_field($geopportal_post_excerpt), 'geoplatform-ccb') . "</div>";
+        echo "</div>";
 
-				<?php	} ?>
+				}
 
-      </div>
-    </article>
-    <?php
-	}
+      echo "</div>";
+    echo "</article>";
+  }
 
   // The admin side of the widget.
 	public function form( $instance ) {
 
-		// Checks if the Content Boxes plugin is installed.
-		// $geopportal_side_cont_link_cb_bool = false;
-		// $geopportal_side_cont_link_cb_message = "Content Blocks plugin not found.";
-		// if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) )){
-		// 	$geopportal_side_cont_link_cb_bool = true;
-		// 	$geopportal_side_cont_link_cb_message = "Click here to edit this content block";
-		// }
-
     // Checks for entries in the widget admin boxes and provides defaults if empty.
-    // $geopportal_side_cont_link_title = ! empty( $instance['geopportal_side_cont_link_title'] ) ? $instance['geopportal_side_cont_link_title'] : 'Features &amp; Announcements';
 		$geopportal_side_cont_link_title = ! empty( $instance['geopportal_side_cont_link_title'] ) ? $instance['geopportal_side_cont_link_title'] : 'Themes';
-		// $geopportal_side_cont_link_content = ! empty( $instance['geopportal_side_cont_link_content'] ) ? $instance['geopportal_side_cont_link_content'] : '';
 		$geopportal_side_cont_link_link = ! empty( $instance['geopportal_side_cont_link_link'] ) ? $instance['geopportal_side_cont_link_link'] : '';
 
 		// HTML for the widget control box.
@@ -145,26 +133,8 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
-		// Checks if the Content Boxes plugin is installed.
-		// $geopportal_side_cont_link_cb_bool = false;
-		// if (in_array( 'custom-post-widget/custom-post-widget.php', (array) get_option( 'active_plugins', array() ) ))
-		// 	$geopportal_side_cont_link_cb_bool = true;
-
-    // $instance[ 'geopportal_side_cont_link_title' ] = strip_tags( $new_instance[ 'geopportal_side_cont_link_title' ] );
 		$instance[ 'geopportal_side_cont_link_title' ] = strip_tags( $new_instance[ 'geopportal_side_cont_link_title' ] );
-		// $instance[ 'geopportal_side_cont_link_content' ] = strip_tags( $new_instance[ 'geopportal_side_cont_link_content' ] );
 		$instance[ 'geopportal_side_cont_link_link' ] = strip_tags( $new_instance[ 'geopportal_side_cont_link_link' ] );
-
-		// Validity check for the content box URL.
-		// if (array_key_exists('geopportal_side_cont_link_content', $instance) && isset($instance['geopportal_side_cont_link_content']) && !empty($instance['geopportal_side_cont_link_content']) && $geopportal_side_cont_link_cb_bool){
-	  // 	$geopportal_side_cont_link_temp_url = preg_replace('/\D/', '', $instance[ 'geopportal_side_cont_link_content' ]);
-	  // 	if (is_numeric($geopportal_side_cont_link_temp_url))
-	  //   	$geopportal_side_cont_link_url = home_url() . "/wp-admin/post.php?post=" . $geopportal_side_cont_link_temp_url . "&action=edit";
-	  // 	else
-	  //   	$geopportal_side_cont_link_url = home_url();
-		// }
-		// else
-		// 	$geopportal_side_cont_link_url = home_url();
 
 		return $instance;
 	}

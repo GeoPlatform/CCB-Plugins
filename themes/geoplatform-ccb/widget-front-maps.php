@@ -1,4 +1,15 @@
 <?php
+/**
+ * Template Name: Widget Front Maps
+ *
+ * Widget for the front page, displays a list of maps in tile format using a gallery ID input.
+ *
+ * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
+ *
+ * @package Geoplatform CCB
+ *
+ * @since 2.0.0
+ */
 class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 
   // Constructor. Simple.
@@ -19,7 +30,6 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
       $geopccb_gallery_id = apply_filters('widget_title', $instance['geopccb_gallery_id']);
 		else
     	$geopccb_gallery_id = "aea7f60a21362a06dbc11bb37078df38";
-			//https://ual.geoplatform.gov/api/galleries/
 
 		$geopccb_invalid_bool = false;
 		$geopccb_error_report = '';
@@ -70,7 +80,6 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 				$geopccb_error_report = 'There are no items in this gallery, or the map service could not otherwise be contacted.';
 			}
 		}
-
 
 		// Further operations continue only if all validity checks pass.
 		if( !$geopccb_invalid_bool ) {
