@@ -2,7 +2,7 @@
 /**
  * The main page template to showcase Featured Categories.
  *
- * This page no longer servers a functional purpose, but must exist to a degree
+ * This page no longer serves a functional purpose, but must exist to a degree
  * for the theme to properly function.
  *
  * pagination
