@@ -136,21 +136,6 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         </div>
     </div>
 
-    <script>
-      // jQuery(document).ready(function() {
-      //   jQuery("#userSignInButton").click(function(e){
-      //     if (jQuery("#geopportal_header_user_dropdown_parent").hasClass("show")){
-      //       jQuery("#geopportal_header_user_dropdown_parent").removeClass("show");
-      //       jQuery("#geopportal_header_user_dropdown_child").removeClass("show");
-      //     }
-      //     else {
-      //       jQuery("#geopportal_header_user_dropdown_parent").addClass("show");
-      //       jQuery("#geopportal_header_user_dropdown_child").addClass("show");
-      //     }
-      //   });
-      // });
-    </script>
-
     <div class="o-header__secondary">
 
         <?php
