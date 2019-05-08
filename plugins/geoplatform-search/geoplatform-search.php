@@ -264,7 +264,6 @@ function geopsearch_ajax_search( $request ) {
 	if ($post_type == 'media'){
 	  $geopsearch_media_args = array(
 			'post_type'      => 'attachment',
-			'post_mime_type' => 'image',
 			'post_status'    => 'inherit',
 			'posts_per_page' => - 1,
 			'author_name' => $search_author,
