@@ -117,7 +117,7 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// from Font Awesome icons to glyphicons and adjust some text sizes. More
 	// functionality may be included in the future.
 	$geopmap_theme = 'F';
-	if (wp_get_theme()->get('Name') == 'Geoplatform Portal 4.0')
+	if (file_exists(get_template_directory() . '/css/geop-style.css'))
 		$geopmap_theme = 'T';
 
 	// Creates an empty error text report string, grabs the map_id string after
@@ -218,7 +218,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 	?>
 			<div class="geop-container-controls" id="image_<?php echo $geopmap_divrand; ?>" src="" alt="Thumbnail failed to load" style="background-image: url( <?php echo $geopmap_ual_url . '/api/maps/' . esc_attr($geopmap_shortcode_array['id']) . '/thumbnail' ?> );" onerror="geopmap_thumb_error(this);"></div>
 		 	<div class="geop-title-grad-div" id="title_<?php echo $geopmap_divrand ?>">
-		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text">
+		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text geop-text-shadow">
 		 			<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 		 		</a>
 		 		<div>
@@ -501,7 +501,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank"})
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none; border-bottom-color:#ffffff;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank"})
 					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
