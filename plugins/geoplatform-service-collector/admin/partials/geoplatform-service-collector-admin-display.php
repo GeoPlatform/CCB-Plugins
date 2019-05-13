@@ -43,22 +43,144 @@
         </p>
       </div>
       <legend class="screen-reader-text"><span><?php _e('Please input a community ID', $this->plugin_name); ?></span></legend>
-      <p>Please input a title:&nbsp
+      <p>
+        Input a title:&nbsp
         <input type="text" class="regular-text" id="serve_name_in" name="<?php echo $this->plugin_name; ?>[serve_name]" value="<?php if(!empty($serve_name)) echo esc_attr($serve_name); ?>"/>
-        &nbsp&nbsp&nbsp&nbspPlease input a community ID:&nbsp
-        <input type="text" class="regular-text" id="serve_id_in" name="<?php echo $this->plugin_name; ?>[serve_id]" value="<?php if(!empty($serve_id)) echo esc_attr($serve_id); ?>"/>
         &nbsp&nbsp&nbsp&nbspResult Count:&nbsp
         <input type="number" class="regular-text" id="serve_count" value="6" name="<?php echo $this->plugin_name; ?>[serve_count]" style="width:5em;"/>
       </p>
       <hr>
-      <p>Choose to capture results by community or theme
+      <p>
+        Choose a standard or compact output format.
         <table>
           <tr>
             <th>
-              <input type="radio" name="serve_source_group" class="regular-text" id="serve_source_community" value="serve_source_community" checked>Community&nbsp&nbsp
+              <input type="radio" name="serve_format_group" class="regular-text" id="serve_format_standard" value="serve_format_standard" checked>Standard&nbsp&nbsp
             </th>
             <th>
-              <input type="radio" name="serve_source_group" class="regular-text" id="serve_source_theme" value="serve_source_theme">Theme&nbsp&nbsp
+              <input type="radio" name="serve_format_group" class="regular-text" id="serve_format_compact" value="serve_format_compact">Compact&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        Enable pagination:&nbsp&nbsp
+        <input type="checkbox" class="regular-text" id="serve_pageinate" value="serve_pageinate">
+      </p>
+      <hr>
+      <p>
+        Choose the search bar format.
+        <br>
+        For "Standard", the search keywords are used to narrow down results provided using the initial criteria.
+        <br>
+        For "GeoPlatform Search", select the asset types to search for. The search bar will collect criteria and redirect to the GeoPlatform Search interface. If the GeoPlatform Search plugin is not installed, the output will default to "Hidden".
+        <br>
+        For "Hidden", the search bar will not be shown. Type selection is unimportant.
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_search_group" class="regular-text" id="serve_search_standard" value="serve_search_standard" checked>Standard&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_search_group" class="regular-text" id="serve_search_geoplatform" value="serve_search_geoplatform">GeoPlatform&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_search_group" class="regular-text" id="serve_search_hidden" value="serve_search_hidden">Hidden&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p>
+      <hr>
+      <p>
+        Please insert initial display criteria in the proper boxes and check those that you wish to apply to the carousel.
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_community_bool" value="serve_type_community_bool">
+              Community&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text" id="serve_type_community_text" value=""/>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_theme_bool" value="serve_type_theme_bool">
+              Theme&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text" id="serve_type_theme_text" value=""/>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_title_bool" value="serve_type_title_bool">
+              Title/Label&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text" id="serve_type_title_text" value=""/>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_keyword_bool" value="serve_type_keyword_bool">
+              Keyword&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text" id="serve_type_keyword_text" value=""/>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_topic_bool" value="serve_type_topic_bool">
+              Topic&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text" id="serve_type_topic_text" value=""/>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_usedby_bool" value="serve_type_usedby_bool">
+              Used By&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text" id="serve_type_usedby_text" value=""/>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_class_bool" value="serve_type_class_bool">
+              Classifier&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text" id="serve_type_class_text" value=""/>
             </th>
           </tr>
         </table>
@@ -82,6 +204,18 @@
             <th>
               <input type="checkbox" class="regular-text" id="serve_cat_gallery" value="serve_cat_gallery">Gallery&nbsp&nbsp
             </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_community" value="serve_cat_community">Community&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_app" value="serve_cat_app">Application&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_topic" value="serve_cat_topic">Topic&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_website" value="serve_cat_website">Website&nbsp&nbsp
+            </th>
           </tr>
         </table>
       </p>
@@ -97,7 +231,7 @@
         	<thead>
         	<tr>
         		<th class="row-title"><?php esc_attr_e( 'Title', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Community', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Filter Criteria', 'geoplatform-serves' ); ?></th>
         		<th><?php esc_attr_e( 'Output Types', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Output Count', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Source Format', 'geoplatform-serves' ); ?></th>
@@ -126,6 +260,10 @@
             (substr(($geopserve_entry->serve_cat), 2, 1) == 'T') ? array_push($geopserve_cat_array, 'Layers') : '';
             (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
             (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
+            (substr(($geopserve_entry->serve_cat), 5, 1) == 'T') ? array_push($geopserve_cat_array, 'Communities') : '';
+            (substr(($geopserve_entry->serve_cat), 6, 1) == 'T') ? array_push($geopserve_cat_array, 'Applications') : '';
+            (substr(($geopserve_entry->serve_cat), 7, 1) == 'T') ? array_push($geopserve_cat_array, 'Topics') : '';
+            (substr(($geopserve_entry->serve_cat), 8, 1) == 'T') ? array_push($geopserve_cat_array, 'Websites') : '';
             $geopserve_cat_out = implode(", ", $geopserve_cat_array);
 
             (is_null($geopserve_entry->serve_source) || empty($geopserve_entry->serve_source)) ? $geopserve_source_out = 'Community' : $geopserve_source_out = ucfirst($geopserve_entry->serve_source);

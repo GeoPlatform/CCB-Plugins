@@ -51,6 +51,25 @@ class Geoplatform_Service_Collector_Activator {
 	    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 	    dbDelta($geopserve_sql);
 	  }
+
+		// if($wpdb->get_var("show tables like '$geopserve_table_name'") != $geopserve_table_name){
+	  //   $geopserve_sql = "CREATE TABLE $geopserve_table_name (
+	  //     id mediumint(9) NOT NULL AUTO_INCREMENT,
+	  //     time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+	  //     serve_num varchar(255) NOT NULL,
+		// 		serve_id varchar(255) NOT NULL,
+	  //     serve_name varchar(255) NOT NULL,
+		// 		serve_title varchar(255) NOT NULL,
+		// 		serve_cat varchar(255) NOT NULL,
+		// 		serve_count varchar(255) NOT NULL,
+		// 		serve_source varchar(255) NOT NULL,
+		// 		serve_shortcode varchar(255) NOT NULL,
+	  //     PRIMARY KEY  (id)
+	  //   ) $geopserve_charset_collate;";
+		//
+	  //   require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	  //   dbDelta($geopserve_sql);
+	  // }
 	}
 
 	/**
