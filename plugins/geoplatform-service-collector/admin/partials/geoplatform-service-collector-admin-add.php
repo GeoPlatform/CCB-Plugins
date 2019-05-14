@@ -150,6 +150,7 @@ if ($geopserve_valid_bool == 'true'){
   elseif ($geopserve_search_hidden == 'true')
     $geopserve_search_final = "hide";
 
+
   // Begin shortcode construction. Adds title, count, cats, and adds, which are
   // mandatory for each carousel.
   $geopserve_shortcode_final = "[geopserve title='" . $geopserve_title . "' count='" . $geopserve_count . "' cat='" . $geopserve_cats_final . "' adds='" . $geopserve_adds_final . "'";

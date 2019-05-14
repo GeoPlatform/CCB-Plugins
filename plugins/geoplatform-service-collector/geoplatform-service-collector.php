@@ -98,6 +98,35 @@ function run_geoplatform_service_collector() {
 run_geoplatform_service_collector();
 
 
+function geopserve_shortcode_generation($geopserve_atts){
+	// Establishes a base array with default values required for shortcode creation
+	// and overwrites them with values from $geopserve_atts.
+	$geopserve_shortcode_array = shortcode_atts(array(
+		'title' => '',
+		'count' => '6',
+		'cat' => 'TFFFFFF',
+		'adds' => 'TTF',
+		'form' => 'standard',
+		'search' => 'stand',
+		'community' => '',
+		'theme' => '',
+		'label' => '',
+		'keyword' => '',
+		'topic' => '',
+		'usedby' => '',
+		'class' => ''
+	), $geopserve_atts);
+	ob_start();
+
+
+
+
+
+
+
+
+}
+
 // The Asset Carousel output operates by using a shortcode invocation of a
 // carousel. This is handled below.
 function geopserve_com_shortcodes_creation($geopserve_atts){
@@ -356,11 +385,11 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 }
 
 // Adds the shortcode hook to init.
-function geopserve_com_shortcodes_init()
+function geopserve_shortcodes_init()
 {
-    add_shortcode('geopserve', 'geopserve_com_shortcodes_creation');
+    add_shortcode('geopserve', 'geopserve_shortcode_generation');
 }
-add_action('init', 'geopserve_com_shortcodes_init');
+add_action('init', 'geopserve_shortcodes_init');
 
 // AJAX handling only seems to function properly if both the hooks and PHP
 // functions are placed in this file. Instead of producing clutter, the files
