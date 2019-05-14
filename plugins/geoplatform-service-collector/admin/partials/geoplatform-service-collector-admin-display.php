@@ -45,9 +45,9 @@
       <legend class="screen-reader-text"><span><?php _e('Please input a community ID', $this->plugin_name); ?></span></legend>
       <p>
         Input a title:&nbsp
-        <input type="text" class="regular-text" id="serve_name_in" name="<?php echo $this->plugin_name; ?>[serve_name]" value="<?php if(!empty($serve_name)) echo esc_attr($serve_name); ?>"/>
+        <input type="text" class="regular-text" id="serve_name_in" value="<?php if(!empty($serve_name)) echo esc_attr($serve_name); ?>"/>
         &nbsp&nbsp&nbsp&nbspResult Count:&nbsp
-        <input type="number" class="regular-text" id="serve_count" value="6" name="<?php echo $this->plugin_name; ?>[serve_count]" style="width:5em;"/>
+        <input type="number" class="regular-text" id="serve_count" value="6" min='1' style="width:5em;"/>
       </p>
       <hr>
       <p>
@@ -64,8 +64,19 @@
         </table>
       </p>
       <p>
+        Display title:&nbsp&nbsp
+        <input type="checkbox" class="regular-text" id="serve_title_bool" value="serve_title_bool" checked>
+      </p>
+      <p>
+        Display tabs:&nbsp&nbsp
+        <input type="checkbox" class="regular-text" id="serve_tabs_bool" value="serve_tabs_bool" checked>
+      </p>
+      <p>
         Enable pagination:&nbsp&nbsp
-        <input type="checkbox" class="regular-text" id="serve_pageinate" value="serve_pageinate">
+        <input type="checkbox" class="regular-text" id="serve_page_bool" value="serve_page_bool">
+      </p>
+      <p>
+        Be advised that if tabs are hidden, only the first item type (as determined by the items to be included in the output) can be displayed.
       </p>
       <hr>
       <p>
@@ -231,10 +242,12 @@
         	<thead>
         	<tr>
         		<th class="row-title"><?php esc_attr_e( 'Title', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Output Format', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Filter Criteria', 'geoplatform-serves' ); ?></th>
         		<th><?php esc_attr_e( 'Output Types', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Search Format', 'geoplatform-serves' ); ?></th>
+            <th><?php esc_attr_e( 'Additional Elements', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Output Count', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Source Format', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Shortcode', 'geoplatform-serves' ); ?></th>
             <th><?php esc_attr_e( 'Controls', 'geoplatform-serves' ); ?></th>
         	</tr>
@@ -247,7 +260,7 @@
            * looped through. Each loop pulls information from a specific table
            * row and uses it to construct a page row.
           */
-          $geopserve_table_name = $wpdb->prefix . "geop_serve_db";
+          $geopserve_table_name = $wpdb->prefix . "geop_asset_db";
           $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
 
           foreach ($geopserve_retrieved_data as $geopserve_entry){
