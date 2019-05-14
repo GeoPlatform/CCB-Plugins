@@ -237,63 +237,91 @@
     <input type="submit" id="geopserve_add_action" value="Add Carousel"/>
  <!-- Procedural table creation block.  Here the carousel collection output is
       set. It begins with the header of the table.-->
-      <p><strong>Carousel Details Table</strong></p>
-        <table class="widefat">
-        	<thead>
-        	<tr>
-        		<th class="row-title"><?php esc_attr_e( 'Title', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Output Format', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Filter Criteria', 'geoplatform-serves' ); ?></th>
-        		<th><?php esc_attr_e( 'Output Types', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Search Format', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Additional Elements', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Output Count', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Shortcode', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Controls', 'geoplatform-serves' ); ?></th>
-        	</tr>
-        	</thead>
-        	<tbody>
+    <?php
+    echo "<p><strong>Carousel Details Table</strong></p>";
+    echo "<table class='widefat'>";
+      echo "<thead>";
+        echo "<tr>";
+        	echo "<th class='row-title'>Title</th>";
+          echo "<th>Output Format</th>";
+          echo "<th>Filter Criteria</th>";
+        	echo "<th>Output Types</th>";
+          echo "<th>Search Format</th>";
+          echo "<th>Additional Elements</th>";
+          echo "<th>Output Count</th>";
+          echo "<th>Shortcode</th>";
+          echo "<th>Controls</th>";
+        echo "</tr>";
+      echo "</thead>";
+      echo "<tbody>";
 
-          <?php
-          /* The actual table construction. The data is pulled from the database
-           * and translated into usable table information. The table is then
-           * looped through. Each loop pulls information from a specific table
-           * row and uses it to construct a page row.
-          */
-          $geopserve_table_name = $wpdb->prefix . "geop_asset_db";
-          $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
+        /* The actual table construction. The data is pulled from the database
+         * and translated into usable table information. The table is then
+         * looped through. Each loop pulls information from a specific table
+         * row and uses it to construct a page row.
+        */
+        $geopserve_table_name = $wpdb->prefix . "geop_asset_db";
+        $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
 
-          foreach ($geopserve_retrieved_data as $geopserve_entry){
+        foreach ($geopserve_retrieved_data as $geopserve_entry){
 
-            // Most data can be pulled straight from the database for use. Cats
-            // however are translated into a string of values for output.
-            $geopserve_cat_array = array();
-            (substr(($geopserve_entry->serve_cat), 0, 1) == 'T') ? array_push($geopserve_cat_array, 'Datasets') : '';
-            (substr(($geopserve_entry->serve_cat), 1, 1) == 'T') ? array_push($geopserve_cat_array, 'Services') : '';
-            (substr(($geopserve_entry->serve_cat), 2, 1) == 'T') ? array_push($geopserve_cat_array, 'Layers') : '';
-            (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
-            (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
-            (substr(($geopserve_entry->serve_cat), 5, 1) == 'T') ? array_push($geopserve_cat_array, 'Communities') : '';
-            (substr(($geopserve_entry->serve_cat), 6, 1) == 'T') ? array_push($geopserve_cat_array, 'Applications') : '';
-            (substr(($geopserve_entry->serve_cat), 7, 1) == 'T') ? array_push($geopserve_cat_array, 'Topics') : '';
-            (substr(($geopserve_entry->serve_cat), 8, 1) == 'T') ? array_push($geopserve_cat_array, 'Websites') : '';
-            $geopserve_cat_out = implode(", ", $geopserve_cat_array);
+          // Most data can be pulled straight from the database for use. Some
+          // though require translation from the database into human reading.
 
-            (is_null($geopserve_entry->serve_source) || empty($geopserve_entry->serve_source)) ? $geopserve_source_out = 'Community' : $geopserve_source_out = ucfirst($geopserve_entry->serve_source);
-            ?>
-            <tr>
-          		<td><?php echo esc_attr($geopserve_entry->serve_title); ?></td>
-              <td><?php echo esc_attr($geopserve_entry->serve_name); ?></td>
-              <td><?php echo esc_attr($geopserve_cat_out); ?></td>
-          		<td><?php echo esc_attr($geopserve_entry->serve_count); ?></td>
-              <td><?php echo esc_attr($geopserve_source_out); ?></td>
-              <td><code><?php echo esc_attr($geopserve_entry->serve_shortcode); ?></code></td>
-              <td>
-                <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_num; ?>">Remove Carousel</button>
-              </td>
-          	</tr><?php
-          }?>
-        </table>
-    </form>
-</div>
-<?php
+          // DB to human reading for filter criteria.
+          $geopserve_crit_array = array();
+          (substr(($geopserve_entry->serve_format), 0, 1) == 'T') ? array_push($geopserve_crit_array, 'Communities') : '';
+          (substr(($geopserve_entry->serve_format), 1, 1) == 'T') ? array_push($geopserve_crit_array, 'Themes') : '';
+          (substr(($geopserve_entry->serve_format), 2, 1) == 'T') ? array_push($geopserve_crit_array, 'Titles/Labels') : '';
+          (substr(($geopserve_entry->serve_format), 3, 1) == 'T') ? array_push($geopserve_crit_array, 'Keywords') : '';
+          (substr(($geopserve_entry->serve_format), 4, 1) == 'T') ? array_push($geopserve_crit_array, 'Topics') : '';
+          (substr(($geopserve_entry->serve_format), 5, 1) == 'T') ? array_push($geopserve_crit_array, 'Used By') : '';
+          (substr(($geopserve_entry->serve_format), 6, 1) == 'T') ? array_push($geopserve_crit_array, 'Classifiers') : '';
+          $geopserve_crit_out = implode(", ", $geopserve_crit_array);
+
+          // Active tab translator.
+          $geopserve_cat_array = array();
+          (substr(($geopserve_entry->serve_cat), 0, 1) == 'T') ? array_push($geopserve_cat_array, 'Datasets') : '';
+          (substr(($geopserve_entry->serve_cat), 1, 1) == 'T') ? array_push($geopserve_cat_array, 'Services') : '';
+          (substr(($geopserve_entry->serve_cat), 2, 1) == 'T') ? array_push($geopserve_cat_array, 'Layers') : '';
+          (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
+          (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
+          (substr(($geopserve_entry->serve_cat), 5, 1) == 'T') ? array_push($geopserve_cat_array, 'Communities') : '';
+          (substr(($geopserve_entry->serve_cat), 6, 1) == 'T') ? array_push($geopserve_cat_array, 'Applications') : '';
+          (substr(($geopserve_entry->serve_cat), 7, 1) == 'T') ? array_push($geopserve_cat_array, 'Topics') : '';
+          (substr(($geopserve_entry->serve_cat), 8, 1) == 'T') ? array_push($geopserve_cat_array, 'Websites') : '';
+          $geopserve_cat_out = implode(", ", $geopserve_cat_array);
+
+          // Search bar format translator.
+          $geopserve_search_out = "Standard";
+          if ($geopserve_entry->serve_search == 'geop')
+            $geopserve_search_out = "GeoPlatform";
+          elseif ($geopserve_entry->serve_search == 'hide')
+            $geopserve_search_out = "Hidden";
+
+          // Additional settings translator.
+          $geopserve_adds_array = array();
+          (substr(($geopserve_entry->serve_adds), 0, 1) == 'T') ? array_push($geopserve_adds_array, 'Title') : '';
+          (substr(($geopserve_entry->serve_adds), 1, 1) == 'T') ? array_push($geopserve_adds_array, 'Tabs') : '';
+          (substr(($geopserve_entry->serve_adds), 2, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
+          $geopserve_adds_out = implode(", ", $geopserve_adds_array);
+
+          // Begin output.
+          echo "<tr>";
+          	echo "<td>" . esc_attr($geopserve_entry->serve_title) . "</td>";
+            echo "<td>" . esc_attr(ucfirst($geopserve_entry->serve_format)) . "</td>";
+            echo "<td>" . esc_attr($geopserve_crit_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_cat_out) . "</td>";
+            echo "<td>" . esc_attr($$geopserve_search_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_adds_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_entry->serve_count) . "</td>";
+            echo "<td>" . esc_attr($geopserve_entry->serve_shortcode) . "</td>";
+            echo "<td>";
+              echo "<button class='geopserve_indiv_car_remove_action button-secondary' value='" . $geopserve_entry->serve_num . "'>Remove Carousel</button>";
+            echo "</td>";
+          echo "</tr>";
+        }
+      echo "</tbody>";
+    echo "</table>";
+  echo "</form>";
+echo "</div>";

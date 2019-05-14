@@ -60,49 +60,49 @@ $geopserve_valid_bool = true;
 $geopserve_rand = rand(0, 10000000000000);
 
 // Filter validity checking.
-if (!($geopserve_type_community_bool || $geopserve_type_theme_bool || $geopserve_type_title_bool || $geopserve_type_keyword_bool || $geopserve_type_topic_bool || $geopserve_type_usedby_bool || $geopserve_type_class_bool)){
+// if (!($geopserve_type_community_bool || $geopserve_type_theme_bool || $geopserve_type_title_bool || $geopserve_type_keyword_bool || $geopserve_type_topic_bool || $geopserve_type_usedby_bool || $geopserve_type_class_bool)){
+//   $geopserve_valid_bool = false;
+//   echo "Addition failed. No constraints provided.";
+// }
+if ($geopserve_type_community_bool == 'true' && (empty($geopserve_type_community_text) || !ctype_xdigit($geopserve_type_community_text) || strlen($geopserve_type_community_text) != 32)){
   $geopserve_valid_bool = false;
-  echo "Addition failed. No constraints provided.";
+  echo "Addition failed. Invalid community ID format or empty input.\n";
 }
-if ($geopserve_type_community_bool && (empty($geopserve_type_community_text) || !ctype_xdigit($geopserve_type_community_text) || strlen($geopserve_type_community_text) != 32){
+if ($geopserve_type_theme_bool == 'true' && (empty($geopserve_type_theme_text) || !ctype_xdigit($geopserve_type_theme_text) || strlen($geopserve_type_theme_text) != 32)){
   $geopserve_valid_bool = false;
-  echo "Addition failed. Invalid community ID format or empty input.";
+  echo "Addition failed. Invalid ID theme format or empty input.\n";
 }
-if ($geopserve_type_theme_bool && (empty($geopserve_type_theme_text) || !ctype_xdigit($geopserve_type_theme_text) || strlen($geopserve_type_theme_text) != 32){
+if ($geopserve_type_title_bool == 'true' && empty($geopserve_type_title_text)){
   $geopserve_valid_bool = false;
-  echo "Addition failed. Invalid ID theme format or empty input.";
+  echo "Addition failed. Empty input for theme criteria.\n";
 }
-if ($geopserve_type_title_bool && empty($geopserve_type_title_text){
+if ($geopserve_type_keyword_bool == 'true' && empty($geopserve_type_keyword_text)){
   $geopserve_valid_bool = false;
-  echo "Addition failed. Empty input for theme criteria.";
+  echo "Addition failed. Empty input for keyword criteria.\n";
 }
-if ($geopserve_type_keyword_bool && empty($geopserve_type_keyword_text){
+if ($geopserve_type_topic_bool == 'true' && empty($geopserve_type_topic_text)){
   $geopserve_valid_bool = false;
-  echo "Addition failed. Empty input for keyword criteria.";
+  echo "Addition failed. Empty input for topic criteria.\n";
 }
-if ($geopserve_type_topic_bool && empty($geopserve_type_topic_text){
+if ($geopserve_type_usedby_bool == 'true' && empty($geopserve_type_usedby_text)){
   $geopserve_valid_bool = false;
-  echo "Addition failed. Empty input for topic criteria.";
+  echo "Addition failed. Empty input for 'used by' criteria.\n";
 }
-if ($geopserve_type_usedby_bool && empty($geopserve_type_usedby_text){
+if ($geopserve_type_class_bool == 'true' && empty($geopserve_type_class_text)){
   $geopserve_valid_bool = false;
-  echo "Addition failed. Empty input for 'used by' criteria.";
-}
-if ($geopserve_type_class_bool && empty($geopserve_type_class_text){
-  $geopserve_valid_bool = false;
-  echo "Addition failed. Empty input for classifier criteria.";
+  echo "Addition failed. Empty input for classifier criteria.\n";
 }
 
 // Item tab check, to ensure that at least one is selected.
-if (!($geopserve_cat_ser || $geopserve_cat_lay || $geopserve_cat_map || $geopserve_cat_gal || $geopserve_cat_com || $geopserve_cat_app || $geopserve_cat_top || $geopserve_cat_web)){
+if ($geopserve_cat_dat  == 'false' && $geopserve_cat_ser  == 'false' && $geopserve_cat_lay == 'false' && $geopserve_cat_map == 'false' && $geopserve_cat_gal == 'false' && $geopserve_cat_com == 'false' && $geopserve_cat_app == 'false' && $geopserve_cat_top == 'false' && $geopserve_cat_web == 'false'){
   $geopserve_valid_bool = false;
-  echo "Addition failed. At least one item type must be selected for output.";
+  echo "Addition failed. At least one item type must be selected for output.\n";
 }
 
 // Count validation, which must be at least one.
 if ($geopserve_count <= 0){
   $geopserve_valid_bool = false;
-  echo "Addition failed. The carousel must have at least one output.";
+  echo "Addition failed. The carousel must have at least one output.\n";
 }
 
 // If any of the validation checks failed, the remainder of this file will not
@@ -198,4 +198,3 @@ if ($geopserve_valid_bool){
     )
   );
 }
-?>

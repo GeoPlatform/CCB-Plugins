@@ -368,6 +368,7 @@ add_action('init', 'geopserve_com_shortcodes_init');
 // included here.
 function geopserve_process_addition() {
 	include 'admin/partials/geoplatform-service-collector-admin-add.php';
+	// include 'admin/partials/cheese.php';
 	wp_die();
 }
 
