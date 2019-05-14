@@ -107,7 +107,7 @@ if ($geopserve_count <= 0){
 
 // If any of the validation checks failed, the remainder of this file will not
 // be executed.
-if ($geopserve_valid_bool){
+if ($geopserve_valid_bool == 'true'){
 
   // Blank title handling.
   if (empty($geopserve_title))
@@ -115,39 +115,39 @@ if ($geopserve_valid_bool){
 
   // Output format determination.
   $geopserve_format_final = 'standard';
-  if ($geopserve_format_compact)
+  if ($geopserve_format_compact == 'true')
     $geopserve_format_final = 'compact';
 
   // Setting up the output criteria string.
-  $geopserve_criteria_final = ($geopserve_type_community_bool) ? 'T' : 'F';
-  $geopserve_criteria_final .= ($geopserve_type_theme_bool) ? 'T' : 'F';
-  $geopserve_criteria_final .= ($geopserve_type_title_bool) ? 'T' : 'F';
-  $geopserve_criteria_final .= ($geopserve_type_keyword_bool) ? 'T' : 'F';
-  $geopserve_criteria_final .= ($geopserve_type_topic_bool) ? 'T' : 'F';
-  $geopserve_criteria_final .= ($geopserve_type_usedby_bool) ? 'T' : 'F';
-  $geopserve_criteria_final .= ($geopserve_type_class_bool) ? 'T' : 'F';
+  $geopserve_criteria_final = ($geopserve_type_community_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_theme_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_title_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_keyword_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_topic_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_usedby_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_class_bool == 'true') ? 'T' : 'F';
 
   // Setting up the additional aspect string.
-  $geopserve_adds_final = ($geopserve_title_bool) ? 'T' : 'F';
-  $geopserve_adds_final .= ($geopserve_tabs_bool) ? 'T' : 'F';
-  $geopserve_adds_final .= ($geopserve_page_bool) ? 'T' : 'F';
+  $geopserve_adds_final = ($geopserve_title_bool == 'true') ? 'T' : 'F';
+  $geopserve_adds_final .= ($geopserve_tabs_bool == 'true') ? 'T' : 'F';
+  $geopserve_adds_final .= ($geopserve_page_bool == 'true') ? 'T' : 'F';
 
   // Setting up the output tab options.
-  $geopserve_cats_final = ($geopserve_cat_dat) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_ser) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_lay) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_map) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_gal) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_com) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_app) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_top) ? 'T' : 'F';
-  $geopserve_cats_final .= ($geopserve_cat_web) ? 'T' : 'F';
+  $geopserve_cats_final = ($geopserve_cat_dat == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_ser == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_lay == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_map == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_gal == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_com == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_app == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_top == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_web == 'true') ? 'T' : 'F';
 
   // Setting up the search bar format.
   $geopserve_search_final = "stand";
-  if ($geopserve_search_geoplatform)
+  if ($geopserve_search_geoplatform == 'true')
     $geopserve_search_final = "geop";
-  elseif ($geopserve_search_hidden)
+  elseif ($geopserve_search_hidden == 'true')
     $geopserve_search_final = "hide";
 
   // Begin shortcode construction. Adds title, count, cats, and adds, which are
@@ -165,25 +165,26 @@ if ($geopserve_valid_bool){
     $geopserve_shortcode_final .= " search='hide'";
 
   // Filtering criteria incorporation.
-  if ($geopserve_type_community_bool)
+  if ($geopserve_type_community_bool == 'true')
     $geopserve_shortcode_final .= " community='" . $geopserve_type_community_text . "'";
-  if ($geopserve_type_theme_bool)
+  if ($geopserve_type_theme_bool == 'true')
     $geopserve_shortcode_final .= " theme='" . $geopserve_type_theme_text . "'";
-  if ($geopserve_type_title_bool)
+  if ($geopserve_type_title_bool == 'true')
     $geopserve_shortcode_final .= " title='" . $geopserve_type_title_text . "'";
-  if ($geopserve_type_keyword_bool)
+  if ($geopserve_type_keyword_bool == 'true')
     $geopserve_shortcode_final .= " keyword='" . $geopserve_type_keyword_text . "'";
-  if ($geopserve_type_topic_bool)
+  if ($geopserve_type_topic_bool == 'true')
     $geopserve_shortcode_final .= " topic='" . $geopserve_type_topic_text . "'";
-  if ($geopserve_type_usedby_bool)
+  if ($geopserve_type_usedby_bool == 'true')
     $geopserve_shortcode_final .= " usedby='" . $geopserve_type_usedby_text . "'";
-  if ($geopserve_type_class_bool)
+  if ($geopserve_type_class_bool == 'true')
     $geopserve_shortcode_final .= " class='" . $geopserve_type_class_text . "'";
 
   // Closing out the string.
   $geopserve_shortcode_final .= "]";
 
   // Finally, the variables are added to the table in key/value pairs.
+  $geopserve_table_name = $wpdb->prefix . "geop_asset_db";
   $wpdb->insert($geopserve_table_name,
     array(
       'serve_num' => $geopserve_rand,

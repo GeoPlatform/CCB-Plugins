@@ -270,14 +270,16 @@
 
           // DB to human reading for filter criteria.
           $geopserve_crit_array = array();
-          (substr(($geopserve_entry->serve_format), 0, 1) == 'T') ? array_push($geopserve_crit_array, 'Communities') : '';
-          (substr(($geopserve_entry->serve_format), 1, 1) == 'T') ? array_push($geopserve_crit_array, 'Themes') : '';
-          (substr(($geopserve_entry->serve_format), 2, 1) == 'T') ? array_push($geopserve_crit_array, 'Titles/Labels') : '';
-          (substr(($geopserve_entry->serve_format), 3, 1) == 'T') ? array_push($geopserve_crit_array, 'Keywords') : '';
-          (substr(($geopserve_entry->serve_format), 4, 1) == 'T') ? array_push($geopserve_crit_array, 'Topics') : '';
-          (substr(($geopserve_entry->serve_format), 5, 1) == 'T') ? array_push($geopserve_crit_array, 'Used By') : '';
-          (substr(($geopserve_entry->serve_format), 6, 1) == 'T') ? array_push($geopserve_crit_array, 'Classifiers') : '';
+          (substr(($geopserve_entry->serve_criteria), 0, 1) == 'T') ? array_push($geopserve_crit_array, 'Communities') : '';
+          (substr(($geopserve_entry->serve_criteria), 1, 1) == 'T') ? array_push($geopserve_crit_array, 'Themes') : '';
+          (substr(($geopserve_entry->serve_criteria), 2, 1) == 'T') ? array_push($geopserve_crit_array, 'Titles/Labels') : '';
+          (substr(($geopserve_entry->serve_criteria), 3, 1) == 'T') ? array_push($geopserve_crit_array, 'Keywords') : '';
+          (substr(($geopserve_entry->serve_criteria), 4, 1) == 'T') ? array_push($geopserve_crit_array, 'Topics') : '';
+          (substr(($geopserve_entry->serve_criteria), 5, 1) == 'T') ? array_push($geopserve_crit_array, 'Used By') : '';
+          (substr(($geopserve_entry->serve_criteria), 6, 1) == 'T') ? array_push($geopserve_crit_array, 'Classifiers') : '';
           $geopserve_crit_out = implode(", ", $geopserve_crit_array);
+          if (empty($geopserve_crit_out))
+            $geopserve_crit_out = "N/A";
 
           // Active tab translator.
           $geopserve_cat_array = array();
@@ -312,10 +314,10 @@
             echo "<td>" . esc_attr(ucfirst($geopserve_entry->serve_format)) . "</td>";
             echo "<td>" . esc_attr($geopserve_crit_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_cat_out) . "</td>";
-            echo "<td>" . esc_attr($$geopserve_search_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_search_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_adds_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_entry->serve_count) . "</td>";
-            echo "<td>" . esc_attr($geopserve_entry->serve_shortcode) . "</td>";
+            echo "<td><code>" . esc_attr($geopserve_entry->serve_shortcode) . "</code></td>";
             echo "<td>";
               echo "<button class='geopserve_indiv_car_remove_action button-secondary' value='" . $geopserve_entry->serve_num . "'>Remove Carousel</button>";
             echo "</td>";
