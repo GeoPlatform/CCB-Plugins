@@ -34,11 +34,11 @@
 // will only have to deal with one data type at a time. Will discern how many
 // copies exist of the given asset type and apply that number to the search area.
 //
-// #param geopserve_id_in: the community ID for the query.
+// #param geopserve_community_in: the community ID for the query.
 // #param geopserve_cat_in: data type for the query.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // #param geopserve_ual_domain_in: UAL source to draw from.
-function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
+function geopserve_gen_count(geopserve_community_in, geopserve_theme_in, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
 
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
@@ -60,12 +60,10 @@ function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in
 		query.setTypes(ItemTypes.GALLERY);
 
 	// Restricts results to a single source, if provided.
-	if (geopserve_id_in) {
-		if (geopserve_source == 'theme')
-			query.setThemes(geopserve_id_in);
-		else
-			query.usedBy(geopserve_id_in);
-	}
+	if (geopserve_community_in)
+		query.usedBy(geopserve_community_in);
+	if (geopserve_theme_in)
+		query.setThemes(geopserve_theme_in);
 
 	// Performs the query grab.
 	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
@@ -94,7 +92,7 @@ function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in
 // will only have to deal with one data type at a time. Generate the panes of
 // the carousel.
 //
-// #param geopserve_id_in: the community ID for the query.
+// #param geopserve_community_in: the community ID for the query.
 // #param geopserve_cat_in: data type for the query.
 // #param geopserve_count_in: number of panes to generate.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
@@ -105,7 +103,7 @@ function geopserve_gen_count(geopserve_id_in, geopserve_source, geopserve_cat_in
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
 //
-function geopserve_gen_list(geopserve_id_in, geopserve_source, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
 
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
@@ -131,12 +129,11 @@ function geopserve_gen_list(geopserve_id_in, geopserve_source, geopserve_cat_in,
 	query.setSort('modified,desc');
 
 	// Restricts results to a single source, if provided.
-	if (geopserve_id_in) {
-		if (geopserve_source == 'theme')
-			query.setThemes(geopserve_id_in);
-		else
-			query.usedBy(geopserve_id_in);
-	}
+	if (geopserve_community_in)
+		query.usedBy(geopserve_community_in);
+	if (geopserve_theme_in)
+		query.setThemes(geopserve_theme_in);
+
 
 	// Adds thumbnails to the query return.
 	var fields = query.getFields();

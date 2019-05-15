@@ -64,16 +64,20 @@
         </table>
       </p>
       <p>
-        Display title:&nbsp&nbsp
         <input type="checkbox" class="regular-text" id="serve_title_bool" value="serve_title_bool" checked>
+        Display main carousel title
       </p>
       <p>
-        Display tabs:&nbsp&nbsp
         <input type="checkbox" class="regular-text" id="serve_tabs_bool" value="serve_tabs_bool" checked>
+        Display tabs
       </p>
       <p>
-        Enable pagination:&nbsp&nbsp
+        <input type="checkbox" class="regular-text" id="serve_section_bool" value="serve_section_bool" checked>
+        Display tabbed section titles
+      </p>
+      <p>
         <input type="checkbox" class="regular-text" id="serve_page_bool" value="serve_page_bool">
+        Enable pagination
       </p>
       <p>
         Be advised that if tabs are hidden, only the first item type (as determined by the items to be included in the output) can be displayed.
@@ -303,9 +307,10 @@
 
           // Additional settings translator.
           $geopserve_adds_array = array();
-          (substr(($geopserve_entry->serve_adds), 0, 1) == 'T') ? array_push($geopserve_adds_array, 'Title') : '';
+          (substr(($geopserve_entry->serve_adds), 0, 1) == 'T') ? array_push($geopserve_adds_array, 'Main Title') : '';
           (substr(($geopserve_entry->serve_adds), 1, 1) == 'T') ? array_push($geopserve_adds_array, 'Tabs') : '';
-          (substr(($geopserve_entry->serve_adds), 2, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
+          (substr(($geopserve_entry->serve_adds), 2, 1) == 'T') ? array_push($geopserve_adds_array, 'Section Titles') : '';
+          (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
           $geopserve_adds_out = implode(", ", $geopserve_adds_array);
 
           // Begin output.

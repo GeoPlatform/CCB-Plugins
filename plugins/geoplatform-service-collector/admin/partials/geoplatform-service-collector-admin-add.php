@@ -22,6 +22,7 @@ $geopserve_format_compact = sanitize_key($_POST["serve_format_compact"]);
 
 $geopserve_title_bool = sanitize_key($_POST["serve_title_bool"]);
 $geopserve_tabs_bool = sanitize_key($_POST["serve_tabs_bool"]);
+$geopserve_section_bool = sanitize_key($_POST["serve_section_bool"]);
 $geopserve_page_bool = sanitize_key($_POST["serve_page_bool"]);
 
 $geopserve_search_standard = sanitize_key($_POST["serve_search_standard"]);
@@ -130,6 +131,7 @@ if ($geopserve_valid_bool == 'true'){
   // Setting up the additional aspect string.
   $geopserve_adds_final = ($geopserve_title_bool == 'true') ? 'T' : 'F';
   $geopserve_adds_final .= ($geopserve_tabs_bool == 'true') ? 'T' : 'F';
+  $geopserve_adds_final .= ($geopserve_section_bool == 'true') ? 'T' : 'F';
   $geopserve_adds_final .= ($geopserve_page_bool == 'true') ? 'T' : 'F';
 
   // Setting up the output tab options.
