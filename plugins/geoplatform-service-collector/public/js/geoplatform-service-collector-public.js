@@ -99,11 +99,12 @@ function geopserve_gen_count(geopserve_community_in, geopserve_theme_in, geopser
 // #param geopserve_icon_in: asset's icon class
 // #param geopserve_ual_domain_in: UAL source to draw from.
 // #param geopserve_redirect_in: Panel base URL for this particular asset type.
-// #param geopserve_new_tab: Determines if a pane opens in a new window or not.
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
 //
-function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
+
+	console.log(geopserve_cat_in);
 
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
@@ -123,6 +124,15 @@ function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserv
 		query.setTypes(ItemTypes.MAP);
 	if (geopserve_cat_in == "Galleries")
 		query.setTypes(ItemTypes.GALLERY);
+	if (geopserve_cat_in == "Communities")
+		query.setTypes(ItemTypes.COMMUNITY);
+	if (geopserve_cat_in == "Applications")
+		query.setTypes(ItemTypes.APPLICATION);
+	if (geopserve_cat_in == "Topics")
+		query.setTypes(ItemTypes.TOPIC);
+	if (geopserve_cat_in == "Websites")
+		query.setTypes(ItemTypes.WEBSITE);
+
 
 	// Sets return count and sortation style.
 	query.setPageSize(geopserve_count_in);
@@ -144,6 +154,8 @@ function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserv
 	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
 	itemSvc.search(query)
 		.then(function (response) {
+
+			console.log(response);
 
 			// Gets the results.
 			var geopserve_results = response.results;
@@ -195,6 +207,23 @@ function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserv
 						geopserve_under_label_type = "<strong>Gallery</strong>";
 						geopserve_under_label_icon = "icon-gallery is-themed u-text--huge"
 						break;
+					case "Communities":
+						geopserve_under_label_type = "<strong>Communities</strong>";
+						geopserve_under_label_icon = "icon-community is-themed u-text--huge"
+						break;
+					case "Applications":
+						geopserve_under_label_type = "<strong>Applications</strong>";
+						geopserve_under_label_icon = "icon-application is-themed u-text--huge"
+						break;
+					case "Topics":
+						geopserve_under_label_type = "<strong>Topics</strong>";
+						geopserve_under_label_icon = "icon-topic is-themed u-text--huge"
+						break;
+					case "Websites":
+						geopserve_under_label_type = "<strong>Websites</strong>";
+						geopserve_under_label_icon = "icon-website is-themed u-text--huge"
+						break;
+
 					default:
 						geopserve_under_label_type = "<strong>Unknown</strong>";
 						geopserve_under_label_icon = "icon-dataset is-themed u-text--huge"
@@ -244,7 +273,7 @@ function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserv
 				var geopserve_thumb_error = "this.src='" + geopserve_404_in + "'";
 
 				// Feeds all this prep work into the generator.
-				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_new_tab, geopserve_under_label_array);
+				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array);
 			}
 		})
 		.catch(function (error) {
@@ -262,10 +291,9 @@ function geopserve_gen_list(geopserve_community_in, geopserve_theme_in, geopserv
 // #param geopserve_label_text: Title of the asset.
 // #param geopserve_master_div: String for the ID of the div containing the assets.
 // #param geopserve_thumb_error: string for the 404 error image if no thumb exists.
-// #param geopserve_new_tab: Determines if a pane opens in a new window or not.
 // #param geopserve_under_label_array: Array of elements for the text under the title.
 //
-function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_new_tab, geopserve_under_label_array){
+function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array){
 
 	// Creates each element as variables.
 	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item'});

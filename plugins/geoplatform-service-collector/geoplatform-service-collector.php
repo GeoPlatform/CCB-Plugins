@@ -130,6 +130,21 @@ function geopserve_shortcode_generation($geopserve_atts){
 
 // The Asset Carousel generation for standard output.
 function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
+	?>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+
+			// Button color controls, because the CSS doesn't work for plugins. On
+			// click, active classes are removed from all buttons, then granted to the
+			// button that was clicked.
+			jQuery(".geopserve-carousel-button-base").click(function(event){
+				jQuery(".geopserve-carousel-button-base").removeClass("geopserve-carousel-active active");
+				jQuery(this).addClass("geopserve-carousel-active active");
+			});
+		});
+	</script>
+	<?php
+
 
 	// Starts interpretation.
 	$geopserve_tab_array = geopserve_tab_interpretation($geopserve_shortcode_array['cat']);
@@ -269,13 +284,12 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 								var geopserve_icon = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
 								var geopserve_ual_domain = "<?php echo $geopserve_ual_domain ?>";
 								var geopserve_redirect = "<?php echo $geopserve_redirect_url ?>";
-								var geopserve_new_tab = "<?php echo $geopserve_shortcode_array['hide'] ?>";
 								var geopserve_home = "<?php echo home_url() ?>";
 								var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
 								// Asset list creation.
 								geopserve_gen_list(geopserve_community_id, geopserve_theme_id, geopserve_asset_name, geopserve_result_count, geopserve_iter,
-									geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_new_tab, geopserve_home, geopserve_failsafe);
+									geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 
 								// Search bar count applicator.
 								geopserve_gen_count(geopserve_community_id, geopserve_theme_id, geopserve_asset_name, geopserve_iter, geopserve_ual_domain);
