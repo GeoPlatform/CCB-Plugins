@@ -336,22 +336,60 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
 
 
+
+
 									jQuery(".geopserve-pagination-prev-button").click(function(event){
 										if (geopserve_current_page > 0){
+
+											jQuery('#geopserve_carousel_gen_div_' + geopserve_iter).animate({
+												opacity: '0'
+											});
+
 											geopserve_current_page =  geopserve_current_page - 1;
 											var new_page = "Page " + (geopserve_current_page + 1);
 											jQuery('#geopserve_pagination_tracker').text(new_page);
+
+
+
+
+
+											// var geopserve_master_div = 'geopserve_carousel_search_div_' + geopserve_iter;
+											var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter);
+											while (myNode.firstChild){
+												myNode.removeChild(myNode.firstChild);
+											}
 											geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
 												geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+												jQuery('#geopserve_carousel_gen_div_' + geopserve_iter).animate({
+													opacity: '1'
+												});
+
 										}
 									});
 
 									jQuery(".geopserve-pagination-next-button").click(function(event){
+
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_iter).animate({
+											opacity: '0'
+										});
+
 										geopserve_current_page =  geopserve_current_page + 1;
 										var new_page = "Page " + (geopserve_current_page + 1);
 										jQuery('#geopserve_pagination_tracker').text(new_page);
+
+
+										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter);
+										while (myNode.firstChild){
+											myNode.removeChild(myNode.firstChild);
+										}
 										geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
 											geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+											jQuery('#geopserve_carousel_gen_div_' + geopserve_iter).animate({
+												opacity: '1'
+											});
+											
 									});
 								});
 							</script>
