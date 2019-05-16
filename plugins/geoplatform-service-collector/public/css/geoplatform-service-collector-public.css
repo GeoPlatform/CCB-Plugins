@@ -49,6 +49,19 @@
   bottom: 0px !important;
 }
 
+.geopserve-pagination-counter-base {
+  /* height: 2em !important; */
+  width: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.25em 0.5em 0.25em 0.5em;
+  text-align: center;
+  text-indent: initial !important;
+  text-align: center;
+  color: #747474;
+  background: #fff;
+  bottom: 0px !important;
+}
 
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 

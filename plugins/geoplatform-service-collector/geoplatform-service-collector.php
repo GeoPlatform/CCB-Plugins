@@ -166,6 +166,8 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	</script>
 	<?php
 
+	// Current pagination page, starting at one.
+	$geopserve_current_page = 0;
 
 	// Starts interpretation.
 	$geopserve_tab_array = geopserve_tab_interpretation($geopserve_shortcode_array['cat']);
@@ -253,7 +255,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 								// Search query construction, changes depending upon whether the assets
 								// are sourced by theme or community.
-								$geopserve_search_query_prefix = "/#/?";
+								$geopserve_search_query_prefix = "/#/?" . $geopserve_tab_array[$i]['query'];
 								if (!empty($geopserve_shortcode_array['community']) && !empty($geopserve_shortcode_array['usedby']))
 									$geopserve_search_query_prefix .= "communities=" . $geopserve_shortcode_array['community'] . "," . $geopserve_shortcode_array['usedby'] . "&";
 								elseif (!empty($geopserve_shortcode_array['community']) && empty($geopserve_shortcode_array['usedby']))
@@ -268,9 +270,8 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 								if (!empty($geopserve_shortcode_array['topic']))
 									$geopserve_search_query_prefix .= "topics=" . $geopserve_shortcode_array['theme'] . "&";
 
-								// Need KG.Classifier aspect.
-								// if (!empty($geopserve_shortcode_array['class']))
-								// 	$geopserve_search_query_prefix .= "KG.Classifier=" . $geopserve_shortcode_array['class'] . "&";
+								// KG.Classifier aspects are not planned for the Search plugin at
+								// the moment, so they'll be overlooked here.
 
 								$geopserve_search_query_prefix .= "q=";
 								if (!empty($geopserve_shortcode_array['label']))
@@ -285,11 +286,13 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base' style='margin-left:0.5em; flex:1!important;'></button>";
 										}
 										elseif ($geopserve_shortcode_array['search'] == 'geop') {
-											if ($geopserve_show_pages)
-												echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base' style='margin-right:0.35em;'></button>";
+											if ($geopserve_show_pages){
+												echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button' style='margin-right:0.35em;'></button>";
+												echo "<span class='u-mg-right--md geopserve-pagination-counter-base' id='geopserve_pagination_tracker'>Page 1</span>";
+											}
 											geopserve_search_bar_geoplatform_standard($i, $geopserve_shortcode_array, $geopserve_tab_array, $geopserve_search_query_prefix, $geopserve_search_placeholder);
 											if ($geopserve_show_pages)
-												echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base' style='margin-left:0.5em;'></button>";
+												echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button' style='margin-left:0.5em;'></button>";
 										}
 										else{
 											if ($geopserve_show_pages)
@@ -305,30 +308,52 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 							<!-- Carousel pane generation script. -->
 							<script type="text/javascript">
-								var geopserve_community_id = "<?php echo $geopserve_shortcode_array['community'] ?>";
-								var geopserve_theme_id = "<?php echo $geopserve_shortcode_array['theme'] ?>";
-								var geopserve_label_id = "<?php echo $geopserve_shortcode_array['label'] ?>";
-								var geopserve_keyword_id = "<?php echo $geopserve_shortcode_array['keyword'] ?>";
-								var geopserve_topic_id = "<?php echo $geopserve_shortcode_array['topic'] ?>";
-								var geopserve_usedby_id = "<?php echo $geopserve_shortcode_array['usedby'] ?>";
-								var geopserve_class_id = "<?php echo $geopserve_shortcode_array['class'] ?>";
-								var geopserve_id_array = [geopserve_community_id, geopserve_theme_id, geopserve_label_id, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
+								jQuery(document).ready(function() {
+									var geopserve_community_id = "<?php echo $geopserve_shortcode_array['community'] ?>";
+									var geopserve_theme_id = "<?php echo $geopserve_shortcode_array['theme'] ?>";
+									var geopserve_label_id = "<?php echo $geopserve_shortcode_array['label'] ?>";
+									var geopserve_keyword_id = "<?php echo $geopserve_shortcode_array['keyword'] ?>";
+									var geopserve_topic_id = "<?php echo $geopserve_shortcode_array['topic'] ?>";
+									var geopserve_usedby_id = "<?php echo $geopserve_shortcode_array['usedby'] ?>";
+									var geopserve_class_id = "<?php echo $geopserve_shortcode_array['class'] ?>";
+									var geopserve_id_array = [geopserve_community_id, geopserve_theme_id, geopserve_label_id, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
 
-								var geopserve_cat_name = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
-								var geopserve_result_count = "<?php echo $geopserve_shortcode_array['count'] ?>";
-								var geopserve_iter = "<?php echo $i ?>";
-								var geopserve_icon = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
-								var geopserve_ual_domain = "<?php echo $geopserve_ual_domain ?>";
-								var geopserve_redirect = "<?php echo $geopserve_redirect_url ?>";
-								var geopserve_home = "<?php echo home_url() ?>";
-								var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
+									var geopserve_current_page = parseInt('<?php echo $geopserve_current_page ?>', 10);
+									var geopserve_cat_name = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
+									var geopserve_result_count = "<?php echo $geopserve_shortcode_array['count'] ?>";
+									var geopserve_iter = "<?php echo $i ?>";
+									var geopserve_icon = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
+									var geopserve_ual_domain = "<?php echo $geopserve_ual_domain ?>";
+									var geopserve_redirect = "<?php echo $geopserve_redirect_url ?>";
+									var geopserve_home = "<?php echo home_url() ?>";
+									var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
-								// Asset list creation.
-								geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter,
-									geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+									// Asset list creation.
+									geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
+										geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 
-								// Search bar count applicator.
-								geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
+									// Search bar count applicator.
+									geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
+
+
+									jQuery(".geopserve-pagination-prev-button").click(function(event){
+										if (geopserve_current_page > 0){
+											geopserve_current_page =  geopserve_current_page - 1;
+											var new_page = "Page " + (geopserve_current_page + 1);
+											jQuery('#geopserve_pagination_tracker').text(new_page);
+											geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
+												geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+										}
+									});
+
+									jQuery(".geopserve-pagination-next-button").click(function(event){
+										geopserve_current_page =  geopserve_current_page + 1;
+										var new_page = "Page " + (geopserve_current_page + 1);
+										jQuery('#geopserve_pagination_tracker').text(new_page);
+										geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
+											geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+									});
+								});
 							</script>
 							<?php
 

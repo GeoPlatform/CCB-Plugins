@@ -179,7 +179,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
 //
-function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
 
 	var geopserve_community_id = geopserve_id_array[0];
 	var geopserve_theme_id = geopserve_id_array[1];
@@ -218,6 +218,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 
 	// Sets return count and sortation style.
 	query.setPageSize(geopserve_count_in);
+	query.setPage(geopserve_current_page);
 	query.setSort('modified,desc');
 
 	// Cleans, explodes, combines, and applies community and usedby criteria.
@@ -405,7 +406,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 				var geopserve_thumb_error = "this.src='" + geopserve_404_in + "'";
 
 				// Feeds all this prep work into the generator.
-				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array);
+				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in);
 			}
 		})
 		.catch(function (error) {
@@ -425,10 +426,12 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 // #param geopserve_thumb_error: string for the 404 error image if no thumb exists.
 // #param geopserve_under_label_array: Array of elements for the text under the title.
 //
-function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array){
+function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in){
+
+	var master_div_id = 'geopserve-carousel-master-div-' + geopserve_iter_in;
 
 	// Creates each element as variables.
-	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item'});
+	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item', id: master_div_id});
 	var main_div = geopserve_createEl({type: 'div', class: 'm-results-item__body'});
 	var icon_div = geopserve_createEl({type: 'div', class: 'm-results-item__icon m-results-item__icon--sm'});
 	var icon_span = geopserve_createEl({type: 'span', class: geopserve_under_label_array[0]});
@@ -512,5 +515,7 @@ function geopserve_createEl(geopserve_el_atts){
 		new_el.setAttribute('src', geopserve_el_atts.src);
 	if(geopserve_el_atts.onerror)
 		new_el.setAttribute('onerror', geopserve_el_atts.onerror);
+	if(geopserve_el_atts.id)
+		new_el.setAttribute('id', geopserve_el_atts.id);
 	return new_el;
 }
