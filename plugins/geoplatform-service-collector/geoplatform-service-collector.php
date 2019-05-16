@@ -219,7 +219,6 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 						echo "<div class='m-results'>";
 							echo "<div id='geopserve_carousel_gen_div_" . $i . "'></div>";
 
-
 							// Search and pagination bar output.
 							if ($geopserve_shortcode_array['search'] != 'hide' || $geopserve_show_pages){
 
@@ -243,20 +242,17 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 								if (!empty($geopserve_shortcode_array['theme']))
 									$geopserve_search_query_prefix .= "themes=" . $geopserve_shortcode_array['theme'] . "&";
+								if (!empty($geopserve_shortcode_array['keyword']))
+									$geopserve_search_query_prefix .= "keywords=" . $geopserve_shortcode_array['keyword'] . "&";
 								if (!empty($geopserve_shortcode_array['topic']))
 									$geopserve_search_query_prefix .= "topics=" . $geopserve_shortcode_array['theme'] . "&";
 
-								// Apparently does an OR in Search.
-								if (!empty($geopserve_shortcode_array['keyword']) && !empty($geopserve_shortcode_array['label']))
-									$geopserve_search_query_prefix .= "q=" . $geopserve_shortcode_array['keyword'] . " " . $geopserve_shortcode_array['label'] . " ";
-								elseif (!empty($geopserve_shortcode_array['keyword']) && empty($geopserve_shortcode_array['label']))
-									$geopserve_search_query_prefix .= "q=" . $geopserve_shortcode_array['keyword'] . " ";
-								elseif (empty($geopserve_shortcode_array['keyword']) && !empty($geopserve_shortcode_array['label']))
+								// Need KG.Classifier aspect.
+								// if (!empty($geopserve_shortcode_array['class']))
+								// 	$geopserve_search_query_prefix .= "KG.Classifier=" . $geopserve_shortcode_array['class'] . "&";
+
+								if (!empty($geopserve_shortcode_array['label']))
 									$geopserve_search_query_prefix .= "q=" . $geopserve_shortcode_array['label'] . " ";
-								else
-									$geopserve_search_query_prefix .= "q=";
-
-
 
 								// Search and paging control construction.
 								echo "<div class='m-results-item'>";

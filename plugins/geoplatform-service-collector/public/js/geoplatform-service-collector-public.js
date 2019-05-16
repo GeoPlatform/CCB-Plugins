@@ -100,6 +100,24 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 		query.setThemes(geopserve_theme_array);
 	}
 
+	// Cleans, explodes, combines, and applies title/label criteria.
+	var geopserve_label_array = '';
+	if (geopserve_label_id){
+		var geopserve_label_temp = geopserve_label_id.replace(/,/g, "-");
+		geopserve_label_array = geopserve_label_temp.split("-");
+		for (i = 0; i < geopserve_label_array.length; i++)
+			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
+		query.setQ(geopserve_label_array);
+	}
+
+	// Cleans, explodes, and applies keyword criteria.
+	if (geopserve_keyword_id){
+		var geopserve_keyword_temp = geopserve_keyword_id.replace(/ /g, "-");
+		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
+		geopserve_keyword_array = geopserve_keyword_temp.split("-");
+		query.setKeywords(geopserve_keyword_array);
+	}
+
 	// Cleans, explodes, and applies topic criteria.
 	if (geopserve_topic_id){
 		var geopserve_topic_temp = geopserve_topic_id.replace(/ /g, "-");
@@ -115,24 +133,6 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 		geopserve_class_array = geopserve_class_temp.split("-");
 		query.setClassifiers(geopserve_class_array);
 	}
-
-	// Cleans, explodes, combines, and applies keyword and title/label criteria.
-	var geopserve_key_label_array = '';
-	if (geopserve_keyword_id){
-		var geopserve_keyword_temp = geopserve_keyword_id.replace(/,/g, " ");
-		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
-		geopserve_keyword_array = geopserve_keyword_temp.split("-");
-		geopserve_key_label_array = geopserve_key_label_array.concat(geopserve_keyword_array);
-	}
-	if (geopserve_label_id){
-		var geopserve_label_temp = geopserve_label_id.replace(/,/g, "-");
-		geopserve_label_array = geopserve_label_temp.split("-");
-		for (i = 0; i < geopserve_label_array.length; i++)
-			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
-		geopserve_key_label_array = geopserve_key_label_array.concat(geopserve_label_array);
-	}
-	if (geopserve_key_label_array != undefined && geopserve_key_label_array.length > 0)
-		query.setQ(geopserve_key_label_array);
 
 	// Performs the query grab.
 	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
@@ -245,6 +245,24 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		query.setThemes(geopserve_theme_array);
 	}
 
+	// Cleans, explodes, combines, and applies title/label criteria.
+	var geopserve_label_array = '';
+	if (geopserve_label_id){
+		var geopserve_label_temp = geopserve_label_id.replace(/,/g, "-");
+		geopserve_label_array = geopserve_label_temp.split("-");
+		for (i = 0; i < geopserve_label_array.length; i++)
+			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
+		query.setQ(geopserve_label_array);
+	}
+
+	// Cleans, explodes, and applies keyword criteria.
+	if (geopserve_keyword_id){
+		var geopserve_keyword_temp = geopserve_keyword_id.replace(/ /g, "-");
+		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
+		geopserve_keyword_array = geopserve_keyword_temp.split("-");
+		query.setKeywords(geopserve_keyword_array);
+	}
+
 	// Cleans, explodes, and applies topic criteria.
 	if (geopserve_topic_id){
 		var geopserve_topic_temp = geopserve_topic_id.replace(/ /g, "-");
@@ -260,24 +278,6 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		geopserve_class_array = geopserve_class_temp.split("-");
 		query.setClassifiers(geopserve_class_array);
 	}
-
-	// Cleans, explodes, combines, and applies keyword and title/label criteria.
-	var geopserve_key_label_array = '';
-	if (geopserve_keyword_id){
-		var geopserve_keyword_temp = geopserve_keyword_id.replace(/,/g, " ");
-		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
-		geopserve_keyword_array = geopserve_keyword_temp.split("-");
-		geopserve_key_label_array = geopserve_key_label_array.concat(geopserve_keyword_array);
-	}
-	if (geopserve_label_id){
-		var geopserve_label_temp = geopserve_label_id.replace(/,/g, "-");
-		geopserve_label_array = geopserve_label_temp.split("-");
-		for (i = 0; i < geopserve_label_array.length; i++)
-			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
-		geopserve_key_label_array = geopserve_key_label_array.concat(geopserve_label_array);
-	}
-	if (geopserve_key_label_array != undefined && geopserve_key_label_array.length > 0)
-		query.setQ(geopserve_key_label_array);
 
 	// Adds thumbnails to the query return.
 	var fields = query.getFields();
