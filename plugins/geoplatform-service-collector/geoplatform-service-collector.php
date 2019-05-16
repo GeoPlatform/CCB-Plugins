@@ -141,6 +141,27 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				jQuery(".geopserve-carousel-button-base").removeClass("geopserve-carousel-active active");
 				jQuery(this).addClass("geopserve-carousel-active active");
 			});
+
+			// Search functionality trigger on button click.
+			jQuery(".geopportal_port_community_search_button").click(function(event){
+				var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+				var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+				window.open(
+					"<?php echo home_url('geoplatform-search')?>" + geopportal_query_string,
+					'_blank'
+				);
+			});
+
+			// Search functionality trigger on pressing enter in search bar.
+			jQuery(".geopportal_port_community_search_form").submit(function(event){
+				event.preventDefault();
+				var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+				var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+				window.open(
+					"<?php echo home_url('geoplatform-search')?>" + geopportal_query_string,
+					'_blank'
+				);
+			});
 		});
 	</script>
 	<?php
@@ -251,8 +272,9 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 								// if (!empty($geopserve_shortcode_array['class']))
 								// 	$geopserve_search_query_prefix .= "KG.Classifier=" . $geopserve_shortcode_array['class'] . "&";
 
+								$geopserve_search_query_prefix .= "q=";
 								if (!empty($geopserve_shortcode_array['label']))
-									$geopserve_search_query_prefix .= "q=" . $geopserve_shortcode_array['label'] . " ";
+									$geopserve_search_query_prefix .= $geopserve_shortcode_array['label'] . " ";
 
 								// Search and paging control construction.
 								echo "<div class='m-results-item'>";
