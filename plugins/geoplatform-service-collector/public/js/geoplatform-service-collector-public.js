@@ -179,7 +179,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
 //
-function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_sort_style, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
 
 	var geopserve_community_id = geopserve_id_array[0];
 	var geopserve_theme_id = geopserve_id_array[1];
@@ -219,7 +219,8 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 	// Sets return count and sortation style.
 	query.setPageSize(geopserve_count_in);
 	query.setPage(geopserve_current_page);
-	query.setSort('modified,desc');
+	console.log(geopserve_sort_style);
+	query.setSort(geopserve_sort_style);
 
 	// Cleans, explodes, combines, and applies community and usedby criteria.
 	var geopserve_com_use_array = '';

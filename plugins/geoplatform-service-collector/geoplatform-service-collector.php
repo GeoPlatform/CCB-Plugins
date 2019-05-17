@@ -105,7 +105,7 @@ function geopserve_shortcode_generation($geopserve_atts){
 		'title' => '',
 		'count' => '6',
 		'cat' => 'TFFFFFF',
-		'adds' => 'TTTF',
+		'adds' => 'TTTFFDM',
 		'form' => 'standard',
 		'search' => 'stand',
 		'community' => '',
@@ -177,10 +177,27 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	// Starts interpretation.
 	$geopserve_tab_array = geopserve_tab_interpretation($geopserve_shortcode_array['cat']);
 
+	// Interprets the togglable portions of the adds.
 	$geopserve_show_main_title = (substr($geopserve_shortcode_array['adds'], 0, 1) == 'T');
 	$geopserve_show_tabs = (substr($geopserve_shortcode_array['adds'], 1, 1) == 'T');
 	$geopserve_show_sub_titles = (substr($geopserve_shortcode_array['adds'], 2, 1) == 'T');
-	$geopserve_show_pages = (substr($geopserve_shortcode_array['adds'], 3, 1) == 'T');
+	$geopserve_show_sortation = (substr($geopserve_shortcode_array['adds'], 3, 1) == 'T');
+	$geopserve_show_pages = (substr($geopserve_shortcode_array['adds'], 4, 1) == 'T');
+
+	// Handles sortation logic.
+	$geopserve_sort_string = '';
+	switch (substr($geopserve_shortcode_array['adds'], 6, 1)) {
+		case "N":
+			$geopserve_sort_string .= "label,";
+			break;
+		case "R":
+			$geopserve_sort_string .= "_score,";
+			break;
+		default:
+			$geopserve_sort_string .= "modified,";
+			break;
+	}
+	$geopserve_sort_string .= (substr($geopserve_shortcode_array['adds'], 5, 1) == 'A') ? "asc" : "desc";
 
 	// Checks if GeoPlatform Search is installed, allowing use of Geop search bar
 	// format, defaulting to standard if not found.
@@ -369,6 +386,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									var geopserve_id_array = [geopserve_community_id, geopserve_theme_id, geopserve_label_id, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
 
 									var geopserve_current_page = parseInt('<?php echo $geopserve_current_page ?>', 10);
+									var geopserve_sort_style = "<?php echo $geopserve_sort_string ?>";
 									var geopserve_cat_name = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
 									var geopserve_result_count = "<?php echo $geopserve_shortcode_array['count'] ?>";
 									var geopserve_iter = "<?php echo $i ?>";
@@ -379,7 +397,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
 									// Asset list creation.
-									geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
+									geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
 										geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 
 									// Search bar count applicator.
@@ -396,7 +414,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											while (myNode.firstChild){
 												myNode.removeChild(myNode.firstChild);
 											}
-											geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
+											geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
 												geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 										}
 									});
@@ -411,7 +429,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 										while (myNode.firstChild){
 											myNode.removeChild(myNode.firstChild);
 										}
-										geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
+										geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
 											geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 									});
 
@@ -427,7 +445,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											myNode.removeChild(myNode.firstChild);
 										}
 										var geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
-										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
+										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
 											geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 
 										console.log(geopportal_query_string);

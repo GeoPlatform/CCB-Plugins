@@ -53,13 +53,11 @@
 				serve_search_standard: jQuery("#serve_search_standard").is(":checked"),
 				serve_search_geoplatform: jQuery("#serve_search_geoplatform").is(":checked"),
 				serve_search_hidden: jQuery("#serve_search_hidden").is(":checked"),
-
 				serve_sort_direction_desc: jQuery("#serve_sort_direction_desc").is(":checked"),
 				serve_sort_direction_asc: jQuery("#serve_sort_direction_asc").is(":checked"),
 				serve_sort_type_modified: jQuery("#serve_sort_type_modified").is(":checked"),
 				serve_sort_type_name: jQuery("#serve_sort_type_name").is(":checked"),
 				serve_sort_type_relevance: jQuery("#serve_sort_type_relevance").is(":checked"),
-
 				serve_type_community_bool: jQuery("#serve_type_community_bool").is(":checked"),
 				serve_type_community_text: jQuery("#serve_type_community_text").val(),
 				serve_type_theme_bool: jQuery("#serve_type_theme_bool").is(":checked"),
