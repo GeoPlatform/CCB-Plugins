@@ -76,11 +76,46 @@
         Display tabbed section titles
       </p>
       <p>
+        <input type="checkbox" class="regular-text" id="serve_sort_bool" value="serve_sort_bool">
+        Display sortation controls
+      </p>
+      <p>
         <input type="checkbox" class="regular-text" id="serve_page_bool" value="serve_page_bool">
         Enable pagination
       </p>
       <p>
         Be advised that if tabs are hidden, only the first item type (as determined by the items to be included in the output) can be displayed.
+      </p>
+      <hr>
+      <p>
+        Choose sorting format.
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_sort_direction_group" class="regular-text" id="serve_sort_direction_desc" value="serve_sort_direction_desc" checked>Descending&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_sort_direction_group" class="regular-text" id="serve_sort_direction_asc" value="serve_sort_direction_asc">Ascending&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_sort_type_group" class="regular-text" id="serve_sort_type_modified" value="serve_sort_type_modified" checked>Modified&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_sort_type_group" class="regular-text" id="serve_sort_type_name" value="serve_sort_type_name">Name&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_sort_type_group" class="regular-text" id="serve_sort_type_relevance" value="serve_sort_type_relevance">Relevance&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
       </p>
       <hr>
       <p>
@@ -252,6 +287,7 @@
         	echo "<th>Output Types</th>";
           echo "<th>Search Format</th>";
           echo "<th>Additional Elements</th>";
+          echo "<th>Sorting</th>";
           echo "<th>Output Count</th>";
           echo "<th>Shortcode</th>";
           echo "<th>Controls</th>";
@@ -310,8 +346,15 @@
           (substr(($geopserve_entry->serve_adds), 0, 1) == 'T') ? array_push($geopserve_adds_array, 'Main Title') : '';
           (substr(($geopserve_entry->serve_adds), 1, 1) == 'T') ? array_push($geopserve_adds_array, 'Tabs') : '';
           (substr(($geopserve_entry->serve_adds), 2, 1) == 'T') ? array_push($geopserve_adds_array, 'Section Titles') : '';
-          (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
+          (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Sortation') : '';
+          (substr(($geopserve_entry->serve_adds), 4, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
           $geopserve_adds_out = implode(", ", $geopserve_adds_array);
+
+          $geopserve_sort_string = '';
+          (substr(($geopserve_entry->serve_adds), 5, 1) == 'D') ? $geopserve_sort_string = "Descending, " : $geopserve_sort_string = "Ascending, ";
+          (substr(($geopserve_entry->serve_adds), 6, 1) == 'M') ? $geopserve_sort_string .= " Modified" : '';
+          (substr(($geopserve_entry->serve_adds), 6, 1) == 'N') ? $geopserve_sort_string .= " Name" : '';
+          (substr(($geopserve_entry->serve_adds), 6, 1) == 'R') ? $geopserve_sort_string .= " Relevance" : '';
 
           // Begin output.
           echo "<tr>";
@@ -321,6 +364,7 @@
             echo "<td>" . esc_attr($geopserve_cat_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_search_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_adds_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_sort_string) . "</td>";
             echo "<td>" . esc_attr($geopserve_entry->serve_count) . "</td>";
             echo "<td><code>" . esc_attr($geopserve_entry->serve_shortcode) . "</code></td>";
             echo "<td>";
