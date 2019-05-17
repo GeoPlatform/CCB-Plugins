@@ -88,7 +88,7 @@
         <br>
         For "Standard", the search keywords are used to narrow down results provided using the initial criteria.
         <br>
-        For "GeoPlatform Search", select the asset types to search for. The search bar will collect criteria and redirect to the GeoPlatform Search interface. If the GeoPlatform Search plugin is not installed, the output will default to "Hidden".
+        For "GeoPlatform Search", select the asset types to search for. The search bar will collect criteria and redirect to the GeoPlatform Search interface. If the GeoPlatform Search plugin is not installed, the output will default to "Standard".
         <br>
         For "Hidden", the search bar will not be shown. Type selection is unimportant.
         <table>
