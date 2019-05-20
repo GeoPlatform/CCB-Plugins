@@ -179,7 +179,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
 //
-function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_sort_style, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_suffix_in, geopserve_sort_style, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
 
 	var geopserve_community_id = geopserve_id_array[0];
 	var geopserve_theme_id = geopserve_id_array[1];
@@ -219,7 +219,6 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 	// Sets return count and sortation style.
 	query.setPageSize(geopserve_count_in);
 	query.setPage(geopserve_current_page);
-	console.log(geopserve_sort_style);
 	query.setSort(geopserve_sort_style);
 
 	// Cleans, explodes, combines, and applies community and usedby criteria.
@@ -357,7 +356,6 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 						geopserve_under_label_type = "<strong>Websites</strong>";
 						geopserve_under_label_icon = "icon-website is-themed u-text--huge"
 						break;
-
 					default:
 						geopserve_under_label_type = "<strong>Unknown</strong>";
 						geopserve_under_label_icon = "icon-dataset is-themed u-text--huge"
@@ -401,7 +399,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 				var geopserve_under_label_array = [geopserve_under_label_icon, geopserve_under_label_type, geopserve_under_label_name, geopserve_under_label_href, geopserve_under_label_created, geopserve_under_label_modified, geopserve_under_label_description];
 
 				// String for the ID of the div containing the assets.
-				var geopserve_master_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
+				var geopserve_master_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in + geopserve_suffix_in;
 
 				// Modifies the 404 for proper syntax.
 				var geopserve_thumb_error = "this.src='" + geopserve_404_in + "'";

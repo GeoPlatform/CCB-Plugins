@@ -63,6 +63,15 @@
   bottom: 0px !important;
 }
 
+.geopserve-visible {
+  visibility: visible;
+}
+
+.geopserve-hidden {
+  visibility: hidden;
+  height: 0px;
+}
+
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 
 /* Document

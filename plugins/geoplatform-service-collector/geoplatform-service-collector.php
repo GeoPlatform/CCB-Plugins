@@ -171,8 +171,9 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	</script>
 	<?php
 
-	// Current pagination page, starting at one.
+	// Current pagination page and suffix, starting at one and A.
 	$geopserve_current_page = 0;
+	$geopserve_current_suffix = 'A';
 
 	// Starts interpretation.
 	$geopserve_tab_array = geopserve_tab_interpretation($geopserve_shortcode_array['cat']);
@@ -265,7 +266,8 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				// More container divs, including the carousel div that assets will be applied to.
 				echo "<div class='m-article__desc'>";
 					echo "<div class='m-results'>";
-						echo "<div id='geopserve_carousel_gen_div_" . $i . "'></div>";
+						echo "<div id='geopserve_carousel_gen_div_" . $i . "A'></div>";
+						echo "<div id='geopserve_carousel_gen_div_" . $i . "N' class='geopserve-hidden'></div>";
 
 						// Placeholder text setup, establishing a default that's overwritten
 						// if within a Portal 4 custom post type.
@@ -354,7 +356,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 										echo "<div class='flex-1 d-flex flex-justify-between flex-align-center'>";
 											echo "<div class='input-group-slick flex-1'>";
-												echo "<form class='input-group-slick flex-1 geopportal_port_community_search_geop_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";
+												echo "<form class='input-group-slick flex-1 geopportal_port_community_search_stand_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";
 												echo "<span class='icon fas fa-search'></span>";
 													echo "<input type='text' class='form-control' aria-label='Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_tab_array[$i]['name']) . "' " .
 															"id='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' " .
@@ -362,7 +364,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 															"placeholder='" . $geopserve_search_placeholder . "'>";
 												echo "</form>";
 											echo "</div>";
-											echo "<button class='geopportal_port_community_search_stand_button u-mg-left--lg btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>SEARCH</a>";
+											echo "<button class='geopportal_port_community_search_stand_button u-mg-left--lg btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' id='geopserve_stand_search_button_" . $i . "'>SEARCH</a>";
 										echo "</div>";
 
 										if ($geopserve_show_pages)
@@ -386,6 +388,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									var geopserve_id_array = [geopserve_community_id, geopserve_theme_id, geopserve_label_id, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
 
 									var geopserve_current_page = parseInt('<?php echo $geopserve_current_page ?>', 10);
+									var geopserve_current_suffix = "<?php echo $geopserve_current_suffix ?>";
 									var geopserve_sort_style = "<?php echo $geopserve_sort_string ?>";
 									var geopserve_cat_name = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
 									var geopserve_result_count = "<?php echo $geopserve_shortcode_array['count'] ?>";
@@ -396,9 +399,11 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									var geopserve_home = "<?php echo home_url() ?>";
 									var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
 
+									var geopserve_search_state = "<?php echo $geopserve_search_state ?>";
+
 									// Asset list creation.
-									geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
-										geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+									geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_current_suffix,
+										geopserve_sort_style,	geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 
 									// Search bar count applicator.
 									geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
@@ -406,58 +411,114 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									jQuery(".geopserve-pagination-prev-button").click(function(event){
 										if (geopserve_current_page > 0){
 
-											geopserve_current_page =  geopserve_current_page - 1;
+											geopserve_current_page = geopserve_current_page - 1;
+											geopserve_current_suffix == 'A' ? geopserve_next_suffix = 'N' : geopserve_next_suffix = 'A';
+
+											var geopserve_id_search_array = geopserve_id_array;
+											if (geopserve_search_state != 'geop' && geopserve_search_state != 'hide'){
+
+												var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
+												var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
+
+												if (geopportal_query_grab){
+													geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
+													geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
+												}
+											}
+
+											geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_next_suffix,
+												geopserve_sort_style, geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+											jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_next_suffix).removeClass('geopserve-hidden');
+											jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix).addClass('geopserve-hidden');
+
 											var new_page = "Page " + (geopserve_current_page + 1);
 											jQuery('.geopserve_pagination_tracker').text(new_page);
 
-											var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter);
+											var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
 											while (myNode.firstChild){
 												myNode.removeChild(myNode.firstChild);
 											}
-											geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
-												geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+											geopserve_current_suffix = geopserve_next_suffix;
 										}
 									});
 
 									jQuery(".geopserve-pagination-next-button").click(function(event){
 
 										geopserve_current_page =  geopserve_current_page + 1;
+										geopserve_current_suffix == 'A' ? geopserve_next_suffix = 'N' : geopserve_next_suffix = 'A';
+
+										var geopserve_id_search_array = geopserve_id_array;
+										if (geopserve_search_state != 'geop' && geopserve_search_state != 'hide' ){
+
+											var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
+											var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
+
+											if (geopportal_query_grab){
+												geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
+												geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
+											}
+										}
+
+										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_next_suffix,
+											geopserve_sort_style, geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_next_suffix).removeClass('geopserve-hidden');
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix).addClass('geopserve-hidden');
+
 										var new_page = "Page " + (geopserve_current_page + 1);
 										jQuery('.geopserve_pagination_tracker').text(new_page);
 
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter);
+										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
 										while (myNode.firstChild){
 											myNode.removeChild(myNode.firstChild);
 										}
-										geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
-											geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+										geopserve_current_suffix = geopserve_next_suffix;
 									});
 
 									// Search functionality trigger on button click.
 									jQuery(".geopportal_port_community_search_stand_button").click(function(event){
-										var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
 										var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
 
-										geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
+										var geopserve_id_search_array = geopserve_id_array;
+										if (geopportal_query_grab){
+											geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
+											geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
+										}
 
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter);
+										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_current_suffix,
+											geopserve_sort_style, geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
 										while (myNode.firstChild){
 											myNode.removeChild(myNode.firstChild);
 										}
-										var geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
-										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_sort_style,
-											geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
-
-										console.log(geopportal_query_string);
-
-										// var geopportal_grabs_from = jQuery(this).attr("grabs-from");
-										// var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-										// window.open(
-										// 	'_blank'
-										// );
 									});
 
+									// Search functionality trigger on pressing enter in search bar.
+									jQuery(".geopportal_port_community_search_stand_form").submit(function(event){
+										event.preventDefault();
 
+										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
+										var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
+
+										var geopserve_id_search_array = geopserve_id_array;
+										if (geopportal_query_grab){
+											geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
+											geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
+										}
+
+										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page, geopserve_current_suffix,
+											geopserve_sort_style, geopserve_icon, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+
+										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
+										while (myNode.firstChild){
+											myNode.removeChild(myNode.firstChild);
+										}
+									});
 								});
 							</script>
 							<?php
@@ -494,6 +555,134 @@ function geopserve_search_bar_standard_standard($i, $geopserve_shortcode_array, 
 		echo "<button class='geopportal_port_community_search_geop_button u-mg-left--lg btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>SEARCH</a>";
 	echo "</div>";
 }
+
+
+
+
+
+
+// The Asset Carousel generation for compact output.
+function geopserve_shortcode_generation_compact($geopserve_atts){
+
+
+
+
+}
+
+
+// Interprets the T/F string for category tabs to be shown.
+// Examines the input string, which should just be a series of T and F characters,
+// one by one, pushing approiate values to an array on finding T's, which is then
+// returned.
+function geopserve_tab_interpretation($geopserve_string_in){
+
+	// Checks the "cat" shortcode value char by char, populating the generation array
+	// with sub-arrays of constants for each asset type.
+	$geopserve_generation_array = array();
+	if (substr($geopserve_string_in, 0, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Datasets',
+				'query' => 'types=dcat:Dataset&',
+				'icon' => 'icon-dataset',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 1, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Services',
+				'query' => 'types=regp:Service&',
+				'icon' => 'icon-service',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 2, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Layers',
+				'query' => 'types=Layer&',
+				'icon' => 'icon-layer',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 3, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Maps',
+				'query' => 'types=Map&',
+				'icon' => 'icon-map',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 4, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Galleries',
+				'query' => 'types=Gallery&',
+				'icon' => 'icon-gallery',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 5, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Communities',
+				'query' => 'types=Community&',
+				'icon' => 'icon-community',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 6, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Applications',
+				'query' => 'types=Application&',
+				'icon' => 'icon-application',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 7, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Topics',
+				'query' => 'types=Topic&',
+				'icon' => 'icon-topic',
+			)
+		);
+	}
+	if (substr($geopserve_string_in, 8, 1) == 'T'){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Websites',
+				'query' => 'types=WebSite&',
+				'icon' => 'icon-website',
+			)
+		);
+	}
+
+	return $geopserve_generation_array;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // The Asset Carousel output operates by using a shortcode invocation of a
@@ -759,99 +948,28 @@ function geopserve_com_shortcodes_creation($geopserve_atts){
 
 
 
-// The Asset Carousel generation for compact output.
-function geopserve_shortcode_generation_compact($geopserve_atts){
 
 
 
 
-}
 
 
-// Interprets the T/F string for category tabs to be shown.
-// Examines the input string, which should just be a series of T and F characters,
-// one by one, pushing approiate values to an array on finding T's, which is then
-// returned.
-function geopserve_tab_interpretation($geopserve_string_in){
 
-	// Checks the "cat" shortcode value char by char, populating the generation array
-	// with sub-arrays of constants for each asset type.
-	$geopserve_generation_array = array();
-	if (substr($geopserve_string_in, 0, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Datasets',
-				'query' => 'types=dcat:Dataset&',
-				'icon' => 'icon-dataset',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 1, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Services',
-				'query' => 'types=regp:Service&',
-				'icon' => 'icon-service',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 2, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Layers',
-				'query' => 'types=Layer&',
-				'icon' => 'icon-layer',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 3, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Maps',
-				'query' => 'types=Map&',
-				'icon' => 'icon-map',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 4, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Galleries',
-				'query' => 'types=Gallery&',
-				'icon' => 'icon-gallery',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 5, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Communities',
-				'query' => 'types=Community&',
-				'icon' => 'icon-community',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 6, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Applications',
-				'query' => 'types=Application&',
-				'icon' => 'icon-application',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 7, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Topics',
-				'query' => 'types=Topic&',
-				'icon' => 'icon-topic',
-			)
-		);
-	}
-	if (substr($geopserve_string_in, 8, 1) == 'T'){
-		array_push( $geopserve_generation_array, array(
-				'name' => 'Websites',
-				'query' => 'types=WebSite&',
-				'icon' => 'icon-website',
-			)
-		);
-	}
 
-	return $geopserve_generation_array;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Adds the shortcode hook to init.
 function geopserve_shortcodes_init()
