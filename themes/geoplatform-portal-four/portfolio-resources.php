@@ -110,10 +110,23 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		<!--
 		PORTFOLIO RESOURCES SECTION
 		-->
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+
+				// Button color controls, because the CSS doesn't work for plugins. On
+				// click, active classes are removed from all buttons, then granted to the
+				// button that was clicked.
+				jQuery(".geopportal_port_car_tab_title").click(function(event){
+					jQuery(".geopportal_port_car_tab_title").removeClass("portfolio-carousel-active-tab");
+					jQuery(this).addClass("portfolio-carousel-active-tab");
+				});
+			});
+		</script>
+
 		<div class="p-landing-page__portfolio-wrapper t-light" id="resources">
 
 
-		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false"id="geopportal_anchor_carousel" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
+		    <div class="p-landing-page__portfolio carousel slide" data-ride="carousel" data-interval="false" id="geopportal_anchor_carousel" style="background-image:url('<?php echo get_stylesheet_directory_uri() . '/img/wave-blue.svg' ?>')">
 
 		        <ol class="carousel-indicators">
 		            <li data-target="#geopportal_anchor_carousel" data-slide-to="0" class="active" title="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>"></li>
@@ -127,11 +140,11 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		            <?php echo sanitize_text_field($geopportal_port_res_main_title) ?>
 		        </div>
 		        <div class="p-landing-page__portfolio__tabs">
-		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',0)">Data</a>
-		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',1)">Services</a>
-		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',2)">Maps</a>
-		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',3)">Galleries</a>
-		            <a class="is-linkless" onclick="cycleCarouselTo('#geopportal_anchor_carousel',4)">Communities</a>
+		            <a class="is-linkless geopportal_port_car_tab_title portfolio-carousel-active-tab " onclick="cycleCarouselTo('#geopportal_anchor_carousel',0)" keyword="active">Data</a>
+		            <a class="is-linkless geopportal_port_car_tab_title" onclick="cycleCarouselTo('#geopportal_anchor_carousel',1)">Services</a>
+		            <a class="is-linkless geopportal_port_car_tab_title" onclick="cycleCarouselTo('#geopportal_anchor_carousel',2)">Maps</a>
+		            <a class="is-linkless geopportal_port_car_tab_title" onclick="cycleCarouselTo('#geopportal_anchor_carousel',3)">Galleries</a>
+		            <a class="is-linkless geopportal_port_car_tab_title" onclick="cycleCarouselTo('#geopportal_anchor_carousel',4)">Communities</a>
 		        </div>
 
 
