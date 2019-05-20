@@ -105,7 +105,7 @@ function geopserve_shortcode_generation($geopserve_atts){
 		'title' => '',
 		'count' => '6',
 		'cat' => 'TFFFFFF',
-		'adds' => 'TTTFFDM',
+		'adds' => 'TTTFDM',
 		'form' => 'standard',
 		'search' => 'stand',
 		'community' => '',
@@ -134,7 +134,6 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	// Required inclusion for detecting if the Item Details and Search plugins
 	// are active.
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-
 	?>
 	<script type="text/javascript">
 		jQuery(document).ready(function() {
@@ -562,11 +561,12 @@ function geopserve_search_bar_standard_standard($i, $geopserve_shortcode_array, 
 
 // The Asset Carousel generation for compact output.
 function geopserve_shortcode_generation_compact($geopserve_atts){
-
-
-
-
+	geopserve_shortcode_generation_compact($geopserve_shortcode_array);
 }
+
+
+
+
 
 
 // Interprets the T/F string for category tabs to be shown.
