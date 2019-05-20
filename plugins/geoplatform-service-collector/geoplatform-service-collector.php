@@ -182,12 +182,11 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	$geopserve_show_main_title = (substr($geopserve_shortcode_array['adds'], 0, 1) == 'T');
 	$geopserve_show_tabs = (substr($geopserve_shortcode_array['adds'], 1, 1) == 'T');
 	$geopserve_show_sub_titles = (substr($geopserve_shortcode_array['adds'], 2, 1) == 'T');
-	$geopserve_show_sortation = (substr($geopserve_shortcode_array['adds'], 3, 1) == 'T');
-	$geopserve_show_pages = (substr($geopserve_shortcode_array['adds'], 4, 1) == 'T');
+	$geopserve_show_pages = (substr($geopserve_shortcode_array['adds'], 3, 1) == 'T');
 
 	// Handles sortation logic.
 	$geopserve_sort_string = '';
-	switch (substr($geopserve_shortcode_array['adds'], 6, 1)) {
+	switch (substr($geopserve_shortcode_array['adds'], 5, 1)) {
 		case "N":
 			$geopserve_sort_string .= "label,";
 			break;
@@ -198,7 +197,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 			$geopserve_sort_string .= "modified,";
 			break;
 	}
-	$geopserve_sort_string .= (substr($geopserve_shortcode_array['adds'], 5, 1) == 'A') ? "asc" : "desc";
+	$geopserve_sort_string .= (substr($geopserve_shortcode_array['adds'], 4, 1) == 'A') ? "asc" : "desc";
 
 	// Checks if GeoPlatform Search is installed, allowing use of Geop search bar
 	// format, defaulting to standard if not found.

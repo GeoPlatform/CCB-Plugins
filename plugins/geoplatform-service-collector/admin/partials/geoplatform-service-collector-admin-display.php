@@ -76,10 +76,6 @@
         Display tabbed section titles
       </p>
       <p>
-        <input type="checkbox" class="regular-text" id="serve_sort_bool" value="serve_sort_bool">
-        Display sortation controls
-      </p>
-      <p>
         <input type="checkbox" class="regular-text" id="serve_page_bool" value="serve_page_bool">
         Enable pagination
       </p>
@@ -346,8 +342,7 @@
           (substr(($geopserve_entry->serve_adds), 0, 1) == 'T') ? array_push($geopserve_adds_array, 'Main Title') : '';
           (substr(($geopserve_entry->serve_adds), 1, 1) == 'T') ? array_push($geopserve_adds_array, 'Tabs') : '';
           (substr(($geopserve_entry->serve_adds), 2, 1) == 'T') ? array_push($geopserve_adds_array, 'Section Titles') : '';
-          (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Sortation') : '';
-          (substr(($geopserve_entry->serve_adds), 4, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
+          (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
           $geopserve_adds_out = implode(", ", $geopserve_adds_array);
 
           $geopserve_sort_string = '';

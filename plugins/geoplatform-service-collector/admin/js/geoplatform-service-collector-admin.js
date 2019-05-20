@@ -47,7 +47,6 @@
 				serve_format_compact: jQuery("#serve_format_compact").is(":checked"),
 				serve_title_bool: jQuery("#serve_title_bool").is(":checked"),
 				serve_tabs_bool: jQuery("#serve_tabs_bool").is(":checked"),
-				serve_sort_bool: jQuery("#serve_sort_bool").is(":checked"),
 				serve_section_bool: jQuery("#serve_section_bool").is(":checked"),
 				serve_page_bool: jQuery("#serve_page_bool").is(":checked"),
 				serve_search_standard: jQuery("#serve_search_standard").is(":checked"),

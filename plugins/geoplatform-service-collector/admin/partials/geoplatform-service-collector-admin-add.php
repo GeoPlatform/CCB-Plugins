@@ -23,7 +23,6 @@ $geopserve_format_compact = sanitize_key($_POST["serve_format_compact"]);
 $geopserve_title_bool = sanitize_key($_POST["serve_title_bool"]);
 $geopserve_tabs_bool = sanitize_key($_POST["serve_tabs_bool"]);
 $geopserve_section_bool = sanitize_key($_POST["serve_section_bool"]);
-$geopserve_sort_bool = sanitize_key($_POST["serve_sort_bool"]);
 $geopserve_page_bool = sanitize_key($_POST["serve_page_bool"]);
 
 $serve_sort_direction_desc = sanitize_key($_POST["serve_sort_direction_desc"]);
@@ -139,7 +138,6 @@ if ($geopserve_valid_bool == 'true'){
   $geopserve_adds_final = ($geopserve_title_bool == 'true') ? 'T' : 'F';
   $geopserve_adds_final .= ($geopserve_tabs_bool == 'true') ? 'T' : 'F';
   $geopserve_adds_final .= ($geopserve_section_bool == 'true') ? 'T' : 'F';
-  $geopserve_adds_final .= ($geopserve_sort_bool == 'true') ? 'T' : 'F';
   $geopserve_adds_final .= ($geopserve_page_bool == 'true') ? 'T' : 'F';
 
   $geopserve_adds_final .= ($serve_sort_direction_desc == 'true') ? 'D' : 'A';
