@@ -19,24 +19,18 @@ class Geopportal_Resource_Elements_Widget extends WP_Widget {
       $geopportal_elements_title = apply_filters('widget_title', $instance['geopportal_elements_title']);
 		else
       $geopportal_elements_title = "Elements";
-		if (array_key_exists('geopportal_elements_shortcode', $instance) && isset($instance['geopportal_elements_shortcode']) && !empty($instance['geopportal_elements_shortcode'])){
+		if (array_key_exists('geopportal_elements_shortcode', $instance) && isset($instance['geopportal_elements_shortcode']) && !empty($instance['geopportal_elements_shortcode']))
       $geopportal_elements_shortcode = apply_filters('widget_title', $instance['geopportal_elements_shortcode']);
-			$geopportal_elements_shortcode = esc_attr(substr($geopportal_elements_shortcode, 0, -1) . " hide=T]");
-		}
 		else
       $geopportal_elements_shortcode = "";
- 		?>
 
-		<!--
-		ELEMENTS
-		-->
-		<div class="m-section-group">
-			<div class="m-article__heading">
-					<?php echo $geopportal_elements_title; ?>
-			</div>
-			<?php echo do_shortcode($geopportal_elements_shortcode); ?>
-		</div>
-    <?php
+		// ELEMENTS
+		echo "<div class='m-section-group'>";
+			echo "<div class='m-article__heading'>";
+					echo $geopportal_elements_title;
+			echo "</div>";
+			echo do_shortcode($geopportal_elements_shortcode);
+		echo "</div>";
 	}
 
   // The admin side of the widget.
@@ -45,21 +39,19 @@ class Geopportal_Resource_Elements_Widget extends WP_Widget {
     // Checks for entries in the widget admin boxes and provides defaults if empty.
 		$geopportal_elements_title = ! empty( $instance['geopportal_elements_title'] ) ? $instance['geopportal_elements_title'] : 'Elements';
 		$geopportal_elements_shortcode = ! empty( $instance['geopportal_elements_shortcode'] ) ? $instance['geopportal_elements_shortcode'] : '';
-		?>
 
-<!-- HTML for the widget control box. -->
-		<p>
-			<?php _e('Input a GeoPlatform Asset Carousel plugin shortcode. There should only be one enabled data type. You will also need to manually remove the community ID and title attributes from the shortcode, leaving only the cat and count values without quotation marks.', 'geoplatform-ccb'); ?>
-		</p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_elements_title' ); ?>">Widget Title:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_elements_title' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_elements_title' ); ?>" value="<?php echo esc_attr( $geopportal_elements_title ); ?>" />
-    </p>
-		<p>
-      <label for="<?php echo $this->get_field_id( 'geopportal_elements_shortcode' ); ?>">Gallery Shortcode:</label>
-      <input type="text" id="<?php echo $this->get_field_id( 'geopportal_elements_shortcode' ); ?>" name="<?php echo $this->get_field_name( 'geopportal_elements_shortcode' ); ?>" value="<?php echo esc_attr( $geopportal_elements_shortcode ); ?>" />
-    </p>
-		<?php
+		// HTML for the widget control box.
+		echo "<p>";
+			_e('Input a GeoPlatform Asset Carousel plugin shortcode. There should only be one enabled data type. Due to Wordpress limitations, all single and double quotes must be removed from the shortcode for it to function.', 'geoplatform-ccb');
+		echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopportal_elements_title' ) . "'>Widget Title:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopportal_elements_title' ) . "' name='" . $this->get_field_name( 'geopportal_elements_title' ) . "' value='" . esc_attr( $geopportal_elements_title ) . "' />";
+    echo "</p>";
+		echo "<p>";
+      echo "<label for='" . $this->get_field_id( 'geopportal_elements_shortcode' ) . "'>Gallery Shortcode:</label>";
+      echo "<input type='text' id='" . $this->get_field_id( 'geopportal_elements_shortcode' ) . "' name='" . $this->get_field_name( 'geopportal_elements_shortcode' ) . "' value='" . esc_attr( $geopportal_elements_shortcode ) . "' />";
+    echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {

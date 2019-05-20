@@ -127,7 +127,6 @@ function geopserve_shortcode_generation($geopserve_atts){
 	return ob_get_clean();
 }
 
-
 // The Asset Carousel generation for standard output.
 function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
