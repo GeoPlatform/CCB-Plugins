@@ -50,7 +50,7 @@
         <input type="number" class="regular-text" id="serve_count" value="6" min='1' style="width:5em;"/>
       </p>
       <hr>
-      <p>
+      <!-- <p>
         Choose a standard or compact output format.
         <table>
           <tr>
@@ -62,7 +62,7 @@
             </th>
           </tr>
         </table>
-      </p>
+      </p> -->
       <p>
         <input type="checkbox" class="regular-text" id="serve_title_bool" value="serve_title_bool" checked>
         Display main carousel title

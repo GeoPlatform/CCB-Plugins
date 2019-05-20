@@ -17,8 +17,10 @@ global $wpdb;
 $geopserve_title = $_POST["serve_name"];
 $geopserve_count = sanitize_key($_POST["serve_count"]);
 
-$geopserve_format_standard = sanitize_key($_POST["serve_format_standard"]);
-$geopserve_format_compact = sanitize_key($_POST["serve_format_compact"]);
+$geopserve_format_standard = true;
+$geopserve_format_compact = false;
+// $geopserve_format_standard = sanitize_key($_POST["serve_format_standard"]);
+// $geopserve_format_compact = sanitize_key($_POST["serve_format_compact"]);
 
 $geopserve_title_bool = sanitize_key($_POST["serve_title_bool"]);
 $geopserve_tabs_bool = sanitize_key($_POST["serve_tabs_bool"]);
