@@ -15,6 +15,10 @@
     <div class="m-article__desc" *ngIf="'regp:Service'===item?.type">
         <gpid-service-layers [serviceId]="item?.id"></gpid-service-layers>
     </div>
+    <!-- OperatesOn Assets -->
+    <div class="m-article__desc" *ngIf="'regp:Service'===item?.type">
+        <gpid-operates-on [data]="item?.operatesOn||[]"></gpid-operates-on>
+    </div>
 
     <!-- Map Layers -->
     <div class="m-article__desc" *ngIf="'Map'===item?.type">
@@ -25,6 +29,7 @@
         <gpid-datasets [data]="item.datasets">
         </gpid-datasets>
     </div>
+
 
     <!-- Gallery Items -->
     <div class="m-article__desc" *ngIf="'Gallery'===item?.type">

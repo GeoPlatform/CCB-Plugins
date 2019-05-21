@@ -1,0 +1,40 @@
+<div class="m-action" *ngIf="isSupported()">
+    <p class="u-text--sm">
+        Create a copy of this resource as your own, allowing you to edit as needed.
+    </p>
+
+    <button type="button"
+        class="btn btn-secondary btn-block u-mg-top--xlg"
+        title="Clone this Item"
+        [disabled]="awaitingInput"
+        (click)="promptForInput()">
+        <span class="fas fa-clone"></span>
+        Clone Item
+    </button>
+    <div *ngIf="awaitingInput" class="m-action-prompt">
+        <br>
+        <div class="u-mg-bottom--sm">
+            <label for="clone_label" class="a-heading">Label for Clone</label>
+            <input type="text" class="form-control"
+                required="true" id="clone_label"
+                [(ngModel)]="overrides.label">
+        </div>
+        <div class="u-text--right">
+            <button type="button" class="btn btn-light btn-sm" (click)="awaitingInput=false">
+                Cancel
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <button type="button"
+                class="btn btn-info btn-sm"
+                [disabled]="!overrides?.label.length || overrides.label === item.label"
+                (click)="doAction()">
+                Submit
+            </button>
+        </div>
+        <div *ngIf="error" class="m-message--error">
+            <span class="gpicons exclamation-circle"></span>
+            <strong>An Error Occurred</strong>
+            <div>{{error.message}}</div>
+        </div>
+    </div>
+</div>

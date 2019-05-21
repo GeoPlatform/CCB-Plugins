@@ -200,6 +200,8 @@
             <gpid-edit-action [item]="item"></gpid-edit-action>
             <!-- <gpid-delete-action [item]="item"></gpid-delete-action> -->
 
+            <gpid-clone-action [item]="item" *ngIf="isAsset()"></gpid-clone-action>
+
         </div>
 
 

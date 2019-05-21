@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 // import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
@@ -93,6 +94,8 @@ import {
 
 
 import { RPMStatsService } from './shared/rpmstats.service';
+import { OperatesOnComponent } from './item/collections/operates-on/operates-on.component';
+import { CloneComponent } from './item/actions/clone/clone.component';
 let RPMStatsServiceFactory = (http: HttpClient) => {
     return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
 }
@@ -171,11 +174,14 @@ export function initializeApp() {
         UseConstraintsComponent,
         PropertyComponent,
         ThemesComponent,
-        TopicsComponent
+        TopicsComponent,
+        OperatesOnComponent,
+        CloneComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),
         BrowserModule,
+        FormsModule,
         HttpClientModule,
         HttpClientJsonpModule,
         NgbModule.forRoot(),
