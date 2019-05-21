@@ -97,6 +97,19 @@
             You must be signed in to a GeoPlatform account in order to create this map.
         </div>
 
+        <div *ngIf="error" class="m-message--error">
+            <strong>
+                <span class="gpicons exclamation-circle"></span>
+                Unable to Create Map
+            </strong>
+            <div>{{error.message}}</div>
+            <div class="u-text--right">
+                <button type="button" class="btn btn-light" (click)="error=null">
+                    DISMISS
+                </button>
+            </div>
+        </div>
+
         <div class="m-article__desc" *ngIf="getUser()">
             <button type="button" class="btn btn-primary"
                 (click)="createMap()">

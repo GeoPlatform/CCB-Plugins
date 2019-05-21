@@ -27,7 +27,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     @HostBinding('class.isCollapsed') hostCollapsed: boolean = false;
 
     public isKeywordsCollapsed : boolean = true;
-
+    public error : Error;
 
     public mapItem : MapItem = {
         uri         : null,
@@ -95,7 +95,15 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
             return;
         }
 
-        this.itemService.getUri(this.mapItem)
+        //first, ensure token isn't in weird expired/revoked state
+        this.authService.check()
+        .then( user => {
+            this.onUserChange(user);
+            if(!user) throw new Error("Not signed in");
+
+            //then request a URI for the new map
+            return this.itemService.getUri(this.mapItem);
+        })
         .then(uri => {
             this.mapItem.uri = uri;
             return this.mapItem;
@@ -103,6 +111,8 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         .then( map => {
             //store selected layers onto map being created
             this.mapItem.layers = this.data.getDataWithState(true);
+
+            //and then save the map
             return this.itemService.save(map)
         })
         .then( created => {
@@ -112,7 +122,8 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
             (window as any).location.href = '/resources/maps/' + created.id;
         })
         .catch( (e:Error) => {
-            //TODO display error message to user
+            //display error message to user
+            this.error = e;
             console.log("Unable to create map, " + e.message);
         });
     }
