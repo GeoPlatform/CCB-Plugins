@@ -77,9 +77,12 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     }
 
     onUserChange(user) {
+        let token = null;
         if(user) {
             this.mapItem.createdBy = user.username;
+            token = this.authService.getJWTfromLocalStorage();
         }
+        this.itemService.client.setAuthToken(token);
     }
 
     /**
