@@ -29,7 +29,7 @@ class Geoplatform_Service_Collector_Activator {
 	private static function geopserve_database_gen() {
 	  global $wpdb;
 
-	  $geopserve_table_name = $wpdb->prefix . 'geop_serve_db';
+	  $geopserve_table_name = $wpdb->prefix . 'geop_asset_db';
 	  $geopserve_charset_collate = $wpdb->get_charset_collate();
 
 	  // This creation segment only executes if the database does not already exist.
@@ -38,12 +38,13 @@ class Geoplatform_Service_Collector_Activator {
 	      id mediumint(9) NOT NULL AUTO_INCREMENT,
 	      time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 	      serve_num varchar(255) NOT NULL,
-				serve_id varchar(255) NOT NULL,
-	      serve_name varchar(255) NOT NULL,
 				serve_title varchar(255) NOT NULL,
+				serve_format varchar(255) NOT NULL,
+				serve_criteria varchar(255) NOT NULL,
+				serve_adds varchar(255) NOT NULL,
 				serve_cat varchar(255) NOT NULL,
+				serve_search varchar(255) NOT NULL,
 				serve_count varchar(255) NOT NULL,
-				serve_source varchar(255) NOT NULL,
 				serve_shortcode varchar(255) NOT NULL,
 	      PRIMARY KEY  (id)
 	    ) $geopserve_charset_collate;";

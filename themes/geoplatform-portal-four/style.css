@@ -31,12 +31,23 @@ limitations under the License.
   opacity: 0;
   padding: 0 !important;
 }
+
 .m-page-overview__additive {
   background: #f6f6f6;
   border-bottom: 1px solid #ddd;
   padding: 1em 8em 1em 3em;
 }
 form { margin: 0; }
+
+.portfolio-carousel-active-tab {
+  background-color: #2079c5;
+  color: #fff!important;
+  border-radius: 4px;
+}
+
+.geopportal_port_car_tab_title{
+  padding: 0.25em 1em;
+}
 
 
 /* PRISM.CSS */

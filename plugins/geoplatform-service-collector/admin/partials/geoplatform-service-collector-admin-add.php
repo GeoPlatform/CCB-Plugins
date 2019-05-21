@@ -15,123 +15,203 @@ global $wpdb;
  * for conditional assignment.
 */
 $geopserve_title = $_POST["serve_name"];
-$geopserve_id = sanitize_key($_POST["serve_id"]);
 $geopserve_count = sanitize_key($_POST["serve_count"]);
-$geopserve_source_in = sanitize_key($_POST["serve_source"]);
+
+$geopserve_format_standard = true;
+$geopserve_format_compact = false;
+// $geopserve_format_standard = sanitize_key($_POST["serve_format_standard"]);
+// $geopserve_format_compact = sanitize_key($_POST["serve_format_compact"]);
+
+$geopserve_title_bool = sanitize_key($_POST["serve_title_bool"]);
+$geopserve_tabs_bool = sanitize_key($_POST["serve_tabs_bool"]);
+$geopserve_section_bool = sanitize_key($_POST["serve_section_bool"]);
+$geopserve_page_bool = sanitize_key($_POST["serve_page_bool"]);
+
+$serve_sort_direction_desc = sanitize_key($_POST["serve_sort_direction_desc"]);
+$serve_sort_direction_asc = sanitize_key($_POST["serve_sort_direction_asc"]);
+$serve_sort_type_modified = sanitize_key($_POST["serve_sort_type_modified"]);
+$serve_sort_type_name = sanitize_key($_POST["serve_sort_type_name"]);
+$serve_sort_type_relevance = sanitize_key($_POST["serve_sort_type_relevance"]);
+
+$geopserve_search_standard = sanitize_key($_POST["serve_search_standard"]);
+$geopserve_search_geoplatform = sanitize_key($_POST["serve_search_geoplatform"]);
+$geopserve_search_hidden = sanitize_key($_POST["serve_search_hidden"]);
+
+$geopserve_type_community_bool = sanitize_key($_POST["serve_type_community_bool"]);
+$geopserve_type_community_text = sanitize_key($_POST["serve_type_community_text"]);
+$geopserve_type_theme_bool = sanitize_key($_POST["serve_type_theme_bool"]);
+$geopserve_type_theme_text = sanitize_key($_POST["serve_type_theme_text"]);
+$geopserve_type_title_bool = sanitize_key($_POST["serve_type_title_bool"]);
+$geopserve_type_title_text = sanitize_key($_POST["serve_type_title_text"]);
+$geopserve_type_keyword_bool = sanitize_key($_POST["serve_type_keyword_bool"]);
+$geopserve_type_keyword_text = sanitize_key($_POST["serve_type_keyword_text"]);
+$geopserve_type_topic_bool = sanitize_key($_POST["serve_type_topic_bool"]);
+$geopserve_type_topic_text = sanitize_key($_POST["serve_type_topic_text"]);
+$geopserve_type_usedby_bool = sanitize_key($_POST["serve_type_usedby_bool"]);
+$geopserve_type_usedby_text = sanitize_key($_POST["serve_type_usedby_text"]);
+$geopserve_type_class_bool = sanitize_key($_POST["serve_type_class_bool"]);
+$geopserve_type_class_text = sanitize_key($_POST["serve_type_class_text"]);
+
 $geopserve_cat_dat = sanitize_key($_POST["serve_cat_dat"]);
 $geopserve_cat_ser = sanitize_key($_POST["serve_cat_ser"]);
 $geopserve_cat_lay = sanitize_key($_POST["serve_cat_lay"]);
 $geopserve_cat_map = sanitize_key($_POST["serve_cat_map"]);
 $geopserve_cat_gal = sanitize_key($_POST["serve_cat_gal"]);
+$geopserve_cat_com = sanitize_key($_POST["serve_cat_com"]);
+$geopserve_cat_app = sanitize_key($_POST["serve_cat_app"]);
+$geopserve_cat_top = sanitize_key($_POST["serve_cat_top"]);
+$geopserve_cat_web = sanitize_key($_POST["serve_cat_web"]);
+
+// Submission validity variable, turned to false if input error.
+$geopserve_valid_bool = true;
+
+// Random value determination.
 $geopserve_rand = rand(0, 10000000000000);
 
-// Working default variables.
-$geopserve_invalid_bool = false;
-$geopserve_ual_url_in = '';
-$geopserve_link_scrub = '';
-$geopserve_response = '';
-$geopserve_result = '';
-$geopserve_table_name = "";
-$geopserve_retrieved_data = "";
+// Filter validity checking.
+// if (!($geopserve_type_community_bool || $geopserve_type_theme_bool || $geopserve_type_title_bool || $geopserve_type_keyword_bool || $geopserve_type_topic_bool || $geopserve_type_usedby_bool || $geopserve_type_class_bool)){
+//   $geopserve_valid_bool = false;
+//   echo "Addition failed. No constraints provided.";
+// }
+if ($geopserve_type_community_bool == 'true' && (empty($geopserve_type_community_text) || !ctype_xdigit($geopserve_type_community_text) || strlen($geopserve_type_community_text) != 32)){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. Invalid community ID format or empty input.\n";
+}
+if ($geopserve_type_theme_bool == 'true' && (empty($geopserve_type_theme_text) || !ctype_xdigit($geopserve_type_theme_text) || strlen($geopserve_type_theme_text) != 32)){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. Invalid ID theme format or empty input.\n";
+}
+if ($geopserve_type_title_bool == 'true' && empty($geopserve_type_title_text)){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. Empty input for theme criteria.\n";
+}
+if ($geopserve_type_keyword_bool == 'true' && empty($geopserve_type_keyword_text)){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. Empty input for keyword criteria.\n";
+}
+if ($geopserve_type_topic_bool == 'true' && empty($geopserve_type_topic_text)){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. Empty input for topic criteria.\n";
+}
+if ($geopserve_type_usedby_bool == 'true' && empty($geopserve_type_usedby_text)){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. Empty input for 'used by' criteria.\n";
+}
+if ($geopserve_type_class_bool == 'true' && empty($geopserve_type_class_text)){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. Empty input for classifier criteria.\n";
+}
 
-// URL variables for resource collection.
-$geopserve_ual_url = 'https://ual.geoplatform.gov';
-
-// Data validation. $geopserve_ual_map_id must be a 32-digit HEX value, while the
-// height and width inputs must be either numeric or blank. Failure anywhere
-// here switches invalid_bool to true.
-if (!ctype_xdigit($geopserve_id) || strlen($geopserve_id) != 32){
-  $geopserve_invalid_bool = true;
-  echo "Addition failed. Invalid ID format.";
+// Item tab check, to ensure that at least one is selected.
+if ($geopserve_cat_dat  == 'false' && $geopserve_cat_ser  == 'false' && $geopserve_cat_lay == 'false' && $geopserve_cat_map == 'false' && $geopserve_cat_gal == 'false' && $geopserve_cat_com == 'false' && $geopserve_cat_app == 'false' && $geopserve_cat_top == 'false' && $geopserve_cat_web == 'false'){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. At least one item type must be selected for output.\n";
 }
 
 // Count validation, which must be at least one.
-if (!$geopserve_invalid_bool && $geopserve_count <= 0){
-  $geopserve_invalid_bool = true;
-  echo "Addition failed. The carousel must have at least one output.";
-}
-
-// Category output validation, of which there must be at least one selected.
-if (!$geopserve_invalid_bool && $geopserve_cat_dat == 'false' && $geopserve_cat_ser == 'false' && $geopserve_cat_lay == 'false' && $geopserve_cat_map == 'false' && $geopserve_cat_gal == 'false'){
-  $geopserve_invalid_bool = true;
-  echo "Addition failed. At least one category must be selected for output.";
+if ($geopserve_count <= 0){
+  $geopserve_valid_bool = false;
+  echo "Addition failed. The carousel must have at least one output.\n";
 }
 
 // If any of the validation checks failed, the remainder of this file will not
 // be executed.
-if (!$geopserve_invalid_bool){
+if ($geopserve_valid_bool == 'true'){
 
-  // Field assignment. The map's url is set up, verified, and json decoded so that
-  // it may be used down the line. If any part of the process fails, invalid_bool
-  // is set to true and the process carries on. However, most of the remaining
-  // operations here require a false $geopserve_invalid_bool.
-  $geopserve_ual_url_in = $geopserve_ual_url . '/api/communities/' . $geopserve_id;
-  $geopserve_link_scrub = wp_remote_get( ''.$geopserve_ual_url_in.'', array( 'timeout' => 120, 'httpversion' => '1.1' ) );
-  $geopserve_response = wp_remote_retrieve_body( $geopserve_link_scrub );
+  // Blank title handling.
+  if (empty($geopserve_title))
+    $geopserve_title = "N/A";
 
-  if (!empty($geopserve_response))
-    $geopserve_result = json_decode($geopserve_response, true);
-  else {
-    $geopserve_invalid_bool = true;
-    echo "Addition failed. Community source could not be contacted.";
-  }
+  // Output format determination.
+  $geopserve_format_final = 'standard';
+  if ($geopserve_format_compact == 'true')
+    $geopserve_format_final = 'compact';
 
-  // Invalid map ID check. A faulty map ID will return a generic JSON dataset from
-  // GeoPlatform with a statusCode entry containing the "404" code. This will
-  // trigger invalid_bool and cause an echo back for user error reporting.
-  if (!$geopserve_invalid_bool && array_key_exists('statusCode', $geopserve_result) && $geopserve_result['statusCode'] == "404"){
-    $geopserve_invalid_bool = true;
-    echo "Addition failed. No community or theme with this ID exists.";
-  }
+  // Setting up the output criteria string.
+  $geopserve_criteria_final = ($geopserve_type_community_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_theme_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_title_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_keyword_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_topic_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_usedby_bool == 'true') ? 'T' : 'F';
+  $geopserve_criteria_final .= ($geopserve_type_class_bool == 'true') ? 'T' : 'F';
 
-  // Validity and duplication checks.
-  if (!$geopserve_invalid_bool){
-    // Our custom table is pulled from $wpdb and prepped for iteration.
-    $geopserve_table_name = $wpdb->prefix . 'geop_serve_db';
-    $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
-  }
+  // Setting up the additional aspect string.
+  $geopserve_adds_final = ($geopserve_title_bool == 'true') ? 'T' : 'F';
+  $geopserve_adds_final .= ($geopserve_tabs_bool == 'true') ? 'T' : 'F';
+  $geopserve_adds_final .= ($geopserve_section_bool == 'true') ? 'T' : 'F';
+  $geopserve_adds_final .= ($geopserve_page_bool == 'true') ? 'T' : 'F';
 
-  /* If the map is valid and not a duplicate, final values of the entry are set
-   * up and entered into the database table.
-  */
-  if (!$geopserve_invalid_bool){
+  $geopserve_adds_final .= ($serve_sort_direction_desc == 'true') ? 'D' : 'A';
+  $geopserve_adds_final .= ($serve_sort_type_modified == 'true') ? 'M' : '';
+  $geopserve_adds_final .= ($serve_sort_type_name == 'true') ? 'N' : '';
+  $geopserve_adds_final .= ($serve_sort_type_relevance == 'true') ? 'R' : '';
 
-    // Blank title handling.
-    if (empty($geopserve_title)){
-      $geopserve_title = "N/A";
-    }
+  // Setting up the output tab options.
+  $geopserve_cats_final = ($geopserve_cat_dat == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_ser == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_lay == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_map == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_gal == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_com == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_app == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_top == 'true') ? 'T' : 'F';
+  $geopserve_cats_final .= ($geopserve_cat_web == 'true') ? 'T' : 'F';
 
-    // Community name handling
-    $geopserve_name = $geopserve_result['label'];
+  // Setting up the search bar format.
+  $geopserve_search_final = "stand";
+  if ($geopserve_search_geoplatform == 'true')
+    $geopserve_search_final = "geop";
+  elseif ($geopserve_search_hidden == 'true')
+    $geopserve_search_final = "hide";
 
-    $geopserve_cats = ($geopserve_cat_dat == 'true') ? 'T' : 'F';
-    $geopserve_cats .= ($geopserve_cat_ser == 'true') ? 'T' : 'F';
-    $geopserve_cats .= ($geopserve_cat_lay == 'true') ? 'T' : 'F';
-    $geopserve_cats .= ($geopserve_cat_map == 'true') ? 'T' : 'F';
-    $geopserve_cats .= ($geopserve_cat_gal == 'true') ? 'T' : 'F';
-    $geopserve_source = ($geopserve_source_in == 'true') ? 'theme' : 'community';
 
-    $geopserve_shortcode = "[geopserve ";
-    if ($geopserve_title != "N/A")
-      $geopserve_shortcode .= "title='" . $geopserve_title . "' ";
-    $geopserve_shortcode .= "id='" . $geopserve_id . "' cat='" . $geopserve_cats . "' count='" . $geopserve_count . "' source='" . $geopserve_source . "']";
+  // Begin shortcode construction. Adds title, count, cats, and adds, which are
+  // mandatory for each carousel.
+  $geopserve_shortcode_final = "[geopserve title='" . $geopserve_title . "' count='" . $geopserve_count . "' cat='" . $geopserve_cats_final . "' adds='" . $geopserve_adds_final . "'";
 
-    // echo $geopserve_title . "-" . $geopserve_name . "-" . $geopserve_id . "-" . $geopserve_count . "-" . $geopserve_cats . "-" . $geopserve_rand . "-" . $geopserve_shortcode;
+  // Compact output styling.
+  if ($geopserve_format_final == 'compact')
+    $geopserve_shortcode_final .= " form='compact'";
 
-    // Finally, the variables are added to the table in key/value pairs.
-    $wpdb->insert($geopserve_table_name,
-      array(
-        'serve_num' => $geopserve_rand,
-        'serve_id' => $geopserve_id,
-        'serve_name' => $geopserve_name,
-        'serve_title' => $geopserve_title,
-        'serve_cat' => $geopserve_cats,
-        'serve_count' => $geopserve_count,
-        'serve_source' => $geopserve_source,
-        'serve_shortcode' => $geopserve_shortcode
-      )
-    );
-  }
+  // Search bar incorporation.
+  if ($geopserve_search_final == 'geop')
+    $geopserve_shortcode_final .= " search='geop'";
+  elseif ($geopserve_search_final == 'hide')
+    $geopserve_shortcode_final .= " search='hide'";
+
+  // Filtering criteria incorporation.
+  if ($geopserve_type_community_bool == 'true')
+    $geopserve_shortcode_final .= " community='" . $geopserve_type_community_text . "'";
+  if ($geopserve_type_theme_bool == 'true')
+    $geopserve_shortcode_final .= " theme='" . $geopserve_type_theme_text . "'";
+  if ($geopserve_type_title_bool == 'true')
+    $geopserve_shortcode_final .= " title='" . $geopserve_type_title_text . "'";
+  if ($geopserve_type_keyword_bool == 'true')
+    $geopserve_shortcode_final .= " keyword='" . $geopserve_type_keyword_text . "'";
+  if ($geopserve_type_topic_bool == 'true')
+    $geopserve_shortcode_final .= " topic='" . $geopserve_type_topic_text . "'";
+  if ($geopserve_type_usedby_bool == 'true')
+    $geopserve_shortcode_final .= " usedby='" . $geopserve_type_usedby_text . "'";
+  if ($geopserve_type_class_bool == 'true')
+    $geopserve_shortcode_final .= " class='" . $geopserve_type_class_text . "'";
+
+  // Closing out the string.
+  $geopserve_shortcode_final .= "]";
+
+  // Finally, the variables are added to the table in key/value pairs.
+  $geopserve_table_name = $wpdb->prefix . "geop_asset_db";
+  $wpdb->insert($geopserve_table_name,
+    array(
+      'serve_num' => $geopserve_rand,
+      'serve_title' => $geopserve_title,
+      'serve_format' => $geopserve_format_final,
+      'serve_criteria' => $geopserve_criteria_final,
+      'serve_adds' => $geopserve_adds_final,
+      'serve_cat' => $geopserve_cats_final,
+      'serve_search' => $geopserve_search_final,
+      'serve_count' => $geopserve_count,
+      'serve_shortcode' => $geopserve_shortcode_final
+    )
+  );
 }
-
-?>
