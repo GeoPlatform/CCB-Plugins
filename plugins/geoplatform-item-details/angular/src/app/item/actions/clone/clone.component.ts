@@ -33,6 +33,8 @@ export class CloneComponent extends AuthenticatedComponent implements OnInit {
         this.overrides = {
             label : "Clone of " + this.item.label
         };
+        let token = this.authService.getJWTfromLocalStorage();
+        this.itemService.client.setAuthToken(token);
     }
 
     ngOnDestroy() {

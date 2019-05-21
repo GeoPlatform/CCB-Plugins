@@ -70,15 +70,18 @@ export class NG2HttpClient {
             opts.body = options.data;
         }
 
-        opts.headers = new HttpHeaders();
+        let headers = new HttpHeaders();
 
         //set authorization token if one was provided
         if(this.token) {
             let token = this.token();
             if(token) {
-                opts.headers.set('Authorization', 'Bearer ' + token);
+                //remember headers.set returns a NEW instance of Headers
+                headers = headers.set('Authorization', 'Bearer ' + token);
             }
         }
+
+        opts.headers = headers;
 
         if(opts.body) {
             return new HttpRequest<any>(options.method, options.url, opts.body, opts);
