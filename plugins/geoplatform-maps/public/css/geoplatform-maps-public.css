@@ -320,11 +320,11 @@ body .btn.btn-sm {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    border: 1px solid transparent !important;
+    /* border: 1px solid transparent !important;
         border-top-color: transparent;
         border-right-color: transparent;
         border-bottom-color: transparent;
-        border-left-color: transparent;
+        border-left-color: transparent; */
     padding: .375rem .75rem;
     font-size: 1rem;
     line-height: 1.5;
