@@ -278,7 +278,7 @@
       echo "<thead>";
         echo "<tr>";
         	echo "<th class='row-title'>Title</th>";
-          echo "<th>Output Format</th>";
+          // echo "<th>Output Format</th>";
           echo "<th>Filter Criteria</th>";
         	echo "<th>Output Types</th>";
           echo "<th>Search Format</th>";
@@ -315,7 +315,7 @@
           (substr(($geopserve_entry->serve_criteria), 6, 1) == 'T') ? array_push($geopserve_crit_array, 'Classifiers') : '';
           $geopserve_crit_out = implode(", ", $geopserve_crit_array);
           if (empty($geopserve_crit_out))
-            $geopserve_crit_out = "N/A";
+            $geopserve_crit_out = "All";
 
           // Active tab translator.
           $geopserve_cat_array = array();
@@ -354,7 +354,7 @@
           // Begin output.
           echo "<tr>";
           	echo "<td>" . esc_attr($geopserve_entry->serve_title) . "</td>";
-            echo "<td>" . esc_attr(ucfirst($geopserve_entry->serve_format)) . "</td>";
+            // echo "<td>" . esc_attr(ucfirst($geopserve_entry->serve_format)) . "</td>";
             echo "<td>" . esc_attr($geopserve_crit_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_cat_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_search_out) . "</td>";
