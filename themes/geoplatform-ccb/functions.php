@@ -214,6 +214,23 @@ if ( ! function_exists ( 'geop_ccb_setup' ) ) {
 	 */
 	add_theme_support( 'html5', array( 'search-form' ) );
 
+
+  /**
+   *  Adds Category Link post type handling for menus.
+   *
+   * @link https://wordpress.stackexchange.com/questions/235880/using-filters-to-change-href-of-nav-menu-page-link
+   */
+  add_filter( 'nav_menu_link_attributes', function ( $atts, $item, $args, $depth ) {
+
+    if ( $item->object == 'geopccb_catlink' ) {
+      $thepost = get_post( $item->object_id );
+      $atts['href'] = $thepost->geop_ccb_cat_link_url;
+    }
+
+    return $atts;
+  }, 10, 4 ); // 4 so we get all arguments
+
+
 	/**
 	 * Starter Content
 	 */
