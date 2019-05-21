@@ -140,7 +140,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		            <?php echo sanitize_text_field($geopportal_port_res_main_title) ?>
 		        </div>
 		        <div class="p-landing-page__portfolio__tabs">
-		            <a class="is-linkless geopportal_port_car_tab_title portfolio-carousel-active-tab " onclick="cycleCarouselTo('#geopportal_anchor_carousel',0)" keyword="active">Data</a>
+		            <a class="is-linkless geopportal_port_car_tab_title portfolio-carousel-active-tab" onclick="cycleCarouselTo('#geopportal_anchor_carousel',0)" keyword="active">Data</a>
 		            <a class="is-linkless geopportal_port_car_tab_title" onclick="cycleCarouselTo('#geopportal_anchor_carousel',1)">Services</a>
 		            <a class="is-linkless geopportal_port_car_tab_title" onclick="cycleCarouselTo('#geopportal_anchor_carousel',2)">Maps</a>
 		            <a class="is-linkless geopportal_port_car_tab_title" onclick="cycleCarouselTo('#geopportal_anchor_carousel',3)">Galleries</a>
