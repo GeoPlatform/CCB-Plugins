@@ -138,7 +138,7 @@
       </p>
       <hr>
       <p>
-        Please insert initial display criteria in the proper boxes and check those that you wish to apply to the carousel.
+        Please insert initial display criteria in the proper boxes and check those that you wish to apply to the carousel. In the case of multiple criteria, inputs should be seperated by commas.
       </p>
       <p>
         <table>
@@ -148,7 +148,11 @@
               Community&nbsp
             </th>
             <th>
-              <input type="text" class="regular-text" id="serve_type_community_text" value=""/>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_community_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit community ID.</span>
             </th>
           </tr>
         </table>
@@ -161,7 +165,11 @@
               Theme&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             </th>
             <th>
-              <input type="text" class="regular-text" id="serve_type_theme_text" value=""/>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_theme_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit theme ID.</span>
             </th>
           </tr>
         </table>
@@ -174,7 +182,11 @@
               Title/Label&nbsp
             </th>
             <th>
-              <input type="text" class="regular-text" id="serve_type_title_text" value=""/>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_title_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input accepts regular text titles or labels.</span>
             </th>
           </tr>
         </table>
@@ -187,7 +199,11 @@
               Keyword&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             </th>
             <th>
-              <input type="text" class="regular-text" id="serve_type_keyword_text" value=""/>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_keyword_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input accepts regular text keywords.</span>
             </th>
           </tr>
         </table>
@@ -200,7 +216,11 @@
               Topic&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             </th>
             <th>
-              <input type="text" class="regular-text" id="serve_type_topic_text" value=""/>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_topic_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit topic ID.</span>
             </th>
           </tr>
         </table>
@@ -213,7 +233,11 @@
               Used By&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             </th>
             <th>
-              <input type="text" class="regular-text" id="serve_type_usedby_text" value=""/>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_usedby_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit asset ID.</span>
             </th>
           </tr>
         </table>
@@ -226,13 +250,17 @@
               Classifier&nbsp&nbsp&nbsp&nbsp&nbsp
             </th>
             <th>
-              <input type="text" class="regular-text" id="serve_type_class_text" value=""/>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_class_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit classifier ID.</span>
             </th>
           </tr>
         </table>
       </p>
       <hr>
-      <p>Select the items to include in the output
+      <p>Select the items to include in the output. Conservative use of tabs is suggested to avoid unnecessary visual clutter.
         <table>
           <tr>
             <th>
