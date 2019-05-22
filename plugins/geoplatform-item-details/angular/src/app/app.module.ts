@@ -77,6 +77,8 @@ import { DeleteActionComponent } from './item/actions/delete-action/delete-actio
 import { LikeActionComponent } from './item/actions/like-action/like-action.component';
 import { DownloadActionComponent } from './item/actions/download/download.component';
 import { PreviewActionComponent } from './item/actions/preview/preview.component';
+import { CloneActionComponent } from './item/actions/clone/clone.component';
+import { OperatesOnComponent } from './item/collections/operates-on/operates-on.component';
 
 
 import { PluginAuthService } from './shared/auth.service';
@@ -94,8 +96,7 @@ import {
 
 
 import { RPMStatsService } from './shared/rpmstats.service';
-import { OperatesOnComponent } from './item/collections/operates-on/operates-on.component';
-import { CloneComponent } from './item/actions/clone/clone.component';
+
 let RPMStatsServiceFactory = (http: HttpClient) => {
     return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
 }
@@ -158,6 +159,7 @@ export function initializeApp() {
         DeleteActionComponent,
         DownloadActionComponent,
         PreviewActionComponent,
+        CloneActionComponent,
         DatasetDistributionsComponent,
         UsedByComponent,
         RelatedComponent,
@@ -175,8 +177,7 @@ export function initializeApp() {
         PropertyComponent,
         ThemesComponent,
         TopicsComponent,
-        OperatesOnComponent,
-        CloneComponent
+        OperatesOnComponent
     ],
     imports: [
         // RouterModule.forRoot( appRoutes, { useHash: true } ),

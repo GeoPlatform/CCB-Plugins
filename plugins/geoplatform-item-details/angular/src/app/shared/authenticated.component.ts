@@ -30,12 +30,12 @@ export abstract class AuthenticatedComponent {
     init() {
 
         this.gpAuthSubscription = this.authService.getMessenger().raw().subscribe(msg => {
-            // console.log("AuthService() - Received Auth Message: " + msg.name);
+            console.log("AuthService() - Received Auth Message (" +
+                msg.name + ") : " + JSON.stringify(msg.user, null, ' '));
             switch(msg.name){
                 case 'userAuthenticated':
                 this.user = msg.user;
                 this.onUserChange(msg.user);
-                // this.user$.next(msg.user);
                 break;
 
                 case 'userSignOut':
@@ -46,7 +46,8 @@ export abstract class AuthenticatedComponent {
         });
 
         this.authService.getUser().then( user => {
-            // console.log('USER: ' + JSON.stringify(user));
+            console.log('AuthService.getUser() returned ' +
+                JSON.stringify(user, null, ' '));
             this.user = user;
             this.onUserChange(user);
         })
