@@ -221,7 +221,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 		 		<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text geop-text-shadow">
 		 			<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 		 		</a>
-		 		<div>
+		 		<div style="display:flex">
 
 					<?php
 					if ( is_plugin_active( 'geoplatform-item-details/geoplatform-item-details.php' ) )
@@ -354,12 +354,12 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					<a href="<?php echo $geopmap_redirect_item_details; ?>" target="_blank" class="geop-map-title-text geop-text-shadow">
 						<span class="t-fg--white geop-hidden-link"><?php echo $geopmap_shortcode_array['name']; ?></span>
 					</a>
-					<div>
+					<div style="display:flex">
 
 						<?php
 						if (esc_attr($geopmap_shortcode_array['use']) != 'featured'){
-							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn-sm' style='margin-right:.5em;'>";
-								echo "<span class='geop-redirect-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
+							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light' style='margin-right:.5em;'>";
+								echo "<span class='geop-layer-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
 							echo "</button>";
 						}
 
