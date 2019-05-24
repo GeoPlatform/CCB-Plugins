@@ -14,7 +14,7 @@ import { itemServiceProvider } from '../../../shared/service.provider';
   styleUrls: ['./clone.component.less'],
   providers: [itemServiceProvider]
 })
-export class CloneComponent extends AuthenticatedComponent implements OnInit {
+export class CloneActionComponent extends AuthenticatedComponent implements OnInit {
 
     @Input() item : any;
     public canClone : boolean;
@@ -28,37 +28,55 @@ export class CloneComponent extends AuthenticatedComponent implements OnInit {
 
     ngOnInit() {
         super.init();
-
-        this.canClone = this.isAuthenticated();
         this.overrides = {
             label : "Clone of " + this.item.label
         };
-        let token = this.authService.getJWTfromLocalStorage();
-        this.itemService.client.setAuthToken(token);
     }
 
     ngOnDestroy() {
         super.destroy();
     }
 
-    isSupported() {
-        return this.item &&
-            this.canClone &&
-            ItemHelper.isAsset(this.item);
+    onUserChange(user) {
+        super.onUserChange(user);
+        console.log("Clone.onUserChange() : " + JSON.stringify(user, null, ' '));
     }
 
+    isSupported() {
+        return this.item && ItemHelper.isAsset(this.item);
+    }
+
+    isAuthenticated() {
+        if(!environment.production) return true;
+        return super.isAuthenticated();
+    }
+
+    /**
+     *
+     */
     doAction() {
-        this.itemService.clone(this.item.id, this.overrides)
+
+        //first, ensure token isn't in weird expired/revoked state
+        this.authService.check().then( user => {
+
+            if(!user) throw new Error("Not signed in");
+            let token = this.authService.getJWTfromLocalStorage();
+            this.itemService.client.setAuthToken(token);
+
+            //then trigger the clone operation
+            return this.itemService.clone(this.item.id, this.overrides);
+        })
         .then( clone => {
+            this.awaitingInput = false;
+
+            //then redirect browser to clone's ID page
             let type = ItemHelper.getTypeKey(clone);
             let url = '/resources/' + type + '/' + clone.id;
             (window as any).location.href = url;
         })
         .catch( (e:Error) => {
-            this.error = e;
-        })
-        .finally( () => {
             this.awaitingInput = false;
+            this.error = e;
         });
     }
 
