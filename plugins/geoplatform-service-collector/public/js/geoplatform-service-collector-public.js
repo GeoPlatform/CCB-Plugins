@@ -290,8 +290,6 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 	itemSvc.search(query)
 		.then(function (response) {
 
-			console.log(response);
-
 			// Gets the results.
 			var geopserve_results = response.results;
 
