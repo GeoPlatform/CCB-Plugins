@@ -21,6 +21,16 @@
     </a>
 </div>
 
+<div class="m-article__desc" *ngIf="'regp:Service'!==item.type">
+    <div><strong>Access the Resource </strong></div>
+    <em *ngIf="!item?.href">Not specified</em>
+    <a *ngIf="item?.href" href="{{item.href}}"
+        target="_blank" class="u-break--all">
+        {{item.href}}
+    </a>
+</div>
+
+
 <div class="m-article__desc" >
     <div><strong>Purpose</strong></div>
     {{item.purpose || "Not specified"}}
