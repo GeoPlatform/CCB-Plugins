@@ -71,6 +71,7 @@
 				serve_type_usedby_text: jQuery("#serve_type_usedby_text").val(),
 				serve_type_class_bool: jQuery("#serve_type_class_bool").is(":checked"),
 				serve_type_class_text: jQuery("#serve_type_class_text").val(),
+				serve_type_class_type: jQuery("#serve_type_class_type").val(),
 				serve_cat_dat: jQuery("#serve_cat_data").is(":checked"),
 				serve_cat_ser: jQuery("#serve_cat_serve").is(":checked"),
 				serve_cat_lay: jQuery("#serve_cat_layer").is(":checked"),
