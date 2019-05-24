@@ -85,9 +85,13 @@
   margin-left: 10%;
   margin-right: 10%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   text-align: center;
   position: relative;
+}
+
+.geopserve-tab-pagers {
+  flex: 1;
 }
 
 

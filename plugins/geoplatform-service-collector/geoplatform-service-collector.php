@@ -224,27 +224,31 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 			// types to provide output for and tabs aren't disabled.
 			if (sizeof($geopserve_tab_array) > 1 && $geopserve_show_tabs){
 				echo "<div class='geopserve-tab-margins u-mg-bottom--xlg'>";
-				if ($geopserve_show_pages)
-					echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button'></button>";
 
-				echo "<ol class='carousel-indicators carousel-indicators-override' style='margin:0'>";
+					if ($geopserve_show_pages)
+						echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button'></button>";
 
+					echo "<ol class='carousel-indicators carousel-indicators-override' style='margin:0'>";
+					for ($i = 0; $i < sizeof($geopserve_tab_array); $i++){
+						if ($i == 0)
+							echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base geopserve-carousel-active active' title='" . $geopserve_tab_array[$i]['name'] . "'>";
+						else
+							echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base' title='" . $geopserve_tab_array[$i]['name'] . "'>";
 
-
-				for ($i = 0; $i < sizeof($geopserve_tab_array); $i++){
-					if ($i == 0)
-						echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base geopserve-carousel-active active' title='" . $geopserve_tab_array[$i]['name'] . "'>";
-					else
-						echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base' title='" . $geopserve_tab_array[$i]['name'] . "'>";
-
-					echo "<span class='" . $geopserve_tab_array[$i]['icon'] . "'></span>" . $geopserve_tab_array[$i]['name'] . "</li>";
+						echo "<span class='" . $geopserve_tab_array[$i]['icon'] . "'></span>" . $geopserve_tab_array[$i]['name'] . "</li>";
 					}
+				  echo "</ol>";
 
+					if ($geopserve_show_pages)
+						echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button'></button>";
 
-
-			  echo "</ol>";
-				if ($geopserve_show_pages)
-					echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button'></button>";
+				echo "</div>";
+			}
+			elseif((sizeof($geopserve_tab_array) <= 1 || !$geopserve_show_tabs) && $geopserve_show_pages){
+				echo "<div class='geopserve-tab-margins u-mg-bottom--xlg'>";
+					echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button geopserve-tab-pagers'></button>";
+					echo "<span class='geopserve-pagination-counter-base geopserve_pagination_tracker geopserve-tab-pagers'>Page 1</span>";
+					echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button geopserve-tab-pagers'></button>";
 				echo "</div>";
 			}
 
@@ -318,10 +322,8 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 								echo "<div class='m-results-item'>";
 									echo "<div class='geopserve-search-display'>";
 
-										if ($geopserve_show_pages){
-											// echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button'></button>";
+										if ($geopserve_show_pages && sizeof($geopserve_tab_array) > 1 && $geopserve_show_tabs)
 											echo "<span class='geopserve-pagination-counter-base geopserve_pagination_tracker u-mg-left--md is-hidden--xs'>Page 1</span>";
-										}
 
 										echo "<a href='" . home_url() . "/geoplatform-search" . $geopserve_search_query_prefix . "' class='u-pd-right--md u-mg-left--md is-hidden--xs geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "'></a>";
 										echo "<div class='flex-1 d-flex flex-justify-between flex-align-center u-mg-left--md'>";
@@ -337,34 +339,18 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											echo "</div>";
 											echo "<button class='geopportal_port_community_search_geop_button u-mg-left--lg u-mg-right--md btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>SEARCH</a>";
 										echo "</div>";
-
-										// if ($geopserve_show_pages)
-										// 	echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button'></button>";
-
 									echo "</div>";
 								echo "</div>";
 							}
-							elseif ($geopserve_search_state == 'hide' && $geopserve_show_pages){
-								// Search and paging control construction.
-								// echo "<div class='m-results-item'>";
-								// 	echo "<div class='m-results-item__body flex-align-center'>";
-								// 		echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button' style='margin-right:0.35em; flex:1!important;'></button>";
-								// 		echo "<span class='u-mg-right--md geopserve-pagination-counter-base geopserve_pagination_tracker' style='flex:1!important;'>Page 1</span>";
-								// 		echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button' style='margin-left:0.5em; flex:1!important;'></button>";
-								// 	echo "</div>";
-								// echo "</div>";
-							}
-							elseif ($geopserve_search_state == 'hide' && !$geopserve_show_pages){}
+							elseif ($geopserve_search_state == 'hide'){}
 							else {
 								echo "<div class='m-results-item'>";
-									echo "<div class='m-results-item__body flex-align-center'>";
+									echo "<div class='geopserve-search-display'>";
 
-										if ($geopserve_show_pages){
-											// echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button' style='margin-right:0.35em;'></button>";
-											echo "<span class='u-mg-right--md geopserve-pagination-counter-base geopserve_pagination_tracker'>Page 1</span>";
-										}
+										if ($geopserve_show_pages && sizeof($geopserve_tab_array) > 1 && $geopserve_show_tabs)
+											echo "<span class='geopserve-pagination-counter-base geopserve_pagination_tracker u-mg-left--md is-hidden--xs'>Page 1</span>";
 
-										echo "<div class='flex-1 d-flex flex-justify-between flex-align-center'>";
+										echo "<div class='flex-1 d-flex flex-justify-between flex-align-center u-mg-left--md'>";
 											echo "<div class='input-group-slick flex-1'>";
 												echo "<form class='input-group-slick flex-1 geopportal_port_community_search_stand_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";
 												echo "<span class='icon fas fa-search'></span>";
@@ -374,7 +360,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 															"placeholder='" . $geopserve_search_placeholder . "'>";
 												echo "</form>";
 											echo "</div>";
-											echo "<button class='geopportal_port_community_search_stand_button u-mg-left--lg u-mg-right--xs btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' id='geopserve_stand_search_button_" . $i . "'>SEARCH</a>";
+											echo "<button class='geopportal_port_community_search_stand_button u-mg-left--lg u-mg-right--md btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' id='geopserve_stand_search_button_" . $i . "'>SEARCH</a>";
 										echo "</div>";
 
 										// if ($geopserve_show_pages)
