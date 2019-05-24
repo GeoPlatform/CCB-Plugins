@@ -339,13 +339,14 @@ function geopsearch_ajax_search( $request ) {
 			$this->totalResults = (int)$total;
 			$this->type = $type;
 	    $this->results = $results;
-	  }
+		}
 	}
 
 	$slice_start = $page * $per_page;
 	// instead of $start use start
 	// instead of $per_page use $size
-	$results = array_slice($geopsearch_post_fetch_total, $slice_start, $per_page, true);
+	// $results = array_slice($geopsearch_post_fetch_total, $slice_start, $per_page, true);
+	$results = $geopsearch_post_fetch_total;
 
 	$page_object = new SearchResults($page, $per_page, $geopsearch_total_count, $post_type, $results);
 

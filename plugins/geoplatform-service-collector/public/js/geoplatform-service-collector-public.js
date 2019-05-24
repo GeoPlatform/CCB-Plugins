@@ -131,7 +131,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
 		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
 		geopserve_class_array = geopserve_class_temp.split("-");
-		query.setParameter('facet.classifiers.purpose.id', geopserve_class_array);
+		query.setClassifier('classifiers.purpose', geopserve_class_array);
 	}
 
 	// Performs the query grab.
