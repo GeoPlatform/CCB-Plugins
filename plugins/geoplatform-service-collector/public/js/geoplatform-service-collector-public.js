@@ -131,7 +131,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
 		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
 		geopserve_class_array = geopserve_class_temp.split("-");
-		query.setClassifiers(geopserve_class_array);
+		query.setClassifier('classifiers.purpose', geopserve_class_array);
 	}
 
 	// Performs the query grab.
@@ -277,7 +277,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
 		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
 		geopserve_class_array = geopserve_class_temp.split("-");
-		query.setClassifiers(geopserve_class_array);
+		query.setParameter('facet.classifiers.purpose.id', geopserve_class_array);
 	}
 
 	// Adds thumbnails to the query return.

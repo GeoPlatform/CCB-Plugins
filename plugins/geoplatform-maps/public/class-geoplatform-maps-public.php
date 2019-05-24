@@ -63,6 +63,7 @@ class Geop_Maps_Public {
 		 * class.
 		 */
 
+	 	wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_leaflet_css', plugin_dir_url( __FILE__ ) . 'assets/leaflet_1.3.1.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_marker_cluster_css', plugin_dir_url( __FILE__ ) . 'assets/MarkerCluster_1.3.0.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_marker_default_css', plugin_dir_url( __FILE__ ) . 'assets/MarkerCluster.Default_1.3.0.css', array(), $this->version, 'all' );

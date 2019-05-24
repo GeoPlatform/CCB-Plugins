@@ -30,10 +30,12 @@
   position: relative !important;
   text-align: left !important;
   bottom: unset !important;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .carousel-indicators li {
-  display: block;
+  width: auto;
 }
 
 .geopserve-pagination-button-base {
@@ -70,6 +72,26 @@
 .geopserve-hidden {
   visibility: hidden;
   height: 0px;
+}
+
+.geopserve-search-display {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1em 0em 1em 0em;
+  align-items: center;
+}
+
+.geopserve-tab-margins{
+  margin-left: 10%;
+  margin-right: 10%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.geopserve-tab-pagers {
+  flex: 1;
 }
 
 
