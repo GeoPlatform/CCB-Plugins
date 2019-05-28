@@ -21,18 +21,21 @@ export class LegendComponent implements OnInit {
 
     ngOnInit() {
         this.types = Object.keys(ItemTypes).map(t=> {
-            let type = ItemTypes[t], label = type, icon = this.getIconPath(type);
+            let type = ItemTypes[t];
+            if(ItemTypes.STANDARD === type) return null;
+            let label = type, icon = this.getIconPath(type);
             if(~label.indexOf(":")) label = label.split(':')[1];
             if("VCard" === label) label = 'Contact';
+            if("Product" === label) label = "Image Product";
             return { id: type, label: label, icon: icon };
-        });
+        }).filter(t=>t!==null);
     }
 
     getIconPath(type) {
         let result = "dataset";
         switch(type) {
             case ItemTypes.CONTACT:         result =  'vcard'; break;
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.IMAGE_PRODUCT:   result =  'imageproduct'; break;
             default: type = type.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         return `../${environment.assets}${result}.svg`;
@@ -42,7 +45,7 @@ export class LegendComponent implements OnInit {
         let type = "dataset";
         switch(typeName) {
             case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.IMAGE_PRODUCT:   type =  'imageproduct'; break;
             default: type = typeName.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         return 'icon-' + type;

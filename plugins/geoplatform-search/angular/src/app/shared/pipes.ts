@@ -39,6 +39,8 @@ export class FriendlyTypePipe implements PipeTransform {
         let idx = value.indexOf(":");
         if(~idx) name = value.substring(idx+1);
         if('VCard' === name) name = 'Contact';
+        if('RightsStatement' === name) name = "Rights Statement";
+        if('Product' === name) name = "Image Product";
         return name;
     }
 }

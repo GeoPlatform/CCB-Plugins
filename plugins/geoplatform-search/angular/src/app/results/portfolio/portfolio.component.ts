@@ -215,6 +215,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         let type = "dataset";
         switch(item.type) {
             case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.IMAGE_PRODUCT:   type =  'imageproduct'; break;
             default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         // return `../${ServerRoutes.ASSETS}${type}.svg`;
@@ -225,6 +226,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         let type = "dataset";
         switch(item.type) {
             case ItemTypes.CONTACT:         type =  'vcard'; break;
+            case ItemTypes.IMAGE_PRODUCT:   type =  'imageproduct'; break;
             default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
         }
         return 'icon-' + type;
@@ -239,6 +241,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.GALLERY: type = "galleries"; break;
             case ItemTypes.COMMUNITY: type = "communities"; break;
             case ItemTypes.CONTACT: type = "contacts"; break;
+            case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
             default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's'; break;
         }
         if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
