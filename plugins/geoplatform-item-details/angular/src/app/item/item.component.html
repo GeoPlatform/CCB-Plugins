@@ -108,7 +108,7 @@
 
 
                 <!-- Contact (VCard) -->
-                <gpid-contact-details *ngIf="TYPES.VCARD===item?.type" [item]="item">
+                <gpid-contact-details *ngIf="TYPES.CONTACT===item?.type" [item]="item">
                 </gpid-contact-details>
 
 
@@ -119,8 +119,7 @@
                 </div>
 
                 <!-- eo:Product -->
-                <gpid-product-details *ngIf="TYPES.IMAGE_PRODUCT===item?.type"
-                    [item]="item">
+                <gpid-product-details *ngIf="TYPES.IMAGE_PRODUCT===item?.type" [item]="item">
                 </gpid-product-details>
 
             </div>

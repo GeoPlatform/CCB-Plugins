@@ -208,27 +208,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.constraints.set(constraint);
     }
 
-    /**
-     *
-     */
-    getIconPath(item) {
-        let type = "dataset";
-        switch(item.type) {
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.IMAGE_PRODUCT:   type =  'imageproduct'; break;
-            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
-        // return `../${ServerRoutes.ASSETS}${type}.svg`;
-        return `../${environment.assets}${type}.svg`;
-    }
-
     getIconClass(item) {
-        let type = "dataset";
-        switch(item.type) {
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.IMAGE_PRODUCT:   type =  'imageproduct'; break;
-            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
+        let type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
         return 'icon-' + type;
     }
 

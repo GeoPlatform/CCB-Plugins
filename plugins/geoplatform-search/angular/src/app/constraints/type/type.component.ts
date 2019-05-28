@@ -101,28 +101,8 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
         }
     }
 
-    getIconPath(option) {
-        let type = "dataset";
-        switch(option.id) {
-            //WP types
-            case 'pages':                   type =  'page'; break;
-            case 'posts':                   type =  'post'; break;
-            case 'media':                   type =  'attachment'; break;
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            default: type = option.id.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
-        return `../${environment.assets}${type}.svg`;
-        // return `../${ServerRoutes.ASSETS}${type}.svg`;
-    }
-
     getIconClass(option) {
-        let type = "dataset";
-        switch(option.id) {
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.IMAGE_PRODUCT:   type = 'imageproduct'; break;
-            case ItemTypes.RIGHTS_STATEMENT:   type = 'rights'; break;
-            default: type = option.id.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
+        let type = option.id.replace(/^[a-z]+\:/i, '').toLowerCase();
         return 'icon-' + type;
     }
 

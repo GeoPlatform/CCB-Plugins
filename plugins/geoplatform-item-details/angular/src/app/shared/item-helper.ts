@@ -1,5 +1,5 @@
 
-import { ItemTypes } from "geoplatform.client";
+import { ItemTypes, ItemTypeLabels } from "geoplatform.client";
 
 import { environment } from '../../environments/environment';
 
@@ -75,25 +75,25 @@ export class ItemHelper {
      */
     static getTypeLabel(item:any) {
         if(!item) return 'Unknown Resource Type';
-
-        let type : string = null;
-        if(typeof(item) === 'string') type = item as string;
-        else if(item.type) type = item.type;
-        else return null;
-
-        switch(type) {
-            case ItemTypes.DATASET :
-            case ItemTypes.SERVICE :
-            case ItemTypes.PERSON :
-            case ItemTypes.ORGANIZATION :
-            case ItemTypes.CONCEPT :
-                return type.replace(/^[a-z]+\:/i, '');
-            case ItemTypes.CONCEPT_SCHEME : return "Concept Scheme";
-            case ItemTypes.WEBSITE : return "Website";
-            case ItemTypes.CONTACT : return "Contact";
-            case ItemTypes.IMAGE_PRODUCT : return "Image Product";
-            default: return type;   //remainder are unprefixed
-        }
+        return ItemTypeLabels[item.type] || 'Unknown Resource Type';
+        // let type : string = null;
+        // if(typeof(item) === 'string') type = item as string;
+        // else if(item.type) type = item.type;
+        // else return null;
+        //
+        // switch(type) {
+        //     case ItemTypes.DATASET :
+        //     case ItemTypes.SERVICE :
+        //     case ItemTypes.PERSON :
+        //     case ItemTypes.ORGANIZATION :
+        //     case ItemTypes.CONCEPT :
+        //         return type.replace(/^[a-z]+\:/i, '');
+        //     case ItemTypes.CONCEPT_SCHEME : return "Concept Scheme";
+        //     case ItemTypes.WEBSITE : return "Website";
+        //     case ItemTypes.CONTACT : return "Contact";
+        //     case ItemTypes.IMAGE_PRODUCT : return "Image Product";
+        //     default: return type;   //remainder are unprefixed
+        // }
     }
 
 

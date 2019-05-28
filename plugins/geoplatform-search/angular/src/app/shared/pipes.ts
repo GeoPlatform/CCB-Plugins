@@ -1,5 +1,6 @@
 
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
+import { ItemTypeLabels } from 'geoplatform.client';
 
 /*
  * Limits an array of entries to a maximum number
@@ -35,13 +36,14 @@ export class LimitToPipe implements PipeTransform {
 export class FriendlyTypePipe implements PipeTransform {
     transform(value: string): string {
         if(!value || typeof(value) !== 'string' || value.length === 0) return value;
-        let name = value;
-        let idx = value.indexOf(":");
-        if(~idx) name = value.substring(idx+1);
-        if('VCard' === name) name = 'Contact';
-        if('RightsStatement' === name) name = "Rights Statement";
-        if('Product' === name) name = "Image Product";
-        return name;
+        return ItemTypeLabels[value];
+        // let name = value;
+        // let idx = value.indexOf(":");
+        // if(~idx) name = value.substring(idx+1);
+        // if('VCard' === name) name = 'Contact';
+        // if('RightsStatement' === name) name = "Rights Statement";
+        // if('Product' === name) name = "Image Product";
+        // return name;
     }
 }
 
