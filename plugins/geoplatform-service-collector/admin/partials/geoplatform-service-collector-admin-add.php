@@ -14,9 +14,10 @@ global $wpdb;
 /* Assigns the variables stored in $_POST while instantiating blank variables
  * for conditional assignment.
 */
-$geopserve_title = $_POST["serve_name"];
+$geopserve_title = sanitize_text_field($_POST["serve_name"]);
 $geopserve_count = sanitize_key($_POST["serve_count"]);
 
+// Format bools are currently constants due to the feature being removed for now.
 $geopserve_format_standard = true;
 $geopserve_format_compact = false;
 // $geopserve_format_standard = sanitize_key($_POST["serve_format_standard"]);
@@ -69,11 +70,13 @@ $geopserve_valid_bool = true;
 // Random value determination.
 $geopserve_rand = rand(0, 10000000000000);
 
-// Filter validity checking.
 // if (!($geopserve_type_community_bool || $geopserve_type_theme_bool || $geopserve_type_title_bool || $geopserve_type_keyword_bool || $geopserve_type_topic_bool || $geopserve_type_usedby_bool || $geopserve_type_class_bool)){
 //   $geopserve_valid_bool = false;
 //   echo "Addition failed. No constraints provided.";
 // }
+
+// Applies validity checkin on inputs, checks for input types that are desired
+// but have empty or invalid inputs and flips the validity bool if found.
 if ($geopserve_type_community_bool == 'true' && (empty($geopserve_type_community_text) || !ctype_xdigit($geopserve_type_community_text) || strlen($geopserve_type_community_text) != 32)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Invalid community ID format or empty input.\n";
@@ -90,15 +93,15 @@ if ($geopserve_type_keyword_bool == 'true' && empty($geopserve_type_keyword_text
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for keyword criteria.\n";
 }
-if ($geopserve_type_topic_bool == 'true' && empty($geopserve_type_topic_text)){
+if ($geopserve_type_topic_bool == 'true' && empty($geopserve_type_topic_text) || !ctype_xdigit($geopserve_type_topic_text) || strlen($geopserve_type_topic_text) != 32)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for topic criteria.\n";
 }
-if ($geopserve_type_usedby_bool == 'true' && empty($geopserve_type_usedby_text)){
+if ($geopserve_type_usedby_bool == 'true' && empty($geopserve_type_usedby_text) || !ctype_xdigit($geopserve_type_usedby_text) || strlen($geopserve_type_usedby_text) != 32)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for 'used by' criteria.\n";
 }
-if ($geopserve_type_class_bool == 'true' && empty($geopserve_type_class_text)){
+if ($geopserve_type_class_bool == 'true' && empty($geopserve_type_class_text) || !ctype_xdigit($geopserve_type_class_text) || strlen($geopserve_type_class_text) != 32)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for classifier criteria.\n";
 }
@@ -123,7 +126,7 @@ if ($geopserve_valid_bool == 'true'){
   if (empty($geopserve_title))
     $geopserve_title = "N/A";
 
-  // Output format determination.
+  // Output format determination. Currently, compact form is not an option.
   $geopserve_format_final = 'standard';
   if ($geopserve_format_compact == 'true')
     $geopserve_format_final = 'compact';
@@ -171,7 +174,7 @@ if ($geopserve_valid_bool == 'true'){
   // mandatory for each carousel.
   $geopserve_shortcode_final = "[geopserve title='" . $geopserve_title . "' count='" . $geopserve_count . "' cat='" . $geopserve_cats_final . "' adds='" . $geopserve_adds_final . "'";
 
-  // Compact output styling.
+  // Compact output styling. Currently impossible to set.
   if ($geopserve_format_final == 'compact')
     $geopserve_shortcode_final .= " form='compact'";
 

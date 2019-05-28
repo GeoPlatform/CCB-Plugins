@@ -341,10 +341,10 @@
         $geopserve_table_name = $wpdb->prefix . "geop_asset_db";
         $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
 
+        // Construction loop. Much of the data can be pulled straight from the
+        // database for use. Some though require translation from the database
+        // into human reading.
         foreach ($geopserve_retrieved_data as $geopserve_entry){
-
-          // Most data can be pulled straight from the database for use. Some
-          // though require translation from the database into human reading.
 
           // DB to human reading for filter criteria.
           $geopserve_crit_array = array();
@@ -387,6 +387,7 @@
           (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
           $geopserve_adds_out = implode(", ", $geopserve_adds_array);
 
+          // Non-binary additional settings translator.
           $geopserve_sort_string = '';
           (substr(($geopserve_entry->serve_adds), 5, 1) == 'D') ? $geopserve_sort_string = "Descending, " : $geopserve_sort_string = "Ascending, ";
           (substr(($geopserve_entry->serve_adds), 6, 1) == 'M') ? $geopserve_sort_string .= " Modified" : '';
