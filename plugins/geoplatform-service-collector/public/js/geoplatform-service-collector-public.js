@@ -34,12 +34,13 @@
 // will only have to deal with one data type at a time. Will discern how many
 // copies exist of the given asset type and apply that number to the search area.
 //
-// #param geopserve_community_id: the community ID for the query.
-// #param geopserve_cat_in: data type for the query.
+// #param geopserve_id_array: array of strings for each asset type to query.
+// #param geopserve_cat_in: the data type for the query.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // #param geopserve_ual_domain_in: UAL source to draw from.
 function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
 
+	// Translates id array into individual query strings for each asset type.
 	var geopserve_community_id = geopserve_id_array[0];
 	var geopserve_theme_id = geopserve_id_array[1];
 	var geopserve_label_id = geopserve_id_array[2];
@@ -143,7 +144,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 		// Variables for the text and page element it's to be attached to.
 		var geopserve_master_div = 'geopserve_carousel_search_div_' + geopserve_iter_in;
 
-		// Single and plural handling.
+		// Determines singular, plural, or empty results text.
 		var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_cat_in;
 		if (response.totalResults == 1){
 			var geopserve_cat_single = geopserve_cat_in;
@@ -170,18 +171,20 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 // will only have to deal with one data type at a time. Generate the panes of
 // the carousel.
 //
-// #param geopserve_community_id: the community ID for the query.
-// #param geopserve_cat_in: data type for the query.
+// #param geopserve_id_array: array of strings for each asset type to query.
+// #param geopserve_cat_in: the data type for the query.
 // #param geopserve_count_in: number of panes to generate.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
-// #param geopserve_icon_in: asset's icon class
+// #param geopserve_current_page: current page for pagination.
+// #param geopserve_suffix_in: asset's suffix, either A or N.
+// #param geopserve_sort_style: How the results are sorted.
 // #param geopserve_ual_domain_in: UAL source to draw from.
 // #param geopserve_redirect_in: Panel base URL for this particular asset type.
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
-//
 function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_suffix_in, geopserve_sort_style, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
 
+	// Translates id array into individual query strings for each asset type.
 	var geopserve_community_id = geopserve_id_array[0];
 	var geopserve_theme_id = geopserve_id_array[1];
 	var geopserve_label_id = geopserve_id_array[2];
@@ -189,6 +192,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 	var geopserve_topic_id = geopserve_id_array[4];
 	var geopserve_usedby_id = geopserve_id_array[5];
 	var geopserve_class_id = geopserve_id_array[6];
+	var geopserve_kg_id = geopserve_id_array[7];
 
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
@@ -197,7 +201,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 
 	var query = new Query();
 
-	// Sets type of asset type to grab.
+	// Sets type of asset to grab.
 	if (geopserve_cat_in == "Datasets")
 		query.setTypes(ItemTypes.DATASET);
 	if (geopserve_cat_in == "Services")
@@ -217,7 +221,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 	if (geopserve_cat_in == "Websites")
 		query.setTypes(ItemTypes.WEBSITE);
 
-	// Sets return count and sortation style.
+	// Sets return count, current page, and sortation style.
 	query.setPageSize(geopserve_count_in);
 	query.setPage(geopserve_current_page);
 	query.setSort(geopserve_sort_style);
@@ -278,7 +282,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
 		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
 		geopserve_class_array = geopserve_class_temp.split("-");
-		query.setParameter('facet.classifiers.purpose.id', geopserve_class_array);
+		query.setClassifier(geopserve_kg_id, geopserve_class_array);
 	}
 
 	// Adds thumbnails to the query return.
@@ -287,7 +291,6 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 	query.setFields(fields);
 
 	// Performs the query grab.
-	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
 	itemSvc.search(query)
 		.then(function (response) {
 
@@ -425,12 +428,13 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 // #param geopserve_master_div: String for the ID of the div containing the assets.
 // #param geopserve_thumb_error: string for the 404 error image if no thumb exists.
 // #param geopserve_under_label_array: Array of elements for the text under the title.
-//
+// #param geopserve_iter_in: current interval of the creation process.
 function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in){
 
+	// Constructs ID of master div.
 	var master_div_id = 'geopserve-carousel-master-div-' + geopserve_iter_in;
 
-	// Creates each element as variables.
+	// Creates each element as a variable.
 	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item', id: master_div_id});
 	var main_div = geopserve_createEl({type: 'div', class: 'm-results-item__body'});
 	var icon_div = geopserve_createEl({type: 'div', class: 'm-results-item__icon m-results-item__icon--sm'});
