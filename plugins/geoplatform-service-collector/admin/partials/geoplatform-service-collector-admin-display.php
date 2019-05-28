@@ -268,7 +268,7 @@
             </th>
             <th>
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit classifier ID.</span>
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit classifier ID, as well as a selection of classifier parameter.</span>
             </th>
           </tr>
         </table>
