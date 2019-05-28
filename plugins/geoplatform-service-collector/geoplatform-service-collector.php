@@ -114,7 +114,8 @@ function geopserve_shortcode_generation($geopserve_atts){
 		'keyword' => '',
 		'topic' => '',
 		'usedby' => '',
-		'class' => ''
+		'class' => '',
+		'kg' => ''
 	), $geopserve_atts);
 	ob_start();
 
@@ -381,7 +382,8 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									var geopserve_topic_id = "<?php echo $geopserve_shortcode_array['topic'] ?>";
 									var geopserve_usedby_id = "<?php echo $geopserve_shortcode_array['usedby'] ?>";
 									var geopserve_class_id = "<?php echo $geopserve_shortcode_array['class'] ?>";
-									var geopserve_id_array = [geopserve_community_id, geopserve_theme_id, geopserve_label_id, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
+									var geopserve_kg_id = "<?php echo $geopserve_shortcode_array['kg'] ?>";
+									var geopserve_id_array = [geopserve_community_id, geopserve_theme_id, geopserve_label_id, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id, geopserve_kg_id];
 
 									var geopserve_current_page = parseInt('<?php echo $geopserve_current_page ?>', 10);
 									var geopserve_current_suffix = "<?php echo $geopserve_current_suffix ?>";

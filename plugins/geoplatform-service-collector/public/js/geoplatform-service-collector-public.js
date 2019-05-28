@@ -47,6 +47,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 	var geopserve_topic_id = geopserve_id_array[4];
 	var geopserve_usedby_id = geopserve_id_array[5];
 	var geopserve_class_id = geopserve_id_array[6];
+	var geopserve_kg_id = geopserve_id_array[7];
 
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
@@ -131,7 +132,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
 		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
 		geopserve_class_array = geopserve_class_temp.split("-");
-		query.setClassifier('classifiers.purpose', geopserve_class_array);
+		query.setClassifier(geopserve_kg_id, geopserve_class_array);
 	}
 
 	// Performs the query grab.
