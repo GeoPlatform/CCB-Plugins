@@ -2,19 +2,8 @@
     <li><a href="/">Home</a></li>
     <li><a href="/resources">Resources</a></li>
     <li><a href="/resources/{{getTypeKey()}}">{{item?.type|friendlyType}}</a></li>
-    <li class="is-active"><a>{{item?.label}}</a></li>
+    <li class="is-active"><a>{{getTitle()}}</a></li>
 </ul>
-
-<!-- <div class="m-page-overview" (window:resize)="onResize()">
-    <div class="a-description__container"
-        [ngClass]="{'is-collapsed':descriptionCollapsed}">
-        <div class="a-description__display" [innerHTML]="item?.description||'No description provided'"></div>
-    </div>
-    <div class="m-page-overview__toggle" *ngIf="hasLongDescription" (click)="toggleDesc()">
-        <span class="fas"
-            [ngClass]="{'fa-caret-down':descriptionCollapsed,'fa-caret-up':!descriptionCollapsed}"></span>
-    </div>
-</div> -->
 
 <div class="l-body l-body--two-column">
 
@@ -128,6 +117,11 @@
                     <div><strong>Name</strong></div>
                     <div>{{item.name||"Not specified"}}</div>
                 </div>
+
+                <!-- eo:Product -->
+                <gpid-product-details *ngIf="TYPES.IMAGE_PRODUCT===item?.type"
+                    [item]="item">
+                </gpid-product-details>
 
             </div>
         </div>

@@ -23,13 +23,10 @@ export class TypeCodec implements Codec {
             let v = ItemTypes[k], label = v;
             if(~label.indexOf(":")) label = label.split(':')[1];
             if("VCard" === label) label = 'Contact';
+            if("Product" === label) label = "Image Product";
+            if("RightsStatement" === label) label = "Right Statement";
             return { key: v, label: label, id: v, count: 0 };
         });
-        // .concat([
-        //     { label: 'Page',  id: 'pages'  },
-        //     { label: 'Post',  id: 'posts'  },
-        //     { label: 'Media', id: 'media' }
-        // ]);
     }
 
     getKey() : string { return QueryParameters.TYPES; };

@@ -39,6 +39,7 @@ export class ResourceLinkComponent implements OnInit {
     getIconClass() : string {
         let type = ItemHelper.getTypeLabel(this.item);
         if("Contact" === type) type = 'vcard';
+        if("Product" === type) type = 'imageproduct';
         return 'icon-' + type.toLowerCase();
     }
 
