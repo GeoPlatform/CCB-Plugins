@@ -37,7 +37,7 @@ add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
 
 // Loads bootstrap resources, but only for pages that aren't Angular with bundled bootstrap.
 function geopportal_enqueue_bootstrap() {
-	if ( !is_page( array('geoplatform-search', 'geoplatform-items', 'register' ) ) ){
+	if ( !is_page( array('geoplatform-search', 'geoplatform-items', 'register', 'geoplatform-map-preview' ) ) ){
 		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
 		wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
 	}

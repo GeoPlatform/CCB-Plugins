@@ -60,7 +60,7 @@ if ( ! function_exists ( 'geopccb_enqueue_bootstrap' ) ) {
     $geop_ccb_options = geop_ccb_get_theme_mods();
 
   	if ( (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on')
-        && ( !is_page( array('geoplatform-search', 'register', 'geoplatform-items') ) ) ){
+        && ( !is_page( array('geoplatform-search', 'register', 'geoplatform-items', 'geoplatform-map-preview') ) ) ){
   		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
   	}
   }

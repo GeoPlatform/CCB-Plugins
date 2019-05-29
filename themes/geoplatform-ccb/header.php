@@ -140,10 +140,20 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
     // This ENTIRE section handles the user info logic.
     $geopccb_current_user = wp_get_current_user();
 
+    // Sets the login url, for redirection back to previous page on login/logout.
+    // Address bar from...
+    //
+    // https://stackoverflow.com/questions/6768793/get-the-full-url-in-php
+    //
     $geopccb_login_url;
-    if ( is_front_page() || is_404() ){ $geopccb_login_url = home_url(); }
-    elseif ( is_category() ){ $geopccb_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) ); }
-    else { $geopccb_login_url = get_permalink(); }
+    if ( is_front_page() || is_404() )
+      $geopccb_login_url = home_url();
+    elseif ( is_category() )
+      $geopccb_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) );
+    elseif (isset($post) && ( $post->post_name == 'register' || $post->post_name == 'geoplatform-items' || $post->post_name == 'geoplatform-map-preview' ))
+      $geopccb_login_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    else
+      $geopccb_login_url = get_permalink();
 
     // Trigger block for if the user is valid (not ID 0).
     if($geopccb_current_user->ID != 0) {
