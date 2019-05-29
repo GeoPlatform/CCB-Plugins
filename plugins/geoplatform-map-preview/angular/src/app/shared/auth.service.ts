@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Observer, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
 import {
@@ -11,72 +11,57 @@ import { authServiceFactory } from './auth.factory';
 import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
 
-
-interface Observer {
-    next: (value:GeoPlatformUser) => void;
-    error: (value:Error)=>void;
-}
-
-
 @Injectable()
 export class PluginAuthService {
 
     private user : GeoPlatformUser;
-    private user$ : Observable<GeoPlatformUser>;
-    private observers : Observer[] = [] as Observer[];
+    private user$ : Subject<GeoPlatformUser>;
     private gpAuthSubscription : ISubscription;
     private authService : AuthService;
 
     constructor(private rpm: RPMService) {
-
         this.authService = authServiceFactory();
+        this.init();
+    }
 
-        this.user$ = new Observable( (observer:Observer) => {
-            // Get the next and error callbacks. These will be passed in when
-            // the consumer subscribes.
-            const { next, error } = observer;
 
-            let idx = this.observers.length;
-            this.observers.push(observer);
+    init() {
 
-            // When the consumer unsubscribes, clean up data ready for next subscription.
-            return {
-                unsubscribe() {
-                    this.observers.splice(idx, 1);
-                }
-            };
-        });
-
+        this.user$ = new Subject<GeoPlatformUser>();
 
         const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
-            console.log("Received Auth Message: " + msg.name);
+            // console.log("Received Auth Message: " + msg.name);
             switch(msg.name){
-                case 'userAuthenticated':
-                    this.onUserChange(msg.user);
-                    // this.user$.next(msg.user);
-                    if(msg.user) this.rpm.setUserId(msg.user.id)
-                break;
-                case 'userSignOut':
-                    this.onUserChange(null);
-                break;
+                case 'userAuthenticated': this.onUserChange(msg.user); break;
+                case 'userSignOut': this.onUserChange(null); break;
             }
         });
 
 
-        this.authService.getUser().then( user => {
-            console.log('USER: ' + JSON.stringify(user));
-            this.onUserChange(user);
+        //force check to make sure user is actually logged in and token hasn't expired/been revoked
+        this.authService.checkWithClient(null)
+        //then fetch user info
+        .then( (jwt) => {
+            if(!jwt) return null;   //if no jwt, no use getting user info
+            return this.authService.getUser();
         })
+        .then( user => { this.onUserChange(user); })
         .catch(e => {
-            console.log("Error retrieving user: " + e.message);
-        })
+            // console.log("AuthService.init() - Error retrieving user: " + e.message);
+            this.onUserChange(null);
+        });
     }
 
-    onUserChange(user) {
+    onUserChange(user : GeoPlatformUser) {
+        console.log("User: " + (user ? user.username : 'N/A'));
+        // console.log('AuthService.onUserChange() returned ' +
+        //     JSON.stringify(user, null, ' '));
         this.user = user;
-        this.observers.forEach( obs => obs.next(user) );
+        this.rpm.setUserId( user ? user.id : null);
+        this.user$.next(user);
     }
+
 
     isAuthenticated() : boolean {
         return !!this.user;
@@ -86,9 +71,39 @@ export class PluginAuthService {
         return this.user;
     }
 
-    subscribe( callback : Observer ) : ISubscription {
+    getToken() : string {
+        return this.authService.getJWT();
+    }
+
+    /**
+     * Check the underlying authentication mechanism endpoint to validate the
+     * current JWT token (if one exists) is not expired or revoked.
+     * @return GeoPlatformUser or null
+     */
+    check() : Promise<GeoPlatformUser> {
+        return this.authService.checkWithClient(null)
+        .then( token => this.authService.getUser() )
+        .then( user => {
+            setTimeout( () => { this.onUserChange(user); },100 );
+            return user;
+        });
+    }
+
+    /**
+     *
+     */
+    subscribe( callback : Observer<GeoPlatformUser> ) : ISubscription {
         return this.user$.subscribe( callback );
     }
 
+    dispose() {
+        if(this.gpAuthSubscription) {
+            this.gpAuthSubscription.unsubscribe();
+            this.gpAuthSubscription = null;
+        }
+        this.user = null;
+        this.user$ = null;
+        this.authService = null;
+    }
 
 }

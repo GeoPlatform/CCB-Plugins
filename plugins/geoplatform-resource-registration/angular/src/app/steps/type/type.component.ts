@@ -368,7 +368,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             case AppEventTypes.AUTH:
                 let user = event.value.user;
                 // console.log("Setting user in form as '" + JSON.stringify(user) + "'");
-                this.setValue(ModelProperties.CREATED_BY, user.username);
+                this.setValue(ModelProperties.CREATED_BY, user ? user.username : null);
                 break;
             case AppEventTypes.CHANGE:
                 this.onTypeSelection( this.data[ModelProperties.TYPE]||null );

@@ -13,6 +13,7 @@ import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 
+import { PluginAuthService }    from './auth.service';
 import { AuthenticatedComponent } from './authenticated.component';
 import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
@@ -51,9 +52,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
     constructor(
         private formBuilder: FormBuilder,
         private itemService : ItemService,
-        matIconRegistry: MatIconRegistry
+        matIconRegistry: MatIconRegistry,
+        authService : PluginAuthService
     ) {
-        super();
+        super(authService);
 
         matIconRegistry.registerFontClassAlias('fontawesome', 'fas');
         matIconRegistry.registerFontClassAlias('geoplatform-icons-font', 'gp');

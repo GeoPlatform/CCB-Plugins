@@ -6,7 +6,7 @@ import { DataProvider } from './shared/data.provider';
 import { NG2HttpClient } from './shared/http-client';
 import { ItemHelper } from './shared/item-helper';
 import { AuthenticatedComponent } from './shared/authenticated.component';
-
+import { PluginAuthService } from './shared/auth.service';
 
 const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)\/map/i;
 
@@ -23,9 +23,14 @@ export class AppComponent extends AuthenticatedComponent implements OnInit, OnDe
     public error : Error;
     public item : any;
     public data : DataProvider;
+    private _authService : PluginAuthService;
 
-    constructor( private itemService : ItemService ) {
-        super();
+    constructor(
+        private itemService : ItemService,
+        authService : PluginAuthService
+    ) {
+        super(authService);
+        this._authService = authService;
         this.data = new DataProvider(itemService);
     }
 
@@ -55,6 +60,8 @@ export class AppComponent extends AuthenticatedComponent implements OnInit, OnDe
         this.itemService = null;
         this.item = null;
         this.error = null;
+        this._authService.dispose();
+        this._authService = null;
     }
 
 
@@ -76,9 +83,9 @@ export class AppComponent extends AuthenticatedComponent implements OnInit, OnDe
 
 
 
-    onUserChange(user) {
-        console.log("User auth status has changed!: " + user);
-    }
+    // onUserChange(user) {
+    //     console.log("User auth status has changed!: " + user);
+    // }
 
 
     /**

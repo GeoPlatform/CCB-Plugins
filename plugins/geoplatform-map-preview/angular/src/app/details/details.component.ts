@@ -9,6 +9,7 @@ import {
     DataProvider, DataEvent, Events, MapItem
 } from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
+import { PluginAuthService } from '../shared/auth.service';
 import { itemServiceProvider } from '../shared/service.provider';
 
 
@@ -48,8 +49,11 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
     private dataSubscription : ISubscription;
 
-    constructor(private itemService : ItemService) {
-        super();
+    constructor(
+        private itemService : ItemService,
+        authService : PluginAuthService
+    ) {
+        super(authService);
     }
 
     ngOnInit() {
@@ -80,7 +84,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         let token = null;
         if(user) {
             this.mapItem.createdBy = user.username;
-            token = this.authService.getJWTfromLocalStorage();
+            token = this.getAuthToken();
         }
         this.itemService.client.setAuthToken(token);
     }
@@ -96,7 +100,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         }
 
         //first, ensure token isn't in weird expired/revoked state
-        this.authService.check()
+        this.checkAuth()
         .then( user => {
             this.onUserChange(user);
             if(!user) throw new Error("Not signed in");
