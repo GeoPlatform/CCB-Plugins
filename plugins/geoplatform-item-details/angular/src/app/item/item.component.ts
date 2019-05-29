@@ -7,6 +7,7 @@ import { ItemTypes, Config, ItemService } from "geoplatform.client";
 
 import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
+import { PluginAuthService } from '../shared/auth.service';
 import { AuthenticatedComponent} from '../shared/authenticated.component';
 import { itemServiceProvider } from '../shared/service.provider';
 
@@ -28,8 +29,12 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
     public descriptionCollapsed: boolean = true;
     public TYPES = ItemTypes;
 
-    constructor(private el: ElementRef, private itemService: ItemService) {
-        super();
+    constructor(
+        private el: ElementRef,
+        private itemService: ItemService,
+        authService : PluginAuthService
+    ) {
+        super(authService);
     }
 
     ngOnInit() {

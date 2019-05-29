@@ -2,46 +2,52 @@ import { HttpClient } from '@angular/common/http';
 import {
     Config, ItemService, ServiceService, UtilsService, KGService
 } from 'geoplatform.client';
+
 import { NG2HttpClient } from './http-client';
 
-var client : NG2HttpClient = null;
-var itemService : ItemService = null;
-var svcService : ServiceService = null;
-var utilsService : UtilsService = null;
-var kgService : KGService = null;
+
+//singleton instances
+var _client : NG2HttpClient = null;
+var _itemService : ItemService = null;
+var _svcService : ServiceService = null;
+var _utilsService : UtilsService = null;
+var _kgService : KGService = null;
+
+
 
 export function itemServiceFactory( http : HttpClient ) {
-    if(itemService) return itemService;
-    if(client === null) client = new NG2HttpClient(http);
+    if(_itemService) return _itemService;
+    if(_client === null) _client = new NG2HttpClient(http);
     // console.log("Creating ItemService using:");
     // console.log(Config);
-    itemService = new ItemService(Config.ualUrl, client);
-    return itemService;
+    _itemService = new ItemService(Config.ualUrl, _client);
+    return _itemService;
 }
 export function svcServiceFactory( http : HttpClient ) {
-    if(svcService) return svcService;
-    if(client === null) client = new NG2HttpClient(http);
+    if(_svcService) return _svcService;
+    if(_client === null) _client = new NG2HttpClient(http);
     // console.log("Creating ServiceService using:");
     // console.log(Config);
-    svcService = new ServiceService(Config.ualUrl, client);
-    return svcService;
+    _svcService = new ServiceService(Config.ualUrl, _client);
+    return _svcService;
 }
 export function utilsServiceFactory( http : HttpClient ) {
-    if(utilsService) return utilsService;
-    if(client === null) client = new NG2HttpClient(http);
+    if(_utilsService) return _utilsService;
+    if(_client === null) _client = new NG2HttpClient(http);
     // console.log("Creating UtilsService using:");
     // console.log(Config);
-    utilsService = new UtilsService(Config.ualUrl, client);
-    return utilsService;
+    _utilsService = new UtilsService(Config.ualUrl, _client);
+    return _utilsService;
 }
 export function kgServiceFactory( http : HttpClient ) {
-    if(kgService) return kgService;
-    if(client === null) client = new NG2HttpClient(http);
+    if(_kgService) return _kgService;
+    if(_client === null) _client = new NG2HttpClient(http);
     // console.log("Creating KGService using:");
     // console.log(Config);
-    kgService = new KGService(Config.ualUrl, client);
-    return kgService;
+    _kgService = new KGService(Config.ualUrl, _client);
+    return _kgService;
 }
+
 
 export let itemServiceProvider = {
     provide: ItemService,

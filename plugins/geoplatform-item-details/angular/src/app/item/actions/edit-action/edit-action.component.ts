@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Input } from '@
 import { Config } from 'geoplatform.client';
 
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
+import { PluginAuthService } from '../../../shared/auth.service';
 import { environment } from '../../../../environments/environment';
 
 @Component({
@@ -13,8 +14,8 @@ export class EditActionComponent extends AuthenticatedComponent implements OnIni
 
     @Input() item : any;
 
-    constructor() {
-        super();
+    constructor( authService : PluginAuthService ) {
+        super(authService);
     }
 
     ngOnInit() {

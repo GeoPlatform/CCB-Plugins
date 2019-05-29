@@ -3,10 +3,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ItemTypes, ItemService } from 'geoplatform.client';
 import { ItemHelper } from '../../../shared/item-helper';
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
+import { PluginAuthService } from '../../../shared/auth.service';
 import { environment } from '../../../../environments/environment';
 import { NG2HttpClient } from '../../../shared/http-client';
 import { itemServiceProvider } from '../../../shared/service.provider';
-
 
 @Component({
   selector: 'gpid-clone-action',
@@ -22,8 +22,11 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
     public overrides : {[key:string]:any};
     public error : Error;
 
-    constructor(private itemService : ItemService) {
-        super();
+    constructor(
+        private itemService : ItemService,
+        authService : PluginAuthService
+    ) {
+        super(authService);
     }
 
     ngOnInit() {
@@ -57,10 +60,10 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
     doAction() {
 
         //first, ensure token isn't in weird expired/revoked state
-        this.authService.check().then( user => {
+        this.checkAuth().then( user => {
 
             if(!user) throw new Error("Not signed in");
-            let token = this.authService.getJWTfromLocalStorage();
+            let token = this.getAuthToken();
             this.itemService.client.setAuthToken(token);
 
             //then trigger the clone operation
