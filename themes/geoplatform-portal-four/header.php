@@ -68,10 +68,20 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <?php
         $geopportal_current_user = wp_get_current_user();
 
+        // Sets the login url, for redirection back to previous page on login/logout.
+        // Address bar from...
+        //
+        // https://stackoverflow.com/questions/6768793/get-the-full-url-in-php
+        //
         $geopportal_login_url;
-        if ( is_front_page() || is_404() ){ $geopportal_login_url = home_url(); }
-        elseif ( is_category() ){ $geopportal_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) ); }
-        else { $geopportal_login_url = get_permalink(); }
+        if ( is_front_page() || is_404() )
+          $geopportal_login_url = home_url();
+        elseif ( is_category() )
+          $geopportal_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) );
+        elseif (isset($post) && ( $post->post_name == 'register' || $post->post_name == 'geoplatform-items' || $post->post_name == 'geoplatform-map-preview' ))
+          $geopportal_login_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        else
+          $geopportal_login_url = get_permalink();
 
         if($geopportal_current_user->ID != 0) {
 

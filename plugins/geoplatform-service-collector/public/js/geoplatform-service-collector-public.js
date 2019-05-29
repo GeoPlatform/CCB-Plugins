@@ -182,7 +182,7 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 // #param geopserve_redirect_in: Panel base URL for this particular asset type.
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
-function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_suffix_in, geopserve_sort_style, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_suffix_in, geopserve_sort_style, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
 
 	// Translates id array into individual query strings for each asset type.
 	var geopserve_community_id = geopserve_id_array[0];
