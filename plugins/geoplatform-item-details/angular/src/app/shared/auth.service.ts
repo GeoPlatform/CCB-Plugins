@@ -16,8 +16,9 @@ import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 export class PluginAuthService {
 
     private user : GeoPlatformUser;
-    private user$ : Observable<GeoPlatformUser>;
-    private observers : Observer<GeoPlatformUser>[] = [] as Observer<GeoPlatformUser>[];
+    private user$ : Subject<GeoPlatformUser>;
+    private observers : { [key:string]: Observer<GeoPlatformUser> } =
+        {} as { [key:string]: Observer<GeoPlatformUser> };
     private gpAuthSubscription : ISubscription;
     private authService : AuthService;
 
@@ -29,22 +30,7 @@ export class PluginAuthService {
 
     init() {
 
-        this.user$ = new Observable( (observer:Observer<GeoPlatformUser>) => {
-            // Get the next and error callbacks. These will be passed in when
-            // the consumer subscribes.
-            const { next, error } = observer;
-
-            let idx = this.observers.length;
-            this.observers.push(observer);
-
-            // When the consumer unsubscribes, clean up data ready for next subscription.
-            return {
-                unsubscribe() {
-                    this.observers.splice(idx, 1);
-                }
-            };
-        });
-
+        this.user$ = new Subject<GeoPlatformUser>();
 
         const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
@@ -75,21 +61,23 @@ export class PluginAuthService {
         })
         .catch(e => {
             console.log("AuthService.init() - Error retrieving user: " + e.message);
-            this.onUserError(e);
+            this.onUserChange(null);
+            // this.onUserError(e);
         });
     }
 
     onUserChange(user : GeoPlatformUser) {
         this.user = user;
         this.rpm.setUserId( user ? user.id : null);
-        this.observers.forEach( obs => obs.next(user) );
+        this.user$.next(user);
+        // Object.keys(this.observers).map(k=>this.observers[k]).forEach( obs => obs.next(user) );
     }
 
-    onUserError(e) {
-        this.observers.forEach( obs => {
-            try { obs.error(e); } catch(e) { }
-        });
-    }
+    // onUserError(e) {
+    //     Object.keys(this.observers).map(k=>this.observers[k]).forEach( obs => {
+    //         try { obs.error(e); } catch(e) { }
+    //     });
+    // }
 
     isAuthenticated() : boolean {
         return !!this.user;
@@ -112,7 +100,7 @@ export class PluginAuthService {
         return this.authService.checkWithClient(null)
         .then( token => this.authService.getUser() )
         .then( user => {
-            this.onUserChange(user);
+            setTimeout( () => { this.onUserChange(user); },100 );
             return user;
         });
     }
@@ -123,6 +111,11 @@ export class PluginAuthService {
     subscribe( callback : Observer<GeoPlatformUser> ) : ISubscription {
         return this.user$.subscribe( callback );
     }
+
+    // unsubscribe( id : string ) {
+    //     if(id && this.observers)
+    //         this.observers[id] = null;
+    // }
 
 
 
