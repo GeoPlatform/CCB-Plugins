@@ -13,7 +13,7 @@ import { PluginAuthService } from './auth.service';
 export abstract class AuthenticatedComponent {
 
     public user : GeoPlatformUser;
-    // private gpAuthSubscription : ISubscription;
+    private gpAuthSubscription : ISubscription;
     // protected authService : AuthService;
 
     constructor(private authService : PluginAuthService) {
@@ -32,22 +32,18 @@ export abstract class AuthenticatedComponent {
     init() {
 
         let obs : Observer<GeoPlatformUser> = {
-            next : function(value: GeoPlatformUser) {
+            next : (value: GeoPlatformUser) => {
                 this.user = value;
                 this.onUserChange(this.user);
             },
-
-            error : function(err: any) {
+            error : (err: any) => {
                 console.log("Unable to get authenticated user info: " +
                     (err as Error).message);
             },
-
-            complete : function() {
-                //TODO ???
-            }
+            complete : () => { }
         };
 
-        this.authService.subscribe( obs );
+        this.gpAuthSubscription = this.authService.subscribe( obs );
 
 
 
@@ -90,8 +86,8 @@ export abstract class AuthenticatedComponent {
      * for authentication events and clean up internals
      */
     destroy() {
-        // this.gpAuthSubscription.unsubscribe();
-        // this.gpAuthSubscription = null;
+        this.gpAuthSubscription.unsubscribe();
+        this.gpAuthSubscription = null;
         this.user = null;
         this.authService = null;
     }
