@@ -34,15 +34,10 @@ export class PluginAuthService {
 
         const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
-            console.log("Received Auth Message: " + msg.name);
+            // console.log("Received Auth Message: " + msg.name);
             switch(msg.name){
-                case 'userAuthenticated':
-                    this.onUserChange(msg.user);
-                    if(msg.user) this.rpm.setUserId(msg.user.id)
-                break;
-                case 'userSignOut':
-                    this.onUserChange(null);
-                break;
+                case 'userAuthenticated': this.onUserChange(msg.user); break;
+                case 'userSignOut': this.onUserChange(null); break;
             }
         });
 
@@ -54,30 +49,22 @@ export class PluginAuthService {
             if(!jwt) return null;   //if no jwt, no use getting user info
             return this.authService.getUser();
         })
-        .then( user => {
-            console.log('AuthService.getUser() returned ' +
-                JSON.stringify(user, null, ' '));
-            this.onUserChange(user);
-        })
+        .then( user => { this.onUserChange(user); })
         .catch(e => {
-            console.log("AuthService.init() - Error retrieving user: " + e.message);
+            // console.log("AuthService.init() - Error retrieving user: " + e.message);
             this.onUserChange(null);
-            // this.onUserError(e);
         });
     }
 
     onUserChange(user : GeoPlatformUser) {
+        console.log("User: " + (user ? user.username : 'N/A'));
+        // console.log('AuthService.onUserChange() returned ' +
+        //     JSON.stringify(user, null, ' '));
         this.user = user;
         this.rpm.setUserId( user ? user.id : null);
         this.user$.next(user);
-        // Object.keys(this.observers).map(k=>this.observers[k]).forEach( obs => obs.next(user) );
     }
 
-    // onUserError(e) {
-    //     Object.keys(this.observers).map(k=>this.observers[k]).forEach( obs => {
-    //         try { obs.error(e); } catch(e) { }
-    //     });
-    // }
 
     isAuthenticated() : boolean {
         return !!this.user;
