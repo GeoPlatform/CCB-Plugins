@@ -580,6 +580,7 @@
       APPLICATION: 'Application',
       TOPIC: 'Topic',
       WEBSITE: 'WebSite',
+      IMAGE_PRODUCT: 'eo:Product',
       ORGANIZATION: "org:Organization",
       CONTACT: "vcard:VCard",
       CONCEPT: "skos:Concept",
@@ -587,6 +588,24 @@
       STANDARD: 'dct:Standard',
       RIGHTS_STATEMENT: 'dct:RightsStatement'
   };
+
+  var ItemTypeLabels = {};
+  ItemTypeLabels[ItemTypes.DATASET] = "Dataset";
+  ItemTypeLabels[ItemTypes.SERVICE] = "Service";
+  ItemTypeLabels[ItemTypes.LAYER] = "Layer";
+  ItemTypeLabels[ItemTypes.MAP] = "Map";
+  ItemTypeLabels[ItemTypes.GALLERY] = "Gallery";
+  ItemTypeLabels[ItemTypes.COMMUNITY] = 'Community';
+  ItemTypeLabels[ItemTypes.APPLICATION] = 'Application';
+  ItemTypeLabels[ItemTypes.TOPIC] = 'Topic';
+  ItemTypeLabels[ItemTypes.WEBSITE] = 'WebSite';
+  ItemTypeLabels[ItemTypes.IMAGE_PRODUCT] = "Image Product";
+  ItemTypeLabels[ItemTypes.ORGANIZATION] = "Organization";
+  ItemTypeLabels[ItemTypes.CONTACT] = "Contact";
+  ItemTypeLabels[ItemTypes.CONCEPT] = "Concept";
+  ItemTypeLabels[ItemTypes.CONCEPT_SCHEME] = "Concept Scheme";
+  ItemTypeLabels[ItemTypes.STANDARD] = 'Standard';
+  ItemTypeLabels[ItemTypes.RIGHTS_STATEMENT] = 'Rights Statement';
 
   /**
    * ItemService
@@ -1081,18 +1100,24 @@
 
           /**
            * @param {string} id - identifier of item to fetch version info for
+           * @param {object} params - optional set of query parameters to constrain list of versions
            * @param {Object} options - optional set of request options to apply to xhr request
            * @return {Promise} resolving array of available versions of the item
            */
 
       }, {
           key: 'versions',
-          value: function versions(id, options) {
+          value: function versions(id, params, options) {
               var _this15 = this;
 
               return Q.resolve(id).then(function (id) {
                   var url = _this15.baseUrl + '/' + id + '/versions';
-                  var opts = _this15.buildRequest({ method: "GET", url: url, options: options });
+                  var opts = _this15.buildRequest({
+                      method: "GET",
+                      url: url,
+                      params: params,
+                      options: options
+                  });
                   return _this15.execute(opts);
               }).catch(function (e) {
                   var err = new Error('Error fetching versions for item ' + id + ': ' + e.message);
@@ -3859,7 +3884,7 @@
       path: 'items/:id/versions',
       auth: false,
       execFn: function execFn(svc, req) {
-          return svc.versions(req.params.id);
+          return svc.versions(req.params.id, req.query);
       }
   }, {
       key: 'getVersion',
@@ -5064,6 +5089,7 @@
       APPLICATION: 'Application',
       TOPIC: 'Topic',
       WEBSITE: 'WebSite',
+      IMAGE_PRODUCT: 'Image Product',
       RIGHTS_STATEMENT: 'RightsStatement',
       KNOWLEDGE_GRAPH: 'Knowledge Graph',
       USER: 'User',
@@ -5386,6 +5412,7 @@
   }();
 
   exports.ItemTypes = ItemTypes;
+  exports.ItemTypeLabels = ItemTypeLabels;
   exports.QueryParameters = QueryParameters;
   exports.QueryFacets = Facets;
   exports.Query = Query$1;
