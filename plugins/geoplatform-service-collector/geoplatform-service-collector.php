@@ -99,6 +99,7 @@ run_geoplatform_service_collector();
 
 
 function geopserve_shortcode_generation($geopserve_atts){
+
 	// Establishes a base array with default values required for shortcode creation
 	// and overwrites them with values from $geopserve_atts.
 	$geopserve_shortcode_array = shortcode_atts(array(
@@ -118,6 +119,9 @@ function geopserve_shortcode_generation($geopserve_atts){
 		'kg' => ''
 	), $geopserve_atts);
 	ob_start();
+
+	// Adding
+	wp_enqueue_style( 'geop_style', plugin_dir_url( __FILE__ ) . 'public/css/geop-style.css', array());
 
 	// The original intention was to handle the shortcode output differently based
 	// upon compact or standard form. Currently, compact form is not planned to be
@@ -697,8 +701,25 @@ function geopserve_tab_interpretation($geopserve_string_in){
 function geopserve_shortcodes_init()
 {
     add_shortcode('geopserve', 'geopserve_shortcode_generation');
+		// get_template_part( 'public/css/geop-style.css', get_post_format() );
 }
 add_action('init', 'geopserve_shortcodes_init');
+
+
+// function geop_ccb_scripts() {
+// 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
+//
+// 	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
+// 	wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
+// 	wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
+// 	wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
+// 	wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
+//
+// 	wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js' );
+// 	wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
+// 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
+// }
+// add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 
 
 // AJAX handling only seems to function properly if both the hooks and PHP
