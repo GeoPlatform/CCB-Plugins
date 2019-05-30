@@ -213,12 +213,23 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             this.hasError = new StepError("Unable to Load Service Types", e.message);
         });
 
+        //define supported item types we're fetching resource types for
+        const TYPES = [
+            ItemTypes.DATASET, ItemTypes.SERVICE, ItemTypes.MAP,
+            ItemTypes.APPLICATION, ItemTypes.TOPIC, ItemTypes.WEBSITE
+        ].map(t=>t.replace(/^\.+:/,''));
+
         //fetch list of resource types
-        this.utilsService.capabilities(ModelProperties.RESOURCE_TYPES)
+        this.utilsService.capabilities(
+            ModelProperties.RESOURCE_TYPES, { types: TYPES.join(',') }
+        )
         .then( response => {
             response.results.forEach( type => {
-                this.availableResourceTypes[type.assetType] = this.availableResourceTypes[type.assetType] || [];
-                this.availableResourceTypes[type.assetType].push(type);
+                (type.resourceTypes || []).forEach( rt => {
+                    let t = rt.replace(/Type$/,'');
+                    this.availableResourceTypes[t] = this.availableResourceTypes[t] || [];
+                    this.availableResourceTypes[t].push(type);
+                });
             });
         })
         .catch( (e : Error) => {
