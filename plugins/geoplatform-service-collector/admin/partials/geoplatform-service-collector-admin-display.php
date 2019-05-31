@@ -385,14 +385,15 @@
           (substr(($geopserve_entry->serve_adds), 1, 1) == 'T') ? array_push($geopserve_adds_array, 'Tabs') : '';
           (substr(($geopserve_entry->serve_adds), 2, 1) == 'T') ? array_push($geopserve_adds_array, 'Section Titles') : '';
           (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
+          empty($geopserve_adds_array) ? array_push($geopserve_adds_array, 'No Additions') : '';
           $geopserve_adds_out = implode(", ", $geopserve_adds_array);
 
           // Non-binary additional settings translator.
           $geopserve_sort_string = '';
-          (substr(($geopserve_entry->serve_adds), 5, 1) == 'D') ? $geopserve_sort_string = "Descending, " : $geopserve_sort_string = "Ascending, ";
-          (substr(($geopserve_entry->serve_adds), 6, 1) == 'M') ? $geopserve_sort_string .= " Modified" : '';
-          (substr(($geopserve_entry->serve_adds), 6, 1) == 'N') ? $geopserve_sort_string .= " Name" : '';
-          (substr(($geopserve_entry->serve_adds), 6, 1) == 'R') ? $geopserve_sort_string .= " Relevance" : '';
+          (substr(($geopserve_entry->serve_adds), 4, 1) == 'D') ? $geopserve_sort_string = "Descending, " : $geopserve_sort_string = "Ascending, ";
+          (substr(($geopserve_entry->serve_adds), 5, 1) == 'M') ? $geopserve_sort_string .= " Modified" : '';
+          (substr(($geopserve_entry->serve_adds), 5, 1) == 'N') ? $geopserve_sort_string .= " Name" : '';
+          (substr(($geopserve_entry->serve_adds), 5, 1) == 'R') ? $geopserve_sort_string .= " Relevance" : '';
 
           // Begin output.
           echo "<tr>";
