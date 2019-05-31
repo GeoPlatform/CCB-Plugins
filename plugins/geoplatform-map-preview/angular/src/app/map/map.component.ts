@@ -13,9 +13,10 @@ import {
 } from "geoplatform.mapcore";
 
 
-// // import * as L from 'leaflet';
+// import * as Leaflet from 'leaflet';
 // var L = require('leaflet');
 import * as esri from "esri-leaflet";
+import "leaflet.vectorgrid";
 
 import { DataProvider, Events, DataEvent } from '../shared/data.provider';
 import { layerServiceProvider } from '../shared/service.provider';

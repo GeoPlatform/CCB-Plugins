@@ -2,8 +2,9 @@
 <!-- Layers -->
 <div *ngIf="'Layer'===item?.type">
     <strong>Service</strong>
-    <div *ngIf="!item?.services && !item?.services?.length" class="t-fg--danger">
-        <span class="fas fa-exclamation-circle"></span>
+    <div *ngIf="!item?.services && !item?.services?.length"
+        [ngClass]="{'t-fg--danger':isServiceRequired()}">
+        <span class="fas" [ngClass]="{'fa-exclamation-circle':isServiceRequired()}"></span>
         Layer does not specify a service
     </div>
     <div *ngIf="item?.services?.length>0">

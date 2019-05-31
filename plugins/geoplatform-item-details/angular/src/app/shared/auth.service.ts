@@ -32,6 +32,8 @@ export class PluginAuthService {
 
         this.user$ = new Subject<GeoPlatformUser>();
 
+        if(!this.authService) return;
+
         const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
             // console.log("Received Auth Message: " + msg.name);
@@ -75,7 +77,7 @@ export class PluginAuthService {
     }
 
     getToken() : string {
-        return this.authService.getJWT();
+        return this.authService ? this.authService.getJWT() : null;
     }
 
     /**
@@ -84,6 +86,7 @@ export class PluginAuthService {
      * @return GeoPlatformUser or null
      */
     check() : Promise<GeoPlatformUser> {
+        if(!this.authService) return Promise.resolve(null);
         return this.authService.checkWithClient(null)
         .then( token => this.authService.getUser() )
         .then( user => {

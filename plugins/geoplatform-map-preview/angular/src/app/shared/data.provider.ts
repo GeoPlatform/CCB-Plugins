@@ -168,7 +168,7 @@ export class DataProvider {
 
         if(datasets.length) this.processDatasets(datasets);
         if(services.length) this.processServices(services);
-        if(layers.length) this.processDatasets(layers);
+        if(layers.length) this.processLayers(layers);
 
     }
 

@@ -163,14 +163,16 @@ export class LayersComponent implements OnInit {
                         <span class="fas fa-info-circle"></span>
                     </a>
                     <button type="button" class="btn btn-sm btn-link"
-                        (click)="isCollapsed=!isCollapsed">
+                        (click)="isCollapsed=!isCollapsed"
+                        *ngIf="item.layer.services&&item.layer.services.length">
                         <span class="fas"
                             [ngClass]="{'fa-chevron-up':!isCollapsed,'fa-chevron-down':isCollapsed}">
                         </span>
                     </button>
                 </span>
             </div>
-            <div class="m-layer-item__additional" [ngClass]="{'is-collapsed':isCollapsed}">
+            <div class="m-layer-item__additional" [ngClass]="{'is-collapsed':isCollapsed}"
+                *ngIf="item.layer.services&&item.layer.services.length">
                 <a href="/resources/services/{{item.layer.services[0].id}}" target="_blank"
                     title="View details about this layer's service">
                     <span class="icon-service"></span>
