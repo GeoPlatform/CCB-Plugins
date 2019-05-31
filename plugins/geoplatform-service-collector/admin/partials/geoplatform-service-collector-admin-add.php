@@ -93,15 +93,15 @@ if ($geopserve_type_keyword_bool == 'true' && empty($geopserve_type_keyword_text
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for keyword criteria.\n";
 }
-if ($geopserve_type_topic_bool == 'true' && empty($geopserve_type_topic_text) || !ctype_xdigit($geopserve_type_topic_text) || strlen($geopserve_type_topic_text) != 32)){
+if ($geopserve_type_topic_bool == 'true' && (empty($geopserve_type_topic_text) || !ctype_xdigit($geopserve_type_topic_text) || strlen($geopserve_type_topic_text) != 32)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for topic criteria.\n";
 }
-if ($geopserve_type_usedby_bool == 'true' && empty($geopserve_type_usedby_text) || !ctype_xdigit($geopserve_type_usedby_text) || strlen($geopserve_type_usedby_text) != 32)){
+if ($geopserve_type_usedby_bool == 'true' && (empty($geopserve_type_usedby_text) || !ctype_xdigit($geopserve_type_usedby_text) || strlen($geopserve_type_usedby_text) != 32)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for 'used by' criteria.\n";
 }
-if ($geopserve_type_class_bool == 'true' && empty($geopserve_type_class_text) || !ctype_xdigit($geopserve_type_class_text) || strlen($geopserve_type_class_text) != 32)){
+if ($geopserve_type_class_bool == 'true' && (empty($geopserve_type_class_text) || !ctype_xdigit($geopserve_type_class_text) || strlen($geopserve_type_class_text) != 32)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for classifier criteria.\n";
 }
