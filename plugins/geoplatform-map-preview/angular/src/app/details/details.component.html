@@ -47,6 +47,18 @@
                     <div class="u-text--sm t-fg--gray-md">Provide keywords for the map</div>
                 </div>
             </div>
+
+            <!-- <div class="m-article__desc">
+                <div class="a-heading">Geographic Extent</div>
+                <div>{{mapItem.extent?.minx}} - {{mapItem.extent?.maxx}}</div>
+                <div>{{mapItem.extent?.miny}} - {{mapItem.extent?.maxy}}</div>
+            </div>
+
+            <div class="m-article__desc">
+                <div class="a-heading">Specializations</div>
+                <div>{{mapItem.resourceTypes.join(', ')}}</div>
+            </div> -->
+
             <br>
 
 
@@ -104,7 +116,7 @@
             </strong>
             <div>{{error.message}}</div>
             <div class="u-text--right">
-                <button type="button" class="btn btn-light" (click)="error=null">
+                <button type="button" class="btn btn-sm btn-light" (click)="error=null">
                     DISMISS
                 </button>
             </div>

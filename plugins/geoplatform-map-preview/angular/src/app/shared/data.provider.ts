@@ -38,6 +38,8 @@ export interface Item {
     usedBy     ?: any[];
     publishers ?: any[];
     classifiers?: {[key:string]:any};
+    resourceTypes ?: any[];
+    extent     ?: { minx ?: number; maxx ?: number; miny ?: number; maxy ?: number; };
 }
 
 export interface MapItem extends Item {
@@ -57,13 +59,15 @@ export class DataProvider {
         title       : null,
         description : null,
         createdBy   : null,
+        resourceTypes : [],
         keywords    : [],
         layers      : [],
         themes      : [],
         topics      : [],
         publishers  : [],
         usedBy      : [],
-        classifiers : {}
+        classifiers : {},
+        extent      : {}
     };
 
     //object holding spatial extent of all data
@@ -78,7 +82,6 @@ export class DataProvider {
     //subscription with which to notify listeners of data changes
     private sub : Subject<DataEvent> = new Subject<DataEvent>();
 
-
     constructor(itemService : ItemService) {
         this.itemService = itemService;
     }
@@ -92,12 +95,17 @@ export class DataProvider {
      *
      */
     setDetails( item : Item ) {
-        // this.details.title = item.title || item.label || null;
-        // this.details.description = item.description || null;
-        // this.details.keywords = item.keywords || [];
 
         Object.keys( this.details ).forEach( property => {
+
+            //don't bother trying to carry over non-map specializations
+            if('resourceTypes' === property && item.type !== ItemTypes.MAP) {
+                return;
+            }
+
             let value = item[property] || null;
+
+            console.log("Setting Property '" + property + "' : " + JSON.stringify(value, null, ' '));
 
             if(!this.details[property]) {
                 this.details[property] = value;
@@ -123,10 +131,23 @@ export class DataProvider {
                         this.details[property] = [ ... Array.from(new Set(arr)) ];
                     }
 
+                } else if( 'extent' === property ) {
+
+                    if(!this.details.extent) this.details.extent = value;
+                    else {
+                        if(!this.details.extent.minx)
+                            this.details.extent.minx = value.minx||-120;
+                        if(!this.details.extent.miny)
+                            this.details.extent.miny = value.miny||20;
+                        if(!this.details.extent.maxx)
+                            this.details.extent.maxx = value.maxx||-76;
+                        if(!this.details.extent.maxy)
+                            this.details.extent.maxy = value.maxy||50;
+                    }
+                    
                 }
             }
 
-            // this.mapItem[property] = value;
         });
     }
 
