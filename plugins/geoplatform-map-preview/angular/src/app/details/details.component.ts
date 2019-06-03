@@ -4,6 +4,7 @@ import {
 } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
 import { ItemService, ItemTypes } from 'geoplatform.client';
+import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 import {
     DataProvider, DataEvent, Events, MapItem
@@ -11,8 +12,11 @@ import {
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { PluginAuthService } from '../shared/auth.service';
 import { itemServiceProvider } from '../shared/service.provider';
+import { environment } from '../../environments/environment';
 
 
+
+const GEOPLATFORM_MAP_TYPE = "http://www.geoplatform.gov/ont/openmap/GeoplatformMap";
 
 
 @Component({
@@ -37,12 +41,14 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         description : "This map needs a description",
         keywords    : [],
         createdBy   : "tester",
+        resourceTypes: [],
         layers      : [],
         themes      : [],
         topics      : [],
         publishers  : [],
         usedBy      : [],
-        classifiers : {}
+        classifiers : {},
+        extent      : {}
     };
 
     public keyword : string;
@@ -99,23 +105,30 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
             return;
         }
 
-        //first, ensure token isn't in weird expired/revoked state
-        this.checkAuth()
+        Promise.resolve(this.getUser())
         .then( user => {
-            this.onUserChange(user);
-            if(!user) throw new Error("Not signed in");
+            if('development' !== environment.env) {
+                // first, ensure token isn't in weird expired/revoked state
+                return this.checkAuth().then( user => {
+                    this.onUserChange(user);
+                    if(!user) throw new Error("Not signed in");
+                });
+            } else Promise.resolve(true);
 
+        })
+        .then( () => {
             //then request a URI for the new map
             return this.itemService.getUri(this.mapItem);
+            // return null; //use if testing create without actually saving
         })
         .then(uri => {
+            if(!uri) throw new Error("Unable to generate a URI for the new map");
             this.mapItem.uri = uri;
             return this.mapItem;
         })
         .then( map => {
             //store selected layers onto map being created
             this.mapItem.layers = this.data.getDataWithState(true);
-
             //and then save the map
             return this.itemService.save(map)
         })
@@ -168,12 +181,6 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
      * @param details - object defining metadata for the new map
      */
     updateDetails( details : {[key:string]:any} ) {
-        // if(details.title) {
-        //     let title = "Map of " + details.title;
-        //     this.mapItem.title = title;
-        // }
-        // if(details.description) this.mapItem.description = details.description;
-        // if(details.keywords) this.mapItem.keywords = details.keywords;
 
         Object.keys(this.mapItem).forEach( property => {
             let value = details[property] || null;
@@ -183,8 +190,58 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
             this.mapItem[property] = value;
         });
 
+        this.ensureExtent();
+        this.ensureResourceTypes();
+
+        if('development' === environment.env) {
+            console.log("======");
+            console.log("Updated Map Item Details");
+            console.log(JSON.stringify(this.mapItem, null, ' '));
+        }
     }
 
+    /**
+     * if the map doesn't have a geographic extent because whatever it's
+     * being created from doesn't have one defined, set a default of CONUS
+     */
+    ensureExtent() {
+        if(!this.mapItem) return;
+
+        if(!this.mapItem.extent) {
+            this.mapItem.extent = {
+                minx: -120, miny: 20, maxx: -76, maxy: 50
+            };
+            return;
+        }
+        if(typeof(this.mapItem.extent.minx) === 'undefined' || this.mapItem.extent.minx === null)
+            this.mapItem.extent.minx = -120;
+        if(typeof(this.mapItem.extent.miny) === 'undefined' || this.mapItem.extent.miny === null)
+            this.mapItem.extent.miny = 20;
+        if(typeof(this.mapItem.extent.maxx) === 'undefined' || this.mapItem.extent.maxx === null)
+            this.mapItem.extent.maxx = -76;
+        if(typeof(this.mapItem.extent.maxy) === 'undefined' || this.mapItem.extent.maxy === null)
+            this.mapItem.extent.maxy = 50;
+    }
+
+    /**
+     * if no map specializations were copied over, set the default one
+     * since this map is being generated from a non-map asset
+     */
+    ensureResourceTypes() {
+        if(!this.mapItem) return;
+        this.mapItem.resourceTypes = this.mapItem.resourceTypes || [];
+        if( !this.mapItem.resourceTypes.length ) {
+            this.mapItem.resourceTypes.push(GEOPLATFORM_MAP_TYPE);
+        }
+    }
+
+
+    getUser() {
+        if('development' === environment.env) {
+            return { username: 'tester' } as GeoPlatformUser;
+        }
+        return super.getUser();
+    }
 
 }
 
