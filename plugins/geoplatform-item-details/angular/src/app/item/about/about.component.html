@@ -23,6 +23,11 @@
         <span *ngIf="!item.lastModifiedBy">an unknown user</span>
     </div>
 
+    <div class="m-article__desc" *ngIf="clonedFrom">
+        <div><strong>Clone of </strong></div>
+        <gpid-resource-link [item]="clonedFrom"></gpid-resource-link>
+    </div>
+
     <div class="m-article__desc" *ngIf="item.visibility">
         <strong>Visibility </strong>{{item.visibility}}
     </div>

@@ -5,12 +5,12 @@
     <button class="btn btn-secondary btn-block dropdown-toggle"
         type="button" id="dropdownMenuButton"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-        disabled="!getFormats().length">
+        [disabled]="!formats.length">
         Export as
     </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <button type="button" class="dropdown-item"
-            *ngFor="let format of getFormats()"
+            *ngFor="let format of formats"
             (click)="doAction(format.value)">
             {{format.label}}
         </button>

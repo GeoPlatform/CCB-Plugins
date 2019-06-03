@@ -2,7 +2,13 @@
     <div class="u-text--justify u-mg-bottom--md">
         {{getDescription()}}
     </div>
-    <button type="button" class="btn btn-primary btn-block" (click)="doAction()">
+    <button type="button" class="btn btn-primary btn-block"
+        [disabled]="!canDoAction()"
+        (click)="doAction()">
         {{getLabel()}}
     </button>
+    <div *ngIf="warning" class="u-text--sm t-fg--warning">
+        <span class="fas fa-exclamation-triangle"></span>
+        {{warning}}
+    </div>
 </div>

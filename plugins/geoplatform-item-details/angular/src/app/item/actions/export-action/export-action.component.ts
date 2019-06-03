@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ItemTypes, Config, ItemService } from "geoplatform.client";
 import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
@@ -48,21 +48,29 @@ export class ExportActionComponent implements OnInit {
     @Input() item : any;
     @Input() service : ItemService;
 
+    public formats : any[];
+
     constructor( private rpm: RPMService) { }
 
     ngOnInit() {
     }
 
-    getFormats() {
-        if(!this.item || !this.item.type ||
-            !FORMATS[this.item.type])
-            return [];
+    ngOnChanges(changes : SimpleChanges) {
+        if(changes && changes.item) {
+            this.determineFormats(changes.item.currentValue);
+        }
+    }
 
-        return FORMATS[this.item.type];
+    determineFormats(item) {
+        if(!item || !item.type || !FORMATS[item.type]) this.formats = [];
+        this.formats = FORMATS[item.type];
     }
 
     doAction(format) {
-        if(!this.item || !this.service) return;
+        if(!this.item || !this.service) {
+            console.log("Warning: ExportAction has no item or service");
+            return;
+        }
         window.open(Config.ualUrl + '/api/items/' + this.item.id + '/export?format=' + format, '_blank');
 
         // RPM : Asset Exported
