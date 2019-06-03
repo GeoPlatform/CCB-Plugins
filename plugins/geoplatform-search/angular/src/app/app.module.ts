@@ -20,12 +20,8 @@ import { environment } from '../environments/environment';
 import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
 import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
-
 import { TrackingService } from 'geoplatform.client';
-
 const trackingService = new TrackingService({ provider : RPMServiceFactory() })
-
-
 
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
@@ -125,6 +121,7 @@ export function initializeApp() {
       // console.log(Config);
   }
 }
+
 
 @NgModule({
   declarations: [
