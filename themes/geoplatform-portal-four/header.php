@@ -1,4 +1,13 @@
 <?php
+/**
+ * A GeoPlatform Header template
+ *
+ * @link https://codex.wordpress.org/Designing_Headers
+ *
+ * enhanced comment display
+ * @link //per https://codex.wordpress.org/Migrating_Plugins_and_Themes_to_2.7/Enhanced_Comment_Display
+ */
+
 // Getting theme mods for search bar and mega-menu hiding checks.
 $geopccb_theme_options = geop_ccb_get_theme_mods();
 ?>
@@ -11,7 +20,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <meta name="author" content="">
   <link rel="shortcut icon" href="<?php echo get_stylesheet_directory_uri(); ?>/favicon.ico" />
 
-  <?php wp_head();?>
+  <?php wp_head(); ?>
 
 </head>
 <header class="o-header o-header--sticky" role="banner">
@@ -59,10 +68,20 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <?php
         $geopportal_current_user = wp_get_current_user();
 
+        // Sets the login url, for redirection back to previous page on login/logout.
+        // Address bar from...
+        //
+        // https://stackoverflow.com/questions/6768793/get-the-full-url-in-php
+        //
         $geopportal_login_url;
-        if ( is_front_page() || is_404() ){ $geopportal_login_url = home_url(); }
-        elseif ( is_category() ){ $geopportal_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) ); }
-        else { $geopportal_login_url = get_permalink(); }
+        if ( is_front_page() || is_404() )
+          $geopportal_login_url = home_url();
+        elseif ( is_category() )
+          $geopportal_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) );
+        elseif (isset($post) && ( $post->post_name == 'register' || $post->post_name == 'geoplatform-items' || $post->post_name == 'geoplatform-map-preview' ))
+          $geopportal_login_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+        else
+          $geopportal_login_url = get_permalink();
 
         if($geopportal_current_user->ID != 0) {
 
@@ -126,21 +145,6 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
             <?php } ?>
         </div>
     </div>
-
-    <script>
-      // jQuery(document).ready(function() {
-      //   jQuery("#userSignInButton").click(function(e){
-      //     if (jQuery("#geopportal_header_user_dropdown_parent").hasClass("show")){
-      //       jQuery("#geopportal_header_user_dropdown_parent").removeClass("show");
-      //       jQuery("#geopportal_header_user_dropdown_child").removeClass("show");
-      //     }
-      //     else {
-      //       jQuery("#geopportal_header_user_dropdown_parent").addClass("show");
-      //       jQuery("#geopportal_header_user_dropdown_child").addClass("show");
-      //     }
-      //   });
-      // });
-    </script>
 
     <div class="o-header__secondary">
 

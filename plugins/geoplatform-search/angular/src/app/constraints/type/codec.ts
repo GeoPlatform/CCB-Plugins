@@ -1,6 +1,6 @@
 
 import { Params } from '@angular/router';
-import { Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Query, QueryParameters, ItemTypes, ItemTypeLabels } from 'geoplatform.client';
 import {
     Constraint, MultiValueConstraint, Constraints, FacetCount
 } from '../../models/constraint';
@@ -20,16 +20,9 @@ export class TypeCodec implements Codec {
                     t !== ItemTypes.STANDARD;
         })
         .map(k=>{
-            let v = ItemTypes[k], label = v;
-            if(~label.indexOf(":")) label = label.split(':')[1];
-            if("VCard" === label) label = 'Contact';
+            let v = ItemTypes[k], label = ItemTypeLabels[v];
             return { key: v, label: label, id: v, count: 0 };
         });
-        // .concat([
-        //     { label: 'Page',  id: 'pages'  },
-        //     { label: 'Post',  id: 'posts'  },
-        //     { label: 'Media', id: 'media' }
-        // ]);
     }
 
     getKey() : string { return QueryParameters.TYPES; };

@@ -5,3 +5,15 @@
 
 /* material design icons */
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+@import "../node_modules/@angular/cdk/overlay-prebuilt.css";
+
+html {
+
+    /* following is required or else mat autocomplete overlays 
+        will jump way up high if the page is scrolled such that
+        the overlay can't fit below its connected element
+    */
+    height: 100% !important;
+
+}

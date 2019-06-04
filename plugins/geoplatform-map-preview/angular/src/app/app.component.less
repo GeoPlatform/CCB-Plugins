@@ -1,0 +1,51 @@
+
+:host {
+    position: relative;
+    width: 100%;
+}
+
+
+
+
+.m-page-breadcrumbs__label {
+    max-width:      8em;
+    overflow:       hidden;
+    display:        inline-block;
+    white-space:    nowrap;
+    vertical-align: bottom;
+    text-overflow:  ellipsis;
+}
+@media(min-width: 768px) {
+    .m-page-breadcrumbs__label {
+        max-width:      15em;
+    }
+}
+@media(min-width: 992px) {
+    .m-page-breadcrumbs__label {
+        max-width:      25em;
+    }
+}
+@media(min-width: 1200px) {
+    .m-page-breadcrumbs__label {
+        max-width:      31em;
+    }
+}
+
+
+
+.p-map-preview {
+}
+@media(min-width: 768px) {
+    .p-map-preview {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        min-height: 20em;   //for error display purposes
+
+        .o-map-sidebar {
+            flex: 0 1 23em;
+            height: calc(50vw);
+            overflow: hidden;
+        }
+    }
+}

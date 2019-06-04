@@ -1,0 +1,77 @@
+<div class="o-map-layers" *ngIf="!isCollapsed">
+
+    <div class="m-article o-map-layers__container">
+        <div class="m-article__desc flex-1 d-flex flex-column flex-align-stretch">
+
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link"
+                        (click)="currentSection=Sections.MAP"
+                        [ngClass]="{active:Sections.MAP===currentSection}">
+                        On Map ({{activeLayers?.length||0}})
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        (click)="currentSection=Sections.AVAILABLE"
+                        [ngClass]="{active:Sections.AVAILABLE===currentSection}">
+                        Available ({{available.length}})
+                    </a>
+                </li>
+            </ul>
+
+            <div class="o-map-layers__content">
+
+                <!--
+                    Layers that have been added to the Map
+                -->
+                <div class="m-article__desc" *ngIf="Sections.MAP===currentSection">
+
+                    <!-- empty message -->
+                    <div *ngIf="!activeLayers || !activeLayers.length"
+                        class="t-fg--gray-md u-text--sm">
+                        <em>
+                            Add layers to the map using the checkboxes next to layers
+                            in the "Available" list
+                        </em>
+                    </div>
+
+                    <!-- list of selected layers on map -->
+                    <div *ngFor="let item of activeLayers" class="m-layer-item">
+                        <button type="button" class="btn btn-sm btn-link"
+                            (click)="toggleLayerViz(item)">
+                            <span *ngIf="!item.visibility" class="fas fa-eye-slash"></span>
+                            <span *ngIf="item.visibility" class="fas fa-eye"></span>
+                        </button>
+                        <span>{{item.layer.label}}</span>
+                    </div>
+
+                </div>
+
+                <!--
+                    Layers that are available to be added to the Map
+                -->
+                <div class="m-article__desc" *ngIf="Sections.AVAILABLE===currentSection">
+
+                    <!-- warning message -->
+                    <div *ngIf="warning" class="a-message--warning">{{warning}}</div>
+
+                    <!-- list of available layers for selection -->
+                    <div *ngFor="let item of available">
+                        <gpmp-layer-available
+                            [item]="item"
+                            [isSelected]="data.getDataState(item)"
+                            (onActivate)="toggleLayer($event)">
+                        </gpmp-layer-available>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

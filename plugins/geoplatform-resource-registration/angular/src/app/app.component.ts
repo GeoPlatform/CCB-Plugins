@@ -2,22 +2,27 @@ import { Component, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable, Subject } from 'rxjs';
+import { MatStepper, MatIconRegistry } from '@angular/material';
+import { ItemTypes, ItemService } from 'geoplatform.client';
+import * as Q from "q";
 
-import { MatStepper } from '@angular/material';
-import { ItemTypes } from 'geoplatform.client';
-
-
+import { itemServiceProvider } from './item-service.provider';
 import { StepComponent, StepEvent } from './steps/step.component';
 import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 
+import { PluginAuthService }    from './auth.service';
 import { AuthenticatedComponent } from './authenticated.component';
 import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
-import { ModelProperties } from './model';
+import {
+    ModelProperties, AppEventTypes, StepEventTypes
+} from './model';
 import { environment } from '../environments/environment';
+
+
 
 export interface AppEvent {
     type   : string;
@@ -25,16 +30,15 @@ export interface AppEvent {
 }
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
+  providers: [ itemServiceProvider ]
 })
 export class AppComponent extends AuthenticatedComponent implements OnInit {
 
-    @Output() appEvents: Subject<AppEvent>
-        = new Subject<AppEvent>();
+    @Output() appEvents: Subject<AppEvent> = new Subject<AppEvent>();
 
     @ViewChild('stepper')           stepper: MatStepper;
     @ViewChild(TypeComponent)       step1: StepComponent;
@@ -44,8 +48,18 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
 
     public item : any;
 
-    constructor( private formBuilder: FormBuilder ) {
-        super();
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private itemService : ItemService,
+        matIconRegistry: MatIconRegistry,
+        authService : PluginAuthService
+    ) {
+        super(authService);
+
+        matIconRegistry.registerFontClassAlias('fontawesome', 'fas');
+        matIconRegistry.registerFontClassAlias('geoplatform-icons-font', 'gp');
+
     }
 
     ngOnInit() {
@@ -100,7 +114,8 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         Object.keys(data).forEach( key => {
             if( typeof(data[key]) !== 'undefined' &&
                 data[key] !== null &&
-                'serviceType' !== key && 'href' !== key
+                ModelProperties.SERVICE_TYPE !== key &&
+                ModelProperties.ACCESS_URL !== key
             ) {
 
                 //if user provided a title, ignore whatever the harvest returned for label
@@ -127,14 +142,12 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         if(ModelProperties.ACCESS_URL === key) {
             if(this.item.type === ItemTypes.DATASET) {
                 //set as distro link
-                this.item.distributions = [{
-                    type: 'dcat:Distribution',
-                    accessURL: value,
-                    title: "Dataset distribution link"
-                }];
+                let distro = {type: 'dcat:Distribution',title: "Dataset distribution link"};
+                distro[ModelProperties.ACCESS_URL] = value;
+                this.item.distributions = [distro];
 
-            } else if(this.item.type === ItemTypes.SERVICE) {
-                this.item.href = value;
+            } else {
+                this.item[ModelProperties.ACCESS_URL] = value;
             }
 
         } else if( ModelProperties.TITLE === key || ModelProperties.LABEL === key ) {
@@ -163,21 +176,24 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // them as uris, so we have to transform them
             this.item[key] = value.map(v => v.uri);
 
-        } else if(ModelProperties.THUMBNAIL_URL === key) {
+        } else if(ModelProperties.FORM_THUMBNAIL_URL === key) {
             if(value && value.length) {
-                this.item.thumbnail = this.item.thumbnail || {};
-                this.item.thumbnail.url = value;
+                this.item[ModelProperties.THUMBNAIL] = this.item[ModelProperties.THUMBNAIL] || {};
+                this.item[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_URL] = value;
             } else {
-                this.item.thumbnail = null;
+                this.item[ModelProperties.THUMBNAIL] = null;
             }
 
-        } else if(ModelProperties.THUMBNAIL_CONTENT === key) {
+        } else if(ModelProperties.FORM_THUMBNAIL_CONTENT === key) {
             if(value && value.length) {
-                this.item.thumbnail = this.item.thumbnail || {};
-                this.item.thumbnail.contentData = value;
+                this.item[ModelProperties.THUMBNAIL] = this.item[ModelProperties.THUMBNAIL] || {};
+                this.item[ModelProperties.THUMBNAIL][ModelProperties.THUMBNAIL_CONTENT] = value;
             } else {
-                this.item.thumbnail = null;
+                this.item[ModelProperties.THUMBNAIL] = null;
             }
+
+        } else if(ModelProperties.THEME_SCHEME === key) {
+            //ignore
 
         } else { //generic property
             this.item[key] = value;
@@ -224,8 +240,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             this.applyItemData(key, ctrl.value);
         });
 
-        console.log("Item updated:");
-        console.log(this.item);
+        if(!environment.production) {
+            console.log("Item updated:");
+            console.log(this.item);
+        }
 
         this.triggerChangeDetection();
     }
@@ -237,7 +255,7 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
     onStepEvent( event : StepEvent ) {
         switch(event.type) {
 
-            case 'app.reset' :
+            case StepEventTypes.RESET :
 
             this.stepper.reset();
 
@@ -248,12 +266,15 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             //reset stepper to first step
             // this.stepper.selectedIndex = 0;
 
-            let appEvent : AppEvent = { type:'reset', value: true };
+            let appEvent : AppEvent = {
+                type: AppEventTypes.RESET,
+                value: true
+            };
             this.appEvents.next(appEvent);
             break;
 
 
-            case 'service.about' :
+            case StepEventTypes.SERVICE_INFO :
             // console.log("Caching service harvest for steps : ");
             // console.log(event.value);
 
@@ -278,23 +299,123 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // ----------------------------------
         };
         // if('development' === environment.env) {
-        //     this.item.createdBy = 'tester';
+        //    this.item.createdBy = 'tester';
         // }
         if(this.user) {
             this.item[ModelProperties.CREATED_BY] = this.user.username;
         }
 
-        let searchParams = window.location.search;
+        //pre-populate some fields based upon query parameters provided
+        let searchParams: string = window.location.search;
         if(searchParams) {
-            let params : any = {};
+            let params : { [key:string]:any } = {} as { [key:string]:any };
             searchParams.replace('?','').split('&').forEach(p => {
                 let param = p.split('='), key = param[0], value = param[1];
                 params[key] = value;
             });
 
-            if(params.type) {
-                this.item.type = params.type;
-            }
+            this.applyPresets(params)
+            .then( () => {
+
+                if(!environment.production) {
+                    console.log("Item Initialized:");
+                    console.log(this.item);
+                }
+                this.triggerChangeDetection();
+
+                //notify children that the item has changed and
+                // should trigger a refresh
+                let appEvent : AppEvent = {
+                    type: AppEventTypes.CHANGE,
+                    value: this.item
+                };
+                this.appEvents.next(appEvent);
+            });
         }
+
+    }
+
+
+    /**
+     *
+     */
+    applyPresets(params : { [key:string]:any } ) : Promise<void> {
+
+        if(params.type) {
+            this.item[ModelProperties.TYPE] = params.type;
+        }
+
+        if(params.title) {
+            this.item[ModelProperties.TITLE] =
+                this.item[ModelProperties.LABEL] =
+                    (decodeURIComponent(params.title) || "").trim();
+        }
+
+        let keys = params.keywords || params.keyword;
+        this.item[ModelProperties.KEYWORDS] = Array.isArray(keys) ? keys : [];
+
+
+        if(params.createdBy && 'development' === environment.env) {
+            this.item[ModelProperties.CREATED_BY] = params.createdBy;
+        }
+
+
+        //Now, resolve any presets that are assets (values are IDs but we need
+        //to fetch their full object representation before setting)
+
+        let cids = params.communities || params.community;
+        if(cids && !Array.isArray(cids)) cids = [cids];
+
+        let thids = params.themes || params.theme;
+        if(thids && !Array.isArray(thids)) thids = [thids];
+
+        let toids = params.topics || params.topic;
+        if(toids && !Array.isArray(toids)) toids = [toids];
+
+
+        let tbd = [].concat(cids||[], thids||[], toids||[]);
+
+        if(!tbd.length) return Promise.resolve();
+
+        return this.itemService.getMultiple(tbd)
+        .then( ( results : {[key:string]:any}[] ) => {
+
+            results.forEach( result => {
+                //TODO eventually the items being resolved will be of the same type
+                // but for different association properties. but for now, each
+                // association is of a specific type, so we determine where to put
+                // each resolved asset according to its type...
+                switch(result.type) {
+                    case ItemTypes.COMMUNITY :
+                    if(!this.item[ModelProperties.COMMUNITIES])
+                        this.item[ModelProperties.COMMUNITIES] = [];
+                    this.item[ModelProperties.COMMUNITIES].push(result);
+                    break;
+                    case ItemTypes.CONCEPT :
+                    if(!this.item[ModelProperties.THEMES])
+                        this.item[ModelProperties.THEMES] = [];
+                    this.item[ModelProperties.THEMES].push(result);
+                    break;
+                    case ItemTypes.ORGANIZATION :
+                    if(!this.item[ModelProperties.PUBLISHERS])
+                        this.item[ModelProperties.PUBLISHERS] = [];
+                    this.item[ModelProperties.PUBLISHERS].push(result);
+                    break;
+                    case ItemTypes.TOPIC :
+                    if(this.item[ModelProperties.ASSETS])
+                        this.item[ModelProperties.ASSETS] = [];
+                    this.item[ModelProperties.ASSETS].push(result);
+                }
+            });
+
+            return;
+
+        })
+        .catch( (error:Error) => {
+            console.log("Error resolving preset assets: " + error.message);
+            //TODO display warning to user that some values couldn't be preset...
+            return Promise.resolve();
+        })
+
     }
 }

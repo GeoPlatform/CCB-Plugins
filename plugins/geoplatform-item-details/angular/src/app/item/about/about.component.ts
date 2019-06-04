@@ -1,29 +1,51 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 
-import { ItemTypes } from 'geoplatform.client';
+import { ItemTypes, ItemService } from 'geoplatform.client';
+
+import { ItemHelper } from '../../shared/item-helper';
+import { itemServiceProvider } from '../../shared/service.provider';
 
 @Component({
   selector: 'gpid-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.less']
+  styleUrls: ['./about.component.less'],
+  providers: [itemServiceProvider]
 })
 export class AboutComponent implements OnInit {
 
     @Input() item : any;
+    public clonedFrom : any;
 
-    constructor() { }
+    constructor(private itemService : ItemService) { }
 
     ngOnInit() {
+
+    }
+
+    ngOnChanges( changes : SimpleChanges ) {
+        if(changes && changes.item) {
+            this.fetchClonedFrom(changes.item.currentValue);
+        }
+    }
+
+    fetchClonedFrom(item) {
+        if(item && item._cloneOf) {
+            this.itemService.get(item._cloneOf)
+            .then( (source : any) => { this.clonedFrom = source; })
+            .catch( e => {
+
+            });
+        }
     }
 
     isAsset() {
-        return this.item && (
-            this.item.type === ItemTypes.DATASET ||
-            this.item.type === ItemTypes.SERVICE ||
-            this.item.type === ItemTypes.LAYER ||
-            this.item.type === ItemTypes.MAP ||
-            this.item.type === ItemTypes.GALLERY ||
-            this.item.type === ItemTypes.COMMUNITY
-        );
+        return this.item && ItemHelper.isAsset(this.item);
+    }
+
+    getCloneLink() {
+        if(!this.clonedFrom) return '';
+        return '/resources/' +
+            ItemHelper.getTypeKey(this.clonedFrom.type) +
+            '/' + this.clonedFrom.id;
     }
 }

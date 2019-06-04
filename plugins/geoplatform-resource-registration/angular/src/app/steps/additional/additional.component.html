@@ -12,6 +12,51 @@
 
             <div class="additional__section">
 
+                <gprr-autocomplete-mat-chip
+                    [label]="'Communities'"
+                    [icon]="'icon-community'"
+                    [placeholder]="'Associate communities'"
+                    [hint]="'Find communities using the typeahead and select them to associate'"
+                    [fieldName]="PROPS.COMMUNITIES"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterCommunities">
+                </gprr-autocomplete-mat-chip>
+
+                <gprr-autocomplete-mat-chip
+                    [label]="'Concept Scheme'"
+                    [icon]="'icon-conceptscheme'"
+                    [placeholder]="'Search concept schemes'"
+                    [hint]="'Select a concept to constrain the avialable options in the Themes field below'"
+                    [fieldName]="PROPS.THEME_SCHEME"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterSchemes">
+                </gprr-autocomplete-mat-chip>
+
+                <gprr-autocomplete-mat-chip
+                    [label]="'Themes'"
+                    [icon]="'icon-concept'"
+                    [placeholder]="'Associate themes'"
+                    [hint]="'Find themes using the typeahead and select them to associate'"
+                    [fieldName]="PROPS.THEMES"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterThemes">
+                </gprr-autocomplete-mat-chip>
+
+                <gprr-autocomplete-mat-chip
+                    [label]="'Topics'"
+                    [icon]="'icon-topic'"
+                    [placeholder]="'Associate topics'"
+                    [hint]="'Find topics using the typeahead and select them to associate'"
+                    [fieldName]="PROPS.TOPICS"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterTopics">
+                </gprr-autocomplete-mat-chip>
+
+            </div>
+
+            <div class="additional__section">
+
+
                 <mat-form-field floatLabel="always">
                     <mat-label>Keywords</mat-label>
                     <mat-chip-list #keyChipList>
@@ -24,7 +69,7 @@
                             <mat-icon matChipRemove>cancel</mat-icon>
                         </mat-chip>
                         <input matInput #keywordsInput
-                            formControlName="$keywords"
+                            formControlName="${{PROPS.KEYWORDS}}"
                             [matChipInputFor]="keyChipList"
                             (matChipInputTokenEnd)="addKeyword($event)">
                     </mat-chip-list>
@@ -32,55 +77,70 @@
                 </mat-form-field>
 
 
-                <gprr-autocomplete-mat-chip
-                    [label]="'Communities'"
-                    [placeholder]="'Associate communities'"
-                    [hint]="'Find communities using the typeahead and select them to associate'"
-                    [fieldName]="'usedBy'"
-                    [formGroup]="formGroup"
-                    [filterFn]="filterCommunities">
-                </gprr-autocomplete-mat-chip>
+
+                <mat-form-field floatLabel="always">
+                  <mat-label>
+                      <mat-icon matPrefix>link</mat-icon>
+                      Landing Page
+                  </mat-label>
+                  <input matInput formControlName="{{PROPS.LANDING_PAGE}}"
+                         placeholder="Specify the landing page of the resource">
+                  <mat-hint>A website where more information can be gathered</mat-hint>
+                  <mat-error *ngIf="isInvalid(PROPS.LANDING_PAGE)">{{getErrorMessage(PROPS.LANDING_PAGE)}}</mat-error>
+                </mat-form-field>
+
 
                 <!-- Thumbnail -->
                 <div>
                     <div class="u-text--sm t-text--bold t-fg--gray-md">Thumbnail</div>
                     <div class="thumbnail__container">
                         <div class="thumbnail__form">
-                            <div>
-                                <input type="file" accept="image/*" style="display:none"
-                                    #thumbFileInput (change)="onFileUpload()">
-                                <input type="hidden" formControlName="thumbnailContent">
-                                <button mat-raised-button (click)="triggerFileUpload()">
-                                    <mat-icon>image</mat-icon> Use a File
-                                </button>
-                                <span *ngIf="thumbFileInput.nativeElement?.files?.length">
-                                    {{thumbFileInput.nativeElement?.files[0].name}}
-                                </span>
+                            <div class="d-flex">
+                                <!-- File Upload -->
+                                <div>
+                                    <input type="file" accept="image/*" style="display:none"
+                                        #thumbFileInput (change)="onFileUpload()">
+                                    <input type="hidden" formControlName="{{PROPS.FORM_THUMBNAIL_CONTENT}}">
+                                    <button mat-raised-button (click)="triggerFileUpload()">
+                                        <mat-icon>image</mat-icon> Use a File
+                                    </button>
+                                    <span *ngIf="thumbFileInput.nativeElement?.files?.length">
+                                        {{thumbFileInput.nativeElement?.files[0].name}}
+                                    </span>
+                                </div>
+
+                                <!-- URL -->
+                                <div class="flex-1 u-mg-left--md">
+                                    <mat-form-field floatLabel="always">
+                                        <mat-label>
+                                            <mat-icon matPrefix>link</mat-icon>
+                                            Use URL
+                                        </mat-label>
+                                        <input type="url" matInput
+                                            formControlName="{{PROPS.FORM_THUMBNAIL_URL}}"
+                                            (keyup)="onThumbnailUrlChange($event)"
+                                            placeholder="Specify a thumbnail image">
+                                        <mat-hint>Specify the URL of an image to use as the thumbnail of the resource</mat-hint>
+                                        <mat-error *ngIf="isInvalid(PROPS.FORM_THUMBNAIL_URL)">{{getErrorMessage(PROPS.FORM_THUMBNAIL_URL)}}</mat-error>
+                                    </mat-form-field>
+                                </div>
                             </div>
-                            <div>
-                                <mat-form-field floatLabel="always">
-                                    <mat-label>Use URL</mat-label>
-                                    <mat-icon matPrefix>link</mat-icon>
-                                    <input type="url" matInput
-                                        formControlName="thumbnailUrl"
-                                        (keyup)="onThumbnailUrlChange($event)"
-                                        placeholder="Specify a thumbnail image">
-                                    <mat-hint>Specify the URL of an image to use as the thumbnail of the resource</mat-hint>
-                                    <mat-error *ngIf="isInvalid('thumbnailUrl')">{{getErrorMessage('thumbnailUrl')}}</mat-error>
-                                </mat-form-field>
-                            </div>
+                            <mat-error *ngIf="thumbError" class="u-mg-left--md u-text--sm">
+                                {{thumbError}}.
+                                <button type="button" class="btn btn-sm btn-danger"
+                                    (click)="thumbError=null;">dismiss</button>
+                            </mat-error>
+
                         </div>
-                        <div class="thumbnail__preview" *ngIf="hasValue('thumbnailUrl')||hasValue('thumbnailContent')">
+                        <div class="thumbnail__preview" *ngIf="hasValue(PROPS.FORM_THUMBNAIL_URL)||hasValue(PROPS.FORM_THUMBNAIL_CONTENT)">
                             <div class="u-text--sm t-text--bold t-fg--gray-md">Selected Thumbnail</div>
-                            <img *ngIf="hasValue('thumbnailUrl')"
-                                [src]="getValue('thumbnailUrl')">
-                            <img *ngIf="hasValue('thumbnailContent')"
-                                [src]="'data:image/png;base64,'+getValue('thumbnailContent')">
+                            <img *ngIf="hasValue(PROPS.FORM_THUMBNAIL_URL)"
+                                [src]="getValue(PROPS.FORM_THUMBNAIL_URL)">
+                            <img *ngIf="hasValue(PROPS.FORM_THUMBNAIL_CONTENT)"
+                                [src]="'data:image/png;base64,'+getValue(PROPS.FORM_THUMBNAIL_CONTENT)">
                         </div>
                     </div>
                 </div>
-
-
 
             </div>
 
@@ -103,7 +163,7 @@
         <div class="m-step__buttons">
             <button mat-raised-button matStepperPrevious class="nav-btn">Back</button>
             <button mat-raised-button color="primary" matStepperNext
-                [disabled]="formGroup.invalid || !data.createdBy">Continue</button>
+                [disabled]="formGroup.invalid || !data[PROPS.CREATED_BY]">Continue</button>
         </div>
     </mat-card-actions>
 

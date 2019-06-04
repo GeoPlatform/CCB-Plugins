@@ -1,5 +1,5 @@
 
-import { ItemTypes } from "geoplatform.client";
+import { ItemTypes, ItemTypeLabels } from "geoplatform.client";
 
 import { environment } from '../../environments/environment';
 
@@ -21,7 +21,7 @@ export class ItemHelper {
             type === ItemTypes.LAYER   || type === ItemTypes.MAP       ||
             type === ItemTypes.GALLERY || type === ItemTypes.COMMUNITY ||
             type === ItemTypes.APPLICATION || type === ItemTypes.TOPIC ||
-            type === ItemTypes.WEBSITE
+            type === ItemTypes.WEBSITE || type === ItemTypes.IMAGE_PRODUCT
         );
     }
 
@@ -75,24 +75,25 @@ export class ItemHelper {
      */
     static getTypeLabel(item:any) {
         if(!item) return 'Unknown Resource Type';
-
-        let type : string = null;
-        if(typeof(item) === 'string') type = item as string;
-        else if(item.type) type = item.type;
-        else return null;
-
-        switch(type) {
-            case ItemTypes.DATASET :
-            case ItemTypes.SERVICE :
-            case ItemTypes.PERSON :
-            case ItemTypes.ORGANIZATION :
-            case ItemTypes.CONCEPT :
-                return type.replace(/^[a-z]+\:/i, '');
-            case ItemTypes.CONCEPT_SCHEME : return "Concept Scheme";
-            case ItemTypes.WEBSITE : return "Website";
-            case ItemTypes.CONTACT : return "Contact";
-            default: return type;   //remainder are unprefixed
-        }
+        return ItemTypeLabels[item.type] || 'Unknown Resource Type';
+        // let type : string = null;
+        // if(typeof(item) === 'string') type = item as string;
+        // else if(item.type) type = item.type;
+        // else return null;
+        //
+        // switch(type) {
+        //     case ItemTypes.DATASET :
+        //     case ItemTypes.SERVICE :
+        //     case ItemTypes.PERSON :
+        //     case ItemTypes.ORGANIZATION :
+        //     case ItemTypes.CONCEPT :
+        //         return type.replace(/^[a-z]+\:/i, '');
+        //     case ItemTypes.CONCEPT_SCHEME : return "Concept Scheme";
+        //     case ItemTypes.WEBSITE : return "Website";
+        //     case ItemTypes.CONTACT : return "Contact";
+        //     case ItemTypes.IMAGE_PRODUCT : return "Image Product";
+        //     default: return type;   //remainder are unprefixed
+        // }
     }
 
 
@@ -114,6 +115,7 @@ export class ItemHelper {
             case ItemTypes.COMMUNITY : return 'communities';
             //different name
             case ItemTypes.CONTACT : return 'contacts'; //instead of "vcards"
+            case ItemTypes.IMAGE_PRODUCT : return 'products'; //instead of "vcards"
             //remainder
             default: return type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's';
 

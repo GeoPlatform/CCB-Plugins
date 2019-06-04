@@ -70,7 +70,7 @@ class Geoplatform_Service_Collector {
 		if ( defined( 'GEOSERVE_PLUGIN' ) ) {
 			$this->version = GEOSERVE_PLUGIN;
 		} else {
-			$this->version = '1.1.1';
+			$this->version = '2.0.0';
 		}
 		$this->plugin_name = 'geoplatform-service-collector';
 
@@ -182,8 +182,8 @@ class Geoplatform_Service_Collector {
 
 		$plugin_public = new Geoplatform_Service_Collector_Public( $this->get_plugin_name(), $this->get_version() );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles', 5000 );
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts', 5000 );
 
 	}
 

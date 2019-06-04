@@ -1,0 +1,22 @@
+
+<div>
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Serviced Assets ({{assets.length||0}})</strong>
+
+    <div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
+        Expand to see assets referenced by this resource
+    </div>
+
+    <div [ngClass]="{'is-hidden':isCollapsed}" class="m-list">
+        <em *ngIf="!assets.length" class="m-list__item t-fg--warning">
+            <span class="fas fa-exclamation-triangle"></span>
+            No assets serviced by this resource
+        </em>
+        <div *ngFor="let it of assets" class="m-list__item">
+            <gpid-resource-link [item]="it"></gpid-resource-link>
+        </div>
+    </div>
+</div>

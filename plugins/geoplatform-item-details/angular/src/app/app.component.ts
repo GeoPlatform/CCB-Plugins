@@ -9,6 +9,7 @@ import { ItemDetailsError } from './shared/item-details-error';
 import { NG2HttpClient } from "./shared/http-client";
 import { environment } from '../environments/environment';
 import { itemServiceProvider } from './shared/service.provider';
+import { PluginAuthService } from './shared/auth.service';
 
 
 const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)/i;
@@ -20,7 +21,7 @@ const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)/i;
     styleUrls: ['./app.component.css'],
     providers: [itemServiceProvider]
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
 
     public item : any;
     public error : ItemDetailsError;
@@ -29,7 +30,8 @@ export class AppComponent {
     constructor(
         private el: ElementRef,
         private itemService : ItemService,
-        private rpm: RPMService
+        private rpm: RPMService,
+        private authService : PluginAuthService
     ) {
 
     }
@@ -74,7 +76,7 @@ export class AppComponent {
     }
 
     ngOnDestroy() {
-
+        this.authService.dispose();
     }
 
 

@@ -244,6 +244,7 @@ function geopsearch_get_search_args() {
 function geopsearch_ajax_search( $request ) {
 	global $wpdb;
 
+	// Establishes result variables and grabs query parameters.
   $posts = [];
   $results = [];
 	$post_type = isset($request['type']) ? $request['type'] : 'fail';
@@ -255,16 +256,18 @@ function geopsearch_ajax_search( $request ) {
 	$per_page = isset($request['per_page']) ? $request['per_page'] : 5;
 	$geopsearch_post_fetch_total = array();
 
+	// Cancels operation if incorrect/no post type.
 	if ($post_type == 'fail' || ($post_type != 'media' && $post_type != 'page' && $post_type != 'post'))
 		return array('error message' => 'Invalid request type. Must be post, page, or media.');
 
+	// Cancels operation if non-numeric page/per-page variables.
 	if (!is_numeric($page) || !is_numeric($per_page))
 		return array('error message' => 'Page and per_page parameters must be numeric.');
 
+	// Grabs media type. Simple, as media can't have tags or categories.
 	if ($post_type == 'media'){
 	  $geopsearch_media_args = array(
 			'post_type'      => 'attachment',
-			'post_mime_type' => 'image',
 			'post_status'    => 'inherit',
 			'posts_per_page' => - 1,
 			'author_name' => $search_author,
@@ -273,11 +276,16 @@ function geopsearch_ajax_search( $request ) {
 			'orderby' => $order_sort,
 		);
 
+		// Feeds the results into a WP_Query object where the search operation is
+		// done, then grabs results.
 		$geopsearch_media_fetch = new WP_Query( $geopsearch_media_args );
 		$geopsearch_post_fetch_total = $geopsearch_media_fetch->posts;
 	}
 	else {
-		// get posts
+
+		// More advances search that combines tags, category, and regular for post/pages.
+
+		// get posts by regular search criteria.
 	  $posts_one = array(
 			'numberposts' => -1,
 			'posts_per_page' => -1,
@@ -288,11 +296,13 @@ function geopsearch_ajax_search( $request ) {
 	    's' => $search_query,
 	  );
 
+		// Gets the term IDs for applying query to categories / tags.
 		$termIDs = get_terms(array(
 			'name__like' => $search_query,
 	    'fields' => 'ids',
 		));
 
+		// Second search, this time applying criteria to tags / categories.
 		$posts_two = array(
 			'numberposts' => -1,
 			'posts_per_page' => -1,
@@ -315,17 +325,22 @@ function geopsearch_ajax_search( $request ) {
 			)
 		);
 
+		// Feeds the results into two seperate WP_Query objects to perform search.
+		// Arrays are then merged, duplicates removed, and results grabbed.
 		$geopsearch_post_fetch_one = new WP_Query($posts_one);
 		$geopsearch_post_fetch_two = new WP_Query($posts_two);
-
 		$geopsearch_post_fetch_total = array_unique(array_merge( $geopsearch_post_fetch_one->posts, $geopsearch_post_fetch_two->posts ), SORT_REGULAR );
 	}
+
+	// Sorts the results in the desired format and gets a count.
 	$geopsearch_post_fetch_total = sort_posts($geopsearch_post_fetch_total, $order_sort, $order_binary);
 	$geopsearch_total_count = count($geopsearch_post_fetch_total);
 
+	// If empty, cancels operations.
 	if ( empty($geopsearch_post_fetch_total) )
     return array('message' => 'No results.');
 
+	// Simple class for returning results.
 	class SearchResults
 	{
 		public $page;
@@ -340,19 +355,31 @@ function geopsearch_ajax_search( $request ) {
 			$this->totalResults = (int)$total;
 			$this->type = $type;
 	    $this->results = $results;
-	  }
+		}
 	}
 
+	// Custom logic to produce a "page" of results. Takes the current "page" and
+	// number of results per page, returning an array of the proper results.
 	$slice_start = $page * $per_page;
-	// instead of $start use start
-	// instead of $per_page use $size
-	$results = array_slice($geopsearch_post_fetch_total, $slice_start, $per_page, true);
+	$slice_length = $slice_start  + $per_page;
+	if ($slice_start + $per_page > sizeof($geopsearch_post_fetch_total)){
+		$slice_length = $geopsearch_total_count;
+	}
+	for ($i = $slice_start; $i < $slice_length; $i++){
+		array_push($results, $geopsearch_post_fetch_total[$i]);
+	}
 
+	// Old method of doing the above, was causing errors.
+	// $results = array_slice($geopsearch_post_fetch_total, $slice_start, $per_page, true);
+
+	// Creates an instance of the object above, passing relevant arguments.
 	$page_object = new SearchResults($page, $per_page, $geopsearch_total_count, $post_type, $results);
 
+	// If results are empty, it's because the page is empty. Error return.
 	if ( empty($page_object->results) )
 	 	return array('message' => 'Requested page exceeds result count.');
 
+	// Otherwise, all went well. Return object.
 	return rest_ensure_response($page_object);
 }
 

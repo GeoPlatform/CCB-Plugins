@@ -13,11 +13,15 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
 
-// Adds window.RPMService to global namespace
-import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
-import { RPMService } from 'gp.rpm/src/iRPMService'
+// import { MatomoModule } from 'ngx-matomo';
+//
+// // Adds window.RPMService to global namespace
+// import { RPMServiceFactory, RPMService } from 'geoplatform.rpm';
+import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'geoplatform.rpm/src/iRPMService'
 
-
+import { TrackingService } from 'geoplatform.client';
+const trackingService = new TrackingService({ provider : RPMServiceFactory() })
 
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
@@ -44,6 +48,7 @@ import {
     CurrentComponent,
     KeywordsComponent,
     ThemeComponent,
+    TopicComponent,
     ContactComponent,
     CreatorComponent,
     PublisherComponent,
@@ -117,6 +122,7 @@ export function initializeApp() {
   }
 }
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -124,6 +130,7 @@ export function initializeApp() {
     ConstraintDirective,
     KeywordsComponent,
     ThemeComponent,
+    TopicComponent,
     CurrentComponent,
     ResultsComponent,
     PublisherComponent,
@@ -159,6 +166,8 @@ export function initializeApp() {
     HttpClientJsonpModule,
     NgbModule.forRoot(),
     InlineSVGModule
+    // ,
+    // MatomoModule
   ],
   providers: [
       CCBService,
@@ -171,6 +180,10 @@ export function initializeApp() {
       {
         provide: RPMService,
         useValue: RPMServiceFactory()
+      },
+      {
+          provide : TrackingService,
+          useValue : trackingService
       },
       {
           provide: APP_INITIALIZER,
@@ -189,6 +202,7 @@ export function initializeApp() {
   entryComponents: [
       KeywordsComponent,
       ThemeComponent,
+      TopicComponent,
       ContactComponent,
       CreatorComponent,
       PublisherComponent,

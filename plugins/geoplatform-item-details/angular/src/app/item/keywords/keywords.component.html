@@ -5,13 +5,11 @@
     </span>
     Keywords
 </div>
-<div class="m-article__desc" *ngIf="isCollapsed">
+<div class="m-article__desc t-fg--gray-md" *ngIf="isCollapsed">
     Expand to see keywords
 </div>
 <div class="m-article__desc" *ngIf="!isCollapsed">
-    <div *ngIf="!keywords || !keywords.length">
-        <em>None specified</em>
-    </div>
+    <em *ngIf="!keywords || !keywords.length">None specified</em>
     <div *ngIf="keywords && keywords.length" class="u-text--left">
         <a *ngFor="let key of keywords"
             href="/geoplatform-search/#?keywords={{key}}"

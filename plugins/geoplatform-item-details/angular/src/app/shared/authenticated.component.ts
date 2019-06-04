@@ -1,7 +1,8 @@
-import { Observable, Subject }          from 'rxjs';
+import { Observable, Observer, Subject }          from 'rxjs';
 import { ISubscription }                from "rxjs/Subscription";
 import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
-import { authServiceFactory }           from './auth.factory';
+
+import { PluginAuthService } from './auth.service';
 
 
 /**
@@ -12,10 +13,9 @@ export abstract class AuthenticatedComponent {
 
     public user : GeoPlatformUser;
     private gpAuthSubscription : ISubscription;
-    protected authService : AuthService;
+    // protected authService : AuthService;
 
-    constructor() {
-        this.authService = authServiceFactory();
+    constructor(private authService : PluginAuthService) {
     }
 
     //facade methods to mimic @Component lifecycle methods in case sub-classes
@@ -29,30 +29,19 @@ export abstract class AuthenticatedComponent {
      */
     init() {
 
-        this.gpAuthSubscription = this.authService.getMessenger().raw().subscribe(msg => {
-            // console.log("AuthService() - Received Auth Message: " + msg.name);
-            switch(msg.name){
-                case 'userAuthenticated':
-                this.user = msg.user;
-                this.onUserChange(msg.user);
-                // this.user$.next(msg.user);
-                break;
+        let obs : Observer<GeoPlatformUser> = {
+            next : (value: GeoPlatformUser) => {
+                this.user = value;
+                this.onUserChange(this.user);
+            },
+            error : (err: any) => {
+                console.log("Unable to get authenticated user info: " +
+                    (err as Error).message);
+            },
+            complete : () => { }
+        };
 
-                case 'userSignOut':
-                this.user = null;
-                this.onUserChange(null);
-                break;
-            }
-        });
-
-        this.authService.getUser().then( user => {
-            // console.log('USER: ' + JSON.stringify(user));
-            this.user = user;
-            this.onUserChange(user);
-        })
-        .catch(e => {
-            console.log("Error retrieving user: " + e.message);
-        })
+        this.gpAuthSubscription = this.authService.subscribe( obs );
     }
 
     /**
@@ -73,7 +62,10 @@ export abstract class AuthenticatedComponent {
     getUser() : GeoPlatformUser { return this.user; }
 
     /** @return {string} JWT token associated with the current user or null */
-    getAuthToken() : string { return this.authService.getJWT(); }
+    getAuthToken() : string { return this.authService.getToken(); }
+
+    /** @return Promise containing current user or null */
+    checkAuth() : Promise<GeoPlatformUser> { return this.authService.check(); }
 
     /**
      * @param {GeoPlatformUser} user - authenticated user object or null if not authed

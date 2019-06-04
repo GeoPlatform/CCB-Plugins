@@ -1,14 +1,25 @@
+<?php
+/**
+ * A GeoPlatform Header search bar template for Geoplatform Search plugin integration.
+ *
+ * @link https://codex.wordpress.org/Theme_Development#Footer_.28footer.php.29
+ *
+ * @package GeoPlatform CCB
+ *
+ * @since 3.1.3
+ */
 
-<!-- Search bar section. -->
+// Visual output.
+echo "<form id='geoplatformsearchform'>";
+  echo "<div class='input-group-slick'>";
+    echo "<span class='icon fas fa-search'></span>";
+    echo "<input type='text' class='form-control' id='geoplatformsearchfield' placeholder='" . esc_attr( 'Search GeoPlatform...', 'geoplatform-ccb' ) . "'/>";
+    echo "<button type='submit' class='btn btn-default' id='geoplatformsearchbutton'>". __( 'Search', 'geoplatform-ccb') . "</button>";
+  echo "</div>";
+echo "</form>";
 
-<form id="geoplatformsearchform">
-  <div class="input-group-slick">
-    <span class="glyphicon glyphicon-search"></span>
-    <input type="text" class="form-control" id="geoplatformsearchfield" placeholder="<?php echo esc_attr( 'Search GeoPlatform...', 'geoplatform-ccb' ); ?>"/>
-    <button type="submit" class="btn btn-default" id="geoplatformsearchbutton"><?php _e( 'Search', 'geoplatform-ccb'); ?></button>
-  </div>
-</form>
-
+?>
+<!-- Javascript integration -->
 <script>
 
 // Code section. First jQuery triggers off of form submission (enter button) and

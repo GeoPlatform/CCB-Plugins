@@ -33,6 +33,7 @@ import {
     itemServiceProvider, serviceServiceProvider
 } from '../../item-service.provider';
 import { AppError } from '../../model';
+import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
 
 const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
     return k.indexOf("secondary")<0 && k.indexOf("community")<0
@@ -52,17 +53,14 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     @Output() onEvent : EventEmitter<StepEvent> = new EventEmitter<StepEvent>();
 
     public formGroup: FormGroup;
-
     //display final item for review
     public preview : string;
-
     public hasError : StepError;
-
     public status : any = {
         isSaving : false,
         isSaved : false
     };
-
+    public PROPS : any = ModelProperties;
 
     // httpClient : NG2HttpClient;
     private eventsSubscription: any;
@@ -145,8 +143,20 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
      *
      */
     startOver() {
+
+        //should just reload page (minus any search parameters)
+        // because we would have to remove the parameters anyway
+        // in order to really start over from scratch
+        let wdw = (window as any);
+        let url = wdw.location.href;
+        let qsidx = url.indexOf("?");
+        if(qsidx > 0) {
+            url = url.substring(0, qsidx);
+        }
+        wdw.location.href = url;
+
         //reset all forms
-        this.onEvent.emit( { type:'app.reset', value:true } );
+        // this.onEvent.emit( { type:StepEventTypes.RESET, value:true } );
     }
 
     /**
@@ -250,12 +260,12 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     onAppEvent( event : AppEvent ) {
         // console.log("ReviewStep: App Event: " + event.type);
         switch(event.type) {
-            case 'reset':
+            case AppEventTypes.RESET:
                 this.hasError = null;
                 this.status.isSaved = false;
                 this.status.isSaving = false;
                 break;
-            case 'auth':
+            case AppEventTypes.AUTH:
                 let token = event.value.token;
                 this.itemService.client.setAuthToken( token as string);
                 break;
@@ -264,9 +274,9 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
 
     getThumbnailBackground() {
-        let thumbnail = this.data.thumbnail;
-        let type = thumbnail.mediaType || 'image/png';
-        let content = thumbnail.contentData;
+        let thumbnail = this.data[ModelProperties.THUMBNAIL];
+        let type = thumbnail[ModelProperties.THUMBNAIL_TYPE] || 'image/png';
+        let content = thumbnail[ModelProperties.THUMBNAIL_CONTENT];
         return this.sanitizer.bypassSecurityTrustStyle(`url(data:${type};base64,${content})`);
     }
 }

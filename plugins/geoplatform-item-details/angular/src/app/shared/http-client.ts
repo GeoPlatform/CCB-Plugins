@@ -76,7 +76,7 @@ export class NG2HttpClient {
         if(this.token) {
             let token = this.token();
             if(token) {
-                opts.headers.set('Authorization', 'Bearer ' + token);
+                opts.headers = opts.headers.set('Authorization', 'Bearer ' + token);
             }
         }
 

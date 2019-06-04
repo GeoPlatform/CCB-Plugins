@@ -1,4 +1,4 @@
-<div *ngIf="item">
+<div *ngIf="item" class="m-action">
     <div class="u-text--justify u-mg-bottom--md u-text--sm">
         Like this GeoPlatform resource
         <span *ngIf="item?.statistics">
@@ -13,5 +13,4 @@
         <span *ngIf="!processing">Like</span>
         <span *ngIf="processing">Liking...</span>
     </button>
-    <hr>
 </div>

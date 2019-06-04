@@ -1,0 +1,54 @@
+<div class="m-article__desc">
+    <div><strong>Publisher(s) </strong></div>
+    <div *ngIf="!item?.publishers?.length"><em>None specified</em></div>
+    <div *ngFor="let pub of item?.publishers">
+        <gpid-resource-link [item]="pub"></gpid-resource-link>
+    </div>
+</div>
+
+<div class="m-article__desc" >
+    <div><strong>Issued</strong></div>
+    <span *ngIf="item?.issued">{{item.issued|date:'mediumDate':'UTC'}}</span>
+    <span *ngIf="!item?.issued">Not specified</span>
+</div>
+
+<div class="m-article__desc" >
+    <div><strong>Landing Page </strong></div>
+    <em *ngIf="!item?.landingPage">Not specified</em>
+    <a *ngIf="item?.landingPage" href="{{item.landingPage}}"
+        target="_blank" class="u-break--all">
+        {{item.landingPage}}
+    </a>
+</div>
+
+<div class="m-article__desc" *ngIf="'regp:Service'!==item.type">
+    <div><strong>Access the Resource </strong></div>
+    <em *ngIf="!item?.href">Not specified</em>
+    <a *ngIf="item?.href" href="{{item.href}}"
+        target="_blank" class="u-break--all">
+        {{item.href}}
+    </a>
+</div>
+
+
+<div class="m-article__desc" >
+    <div><strong>Purpose</strong></div>
+    {{item.purpose || "Not specified"}}
+</div>
+
+<div class="m-article__desc">
+    <gpid-use-constraints [rights]="item?.rights"></gpid-use-constraints>
+</div>
+
+<div class="m-article__desc">
+    <gpid-alt-ids  [ids]="item?.identifiers"></gpid-alt-ids>
+</div>
+
+<div class="m-article__desc">
+    <gpid-themes  [themes]="item?.themes"></gpid-themes>
+</div>
+
+<!-- Topics (hasTopic) -->
+<div class="m-article__desc" >
+    <gpid-topics [topics]="item?.topics"></gpid-topics>
+</div>

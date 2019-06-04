@@ -1,0 +1,134 @@
+<div class="o-map-details"  *ngIf="!isCollapsed">
+
+    <div class="o-map-details__content">
+
+        <div class="m-article">
+
+            <div class="m-article__desc">
+                <div class="a-heading">Title <sup class="t-fg--danger">*</sup></div>
+                <div class="input-group-slick">
+                    <input type="text" class="form-control" [(ngModel)]="mapItem.title"
+                        placeholder="A title is required">
+                    <span *ngIf="!mapItem.title || !mapItem.title.length"
+                        class="fas fa-exclamation-circle t-fg--danger"></span>
+                </div>
+                <div class="u-text--sm t-fg--gray-md">Provide a brief but unique name for the map</div>
+            </div>
+
+            <div class="m-article__desc">
+                <div class="a-heading">Description</div>
+                <textarea rows="3" class="form-control"
+                    [(ngModel)]="mapItem.description"
+                    placeholder="A description is recommended"></textarea>
+                <div class="u-text--sm t-fg--gray-md">Provide a description of the map</div>
+            </div>
+
+            <div class="m-article__desc">
+                <div class="a-heading">
+                    <span class="fas fa-tag"></span>
+                    Keywords ({{mapItem.keywords?.length||0}})
+                    <button type="button" class="btn btn-sm btn-link"
+                        (click)="isKeywordsCollapsed=!isKeywordsCollapsed">
+                        <span *ngIf="isKeywordsCollapsed" class="fas fa-chevron-down"></span>
+                        <span *ngIf="!isKeywordsCollapsed" class="fas fa-chevron-up"></span>
+                    </button>
+                </div>
+                <div *ngIf="!isKeywordsCollapsed">
+                    <span *ngFor="let key of mapItem.keywords" class="a-keyword">
+                        {{key}}
+                    </span>
+                    <div class="input-group-slick">
+                        <input type="text" class="form-control"
+                            [(ngModel)]="keyword" (keyup.enter)="addKeyword($event)">
+                        <button type="button" class="btn btn-secondary" (click)="addKeyword()">
+                            <span class="fas fa-plus"></span>
+                        </button>
+                    </div>
+                    <div class="u-text--sm t-fg--gray-md">Provide keywords for the map</div>
+                </div>
+            </div>
+
+            <!-- <div class="m-article__desc">
+                <div class="a-heading">Geographic Extent</div>
+                <div>{{mapItem.extent?.minx}} - {{mapItem.extent?.maxx}}</div>
+                <div>{{mapItem.extent?.miny}} - {{mapItem.extent?.maxy}}</div>
+            </div>
+
+            <div class="m-article__desc">
+                <div class="a-heading">Specializations</div>
+                <div>{{mapItem.resourceTypes.join(', ')}}</div>
+            </div> -->
+
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'themes'"
+                [label]="'Themes'"
+                [iconClass]="'icon-concept'"
+                [value]="mapItem?.themes">
+            </gpmp-array-property>
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'topics'"
+                [label]="'Topics'"
+                [iconClass]="'icon-topic'"
+                [value]="mapItem?.topics">
+            </gpmp-array-property>
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'publishers'"
+                [label]="'Publishers'"
+                [iconClass]="'icon-organization'"
+                [value]="mapItem?.publishers">
+            </gpmp-array-property>
+            <br>
+
+
+            <gpmp-array-property
+                [field]="'usedBy'"
+                [label]="'Communities'"
+                [iconClass]="'icon-community'"
+                [value]="mapItem?.usedBy">
+            </gpmp-array-property>
+            <br>
+
+
+        </div>
+
+    </div>
+
+
+    <div class="o-map-details__footer">
+
+        <div *ngIf="!getUser()" class='m-message--warning'>
+            You must be signed in to a GeoPlatform account in order to create this map.
+        </div>
+
+        <div *ngIf="error" class="m-message--error">
+            <strong>
+                <span class="gpicons exclamation-circle"></span>
+                Unable to Create Map
+            </strong>
+            <div>{{error.message}}</div>
+            <div class="u-text--right">
+                <button type="button" class="btn btn-sm btn-light" (click)="error=null">
+                    DISMISS
+                </button>
+            </div>
+        </div>
+
+        <div class="m-article__desc" *ngIf="getUser()">
+            <button type="button" class="btn btn-primary"
+                (click)="createMap()">
+                Create
+            </button>
+        </div>
+
+    </div>
+
+</div>

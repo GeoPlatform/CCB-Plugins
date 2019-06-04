@@ -5,6 +5,9 @@
     </span>
     <strong>Additional Identifiers ({{ids?.length||0}})</strong>
 </div>
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
+    Expand to see alternate identifiers for this resource
+</div>
 <div [ngClass]="{'is-hidden':isCollapsed}">
     <div *ngIf="!ids || !ids.length">None specified</div>
     <div *ngIf="ids && ids.length">

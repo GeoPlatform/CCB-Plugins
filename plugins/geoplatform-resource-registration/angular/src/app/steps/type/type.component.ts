@@ -22,11 +22,13 @@ import {
 } from 'geoplatform.client';
 
 import { AppEvent } from '../../app.component';
-import { StepComponent, StepEvent, StepError } from '../step.component';
+import {
+    StepComponent, StepEvent, StepError
+} from '../step.component';
 import { NG2HttpClient } from '../../http-client';
 import { environment } from '../../../environments/environment';
 
-import { ModelProperties } from '../../model';
+import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
 import {
     itemServiceProvider, serviceServiceProvider, utilsServiceProvider
 } from '../../item-service.provider';
@@ -37,6 +39,11 @@ const URL_VALIDATOR = Validators.pattern("https?://.+");
 interface ResourceType {
     label:string;
     uri:string;
+}
+
+interface Topics {
+  label:string;
+   uri:string;
 }
 
 
@@ -64,12 +71,15 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     public hasError : StepError = null;
     public doesExist : string;
 
+    public PROPS : any = ModelProperties;
+
 
     private formListener : any;
     private typeListener : any;
     private eventsSubscription: any;
     private availableResourceTypes: { type: string; values: ResourceType[]; } =
         {} as { type: string; values: ResourceType[]; };
+
 
     formOpts: any = {};
 
@@ -85,12 +95,13 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.formOpts[ModelProperties.TITLE] = ['', Validators.required];
         this.formOpts[ModelProperties.DESCRIPTION] = [''];
         this.formOpts[ModelProperties.ACCESS_URL] = ['', URL_VALIDATOR];
-        this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.SERVICE_TYPE] = [''];
         this.formOpts[ModelProperties.RESOURCE_TYPES] = [''];
         this.formOpts['$'+ModelProperties.RESOURCE_TYPES] = [''];   //temp field for autocomplete
         this.formOpts[ModelProperties.PUBLISHERS] = [''];
         this.formOpts['$'+ModelProperties.PUBLISHERS] = [''];   //for autocomplete
+        this.formOpts[ModelProperties.SUBTOPIC_OF] = [''];
+        this.formOpts['$'+ModelProperties.SUBTOPIC_OF] = [''];   //for autocomplete
         this.formOpts[ModelProperties.CREATED_BY] = ['', Validators.required];
         this.formGroup = this.formBuilder.group(this.formOpts);
 
@@ -132,11 +143,12 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
             } else { //update content
 
+                // console.log("TypeStep.onChanges() - Data changed!");
+
                 this.setValue(ModelProperties.TYPE, data[ModelProperties.TYPE]||null );
                 this.setValue(ModelProperties.TITLE, data[ModelProperties.TITLE]||null );
                 this.setValue(ModelProperties.DESCRIPTION, data[ModelProperties.DESCRIPTION]||null );
                 this.setValue(ModelProperties.SERVICE_TYPE, data[ModelProperties.SERVICE_TYPE]||null );
-                this.setValue(ModelProperties.LANDING_PAGE, data[ModelProperties.LANDING_PAGE]||null );
                 this.setValue(ModelProperties.CREATED_BY, data[ModelProperties.CREATED_BY]||null);
 
                 if(data[ModelProperties.RESOURCE_TYPES] && data[ModelProperties.RESOURCE_TYPES].length) {
@@ -150,17 +162,20 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                     this.formGroup.get(ModelProperties.PUBLISHERS)
                         .setValue(data[ModelProperties.PUBLISHERS]);
                 }
+                if(data[ModelProperties.SUBTOPIC_OF] && data[ModelProperties.SUBTOPIC_OF].length) {
+                  this.formGroup.get(ModelProperties.SUBTOPIC_OF)
+                    .setValue(data[ModelProperties.SUBTOPIC_OF]);
+                }
 
                 let url = null;
                 if(ItemTypes.DATASET === data[ModelProperties.TYPE] &&
                     data[ModelProperties.DISTRIBUTIONS] &&
                     data[ModelProperties.DISTRIBUTIONS].length &&
-                    data[ModelProperties.DISTRIBUTIONS][0].accessURL) {
-                    url = data[ModelProperties.DISTRIBUTIONS][0].accessURL;
+                    data[ModelProperties.DISTRIBUTIONS][0][ModelProperties.ACCESS_URL]) {
+                    url = data[ModelProperties.DISTRIBUTIONS][0][ModelProperties.ACCESS_URL];
 
-                } else if(ItemTypes.SERVICE === data[ModelProperties.TYPE] &&
-                    data[ModelProperties.HREF]) {
-                    url = data[ModelProperties.HREF];
+                } else if( data[ModelProperties.ACCESS_URL] ) {
+                    url = data[ModelProperties.ACCESS_URL];
                 }
                 this.setValue(ModelProperties.ACCESS_URL, url);
 
@@ -187,7 +202,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         //fetch list of supported service types
         let stq = new Query()
-            .types('dct:Standard')
+            .types(ItemTypes.STANDARD)
             .resourceTypes('ServiceType')
             .pageSize(50)
             .sort('label,asc');
@@ -198,12 +213,23 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             this.hasError = new StepError("Unable to Load Service Types", e.message);
         });
 
+        //define supported item types we're fetching resource types for
+        const TYPES = [
+            ItemTypes.DATASET, ItemTypes.SERVICE, ItemTypes.MAP,
+            ItemTypes.APPLICATION, ItemTypes.TOPIC, ItemTypes.WEBSITE
+        ].map(t=>t.replace(/^\.+:/,''));
+
         //fetch list of resource types
-        this.utilsService.capabilities('resourceTypes')
+        this.utilsService.capabilities(
+            ModelProperties.RESOURCE_TYPES, { types: TYPES.join(',') }
+        )
         .then( response => {
             response.results.forEach( type => {
-                this.availableResourceTypes[type.assetType] = this.availableResourceTypes[type.assetType] || [];
-                this.availableResourceTypes[type.assetType].push(type);
+                (type.resourceTypes || []).forEach( rt => {
+                    let t = rt.replace(/Type$/,'');
+                    this.availableResourceTypes[t] = this.availableResourceTypes[t] || [];
+                    this.availableResourceTypes[t].push(type);
+                });
             });
         })
         .catch( (e : Error) => {
@@ -249,7 +275,6 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         let urlField     = this.formGroup.get(ModelProperties.ACCESS_URL);
         let svcTypeField = this.formGroup.get(ModelProperties.SERVICE_TYPE);
-        let landingField = this.formGroup.get(ModelProperties.LANDING_PAGE);
         let resTypeField = this.formGroup.get(ModelProperties.RESOURCE_TYPES);
         let tempResTypeField = this.formGroup.get('$'+ModelProperties.RESOURCE_TYPES);
 
@@ -276,16 +301,9 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         }
 
-        if(type && ItemTypes.MAP === type) {
-            landingField.setValidators([Validators.required, URL_VALIDATOR]);
-        } else {
-            landingField.setValidators(URL_VALIDATOR);
-        }
-
         //after changing validators, must re-evaluate to clear previous errors
         urlField.updateValueAndValidity();
         svcTypeField.updateValueAndValidity();
-        landingField.updateValueAndValidity();
     }
 
 
@@ -310,7 +328,10 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             if(response) {            //pre-populate fields with harvested info
 
                 //notify parent so values can be injected into other steps when needed
-                let evt : StepEvent = { type: 'service.about', value: response } as StepEvent;
+                let evt : StepEvent = {
+                    type: StepEventTypes.SERVICE_INFO,
+                    value: response
+                } as StepEvent;
                 this.onEvent.emit(evt);
 
                 let titleField = this.formGroup.get(ModelProperties.TITLE);
@@ -351,14 +372,18 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     onAppEvent( event : AppEvent ) {
         console.log("TypeStep: App Event: " + event.type);
         switch(event.type) {
-            case 'reset':
+            case AppEventTypes.RESET:
                 this.hasError = null;
                 this.status.isFetchingServiceInfo = false;
                 break;
-            case 'auth':
+            case AppEventTypes.AUTH:
                 let user = event.value.user;
                 // console.log("Setting user in form as '" + JSON.stringify(user) + "'");
-                this.setValue(ModelProperties.CREATED_BY, user.username);
+                this.setValue(ModelProperties.CREATED_BY, user ? user.username : null);
+                break;
+            case AppEventTypes.CHANGE:
+                this.onTypeSelection( this.data[ModelProperties.TYPE]||null );
+                this.checkExists();
                 break;
         }
     }
@@ -389,7 +414,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         current = current.map(c=>c.id);
 
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
-        let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue);
+        let query = new Query().types(ItemTypes.ORGANIZATION).q(filterValue).sort("_score,desc");
         return this.itemService.search(query)
         .then( response => {
             let hits = response.results;
@@ -402,6 +427,33 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
             //display error message indicating an issue searching...
             this.hasError = new StepError("Error Searching Publishers", e.message);
         });
+    }
+
+
+  /**
+   * Retrieve all existing Topic instances so they can be linked as parent topics
+   * @param value
+   * @return Query of ItemTypes.Topic
+   */
+  filterParentTopics = (value:string) : Promise<string[]> => {
+
+       let current = this.getValue(ModelProperties.SUBTOPIC_OF) || [];
+       current = current.map(c=>c.id);
+
+       const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
+       let query = new Query().types(ItemTypes.TOPIC).q(filterValue).sort("_score,desc");
+       return this.itemService.search(query)
+       .then( response => {
+                  let hits = response.results;
+                  if(current && current.length) {
+                      hits = hits.filter(o => { return current.indexOf(o.id)<0; });
+                  }
+                  return hits;
+              })
+       .catch(e => {
+                  //display error message indicating an issue searching...
+                  this.hasError = new StepError("Error Searching Topics", e.message);
+              });
     }
 
     getValue(field) { return this.formGroup.get(field).value; }

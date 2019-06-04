@@ -4,7 +4,7 @@ import { Config, ItemTypes } from "geoplatform.client";
 import { environment } from '../../../../environments/environment';
 
 const AGOL_RES_TYPE = "http://www.geoplatform.gov/ont/openmap/AGOLMap";
-const GP_RES_TYPE = 'http://www.geoplatform.gov/ont/openmap/GeoplatformMap';
+const GP_MAP_TYPE = 'http://www.geoplatform.gov/ont/openmap/GeoplatformMap';
 
 
 
@@ -16,13 +16,36 @@ const GP_RES_TYPE = 'http://www.geoplatform.gov/ont/openmap/GeoplatformMap';
 export class PrimaryActionComponent implements OnInit {
 
     @Input() item : any;
-
+    public warning : string = null;
 
     constructor() { }
 
     ngOnInit() {
     }
 
+    canDoAction() {
+        if(!this.item || !this.item.type) return false;
+        let type = this.item.type;
+        switch(type) {
+            case ItemTypes.DATASET:
+                if(!this.item.source || !this.item.source.uri) {
+                    setTimeout(() => {
+                        this.warning = "Dataset has no source link";
+                    });
+                    return false;
+                }
+                return true;
+            case ItemTypes.MAP:
+                if(!this.getMapUrl()) {
+                    setTimeout(() => {
+                        this.warning = "Map is missing specializations and/or external links";
+                    });
+                    return false;
+                }
+                return true;
+            default: return true;
+        }
+    }
 
     doAction() {
         if(!this.item || !this.item.type) return;
@@ -30,17 +53,16 @@ export class PrimaryActionComponent implements OnInit {
         let type = this.item.type;
         switch(type) {
             case ItemTypes.MAP : this.openMap(); break;
-            case ItemTypes.DATASET :
-                // this.openDataset(); break;
-            case ItemTypes.SERVICE :
-            case ItemTypes.LAYER :
-            case ItemTypes.GALLERY :
-            case ItemTypes.COMMUNITY :
-            case ItemTypes.ORGANIZATION :
-            case ItemTypes.CONTACT :
-            case ItemTypes.PERSON :
-            case ItemTypes.CONCEPT :
-            case ItemTypes.CONCEPT_SCHEME :
+            // case ItemTypes.DATASET :
+            // case ItemTypes.SERVICE :
+            // case ItemTypes.LAYER :
+            // case ItemTypes.GALLERY :
+            // case ItemTypes.COMMUNITY :
+            // case ItemTypes.ORGANIZATION :
+            // case ItemTypes.CONTACT :
+            // case ItemTypes.PERSON :
+            // case ItemTypes.CONCEPT :
+            // case ItemTypes.CONCEPT_SCHEME :
             default: this.openInObjectEditor();
         }
     }
@@ -51,17 +73,16 @@ export class PrimaryActionComponent implements OnInit {
         let type = this.item.type;
         switch(type) {
             case ItemTypes.MAP : return 'Open Map';
-            case ItemTypes.DATASET :
-                // if(this.item.source && this.item.source.uri) return "View Metadata";
-            case ItemTypes.SERVICE :
-            case ItemTypes.LAYER :
-            case ItemTypes.GALLERY :
-            case ItemTypes.COMMUNITY :
-            case ItemTypes.ORGANIZATION :
-            case ItemTypes.CONTACT :
-            case ItemTypes.PERSON :
-            case ItemTypes.CONCEPT :
-            case ItemTypes.CONCEPT_SCHEME :
+            // case ItemTypes.DATASET :
+            // case ItemTypes.SERVICE :
+            // case ItemTypes.LAYER :
+            // case ItemTypes.GALLERY :
+            // case ItemTypes.COMMUNITY :
+            // case ItemTypes.ORGANIZATION :
+            // case ItemTypes.CONTACT :
+            // case ItemTypes.PERSON :
+            // case ItemTypes.CONCEPT :
+            // case ItemTypes.CONCEPT_SCHEME :
             default: return 'Open';
         }
     }
@@ -101,27 +122,25 @@ export class PrimaryActionComponent implements OnInit {
      *
      */
     openMap() {
+        let url = this.getMapUrl();
+        if(url) window.open(url, '_blank');
+        else console.log("Warning: Map has insufficient info to open");
+    }
 
-        let resTypes = this.item.resourceTypes;
-        if(!Array.isArray(resTypes)) {
-            console.log("Warning: Map has no resource types specified");
-            return;
-        }
+    getMapUrl() {
+        let resTypes = this.item.resourceTypes || [];
 
-        // GeoPlatform OpenMaps...
-        if(~resTypes.indexOf(GP_RES_TYPE)) {
-            let url = Config.ualUrl.replace('ual','viewer') + '/?id=' + this.item.id;
-            window.open(url, "_blank");
-            return;
+        if(~resTypes.indexOf(GP_MAP_TYPE)) {
+            return Config.ualUrl.replace('ual','viewer') + '/?id=' + this.item.id;
         }
 
         //all other map types...
 
-        if(!this.item.landingPage) {
-            console.log("Warning: External map has no home page specified");
-            return;
+        if(this.item.landingPage || this.item.href) {
+            return this.item.landingPage || this.item.href;
         }
-        window.open(this.item.landingPage, "_blank");
+
+        return null;
     }
 
     /**

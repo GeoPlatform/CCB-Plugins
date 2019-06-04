@@ -10,7 +10,8 @@ import 'rxjs/add/operator/debounceTime';
 import {
     Config,
     Query, QueryParameters, QueryFields,
-    ItemService, ItemTypes
+    ItemService, ItemTypes,
+    TrackingService, TrackingEvent
 } from 'geoplatform.client';
 
 
@@ -22,7 +23,6 @@ import { SimilarityCodec } from '../../constraints/similarity/codec';
 import { PagingEvent } from '../../shared/paging/paging.component';
 // import { ServerRoutes } from '../../server-routes.enum'
 import { environment } from '../../../environments/environment';
-import { RPMService } from 'gp.rpm/src/iRPMService'
 
 import { itemServiceProvider } from '../../shared/service.provider';
 
@@ -48,7 +48,10 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public showLegend : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
 
-    constructor( private itemService : ItemService, public rpm: RPMService ) {
+    constructor(
+        private itemService : ItemService,
+        private trackingSvc : TrackingService
+    ) {
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = '_score,desc';
         this.defaultQuery.sort(this.sortField);
@@ -135,7 +138,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
             //show facet counts in picker filters...
             this.constraints.updateFacetCounts(response.facets);
-            this.rpm.logSearch(this.query.query, response.totalResults);
+            this.trackingSvc.logSearch(this.query.query, response.totalResults);
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);
@@ -158,8 +161,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.defaultQuery.sort(this.sortField);
         //let listeners know the query has changed
         this.queryChange.next(this.query);
-        //trigger RPM tracking event
-        this.rpm.logEvent('Sort', this.sortField)
     }
 
     /**
@@ -170,12 +171,14 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         let changed = false;
         if(!isNaN($event.page)) {
             this.query.setPage($event.page);
+
             //don't update default query page because we want constraint
             // changes to restart paging at the first page of results
             changed = true;
         }
         if(!isNaN($event.size)) {
             this.query.setPageSize($event.size);
+
             //update default query because we don't want to lose user-selected
             // page size value when the constraints change
             this.defaultQuery.setPageSize($event.size);
@@ -199,25 +202,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.constraints.set(constraint);
     }
 
-    /**
-     *
-     */
-    getIconPath(item) {
-        let type = "dataset";
-        switch(item.type) {
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
-        // return `../${ServerRoutes.ASSETS}${type}.svg`;
-        return `../${environment.assets}${type}.svg`;
-    }
-
     getIconClass(item) {
-        let type = "dataset";
-        switch(item.type) {
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
+        let type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
         return 'icon-' + type;
     }
 
@@ -230,6 +216,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.GALLERY: type = "galleries"; break;
             case ItemTypes.COMMUNITY: type = "communities"; break;
             case ItemTypes.CONTACT: type = "contacts"; break;
+            case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
             default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's'; break;
         }
         if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;

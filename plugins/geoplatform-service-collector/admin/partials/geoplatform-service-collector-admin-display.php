@@ -43,14 +43,238 @@
         </p>
       </div>
       <legend class="screen-reader-text"><span><?php _e('Please input a community ID', $this->plugin_name); ?></span></legend>
-      <p>Please input a title:&nbsp
-        <input type="text" class="regular-text" id="serve_name_in" name="<?php echo $this->plugin_name; ?>[serve_name]" value="<?php if(!empty($serve_name)) echo esc_attr($serve_name); ?>"/>
-        &nbsp&nbsp&nbsp&nbspPlease input a community ID:&nbsp
-        <input type="text" class="regular-text" id="serve_id_in" name="<?php echo $this->plugin_name; ?>[serve_id]" value="<?php if(!empty($serve_id)) echo esc_attr($serve_id); ?>"/>
+      <p>
+        Input a title:&nbsp
+        <input type="text" class="regular-text" id="serve_name_in" value="<?php if(!empty($serve_name)) echo esc_attr($serve_name); ?>"/>
         &nbsp&nbsp&nbsp&nbspResult Count:&nbsp
-        <input type="number" class="regular-text" id="serve_count" value="6" name="<?php echo $this->plugin_name; ?>[serve_count]" style="width:5em;"/>
+        <input type="number" class="regular-text" id="serve_count" value="6" min='1' style="width:5em;"/>
       </p>
-      <p>Select the items to include in the output
+      <hr>
+      <!-- <p>
+        Choose a standard or compact output format.
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_format_group" class="regular-text" id="serve_format_standard" value="serve_format_standard" checked>Standard&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_format_group" class="regular-text" id="serve_format_compact" value="serve_format_compact">Compact&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p> -->
+      <p>
+        <input type="checkbox" class="regular-text" id="serve_title_bool" value="serve_title_bool" checked>
+        Display main carousel title
+      </p>
+      <p>
+        <input type="checkbox" class="regular-text" id="serve_tabs_bool" value="serve_tabs_bool" checked>
+        Display tabs
+      </p>
+      <p>
+        <input type="checkbox" class="regular-text" id="serve_section_bool" value="serve_section_bool" checked>
+        Display tabbed section titles
+      </p>
+      <p>
+        <input type="checkbox" class="regular-text" id="serve_page_bool" value="serve_page_bool">
+        Enable pagination
+      </p>
+      <p>
+        Be advised that if tabs are hidden, only the first item type (as determined by the items to be included in the output) can be displayed.
+      </p>
+      <hr>
+      <p>
+        Choose sorting format.
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_sort_direction_group" class="regular-text" id="serve_sort_direction_desc" value="serve_sort_direction_desc" checked>Descending&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_sort_direction_group" class="regular-text" id="serve_sort_direction_asc" value="serve_sort_direction_asc">Ascending&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_sort_type_group" class="regular-text" id="serve_sort_type_modified" value="serve_sort_type_modified" checked>Modified&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_sort_type_group" class="regular-text" id="serve_sort_type_name" value="serve_sort_type_name">Name&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_sort_type_group" class="regular-text" id="serve_sort_type_relevance" value="serve_sort_type_relevance">Relevance&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p>
+      <hr>
+      <p>
+        Choose the search bar format.
+        <br>
+        For "Standard", the search keywords are used to narrow down results provided using the initial criteria.
+        <br>
+        For "GeoPlatform Search", select the asset types to search for. The search bar will collect criteria and redirect to the GeoPlatform Search interface. If the GeoPlatform Search plugin is not installed, the output will default to "Standard".
+        <br>
+        For "Hidden", the search bar will not be shown. Type selection is unimportant.
+        <table>
+          <tr>
+            <th>
+              <input type="radio" name="serve_search_group" class="regular-text" id="serve_search_standard" value="serve_search_standard" checked>Standard&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_search_group" class="regular-text" id="serve_search_geoplatform" value="serve_search_geoplatform">GeoPlatform&nbsp&nbsp
+            </th>
+            <th>
+              <input type="radio" name="serve_search_group" class="regular-text" id="serve_search_hidden" value="serve_search_hidden">Hidden&nbsp&nbsp
+            </th>
+          </tr>
+        </table>
+      </p>
+      <hr>
+      <p>
+        Please insert initial display criteria in the proper boxes and check those that you wish to apply to the carousel. In the case of multiple criteria, inputs should be seperated by commas.
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_community_bool" value="serve_type_community_bool">
+              Community&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_community_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit community ID.</span>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_theme_bool" value="serve_type_theme_bool">
+              Theme&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_theme_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit theme ID.</span>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_title_bool" value="serve_type_title_bool">
+              Title/Label&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_title_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input accepts regular text titles or labels.</span>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_keyword_bool" value="serve_type_keyword_bool">
+              Keyword&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_keyword_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input accepts regular text keywords.</span>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_topic_bool" value="serve_type_topic_bool">
+              Topic&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_topic_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit topic ID.</span>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_usedby_bool" value="serve_type_usedby_bool">
+              Used By&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_usedby_text" value=""/>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit asset ID.</span>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <p>
+        <table>
+          <tr>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_type_class_bool" value="serve_type_class_bool">
+              Classifier&nbsp&nbsp&nbsp&nbsp&nbsp
+            </th>
+            <th>
+              <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_class_text" value=""/>
+            </th>
+            <th>
+              <select class="geopserve-norm-weight" id="serve_type_class_type">
+                <option value='purpose'>Purpose</option>
+                <option value='function'>Function</option>
+                <option value='primaryTopic'>Primary Topic</option>
+                <option value='secondaryTopic'>Secondary Topic</option>
+                <option value='primarySubject'>Primary Subject</option>
+                <option value='secondarySubject'>Secondary Subject</option>
+                <option value='community'>Community</option>
+                <option value='audience'>Audience</option>
+                <option value='place'>Place</option>
+                <option value='category'>Category</option>
+              </select>
+            </th>
+            <th>
+              &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit classifier ID, as well as a selection of classifier parameter.</span>
+            </th>
+          </tr>
+        </table>
+      </p>
+      <hr>
+      <p>Select the items to include in the output. Conservative use of tabs is suggested to avoid unnecessary visual clutter.
         <table>
           <tr>
             <th>
@@ -68,63 +292,126 @@
             <th>
               <input type="checkbox" class="regular-text" id="serve_cat_gallery" value="serve_cat_gallery">Gallery&nbsp&nbsp
             </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_community" value="serve_cat_community">Community&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_app" value="serve_cat_app">Application&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_topic" value="serve_cat_topic">Topic&nbsp&nbsp
+            </th>
+            <th>
+              <input type="checkbox" class="regular-text" id="serve_cat_website" value="serve_cat_website">Website&nbsp&nbsp
+            </th>
           </tr>
         </table>
       </p>
     </fieldset>
 
 <!-- Add Carousel Button -->
+    <hr>
     <input type="submit" id="geopserve_add_action" value="Add Carousel"/>
-
  <!-- Procedural table creation block.  Here the carousel collection output is
       set. It begins with the header of the table.-->
-      <p><strong>Carousel Details Table</strong></p>
-        <table class="widefat">
-        	<thead>
-        	<tr>
-        		<th class="row-title"><?php esc_attr_e( 'Title', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Community', 'geoplatform-serves' ); ?></th>
-        		<th><?php esc_attr_e( 'Output Types', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Output Count', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Shortcode', 'geoplatform-serves' ); ?></th>
-            <th><?php esc_attr_e( 'Controls', 'geoplatform-serves' ); ?></th>
-        	</tr>
-        	</thead>
-        	<tbody>
+    <?php
+    echo "<p><strong>Carousel Details Table</strong></p>";
+    echo "<table class='widefat'>";
+      echo "<thead>";
+        echo "<tr>";
+        	echo "<th class='row-title'>Title</th>";
+          // echo "<th>Output Format</th>";
+          echo "<th>Filter Criteria</th>";
+        	echo "<th>Output Types</th>";
+          echo "<th>Search Format</th>";
+          echo "<th>Additional Elements</th>";
+          echo "<th>Sorting</th>";
+          echo "<th>Output Count</th>";
+          echo "<th>Shortcode</th>";
+          echo "<th>Controls</th>";
+        echo "</tr>";
+      echo "</thead>";
+      echo "<tbody>";
 
-          <?php
-          /* The actual table construction. The data is pulled from the database
-           * and translated into usable table information. The table is then
-           * looped through. Each loop pulls information from a specific table
-           * row and uses it to construct a page row.
-          */
-          $geopserve_table_name = $wpdb->prefix . "geop_serve_db";
-          $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
+        /* The actual table construction. The data is pulled from the database
+         * and translated into usable table information. The table is then
+         * looped through. Each loop pulls information from a specific table
+         * row and uses it to construct a page row.
+        */
+        $geopserve_table_name = $wpdb->prefix . "geop_asset_db";
+        $geopserve_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopserve_table_name" );
 
-          foreach ($geopserve_retrieved_data as $geopserve_entry){
+        // Construction loop. Much of the data can be pulled straight from the
+        // database for use. Some though require translation from the database
+        // into human reading.
+        foreach ($geopserve_retrieved_data as $geopserve_entry){
 
-            // Most data can be pulled straight from the database for use. Cats
-            // however are translated into a string of values for output.
-            $geopserve_cat_array = array();
-            (substr(($geopserve_entry->serve_cat), 0, 1) == 'T') ? array_push($geopserve_cat_array, 'Datasets') : '';
-            (substr(($geopserve_entry->serve_cat), 1, 1) == 'T') ? array_push($geopserve_cat_array, 'Services') : '';
-            (substr(($geopserve_entry->serve_cat), 2, 1) == 'T') ? array_push($geopserve_cat_array, 'Layers') : '';
-            (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
-            (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
-            $geopserve_cat_out = implode(", ", $geopserve_cat_array);
-            ?>
-            <tr>
-          		<td><?php echo esc_attr($geopserve_entry->serve_title); ?></td>
-              <td><?php echo esc_attr($geopserve_entry->serve_name); ?></td>
-              <td><?php echo esc_attr($geopserve_cat_out); ?></td>
-          		<td><?php echo esc_attr($geopserve_entry->serve_count); ?></td>
-              <td><code><?php echo esc_attr($geopserve_entry->serve_shortcode); ?></code></td>
-              <td>
-                <button class="geopserve_indiv_car_remove_action button-secondary" value="<?php echo $geopserve_entry->serve_num; ?>">Remove Carousel</button>
-              </td>
-          	</tr><?php
-          }?>
-        </table>
-    </form>
-</div>
-<?php
+          // DB to human reading for filter criteria.
+          $geopserve_crit_array = array();
+          (substr(($geopserve_entry->serve_criteria), 0, 1) == 'T') ? array_push($geopserve_crit_array, 'Communities') : '';
+          (substr(($geopserve_entry->serve_criteria), 1, 1) == 'T') ? array_push($geopserve_crit_array, 'Themes') : '';
+          (substr(($geopserve_entry->serve_criteria), 2, 1) == 'T') ? array_push($geopserve_crit_array, 'Titles/Labels') : '';
+          (substr(($geopserve_entry->serve_criteria), 3, 1) == 'T') ? array_push($geopserve_crit_array, 'Keywords') : '';
+          (substr(($geopserve_entry->serve_criteria), 4, 1) == 'T') ? array_push($geopserve_crit_array, 'Topics') : '';
+          (substr(($geopserve_entry->serve_criteria), 5, 1) == 'T') ? array_push($geopserve_crit_array, 'Used By') : '';
+          (substr(($geopserve_entry->serve_criteria), 6, 1) == 'T') ? array_push($geopserve_crit_array, 'Classifiers') : '';
+          $geopserve_crit_out = implode(", ", $geopserve_crit_array);
+          if (empty($geopserve_crit_out))
+            $geopserve_crit_out = "All";
+
+          // Active tab translator.
+          $geopserve_cat_array = array();
+          (substr(($geopserve_entry->serve_cat), 0, 1) == 'T') ? array_push($geopserve_cat_array, 'Datasets') : '';
+          (substr(($geopserve_entry->serve_cat), 1, 1) == 'T') ? array_push($geopserve_cat_array, 'Services') : '';
+          (substr(($geopserve_entry->serve_cat), 2, 1) == 'T') ? array_push($geopserve_cat_array, 'Layers') : '';
+          (substr(($geopserve_entry->serve_cat), 3, 1) == 'T') ? array_push($geopserve_cat_array, 'Maps') : '';
+          (substr(($geopserve_entry->serve_cat), 4, 1) == 'T') ? array_push($geopserve_cat_array, 'Galleries') : '';
+          (substr(($geopserve_entry->serve_cat), 5, 1) == 'T') ? array_push($geopserve_cat_array, 'Communities') : '';
+          (substr(($geopserve_entry->serve_cat), 6, 1) == 'T') ? array_push($geopserve_cat_array, 'Applications') : '';
+          (substr(($geopserve_entry->serve_cat), 7, 1) == 'T') ? array_push($geopserve_cat_array, 'Topics') : '';
+          (substr(($geopserve_entry->serve_cat), 8, 1) == 'T') ? array_push($geopserve_cat_array, 'Websites') : '';
+          $geopserve_cat_out = implode(", ", $geopserve_cat_array);
+
+          // Search bar format translator.
+          $geopserve_search_out = "Standard";
+          if ($geopserve_entry->serve_search == 'geop')
+            $geopserve_search_out = "GeoPlatform";
+          elseif ($geopserve_entry->serve_search == 'hide')
+            $geopserve_search_out = "Hidden";
+
+          // Additional settings translator.
+          $geopserve_adds_array = array();
+          (substr(($geopserve_entry->serve_adds), 0, 1) == 'T') ? array_push($geopserve_adds_array, 'Main Title') : '';
+          (substr(($geopserve_entry->serve_adds), 1, 1) == 'T') ? array_push($geopserve_adds_array, 'Tabs') : '';
+          (substr(($geopserve_entry->serve_adds), 2, 1) == 'T') ? array_push($geopserve_adds_array, 'Section Titles') : '';
+          (substr(($geopserve_entry->serve_adds), 3, 1) == 'T') ? array_push($geopserve_adds_array, 'Pagination') : '';
+          empty($geopserve_adds_array) ? array_push($geopserve_adds_array, 'No Additions') : '';
+          $geopserve_adds_out = implode(", ", $geopserve_adds_array);
+
+          // Non-binary additional settings translator.
+          $geopserve_sort_string = '';
+          (substr(($geopserve_entry->serve_adds), 4, 1) == 'D') ? $geopserve_sort_string = "Descending, " : $geopserve_sort_string = "Ascending, ";
+          (substr(($geopserve_entry->serve_adds), 5, 1) == 'M') ? $geopserve_sort_string .= " Modified" : '';
+          (substr(($geopserve_entry->serve_adds), 5, 1) == 'N') ? $geopserve_sort_string .= " Name" : '';
+          (substr(($geopserve_entry->serve_adds), 5, 1) == 'R') ? $geopserve_sort_string .= " Relevance" : '';
+
+          // Begin output.
+          echo "<tr>";
+          	echo "<td>" . esc_attr($geopserve_entry->serve_title) . "</td>";
+            // echo "<td>" . esc_attr(ucfirst($geopserve_entry->serve_format)) . "</td>";
+            echo "<td>" . esc_attr($geopserve_crit_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_cat_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_search_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_adds_out) . "</td>";
+            echo "<td>" . esc_attr($geopserve_sort_string) . "</td>";
+            echo "<td>" . esc_attr($geopserve_entry->serve_count) . "</td>";
+            echo "<td><code>" . esc_attr($geopserve_entry->serve_shortcode) . "</code></td>";
+            echo "<td>";
+              echo "<button class='geopserve_indiv_car_remove_action button-secondary' value='" . $geopserve_entry->serve_num . "'>Remove Carousel</button>";
+            echo "</td>";
+          echo "</tr>";
+        }
+      echo "</tbody>";
+    echo "</table>";
+  echo "</form>";
+echo "</div>";

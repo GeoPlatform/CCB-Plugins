@@ -6,15 +6,13 @@
     <strong>Other Resources ({{getRelated().length}})</strong>
 </div>
 
-<div [ngClass]="{'is-hidden':!isCollapsed}">
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
     Expand to see additional related resources
 </div>
 
 <div [ngClass]="{'is-hidden':isCollapsed}">
 
-    <div *ngIf="!related || !related.length">
-        <em>None specified</em>
-    </div>
+    <em *ngIf="!related || !related.length">None specified</em>
 
     <div class="m-list">
         <div *ngFor="let rel of getRelated()" class="m-list__item">

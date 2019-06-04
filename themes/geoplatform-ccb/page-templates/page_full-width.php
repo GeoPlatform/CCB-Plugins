@@ -3,35 +3,43 @@
  * Template Name: Full Width Page
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
- * 
+ *
  * @package Geoplatform CCB
- * 
+ *
  * @since 2.0.0
  */
- ?>
-
- <?php get_header(); ?>
- <?php get_template_part( 'mega-menu', get_post_format() ); ?>
- <!--Used for the Main banner background to show up properly-->
- <?php get_template_part( 'single-banner', get_post_format() ); ?>
-
- <div class="container">
-
-     <div class="row">
-       <div class="loop">
-         <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-
-       get_template_part( 'page-single', get_post_format() );
-
-       //Un-comment the code below to show comments on the posts
-       //if ( comments_open() || get_comments_number() ) :
-       //	  comments_template();
-       //	endif;
-     endwhile; endif;
-     ?>
-      </div><!--#loop-->
-     </div><!--#row-->
-   </div><!--#container-->
+get_header();
+get_template_part( 'sub-header-post', get_post_format() );
+$geopccb_theme_options = geop_ccb_get_theme_mods();
 
 
-<?php get_footer(); ?>
+if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on'){
+  // ELEMENTS
+  echo "<div class='widget-banner-main'>";
+    echo "<div class='widget-banner-sub'>";
+      echo "<div class='widget-banner-container container'>";
+        echo "<div class='m-article__heading' style='color:white'>";
+          echo esc_attr(the_title(), 'geoplatform-ccb');
+        echo "</div>";
+        echo "<div style='color:white'>";
+          echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true));
+        echo "</div>";
+      echo "</div>";
+    echo "</div>";
+  echo "</div>";
+}
+
+echo "<div class='l-body l-body--one-column'>";
+  echo "<div class='l-body__main-column'>";
+    if ( have_posts() ) : while ( have_posts() ) : the_post();
+
+      get_template_part( 'post-single', get_post_format() );
+
+        //Un-comment the code below to show comments on the posts
+        //if ( comments_open() || get_comments_number() ) :
+        //	  comments_template();
+        //	endif;
+      endwhile; endif;
+  echo "</div>";
+echo "</div>";
+get_footer();

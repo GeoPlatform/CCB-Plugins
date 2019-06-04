@@ -14,6 +14,7 @@ import {
 // // import * as L from 'leaflet';
 // var L = require('leaflet');
 import * as esri from "esri-leaflet";
+import "leaflet.vectorgrid";
 
 
 

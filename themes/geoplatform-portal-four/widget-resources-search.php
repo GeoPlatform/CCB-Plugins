@@ -82,7 +82,7 @@ class Geopportal_Resource_Search_Widget extends WP_Widget {
 												<span class="icon fas fa-search"></span>
 												<input type="text" class="form-control"  id="geopportal_resource_search_input"
 														aria-label="Search GeoPlatform <?php _e(sanitize_text_field(ucwords($geopportal_resource_search_title)), 'geoplatform-ccb') ?>"
-														placeholder="Search GeoPlatform <?php _e(sanitize_text_field(ucwords($geopportal_resource_search_title)), 'geoplatform-ccb') ?>">
+														placeholder="Enter a search phrase or click on 'Search' to browse.">
 										</form>
 										<button type="button" class="btn btn-secondary" id="geopportal_resource_search_button">SEARCH</button>
 								</div>&nbsp;&nbsp;

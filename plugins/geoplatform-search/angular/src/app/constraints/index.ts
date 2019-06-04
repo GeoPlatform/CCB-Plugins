@@ -8,6 +8,7 @@ import { Codec } from '../models/codec';
 import { TypeCodec } from './type/codec';
 import { KeywordCodec } from './keywords/codec';
 import { ThemeCodec } from './theme/codec';
+import { TopicCodec } from './topic/codec';
 import { PublisherCodec } from './publisher/codec';
 import { CommunityCodec } from './community/codec';
 import { CreatorCodec } from './creator/codec';
@@ -27,6 +28,7 @@ import { CommunityComponent } from './community/community.component';
 import { ExtentComponent } from './extent/extent.component';
 import { TemporalComponent } from './temporal/temporal.component';
 import { ThemeComponent } from './theme/theme.component';
+import { TopicComponent } from './topic/topic.component';
 import { TypeComponent } from './type/type.component';
 import { SemanticComponent } from './semantic/semantic.component';
 import { SimilarityComponent } from './similarity/similarity.component';
@@ -56,6 +58,7 @@ SearchEditorRegistry.registerEditor( "publishers", "Publishers", PublisherCompon
 SearchEditorRegistry.registerEditor( "communities", "Communities", CommunityComponent );
 SearchEditorRegistry.registerEditor( "temporal", "Date Range", TemporalComponent );
 SearchEditorRegistry.registerEditor( "themes", "Themes", ThemeComponent );
+SearchEditorRegistry.registerEditor( "topics", "Topics", TopicComponent );
 SearchEditorRegistry.registerEditor( "types", "Types", TypeComponent );
 SearchEditorRegistry.registerEditor( "semantic", "Semantic Concepts", SemanticComponent );
 
@@ -79,6 +82,7 @@ class CodecFactory {
         this.registerCodec(new TypeCodec());
         this.registerCodec(new KeywordCodec());
         this.registerCodec(new ThemeCodec(http));
+        this.registerCodec(new TopicCodec(http));
         this.registerCodec(new PublisherCodec(http));
         this.registerCodec(new CommunityCodec(http));
         this.registerCodec(new CreatorCodec());
@@ -121,6 +125,7 @@ export {
     ExtentComponent,
     TemporalComponent,
     ThemeComponent,
+    TopicComponent,
     TypeComponent,
     SemanticComponent,
     SimilarityComponent,

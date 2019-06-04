@@ -37,3 +37,12 @@ span.fas.fa-caret-up {
     justify-content: center;
     align-items: center;
 }
+
+
+
+
+.m-action {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid #ddd;
+}

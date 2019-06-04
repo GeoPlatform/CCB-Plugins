@@ -6,15 +6,13 @@
     <strong>Service Layers ({{layerTotal}})</strong>
 </div>
 
-<div [ngClass]="{'is-hidden':!isCollapsed}">
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
     Expand to see layers hosted by this service
 </div>
 
 <div [ngClass]="{'is-hidden':isCollapsed}">
 
-    <div *ngIf="!layers || !layers.length">
-        <em>None specified</em>
-    </div>
+    <em *ngIf="!layers || !layers.length">None specified</em>
 
     <div *ngIf="layers" class="m-list--unbulleted">
         <gpid-service-layer *ngFor="let layer of layers" [layer]="layer"></gpid-service-layer>

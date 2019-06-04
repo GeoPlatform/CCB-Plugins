@@ -9,14 +9,12 @@
  *
  * @since 3.1.0
  */
-?>
 
-<!-- GP styled search form -->
-<form role="search" method="get" id="search-form" action="<?php echo esc_url( home_url( '/' ) ); ?>">
-<div class="input-group-slick">
-      <span class="glyphicon glyphicon-search"></span>
-      <input type="search" class="form-control" placeholder="<?php echo esc_attr( 'Search Site...', 'geoplatform-ccb' ); ?>"
-      name="s" id="search-input" value="<?php echo esc_attr( get_search_query() ); ?>"/>
-      <button type="submit" class="btn btn-default" id="search-submit"><?php _e( 'Search', 'geoplatform-ccb'); ?></button>
-  </div>
-</form>
+// GP styled search form
+echo "<form role='search' method='get' id='search-form' action='" . esc_url( home_url( '/' ) ) . "'>";
+  echo "<div class='input-group-slick'>";
+    echo "<span class='icon fas fa-search'></span>";
+    echo "<input type='search' class='form-control' placeholder='" . esc_attr( 'Search Site...', 'geoplatform-ccb' ) . "' name='s' id='search-input' value='" . esc_attr( get_search_query() ) . "'/>";
+    echo "<button type='submit' class='btn btn-default' id='search-submit'>" . __( 'Search', 'geoplatform-ccb') . "</button>";
+  echo "</div>";
+echo "</form>";

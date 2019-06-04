@@ -19,7 +19,7 @@ $geoserve_rand_id = sanitize_key($_POST["serve_rand"]);
  * cycles through the table, seeking rows with serve_num that matches
  * geoserve_rand_id, removing it when found.
 */
-$geopmap_table_name = $wpdb->prefix . 'geop_serve_db';
+$geopmap_table_name = $wpdb->prefix . 'geop_asset_db';
 $geopmap_retrieved_data = $wpdb->get_results( "SELECT * FROM $geopmap_table_name" );
 
 foreach ($geopmap_retrieved_data as $geopmap_entry)

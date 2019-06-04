@@ -1,0 +1,6 @@
+<div class="m-article__desc"><!--spacer--></div>
+<div class="m-article__desc">
+    <div><strong>Product ID </strong></div>
+    <div *ngIf="!item?.productId"><em>Not specified</em></div>
+    <div *ngIf="item?.productId">{{item.productId}}</div>
+</div>

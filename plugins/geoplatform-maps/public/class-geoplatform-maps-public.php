@@ -63,6 +63,7 @@ class Geop_Maps_Public {
 		 * class.
 		 */
 
+	 	wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_leaflet_css', plugin_dir_url( __FILE__ ) . 'assets/leaflet_1.3.1.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_marker_cluster_css', plugin_dir_url( __FILE__ ) . 'assets/MarkerCluster_1.3.0.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_marker_default_css', plugin_dir_url( __FILE__ ) . 'assets/MarkerCluster.Default_1.3.0.css', array(), $this->version, 'all' );
@@ -94,13 +95,16 @@ class Geop_Maps_Public {
 		 * theme environments.
 		 */
 		wp_enqueue_script( 'jquery' );
+
+
 		wp_enqueue_script( 'geop_leaflet_js', plugin_dir_url( __FILE__ ) . 'assets/leaflet-src_1.3.1.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_q', plugin_dir_url( __FILE__ ) . 'assets/q_2.0.3.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_iso8601', plugin_dir_url( __FILE__ ) . 'assets/iso8601_0.2.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_marker_cluster_js', plugin_dir_url( __FILE__ ) . 'assets/leaflet.markercluster-src_1.3.0.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_esri', plugin_dir_url( __FILE__ ) . 'assets/esri-leaflet_2.1.3.js', array(), $this->version, false );
-		wp_enqueue_script( 'geop_timedimension_js', plugin_dir_url( __FILE__ ) . 'assets/leaflet.timedimension.src_1.1.0.js', array(), $this->version, false );
+		// wp_enqueue_script( 'geop_timedimension_js', plugin_dir_url( __FILE__ ) . 'assets/leaflet.timedimension.src_1.1.0.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.js', array(), $this->version, false );
+		wp_enqueue_script( 'geop_leaflet_draw', plugin_dir_url( __FILE__ ) . 'assets/leaflet.draw.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.client.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_mapcore', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.mapcore.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-maps-public.js', array(), $this->version, false );

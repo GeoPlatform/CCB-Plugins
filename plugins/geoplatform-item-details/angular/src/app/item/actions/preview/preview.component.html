@@ -1,0 +1,10 @@
+<div class="m-action" *ngIf="isSupported()">
+    <p class="u-text--sm">
+        View this resource on a map. For Service resources, this includes all
+        layers hosted by the service. For Dataset resources, this includes associated
+        layers as well as layers hosted by associated services.
+    </p>
+    <a href="{{getHref()}}" class="btn btn-secondary btn-block u-mg-top--xlg">
+        <span class="far fa-map"></span> Preview on Map
+    </a>
+</div>

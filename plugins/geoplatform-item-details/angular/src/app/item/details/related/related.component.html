@@ -1,0 +1,54 @@
+<div class="m-article">
+    <div class="m-article__heading">Related Resources</div>
+    <br>
+
+    <!-- Dataset Distributions -->
+    <div class="m-article__desc" *ngIf="'dcat:Dataset'===item?.type">
+        <gpid-dataset-distributions [item]="item"></gpid-dataset-distributions>
+    </div>
+
+    <div class="m-article__desc" *ngIf="'Layer'===item?.type||'dcat:Dataset'===item?.type">
+        <gpid-services [item]="item"></gpid-services>
+    </div>
+
+    <!-- Service Layers -->
+    <div class="m-article__desc" *ngIf="'regp:Service'===item?.type">
+        <gpid-service-layers [serviceId]="item?.id"></gpid-service-layers>
+    </div>
+    <!-- OperatesOn Assets -->
+    <div class="m-article__desc" *ngIf="'regp:Service'===item?.type">
+        <gpid-operates-on [data]="item?.operatesOn||[]"></gpid-operates-on>
+    </div>
+
+    <!-- Map Layers -->
+    <div class="m-article__desc" *ngIf="'Map'===item?.type">
+        <gpid-map-layers [map]="item"></gpid-map-layers>
+    </div>
+
+    <div class="m-article__desc" *ngIf="item?.datasets">
+        <gpid-datasets [data]="item.datasets">
+        </gpid-datasets>
+    </div>
+
+
+    <!-- Gallery Items -->
+    <div class="m-article__desc" *ngIf="'Gallery'===item?.type">
+        <gpid-gallery-items [items]="item?.items"></gpid-gallery-items>
+    </div>
+
+    <!-- Community -->
+    <div class="m-article__desc" *ngIf="'Community'===item?.type">
+        <gpid-community-members [members]="item?.members"></gpid-community-members>
+    </div>
+
+    <!-- Used By (Community Refences) -->
+    <div class="m-article__desc">
+        <gpid-used-by [communities]="item?.usedBy"></gpid-used-by>
+    </div>
+
+    <!-- Related Resources -->
+    <div class="m-article__desc">
+        <gpid-related [related]="item?.related"></gpid-related>
+    </div>
+
+</div>

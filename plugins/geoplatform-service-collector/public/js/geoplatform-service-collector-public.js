@@ -34,19 +34,28 @@
 // will only have to deal with one data type at a time. Will discern how many
 // copies exist of the given asset type and apply that number to the search area.
 //
-// #param geopserve_id_in: the community ID for the query.
-// #param geopserve_cat_in: data type for the query.
+// #param geopserve_id_array: array of strings for each asset type to query.
+// #param geopserve_cat_in: the data type for the query.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
 // #param geopserve_ual_domain_in: UAL source to draw from.
-function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
+function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
+
+	// Translates id array into individual query strings for each asset type.
+	var geopserve_community_id = geopserve_id_array[0];
+	var geopserve_theme_id = geopserve_id_array[1];
+	var geopserve_label_id = geopserve_id_array[2];
+	var geopserve_keyword_id = geopserve_id_array[3];
+	var geopserve_topic_id = geopserve_id_array[4];
+	var geopserve_usedby_id = geopserve_id_array[5];
+	var geopserve_class_id = geopserve_id_array[6];
+	var geopserve_kg_id = geopserve_id_array[7];
 
 	// Service collection setup.
-	const Query = GeoPlatform.Query;
-	const ItemTypes = GeoPlatform.ItemTypes;
-	const QueryParameters = GeoPlatform.QueryParameters;
-	var ItemService = GeoPlatform.ItemService;
+	const Query = GeoPlatformClient.Query;
+	const ItemTypes = GeoPlatformClient.ItemTypes;
+	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
 
-	var query = new GeoPlatform.Query();
+	var query = new Query();
 
 	// Sets type of asset type to grab.
 	if (geopserve_cat_in == "Datasets")
@@ -59,19 +68,90 @@ function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_i
 		query.setTypes(ItemTypes.MAP);
 	if (geopserve_cat_in == "Galleries")
 		query.setTypes(ItemTypes.GALLERY);
+	if (geopserve_cat_in == "Communities")
+		query.setTypes(ItemTypes.COMMUNITY);
+	if (geopserve_cat_in == "Applications")
+		query.setTypes(ItemTypes.APPLICATION);
+	if (geopserve_cat_in == "Topics")
+		query.setTypes(ItemTypes.TOPIC);
+	if (geopserve_cat_in == "Websites")
+		query.setTypes(ItemTypes.WEBSITE);
 
-	// Restricts results to a single community, if provided.
-	if (geopserve_id_in) {
-		query.usedBy(geopserve_id_in);
+	// Cleans, explodes, combines, and applies community and usedby criteria.
+	var geopserve_com_use_array = '';
+	if (geopserve_community_id){
+		var geopserve_community_temp = geopserve_community_id.replace(/ /g, "-");
+		geopserve_community_temp = geopserve_community_temp.replace(/,/g, "-");
+		geopserve_community_array = geopserve_community_temp.split("-");
+		geopserve_com_use_array = geopserve_com_use_array.concat(geopserve_community_array);
+	}
+	if (geopserve_usedby_id){
+		var geopserve_usedby_temp = geopserve_usedby_id.replace(/ /g, "-");
+		geopserve_usedby_temp = geopserve_usedby_temp.replace(/,/g, "-");
+		geopserve_usedby_array = geopserve_usedby_temp.split("-");
+		geopserve_com_use_array = geopserve_com_use_array.concat(geopserve_usedby_array);
+	}
+	if (geopserve_com_use_array != undefined && geopserve_com_use_array.length > 0)
+		query.usedBy(geopserve_com_use_array);
+
+	// Cleans, explodes, and applies theme criteria.
+	if (geopserve_theme_id){
+		var geopserve_theme_temp = geopserve_theme_id.replace(/ /g, "-");
+		geopserve_theme_temp = geopserve_theme_temp.replace(/,/g, "-");
+		geopserve_theme_array = geopserve_theme_temp.split("-");
+		query.setThemes(geopserve_theme_array);
+	}
+
+	// Cleans, explodes, combines, and applies title/label criteria.
+	var geopserve_label_array = '';
+	if (geopserve_label_id){
+		var geopserve_label_temp = geopserve_label_id.replace(/,/g, "-");
+		geopserve_label_array = geopserve_label_temp.split("-");
+		for (i = 0; i < geopserve_label_array.length; i++)
+			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
+		query.setQ(geopserve_label_array);
+	}
+
+	// Cleans, explodes, and applies keyword criteria.
+	if (geopserve_keyword_id){
+		var geopserve_keyword_temp = geopserve_keyword_id.replace(/ /g, "-");
+		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
+		geopserve_keyword_array = geopserve_keyword_temp.split("-");
+		query.setKeywords(geopserve_keyword_array);
+	}
+
+	// Cleans, explodes, and applies topic criteria.
+	if (geopserve_topic_id){
+		var geopserve_topic_temp = geopserve_topic_id.replace(/ /g, "-");
+		geopserve_topic_temp = geopserve_topic_temp.replace(/,/g, "-");
+		geopserve_topic_array = geopserve_topic_temp.split("-");
+		query.setTopics(geopserve_topic_array);
+	}
+
+	// Cleans, explodes, and applies classifier criteria.
+	if (geopserve_class_id){
+		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
+		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
+		geopserve_class_array = geopserve_class_temp.split("-");
+		query.setClassifier(geopserve_kg_id, geopserve_class_array);
 	}
 
 	// Performs the query grab.
-	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	itemSvc.search(query)
 	.then(function (response) {
 
 		// Variables for the text and page element it's to be attached to.
 		var geopserve_master_div = 'geopserve_carousel_search_div_' + geopserve_iter_in;
+
+		// Determines singular, plural, or empty results text.
 		var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_cat_in;
+		if (response.totalResults == 1){
+			var geopserve_cat_single = geopserve_cat_in;
+			geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
+			geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
+			geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
+		}
 		if (response.totalResults <= 0)
 			geopserve_search_text = 'No ' + geopserve_cat_in.toLowerCase() + ' to browse';
 
@@ -91,28 +171,37 @@ function geopserve_gen_count(geopserve_id_in, geopserve_cat_in, geopserve_iter_i
 // will only have to deal with one data type at a time. Generate the panes of
 // the carousel.
 //
-// #param geopserve_id_in: the community ID for the query.
-// #param geopserve_cat_in: data type for the query.
+// #param geopserve_id_array: array of strings for each asset type to query.
+// #param geopserve_cat_in: the data type for the query.
 // #param geopserve_count_in: number of panes to generate.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
-// #param geopserve_icon_in: asset's icon class
+// #param geopserve_current_page: current page for pagination.
+// #param geopserve_suffix_in: asset's suffix, either A or N.
+// #param geopserve_sort_style: How the results are sorted.
 // #param geopserve_ual_domain_in: UAL source to draw from.
 // #param geopserve_redirect_in: Panel base URL for this particular asset type.
-// #param geopserve_new_tab: Determines if a pane opens in a new window or not.
 // #param geopserve_home: Home url of hosting site.
 // #param geopserve_404_in: 404 image path.
-//
-function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_icon_in, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_new_tab, geopserve_home, geopserve_404_in){
+function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_count_in, geopserve_iter_in, geopserve_current_page, geopserve_suffix_in, geopserve_sort_style, geopserve_ual_domain_in, geopserve_redirect_in, geopserve_home, geopserve_404_in){
+
+	// Translates id array into individual query strings for each asset type.
+	var geopserve_community_id = geopserve_id_array[0];
+	var geopserve_theme_id = geopserve_id_array[1];
+	var geopserve_label_id = geopserve_id_array[2];
+	var geopserve_keyword_id = geopserve_id_array[3];
+	var geopserve_topic_id = geopserve_id_array[4];
+	var geopserve_usedby_id = geopserve_id_array[5];
+	var geopserve_class_id = geopserve_id_array[6];
+	var geopserve_kg_id = geopserve_id_array[7];
 
 	// Service collection setup.
-	const Query = GeoPlatform.Query;
-	const ItemTypes = GeoPlatform.ItemTypes;
-	const QueryParameters = GeoPlatform.QueryParameters;
-	var ItemService = GeoPlatform.ItemService;
+	const Query = GeoPlatformClient.Query;
+	const ItemTypes = GeoPlatformClient.ItemTypes;
+	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
 
-	var query = new GeoPlatform.Query();
+	var query = new Query();
 
-	// Sets type of asset type to grab.
+	// Sets type of asset to grab.
 	if (geopserve_cat_in == "Datasets")
 		query.setTypes(ItemTypes.DATASET);
 	if (geopserve_cat_in == "Services")
@@ -123,14 +212,77 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 		query.setTypes(ItemTypes.MAP);
 	if (geopserve_cat_in == "Galleries")
 		query.setTypes(ItemTypes.GALLERY);
+	if (geopserve_cat_in == "Communities")
+		query.setTypes(ItemTypes.COMMUNITY);
+	if (geopserve_cat_in == "Applications")
+		query.setTypes(ItemTypes.APPLICATION);
+	if (geopserve_cat_in == "Topics")
+		query.setTypes(ItemTypes.TOPIC);
+	if (geopserve_cat_in == "Websites")
+		query.setTypes(ItemTypes.WEBSITE);
 
-	// Sets return count and sortation style.
+	// Sets return count, current page, and sortation style.
 	query.setPageSize(geopserve_count_in);
-	query.setSort('modified,desc');
+	query.setPage(geopserve_current_page);
+	query.setSort(geopserve_sort_style);
 
-	// Restricts results to a single community, if provided.
-	if (geopserve_id_in) {
-		query.usedBy(geopserve_id_in);
+	// Cleans, explodes, combines, and applies community and usedby criteria.
+	var geopserve_com_use_array = '';
+	if (geopserve_community_id){
+		var geopserve_community_temp = geopserve_community_id.replace(/ /g, "-");
+		geopserve_community_temp = geopserve_community_temp.replace(/,/g, "-");
+		geopserve_community_array = geopserve_community_temp.split("-");
+		geopserve_com_use_array = geopserve_com_use_array.concat(geopserve_community_array);
+	}
+	if (geopserve_usedby_id){
+		var geopserve_usedby_temp = geopserve_usedby_id.replace(/ /g, "-");
+		geopserve_usedby_temp = geopserve_usedby_temp.replace(/,/g, "-");
+		geopserve_usedby_array = geopserve_usedby_temp.split("-");
+		geopserve_com_use_array = geopserve_com_use_array.concat(geopserve_usedby_array);
+	}
+	if (geopserve_com_use_array != undefined && geopserve_com_use_array.length > 0)
+		query.usedBy(geopserve_com_use_array);
+
+	// Cleans, explodes, and applies theme criteria.
+	if (geopserve_theme_id){
+		var geopserve_theme_temp = geopserve_theme_id.replace(/ /g, "-");
+		geopserve_theme_temp = geopserve_theme_temp.replace(/,/g, "-");
+		geopserve_theme_array = geopserve_theme_temp.split("-");
+		query.setThemes(geopserve_theme_array);
+	}
+
+	// Cleans, explodes, combines, and applies title/label criteria.
+	var geopserve_label_array = '';
+	if (geopserve_label_id){
+		var geopserve_label_temp = geopserve_label_id.replace(/,/g, "-");
+		geopserve_label_array = geopserve_label_temp.split("-");
+		for (i = 0; i < geopserve_label_array.length; i++)
+			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
+		query.setQ(geopserve_label_array);
+	}
+
+	// Cleans, explodes, and applies keyword criteria.
+	if (geopserve_keyword_id){
+		var geopserve_keyword_temp = geopserve_keyword_id.replace(/ /g, "-");
+		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
+		geopserve_keyword_array = geopserve_keyword_temp.split("-");
+		query.setKeywords(geopserve_keyword_array);
+	}
+
+	// Cleans, explodes, and applies topic criteria.
+	if (geopserve_topic_id){
+		var geopserve_topic_temp = geopserve_topic_id.replace(/ /g, "-");
+		geopserve_topic_temp = geopserve_topic_temp.replace(/,/g, "-");
+		geopserve_topic_array = geopserve_topic_temp.split("-");
+		query.setTopics(geopserve_topic_array);
+	}
+
+	// Cleans, explodes, and applies classifier criteria.
+	if (geopserve_class_id){
+		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
+		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
+		geopserve_class_array = geopserve_class_temp.split("-");
+		query.setClassifier(geopserve_kg_id, geopserve_class_array);
 	}
 
 	// Adds thumbnails to the query return.
@@ -139,10 +291,8 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 	query.setFields(fields);
 
 	// Performs the query grab.
-	geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
+	itemSvc.search(query)
 		.then(function (response) {
-
-			// ItemService.search(thumb_query).then( thumb_response => thumb_response.results.forEach( item => item.thumbnail ? console.log(buildThumb(item.thumbnail)) : doNothing(); ) );
 
 			// Gets the results.
 			var geopserve_results = response.results;
@@ -194,6 +344,22 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 						geopserve_under_label_type = "<strong>Gallery</strong>";
 						geopserve_under_label_icon = "icon-gallery is-themed u-text--huge"
 						break;
+					case "Communities":
+						geopserve_under_label_type = "<strong>Communities</strong>";
+						geopserve_under_label_icon = "icon-community is-themed u-text--huge"
+						break;
+					case "Applications":
+						geopserve_under_label_type = "<strong>Applications</strong>";
+						geopserve_under_label_icon = "icon-application is-themed u-text--huge"
+						break;
+					case "Topics":
+						geopserve_under_label_type = "<strong>Topics</strong>";
+						geopserve_under_label_icon = "icon-topic is-themed u-text--huge"
+						break;
+					case "Websites":
+						geopserve_under_label_type = "<strong>Websites</strong>";
+						geopserve_under_label_icon = "icon-website is-themed u-text--huge"
+						break;
 					default:
 						geopserve_under_label_type = "<strong>Unknown</strong>";
 						geopserve_under_label_icon = "icon-dataset is-themed u-text--huge"
@@ -237,13 +403,13 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 				var geopserve_under_label_array = [geopserve_under_label_icon, geopserve_under_label_type, geopserve_under_label_name, geopserve_under_label_href, geopserve_under_label_created, geopserve_under_label_modified, geopserve_under_label_description];
 
 				// String for the ID of the div containing the assets.
-				var geopserve_master_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in;
+				var geopserve_master_div = 'geopserve_carousel_gen_div_' + geopserve_iter_in + geopserve_suffix_in;
 
 				// Modifies the 404 for proper syntax.
 				var geopserve_thumb_error = "this.src='" + geopserve_404_in + "'";
 
 				// Feeds all this prep work into the generator.
-				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_new_tab, geopserve_under_label_array);
+				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in);
 			}
 		})
 		.catch(function (error) {
@@ -261,13 +427,15 @@ function geopserve_gen_list(geopserve_id_in, geopserve_cat_in, geopserve_count_i
 // #param geopserve_label_text: Title of the asset.
 // #param geopserve_master_div: String for the ID of the div containing the assets.
 // #param geopserve_thumb_error: string for the 404 error image if no thumb exists.
-// #param geopserve_new_tab: Determines if a pane opens in a new window or not.
 // #param geopserve_under_label_array: Array of elements for the text under the title.
-//
-function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_new_tab, geopserve_under_label_array){
+// #param geopserve_iter_in: current interval of the creation process.
+function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in){
 
-	// Creates each element as variables.
-	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item'});
+	// Constructs ID of master div.
+	var master_div_id = 'geopserve-carousel-master-div-' + geopserve_iter_in;
+
+	// Creates each element as a variable.
+	var master_div = geopserve_createEl({type: 'div', class: 'm-results-item', id: master_div_id});
 	var main_div = geopserve_createEl({type: 'div', class: 'm-results-item__body'});
 	var icon_div = geopserve_createEl({type: 'div', class: 'm-results-item__icon m-results-item__icon--sm'});
 	var icon_span = geopserve_createEl({type: 'span', class: geopserve_under_label_array[0]});
@@ -351,5 +519,7 @@ function geopserve_createEl(geopserve_el_atts){
 		new_el.setAttribute('src', geopserve_el_atts.src);
 	if(geopserve_el_atts.onerror)
 		new_el.setAttribute('onerror', geopserve_el_atts.onerror);
+	if(geopserve_el_atts.id)
+		new_el.setAttribute('id', geopserve_el_atts.id);
 	return new_el;
 }

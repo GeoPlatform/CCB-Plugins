@@ -72,7 +72,8 @@ class Geoplatform_Service_Collector_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+		wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'font/fontawesome-all_5.0.10.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-service-collector-public.css', array(), $this->version, 'all' );
 	}
 
@@ -96,11 +97,11 @@ class Geoplatform_Service_Collector_Public {
 		 */
 
 		wp_enqueue_script( 'jquery' );
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-service-collector-public.js', array( 'jquery' ), $this->version, false );
-		// wp_enqueue_script( 'geop_client_api_min', 'https://github.com/GeoPlatform/client-api/blob/master/dist/js/geoplatform.client.js' );
-		wp_enqueue_script( 'geop_client_api_min', plugin_dir_url( __FILE__ ) . 'js/geoplatform.client.min.js', array(), $this->version, false );
-		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'js/geoplatform.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_q', plugin_dir_url( __FILE__ ) . 'js/q_2.0.3.js', array(), $this->version, false );
+		wp_enqueue_script( 'geop_bootstrap-js', plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'js/geoplatform.client.js', array(), $this->version, false );
+		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'js/geoplatform.js', array(), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-service-collector-public.js', array( 'jquery' ), $this->version, false );
 	}
 
 }

@@ -1,0 +1,20 @@
+:host, .m-layer-item {
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.m-layer-item__additional {
+    font-size:   0.875em;
+    margin-left: 2em;
+    width:       100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow:    hidden;
+
+    &.is-collapsed {
+        height: 0;
+    }
+}

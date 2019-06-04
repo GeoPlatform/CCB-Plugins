@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTypes } from 'geoplatform.client';
+import { ItemTypes, ItemTypeLabels } from 'geoplatform.client';
 
 import { environment } from '../../../../environments/environment';
 
@@ -21,30 +21,15 @@ export class LegendComponent implements OnInit {
 
     ngOnInit() {
         this.types = Object.keys(ItemTypes).map(t=> {
-            let type = ItemTypes[t], label = type, icon = this.getIconPath(type);
-            if(~label.indexOf(":")) label = label.split(':')[1];
-            if("VCard" === label) label = 'Contact';
+            let type = ItemTypes[t];
+            if(ItemTypes.STANDARD === type) return null;
+            let label = ItemTypeLabels[type], icon = this.getIconClass(type);
             return { id: type, label: label, icon: icon };
-        });
-    }
-
-    getIconPath(type) {
-        let result = "dataset";
-        switch(type) {
-            case ItemTypes.CONTACT:         result =  'vcard'; break;
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            default: type = type.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
-        return `../${environment.assets}${result}.svg`;
+        }).filter(t=>t!==null);
     }
 
     getIconClass(typeName) {
-        let type = "dataset";
-        switch(typeName) {
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            case ItemTypes.CONTACT:         type =  'vcard'; break;
-            default: type = typeName.replace(/^[a-z]+\:/i, '').toLowerCase();
-        }
+        let type = typeName.replace(/^[a-z]+\:/i, '').toLowerCase();
         return 'icon-' + type;
     }
 

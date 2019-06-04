@@ -23,6 +23,11 @@
         <span *ngIf="!item.lastModifiedBy">an unknown user</span>
     </div>
 
+    <div class="m-article__desc" *ngIf="clonedFrom">
+        <div><strong>Clone of </strong></div>
+        <gpid-resource-link [item]="clonedFrom"></gpid-resource-link>
+    </div>
+
     <div class="m-article__desc" *ngIf="item.visibility">
         <strong>Visibility </strong>{{item.visibility}}
     </div>
@@ -45,9 +50,7 @@
 
     <div class="m-article__desc" *ngIf="isAsset()">
         <div><strong>Creators(s) </strong></div>
-        <div *ngIf="!item.creators||!item.creators.length">
-            <em>None specified</em>
-        </div>
+        <em *ngIf="!item.creators||!item.creators.length">None specified</em>
         <div *ngFor="let creator of item.creators">
             <gpid-resource-link [item]="creator"></gpid-resource-link>
         </div>
@@ -55,9 +58,7 @@
 
     <div class="m-article__desc" *ngIf="isAsset()">
         <div><strong>Contact(s) </strong></div>
-        <div *ngIf="!item.contacts||!item.contacts.length">
-            <em>None specified</em>
-        </div>
+        <em *ngIf="!item.contacts||!item.contacts.length">None specified</em>
         <div *ngFor="let contact of item.contacts">
             <gpid-resource-link [item]="contact"></gpid-resource-link>
         </div>
