@@ -40,13 +40,13 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     $geopccb_pages_trimmed = array();
     $geopccb_final_objects_array = array();
 
-    $geopportal_category = get_cat_ID($geopccb_community_link);
-    if ($geopportal_category == 0)
-      $geopportal_category = get_cat_ID('Front Page');
+    $geopccb_category = get_cat_ID($geopccb_community_link);
+    if ($geopccb_category == 0)
+      $geopccb_category = get_cat_ID('Front Page');
 
     // Grabs all child categories of the parent one.
 		$geopccb_categories = get_categories( array(
-				'parent'     => $geopportal_category,
+				'parent'     => $geopccb_category,
 				'orderby'   => 'date',
 				'order'     => 'DESC',
 				'hide_empty'=> 0,
@@ -95,17 +95,29 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
       'orderby' => 'date',
       'order' => 'DESC',
       'numberposts' => -1,
-      'cat'=> $geopportal_category,
+      'cat'=> $geopccb_category,
       'post_status' => $geop_ccb_private_perm
     ) );
 
+		// Filters out subcategory content, so only surface-level content remains.
+		$geopccb_pages_cated = array();
+		foreach($geopccb_pages as $geopccb_page){
+			$geopccb_category_array = get_the_category($geopccb_page->ID);
+			foreach($geopccb_category_array as $geopccb_category_attribute){
+				if ($geopccb_category == $geopccb_category_attribute->term_id){
+					array_push($geopccb_pages_cated, $geopccb_page);
+					break;
+				}
+			}
+		}
+
     // Mimics the old way of populating, but functional.
     if ($geopccb_featured_sort_format == 'date'){
-			$geopccb_pages_trimmed = $geopccb_pages;
+			$geopccb_pages_trimmed = $geopccb_pages_cated;
     }
     else {
       // Assigns pages with valid priority values to the trimmed array.
-      foreach($geopccb_pages as $geopccb_page){
+      foreach($geopccb_pages_cated as $geopccb_page){
         if ($geopccb_page->geop_ccb_post_priority > 0)
         	array_push($geopccb_pages_trimmed, $geopccb_page);
       }
