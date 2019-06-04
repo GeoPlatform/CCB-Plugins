@@ -161,8 +161,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         this.defaultQuery.sort(this.sortField);
         //let listeners know the query has changed
         this.queryChange.next(this.query);
-        //trigger RPM tracking event
-        this.trackingSvc.logEvent(new TrackingEvent('Sort', this.sortField));
     }
 
     /**
@@ -173,7 +171,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         let changed = false;
         if(!isNaN($event.page)) {
             this.query.setPage($event.page);
-            // this.trackingSvc.logEvent(new TrackingEvent('Page', 'CurrentPage', this.query.getPage()));
 
             //don't update default query page because we want constraint
             // changes to restart paging at the first page of results
@@ -181,9 +178,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         }
         if(!isNaN($event.size)) {
             this.query.setPageSize($event.size);
-            this.trackingSvc.logEvent(
-                new TrackingEvent('Page', 'ResultsPerPage', this.query.getPage())
-            );
 
             //update default query because we don't want to lose user-selected
             // page size value when the constraints change
