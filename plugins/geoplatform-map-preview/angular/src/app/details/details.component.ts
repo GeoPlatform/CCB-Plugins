@@ -113,13 +113,14 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
                     this.onUserChange(user);
                     if(!user) throw new Error("Not signed in");
                 });
-            } else Promise.resolve(true);
-
+            } else {
+                this.onUserChange(user);
+                Promise.resolve(true);
+            }
         })
         .then( () => {
             //then request a URI for the new map
-            return this.itemService.getUri(this.mapItem);
-            // return null; //use if testing create without actually saving
+            return this.itemService.getUri(this.mapItem);            // return null; //use if testing create without actually saving
         })
         .then(uri => {
             if(!uri) throw new Error("Unable to generate a URI for the new map");
@@ -129,10 +130,21 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         .then( map => {
             //store selected layers onto map being created
             this.mapItem.layers = this.data.getDataWithState(true);
+            this.mapItem.baseLayer = this.data.getBaseLayer();
+
+            if('development' === environment.env) {
+                console.log("======");
+                console.log("Saving Map as...");
+                console.log(JSON.stringify(this.mapItem, null, ' '));
+                console.log("======");
+            }
+
             //and then save the map
             return this.itemService.save(map)
+            // return null;    //use if testing locally without actually saving
         })
         .then( created => {
+            if(!created) throw new Error("No response when attempting to create the map");
             //TODO display success message!
 
             //for now, take user to the map's IDp page
@@ -193,11 +205,11 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         this.ensureExtent();
         this.ensureResourceTypes();
 
-        if('development' === environment.env) {
-            console.log("======");
-            console.log("Updated Map Item Details");
-            console.log(JSON.stringify(this.mapItem, null, ' '));
-        }
+        // if('development' === environment.env) {
+        //     console.log("======");
+        //     console.log("Updated Map Item Details");
+        //     console.log(JSON.stringify(this.mapItem, null, ' '));
+        // }
     }
 
     /**

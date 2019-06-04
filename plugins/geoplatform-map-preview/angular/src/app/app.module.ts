@@ -68,10 +68,10 @@ import {
     SelectedLayerComponent
 } from './layers/layers.component';
 import {
-    DetailsComponent, ArrayPropertyComponent 
+    DetailsComponent, ArrayPropertyComponent
 } from './details/details.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
+import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnail.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +85,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SelectedLayerComponent,
     DetailsComponent,
     ArrayPropertyComponent,
-    SidebarComponent
+    SidebarComponent,
+    ThumbnailComponent,
+    ImageFallbackDirective
   ],
   imports: [
       BrowserModule,

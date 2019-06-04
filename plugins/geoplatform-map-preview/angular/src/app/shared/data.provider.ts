@@ -7,9 +7,10 @@ import { Query, ItemService, ItemTypes } from 'geoplatform.client';
 export const Events = {
     ON  : Symbol('on'),
     OFF : Symbol('off'),
-    ADD : Symbol("add"),
-    DEL : Symbol("del"),
-    VIZ : Symbol("viz")
+    ADD : Symbol("add"),    //add layer event
+    DEL : Symbol("del"),    //remove layer event
+    VIZ : Symbol("viz"),    //layer visibility event
+    BASE: Symbol("base")    //base layer event
 }
 
 
@@ -44,6 +45,7 @@ export interface Item {
 
 export interface MapItem extends Item {
     layers      : any[];
+    baseLayer  ?: any;
 }
 
 
@@ -105,7 +107,7 @@ export class DataProvider {
 
             let value = item[property] || null;
 
-            console.log("Setting Property '" + property + "' : " + JSON.stringify(value, null, ' '));
+            // console.log("Setting Property '" + property + "' : " + JSON.stringify(value, null, ' '));
 
             if(!this.details[property]) {
                 this.details[property] = value;
@@ -144,7 +146,7 @@ export class DataProvider {
                         if(!this.details.extent.maxy)
                             this.details.extent.maxy = value.maxy||50;
                     }
-                    
+
                 }
             }
 
@@ -341,7 +343,26 @@ export class DataProvider {
     }
 
 
+    setBaseLayer( layer : any, trigger ?: boolean ) {
+        this.details.baseLayer = layer;
+        if(typeof(trigger) === 'undefined' || trigger === true) {
+            let evt : DataEvent = { type : Events.BASE, data: [layer] };
+            this.sub.next(evt);
+        }
+    }
+    getBaseLayer() {
+        return this.details.baseLayer;
+    }
+
+
+
     trigger( event : DataEvent ) {
+        if(!event) return null;
+        //just in case a base layer is set without using .setBaseLayer(),
+        // catch the event here and then forward it to subscribers
+        if(Events.BASE === event.type) {
+            this.setBaseLayer(event.data[0], false);
+        }
         this.sub.next(event);
     }
 

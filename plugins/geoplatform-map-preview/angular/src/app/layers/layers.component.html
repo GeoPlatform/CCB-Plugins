@@ -18,6 +18,13 @@
                         Available ({{available.length}})
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        (click)="currentSection=Sections.BASE"
+                        [ngClass]="{active:Sections.BASE===currentSection}">
+                        Base Layer
+                    </a>
+                </li>
             </ul>
 
             <div class="o-map-layers__content">
@@ -65,6 +72,27 @@
                         </gpmp-layer-available>
                     </div>
 
+                </div>
+
+
+                <!--
+                    Base Layer options
+                -->
+                <div class="m-article__desc o-base-layers" *ngIf="Sections.BASE===currentSection">
+                    <div *ngFor="let layer of baseLayers" class="m-results-item"
+                        (click)="selectBaseLayer(layer)"
+                        [ngClass]="{active:selectedBaseLayer&&selectedBaseLayer.id===layer.id}">
+                        <div class="m-results-item__body">
+                            <gpmp-thumbnail [item]="layer"
+                                class="m-results-item__icon m-results-item__icon--sm">
+                            </gpmp-thumbnail>
+                            <div class="flex-1">
+                                <div class="m-results-item__heading">
+                                    <div class="flex-1">{{layer.label}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 

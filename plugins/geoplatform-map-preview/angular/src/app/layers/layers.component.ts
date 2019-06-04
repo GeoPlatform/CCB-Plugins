@@ -3,21 +3,27 @@ import {
     Input, Output, EventEmitter, SimpleChanges, HostBinding
 } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
+import { Query, LayerService } from "geoplatform.client";
 
 import { DataProvider, DataEvent, Events } from '../shared/data.provider';
+import { layerServiceProvider } from '../shared/service.provider';
 
 
 const SECTIONS = {
     MAP : "map",
-    AVAILABLE : "available"
+    AVAILABLE : "available",
+    BASE: "base"
 };
+
+const BASE_LAYER_RT = 'http://www.geoplatform.gov/ont/openlayer/BaseLayer';
 
 
 
 @Component({
   selector: 'gpmp-layer-list',
   templateUrl: './layers.component.html',
-  styleUrls: ['./layers.component.less']
+  styleUrls: ['./layers.component.less'],
+  providers: [layerServiceProvider]
 })
 export class LayersComponent implements OnInit {
 
@@ -29,10 +35,23 @@ export class LayersComponent implements OnInit {
     public warning : string;
     public activeLayers : any[];
     public available : any[] = [];
+    public baseLayers : any[] = [];
+    public selectedBaseLayer : any;
     private dataSubscription : ISubscription;
 
 
-    constructor() { }
+    constructor( layerService : LayerService ) {
+
+        let query = new Query().resourceTypes(BASE_LAYER_RT)
+            .fields('*').facets([]).pageSize(20);
+        layerService.search(query).then( (response:any) => {
+            this.baseLayers = response.results;
+        })
+        .catch( (e: Error) => {
+            console.log("Unable to fetch available base layer options");
+        });
+
+    }
 
     ngOnInit() {
         if(this.data) {
@@ -64,6 +83,16 @@ export class LayersComponent implements OnInit {
         }
         this.data.trigger(evt);
         // item.visibility = !item.visibility;
+    }
+
+
+    selectBaseLayer(layer) {
+        this.selectedBaseLayer = layer;
+        let evt : DataEvent = {
+            type: Events.BASE,
+            data: [layer]
+        }
+        this.data.trigger(evt);
     }
 
 

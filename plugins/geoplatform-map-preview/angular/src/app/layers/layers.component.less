@@ -56,3 +56,21 @@
         &:hover { color: #fff; }
     }
 }
+
+
+
+
+/** Override for smaller results listing for base layers */
+.o-base-layers {
+    .m-results-item {
+        margin: 0.5em;
+        cursor: pointer;    //show as selectable on each item's root
+
+        .m-results-item__body { padding: 0.25em; }
+
+        &.active {
+            background-color: fadeOut(@color-blue-xlt, 85%);
+            border-color: @color-blue-xlt;
+        }
+    }
+}

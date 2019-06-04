@@ -7,6 +7,7 @@ export const environment = {
     production: false,
     env: 'development',
     ualUrl: 'https://sit-ual.geoplatform.us',
+    // ualUrl: 'http://localhost:4040',         //TESTING SAVES LOCALLY
     wpUrl: '',
     root: '/',
     assets: '/assets',
