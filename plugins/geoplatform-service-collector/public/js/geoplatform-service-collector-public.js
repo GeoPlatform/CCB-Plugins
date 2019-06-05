@@ -285,9 +285,10 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		query.setClassifier(geopserve_kg_id, geopserve_class_array);
 	}
 
-	// Adds thumbnails to the query return.
+	// Adds thumbnails and clone-of to the query return.
 	var fields = query.getFields();
 	fields.push("thumbnail");
+	fields.push("_cloneOf");
 	query.setFields(fields);
 
 	// Performs the query grab.
@@ -408,8 +409,13 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 				// Modifies the 404 for proper syntax.
 				var geopserve_thumb_error = "this.src='" + geopserve_404_in + "'";
 
+				// Sets clone value, if present.
+				var geopserve_clone_val = "none";
+				if (geopserve_results[i].hasOwnProperty('_cloneOf'))
+					geopserve_clone_val = geopserve_redirect_in + geopserve_results[i]._cloneOf;
+
 				// Feeds all this prep work into the generator.
-				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in);
+				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in, geopserve_clone_val);
 			}
 		})
 		.catch(function (error) {
@@ -429,7 +435,8 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 // #param geopserve_thumb_error: string for the 404 error image if no thumb exists.
 // #param geopserve_under_label_array: Array of elements for the text under the title.
 // #param geopserve_iter_in: current interval of the creation process.
-function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in){
+// #param geopserve_clone_val: "none" if not cloned, URL of the original element's Item Details page if so.
+function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in, geopserve_clone_val){
 
 	// Constructs ID of master div.
 	var master_div_id = 'geopserve-carousel-master-div-' + geopserve_iter_in;
@@ -441,7 +448,7 @@ function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, g
 	var icon_span = geopserve_createEl({type: 'span', class: geopserve_under_label_array[0]});
 	var body_div = geopserve_createEl({type: 'div', class: 'flex-1'});
 	var head_div = geopserve_createEl({type: 'div', class: 'm-results-item__heading'});
-	var head_href = geopserve_createEl({type: 'a', href: geopserve_asset_link , target: '_blank', html: geopserve_label_text});
+	var head_href = geopserve_createEl({type: 'a', href: geopserve_asset_link, target: '_blank', html: geopserve_label_text});
 	var mid_div = geopserve_createEl({type: 'div', class: 'm-results-item__facets'});
 	var top_span = geopserve_createEl({type: 'span', class: 'm-results-item__type', html: geopserve_under_label_array[1]});
 	var top_sub_span = geopserve_createEl({type: 'span', html: " by "});
@@ -451,6 +458,14 @@ function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, g
 	var second_gap = document.createTextNode(" | ");
 	var bottom_span = geopserve_createEl({type: 'span', html: geopserve_under_label_array[5]});
 	var sub_div = geopserve_createEl({type: 'div', class: 'm-results-item__description', html: geopserve_under_label_array[6]});
+
+	// Creates cloned dif if necessary.
+	if (geopserve_clone_val != "none"){
+		var clone_div = geopserve_createEl({type: 'div', class: 'm-results-item__facets'});
+		var clone_icon = geopserve_createEl({type: 'span', class: 'fas fa-clone t-fg--gray-md'});
+		var clone_text = document.createTextNode(" Cloned from ");
+		var clone_href = geopserve_createEl({type: 'a', href: geopserve_clone_val, html: 'another item', target: '_blank'});
+	}
 
 	// Creates thumbnail image only if asset possesses a thumbnail.
 	if (geopserve_thumb_src !== 'undefined')
@@ -470,8 +485,17 @@ function geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, g
 	mid_div.appendChild(second_gap);
 	mid_div.appendChild(bottom_span);
 
+	if (geopserve_clone_val != "none"){
+		clone_div.appendChild(clone_icon);
+		clone_div.appendChild(clone_text);
+		clone_div.appendChild(clone_href);
+	}
+
 	body_div.appendChild(head_div);
 	body_div.appendChild(mid_div);
+	if (geopserve_clone_val != "none"){
+		body_div.appendChild(clone_div);
+	}
 	body_div.appendChild(sub_div);
 
 	main_div.appendChild(icon_div);
