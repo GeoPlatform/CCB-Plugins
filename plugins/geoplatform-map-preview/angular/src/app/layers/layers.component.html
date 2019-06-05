@@ -18,6 +18,13 @@
                         Available ({{available.length}})
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        (click)="currentSection=Sections.BASE"
+                        [ngClass]="{active:Sections.BASE===currentSection}">
+                        Base Layer
+                    </a>
+                </li>
             </ul>
 
             <div class="o-map-layers__content">
@@ -64,7 +71,43 @@
                             (onActivate)="toggleLayer($event)">
                         </gpmp-layer-available>
                     </div>
+                    <div *ngIf="!available.length">
+                        There are no layers to preview for the item. This could be
+                        because it has no services associated or no layers configured.
+                        If you believe this is an error, contact the
+                        <a href="mailto:servicedesk@geoplatform.gov?subject=Map%20Preview%20Plugin">
+                            GeoPlatform Service Desk
+                        </a> and let us know.
+                    </div>
 
+                </div>
+
+
+                <!--
+                    Base Layer options
+                -->
+                <div class="m-article__desc o-base-layers" *ngIf="Sections.BASE===currentSection">
+                    <div *ngFor="let layer of baseLayers" class="m-results-item"
+                        (click)="selectBaseLayer(layer)"
+                        [ngClass]="{active:selectedBaseLayer&&selectedBaseLayer.id===layer.id}">
+                        <div class="m-results-item__body">
+                            <gpmp-thumbnail [item]="layer"
+                                class="m-results-item__icon m-results-item__icon--sm">
+                            </gpmp-thumbnail>
+                            <div class="flex-1">
+                                <div class="m-results-item__heading">
+                                    <div class="flex-1">{{layer.label}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!baseLayers.length">
+                        There are no base layers to choose from, probably because of
+                        an error. Please, contact the
+                        <a href="mailto:servicedesk@geoplatform.gov?subject=Map%20Preview%20Plugin">
+                            GeoPlatform Service Desk
+                        </a> and let us know.
+                    </div>
                 </div>
 
 

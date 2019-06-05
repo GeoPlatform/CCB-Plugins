@@ -352,6 +352,9 @@ export class MapComponent implements OnInit, OnChanges {
             case Events.VIZ :
                 this.map.toggleLayerVisibility(event.data[0].layerId);
                 break;
+
+            case Events.BASE :
+                this.map.setBaseLayer(event.data[0]);
         }
     }
 

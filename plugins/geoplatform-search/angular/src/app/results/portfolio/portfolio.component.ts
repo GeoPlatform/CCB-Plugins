@@ -59,7 +59,8 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             this.defaultQuery.getFields().concat([
                 QueryFields.THUMBNAIL,
                 QueryFields.RESOURCE_TYPES,
-                QueryFields.LANDING_PAGE
+                QueryFields.LANDING_PAGE,
+                '_cloneOf'   //DT-2621
             ])
         );
         this.defaultQuery.setFacets('type');
@@ -71,7 +72,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-
 
         /* FOR TESTING PURPOSES ONLY */
         // setTimeout(() => {
@@ -203,7 +203,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     getIconClass(item) {
-        let type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase();
+        let type = item.type.replace(/^.+\:/i, '').toLowerCase();
         return 'icon-' + type;
     }
 
@@ -217,11 +217,25 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.COMMUNITY: type = "communities"; break;
             case ItemTypes.CONTACT: type = "contacts"; break;
             case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
-            default: type = item.type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's'; break;
+            default: type = item.type.replace(/^.+\:/i, '').toLowerCase() + 's'; break;
         }
         if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
         else return '/resources';
 
+    }
+
+    getCloneOfActivationUrl(item) {
+        let type = item.type;
+        let id = item._cloneOf;
+        if(!type || !id) return '';
+        switch(type) {
+            case ItemTypes.GALLERY: type = "galleries"; break;
+            case ItemTypes.COMMUNITY: type = "communities"; break;
+            case ItemTypes.CONTACT: type = "contacts"; break;
+            case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
+            default: type = item.type.replace(/^.+\:/i, '').toLowerCase() + 's'; break;
+        }
+        return `${environment.wpUrl}/resources/${type}/${id}`;
     }
 
 

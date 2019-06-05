@@ -86,6 +86,12 @@
                             <em>last modified</em> {{item.modified|date:'mediumDate':'UTC'}}
                         </span>
                     </div>
+                    <div *ngIf="item._cloneOf" class="m-results-item__facets">
+                        &nbsp;
+                        <span class="fas fa-clone t-fg--gray-md"></span>
+                        Cloned from
+                        <a href="{{getCloneOfActivationUrl(item)}}" target="_blank">another item</a>
+                    </div>
                     <div class="m-results-item__description" [innerHtml]="item.description"></div>
                     <div class="m-results-item__actions">
                         <a class="is-linkless" (click)="findSimilarTo(item)">Find similar items</a>
@@ -98,18 +104,18 @@
 
             </div>
 
-            <div class="m-results-item__footer">
-                <!-- <div class="m-results-item__stats">
+            <!-- <div class="m-results-item__footer">
+                <div class="m-results-item__stats">
                     <div><strong>{{item.type}}</strong></div>
                     <button type="button" *ngIf="item.createdBy" class="btn btn-link"
                         (click)="addCreatorConstraint(item.createdBy)">{{item.createdBy}}</button>
                     <div *ngIf="item.created" title="Creation date">C: {{item.created}}</div>
                     <div *ngIf="item.modified" title="Last modified date">M: {{item.modified}}</div>
-                </div> -->
-                <!-- <div class="m-results-item__actions">
+                </div>
+                <div class="m-results-item__actions">
                     <a>Find similar</a>
-                </div> -->
-            </div>
+                </div>
+            </div> -->
         </div>
 
     </div>

@@ -126,32 +126,44 @@ echo "<div class='l-body l-body--two-column'>";
 
  		foreach($geopccb_pages_final as $geopccb_post){
 
- 			// Grabs default 404 image as thumb and overwrites if the post has one.
- 			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
- 			if ( has_post_thumbnail($geopccb_post) )
- 				$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($geopccb_post);
+			// Makes sure the current item is assigned to this category.y
+			$geopccb_current_cat_bool = false;
+			$geopccb_category_array = get_the_category($geopccb_post->ID);
+			foreach($geopccb_category_array as $geopccb_category_attribute){
+				if ($geopccb_category == $geopccb_category_attribute->term_id)
+					$geopccb_current_cat_bool = true;
+			}
+			if ($geopccb_current_cat_bool){
 
- 			// To prevent entries overlapping their blocks, sets min height to match thumb.
- 			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
- 			$geopccb_archive_scaled_height = ((350 * $height) / $width) + 30;
+			// if (get_the_category($geopccb_post->ID)[0]->term_id == $geopccb_category){
 
-			// Sets the More Information link to point to the post or page, but replaces
-			// it with the cat link's URL custom value if it is a cat link.
-			$geopccb_link_url = get_the_permalink($geopccb_post);
-			if (get_post_type($geopccb_post) == 'geopccb_catlink')
-				$geopccb_link_url = esc_url($geopccb_post->geop_ccb_cat_link_url);
+	 			// Grabs default 404 image as thumb and overwrites if the post has one.
+	 			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
+	 			if ( has_post_thumbnail($geopccb_post) )
+	 				$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($geopccb_post);
 
-			// Final output.
-			echo "<div class='m-article m-article--flex'>";
-				echo "<a class='m-article__thumbnail is-16x9' href='" . $geopccb_link_url . "'>";
-					echo "<img alt='Article Heading' src='" . $geopccb_archive_disp_thumb . "'>";
-				echo "</a>";
-				echo "<div class='m-article__body'>";
-					echo "<a class='m-article__heading' href='" . $geopccb_link_url . "'>" . get_the_title($geopccb_post) . "</a>";
-					echo "<div class='m-article__desc'>" . get_the_date("F j, Y", $geopccb_post->ID) . "</div>";
-					echo "<div class='m-article__desc'>" . esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) . "</div>";
+	 			// To prevent entries overlapping their blocks, sets min height to match thumb.
+	 			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
+	 			$geopccb_archive_scaled_height = ((350 * $height) / $width) + 30;
+
+				// Sets the More Information link to point to the post or page, but replaces
+				// it with the cat link's URL custom value if it is a cat link.
+				$geopccb_link_url = get_the_permalink($geopccb_post);
+				if (get_post_type($geopccb_post) == 'geopccb_catlink')
+					$geopccb_link_url = esc_url($geopccb_post->geop_ccb_cat_link_url);
+
+				// Final output.
+				echo "<div class='m-article m-article--flex'>";
+					echo "<a class='m-article__thumbnail is-16x9' href='" . $geopccb_link_url . "'>";
+						echo "<img alt='Article Heading' src='" . $geopccb_archive_disp_thumb . "'>";
+					echo "</a>";
+					echo "<div class='m-article__body'>";
+						echo "<a class='m-article__heading' href='" . $geopccb_link_url . "'>" . get_the_title($geopccb_post) . "</a>";
+						echo "<div class='m-article__desc'>" . get_the_date("F j, Y", $geopccb_post->ID) . "</div>";
+						echo "<div class='m-article__desc'>" . esc_attr(wp_strip_all_tags($geopccb_post->post_excerpt)) . "</div>";
+					echo "</div>";
 				echo "</div>";
-			echo "</div>";
+			}
  		}
 
   echo "</div>";
