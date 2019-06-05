@@ -228,7 +228,14 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
         let type = item.type;
         let id = item._cloneOf;
         if(!type || !id) return '';
-        if(type) return `${environment.wpUrl}/resources/${type}/${id}`;
+        switch(type) {
+            case ItemTypes.GALLERY: type = "galleries"; break;
+            case ItemTypes.COMMUNITY: type = "communities"; break;
+            case ItemTypes.CONTACT: type = "contacts"; break;
+            case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
+            default: type = item.type.replace(/^.+\:/i, '').toLowerCase() + 's'; break;
+        }
+        return `${environment.wpUrl}/resources/${type}/${id}`;
     }
 
 
