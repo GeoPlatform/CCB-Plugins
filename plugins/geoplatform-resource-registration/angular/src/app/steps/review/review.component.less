@@ -1,5 +1,27 @@
 
 
+.p-review__container { }
+.p-review__main { }
+.p-review__aside { }
+
+
+@media(min-width: 768px) {
+    .p-review__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .p-review__main {
+        flex: 2;
+    }
+    .p-review__aside {
+        flex: 1;
+        margin-left: 2em;
+    }
+}
+
+
+
 .o-review__container {
     display: block;
 }
@@ -80,18 +102,16 @@
     padding: .5em 0;
     overflow: hidden;
     position: relative;
+    display: flex;
 
-    // label {
-    //     position: absolute;
-    //     left: 0;
-    //     width: 10em;
-    //     word-break: break-word;
-    // }
+    & > label {
+        font-weight: 700;
+        flex: 0 1 10em;
+        margin-right: 1em;
+    }
 
     .a-property-value {
         display: block;
-        // margin-left: 12em;
-
         em { color: #777; }
     }
 }

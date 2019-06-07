@@ -48,8 +48,10 @@ export abstract class AuthenticatedComponent {
      * for authentication events and clean up internals
      */
     destroy() {
-        this.gpAuthSubscription.unsubscribe();
-        this.gpAuthSubscription = null;
+        if(this.gpAuthSubscription) {
+            this.gpAuthSubscription.unsubscribe();
+            this.gpAuthSubscription = null;
+        }
         this.user = null;
         this.authService = null;
     }
@@ -61,10 +63,15 @@ export abstract class AuthenticatedComponent {
     getUser() : GeoPlatformUser { return this.user; }
 
     /** @return {string} JWT token associated with the current user or null */
-    getAuthToken() : string { return this.authService.getToken(); }
+    getAuthToken() : string {
+        return this.authService ? this.authService.getToken() : null;
+    }
 
     /** @return Promise containing current user or null */
-    checkAuth() : Promise<GeoPlatformUser> { return this.authService.check(); }
+    checkAuth() : Promise<GeoPlatformUser> {
+        if(this.authService) return this.authService.check();
+        return Promise.resolve({username:'tester'} as GeoPlatformUser);
+    }
 
     /**
      * @param {GeoPlatformUser} user - authenticated user object or null if not authed

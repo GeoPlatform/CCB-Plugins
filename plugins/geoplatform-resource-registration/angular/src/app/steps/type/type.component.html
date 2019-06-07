@@ -41,6 +41,7 @@
                     <mat-hint>A rich description helps others discover your resource</mat-hint>
                 </mat-form-field>
 
+                <!-- PUBLISHERS -->
                 <gprr-autocomplete-mat-chip
                     [label]="'Publishers'"
                     [icon]="'icon-organization'"
@@ -50,6 +51,18 @@
                     [formGroup]="formGroup"
                     [filterFn]="filterPublishers">
                 </gprr-autocomplete-mat-chip>
+
+                <!-- SPECIALIZATIONS -->
+                <gprr-autocomplete-mat-chip
+                    [label]="'Specialization'"
+                    [placeholder]="'Specify resource specialization(s)'"
+                    [hint]="'Resources can be specialized to enhance search, discovery, and usage by other users. Specializations are type-specific and may not exist for all types.'"
+                    [fieldName]="PROPS.RESOURCE_TYPES"
+                    [formGroup]="formGroup"
+                    [filterFn]="filterResourceTypes">
+                </gprr-autocomplete-mat-chip>
+
+
 
             </div>
 
@@ -63,36 +76,8 @@
 
             <div class="type__section" *ngIf="currentType">
 
-                <!-- if user selects Dataset type -->
-                <div *ngIf="currentType==='dcat:Dataset'">
-
-                    <mat-form-field floatLabel="always">
-                        <mat-label>
-                            <mat-icon matPrefix>link</mat-icon>
-                            Download URL
-                        </mat-label>
-                        <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Specify a download URL">
-                        <mat-hint>If the dataset is downloadable via a web-accessible URL</mat-hint>
-                        <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
-                    </mat-form-field>
-
-                </div>
-
-
                 <!-- if user selects Service type -->
-                <div *ngIf="currentType==='regp:Service'">
-
-                    <mat-form-field floatLabel="always">
-                        <mat-label>
-                            <mat-icon matPrefix>link</mat-icon>
-                            Service URL
-                        </mat-label>
-                        <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}" placeholder="Provide the service's URL" required>
-                        <mat-hint>The web-accessible URL to the service's API</mat-hint>
-                        <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">
-                            {{getErrorMessage(PROPS.ACCESS_URL)}}
-                        </mat-error>
-                    </mat-form-field>
+                <div *ngIf="currentType===TYPES.SERVICE">
 
                     <mat-form-field floatLabel="always">
                         <mat-label>Service Type</mat-label>
@@ -110,51 +95,20 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <div class="u-mg-bottom--xxxlg">
-                        <p>
-                            Once a URL and Service Type is specified, you may
-                            fetch metadata from the web service to pre-populate
-                            information about the service.
-                        </p>
-                        <button mat-raised-button color="accent" (click)="fetchServiceInfo()">
-                            <span *ngIf="!status.isFetchingServiceInfo">Fetch Service Info</span>
-                            <mat-progress-spinner mode="indeterminate"
-                                [diameter]="32" *ngIf="status.isFetchingServiceInfo"></mat-progress-spinner>
-                        </button>
-                    </div>
-
                 </div>
 
-                <!-- if user selects Application type -->
-                <div *ngIf="currentType==='Application'">
 
-                  <mat-form-field floatLabel="always">
-                    <mat-label>
-                        <mat-icon matPrefix>link</mat-icon>
-                        Access URL
-                    </mat-label>
-                    <input matInput formControlName="{{PROPS.ACCESS_URL}}"
-                           placeholder="Specify the access URL of the Application"
-                           [required]="currentType==='Application'">
-                    <mat-hint>A website where more information can be gathered</mat-hint>
-                    <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">
-                        {{getErrorMessage(PROPS.ACCESS_URL)}}
-                    </mat-error>
-                  </mat-form-field>
+                <!-- if user selects Topic type -->
+                <div *ngIf="currentType===TYPES.TOPIC">
 
-                </div>
-
-              <!-- if user selects Topic type -->
-              <div *ngIf="currentType==='Topic'">
-
-                <gprr-autocomplete-mat-chip
-                  [label]="'Parent Topics'"
-                  [placeholder]="'Associate parent topics of the topic being registered'"
-                  [hint]="'Find parent topics using the typeahead and select them to associate'"
-                  [fieldName]="'subTopicOf'"
-                  [formGroup]="formGroup"
-                  [filterFn]="filterParentTopics">
-                </gprr-autocomplete-mat-chip>
+                    <gprr-autocomplete-mat-chip
+                        [label]="'Parent Topics'"
+                        [placeholder]="'Associate parent topics of the topic being registered'"
+                        [hint]="'Find parent topics using the typeahead and select them to associate'"
+                        [fieldName]="'subTopicOf'"
+                        [formGroup]="formGroup"
+                        [filterFn]="filterParentTopics">
+                    </gprr-autocomplete-mat-chip>
 
               </div>
 
@@ -166,14 +120,49 @@
 
                 <!-- Type-less fields -->
 
-                <gprr-autocomplete-mat-chip
-                    [label]="'Specialization'"
-                    [placeholder]="'Specify resource specialization(s)'"
-                    [hint]="'Resources can be specialized to enhance search, discovery, and usage by other users. Specializations are type-specific and may not exist for all types.'"
-                    [fieldName]="PROPS.RESOURCE_TYPES"
-                    [formGroup]="formGroup"
-                    [filterFn]="filterResourceTypes">
-                </gprr-autocomplete-mat-chip>
+
+                <mat-form-field floatLabel="always">
+                    <mat-label>
+                        <mat-icon matPrefix>link</mat-icon>
+                        Access URL
+                    </mat-label>
+                    <input type="url" matInput formControlName="{{PROPS.ACCESS_URL}}"
+                        placeholder="Specify a download URL"
+                        [required]="currentType===TYPES.SERVICE">
+                    <mat-hint>The url used to access the resource or resource's API</mat-hint>
+                    <mat-error *ngIf="isInvalid(PROPS.ACCESS_URL)">{{getErrorMessage(PROPS.ACCESS_URL)}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field floatLabel="always">
+                  <mat-label>
+                      <mat-icon matPrefix>link</mat-icon>
+                      Landing Page
+                  </mat-label>
+                  <input matInput formControlName="{{PROPS.LANDING_PAGE}}"
+                         placeholder="Specify the landing page of the resource">
+                  <mat-hint>A website where more information can be gathered about the resource</mat-hint>
+                  <mat-error *ngIf="isInvalid(PROPS.LANDING_PAGE)">{{getErrorMessage(PROPS.LANDING_PAGE)}}</mat-error>
+                </mat-form-field>
+
+
+                <!-- if user selects Service type -->
+                <div *ngIf="currentType===TYPES.SERVICE">
+
+                    <div class="u-mg-bottom--xxxlg">
+                        <p>
+                            Once a URL and Service Type is specified, you may
+                            fetch metadata from the web service to pre-populate
+                            information about the service.
+                        </p>
+                        <button mat-raised-button color="accent" (click)="fetchServiceInfo()"
+                            [disabled]="isInvalid(PROPS.ACCESS_URL)||isInvalid(PROPS.SERVICE_TYPE)">
+                            <span *ngIf="!status.isFetchingServiceInfo">Fetch Service Info</span>
+                            <mat-progress-spinner mode="indeterminate"
+                                [diameter]="32" *ngIf="status.isFetchingServiceInfo"></mat-progress-spinner>
+                        </button>
+                    </div>
+
+                </div>
 
             </div>
 

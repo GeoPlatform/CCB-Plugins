@@ -72,6 +72,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     public doesExist : string;
 
     public PROPS : any = ModelProperties;
+    public TYPES : any = ItemTypes;
 
 
     private formListener : any;
@@ -95,6 +96,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         this.formOpts[ModelProperties.TITLE] = ['', Validators.required];
         this.formOpts[ModelProperties.DESCRIPTION] = [''];
         this.formOpts[ModelProperties.ACCESS_URL] = ['', URL_VALIDATOR];
+        this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.SERVICE_TYPE] = [''];
         this.formOpts[ModelProperties.RESOURCE_TYPES] = [''];
         this.formOpts['$'+ModelProperties.RESOURCE_TYPES] = [''];   //temp field for autocomplete
@@ -150,6 +152,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
                 this.setValue(ModelProperties.DESCRIPTION, data[ModelProperties.DESCRIPTION]||null );
                 this.setValue(ModelProperties.SERVICE_TYPE, data[ModelProperties.SERVICE_TYPE]||null );
                 this.setValue(ModelProperties.CREATED_BY, data[ModelProperties.CREATED_BY]||null);
+                this.setValue(ModelProperties.LANDING_PAGE, data[ModelProperties.LANDING_PAGE]||null);
 
                 if(data[ModelProperties.RESOURCE_TYPES] && data[ModelProperties.RESOURCE_TYPES].length) {
                     let itemType = data[ModelProperties.TYPE];
@@ -221,12 +224,15 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
         //fetch list of resource types
         this.utilsService.capabilities(
-            ModelProperties.RESOURCE_TYPES, { types: TYPES.join(',') }
+            ModelProperties.RESOURCE_TYPES,
+            { types: TYPES.join(','), size: 100 }
         )
         .then( response => {
             response.results.forEach( type => {
                 (type.resourceTypes || []).forEach( rt => {
                     let t = rt.replace(/Type$/,'');
+                    if('Service' === t) t = ItemTypes.SERVICE;
+                    if('Dataset' === t) t = ItemTypes.DATASET;
                     this.availableResourceTypes[t] = this.availableResourceTypes[t] || [];
                     this.availableResourceTypes[t].push(type);
                 });

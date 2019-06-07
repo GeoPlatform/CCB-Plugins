@@ -29,6 +29,14 @@ var authService : AuthService = null;
 
 export function authServiceFactory() {
 
+    if(!environment.production) {
+        //while in development mode, don't create an
+        //instance of the gpoauth.AuthService because
+        //it will endlessly keep reloading the page
+        //trying to validate tokens
+        return null;
+    }
+
     //once service has been built, keep using it
     if(authService) return authService;
 

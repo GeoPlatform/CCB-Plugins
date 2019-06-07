@@ -84,7 +84,6 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
         this.formOpts[ModelProperties.TOPICS] = [''];
         this.formOpts['$'+ModelProperties.TOPICS] = [''];
-        this.formOpts[ModelProperties.LANDING_PAGE] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.FORM_THUMBNAIL_URL] = ['', URL_VALIDATOR];
         this.formOpts[ModelProperties.FORM_THUMBNAIL_CONTENT] = [''];
         this.formGroup = this.formBuilder.group(this.formOpts);
@@ -118,8 +117,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
                 let props = [
                     ModelProperties.KEYWORDS, ModelProperties.COMMUNITIES,
-                    ModelProperties.THEMES, ModelProperties.ASSETS,
-                    ModelProperties.LANDING_PAGE
+                    ModelProperties.THEMES, ModelProperties.ASSETS
                 ];
                 props.forEach( property => {
                     if(data[property] && data[property].length) {
