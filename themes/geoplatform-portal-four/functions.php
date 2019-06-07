@@ -84,6 +84,8 @@ function geop_ccb_register_menus() {
     array(
       'headfoot-featured' => __( 'HF - Featured' ),
       'headfoot-getInvolved' => __( 'HF - Get Involved' ),
+			'headfoot-exploreData' => __( 'HF - Explore Data' ),
+			'headfoot-appsService' => __( 'HF - Apps & Services' ),
       'headfoot-about' => __( 'HF - About' ),
     )
   );
