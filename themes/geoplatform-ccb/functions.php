@@ -42,7 +42,7 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
 
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
-    wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
+    wp_enqueue_style( 'geop_style', get_template_directory_uri() . '/css/geop-style.css');
     wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
     wp_enqueue_style( 'geop_bootstrap_css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
 

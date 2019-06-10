@@ -120,7 +120,8 @@ function geopserve_shortcode_generation($geopserve_atts){
 	), $geopserve_atts);
 	ob_start();
 
-	// Adding
+	// Adding GeoPlatform styling. Placing it here ensures it doesn't get
+	// overridden by the theme.
 	wp_enqueue_style( 'geop_style', plugin_dir_url( __FILE__ ) . 'public/css/geop-style.css', array());
 
 	// The original intention was to handle the shortcode output differently based
@@ -262,11 +263,6 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				// Checks if pagination is enabled and, if so, outputs the right control.
 				if ($geopserve_show_pages)
 					echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button'></button>";
-
-				if (wp_script_is('geop_bootstrap_js'))
-					echo "Yeet";
-				else
-					echo "Yote";
 
 				echo "</div>";
 			}
