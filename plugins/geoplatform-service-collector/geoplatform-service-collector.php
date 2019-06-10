@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             2.0.0
+ * @since             2.0.1
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSERVE_PLUGIN', '2.0.0' );
+define( 'GEOSERVE_PLUGIN', '2.0.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -120,7 +120,8 @@ function geopserve_shortcode_generation($geopserve_atts){
 	), $geopserve_atts);
 	ob_start();
 
-	// Adding
+	// Adding GeoPlatform styling. Placing it here ensures it doesn't get
+	// overridden by the theme.
 	wp_enqueue_style( 'geop_style', plugin_dir_url( __FILE__ ) . 'public/css/geop-style.css', array());
 
 	// The original intention was to handle the shortcode output differently based

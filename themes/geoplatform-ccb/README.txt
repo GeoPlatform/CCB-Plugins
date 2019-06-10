@@ -2,8 +2,8 @@
 
 -Contributors: imagemattersllc, kevins713, lheazel
 -Requires at least: WordPress 4.6.4
--Tested up to: WordPress 4.9.6
--Stable tag: 3.0.5
+-Tested up to: WordPress 5.2.0
+-Stable tag: 4.0.0
 -Version: 4.0.0
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
@@ -114,6 +114,10 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
  = 4.0.0 =
 * Release pending
+
+- Complete visual overhaul.
+- Front page is now widgetized, allowing wider customization options.
+- Broader controls for general website configuration.
 
 - TBD
 

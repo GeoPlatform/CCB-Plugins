@@ -10,28 +10,32 @@ function buildFormats() {
     let result = {};
 
     result[ItemTypes.DATASET] = [
-        {label: "ISO19139", value: "iso19139"},
-        {label: "ISO19115", value: "iso19115"},
-        {label: "GeoPlatform ISO19139 Profile", value: "gpfm"}
+        {label: "JSON", value: "json"},
+        {label: "ISO 19139", value: "iso19139"},
+        {label: "ISO 19115-3", value: "iso19115"},
+        {label: "ISO 19115-3 GeoPlatform Profile", value: "gpfm"}
     ];
     result[ItemTypes.SERVICE] = [
-        {label: "ISO19139", value: "iso19139"},
-        {label: "ISO19115", value: "iso19115"},
-        {label: "GeoPlatform ISO19139 Profile", value: "gpfm"}
+        {label: "JSON", value: "json"},
+        {label: "ISO 19139", value: "iso19139"},
+        {label: "ISO 19115-3", value: "iso19115"},
+        {label: "ISO 19115-3 GeoPlatform Profile", value: "gpfm"}
     ];
     result[ItemTypes.LAYER] = [
-        {label: "ISO19139", value: "iso19139"}
+        {label: "JSON", value: "json"},
+        {label: "ISO 19139 GeoPlatform Profile", value: "gpfm"}
     ];
     result[ItemTypes.MAP] = [
-        {label: "ISO19139", value: "iso19139"},
+        {label: "JSON", value: "json"},
+        {label: "ISO 19115-3 GeoPlatform Profile", value: "gpfm"},
         {label: "KML", value: "kml"},
         {label: "Web Map Context", value: "wmc"}
     ];
     result[ItemTypes.GALLERY] = [
-        {label: "ISO19139", value: "iso19139"}
+        {label: "JSON", value: "json"}
     ];
     result[ItemTypes.COMMUNITY] = [
-        {label: "ISO19139", value: "iso19139"}
+        {label: "JSON", value: "json"}
     ];
     return result;
 }

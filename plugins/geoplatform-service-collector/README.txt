@@ -3,8 +3,8 @@ Contributors: (this should be a list of wordpress.org userid's)
 Donate link: https://www.imagemattersllc.com
 Tags: comments, spam
 Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 2.0.0
+Tested up to: 5.2.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,12 +67,14 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 2.0.1 =
+* Feature and styling tweaks.
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+= 2.0.0 =
+* Complete admin and functional redesign. Extensive interactive options added.
+
+= 1.0.0 =
+* Initial release.
 
 == Upgrade Notice ==
 

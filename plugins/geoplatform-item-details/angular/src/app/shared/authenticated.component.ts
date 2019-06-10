@@ -5,6 +5,9 @@ import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 import { PluginAuthService } from './auth.service';
 
 
+const EDIT_ROLE = 'gp_editor';
+
+
 /**
  * Base class that can be used to hook authentication notifications into
  * Angular @Component instances.
@@ -66,6 +69,25 @@ export abstract class AuthenticatedComponent {
 
     /** @return Promise containing current user or null */
     checkAuth() : Promise<GeoPlatformUser> { return this.authService.check(); }
+
+    /**
+     * @param item - optional object the user may be able to edit
+     * @return boolean indicating whether user can edit the requested item or is an editor if no item was specified
+     */
+    canUserEdit(item ?: any) {
+        if(!this.user) return false;
+        if(this.user.isAuthorized(EDIT_ROLE)) return true;
+        return this.isAuthorOf(item);
+    }
+
+    /**
+     * @param item - object the user may be the owner of
+     * @return boolean indicating if the user is the associated creator/owner of the item
+     */
+    isAuthorOf(item ?: any) {
+        if(!this.user || !item) return false;
+        return item.createdBy && item.createdBy === this.user.username;
+    }
 
     /**
      * @param {GeoPlatformUser} user - authenticated user object or null if not authed

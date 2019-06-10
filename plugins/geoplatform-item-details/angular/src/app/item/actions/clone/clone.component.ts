@@ -51,7 +51,11 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
 
     isAuthenticated() {
         if(!environment.production) return true;
-        return super.isAuthenticated();
+        return super.canUserEdit(); //must be a "gp_editor" to clone
+    }
+
+    canDoAction() {
+        return this.isAuthenticated() && this.isSupported();
     }
 
     /**

@@ -5,8 +5,8 @@ Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-search
 Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
-Tested up to: 5.0.1
-Stable tag: 1.0.9
+Tested up to: 5.2.0
+Stable tag: 1.0.11
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -83,6 +83,12 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 
 == Changelog ==
 
+= 1.0.11 =
+* Fixed issues with local site search result pagination.
+
+= 1.0.10 =
+* Inserted custom local site search logic that factors in tags and categories.
+
 = 1.0.9 =
 * Updated visuals.
 * Localized site configuration improvements.
@@ -99,7 +105,7 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 * Fixed error with html redirects.
 
 = 1.0.5 =
-* Fixed versioning discrepancies.
+* Fixed version discrepancies.
 
 = 1.0.3 =
 * Initial release.

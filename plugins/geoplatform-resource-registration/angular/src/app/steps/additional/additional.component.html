@@ -43,10 +43,10 @@
                 </gprr-autocomplete-mat-chip>
 
                 <gprr-autocomplete-mat-chip
-                    [label]="'Topics'"
+                    [label]="'GeoPlatform Topics'"
                     [icon]="'icon-topic'"
                     [placeholder]="'Associate topics'"
-                    [hint]="'Find topics using the typeahead and select them to associate'"
+                    [hint]="'Find Topic assets using the typeahead and select them to associate'"
                     [fieldName]="PROPS.TOPICS"
                     [formGroup]="formGroup"
                     [filterFn]="filterTopics">
@@ -77,7 +77,7 @@
                 </mat-form-field>
 
 
-
+<!--
                 <mat-form-field floatLabel="always">
                   <mat-label>
                       <mat-icon matPrefix>link</mat-icon>
@@ -88,7 +88,7 @@
                   <mat-hint>A website where more information can be gathered</mat-hint>
                   <mat-error *ngIf="isInvalid(PROPS.LANDING_PAGE)">{{getErrorMessage(PROPS.LANDING_PAGE)}}</mat-error>
                 </mat-form-field>
-
+ -->
 
                 <!-- Thumbnail -->
                 <div>

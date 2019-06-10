@@ -27,14 +27,14 @@ export class PrimaryActionComponent implements OnInit {
         if(!this.item || !this.item.type) return false;
         let type = this.item.type;
         switch(type) {
-            case ItemTypes.DATASET:
-                if(!this.item.source || !this.item.source.uri) {
-                    setTimeout(() => {
-                        this.warning = "Dataset has no source link";
-                    });
-                    return false;
-                }
-                return true;
+            // case ItemTypes.DATASET:
+            //     if(!this.item.source || !this.item.source.uri) {
+            //         setTimeout(() => {
+            //             this.warning = "Dataset has no source link";
+            //         });
+            //         return false;
+            //     }
+            //     return true;
             case ItemTypes.MAP:
                 if(!this.getMapUrl()) {
                     setTimeout(() => {
@@ -53,7 +53,7 @@ export class PrimaryActionComponent implements OnInit {
         let type = this.item.type;
         switch(type) {
             case ItemTypes.MAP : this.openMap(); break;
-            // case ItemTypes.DATASET :
+            // case ItemTypes.DATASET : this.openDataset(); break;
             // case ItemTypes.SERVICE :
             // case ItemTypes.LAYER :
             // case ItemTypes.GALLERY :
@@ -73,7 +73,7 @@ export class PrimaryActionComponent implements OnInit {
         let type = this.item.type;
         switch(type) {
             case ItemTypes.MAP : return 'Open Map';
-            // case ItemTypes.DATASET :
+            // case ItemTypes.DATASET : return "View Source";
             // case ItemTypes.SERVICE :
             // case ItemTypes.LAYER :
             // case ItemTypes.GALLERY :
@@ -83,7 +83,7 @@ export class PrimaryActionComponent implements OnInit {
             // case ItemTypes.PERSON :
             // case ItemTypes.CONCEPT :
             // case ItemTypes.CONCEPT_SCHEME :
-            default: return 'Open';
+            default: return 'View in Object Editor';
         }
     }
 
@@ -113,8 +113,8 @@ export class PrimaryActionComponent implements OnInit {
      *
      */
     openDataset() {
-        if(!this.item.source || !this.item.source.uri) return;
-        window.open(this.item.source.uri, '_blank');
+        // if(!this.item.source || !this.item.source.uri) return;
+        // window.open(this.item.source.uri, '_blank');
     }
 
 
