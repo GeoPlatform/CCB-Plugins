@@ -78,7 +78,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           $geopportal_login_url = home_url();
         elseif ( is_category() )
           $geopportal_login_url = esc_url( get_category_link( $wp_query->get_queried_object_id() ) );
-        elseif (isset($post) && ( $post->post_name == 'register' || $post->post_name == 'geoplatform-items' || $post->post_name == 'geoplatform-map-preview' ))
+        elseif (isset($post) && ( $post->post_name == 'register' || $post->post_name == 'geoplatform-items' || $post->post_name == 'geoplatform-map-preview'  || $post->post_name == 'geoplatform-search'))
           $geopportal_login_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
         else
           $geopportal_login_url = get_permalink();

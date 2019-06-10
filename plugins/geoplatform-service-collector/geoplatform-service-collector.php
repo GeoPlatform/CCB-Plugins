@@ -263,6 +263,11 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				if ($geopserve_show_pages)
 					echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button'></button>";
 
+				if (wp_script_is('geop_bootstrap_js'))
+					echo "Yeet";
+				else
+					echo "Yote";
+
 				echo "</div>";
 			}
 			elseif((sizeof($geopserve_tab_array) <= 1 || !$geopserve_show_tabs) && $geopserve_show_pages){
