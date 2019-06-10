@@ -2,7 +2,7 @@
 
 **Contributors:** imagemattersllc, kevins713, lheazel
 **Requires at least:** WordPress 4.6.4   
-**Tested up to:** WordPress 4.9.6   
+**Tested up to:** WordPress 5.2.0
 **Stable tag:** 4.1.0
 **Version:** 4.1.0
 **License:** Apache 2.0   
