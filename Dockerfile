@@ -36,7 +36,7 @@ RUN curl -L -o /usr/src/easy-wp-smtp.zip \
 
 # email-subscribers:
 RUN curl -L -o /usr/src/email-subscribers.zip \
-					https://downloads.wordpress.org/plugin/email-subscribers.3.5.3.zip; \
+					https://downloads.wordpress.org/plugin/email-subscribers.4.1.3.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/email-subscribers.zip; \
 		rm /usr/src/email-subscribers.zip
