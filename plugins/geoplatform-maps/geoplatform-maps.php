@@ -358,7 +358,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 						<?php
 						if (esc_attr($geopmap_shortcode_array['use']) != 'featured'){
-							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn--sm' style='margin-right:.5em;'>";
+							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn--sm'>";
 								echo "<span class='geop-layer-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
 							echo "</button>";
 						}
