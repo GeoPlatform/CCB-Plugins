@@ -42,9 +42,9 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
 
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
-    wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
+    wp_enqueue_style( 'geop_style', get_template_directory_uri() . '/css/geop-style.css');
     wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
-    wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
+    wp_enqueue_style( 'geop_bootstrap_css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
 
     wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js' );
     wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
@@ -61,7 +61,7 @@ if ( ! function_exists ( 'geopccb_enqueue_bootstrap' ) ) {
 
   	if ( (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on')
         && ( !is_page( array('geoplatform-search', 'register', 'geoplatform-items', 'geoplatform-map-preview') ) ) ){
-  		wp_enqueue_script( 'bootstrap-js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
+  		wp_enqueue_script( 'geop_bootstrap_js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
   	}
   }
   add_action( 'wp_enqueue_scripts', 'geopccb_enqueue_bootstrap' );

@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.1.4
+ * @since             2.0.5
  * @package           Geop_Maps
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Maps
  * Plugin URI:        www.geoplatform.gov
  * Description:       Manage your own personal database of GeoPlatform interactive maps and use shortcode to insert them into your posts.
- * Version:           1.1.4
+ * Version:           2.0.5
  * Author:            Image Matters LLC: Lee Heazel
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOPMAP_PLUGIN', '1.1.4' );
+define( 'GEOPMAP_PLUGIN', '2.0.5' );
 
 /**
  * The code that runs during plugin activation.
@@ -358,7 +358,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 						<?php
 						if (esc_attr($geopmap_shortcode_array['use']) != 'featured'){
-							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn--sm' style='margin-right:.5em;'>";
+							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn--sm'>";
 								echo "<span class='geop-layer-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
 							echo "</button>";
 						}
