@@ -1,16 +1,17 @@
 import { Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 import { Query, ItemService, ItemTypes } from 'geoplatform.client';
-
+import { logger } from './logger';
 
 
 export const Events = {
-    ON  : Symbol('on'),
-    OFF : Symbol('off'),
-    ADD : Symbol("add"),    //add layer event
-    DEL : Symbol("del"),    //remove layer event
-    VIZ : Symbol("viz"),    //layer visibility event
-    BASE: Symbol("base")    //base layer event
+    ON      : Symbol('on'),
+    OFF     : Symbol('off'),
+    ADD     : Symbol("add"),    //add layer event
+    DEL     : Symbol("del"),    //remove layer event
+    VIZ     : Symbol("viz"),    //layer visibility event
+    BASE    : Symbol("base"),   //base layer event
+    EXTENT  : Symbol("extent")  //map extent change
 }
 
 
@@ -26,6 +27,15 @@ export interface Extent {
     miny: number;
     maxy: number;
 }
+
+
+export interface LayerState {
+    layer : any;
+    layerId: string;
+    visibility: boolean;
+    opacity: number;
+}
+
 
 export interface Item {
     uri         : string;
@@ -44,7 +54,7 @@ export interface Item {
 }
 
 export interface MapItem extends Item {
-    layers      : any[];
+    layers      : LayerState[];
     baseLayer  ?: any;
 }
 
@@ -63,7 +73,7 @@ export class DataProvider {
         createdBy   : null,
         resourceTypes : [],
         keywords    : [],
-        layers      : [],
+        layers      : [] as LayerState[],
         themes      : [],
         topics      : [],
         publishers  : [],
@@ -174,7 +184,7 @@ export class DataProvider {
 
             let type = it.type;
             if(!type) {
-                console.log("Item " + it.id + " has no type and therefore cannot be previewed");
+                logger.warn("Item (" + it.id + ") has no type and therefore cannot be previewed");
                 return;
             }
 
@@ -208,7 +218,7 @@ export class DataProvider {
             .fields('*')
             .types(ItemTypes.LAYER)
             .page(0)
-            .pageSize(50);
+            .pageSize(100);
         query.setParameter("service", svcIds.join(','));
         this.searchItems(query);
     }
@@ -221,7 +231,7 @@ export class DataProvider {
             .fields('*')
             .types(ItemTypes.LAYER)
             .page(0)
-            .pageSize(50);
+            .pageSize(100);
         query.setParameter( "service", items.map(it=>it.id).join(',') );
         this.searchItems(query);
     }
@@ -241,7 +251,6 @@ export class DataProvider {
 
         let page : number = query.getPage() as number;
         let pageSize : number  = query.getPageSize() as number;
-        // console.log("Searching page #" + page + " (" + pageSize + ")")
 
         this.itemService.search(query).then( (response : any) => {
 
@@ -267,11 +276,16 @@ export class DataProvider {
             }
         })
         .catch(e => {
-            console.log("Error searching for items: " + e.message);
+            logger.error("Error searching for items: " + e.message);
         });
     }
 
 
+    setExtent( extent : Extent ) {
+        this.extent = extent;
+        let evt = { type : Events.EXTENT, data: [extent] } as DataEvent;
+        this.sub.next(evt);
+    }
 
     getExtent() : Extent {
         return this.extent;
@@ -280,9 +294,9 @@ export class DataProvider {
     addData(item : any | any[], warning ?: string) {
 
         if(Array.isArray(item)) {
-            this.data = this.data.concat( (item as any[]).map(it => this.wrapItem(it) ) );
+            this.data = this.data.concat( (item as any[]) );
         } else {
-            this.data.push( this.wrapItem(item) );
+            this.data.push( item );
         }
 
         this.adjustExtent();
@@ -296,7 +310,7 @@ export class DataProvider {
     }
 
     removeData(item : any) {
-        let idx = this.data.findIndex( it => it.layerId === item.id);
+        let idx = this.data.findIndex( it => it.id === item.id);
         if(idx > -1) {
             this.data.splice(idx, 1);
             let evt = {
@@ -314,8 +328,12 @@ export class DataProvider {
         return this.data;
     }
 
+    /**
+     * @param state - boolean flag indicating whether the data object is selected
+     * @return array of data objects matching specified state
+     */
     getDataWithState( state : boolean ) : any[] {
-        return this.data.filter( d => !!this.states[d.layerId] );
+        return this.data.filter( d => !!this.states[d.id] );
     }
 
     /**
@@ -330,8 +348,8 @@ export class DataProvider {
 
         let type = Events.ON;
         arr.forEach( it => {
-            this.states[it.layerId] = !this.states[it.layerId];
-            if( !this.states[it.layerId] ) type = Events.OFF;
+            this.states[it.id] = !this.states[it.id];
+            if( !this.states[it.id] ) type = Events.OFF;
         });
 
         let evt : DataEvent = { type : type, data: arr };
@@ -339,7 +357,10 @@ export class DataProvider {
     }
 
     getDataState( item : any ) : boolean {
-        return !!this.states[item.layerId];
+        return this.getDataStateById(item.id);
+    }
+    getDataStateById( id : string ) : boolean {
+        return !!this.states[id];
     }
 
 
@@ -373,28 +394,13 @@ export class DataProvider {
 
     /**
      *
-     */
-    private wrapItem(item : any) : any {
-        if(!item.layer) {
-            return {
-                layer : item,
-                layerId : item.id,
-                opacity: 1.0,
-                visibility: true
-            };
-        }
-        return item;
-    }
-
-    /**
-     *
      *
      */
     private adjustExtent() {
         let extent : Extent = { minx: 179, maxx: -179, miny: 89, maxy: -89 };
         this.data.forEach( it => {
 
-            let itExt : Extent = it.layer.extent as Extent;
+            let itExt : Extent = it.extent as Extent;
             if(!itExt) return;
 
             extent.minx = Math.min(extent.minx, itExt.minx||179);

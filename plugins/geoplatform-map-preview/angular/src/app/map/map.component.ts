@@ -18,9 +18,13 @@ import {
 import * as esri from "esri-leaflet";
 import "leaflet.vectorgrid";
 
-import { DataProvider, Events, DataEvent } from '../shared/data.provider';
+import {
+    DataProvider, Events, DataEvent, Extent, LayerState
+} from '../shared/data.provider';
 import { layerServiceProvider } from '../shared/service.provider';
 import { NG2HttpClient } from '../shared/http-client';
+import { environment } from '../../environments/environment';
+import { logger } from '../shared/logger';
 
 
 const EXTENT_STYLE = {
@@ -31,12 +35,6 @@ const EXTENT_STYLE = {
     fillOpacity: 0.7
 };
 
-interface Bbox {
-    minx: number;
-    maxx: number;
-    miny: number;
-    maxy: number;
-}
 
 @Component({
   selector: 'gpmp-map',
@@ -46,7 +44,7 @@ interface Bbox {
 })
 export class MapComponent implements OnInit, OnChanges {
 
-    @Input() extent : Bbox;
+    @Input() extent : Extent;
     @Input() data : DataProvider;
 
     public errors : any[] = [] as any[];
@@ -130,6 +128,19 @@ export class MapComponent implements OnInit, OnChanges {
         LayerFactory.setLayerService(this.layerService);
 
         this.setDefaultBaseLayer();
+
+        //listen for map pan/zoom events so we can update the map details
+        map.on('moveend', () => { this.onMapBoundsChange(); });
+    }
+
+    onMapBoundsChange() {
+        let bounds = this.map.getMap().getBounds();
+        logger.debug("Map Extent Changed: ", bounds.toBBoxString());
+        let extent : Extent = {
+            minx: bounds.getWest(), miny: bounds.getSouth(),
+            maxx: bounds.getEast(), maxy: bounds.getNorth()
+        };
+        this.data.setExtent(extent);
     }
 
     /**
@@ -137,10 +148,6 @@ export class MapComponent implements OnInit, OnChanges {
      */
     setDefaultBaseLayer() {
         return DefaultBaseLayer.get(this.layerService).then(baseLayer => {
-            // if(this.mapId) {
-            //     //only show warning if this happens loading a map
-            //     this.warnings.push(new Error("Using default base layer"));
-            // }
             this.map.setBaseLayer(baseLayer);
             return baseLayer;
         });
@@ -156,45 +163,17 @@ export class MapComponent implements OnInit, OnChanges {
             if(!map || !map.baseLayer) {
                 this.setDefaultBaseLayer();
             }
-
-            // if(map.extent) {
-            //     this.extentControl.setExtent([
-            //         [map.extent.miny, map.extent.minx],
-            //         [map.extent.maxy, map.extent.maxx]
-            //     ]);
-            // }
-
             return map;
         })
         .catch(e => {
-
-            console.log("Unable to load map '" + id + "' because " + e.message);
+            logger.error("Unable to load map (" + id + ") because of: ", e.message);
             console.log(e);
-
             this.setDefaultBaseLayer();
-
-            //display error message to user
-            this.errors.push(e);
-
+            this.errors.push(e);    //display error message to user
             return Promise.resolve(null);
         });
     }
 
-    /**
-     * @param {string} id - GP Layer object to load
-     */
-    loadLayer(id) {
-        this.layerService.get(id)
-        .then( layer => {
-            if(layer.extent) {
-                this.setExtent(layer.extent);
-            }
-            this.map.addLayers(layer);
-        })
-        .catch( e => {
-            //TODO display error about loading layer
-        });
-    }
 
     /**
      * @param {object} extent - GP extent object ( { minx: ..., miny: ..., maxx: ..., maxy: ...} )
@@ -203,30 +182,7 @@ export class MapComponent implements OnInit, OnChanges {
         if(extent) {
             let bounds = this.getBoundsFor(extent);
             if(!bounds) return;
-
-            // this.extentControl.setExtent(bounds);
-
-            //MapCore Map expects extent, not array
-            this.map.setExtent(extent);
-
-            // if(!this.mapId && !this.layerId) {
-            //     //if not loading a map or layer, show extent layer
-            //     if(!this.extentLayer) {
-            //         this.extentLayer = new L.FeatureGroup();
-            //         this.extentLayer.addTo(this.map.getMap());
-            //     }
-            //     let l = this.renderBounds(bounds, !!this.mapId||!!this.layerId);
-            //     if(!l) {
-            //         console.log("WARN: Could not render extent as a path layer");
-            //         return;
-            //     }
-            //     this.extentLayer.addLayer(l);
-            //
-            // } else if(this.extentLayer) {
-            //     //if loading a map or layer, don't show extent layer
-            //     this.extentLayer.remove();
-            //     this.extentLayer = null;
-            // }
+            this.map.setExtent(extent); //MapCore Map expects extent, not array
         }
     }
 
@@ -324,15 +280,28 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
 
+    private wrapLayer(item : any) : any {
+        if(!item.layer) {
+            return {
+                layer : item,
+                layerId : item.id,
+                opacity: 1.0,
+                visibility: true
+            };
+        }
+        return item;
+    }
+
+
 
     onDataEvent( event : DataEvent ) {
-        // console.log("Map.onDataEvent(" + event.type.toString() + ")");
+        logger.debug("Map.onDataEvent(" + event.type.toString() + ")");
         switch(event.type) {
 
             case Events.ON :
 
                 let count = this.data.getData().length;
-                let data = event.data;
+                let data = event.data.map(d=>this.wrapLayer(d));
                 this.map.addLayers(data);
 
                 if(this.extentTimer) {
@@ -346,15 +315,16 @@ export class MapComponent implements OnInit, OnChanges {
                 break;
 
             case Events.OFF :
-                this.map.removeLayer(event.data[0].layerId);
+                this.map.removeLayer(event.data[0].id);
                 break;
 
             case Events.VIZ :
-                this.map.toggleLayerVisibility(event.data[0].layerId);
+                this.map.toggleLayerVisibility(event.data[0].id);
                 break;
 
             case Events.BASE :
                 this.map.setBaseLayer(event.data[0]);
+                break;
         }
     }
 
