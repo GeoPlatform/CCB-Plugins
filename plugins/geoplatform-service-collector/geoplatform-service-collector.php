@@ -444,7 +444,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 										geopserve_current_suffix, geopserve_sort_style,	geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 
 									// Search bar count applicator.
-									geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
+									// geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
 
 									// Pagination control for previous page. Only triggers if the
 									// current page is not the first.

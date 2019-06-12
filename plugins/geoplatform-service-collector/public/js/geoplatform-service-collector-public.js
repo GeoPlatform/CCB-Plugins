@@ -34,6 +34,9 @@
 // will only have to deal with one data type at a time. Will discern how many
 // copies exist of the given asset type and apply that number to the search area.
 //
+// THIS FUNCTION IS DEPRECATED AND ONLY REMAINS FOR REFERENCE.
+// IT WILL BE DELETED AFTER CODE CLEANUP.
+//
 // #param geopserve_id_array: array of strings for each asset type to query.
 // #param geopserve_cat_in: the data type for the query.
 // #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
@@ -141,6 +144,8 @@ function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_ite
 	itemSvc.search(query)
 	.then(function (response) {
 
+		// console.log(response.totalResults);
+
 		// Variables for the text and page element it's to be attached to.
 		var geopserve_master_div = 'geopserve_carousel_search_div_' + geopserve_iter_in;
 
@@ -199,32 +204,33 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 	const ItemTypes = GeoPlatformClient.ItemTypes;
 	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
 
-	var query = new Query();
+	var genQuery = new Query();
+	var countQuery = new Query();
 
 	// Sets type of asset to grab.
 	if (geopserve_cat_in == "Datasets")
-		query.setTypes(ItemTypes.DATASET);
+		genQuery.setTypes(ItemTypes.DATASET);
 	if (geopserve_cat_in == "Services")
-		query.setTypes(ItemTypes.SERVICE);
+		genQuery.setTypes(ItemTypes.SERVICE);
 	if (geopserve_cat_in == "Layers")
-		query.setTypes(ItemTypes.LAYER);
+		genQuery.setTypes(ItemTypes.LAYER);
 	if (geopserve_cat_in == "Maps")
-		query.setTypes(ItemTypes.MAP);
+		genQuery.setTypes(ItemTypes.MAP);
 	if (geopserve_cat_in == "Galleries")
-		query.setTypes(ItemTypes.GALLERY);
+		genQuery.setTypes(ItemTypes.GALLERY);
 	if (geopserve_cat_in == "Communities")
-		query.setTypes(ItemTypes.COMMUNITY);
+		genQuery.setTypes(ItemTypes.COMMUNITY);
 	if (geopserve_cat_in == "Applications")
-		query.setTypes(ItemTypes.APPLICATION);
+		genQuery.setTypes(ItemTypes.APPLICATION);
 	if (geopserve_cat_in == "Topics")
-		query.setTypes(ItemTypes.TOPIC);
+		genQuery.setTypes(ItemTypes.TOPIC);
 	if (geopserve_cat_in == "Websites")
-		query.setTypes(ItemTypes.WEBSITE);
+		genQuery.setTypes(ItemTypes.WEBSITE);
 
 	// Sets return count, current page, and sortation style.
-	query.setPageSize(geopserve_count_in);
-	query.setPage(geopserve_current_page);
-	query.setSort(geopserve_sort_style);
+	genQuery.setPageSize(geopserve_count_in);
+	genQuery.setPage(geopserve_current_page);
+	genQuery.setSort(geopserve_sort_style);
 
 	// Cleans, explodes, combines, and applies community and usedby criteria.
 	var geopserve_com_use_array = '';
@@ -241,14 +247,14 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		geopserve_com_use_array = geopserve_com_use_array.concat(geopserve_usedby_array);
 	}
 	if (geopserve_com_use_array != undefined && geopserve_com_use_array.length > 0)
-		query.usedBy(geopserve_com_use_array);
+		genQuery.usedBy(geopserve_com_use_array);
 
 	// Cleans, explodes, and applies theme criteria.
 	if (geopserve_theme_id){
 		var geopserve_theme_temp = geopserve_theme_id.replace(/ /g, "-");
 		geopserve_theme_temp = geopserve_theme_temp.replace(/,/g, "-");
 		geopserve_theme_array = geopserve_theme_temp.split("-");
-		query.setThemes(geopserve_theme_array);
+		genQuery.setThemes(geopserve_theme_array);
 	}
 
 	// Cleans, explodes, combines, and applies title/label criteria.
@@ -258,7 +264,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		geopserve_label_array = geopserve_label_temp.split("-");
 		for (i = 0; i < geopserve_label_array.length; i++)
 			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
-		query.setQ(geopserve_label_array);
+		genQuery.setQ(geopserve_label_array);
 	}
 
 	// Cleans, explodes, and applies keyword criteria.
@@ -266,7 +272,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		var geopserve_keyword_temp = geopserve_keyword_id.replace(/ /g, "-");
 		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
 		geopserve_keyword_array = geopserve_keyword_temp.split("-");
-		query.setKeywords(geopserve_keyword_array);
+		genQuery.setKeywords(geopserve_keyword_array);
 	}
 
 	// Cleans, explodes, and applies topic criteria.
@@ -274,7 +280,7 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		var geopserve_topic_temp = geopserve_topic_id.replace(/ /g, "-");
 		geopserve_topic_temp = geopserve_topic_temp.replace(/,/g, "-");
 		geopserve_topic_array = geopserve_topic_temp.split("-");
-		query.setTopics(geopserve_topic_array);
+		genQuery.setTopics(geopserve_topic_array);
 	}
 
 	// Cleans, explodes, and applies classifier criteria.
@@ -282,18 +288,35 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
 		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
 		geopserve_class_array = geopserve_class_temp.split("-");
-		query.setClassifier(geopserve_kg_id, geopserve_class_array);
+		genQuery.setClassifier(geopserve_kg_id, geopserve_class_array);
 	}
 
 	// Adds thumbnails and clone-of to the query return.
-	var fields = query.getFields();
+	var fields = genQuery.getFields();
 	fields.push("thumbnail");
 	fields.push("_cloneOf");
-	query.setFields(fields);
+	genQuery.setFields(fields);
 
 	// Performs the query grab.
-	itemSvc.search(query)
+	itemSvc.search(genQuery)
 		.then(function (response) {
+
+			// Determines the object ID to which the generated text will apply.
+			var geopserve_browseall_div = 'geopserve_carousel_search_div_' + geopserve_iter_in;
+
+			// Determines singular, plural, or empty results text.
+			var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_cat_in;
+			if (response.totalResults == 1){
+				var geopserve_cat_single = geopserve_cat_in;
+				geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
+				geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
+				geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
+			}
+			if (response.totalResults <= 0)
+				geopserve_search_text = 'No ' + geopserve_cat_in.toLowerCase() + ' to browse';
+
+			// Attache the text.
+			document.getElementById(geopserve_browseall_div).innerHTML = geopserve_search_text;
 
 			// Gets the results.
 			var geopserve_results = response.results;
