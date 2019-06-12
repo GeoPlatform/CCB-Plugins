@@ -33,8 +33,9 @@
 // will only have to deal with one data type at a time. Generate the panes of
 // the carousel.
 //
-// #param object containing all values to be processed.
-function geopserve_gen_list(geopserve_options){
+// #param geopserve_options: object containing all values to be processed.
+// #param geopserve_query: query if doing a live label filter.
+function geopserve_gen_list(geopserve_options, geopserve_query){
 
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
@@ -69,12 +70,15 @@ function geopserve_gen_list(geopserve_options){
 		query.setThemes(geopserve_theme_array);
 	}
 
-	// Cleans, explodes, combines, and applies title/label criteria.
-	if (geopserve_options.label_id){
-		var geopserve_label_array = geopserve_options.label_id.replace(/,/g, "-").split("-");
-		for (i = 0; i < geopserve_label_array.length; i++)
-			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
-		query.setQ(geopserve_label_array);
+	// Cleans, explodes, combines, and applies title/label and query criteria.
+	if (geopserve_options.label_id || geopserve_query){
+		var geopserve_label_array = (geopserve_options.label_id) ? geopserve_options.label_id.replace(/,/g, "-").split("-") : [];
+		var geopserve_query_array = (geopserve_query) ? geopserve_query.replace(/,/g, "-").split("-") : [];
+		var geopserve_q_array = geopserve_label_array.concat(geopserve_query_array);
+		for (i = 0; i < geopserve_q_array.length; i++)
+			geopserve_q_array[i] = '"' + geopserve_q_array[i] + '"';
+		query.setQ(geopserve_q_array);
+		console.log(geopserve_q_array);
 	}
 
 	// Cleans, explodes, and applies keyword criteria.
@@ -104,23 +108,29 @@ function geopserve_gen_list(geopserve_options){
 	// Performs the query grab.
 	itemSvc.search(query)
 		.then(function (response) {
+			console.log(response);
 
 			// Determines the object ID to which the generated text will apply.
 			var geopserve_browseall_div = 'geopserve_carousel_search_div_' + geopserve_options.iter;
 
-			// Determines singular, plural, or empty results text.
-			var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_options.cat_name;
-			if (response.totalResults == 1){
-				var geopserve_cat_single = geopserve_options.cat_name;
-				geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
-				geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
-				geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
-			}
-			if (response.totalResults <= 0)
-				geopserve_search_text = 'No ' + geopserve_options.cat_name.toLowerCase() + ' to browse';
+			// "browse all number asset type" text attachement, only fires in geop
+			// search mode.
+			if (geopserve_options.search_state == 'geop'){
 
-			// Attache the text.
-			document.getElementById(geopserve_browseall_div).innerHTML = geopserve_search_text;
+				// Determines singular, plural, or empty results text.
+				var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_options.cat_name;
+				if (response.totalResults == 1){
+					var geopserve_cat_single = geopserve_options.cat_name;
+					geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
+					geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
+					geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
+				}
+				if (response.totalResults <= 0)
+					geopserve_search_text = 'No ' + geopserve_options.cat_name.toLowerCase() + ' to browse';
+
+				// Attaches the text.
+				document.getElementById(geopserve_browseall_div).innerHTML = geopserve_search_text;
+			}
 
 			// Gets the results.
 			var geopserve_results = response.results;
@@ -355,6 +365,7 @@ function geopserve_typeGrab(geopserve_cat_in){
 	return geopserve_typeMap[geopserve_cat_in];
 }
 
+// Performs similar to above, but with HTML values for output.
 function geopserve_typeGen(geopserve_cat_in){
 
 	var geopserve_typeMap = {

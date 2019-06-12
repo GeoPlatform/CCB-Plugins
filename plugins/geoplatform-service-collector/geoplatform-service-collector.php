@@ -439,6 +439,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 										redirect: "<?php echo $geopserve_redirect_url ?>",
 										home: "<?php echo home_url() ?>",
 										failsafe: "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>",
+										search_state: "<?php echo $geopserve_search_state ?>",
 									}
 
 									var geopserve_community_id = "<?php echo $geopserve_shortcode_array['community'] ?>";
@@ -465,7 +466,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									var geopserve_search_state = "<?php echo $geopserve_search_state ?>";
 
 									// Asset list creation.
-									geopserve_gen_list(geopserve_options);
+									geopserve_gen_list(geopserve_options, "");
 
 									// Search bar count applicator.
 									// geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
@@ -473,53 +474,45 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									// Pagination control for previous page. Only triggers if the
 									// current page is not the first.
 									jQuery(".geopserve-pagination-prev-button").click(function(event){
-										if (geopserve_current_page > 0){
+										if (geopserve_options.current_page > 0){
 
 											// Reduces the value of current page and determines which
 											// of the two "next page" divs to use.
-											geopserve_current_page = geopserve_current_page - 1;
-											geopserve_current_suffix == 'A' ? geopserve_next_suffix = 'N' : geopserve_next_suffix = 'A';
-
-											// Sets the array which contains changes values to a variable
-											var geopserve_id_search_array = geopserve_id_array;
+											geopserve_options.current_page = geopserve_options.current_page - 1;
+											var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
 
 											// If standard search is in effect, then the search criteria
 											// in the bar needs to be taken into consideration during
 											// paging. This section injects that info into the query
 											// array.
-											if (geopserve_search_state != 'geop' && geopserve_search_state != 'hide'){
-
-												var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
-												var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
-
-												if (geopportal_query_grab){
-													geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
-													geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
-												}
+											var geopserve_query_value = "";
+											if (geopserve_options.search_state != 'geop' && geopserve_options.search_state != 'hide'){
+												var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
+												var geopserve_query_value = jQuery("#" + geopportal_grabs_from).val();
 											}
 
 											// The new results are generated. Unlike usual, next_suffix
 											// is passed instead of current_suffix, and a different page
 											// number is sent to filter results.
-											geopserve_gen_list(geopserve_options);
+											geopserve_gen_list(geopserve_options, geopserve_query_value);
 
 											// With results on the new div, the previous one is hidden
 											// and the new one is made visible.
-											jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_next_suffix).removeClass('geopserve-hidden');
-											jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix).addClass('geopserve-hidden');
+											jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
+											jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
 
 											// Page number for the UI output is updated.
-											var new_page = "Page " + (geopserve_current_page + 1);
+											var new_page = "Page " + (geopserve_options.current_page + 1);
 											jQuery('.geopserve_pagination_tracker').text(new_page);
 
 											// Content is removed from the now hidden div.
-											var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
+											var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
 											while (myNode.firstChild){
 												myNode.removeChild(myNode.firstChild);
 											}
 
 											// Current suffix is updated to the new one.
-											geopserve_current_suffix = geopserve_next_suffix;
+											geopserve_options.current_suffix = geopserve_next_suffix;
 										}
 									});
 
@@ -528,35 +521,38 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									// value as opposed to decreasing, works identical to above.
 									jQuery(".geopserve-pagination-next-button").click(function(event){
 
-										geopserve_current_page =  geopserve_current_page + 1;
-										geopserve_current_suffix == 'A' ? geopserve_next_suffix = 'N' : geopserve_next_suffix = 'A';
+										geopserve_options.current_page =  geopserve_options.current_page + 1;
+										var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
 
-										var geopserve_id_search_array = geopserve_id_array;
-										if (geopserve_search_state != 'geop' && geopserve_search_state != 'hide' ){
-
-											var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
-											var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
-
-											if (geopportal_query_grab){
-												geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
-												geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
-											}
+										// If standard search is in effect, then the search criteria
+										// in the bar needs to be taken into consideration during
+										// paging. This section injects that info into the query
+										// array.
+										var geopserve_query_value = "";
+										if (geopserve_options.search_state != 'geop' && geopserve_options.search_state != 'hide'){
+											var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
+											var geopserve_query_value = jQuery("#" + geopportal_grabs_from).val();
 										}
 
-										geopserve_gen_list(geopserve_options);
+										// The new results are generated. Unlike usual, next_suffix
+										// is passed instead of current_suffix, and a different page
+										// number is sent to filter results.
+										geopserve_gen_list(geopserve_options, geopserve_query_value);
 
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_next_suffix).removeClass('geopserve-hidden');
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix).addClass('geopserve-hidden');
+										// With results on the new div, the previous one is hidden
+										// and the new one is made visible.
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
 
-										var new_page = "Page " + (geopserve_current_page + 1);
+										var new_page = "Page " + (geopserve_options.current_page + 1);
 										jQuery('.geopserve_pagination_tracker').text(new_page);
 
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
+										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
 										while (myNode.firstChild){
 											myNode.removeChild(myNode.firstChild);
 										}
 
-										geopserve_current_suffix = geopserve_next_suffix;
+										geopserve_options.current_suffix = geopserve_next_suffix;
 									});
 
 									// Search functionality trigger on button click. Performs a
@@ -564,29 +560,27 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									// that of the same, search criteria applied.
 									jQuery(".geopportal_port_community_search_stand_button").click(function(event){
 
+										var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
+
 										// Grabs the input parameters from the search bar.
-										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
+										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
 										var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
 
-										// Sets the array which contains changes values to a variable
-										var geopserve_id_search_array = geopserve_id_array;
-
-										// If there is input in the search bar, it's injected into
-										// the label_id section of the array, which may already
-										// contain a keyword or two.
-										if (geopportal_query_grab){
-											geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
-											geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
-										}
-
 										// Result generation.
-										geopserve_gen_list(geopserve_options);
+										geopserve_gen_list(geopserve_options, geopportal_query_grab);
+
+										// With results on the new div, the previous one is hidden
+										// and the new one is made visible.
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
 
 										// Flushes all content of the current suffix.
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
+										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
 										while (myNode.firstChild){
 											myNode.removeChild(myNode.firstChild);
 										}
+
+										geopserve_options.current_suffix = geopserve_next_suffix;
 									});
 
 									// Search functionality trigger on pressing enter in search bar.
@@ -594,21 +588,23 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									jQuery(".geopportal_port_community_search_stand_form").submit(function(event){
 										event.preventDefault();
 
-										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_iter).attr("grabs-from");
+										var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
+
+										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
 										var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
 
-										var geopserve_id_search_array = geopserve_id_array;
-										if (geopportal_query_grab){
-											geopportal_query_string = geopserve_id_array[2].concat("," + geopportal_query_grab);
-											geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
-										}
+										// Result generation.
+										geopserve_gen_list(geopserve_options, geopportal_query_grab);
 
-										geopserve_gen_list(geopserve_options);
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
+										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
 
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
+										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
 										while (myNode.firstChild){
 											myNode.removeChild(myNode.firstChild);
 										}
+
+										geopserve_options.current_suffix = geopserve_next_suffix;
 									});
 								});
 							</script>
