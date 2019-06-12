@@ -416,6 +416,31 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 							<!-- Carousel pane generation script. -->
 							<script type="text/javascript">
 								jQuery(document).ready(function() {
+
+									/*
+									 * TODO: use Obj for variables instead of geopserve_id_array
+									 */
+									var geopserve_options = {
+										community_id: "<?php echo $geopserve_shortcode_array['community'] ?>",
+										theme_id: "<?php echo $geopserve_shortcode_array['theme'] ?>",
+										label_id: "<?php echo $geopserve_shortcode_array['label'] ?>",
+										keyword_id: "<?php echo $geopserve_shortcode_array['keyword'] ?>",
+										topic_id: "<?php echo $geopserve_shortcode_array['topic'] ?>",
+										usedby_id: "<?php echo $geopserve_shortcode_array['usedby'] ?>",
+										class_id: "<?php echo $geopserve_shortcode_array['class'] ?>",
+										kg_id: "<?php echo $geopserve_shortcode_array['kg'] ?>",
+										current_page: parseInt('<?php echo $geopserve_current_page ?>', 10),
+										current_suffix: "<?php echo $geopserve_current_suffix ?>",
+										sort_style: "<?php echo $geopserve_sort_string ?>",
+										cat_name: "<?php echo $geopserve_tab_array[$i]['name'] ?>",
+										per_page: "<?php echo $geopserve_shortcode_array['count'] ?>",
+										iter: "<?php echo $i ?>",
+										ual_domain: "<?php echo $geopserve_ual_domain ?>",
+										redirect: "<?php echo $geopserve_redirect_url ?>",
+										home: "<?php echo home_url() ?>",
+										failsafe: "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>",
+									}
+
 									var geopserve_community_id = "<?php echo $geopserve_shortcode_array['community'] ?>";
 									var geopserve_theme_id = "<?php echo $geopserve_shortcode_array['theme'] ?>";
 									var geopserve_label_id = "<?php echo $geopserve_shortcode_array['label'] ?>";
@@ -440,8 +465,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 									var geopserve_search_state = "<?php echo $geopserve_search_state ?>";
 
 									// Asset list creation.
-									geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
-										geopserve_current_suffix, geopserve_sort_style,	geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+									geopserve_gen_list(geopserve_options);
 
 									// Search bar count applicator.
 									// geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
@@ -477,8 +501,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											// The new results are generated. Unlike usual, next_suffix
 											// is passed instead of current_suffix, and a different page
 											// number is sent to filter results.
-											geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
-												geopserve_next_suffix, geopserve_sort_style, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+											geopserve_gen_list(geopserve_options);
 
 											// With results on the new div, the previous one is hidden
 											// and the new one is made visible.
@@ -520,8 +543,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											}
 										}
 
-										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
-											geopserve_next_suffix, geopserve_sort_style, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+										geopserve_gen_list(geopserve_options);
 
 										jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_next_suffix).removeClass('geopserve-hidden');
 										jQuery('#geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix).addClass('geopserve-hidden');
@@ -558,8 +580,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 										}
 
 										// Result generation.
-										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
-											geopserve_current_suffix, geopserve_sort_style, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+										geopserve_gen_list(geopserve_options);
 
 										// Flushes all content of the current suffix.
 										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
@@ -582,8 +603,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											geopserve_id_search_array = [geopserve_community_id, geopserve_theme_id, geopportal_query_string, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id];
 										}
 
-										geopserve_gen_list(geopserve_id_search_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
-											geopserve_current_suffix,	geopserve_sort_style, geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
+										geopserve_gen_list(geopserve_options);
 
 										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_iter + geopserve_current_suffix);
 										while (myNode.firstChild){
