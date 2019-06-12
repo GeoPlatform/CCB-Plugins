@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOWPOAUTH_PLUGIN', '1.0.1' );
+define( 'GEOWPOAUTH_PLUGIN', '1.0.1' ); // <-- Is this a typo?
 
 
 // Sets the parameters of and then creates the token page. It deletes any old
@@ -80,6 +80,7 @@ function geopoauth_establish_globals() {
 	$geopoauth_rpmUrl = isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov';
 	$geopoauth_idpUrl = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
 	$geopoauth_token = isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '';
+	$cache_buster = time();
 
 	$geopoauth_stuff = <<<_GEOPLATFORMVAR
   <script type="text/javascript">
@@ -100,6 +101,22 @@ function geopoauth_establish_globals() {
   }
   </script>
 
+  <!-- RPM Reporting -->
+  <script src="https://s3.amazonaws.com/geoplatform-cdn/gp.rpm/stable/js/gp.rpm.browser.min.js?t=$cache_buster"></script>
+  <script type="text/javascript">
+	/* Setup Global RPM variable for usage in page.
+	 *
+	 * SIDE-EFFECT:
+	 * 	This call will report a 'PageView' event.
+	 *
+	 * Usage:
+	 * 	RPM.logEvent(TYPE, EVENT, ID)
+	 *
+	 * Full Usage Documentation:
+	 * 	http://geoplatform-cdn.s3-website-us-east-1.amazonaws.com/gp.rpm/stable/docs/jsdocs/RPMService.html
+	 */
+	window.RPM = RPMService();
+  </script>
 _GEOPLATFORMVAR;
 
 	echo $geopoauth_stuff;
