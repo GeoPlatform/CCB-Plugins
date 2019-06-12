@@ -460,6 +460,27 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				var geopmap_baseLayer = GeopMapInstance.getBaseLayer();
 				var geopmap_layerStates = GeopMapInstance.getLayers();
 				geop_layer_control_gen(GeopMapInstance, geopmap_layerStates, geopmap_item_details_base);
+
+				try {
+					if(typeof RPMService != 'undefined') {
+						var RPM = typeof window.RPM != 'object' ? window.RPM : RPMService();
+						var EVENT = 'Displayed';
+						/* Report Map view to RPM
+						* Replicate logic from:
+						* https://github.com/GeoPlatform/client-api/blob/master/src/services/tracking.js#L86-L132
+						*/
+						// Map Displayed
+						RPM.logEvent('Map', EVENT, geopmap_mapCode)
+						RPM.logEvent('Layer', EVENT, geopmap_baseLayer.id)
+						// Each Layer Displayed
+						geopmap_layerStates.map(l => RPM.logEvent('Layer', EVENT, l.layer_id))
+					} else {
+						console.log("Error: Unable to track Map usage -- RPM library not loaded")
+					}
+				} catch(err) {
+					console.log("Error: Error reporting Map usage to RPM: ", err)
+				}
+
 			}).catch( function(error){
 				geopmap_error_report += (error + "<BR>");
 			})
