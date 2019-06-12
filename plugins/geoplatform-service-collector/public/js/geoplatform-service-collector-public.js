@@ -1,171 +1,3 @@
-(function( $ ) {
-	'use strict';
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-})( jQuery );
-
-
-// Community asset count applicator. Called during each loop of the carousel, so
-// will only have to deal with one data type at a time. Will discern how many
-// copies exist of the given asset type and apply that number to the search area.
-//
-// #param geopserve_id_array: array of strings for each asset type to query.
-// #param geopserve_cat_in: the data type for the query.
-// #param geopserve_iter_in: iter of the loop in which this function is called, used for element attachement.
-// #param geopserve_ual_domain_in: UAL source to draw from.
-function geopserve_gen_count(geopserve_id_array, geopserve_cat_in, geopserve_iter_in, geopserve_ual_domain_in){
-
-	// Translates id array into individual query strings for each asset type.
-	var geopserve_community_id = geopserve_id_array[0];
-	var geopserve_theme_id = geopserve_id_array[1];
-	var geopserve_label_id = geopserve_id_array[2];
-	var geopserve_keyword_id = geopserve_id_array[3];
-	var geopserve_topic_id = geopserve_id_array[4];
-	var geopserve_usedby_id = geopserve_id_array[5];
-	var geopserve_class_id = geopserve_id_array[6];
-	var geopserve_kg_id = geopserve_id_array[7];
-
-	// Service collection setup.
-	const Query = GeoPlatformClient.Query;
-	const ItemTypes = GeoPlatformClient.ItemTypes;
-	let itemSvc = new GeoPlatformClient.ItemService(geopserve_ual_domain_in, new GeoPlatformClient.JQueryHttpClient());
-
-	var query = new Query();
-
-	// Sets type of asset type to grab.
-	if (geopserve_cat_in == "Datasets")
-		query.setTypes(ItemTypes.DATASET);
-	if (geopserve_cat_in == "Services")
-		query.setTypes(ItemTypes.SERVICE);
-	if (geopserve_cat_in == "Layers")
-		query.setTypes(ItemTypes.LAYER);
-	if (geopserve_cat_in == "Maps")
-		query.setTypes(ItemTypes.MAP);
-	if (geopserve_cat_in == "Galleries")
-		query.setTypes(ItemTypes.GALLERY);
-	if (geopserve_cat_in == "Communities")
-		query.setTypes(ItemTypes.COMMUNITY);
-	if (geopserve_cat_in == "Applications")
-		query.setTypes(ItemTypes.APPLICATION);
-	if (geopserve_cat_in == "Topics")
-		query.setTypes(ItemTypes.TOPIC);
-	if (geopserve_cat_in == "Websites")
-		query.setTypes(ItemTypes.WEBSITE);
-
-	// Cleans, explodes, combines, and applies community and usedby criteria.
-	var geopserve_com_use_array = '';
-	if (geopserve_community_id){
-		var geopserve_community_temp = geopserve_community_id.replace(/ /g, "-");
-		geopserve_community_temp = geopserve_community_temp.replace(/,/g, "-");
-		geopserve_community_array = geopserve_community_temp.split("-");
-		geopserve_com_use_array = geopserve_com_use_array.concat(geopserve_community_array);
-	}
-	if (geopserve_usedby_id){
-		var geopserve_usedby_temp = geopserve_usedby_id.replace(/ /g, "-");
-		geopserve_usedby_temp = geopserve_usedby_temp.replace(/,/g, "-");
-		geopserve_usedby_array = geopserve_usedby_temp.split("-");
-		geopserve_com_use_array = geopserve_com_use_array.concat(geopserve_usedby_array);
-	}
-	if (geopserve_com_use_array != undefined && geopserve_com_use_array.length > 0)
-		query.usedBy(geopserve_com_use_array);
-
-	// Cleans, explodes, and applies theme criteria.
-	if (geopserve_theme_id){
-		var geopserve_theme_temp = geopserve_theme_id.replace(/ /g, "-");
-		geopserve_theme_temp = geopserve_theme_temp.replace(/,/g, "-");
-		geopserve_theme_array = geopserve_theme_temp.split("-");
-		query.setThemes(geopserve_theme_array);
-	}
-
-	// Cleans, explodes, combines, and applies title/label criteria.
-	var geopserve_label_array = '';
-	if (geopserve_label_id){
-		var geopserve_label_temp = geopserve_label_id.replace(/,/g, "-");
-		geopserve_label_array = geopserve_label_temp.split("-");
-		for (i = 0; i < geopserve_label_array.length; i++)
-			geopserve_label_array[i] = '"' + geopserve_label_array[i] + '"';
-		query.setQ(geopserve_label_array);
-	}
-
-	// Cleans, explodes, and applies keyword criteria.
-	if (geopserve_keyword_id){
-		var geopserve_keyword_temp = geopserve_keyword_id.replace(/ /g, "-");
-		geopserve_keyword_temp = geopserve_keyword_temp.replace(/,/g, "-");
-		geopserve_keyword_array = geopserve_keyword_temp.split("-");
-		query.setKeywords(geopserve_keyword_array);
-	}
-
-	// Cleans, explodes, and applies topic criteria.
-	if (geopserve_topic_id){
-		var geopserve_topic_temp = geopserve_topic_id.replace(/ /g, "-");
-		geopserve_topic_temp = geopserve_topic_temp.replace(/,/g, "-");
-		geopserve_topic_array = geopserve_topic_temp.split("-");
-		query.setTopics(geopserve_topic_array);
-	}
-
-	// Cleans, explodes, and applies classifier criteria.
-	if (geopserve_class_id){
-		var geopserve_class_temp = geopserve_class_id.replace(/ /g, "-");
-		geopserve_class_temp = geopserve_class_temp.replace(/,/g, "-");
-		geopserve_class_array = geopserve_class_temp.split("-");
-		query.setClassifier(geopserve_kg_id, geopserve_class_array);
-	}
-
-	// Performs the query grab.
-	// geopserve_list_retrieve_objects(query, geopserve_ual_domain_in)
-	itemSvc.search(query)
-	.then(function (response) {
-
-		// Variables for the text and page element it's to be attached to.
-		var geopserve_master_div = 'geopserve_carousel_search_div_' + geopserve_iter_in;
-
-		// Determines singular, plural, or empty results text.
-		var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_cat_in;
-		if (response.totalResults == 1){
-			var geopserve_cat_single = geopserve_cat_in;
-			geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
-			geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
-			geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
-		}
-		if (response.totalResults <= 0)
-			geopserve_search_text = 'No ' + geopserve_cat_in.toLowerCase() + ' to browse';
-
-		// Creates the text and attaches it.
-		geop_search_node = document.createTextNode(geopserve_search_text);
-		document.getElementById(geopserve_master_div).appendChild(geop_search_node);
-	})
-	.catch(function (error) {
-		errorSelector.show();
-		workingSelector.hide();
-		pagingSelector.hide();
-	});
-}( jQuery );
-
 
 // Community list window creator. Called during each loop of the carousel, so
 // will only have to deal with one data type at a time. Generate the panes of
@@ -417,6 +249,21 @@ function geopserve_gen_list(geopserve_id_array, geopserve_cat_in, geopserve_coun
 				// Feeds all this prep work into the generator.
 				geopserve_gen_list_element(geopserve_thumb_src, geopserve_asset_link, geopserve_label_text, geopserve_master_div, geopserve_thumb_error, geopserve_under_label_array, geopserve_iter_in, geopserve_clone_val);
 			}
+
+			// Determines singular, plural, or empty results text.
+			var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_cat_in;
+			if (response.totalResults == 1){
+				var geopserve_cat_single = geopserve_cat_in;
+				geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
+				geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
+				geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
+			}
+			if (response.totalResults <= 0)
+				geopserve_search_text = 'No ' + geopserve_cat_in.toLowerCase() + ' to browse';
+
+			// Creates the text and attaches it.
+			geop_search_node = document.createTextNode(geopserve_search_text);
+			document.getElementById(geopserve_master_div).appendChild(geop_search_node);
 		})
 		.catch(function (error) {
 			errorSelector.show();

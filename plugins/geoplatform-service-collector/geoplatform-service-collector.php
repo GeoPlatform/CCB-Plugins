@@ -416,6 +416,15 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 							<!-- Carousel pane generation script. -->
 							<script type="text/javascript">
 								jQuery(document).ready(function() {
+
+									/*
+									 * TODO: use Obj for variables instead of geopserve_id_array
+									 */
+									// var options = {
+									// 	geopserve_community_id: "<?php echo $geopserve_shortcode_array['community'] ?>",
+									// }
+
+
 									var geopserve_community_id = "<?php echo $geopserve_shortcode_array['community'] ?>";
 									var geopserve_theme_id = "<?php echo $geopserve_shortcode_array['theme'] ?>";
 									var geopserve_label_id = "<?php echo $geopserve_shortcode_array['label'] ?>";
@@ -439,12 +448,49 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 									var geopserve_search_state = "<?php echo $geopserve_search_state ?>";
 
-									// Asset list creation.
-									geopserve_gen_list(geopserve_id_array, geopserve_cat_name, geopserve_result_count, geopserve_iter, geopserve_current_page,
-										geopserve_current_suffix, geopserve_sort_style,	geopserve_ual_domain, geopserve_redirect, geopserve_home, geopserve_failsafe);
 
-									// Search bar count applicator.
-									geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
+									// TODO:  this code should only run Once. Just once on the page
+									// Move it to where it needs to go to make that happen.
+									(function( $ ) {
+										/*
+										 * Only allow it to run once
+										 */
+										if(!window.loaded){ /* Bad: refactor this out */
+											window.loaded = true; /* Bad: refactor this out */
+											window.tabsLoaded = [] /* Bad: refactor this out */
+
+											jQuery('[data-slide-to]').on('click', (event) => {
+												var element = jQuery(event.target);
+												var num = (element.attr('data-slide-to') ?
+																element.attr('data-slide-to') :
+																element.parent().attr('data-slide-to'))
+												var type = (element.text() ?
+																element.text() :
+																element.parent().text())
+
+												if(!window.tabsLoaded[num]){ /* Bad: refactor this out */
+													window.tabsLoaded[num] = true /* Bad: refactor this out */
+													// Asset list creation.
+													geopserve_gen_list(geopserve_id_array
+																	 , type
+																	 , geopserve_result_count
+																	 , num
+																	 , geopserve_current_page
+																	 , geopserve_current_suffix
+																	 , geopserve_sort_style
+																	 , geopserve_ual_domain
+																	 , geopserve_redirect
+																	 , geopserve_home
+																	 , geopserve_failsafe);
+												}
+
+											});
+
+											// Initial Load of 1st type:
+											jQuery('[data-slide-to]')[0].click();
+										}
+
+									})( jQuery );
 
 									// Pagination control for previous page. Only triggers if the
 									// current page is not the first.
