@@ -81,12 +81,7 @@ export class LayersComponent implements OnInit {
     }
 
     toggleLayerViz(item : any) {
-        let evt : DataEvent = {
-            type: Events.VIZ,
-            data: [item]
-        }
-        this.data.trigger(evt);
-        // item.visibility = !item.visibility;
+        this.data.toggleVisibility(item);
     }
 
 
@@ -100,7 +95,11 @@ export class LayersComponent implements OnInit {
     }
 
     isLayerSelected(layer) {
-        return this.data.getDataState(layer);
+        return this.data.isSelected(layer);
+    }
+
+    isVisible(layer) {
+        return this.data.isVisible(layer);
     }
 
 
@@ -111,7 +110,7 @@ export class LayersComponent implements OnInit {
 
             case Events.ON :
             case Events.OFF :
-                this.activeLayers = this.data.getDataWithState(true);
+                this.activeLayers = this.data.getSelected(true);
                 break;
 
             case Events.ADD :
@@ -207,33 +206,25 @@ export class LayersComponent implements OnInit {
     template: `
         <div class="m-layer-item">
             <div class="d-flex flex-justify-between flex-align-center">
-                <button type="button" class="btn btn-sm btn-link" (click)="onClick()">
-                    <span *ngIf="!isLayerSelected()" class="far fa-square"></span>
+                <button class="btn btn-sm btn-link" type="button" (click)="onClick()">
+                    <span *ngIf="!isLayerSelected()" class="far fa-square t-fg--gray-md"></span>
                     <span *ngIf="isLayerSelected()" class="far fa-check-square"
                         [ngClass]="{'t-fg--gray-lt':!isSelected&&isParentSelected}">
                     </span>
                 </button>
-                <span class="flex-1 d-flex flex-justify-between flex-align-center">
-                    <span *ngFor="let idx of levelArr" class="u-mg-left--sm u-mg-right--xs"></span>
-                    <span *ngIf="item.parentLayer||item.parentLayer_id"
-                        class="u-mg-right--xs fas fa-level-up-alt fa-rotate-90 t-fg--gray-md">
-                    </span>
-                    <a class="flex-1" href="/resources/layers/{{item.id}}" target="_blank"
-                        title="View details about this layer">{{item.label}}</a>
-                </span>
-            </div>
-            <div class="m-layer-item__additional" [ngClass]="{'is-collapsed':isCollapsed}"
-                *ngIf="item.services&&item.services.length">
-                <a href="/resources/services/{{item.services[0].id}}" target="_blank"
-                    title="View details about this layer's service">
-                    <span class="icon-service"></span>
-                    {{item.services[0].label}}
+                <div [style.width.em]="level>1?level:0" [style.height.px]="1"></div>
+                <div *ngIf="item.parentLayer||item.parentLayer_id"
+                    class="fas fa-level-up-alt fa-rotate-90  u-mg-left--xxs u-mg-right--sm t-fg--gray-lt">
+                </div>
+                <a class="flex-1" href="/resources/layers/{{item.id}}" target="_blank"
+                    title="View details about this layer">
+                    {{item.label}}
                 </a>
             </div>
             <div *ngFor="let child of item.subLayers">
                 <gpmp-layer-available
                     [item]="child" [data]="data" [level]="level+1"
-                    [isSelected]="data.getDataState(child)"
+                    [isSelected]="data.isSelected(child)"
                     [isParentSelected]="isSelected||isParentSelected"
                     (onActivate)="toggleLayer($event)">
                 </gpmp-layer-available>
@@ -294,6 +285,7 @@ export class AvailableLayerComponent implements OnInit {
 export class SelectedLayerComponent {
 
     @Input() item : any;
+    @Input() isVisible : boolean = true;
     @Output() onActivate : EventEmitter<any> = new EventEmitter<any>();
 
     constructor() {}

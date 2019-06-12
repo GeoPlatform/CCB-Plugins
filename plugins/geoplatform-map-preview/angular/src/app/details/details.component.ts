@@ -129,7 +129,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         })
         .then( map => {
             //store selected layers onto map being created
-            this.mapItem.layers = this.data.getDataWithState(true)
+            this.mapItem.layers = this.data.getSelected(true)
             .map( (layer: any) => {
                 return {
                     layer: {
@@ -138,7 +138,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
                         type: layer.type
                     },
                     layerId: layer.id,
-                    visibility: true,
+                    visibility: this.data.isVisible(layer),
                     opacity: 1.0
                 } as LayerState;
             });

@@ -47,8 +47,7 @@
                     <div *ngFor="let item of activeLayers" class="m-layer-item">
                         <button type="button" class="btn btn-sm btn-link"
                             (click)="toggleLayerViz(item)">
-                            <span *ngIf="!item.visibility" class="fas fa-eye-slash"></span>
-                            <span *ngIf="item.visibility" class="fas fa-eye"></span>
+                            <span class="fas fa-eye" [ngClass]="{'t-fg--gray-lt':!isVisible(item)}"></span>
                         </button>
                         <span>{{item.label}}</span>
                     </div>

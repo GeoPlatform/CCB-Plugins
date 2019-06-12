@@ -88,8 +88,11 @@ export class DataProvider {
     //array of data objects
     private data : any[] = [] as any[];
 
-    //kvp of data states (added to map or not)
-    private states : {[key:string]:boolean} = {};
+    //kvp of data selected (added to map or not)
+    private selected : {[key:string]:boolean} = {};
+
+    //kvp of data marked as visible or hidden (must be in selected set first)
+    private visibility : {[key:string]:boolean} = {};
 
     //subscription with which to notify listeners of data changes
     private sub : Subject<DataEvent> = new Subject<DataEvent>();
@@ -332,8 +335,8 @@ export class DataProvider {
      * @param state - boolean flag indicating whether the data object is selected
      * @return array of data objects matching specified state
      */
-    getDataWithState( state : boolean ) : any[] {
-        return this.data.filter( d => !!this.states[d.id] );
+    getSelected( state : boolean ) : any[] {
+        return this.data.filter( d => !!this.selected[d.id] );
     }
 
     /**
@@ -348,20 +351,44 @@ export class DataProvider {
 
         let type = Events.ON;
         arr.forEach( it => {
-            this.states[it.id] = !this.states[it.id];
-            if( !this.states[it.id] ) type = Events.OFF;
+            this.selected[it.id] = !this.selected[it.id];
+            if( !this.selected[it.id] ) {
+                type = Events.OFF;
+                this.visibility[it.id] = false;
+            } else {
+                this.visibility[it.id] = true;
+            }
         });
 
         let evt : DataEvent = { type : type, data: arr };
         this.sub.next(evt);
     }
 
-    getDataState( item : any ) : boolean {
-        return this.getDataStateById(item.id);
+    isSelected( item : any ) : boolean {
+        let id = this.getId(item);
+        return !!this.selected[id];
     }
-    getDataStateById( id : string ) : boolean {
-        return !!this.states[id];
+
+    isVisible( item : any ) : boolean {
+        let id = this.getId(item);
+        return !!this.visibility[id];
     }
+
+    toggleVisibility( item : any ) {
+        if(!item || !item.id) return;
+        this.visibility[item.id] = !this.visibility[item.id];
+        let evt : DataEvent = { type: Events.VIZ, data: [item] }
+        this.trigger(evt);
+    }
+
+    private getId( item : any ) {
+        if(!item) return null;
+        let id = null;
+        if(typeof(item.id) !== 'undefined') id = item.id;
+        else if(typeof(item) === 'string') id = item;
+        return id;
+    }
+
 
 
     setBaseLayer( layer : any, trigger ?: boolean ) {
