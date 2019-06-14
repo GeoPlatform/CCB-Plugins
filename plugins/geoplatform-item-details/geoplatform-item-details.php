@@ -142,14 +142,16 @@ function geopccb_redirect_logic(){
 
 				// Gets the ID of the asset from the URL bar.
 			  $geopccb_redirect_id = "";
-			  preg_match('([a-f\d]{32})', $url_dump, $geopccb_redirect_id);
+			  preg_match('([a-f\d]{32}/.)', $url_dump, $geopccb_redirect_id);
 
-				// Constructs the complete UAL url.
-			  $geopccb_ual_url_full = $geopccb_ual_url_base . "/api/items/" . $geopccb_redirect_id[0] . $geopccb_redirect_val;
+				if (isset($geopccb_redirect_id[0]) && strlen($geopccb_redirect_id[0]) == 32){
+					// Constructs the complete UAL url.
+			  	$geopccb_ual_url_full = $geopccb_ual_url_base . "/api/items/" . $geopccb_redirect_id[0] . $geopccb_redirect_val;
 
-				// Performs 302 redirection.
-			  wp_redirect($geopccb_ual_url_base, 302);
-				exit;
+					// Performs 302 redirection.
+			  	wp_redirect($geopccb_ual_url_base, 302);
+					exit;
+				}
 			}
 		}
 	}
