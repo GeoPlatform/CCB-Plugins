@@ -111,17 +111,17 @@ function geopccb_redirect_logic(){
 			global $wp;
 			$url_dump = home_url($wp->request);
 			$geopccb_redirect_val = false;
-			$head_dump = getallheaders()['Accept'];
-			$head_explode = explode(",", $head_dump);
-
-			// Checks the array for each desired type, and assigns an associated extension
-			// to the redirect val if found; otherwise, the val is passed on.
-			$geopccb_redirect_val = (in_array("application/rdf+xml", $head_explode, true)) ? ".rdf" : $geopccb_redirect_val;
-			$geopccb_redirect_val = (in_array("application/ld+json", $head_explode, true)) ? ".jsonld" : $geopccb_redirect_val;
-			$geopccb_redirect_val = (in_array("application/json", $head_explode, true)) ? ".json" : $geopccb_redirect_val;
-			$geopccb_redirect_val = (in_array("text/x-turtle", $head_explode, true)) ? ".ttl" : $geopccb_redirect_val;
-			$geopccb_redirect_val = (in_array("text/n3", $head_explode, true)) ? ".n3" : $geopccb_redirect_val;
-			$geopccb_redirect_val = (in_array("application/n-triples", $head_explode, true)) ? ".nt" : $geopccb_redirect_val;
+			// $head_dump = getallheaders()['Accept'];
+			// $head_explode = explode(",", $head_dump);
+			//
+			// // Checks the array for each desired type, and assigns an associated extension
+			// // to the redirect val if found; otherwise, the val is passed on.
+			// $geopccb_redirect_val = (in_array("application/rdf+xml", $head_explode, true)) ? ".rdf" : $geopccb_redirect_val;
+			// $geopccb_redirect_val = (in_array("application/ld+json", $head_explode, true)) ? ".jsonld" : $geopccb_redirect_val;
+			// $geopccb_redirect_val = (in_array("application/json", $head_explode, true)) ? ".json" : $geopccb_redirect_val;
+			// $geopccb_redirect_val = (in_array("text/x-turtle", $head_explode, true)) ? ".ttl" : $geopccb_redirect_val;
+			// $geopccb_redirect_val = (in_array("text/n3", $head_explode, true)) ? ".n3" : $geopccb_redirect_val;
+			// $geopccb_redirect_val = (in_array("application/n-triples", $head_explode, true)) ? ".nt" : $geopccb_redirect_val;
 
 			// If the redirect val is still false, the URL bar is checked for extensions
 			// and redirect_val is assigned or passed on as appropriate.
@@ -142,8 +142,7 @@ function geopccb_redirect_logic(){
 
 				// Gets the ID of the asset from the URL bar.
 			  $geopccb_redirect_id = "";
-			  preg_match('([a-f\d]{32}/.)', $url_dump, $geopccb_redirect_id);
-
+			  preg_match('([a-f\d]{32})', $url_dump, $geopccb_redirect_id);
 				if (isset($geopccb_redirect_id[0]) && strlen($geopccb_redirect_id[0]) == 32){
 					// Constructs the complete UAL url.
 			  	$geopccb_ual_url_full = $geopccb_ual_url_base . "/api/items/" . $geopccb_redirect_id[0] . $geopccb_redirect_val;
