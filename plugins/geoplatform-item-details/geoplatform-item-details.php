@@ -111,17 +111,24 @@ function geopccb_redirect_logic(){
 			global $wp;
 			$url_dump = home_url($wp->request);
 			$geopccb_redirect_val = false;
-			// $head_dump = getallheaders()['Accept'];
-			// $head_explode = explode(",", $head_dump);
-			//
-			// // Checks the array for each desired type, and assigns an associated extension
-			// // to the redirect val if found; otherwise, the val is passed on.
-			// $geopccb_redirect_val = (in_array("application/rdf+xml", $head_explode, true)) ? ".rdf" : $geopccb_redirect_val;
-			// $geopccb_redirect_val = (in_array("application/ld+json", $head_explode, true)) ? ".jsonld" : $geopccb_redirect_val;
-			// $geopccb_redirect_val = (in_array("application/json", $head_explode, true)) ? ".json" : $geopccb_redirect_val;
-			// $geopccb_redirect_val = (in_array("text/x-turtle", $head_explode, true)) ? ".ttl" : $geopccb_redirect_val;
-			// $geopccb_redirect_val = (in_array("text/n3", $head_explode, true)) ? ".n3" : $geopccb_redirect_val;
-			// $geopccb_redirect_val = (in_array("application/n-triples", $head_explode, true)) ? ".nt" : $geopccb_redirect_val;
+
+			$head_dump = isset(getallheaders()['accept']) ? getallheaders()['accept'] : '';
+			$head_dump = isset(getallheaders()['Accept']) ? getallheaders()['Accept'] : '';
+
+			if (!empty($head_dump)){
+
+				$head_explode = explode(",", $head_dump);
+				// var_dump($head_explode);
+
+				// Checks the array for each desired type, and assigns an associated extension
+				// to the redirect val if found; otherwise, the val is passed on.
+				$geopccb_redirect_val = (in_array("application/rdf+xml", $head_explode, true)) ? ".rdf" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("application/ld+json", $head_explode, true)) ? ".jsonld" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("application/json", $head_explode, true)) ? ".json" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("text/x-turtle", $head_explode, true)) ? ".ttl" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("text/n3", $head_explode, true)) ? ".n3" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("application/n-triples", $head_explode, true)) ? ".nt" : $geopccb_redirect_val;
+			}
 
 			// If the redirect val is still false, the URL bar is checked for extensions
 			// and redirect_val is assigned or passed on as appropriate.
