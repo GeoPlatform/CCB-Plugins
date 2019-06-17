@@ -106,22 +106,19 @@ function geopccb_redirect_logic(){
 		global $post;
 		if ($post->post_name == 'geoplatform-items'){
 
-			// Gets the wordpress global and url. Sets up redirect extension variable,
-			// then grabs the Accept header and explodes it into an array.
+			// Gets the wordpress global and url, and sets up redirect extension var.
 			global $wp;
 			$url_dump = home_url($wp->request);
 			$geopccb_redirect_val = false;
 
-			$head_dump = isset(getallheaders()['accept']) ? getallheaders()['accept'] : '';
-			$head_dump = isset(getallheaders()['Accept']) ? getallheaders()['Accept'] : '';
+			// Grabs the accept header, either capitalized or not.
+			$head_dump = isset(getallheaders()['accept']) ? getallheaders()['accept'] : getallheaders()['Accept'];
 
+			// If the header exists, explodes it into an array for analysis. Checks
+			// the array for each desired type, and assigns an associated extension to
+			// the redirect val if found; otherwise, the val is passed on.
 			if (!empty($head_dump)){
-
 				$head_explode = explode(",", $head_dump);
-				// var_dump($head_explode);
-
-				// Checks the array for each desired type, and assigns an associated extension
-				// to the redirect val if found; otherwise, the val is passed on.
 				$geopccb_redirect_val = (in_array("application/rdf+xml", $head_explode, true)) ? ".rdf" : $geopccb_redirect_val;
 				$geopccb_redirect_val = (in_array("application/ld+json", $head_explode, true)) ? ".jsonld" : $geopccb_redirect_val;
 				$geopccb_redirect_val = (in_array("application/json", $head_explode, true)) ? ".json" : $geopccb_redirect_val;
