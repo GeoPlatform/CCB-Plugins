@@ -139,6 +139,7 @@ function geopccb_redirect_logic(){
 
 				// Determines UAL env.
 			  $geopccb_ual_url_base = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+				// $geopccb_ual_url_base = 'https://sit-ual.geoplatform.us';
 
 				// Gets the ID of the asset from the URL bar.
 			  $geopccb_redirect_id = "";
@@ -148,7 +149,7 @@ function geopccb_redirect_logic(){
 			  	$geopccb_ual_url_full = $geopccb_ual_url_base . "/api/items/" . $geopccb_redirect_id[0] . $geopccb_redirect_val;
 
 					// Performs 302 redirection.
-			  	wp_redirect($geopccb_ual_url_base, 302);
+			  	wp_redirect($geopccb_ual_url_full, 302);
 					exit;
 				}
 			}
