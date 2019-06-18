@@ -37,8 +37,6 @@
 // #param geopserve_query: query if doing a live label filter.
 function geopserve_gen_list(geopserve_options, geopserve_query){
 
-	geopserve_options.ual_domain = "https://sit-ual.geoplatform.us";
-
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
 	let itemSvc = new GeoPlatformClient.ItemService(geopserve_options.ual_domain, new GeoPlatformClient.JQueryHttpClient());

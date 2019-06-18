@@ -286,7 +286,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 				// Item Details plugin detection. If found, will pass off the relevant
 				// redirected url to the function. If not, it will set it to OE.
-				$geopserve_redirect_url = "https://oe.geoplatform.gov/view/";
+				$geopserve_redirect_url = isset($_ENV['oe_url']) ? $_ENV['oe_url'] : "https://oe.geoplatform.gov/view/";
 				if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
 					$geopserve_redirect_url = home_url() . "/" . "resources/" . strtolower($geopserve_tab_array[$i]['name']) . "/";
 
