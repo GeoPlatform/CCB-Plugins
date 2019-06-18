@@ -7,13 +7,13 @@ import { ItemService, ItemTypes } from 'geoplatform.client';
 import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 import {
-    DataProvider, DataEvent, Events, MapItem
+    DataProvider, DataEvent, Events, MapItem, Extent, LayerState
 } from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { PluginAuthService } from '../shared/auth.service';
 import { itemServiceProvider } from '../shared/service.provider';
 import { environment } from '../../environments/environment';
-
+import { logger } from "../shared/logger";
 
 
 const GEOPLATFORM_MAP_TYPE = "http://www.geoplatform.gov/ont/openmap/GeoplatformMap";
@@ -101,7 +101,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     createMap() {
 
         if(!this.mapItem.createdBy) {
-            console.log("User not authenticated, aborting create...");
+            logger.warn("User not authenticated, aborting create...");
             return;
         }
 
@@ -129,15 +129,23 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         })
         .then( map => {
             //store selected layers onto map being created
-            this.mapItem.layers = this.data.getDataWithState(true);
+            this.mapItem.layers = this.data.getSelected(true)
+            .map( (layer: any) => {
+                return {
+                    layer: {
+                        id: layer.id,
+                        uri: layer.uri,
+                        type: layer.type
+                    },
+                    layerId: layer.id,
+                    visibility: this.data.isVisible(layer),
+                    opacity: 1.0
+                } as LayerState;
+            });
             this.mapItem.baseLayer = this.data.getBaseLayer();
 
-            if('development' === environment.env) {
-                console.log("======");
-                console.log("Saving Map as...");
-                console.log(JSON.stringify(this.mapItem, null, ' '));
-                console.log("======");
-            }
+            logger.debug("Saving Map as...");
+            logger.debug(JSON.stringify(this.mapItem, null, ' '))
 
             //and then save the map
             return this.itemService.save(map)
@@ -153,7 +161,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         .catch( (e:Error) => {
             //display error message to user
             this.error = e;
-            console.log("Unable to create map, " + e.message);
+            logger.error("Unable to create map because of: " + e.message);
         });
     }
 
@@ -176,7 +184,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
      * @param event - DataEvent
      */
     onDataEvent( event : DataEvent ) {
-        // console.log("MapLayers.onDataEvent(" + event.type.toString() + ")");
+        logger.debug("MapLayers.onDataEvent(" + event.type.toString() + ")");
         switch(event.type) {
 
             case Events.ADD :
@@ -184,7 +192,13 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
                 this.updateDetails(details);
                 break;
 
-            case Events.DEL :
+            case Events.DEL : break;
+
+            case Events.EXTENT :
+                if(event.data && event.data.length) {
+                    let extent : Extent = event.data[0] as Extent;
+                    this.mapItem.extent = extent;
+                }
                 break;
         }
     }
@@ -205,11 +219,9 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         this.ensureExtent();
         this.ensureResourceTypes();
 
-        // if('development' === environment.env) {
-        //     console.log("======");
-        //     console.log("Updated Map Item Details");
-        //     console.log(JSON.stringify(this.mapItem, null, ' '));
-        // }
+        // logger.debug("Updated Map Item Details");
+        // logger.debug(JSON.stringify(this.mapItem, null, ' '));
+
     }
 
     /**

@@ -96,6 +96,73 @@ register_activation_hook( __FILE__, 'geopitems_add_interface_page' );
 register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_details' );
 
 
+// Redirect logic for item details page. Will redirect to UAL if...
+// 1) There is a recognized Accept header element.
+// 2) There is a recognized extension in the URL bar.
+function geopccb_redirect_logic(){
+
+	// This will only trigger on the item details page.
+	if (is_page()){
+		global $post;
+		if ($post->post_name == 'geoplatform-items'){
+
+			// Gets the wordpress global and url, and sets up redirect extension var.
+			global $wp;
+			$url_dump = home_url($wp->request);
+			$geopccb_redirect_val = false;
+
+			// Grabs the accept header, either capitalized or not.
+			$head_dump = isset(getallheaders()['accept']) ? getallheaders()['accept'] : getallheaders()['Accept'];
+
+			// If the header exists, explodes it into an array for analysis. Checks
+			// the array for each desired type, and assigns an associated extension to
+			// the redirect val if found; otherwise, the val is passed on.
+			if (!empty($head_dump)){
+				$head_explode = explode(",", $head_dump);
+				$geopccb_redirect_val = (in_array("application/rdf+xml", $head_explode, true)) ? ".rdf" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("application/ld+json", $head_explode, true)) ? ".jsonld" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("application/json", $head_explode, true)) ? ".json" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("text/x-turtle", $head_explode, true)) ? ".ttl" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("text/n3", $head_explode, true)) ? ".n3" : $geopccb_redirect_val;
+				$geopccb_redirect_val = (in_array("application/n-triples", $head_explode, true)) ? ".nt" : $geopccb_redirect_val;
+			}
+
+			// If the redirect val is still false, the URL bar is checked for extensions
+			// and redirect_val is assigned or passed on as appropriate.
+			if (!$geopccb_redirect_val){
+		    $geopccb_redirect_val = (strpos($url_dump, '.rdf')) ? ".rdf" : $geopccb_redirect_val;
+		    $geopccb_redirect_val = (strpos($url_dump, '.jsonld')) ? ".jsonld" : $geopccb_redirect_val;
+		    $geopccb_redirect_val = (strpos($url_dump, '.json')) ? ".json" : $geopccb_redirect_val;
+		    $geopccb_redirect_val = (strpos($url_dump, '.ttl')) ? ".ttl" : $geopccb_redirect_val;
+		    $geopccb_redirect_val = (strpos($url_dump, '.n3')) ? ".n3" : $geopccb_redirect_val;
+		    $geopccb_redirect_val = (strpos($url_dump, '.nt')) ? ".nt" : $geopccb_redirect_val;
+			}
+
+			// If there is a valid redirect, the redirection can occur.
+			if ($geopccb_redirect_val){
+
+				// Determines UAL env.
+			  $geopccb_ual_url_base = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+				// $geopccb_ual_url_base = 'https://sit-ual.geoplatform.us';
+
+				// Gets the ID of the asset from the URL bar.
+			  $geopccb_redirect_id = "";
+			  preg_match('([a-f\d]{32})', $url_dump, $geopccb_redirect_id);
+				if (isset($geopccb_redirect_id[0]) && strlen($geopccb_redirect_id[0]) == 32){
+					// Constructs the complete UAL url.
+			  	$geopccb_ual_url_full = $geopccb_ual_url_base . "/api/items/" . $geopccb_redirect_id[0] . $geopccb_redirect_val;
+
+					// Performs 302 redirection.
+			  	wp_redirect($geopccb_ual_url_full, 302);
+					exit;
+				}
+			}
+		}
+	}
+}
+add_action('template_redirect', 'geopccb_redirect_logic');
+
+
 // Rule rewrites to control the URL of the items page.
 function geopitems_add_rewrite_rules( $wp_rewrite )
 {
@@ -109,12 +176,6 @@ function geopitems_add_rewrite_rules( $wp_rewrite )
   $wp_rewrite->rules = $geop_items_new_rules + $wp_rewrite->rules;
 }
 add_action('generate_rewrite_rules', 'geopitems_add_rewrite_rules');
-
-// Deprecated function.
-function myplugin_rewrite_tag() {
-	add_rewrite_tag( '%q%', '([^/]+)' );
-}
-// add_action('init', 'myplugin_rewrite_tag', 10, 0);
 
 
 // Additional dependency enqueues.

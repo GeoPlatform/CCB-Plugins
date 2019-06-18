@@ -5,6 +5,7 @@ import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@ang
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 // import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { InlineSVGModule } from 'ng-inline-svg';
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { ChartsModule } from 'ng2-charts';

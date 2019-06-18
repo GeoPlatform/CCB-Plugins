@@ -15,7 +15,7 @@
                     <a class="nav-link"
                         (click)="currentSection=Sections.AVAILABLE"
                         [ngClass]="{active:Sections.AVAILABLE===currentSection}">
-                        Available ({{available.length}})
+                        Available ({{totalAvailable}})
                     </a>
                 </li>
                 <li class="nav-item">
@@ -47,10 +47,9 @@
                     <div *ngFor="let item of activeLayers" class="m-layer-item">
                         <button type="button" class="btn btn-sm btn-link"
                             (click)="toggleLayerViz(item)">
-                            <span *ngIf="!item.visibility" class="fas fa-eye-slash"></span>
-                            <span *ngIf="item.visibility" class="fas fa-eye"></span>
+                            <span class="fas fa-eye" [ngClass]="{'t-fg--gray-lt':!isVisible(item)}"></span>
                         </button>
-                        <span>{{item.layer.label}}</span>
+                        <span>{{item.label}}</span>
                     </div>
 
                 </div>
@@ -66,8 +65,8 @@
                     <!-- list of available layers for selection -->
                     <div *ngFor="let item of available">
                         <gpmp-layer-available
-                            [item]="item"
-                            [isSelected]="data.getDataState(item)"
+                            [item]="item" [data]="data"
+                            [isSelected]="isLayerSelected(item)"
                             (onActivate)="toggleLayer($event)">
                         </gpmp-layer-available>
                     </div>

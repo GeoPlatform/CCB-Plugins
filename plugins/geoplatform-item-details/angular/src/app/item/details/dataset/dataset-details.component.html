@@ -1,4 +1,56 @@
-<!-- <div class="m-article__desc">
-    <div><strong>Title</strong></div>
-    Value...
+
+<!-- Product ID -->
+<div class="m-article__desc" *ngIf="isEO()">
+    <div><strong>Product ID </strong></div>
+    <div *ngIf="!item?.product?.productId"><em>Not specified</em></div>
+    <div *ngIf="item?.product?.productId">{{item.product.productId}}</div>
+</div>
+
+
+<!-- Product Types -->
+<div class="m-article__desc" *ngIf="isEO()">
+    <div><strong>Product Types ({{item.productTypes?.length||0}}) </strong></div>
+    <span *ngFor="let type of item.productTypes; let $index=index;">
+        <span *ngIf="$index>0">, </span>
+        <gpid-resource-link [item]="type"></gpid-resource-link>
+    </span>
+    <em *ngIf="!item.productTypes.length">No product typess associated</em>
+</div>
+
+
+<!-- Acquisition -->
+<div class="m-article__desc" *ngIf="isEO()">
+    <div><strong>Platform(s)</strong></div>
+    <div class="value--placeholder" *ngIf="!item?.acquisition?.platform.length">None specified</div>
+    <div class="value">
+        <span *ngFor="let platform of item?.acquisition?.platform; let $index=index;">
+            <span *ngIf="$index>0">, </span>
+            <gpid-resource-link [item]="platform"></gpid-resource-link>
+        </span>
+    </div>
+</div>
+
+<div class="m-article__desc" *ngIf="isEO()">
+    <div><strong>Instrument(s)</strong></div>
+    <em *ngIf="!item?.acquisition?.instrument.length">None specified</em>
+    <div class="value">
+        <span *ngFor="let instrument of item?.acquisition?.instrument; let $index=index;">
+            <span *ngIf="$index>0">, </span>
+            <gpid-resource-link [item]="instrument"></gpid-resource-link>
+        </span>
+    </div>
+</div>
+
+<div class="m-article__desc" *ngIf="isEO()">
+    <div><strong>Acquisition Date</strong></div>
+    <em *ngIf="!item?.acquisition?.acquisitionDate">Not specified</em>
+    <div class="value" *ngIf="item?.acquisition?.acquisitionDate">
+        {{item?.acquisition?.acquisitionDate|date:'medium':"UTC"}}
+    </div>
+</div>
+
+    <!-- <div *ngFor="let param of params" class="c-viewer__property">
+        <label>{{param}}: </label>
+        <span>{{item.acquisitionParameters[param]}}</span>
+    </div>
 </div> -->

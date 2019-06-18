@@ -55,7 +55,8 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
     }
 
     canDoAction() {
-        return this.isAuthenticated() && this.isSupported();
+        //must be a gp-editor in order to clone Assets
+        return this.canUserEdit() && this.isSupported();
     }
 
     /**
