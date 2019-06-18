@@ -18,7 +18,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 // sure that the first half is as close to 300 as possible without going over.
 $geop_portal_excerpt_overflow = false;
 $geop_portal_excerpt_one = wp_strip_all_tags(wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)));
-$geop_portal_excerpt_two = wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true));
+$geop_portal_excerpt_two = wp_strip_all_tags(wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)));
 
 if (strlen($geop_portal_excerpt_one) > 300){
   $geop_portal_excerpt_overflow = true;
@@ -69,19 +69,33 @@ if (get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_cont
 // WYSIWYG output determination and control. Triggers if banner is off and there
 // is something to display. Uses HTML because of toggleClass.
 if ((wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)) != '' ) && (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'off')){
+  echo "<div class='m-page-overview collapsible' id='geopccb_subexcerpt_main'>";
+    echo $geop_portal_excerpt_one;
+    if ($geop_portal_excerpt_overflow){
+      echo "<button class='m-page-overview__toggle btn-account' id='geopccb_subexcerpt_main_toggle' style='background:transparent;border-color:transparent'>";
+        echo "<span class='fas fa-caret-down'></span>";
+      echo "</button>";
+    echo "</div>";
+    // echo "<div class='m-page-overview__additional'>";
+    echo "<div class='m-page-overview collapsible is-collapsed' id='geopccb_subexcerpt_supp'>";
+      echo $geop_portal_excerpt_two;
+      echo "<button class='m-page-overview__toggle' id='geopccb_subexcerpt_supp_toggle' style='background:transparent;border-color:transparent'>";
+        echo "<span class='fas fa-caret-down'></span>";
+      echo "</button>";
+    }
+  echo "</div>";
+}
 ?>
-  <div class="m-page-overview">
-    <?php echo $geop_portal_excerpt_one;
-    if ($geop_portal_excerpt_overflow){ ?>
-      <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
-        <span class="fas fa-caret-down"></span>
-      </div>
-    </div>
-    <div class="m-page-overview__additional">
-      <?php echo $geop_portal_excerpt_two ?>
-      <div class="m-page-overview__toggle" onclick="toggleClass('.m-page-overview__additional','is-expanded m-page-overview__additive'), toggleClass('.m-page-overview','is-collapsed')">
-        <span class="fas fa-caret-down"></span>
-      </div>
-    <?php } ?>
-  </div>
-<?php } ?>
+<script type="text/javascript">
+  jQuery(document).ready(function() {
+    jQuery("#geopccb_subexcerpt_main_toggle").click(function(event){
+      jQuery("#geopccb_subexcerpt_main").addClass('is-collapsed');
+      jQuery("#geopccb_subexcerpt_supp").removeClass('is-collapsed');
+    });
+
+    jQuery("#geopccb_subexcerpt_supp_toggle").click(function(event){
+      jQuery("#geopccb_subexcerpt_supp").addClass('is-collapsed');
+      jQuery("#geopccb_subexcerpt_main").removeClass('is-collapsed');
+    });
+	});
+</script>
