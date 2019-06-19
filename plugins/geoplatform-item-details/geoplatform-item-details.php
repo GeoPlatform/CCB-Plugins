@@ -114,8 +114,8 @@ function geopccb_redirect_logic(){
 			// The URL bar is checked for extensions and redirect_val is assigned or
 			// passed on as appropriate.
 	    $geopccb_redirect_val = (strpos($url_dump, '.rdf')) ? ".rdf" : $geopccb_redirect_val;
-	    $geopccb_redirect_val = (strpos($url_dump, '.jsonld')) ? ".jsonld" : $geopccb_redirect_val;
 	    $geopccb_redirect_val = (strpos($url_dump, '.json')) ? ".json" : $geopccb_redirect_val;
+			$geopccb_redirect_val = (strpos($url_dump, '.jsonld')) ? ".jsonld" : $geopccb_redirect_val;
 	    $geopccb_redirect_val = (strpos($url_dump, '.ttl')) ? ".ttl" : $geopccb_redirect_val;
 	    $geopccb_redirect_val = (strpos($url_dump, '.n3')) ? ".n3" : $geopccb_redirect_val;
 	    $geopccb_redirect_val = (strpos($url_dump, '.nt')) ? ".nt" : $geopccb_redirect_val;
@@ -134,8 +134,8 @@ function geopccb_redirect_logic(){
 					for ($i = 0; $i < count($head_explode) && !$geopccb_redirect_val; $i++){
 						$head_element = $head_explode[$i];
 						$geopccb_redirect_val = ($head_element == "application/rdf+xml") ? ".rdf" : $geopccb_redirect_val;
-						$geopccb_redirect_val = ($head_element == "application/ld+json") ? ".jsonld" : $geopccb_redirect_val;
 						$geopccb_redirect_val = ($head_element == "application/json") ? ".json" : $geopccb_redirect_val;
+						$geopccb_redirect_val = ($head_element == "application/ld+json") ? ".jsonld" : $geopccb_redirect_val;
 						$geopccb_redirect_val = ($head_element == "text/x-turtle") ? ".ttl" : $geopccb_redirect_val;
 						$geopccb_redirect_val = ($head_element == "text/n3") ? ".n3" : $geopccb_redirect_val;
 						$geopccb_redirect_val = ($head_element == "application/n-triples") ? ".nt" : $geopccb_redirect_val;
