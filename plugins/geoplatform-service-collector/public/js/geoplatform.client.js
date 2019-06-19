@@ -580,9 +580,9 @@
       APPLICATION: 'Application',
       TOPIC: 'Topic',
       WEBSITE: 'WebSite',
-      IMAGE_PRODUCT: 'eo:Product',
       ORGANIZATION: "org:Organization",
       CONTACT: "vcard:VCard",
+      PERSON: "foaf:Person",
       CONCEPT: "skos:Concept",
       CONCEPT_SCHEME: "skos:ConceptScheme",
       STANDARD: 'dct:Standard',
@@ -599,13 +599,238 @@
   ItemTypeLabels[ItemTypes.APPLICATION] = 'Application';
   ItemTypeLabels[ItemTypes.TOPIC] = 'Topic';
   ItemTypeLabels[ItemTypes.WEBSITE] = 'WebSite';
-  ItemTypeLabels[ItemTypes.IMAGE_PRODUCT] = "Image Product";
   ItemTypeLabels[ItemTypes.ORGANIZATION] = "Organization";
   ItemTypeLabels[ItemTypes.CONTACT] = "Contact";
+  ItemTypeLabels[ItemTypes.PERSON] = "Person";
   ItemTypeLabels[ItemTypes.CONCEPT] = "Concept";
   ItemTypeLabels[ItemTypes.CONCEPT_SCHEME] = "Concept Scheme";
   ItemTypeLabels[ItemTypes.STANDARD] = 'Standard';
   ItemTypeLabels[ItemTypes.RIGHTS_STATEMENT] = 'Rights Statement';
+
+  var URI_BASE = 'http://www.geoplatform.gov';
+
+  var ESRI_TYPES = ["http://www.geoplatform.gov/spec/esri-feature-rest", "http://www.geoplatform.gov/spec/esri-image-rest", "http://www.geoplatform.gov/spec/esri-map-rest", "http://www.geoplatform.gov/spec/esri-tile-rest"];
+
+  function formatReference(ref) {
+      if (ref === null) return '';
+      if (typeof ref === 'string') return ref.toLowerCase().replace(/\s/g, '');else if ((typeof ref === 'undefined' ? 'undefined' : _typeof(ref)) === 'object') {
+          var result = '';
+          for (var prop in ref) {
+              if (ref.hasOwnProperty(prop)) {
+                  var value = ref[prop];
+                  if (value !== null && typeof value !== 'undefined') {
+                      //TODO catch non-string-able values
+                      result += (value + '').toLowerCase().replace(/\s/g, '');
+                  }
+              }
+          }
+          return result;
+      }
+      return '';
+  }
+
+  /**
+   * Adjusts service access url to ignore certain patterns that can affect
+   * how URI uniqueness is.
+   * @param {object} service - GP Service instance
+   * @return {string} access url adjusted for URI generation needs
+   */
+  function fixServiceHref(service) {
+      stripLayerFromServiceHref(service);
+      var url = service.accessURL || service.href;
+      if (!url || !url.length) return null;
+
+      //ensure case sensitivity is not an issue
+      // and that any surrounding whitespace is ignored
+      url = (url + '').trim().toLowerCase();
+
+      url = url.replace(/http(s)?:\/\//, ''); //ignore protocol for URI purposes
+
+      url = url.replace(/&?request=[A-Za-z]+/i, '').replace(/&?service=(WMS|WFS|WCS|CSW)/i, '').replace(/&?version=[0-9\.]*/i, '').replace(/&?layers=[A-Za-z0-9\-\:_,]*/i, '').replace(/&?srs=[A-Za-z0-9\:]*/i, '').replace(/&?crs=[A-Za-z0-9\:]*/i, '').replace(/&?format=[A-Za-z\/]*/i, '').replace(/&?bbox=[0-9,\.]*/i, '');
+
+      var lastChar = url[url.length - 1];
+      if ('/' === lastChar || '?' === lastChar) {
+          //ignore empty querystring or trailing slashes
+          url = url.substring(0, url.length - 1);
+      }
+      return url;
+  }
+
+  /**
+   * ESRI services sometimes have layer information baked into their URL
+   * which needs to be removed before the service can be used.
+   * @param service - GP Service object
+   */
+  function stripLayerFromServiceHref(service) {
+
+      if (!service) return;
+      var type = service.serviceType || service.conformsTo;
+      if (!type) return;
+
+      //if ESRI service, make sure it doesn't have a layer id on the href
+      if (ESRI_TYPES.indexOf(type.uri) >= 0) {
+
+          var href = service.href || service.accessURL;
+          var matches = href.match(/(Map|Feature|Image)(Server\/\d+)/i);
+          if (matches && matches.length > 2) {
+              // 0 < full string match (ie, 'MapServer/1')
+              // 1 < server type match (ie, 'Map' or 'Feature')
+              // 2 < bit we care about (ie, 'Server/1')
+              href = href.replace(matches[2], 'Server/');
+
+              if (service.href) service.href = href;
+              if (service.accessURL) service.accessURL = href;
+          }
+      }
+  }
+
+  /**
+   * @see https://geoplatform.atlassian.net/wiki/display/DT/Common+Object+Identifier+Scheme
+   */
+  var URIFactory = {
+
+      factories: {},
+
+      register: function register(type, factory) {
+          this.factories[type] = factory;
+      },
+
+      create: function create(object, md5Fn) {
+          if (!object || !object.type) return null;
+          if (typeof md5Fn !== 'function') {
+              throw new Error("Must specify a MD5 function when using URIFactory");
+          }
+          var factory = this.factories[object.type];
+          if (!factory) return null;
+          return factory(object, md5Fn);
+      }
+  };
+
+  URIFactory.register(ItemTypes.DATASET, function (dataset, md5) {
+      var pubName = (dataset.publisher || dataset.publishers || []).map(function (pub) {
+          return pub.label || "";
+      }).join('');
+      var ref = formatReference({
+          title: dataset.title,
+          pub: pubName
+      });
+      return URI_BASE + '/id/dataset/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.SERVICE, function (service, md5) {
+      var url = fixServiceHref(service);
+      var ref = formatReference(url);
+      return URI_BASE + '/id/service/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.LAYER, function (layer, md5) {
+
+      var svcUrl = '';
+      var services = layer.servicedBy || layer.services;
+      if (services && services.length) svcUrl = services[0].accessURL || services[0].href || '';
+      var lyrUrl = layer.accessURL || layer.href || '';
+      var lyrName = layer.layerName || '';
+
+      //not recommended based upon following example:
+      //  http://services.nationalmap.gov/.../MapServer/WMSServer?request=GetCapabilities&service=WMS/layer/1
+      // return url + '/layer/' + layer.layerName;
+
+      var args = svcUrl + lyrName + lyrUrl;
+      if (!args.length) return null; //nothing was provided
+
+      //ALTERNATE URI PATTERN
+      var ref = formatReference(args);
+      return URI_BASE + '/id/layer/' + md5(ref);
+  });
+
+  /**
+   * Uses the map title, createdBy, and all third-party identifiers associated with the map
+   * @param {object} map - GP Map object
+   * @return {string} uri unique to this object
+   */
+  URIFactory.register(ItemTypes.MAP, function (map, md5) {
+      var author = map.createdBy || map._createdBy || "";
+      var identifiers = (map.identifiers || map.identifier || []).join('');
+      var ref = formatReference({ title: map.title, author: author, identifiers: identifiers });
+      return URI_BASE + '/id/map/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.GALLERY, function (gallery, md5) {
+      var author = gallery.createdBy || gallery._createdBy || "";
+      var ref = formatReference({ title: gallery.title, author: author });
+      return URI_BASE + '/id/gallery/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.COMMUNITY, function (community, md5) {
+      var ref = formatReference({ title: community.title });
+      return URI_BASE + '/id/community/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.ORGANIZATION, function (org, md5) {
+      var ref = formatReference(org.label || org.name);
+      return URI_BASE + '/id/organization/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.PERSON, function (person, md5) {
+      var ref = formatReference(person.name);
+      return URI_BASE + '/id/person/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.CONTACT, function (vcard, md5) {
+      var ref = {};
+      if (vcard.email || vcard.hasEmail) ref.email = vcard.email || vcard.hasEmail; //email
+      if (vcard.tel) ref.tel = vcard.tel; //tel
+      if (vcard.orgName || vcard['organization-name']) ref.orgName = vcard.orgName || vcard['organization-name']; //orgName
+      if (vcard.positionTitle) ref.positionTitle = vcard.positionTitle; //positionTitle
+      ref = formatReference(ref);
+      return URI_BASE + '/id/contact/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.CONCEPT, function (object, md5) {
+      var scheme = object.inScheme || object.scheme;
+      var schemeLabel = scheme ? scheme.label || scheme.prefLabel : '';
+      var schemeRef = formatReference(schemeLabel);
+      var ref = formatReference(object.label || object.prefLabel);
+      return URI_BASE + '/id/metadata-codelists/' + md5(schemeRef) + '/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.CONCEPT_SCHEME, function (object, md5) {
+      var ref = formatReference(object.label || object.prefLabel);
+      return URI_BASE + '/id/metadata-codelists/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.APPLICATION, function (object, md5) {
+      if (!object || !object.title) return null;
+      var author = object.createdBy || object._createdBy || "";
+      var ref = formatReference({ title: object.title, author: author });
+      return URI_BASE + '/id/application/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.TOPIC, function (object, md5) {
+      if (!object || !object.title) return null;
+      var author = object.createdBy || object._createdBy || "";
+      var ref = formatReference({ title: object.title, author: author });
+      return URI_BASE + '/id/topic/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.WEBSITE, function (item, md5) {
+      if (!item || !item.landingPage) return null;
+      var ref = formatReference(item.landingPage);
+      return URI_BASE + '/id/website/' + md5(ref);
+  });
+
+  URIFactory.register(ItemTypes.DOCUMENT, function () {
+      return null;
+  });
+
+  function factoryFn(md5Fn) {
+      if (typeof md5Fn !== 'function') {
+          throw new Error("Must specify a MD5 function when using URIFactory");
+      }
+      return function (object) {
+          return URIFactory.create(object, md5Fn);
+      };
+  }
 
   /**
    * ItemService
@@ -2300,9 +2525,8 @@
       }, {
           key: 'setClassifier',
           value: function setClassifier(classifier, value) {
-              var classifiers = this.getParameter(QueryParameters.CLASSIFIERS) || {};
-              classifiers[classifier] = toArray$1(value);
-              this.setParameter(QueryParameters.CLASSIFIERS, classifiers);
+              var arr = toArray$1(value);
+              this.setParameter(QueryParameters.CLASSIFIERS + "." + classifier, arr);
           }
 
           /**
@@ -2313,8 +2537,7 @@
       }, {
           key: 'getClassifier',
           value: function getClassifier(classifier) {
-              var classifiers = this.getParameter(QueryParameters.CLASSIFIERS) || {};
-              return classifiers[classifier] || [];
+              return this.getParameter(QueryParameters.CLASSIFIERS + "." + classifier) || [];
           }
 
           /**
@@ -2346,20 +2569,22 @@
       }, {
           key: 'setClassifiers',
           value: function setClassifiers(value) {
-              if (!value || (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== 'object' || Array.isArray(value)) {
-                  this.setParameter(QueryParameters.CLASSIFIERS, null);
-                  return;
-              }
+              var _this = this;
+
               var classes = Object.keys(Classifiers).map(function (k) {
                   return Classifiers[k];
               });
-              var classifiers = this.getParameter(QueryParameters.CLASSIFIERS) || {};
+              if (!value || (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== 'object' || Array.isArray(value)) {
+                  classes.forEach(function (classifier) {
+                      _this.clearParameter(QueryParameters.CLASSIFIERS + "." + classifier);
+                  });
+                  return;
+              }
               Object.keys(value).forEach(function (classifier) {
                   if (~classes.indexOf(classifier)) {
-                      classifiers[classifier] = toArray$1(value[classifier]);
+                      _this.setClassifier(classifier, value[classifier]);
                   }
               });
-              this.setParameter(QueryParameters.CLASSIFIERS, classifiers);
           }
 
           /**
@@ -2369,7 +2594,15 @@
       }, {
           key: 'getClassifiers',
           value: function getClassifiers() {
-              return this.getParameter(QueryParameters.CLASSIFIERS) || null;
+              var _this2 = this;
+
+              var result = {};
+              Object.keys(Classifiers).map(function (k) {
+                  return Classifiers[k];
+              }).forEach(function (classifier) {
+                  result[classifier] = _this2.getClassifier(classifier);
+              });
+              return result;
           }
 
           // -----------------------------------------------------------
@@ -5089,7 +5322,6 @@
       APPLICATION: 'Application',
       TOPIC: 'Topic',
       WEBSITE: 'WebSite',
-      IMAGE_PRODUCT: 'Image Product',
       RIGHTS_STATEMENT: 'RightsStatement',
       KNOWLEDGE_GRAPH: 'Knowledge Graph',
       USER: 'User',
@@ -5420,6 +5652,7 @@
   exports.QueryFields = Fields;
   exports.KGQuery = KGQuery;
   exports.KGClassifiers = Classifiers;
+  exports.URIFactory = factoryFn;
   exports.JQueryHttpClient = JQueryHttpClient;
   exports.NGHttpClient = NGHttpClient;
   exports.NodeHttpClient = NodeHttpClient;
