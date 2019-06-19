@@ -111,31 +111,36 @@ function geopccb_redirect_logic(){
 			$url_dump = home_url($wp->request);
 			$geopccb_redirect_val = false;
 
-			// Grabs the accept header, either capitalized or not.
-			$head_dump = isset(getallheaders()['accept']) ? getallheaders()['accept'] : getallheaders()['Accept'];
+			// The URL bar is checked for extensions and redirect_val is assigned or
+			// passed on as appropriate.
+	    $geopccb_redirect_val = (strpos($url_dump, '.rdf')) ? ".rdf" : $geopccb_redirect_val;
+	    $geopccb_redirect_val = (strpos($url_dump, '.json')) ? ".json" : $geopccb_redirect_val;
+			$geopccb_redirect_val = (strpos($url_dump, '.jsonld')) ? ".jsonld" : $geopccb_redirect_val;
+	    $geopccb_redirect_val = (strpos($url_dump, '.ttl')) ? ".ttl" : $geopccb_redirect_val;
+	    $geopccb_redirect_val = (strpos($url_dump, '.n3')) ? ".n3" : $geopccb_redirect_val;
+	    $geopccb_redirect_val = (strpos($url_dump, '.nt')) ? ".nt" : $geopccb_redirect_val;
 
-			// If the header exists, explodes it into an array for analysis. Checks
-			// the array for each desired type, and assigns an associated extension to
-			// the redirect val if found; otherwise, the val is passed on.
-			if (!empty($head_dump)){
-				$head_explode = explode(",", $head_dump);
-				$geopccb_redirect_val = (in_array("application/rdf+xml", $head_explode, true)) ? ".rdf" : $geopccb_redirect_val;
-				$geopccb_redirect_val = (in_array("application/ld+json", $head_explode, true)) ? ".jsonld" : $geopccb_redirect_val;
-				$geopccb_redirect_val = (in_array("application/json", $head_explode, true)) ? ".json" : $geopccb_redirect_val;
-				$geopccb_redirect_val = (in_array("text/x-turtle", $head_explode, true)) ? ".ttl" : $geopccb_redirect_val;
-				$geopccb_redirect_val = (in_array("text/n3", $head_explode, true)) ? ".n3" : $geopccb_redirect_val;
-				$geopccb_redirect_val = (in_array("application/n-triples", $head_explode, true)) ? ".nt" : $geopccb_redirect_val;
-			}
-
-			// If the redirect val is still false, the URL bar is checked for extensions
-			// and redirect_val is assigned or passed on as appropriate.
+			// If no extension was found, the headers are checked.
 			if (!$geopccb_redirect_val){
-		    $geopccb_redirect_val = (strpos($url_dump, '.rdf')) ? ".rdf" : $geopccb_redirect_val;
-		    $geopccb_redirect_val = (strpos($url_dump, '.jsonld')) ? ".jsonld" : $geopccb_redirect_val;
-		    $geopccb_redirect_val = (strpos($url_dump, '.json')) ? ".json" : $geopccb_redirect_val;
-		    $geopccb_redirect_val = (strpos($url_dump, '.ttl')) ? ".ttl" : $geopccb_redirect_val;
-		    $geopccb_redirect_val = (strpos($url_dump, '.n3')) ? ".n3" : $geopccb_redirect_val;
-		    $geopccb_redirect_val = (strpos($url_dump, '.nt')) ? ".nt" : $geopccb_redirect_val;
+
+				// Grabs the accept header, either capitalized or not.
+				$head_dump = isset(getallheaders()['accept']) ? getallheaders()['accept'] : getallheaders()['Accept'];
+
+				// If the header exists, explodes it into an array for analysis. Checks
+				// the array for each desired type, and assigns an associated extension
+				// to the redirect val if found; otherwise, the val is passed on.
+				if (!empty($head_dump)){
+					$head_explode = explode(",", $head_dump);
+					for ($i = 0; $i < count($head_explode) && !$geopccb_redirect_val; $i++){
+						$head_element = $head_explode[$i];
+						$geopccb_redirect_val = ($head_element == "application/rdf+xml") ? ".rdf" : $geopccb_redirect_val;
+						$geopccb_redirect_val = ($head_element == "application/json") ? ".json" : $geopccb_redirect_val;
+						$geopccb_redirect_val = ($head_element == "application/ld+json") ? ".jsonld" : $geopccb_redirect_val;
+						$geopccb_redirect_val = ($head_element == "text/x-turtle") ? ".ttl" : $geopccb_redirect_val;
+						$geopccb_redirect_val = ($head_element == "text/n3") ? ".n3" : $geopccb_redirect_val;
+						$geopccb_redirect_val = ($head_element == "application/n-triples") ? ".nt" : $geopccb_redirect_val;
+					}
+				}
 			}
 
 			// If there is a valid redirect, the redirection can occur.

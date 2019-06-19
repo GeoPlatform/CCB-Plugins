@@ -37,10 +37,9 @@
 // #param geopserve_query: query if doing a live label filter.
 function geopserve_gen_list(geopserve_options, geopserve_query){
 
-	geopserve_options.ual_domain = "https://sit-ual.geoplatform.us";
-
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
+	// const Classifiers = GeoPlatformClient.KGClassifiers;
 	let itemSvc = new GeoPlatformClient.ItemService(geopserve_options.ual_domain, new GeoPlatformClient.JQueryHttpClient());
 	var query = new Query();
 	var countQuery = new Query();
@@ -97,7 +96,7 @@ function geopserve_gen_list(geopserve_options, geopserve_query){
 	// Cleans, explodes, and applies classifier criteria.
 	if (geopserve_options.class_id){
 		var geopserve_class_array = geopserve_options.class_id.replace(/ /g, "-").replace(/,/g, "-").split("-");
-		query.setClassifier(geopserve_options.kg_id, geopserve_class_array);
+		query.classifier(geopserve_options.kg_id, geopserve_class_array);
 	}
 
 	// Adds thumbnails and clone-of to the query return.
