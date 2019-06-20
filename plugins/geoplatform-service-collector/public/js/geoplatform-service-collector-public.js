@@ -34,8 +34,7 @@
 // the carousel.
 //
 // #param geopserve_options: object containing all values to be processed.
-// #param geopserve_query: query if doing a live label filter.
-function geopserve_gen_list(geopserve_options, geopserve_query){
+function geopserve_gen_list(geopserve_options){
 
 	// Service collection setup.
 	const Query = GeoPlatformClient.Query;
@@ -72,9 +71,9 @@ function geopserve_gen_list(geopserve_options, geopserve_query){
 	}
 
 	// Cleans, explodes, combines, and applies title/label and query criteria.
-	if (geopserve_options.label_id || geopserve_query){
+	if (geopserve_options.label_id || geopserve_options.query_var){
 		var geopserve_label_array = (geopserve_options.label_id) ? geopserve_options.label_id.replace(/,/g, "-").split("-") : [];
-		var geopserve_query_array = (geopserve_query) ? geopserve_query.replace(/,/g, "-").split("-") : [];
+		var geopserve_query_array = (geopserve_options.query_var) ? geopserve_query.replace(/,/g, "-").split("-") : [];
 		var geopserve_q_array = geopserve_label_array.concat(geopserve_query_array);
 		for (i = 0; i < geopserve_q_array.length; i++)
 			geopserve_q_array[i] = '"' + geopserve_q_array[i] + '"';
@@ -109,8 +108,11 @@ function geopserve_gen_list(geopserve_options, geopserve_query){
 	itemSvc.search(query)
 		.then(function (response) {
 
+			// console.log(response);
+			console.log(geopserve_options);
+
 			// Determines the object ID to which the generated text will apply.
-			var geopserve_browseall_div = 'geopserve_carousel_search_div_' + geopserve_options.iter;
+			var geopserve_browseall_div = 'geopserve_carousel_search_div_' + geopserve_options.current_tab;
 
 			// "browse all number asset type" text attachement, only fires in geop
 			// search mode.
@@ -199,7 +201,7 @@ function geopserve_gen_list(geopserve_options, geopserve_query){
 				var geopserve_under_label_array = [geopserve_under_label_icon, geopserve_under_label_type, geopserve_under_label_name, geopserve_under_label_href, geopserve_under_label_created, geopserve_under_label_modified, geopserve_under_label_description];
 
 				// String for the ID of the div containing the assets.
-				var geopserve_master_div = 'geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix;
+				var geopserve_master_div = 'geopserve_carousel_gen_div_' + geopserve_options.current_tab + geopserve_options.current_suffix;
 
 				// Modifies the 404 for proper syntax.
 				var geopserve_thumb_error = "this.src='" + geopserve_options.failsafe + "'";
@@ -223,7 +225,7 @@ function geopserve_gen_list(geopserve_options, geopserve_query){
 					label_created: geopserve_under_label_created,
 					label_modified: geopserve_under_label_modified,
 					label_description: geopserve_under_label_description,
-					iter: geopserve_options.iter,
+					iter: geopserve_options.current_tab,
 					clone_val: geopserve_clone_val,
 				}
 
