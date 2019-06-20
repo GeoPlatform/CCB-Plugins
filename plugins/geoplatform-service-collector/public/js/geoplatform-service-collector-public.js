@@ -73,7 +73,7 @@ function geopserve_gen_list(geopserve_options){
 	// Cleans, explodes, combines, and applies title/label and query criteria.
 	if (geopserve_options.label_id || geopserve_options.query_var){
 		var geopserve_label_array = (geopserve_options.label_id) ? geopserve_options.label_id.replace(/,/g, "-").split("-") : [];
-		var geopserve_query_array = (geopserve_options.query_var) ? geopserve_query.replace(/,/g, "-").split("-") : [];
+		var geopserve_query_array = (geopserve_options.query_var) ? geopserve_options.query_var.replace(/,/g, "-").split("-") : [];
 		var geopserve_q_array = geopserve_label_array.concat(geopserve_query_array);
 		for (i = 0; i < geopserve_q_array.length; i++)
 			geopserve_q_array[i] = '"' + geopserve_q_array[i] + '"';
