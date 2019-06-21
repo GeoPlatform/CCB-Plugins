@@ -108,11 +108,14 @@ function geopserve_gen_list(geopserve_options){
 	itemSvc.search(query)
 		.then(function (response) {
 
-			// console.log(response);
-			console.log(geopserve_options);
+			var geopserve_regp_array = "";
 
 			// Determines the object ID to which the generated text will apply.
 			var geopserve_browseall_div = 'geopserve_carousel_search_div_' + geopserve_options.current_tab;
+
+			var geopserve_cat_single = geopserve_options.cat_name;
+			geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
+			geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
 
 			// "browse all number asset type" text attachement, only fires in geop
 			// search mode.
@@ -121,9 +124,9 @@ function geopserve_gen_list(geopserve_options){
 				// Determines singular, plural, or empty results text.
 				var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_options.cat_name;
 				if (response.totalResults == 1){
-					var geopserve_cat_single = geopserve_options.cat_name;
-					geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
-					geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
+					// var geopserve_cat_single = geopserve_options.cat_name;
+					// geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
+					// geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
 					geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
 				}
 				if (response.totalResults <= 0)
@@ -143,6 +146,10 @@ function geopserve_gen_list(geopserve_options){
 
 			// Pane generation loop.
 			for (var i = 0; i < geopserve_max_panes; i++){
+
+				if (i != 0)
+					geopserve_regp_array = geopserve_regp_array + ",";
+				geopserve_regp_array = geopserve_regp_array + geopserve_results[i].id;
 
 				// Grabs the id and uses it to construct an item details href.
 				var geopserve_asset_link = geopserve_options.redirect + geopserve_results[i].id;
@@ -232,6 +239,24 @@ function geopserve_gen_list(geopserve_options){
 				// Feeds all this prep work into the generator.
 				geopserve_gen_list_element(geopserve_gen_element);
 			}
+
+			console.log(geopserve_regp_array);
+
+			// RPM Reporting
+			try {
+				if(typeof RPMService != 'undefined') {
+					var RPM = typeof window.RPM != 'object' ? window.RPM : RPMService();
+					var EVENT = 'Displayed';
+
+					// Map Displayed
+					RPM.logEvent(geopserve_cat_single, EVENT, geopserve_regp_array)
+				} else {
+					console.log("Error: Unable to track Asset usage -- RPM library not loaded")
+				}
+			} catch(err) {
+				console.log("Error: Error reporting Map usage to RPM: ", err)
+			}
+
 		})
 		.catch(function (error) {
 			errorSelector.show();
