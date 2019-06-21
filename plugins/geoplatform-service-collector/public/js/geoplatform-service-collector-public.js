@@ -108,8 +108,6 @@ function geopserve_gen_list(geopserve_options){
 	itemSvc.search(query)
 		.then(function (response) {
 
-			var geopserve_regp_array = "";
-
 			// Determines the object ID to which the generated text will apply.
 			var geopserve_browseall_div = 'geopserve_carousel_search_div_' + geopserve_options.current_tab;
 
@@ -146,10 +144,6 @@ function geopserve_gen_list(geopserve_options){
 
 			// Pane generation loop.
 			for (var i = 0; i < geopserve_max_panes; i++){
-
-				if (i != 0)
-					geopserve_regp_array = geopserve_regp_array + ",";
-				geopserve_regp_array = geopserve_regp_array + geopserve_results[i].id;
 
 				// Grabs the id and uses it to construct an item details href.
 				var geopserve_asset_link = geopserve_options.redirect + geopserve_results[i].id;
@@ -240,16 +234,15 @@ function geopserve_gen_list(geopserve_options){
 				geopserve_gen_list_element(geopserve_gen_element);
 			}
 
-			console.log(geopserve_regp_array);
-
 			// RPM Reporting
 			try {
 				if(typeof RPMService != 'undefined') {
 					var RPM = typeof window.RPM != 'object' ? window.RPM : RPMService();
 					var EVENT = 'Displayed';
 
+					// debugger
 					// Map Displayed
-					RPM.logEvent(geopserve_cat_single, EVENT, geopserve_regp_array)
+					// RPM.logSearch(query.query)
 				} else {
 					console.log("Error: Unable to track Asset usage -- RPM library not loaded")
 				}
