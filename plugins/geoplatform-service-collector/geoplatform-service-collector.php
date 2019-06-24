@@ -146,57 +146,10 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	// are active.
 	include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
-	// Javascript block for full-carousel controls.
-	?>
-	<script type="text/javascript">
-		jQuery(document).ready(function() {
-
-			// Button color controls, because the CSS doesn't work for plugins. On
-			// click, active classes are removed from all buttons, then granted to the
-			// button that was clicked.
-			jQuery(".geopserve-carousel-button-base").click(function(event){
-				jQuery(".geopserve-carousel-button-base").removeClass("geopserve-carousel-active active");
-				jQuery(this).addClass("geopserve-carousel-active active");
-			});
-
-			// Search functionality trigger on button click.
-			jQuery(".geopportal_port_community_search_geop_button").click(function(event){
-				var geopportal_grabs_from = jQuery(this).attr("grabs-from");
-				var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-				window.open(
-					"<?php echo home_url('geoplatform-search')?>" + geopportal_query_string,
-					'_blank'
-				);
-			});
-
-			// Search functionality trigger on pressing enter in search bar.
-			jQuery(".geopportal_port_community_search_geop_form").submit(function(event){
-				event.preventDefault();
-				var geopportal_grabs_from = jQuery(this).attr("grabs-from");
-				var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
-				window.open(
-					"<?php echo home_url('geoplatform-search')?>" + geopportal_query_string,
-					'_blank'
-				);
-			});
-		});
-	</script>
-	<?php
-
 	// Current pagination page and suffix, starting at one and A.
 	$geopserve_current_page = 0;
+	$geopserve_current_tab = 0;
 	$geopserve_current_suffix = 'A';
-
-	// Starts interpretation. First calls the tab interpretation function's return,
-	// which is an array of arrays containing key-value pairs relevant for output
-	// of the carousel tabs.
-	$geopserve_tab_array = geopserve_tab_interpretation($geopserve_shortcode_array['cat']);
-
-	// Interprets the togglable portions of the misc additional features.
-	$geopserve_show_main_title = (substr($geopserve_shortcode_array['adds'], 0, 1) == 'T');
-	$geopserve_show_tabs = (substr($geopserve_shortcode_array['adds'], 1, 1) == 'T');
-	$geopserve_show_sub_titles = (substr($geopserve_shortcode_array['adds'], 2, 1) == 'T');
-	$geopserve_show_pages = (substr($geopserve_shortcode_array['adds'], 3, 1) == 'T');
 
 	// Handles sortation logic.
 	$geopserve_sort_string = '';
@@ -213,6 +166,17 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	}
 	$geopserve_sort_string .= (substr($geopserve_shortcode_array['adds'], 4, 1) == 'A') ? "asc" : "desc";
 
+	// Starts interpretation. First calls the tab interpretation function's return,
+	// which is an array of arrays containing key-value pairs relevant for output
+	// of the carousel tabs.
+	$geopserve_tab_array = geopserve_tab_interpretation($geopserve_shortcode_array['cat']);
+
+	// Interprets the togglable portions of the misc additional features.
+	$geopserve_show_main_title = (substr($geopserve_shortcode_array['adds'], 0, 1) == 'T');
+	$geopserve_show_tabs = (substr($geopserve_shortcode_array['adds'], 1, 1) == 'T');
+	$geopserve_show_sub_titles = (substr($geopserve_shortcode_array['adds'], 2, 1) == 'T');
+	$geopserve_show_pages = (substr($geopserve_shortcode_array['adds'], 3, 1) == 'T');
+
 	// Grabs the search bar format. Checks for the state of the GeoPlatform search
 	// format and lack of the associated plugin, defaulting to standard format if
 	// true.
@@ -223,6 +187,149 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	// Default image and environment pull. Only really applicable in GeoPlatform
 	// instances that may be in testing phases.
 	$geopserve_ual_domain = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+
+	// Item Details plugin detection. If found, will pass off the relevant
+	// redirected url to the function. If not, it will set it to OE.
+	$geopserve_redirect_url = isset($_ENV['oe_url']) ? $_ENV['oe_url'] : "https://oe.geoplatform.gov/view/";
+	if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
+		$geopserve_redirect_url = home_url() . "/" . "resources/" . strtolower($geopserve_tab_array[$geopserve_current_page]['name']) . "/";
+
+	// Javascript block for full-carousel controls.
+	?>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+
+			// var geopserve_reset_count = sizeof($geopserve_tab_array);
+
+			/*
+			 * TODO: use Obj for variables instead of geopserve_id_array
+			 */
+			var geopserve_options = {
+				community_id: "<?php echo $geopserve_shortcode_array['community'] ?>",
+				theme_id: "<?php echo $geopserve_shortcode_array['theme'] ?>",
+				label_id: "<?php echo $geopserve_shortcode_array['label'] ?>",
+				keyword_id: "<?php echo $geopserve_shortcode_array['keyword'] ?>",
+				topic_id: "<?php echo $geopserve_shortcode_array['topic'] ?>",
+				usedby_id: "<?php echo $geopserve_shortcode_array['usedby'] ?>",
+				class_id: "<?php echo $geopserve_shortcode_array['class'] ?>",
+				kg_id: "<?php echo $geopserve_shortcode_array['kg'] ?>",
+				current_tab: parseInt('<?php echo $geopserve_current_tab ?>', 10),
+				current_page: parseInt('<?php echo $geopserve_current_page ?>', 10),
+				current_suffix: "<?php echo $geopserve_current_suffix ?>",
+				sort_style: "<?php echo $geopserve_sort_string ?>",
+				cat_name: "<?php echo $geopserve_tab_array[$geopserve_current_page]['name'] ?>",
+				per_page: "<?php echo $geopserve_shortcode_array['count'] ?>",
+				ual_domain: "<?php echo $geopserve_ual_domain ?>",
+				redirect: "<?php echo $geopserve_redirect_url ?>",
+				home: "<?php echo home_url() ?>",
+				failsafe: "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>",
+				search_state: "<?php echo $geopserve_search_state ?>",
+				query_var: "",
+			}
+
+			geopserve_gen_list(geopserve_options);
+
+			// Button color controls, because the CSS doesn't work for plugins. On
+			// click, active classes are removed from all buttons, then granted to the
+			// button that was clicked.
+			jQuery(".geopserve-carousel-button-base").click(function(event){
+				jQuery(".geopserve-carousel-button-base").removeClass("geopserve-carousel-active active");
+				jQuery(this).addClass("geopserve-carousel-active active");
+				geopserve_options.cat_name = jQuery(this).attr("title");
+				geopserve_options.current_tab = jQuery(this).attr("data-slide-to");
+
+				if (jQuery(this).attr('gen-bool') == 'F'){
+					jQuery(this).attr('gen-bool','T');
+					jQuery('#geopserve_carousel_gen_div_' + geopserve_options.current_tab + geopserve_options.current_suffix).empty();
+					geopserve_gen_list(geopserve_options);
+				}
+			});
+
+			// Pagination control for previous page. Only triggers if the
+			// current page is not the first.
+			jQuery(".geopserve-pagination-prev-button").click(function(event){
+				if (geopserve_options.current_page > 0){
+
+					geopserve_options.current_page =  geopserve_options.current_page - 1;
+
+					// Sets all tabs to false gen-bool, then reassigns the current to true.
+					jQuery(".geopserve-carousel-button-base").attr('gen-bool','F');
+					jQuery('.geopserve-carousel-button-base[data-slide-to="' + geopserve_options.current_tab + '"]').attr('gen-bool','T');
+					jQuery('.geopserve_carousel_gen_class').empty();
+					geopserve_gen_list(geopserve_options);
+
+					var new_page = "Page " + (geopserve_options.current_page + 1);
+					jQuery('.geopserve_pagination_tracker').text(new_page);
+				}
+			});
+
+			// Pagination control for next page. Aside from the lack of
+			// checking for a maximum page, and increase in current_page
+			// value as opposed to decreasing, works identical to above.
+			jQuery(".geopserve-pagination-next-button").click(function(event){
+
+				geopserve_options.current_page =  geopserve_options.current_page + 1;
+
+				// Sets all tabs to false gen-bool, then reassigns the current to true.
+				jQuery(".geopserve-carousel-button-base").attr('gen-bool','F');
+				jQuery('.geopserve-carousel-button-base[data-slide-to="' + geopserve_options.current_tab + '"]').attr('gen-bool','T');
+				jQuery('.geopserve_carousel_gen_class').empty();
+				geopserve_gen_list(geopserve_options);
+
+				var new_page = "Page " + (geopserve_options.current_page + 1);
+				jQuery('.geopserve_pagination_tracker').text(new_page);
+			});
+
+			jQuery(".geopserve_search_standard_button").click(function(event){
+
+				// Grabs the input parameters from the search bar.
+				var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.current_tab).attr("grabs-from");
+				geopserve_options.query_var = jQuery("#" + geopportal_grabs_from).val();
+
+				jQuery(".geopserve-carousel-button-base").attr('gen-bool','F');
+				jQuery('.geopserve-carousel-button-base[data-slide-to="' + geopserve_options.current_tab + '"]').attr('gen-bool','T');
+				jQuery('.geopserve_carousel_gen_class').empty();
+				geopserve_gen_list(geopserve_options);
+			});
+
+
+			// Search functionality trigger on pressing enter in search bar.
+			// Functions identically to the button press.
+			jQuery(".geopserve_search_standard_form").submit(function(event){
+				event.preventDefault();
+
+				var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.current_tab).attr("grabs-from");
+				geopserve_options.query_var = jQuery("#" + geopportal_grabs_from).val();
+
+				jQuery(".geopserve-carousel-button-base").attr('gen-bool','F');
+				jQuery('.geopserve-carousel-button-base[data-slide-to="' + geopserve_options.current_tab + '"]').attr('gen-bool','T');
+				jQuery('.geopserve_carousel_gen_class').empty();
+				geopserve_gen_list(geopserve_options);
+			});
+
+			// Search functionality trigger on button click.
+			jQuery(".geopserve_search_geop_button").click(function(event){
+				var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+				var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+				window.open(
+					"<?php echo home_url('geoplatform-search')?>" + geopportal_query_string,
+					'_blank'
+				);
+			});
+
+			// Search functionality trigger on pressing enter in search bar.
+			jQuery(".geopserve_search_geop_form").submit(function(event){
+				event.preventDefault();
+				var geopportal_grabs_from = jQuery(this).attr("grabs-from");
+				var geopportal_query_string = jQuery("#" + geopportal_grabs_from).attr("query-prefix") + jQuery("#" + geopportal_grabs_from).val();
+				window.open(
+					"<?php echo home_url('geoplatform-search')?>" + geopportal_query_string,
+					'_blank'
+				);
+			});
+		});
+	</script>
+	<?php
 
 	// CAROUSEL CONSTRUCTION BEGINS
 	// Everywhere that 'hide' is checked is indicitive of an option that strips out
@@ -252,9 +359,9 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				echo "<ol class='carousel-indicators carousel-indicators-override' style='margin:0'>";
 				for ($i = 0; $i < sizeof($geopserve_tab_array); $i++){
 					if ($i == 0)
-						echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base geopserve-carousel-active active' title='" . $geopserve_tab_array[$i]['name'] . "'>";
+						echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base geopserve-carousel-active active' title='" . $geopserve_tab_array[$i]['name'] . "' gen-bool='T'>";
 					else
-						echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base' title='" . $geopserve_tab_array[$i]['name'] . "'>";
+						echo "<li data-target='#geopserve_community_anchor_carousel' data-slide-to='" . $i . "' class='carousel-indicators geopserve-carousel-button-base' title='" . $geopserve_tab_array[$i]['name'] . "' gen-bool='F'>";
 
 					echo "<span class='" . $geopserve_tab_array[$i]['icon'] . "'></span>" . $geopserve_tab_array[$i]['name'] . "</li>";
 				}
@@ -284,12 +391,6 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 			// active status, then produces the remaining elements.
 			for ($i = 0; $i < sizeof($geopserve_tab_array); $i++){
 
-				// Item Details plugin detection. If found, will pass off the relevant
-				// redirected url to the function. If not, it will set it to OE.
-				$geopserve_redirect_url = isset($_ENV['oe_url']) ? $_ENV['oe_url'] : "https://oe.geoplatform.gov/view/";
-				if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
-					$geopserve_redirect_url = home_url() . "/" . "resources/" . strtolower($geopserve_tab_array[$i]['name']) . "/";
-
 				// Sets the first part of the carousel as active.
 				if ($i == 0)
 					echo "<div class='carousel-item active'>";
@@ -308,8 +409,8 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				// div for holding output, and N, which is the alternate div for pagination.
 				echo "<div class='m-article__desc'>";
 					echo "<div class='m-results'>";
-						echo "<div id='geopserve_carousel_gen_div_" . $i . "A'></div>";
-						echo "<div id='geopserve_carousel_gen_div_" . $i . "N' class='geopserve-hidden'></div>";
+						echo "<div id='geopserve_carousel_gen_div_" . $i . "A' class='geopserve_carousel_gen_class'></div>";
+						echo "<div id='geopserve_carousel_gen_div_" . $i . "N' class='geopserve_carousel_gen_class geopserve-hidden'></div>";
 
 						// Placeholder text setup, establishing a default that's overwritten
 						// if within a Portal 4 custom post type.
@@ -366,7 +467,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 										echo "<a href='" . home_url() . "/geoplatform-search" . $geopserve_search_query_prefix . "' class='u-pd-right--md u-mg-left--md is-hidden--xs geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "'></a>";
 										echo "<div class='flex-1 d-flex flex-justify-between flex-align-center u-mg-left--md'>";
 											echo "<div class='input-group-slick flex-1'>";
-												echo "<form class='input-group-slick flex-1 geopportal_port_community_search_geop_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";
+												echo "<form class='input-group-slick flex-1 geopserve_search_geop_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";
 												echo "<span class='icon fas fa-search'></span>";
 													echo "<input type='text' class='form-control' aria-label='Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_tab_array[$i]['name']) . "' " .
 															"id='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' " .
@@ -375,7 +476,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 															"placeholder='" . $geopserve_search_placeholder . "'>";
 												echo "</form>";
 											echo "</div>";
-											echo "<button class='geopportal_port_community_search_geop_button u-mg-left--lg u-mg-right--md btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>SEARCH</a>";
+											echo "<button class='geopserve_search_geop_button u-mg-left--lg u-mg-right--md btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>SEARCH</a>";
 										echo "</div>";
 									echo "</div>";
 								echo "</div>";
@@ -398,7 +499,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 										// Continued construction.
 										echo "<div class='flex-1 d-flex flex-justify-between flex-align-center u-mg-left--md'>";
 											echo "<div class='input-group-slick flex-1'>";
-												echo "<form class='input-group-slick flex-1 geopportal_port_community_search_stand_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";
+												echo "<form class='input-group-slick flex-1 geopserve_search_standard_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";
 												echo "<span class='icon fas fa-search'></span>";
 													echo "<input type='text' class='form-control' aria-label='Search " . $geopserve_shortcode_array['title'] . " " . strtolower($geopserve_tab_array[$i]['name']) . "' " .
 															"id='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' " .
@@ -406,211 +507,13 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 															"placeholder='" . $geopserve_search_placeholder . "'>";
 												echo "</form>";
 											echo "</div>";
-											echo "<button class='geopportal_port_community_search_stand_button u-mg-left--lg u-mg-right--md btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' id='geopserve_stand_search_button_" . $i . "'>SEARCH</a>";
+											echo "<button class='geopserve_search_standard_button u-mg-left--lg u-mg-right--md btn btn-secondary' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search' id='geopserve_stand_search_button_" . $i . "'>SEARCH</a>";
 										echo "</div>";
 									echo "</div>";
 								echo "</div>";
 							}
-							?>
 
-							<!-- Carousel pane generation script. -->
-							<script type="text/javascript">
-								jQuery(document).ready(function() {
-
-									/*
-									 * TODO: use Obj for variables instead of geopserve_id_array
-									 */
-									var geopserve_options = {
-										community_id: "<?php echo $geopserve_shortcode_array['community'] ?>",
-										theme_id: "<?php echo $geopserve_shortcode_array['theme'] ?>",
-										label_id: "<?php echo $geopserve_shortcode_array['label'] ?>",
-										keyword_id: "<?php echo $geopserve_shortcode_array['keyword'] ?>",
-										topic_id: "<?php echo $geopserve_shortcode_array['topic'] ?>",
-										usedby_id: "<?php echo $geopserve_shortcode_array['usedby'] ?>",
-										class_id: "<?php echo $geopserve_shortcode_array['class'] ?>",
-										kg_id: "<?php echo $geopserve_shortcode_array['kg'] ?>",
-										current_page: parseInt('<?php echo $geopserve_current_page ?>', 10),
-										current_suffix: "<?php echo $geopserve_current_suffix ?>",
-										sort_style: "<?php echo $geopserve_sort_string ?>",
-										cat_name: "<?php echo $geopserve_tab_array[$i]['name'] ?>",
-										per_page: "<?php echo $geopserve_shortcode_array['count'] ?>",
-										iter: "<?php echo $i ?>",
-										ual_domain: "<?php echo $geopserve_ual_domain ?>",
-										redirect: "<?php echo $geopserve_redirect_url ?>",
-										home: "<?php echo home_url() ?>",
-										failsafe: "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>",
-										search_state: "<?php echo $geopserve_search_state ?>",
-									}
-
-									var geopserve_community_id = "<?php echo $geopserve_shortcode_array['community'] ?>";
-									var geopserve_theme_id = "<?php echo $geopserve_shortcode_array['theme'] ?>";
-									var geopserve_label_id = "<?php echo $geopserve_shortcode_array['label'] ?>";
-									var geopserve_keyword_id = "<?php echo $geopserve_shortcode_array['keyword'] ?>";
-									var geopserve_topic_id = "<?php echo $geopserve_shortcode_array['topic'] ?>";
-									var geopserve_usedby_id = "<?php echo $geopserve_shortcode_array['usedby'] ?>";
-									var geopserve_class_id = "<?php echo $geopserve_shortcode_array['class'] ?>";
-									var geopserve_kg_id = "<?php echo $geopserve_shortcode_array['kg'] ?>";
-									var geopserve_id_array = [geopserve_community_id, geopserve_theme_id, geopserve_label_id, geopserve_keyword_id, geopserve_topic_id, geopserve_usedby_id, geopserve_class_id, geopserve_kg_id];
-
-									var geopserve_current_page = parseInt('<?php echo $geopserve_current_page ?>', 10);
-									var geopserve_current_suffix = "<?php echo $geopserve_current_suffix ?>";
-									var geopserve_sort_style = "<?php echo $geopserve_sort_string ?>";
-									var geopserve_cat_name = "<?php echo $geopserve_tab_array[$i]['name'] ?>";
-									var geopserve_result_count = "<?php echo $geopserve_shortcode_array['count'] ?>";
-									var geopserve_iter = "<?php echo $i ?>";
-									var geopserve_ual_domain = "<?php echo $geopserve_ual_domain ?>";
-									var geopserve_redirect = "<?php echo $geopserve_redirect_url ?>";
-									var geopserve_home = "<?php echo home_url() ?>";
-									var geopserve_failsafe = "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>";
-
-									var geopserve_search_state = "<?php echo $geopserve_search_state ?>";
-
-									// Asset list creation.
-									geopserve_gen_list(geopserve_options, "");
-
-									// Search bar count applicator.
-									// geopserve_gen_count(geopserve_id_array, geopserve_cat_name, geopserve_iter, geopserve_ual_domain);
-
-									// Pagination control for previous page. Only triggers if the
-									// current page is not the first.
-									jQuery(".geopserve-pagination-prev-button").click(function(event){
-										if (geopserve_options.current_page > 0){
-
-											// Reduces the value of current page and determines which
-											// of the two "next page" divs to use.
-											geopserve_options.current_page = geopserve_options.current_page - 1;
-											var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
-
-											// If standard search is in effect, then the search criteria
-											// in the bar needs to be taken into consideration during
-											// paging. This section injects that info into the query
-											// array.
-											var geopserve_query_value = "";
-											if (geopserve_options.search_state != 'geop' && geopserve_options.search_state != 'hide'){
-												var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
-												var geopserve_query_value = jQuery("#" + geopportal_grabs_from).val();
-											}
-
-											// The new results are generated. Unlike usual, next_suffix
-											// is passed instead of current_suffix, and a different page
-											// number is sent to filter results.
-											geopserve_gen_list(geopserve_options, geopserve_query_value);
-
-											// With results on the new div, the previous one is hidden
-											// and the new one is made visible.
-											jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
-											jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
-
-											// Page number for the UI output is updated.
-											var new_page = "Page " + (geopserve_options.current_page + 1);
-											jQuery('.geopserve_pagination_tracker').text(new_page);
-
-											// Content is removed from the now hidden div.
-											var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
-											while (myNode.firstChild){
-												myNode.removeChild(myNode.firstChild);
-											}
-
-											// Current suffix is updated to the new one.
-											geopserve_options.current_suffix = geopserve_next_suffix;
-										}
-									});
-
-									// Pagination control for next page. Aside from the lack of
-									// checking for a maximum page, and increase in current_page
-									// value as opposed to decreasing, works identical to above.
-									jQuery(".geopserve-pagination-next-button").click(function(event){
-
-										geopserve_options.current_page =  geopserve_options.current_page + 1;
-										var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
-
-										// If standard search is in effect, then the search criteria
-										// in the bar needs to be taken into consideration during
-										// paging. This section injects that info into the query
-										// array.
-										var geopserve_query_value = "";
-										if (geopserve_options.search_state != 'geop' && geopserve_options.search_state != 'hide'){
-											var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
-											var geopserve_query_value = jQuery("#" + geopportal_grabs_from).val();
-										}
-
-										// The new results are generated. Unlike usual, next_suffix
-										// is passed instead of current_suffix, and a different page
-										// number is sent to filter results.
-										geopserve_gen_list(geopserve_options, geopserve_query_value);
-
-										// With results on the new div, the previous one is hidden
-										// and the new one is made visible.
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
-
-										var new_page = "Page " + (geopserve_options.current_page + 1);
-										jQuery('.geopserve_pagination_tracker').text(new_page);
-
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
-										while (myNode.firstChild){
-											myNode.removeChild(myNode.firstChild);
-										}
-
-										geopserve_options.current_suffix = geopserve_next_suffix;
-									});
-
-									// Search functionality trigger on button click. Performs a
-									// fresh query, replacing the current carousel content with
-									// that of the same, search criteria applied.
-									jQuery(".geopportal_port_community_search_stand_button").click(function(event){
-
-										var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
-
-										// Grabs the input parameters from the search bar.
-										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
-										var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
-
-										// Result generation.
-										geopserve_gen_list(geopserve_options, geopportal_query_grab);
-
-										// With results on the new div, the previous one is hidden
-										// and the new one is made visible.
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
-
-										// Flushes all content of the current suffix.
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
-										while (myNode.firstChild){
-											myNode.removeChild(myNode.firstChild);
-										}
-
-										geopserve_options.current_suffix = geopserve_next_suffix;
-									});
-
-									// Search functionality trigger on pressing enter in search bar.
-									// Functions identically to the button press.
-									jQuery(".geopportal_port_community_search_stand_form").submit(function(event){
-										event.preventDefault();
-
-										var geopserve_next_suffix = geopserve_options.current_suffix == 'A' ? 'N' : 'A';
-
-										var geopportal_grabs_from = jQuery("#geopserve_stand_search_button_" + geopserve_options.iter).attr("grabs-from");
-										var geopportal_query_grab = jQuery("#" + geopportal_grabs_from).val();
-
-										// Result generation.
-										geopserve_gen_list(geopserve_options, geopportal_query_grab);
-
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_next_suffix).removeClass('geopserve-hidden');
-										jQuery('#geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix).addClass('geopserve-hidden');
-
-										var myNode = document.getElementById('geopserve_carousel_gen_div_' + geopserve_options.iter + geopserve_options.current_suffix);
-										while (myNode.firstChild){
-											myNode.removeChild(myNode.firstChild);
-										}
-
-										geopserve_options.current_suffix = geopserve_next_suffix;
-									});
-								});
-							</script>
-							<?php
-
-					// Divs that close out the interface.
+							// Divs that close out the interface.
 							echo "</div> <!-- m-results -->";
 						echo "</div> <!-- m-article__desc -->";
 					echo "</div> <!-- m-article -->";
