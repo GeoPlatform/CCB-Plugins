@@ -123,6 +123,7 @@ function geopserve_shortcode_generation($geopserve_atts){
 	// Adding GeoPlatform styling. Placing it here ensures it doesn't get
 	// overridden by the theme.
 	wp_enqueue_style( 'geop_style', plugin_dir_url( __FILE__ ) . 'public/css/geop-style.css', array());
+	wp_enqueue_script( 'geop_bootstrap_js', plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false );
 
 	// The original intention was to handle the shortcode output differently based
 	// upon compact or standard form. Currently, compact form is not planned to be
