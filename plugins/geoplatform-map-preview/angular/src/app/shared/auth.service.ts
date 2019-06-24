@@ -9,6 +9,9 @@ import {
 import { environment } from '../../environments/environment';
 import { authServiceFactory } from './auth.factory';
 import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { logger } from './logger';
+
+
 
 
 @Injectable()
@@ -83,10 +86,12 @@ export class PluginAuthService {
      * @return GeoPlatformUser or null
      */
     check() : Promise<GeoPlatformUser> {
-        if(!this.authService) return Promise.resolve(null);
-        return this.authService.checkWithClient(null)
-        .then( token => this.authService.getUser() )
-        .then( user => {
+        if(!this.authService) {
+            logger.log("No auth service to check token with...");
+            return Promise.resolve(null);
+        }
+        logger.log("Checking with auth service for token");
+        return this.authService.check().then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
             return user;
         });
