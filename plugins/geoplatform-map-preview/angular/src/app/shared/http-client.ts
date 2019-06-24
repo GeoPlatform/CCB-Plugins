@@ -14,7 +14,7 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
-
+import { logger } from './logger';
 import { ItemDetailsError } from './item-details-error';
 
 
@@ -70,18 +70,20 @@ export class NG2HttpClient {
             opts.body = options.data;
         }
 
-        let headers = new HttpHeaders();
+        let headers = {};
 
         //set authorization token if one was provided
         if(this.token) {
             let token = this.token();
             if(token) {
                 //remember headers.set returns a NEW instance of Headers
-                headers = headers.set('Authorization', 'Bearer ' + token);
+                headers['Authorization'] = 'Bearer ' + token;
             }
         }
+        //set any remaining headers...
 
-        opts.headers = headers;
+        opts.headers = new HttpHeaders(headers);
+        logger.log("HttpClient headers: ", opts.headers.keys().map(key => opts.headers.get(key)) );
 
         if(opts.body) {
             return new HttpRequest<any>(options.method, options.url, opts.body, opts);
