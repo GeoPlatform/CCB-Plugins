@@ -79,11 +79,11 @@ RUN curl -L -o /usr/src/classic-editor.zip \
 #		rm -rf /usr/src/wordpress/wp-content/plugins/__MACOSX/;
 
 # Open ID Connect - OAUTH :
-RUN curl -L -o /usr/src/open-id-generic-master.zip \
-					https://github.com/daggerhart/openid-connect-generic/archive/3.4.0.zip; \
-	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
-					/usr/src/open-id-generic-master.zip; \
-		rm /usr/src/open-id-generic-master.zip;
+#RUN curl -L -o /usr/src/open-id-generic-master.zip \
+#					https://github.com/daggerhart/openid-connect-generic/archive/3.4.0.zip; \
+#	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+#					/usr/src/open-id-generic-master.zip; \
+#		rm /usr/src/open-id-generic-master.zip;
 #########################################################
 
 # The /usr/src/wordpress/ dir in the container is copied to /var/www/html
