@@ -68,7 +68,6 @@ function geopoauth_register_authorize(){
 		if ($post->post_name == 'checktoken' && isset($_COOKIE['geop_auth_cookie'])){
 			$header = "Authorization: Bearer " . $_COOKIE['geop_auth_cookie'];
 			header($header);
-			echo "YEET!!";
 		}
 	}
 }
