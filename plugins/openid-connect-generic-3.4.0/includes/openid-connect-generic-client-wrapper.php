@@ -19,7 +19,6 @@ class OpenID_Connect_Generic_Client_Wrapper {
 	// WP_Error if there was a problem, or false if no error
 	private $error = false;
 
-
 	/**
 	 * Inject necessary objects and services into the client
 	 *
@@ -134,6 +133,8 @@ class OpenID_Connect_Generic_Client_Wrapper {
 		$refresh_expires = $refresh_token_info[ 'refresh_expires' ];
 
 		if ( ! $refresh_token || ( $refresh_expires && $current_time > $refresh_expires ) ) {
+			$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
+			setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, TRUE);
 			wp_logout();
 
 			if ( $this->settings->redirect_on_logout ) {
@@ -146,6 +147,8 @@ class OpenID_Connect_Generic_Client_Wrapper {
 		$token_result = $this->client->request_new_tokens( $refresh_token );
 
 		if ( is_wp_error( $token_result ) ) {
+			$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
+			setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, TRUE);
 			wp_logout();
 			$this->error_redirect( $token_result );
 		}
@@ -153,6 +156,8 @@ class OpenID_Connect_Generic_Client_Wrapper {
 		$token_response = $this->client->get_token_response( $token_result );
 
 		if ( is_wp_error( $token_response ) ) {
+			$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
+			setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, TRUE);
 			wp_logout();
 			$this->error_redirect( $token_response );
 		}
