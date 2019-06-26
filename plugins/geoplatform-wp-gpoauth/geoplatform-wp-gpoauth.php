@@ -70,7 +70,7 @@ function geopoauth_register_authorize(){
 			setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, TRUE);
 		}
 		if ($post->post_name == 'checktoken'){
-			$header = "Authorization: Bearer cheese";
+			$header = "Authorization: Bearer";
 			if (is_user_logged_in()){
 				$header = "Authorization: Bearer " . get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
 				if (isset($_COOKIE['geop_auth_cookie'])){
