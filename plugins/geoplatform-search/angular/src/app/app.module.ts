@@ -45,18 +45,11 @@ import { EditorComponent, ConstraintDirective } from './picker/editor/editor.com
 import { UTCDatepickerAdapter } from './constraints/temporal/temporal.component';
 
 import {
-    CurrentComponent,
-    KeywordsComponent,
-    ThemeComponent,
-    TopicComponent,
-    ContactComponent,
-    CreatorComponent,
-    PublisherComponent,
-    CommunityComponent,
-    ExtentComponent,
-    SemanticComponent,
-    TemporalComponent,
-    TypeComponent
+    CurrentComponent, KeywordsComponent, ThemeComponent,
+    TopicComponent, ContactComponent, CreatorComponent,
+    PublisherComponent, CommunityComponent, ExtentComponent,
+    SemanticComponent, TemporalComponent, TypeComponent,
+    ResourceTypeComponent
 } from './constraints';
 
 import {
@@ -156,7 +149,8 @@ export function initializeApp() {
     TypedResultsComponent,
     CommunityComponent,
     SimilarityComponent,
-    LegendComponent
+    LegendComponent,
+    ResourceTypeComponent
   ],
   imports: [
     RouterModule.forRoot( appRoutes, { useHash: true } ),
@@ -210,7 +204,8 @@ export function initializeApp() {
       ExtentComponent,
       SemanticComponent,
       TemporalComponent,
-      TypeComponent
+      TypeComponent,
+      ResourceTypeComponent
   ],
   bootstrap: [AppComponent]
 })

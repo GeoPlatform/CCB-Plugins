@@ -33,10 +33,11 @@ export interface Facet {
  */
 export class Constraint {
 
-    name: string;
-    label: string;
-    value: any;
-    counts: FacetCount[];
+    name          : string;
+    label         : string;
+    value         : any;
+    valueProperty : string;
+    counts        : FacetCount[];
 
     constructor(name: string, value?:any, label?:string) {
         this.name = name;
@@ -60,8 +61,12 @@ export class Constraint {
         let value = null;
         if(this.value) {
             if('object' === typeof(this.value)) {
-                //      asset obj     or  suggested concept
-                value = this.value.id || this.value.uri || null;
+                if(this.valueProperty && this.value[this.valueProperty] !== undefined) {
+                    value = this.value[this.valueProperty];
+                } else {
+                    //      asset obj     or  suggested concept
+                    value = this.value.id || this.value.uri || null;
+                }
             } else {
                 value = this.value;
             }
@@ -71,6 +76,10 @@ export class Constraint {
 
     updateFacetCounts( counts: FacetCount[] ) {
         this.counts = counts;
+    }
+
+    setValueProperty( property : string) {
+        this.valueProperty = property;
     }
 }
 
@@ -109,8 +118,12 @@ export class MultiValueConstraint extends Constraint {
         if(this.value) {
             value = this.value.map( v => {
                 if('object' === typeof(v)) {
-                    //      asset obj     or  suggested concept
-                    return v.id || v.uri || null;
+                    if(this.valueProperty && v[this.valueProperty] !== undefined) {
+                        return v[this.valueProperty];
+                    } else {
+                        //      asset obj     or  suggested concept
+                        return v.id || v.uri || null;
+                    }
                 }
                 return v;
             });

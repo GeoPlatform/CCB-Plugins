@@ -16,6 +16,7 @@ import { ExtentCodec } from './extent/codec';
 import { TemporalCodec } from './temporal/codec';
 import { SemanticCodec } from './semantic/codec';
 import { SimilarityCodec } from './similarity/codec';
+import { ResourceTypeCodec } from './resource-type/codec';
 import { FreeTextCodec } from './freetext.codec';
 
 import { CurrentComponent } from './current/current.component';
@@ -32,6 +33,7 @@ import { TopicComponent } from './topic/topic.component';
 import { TypeComponent } from './type/type.component';
 import { SemanticComponent } from './semantic/semantic.component';
 import { SimilarityComponent } from './similarity/similarity.component';
+import { ResourceTypeComponent } from './resource-type/resource-type.component';
 
 
 class EditorRegistry {
@@ -61,6 +63,7 @@ SearchEditorRegistry.registerEditor( "themes", "Themes", ThemeComponent );
 SearchEditorRegistry.registerEditor( "topics", "Topics", TopicComponent );
 SearchEditorRegistry.registerEditor( "types", "Types", TypeComponent );
 SearchEditorRegistry.registerEditor( "semantic", "Semantic Concepts", SemanticComponent );
+SearchEditorRegistry.registerEditor( "resourceType", "Type Specializations", ResourceTypeComponent );
 
 
 
@@ -90,6 +93,7 @@ class CodecFactory {
         this.registerCodec(new TemporalCodec());
         this.registerCodec(new SemanticCodec(http));
         this.registerCodec(new SimilarityCodec(http));
+        this.registerCodec(new ResourceTypeCodec(http));
     }
 
     registerCodec(codec : Codec) {
@@ -129,6 +133,7 @@ export {
     TypeComponent,
     SemanticComponent,
     SimilarityComponent,
+    ResourceTypeComponent,
     FreeTextCodec,
     TypeCodec,
     KeywordCodec,
@@ -139,5 +144,6 @@ export {
     ExtentCodec,
     TemporalCodec,
     SemanticCodec,
-    SimilarityCodec
+    SimilarityCodec,
+    ResourceTypeCodec
 }

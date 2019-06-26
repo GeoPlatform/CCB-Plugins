@@ -66,11 +66,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     ngOnInit() {
         super.ngOnInit();
 
-        this.itemService.client.setAuthToken( () => {
-            let token = this.getAuthToken();
-            logger.log(`DetailsComponent using JWT: ${token}`);
-            return token;
-        });
+        this.itemService.client.setAuthToken( () => { return this.getAuthToken(); });
 
         if(this.data) {
             this.dataSubscription = this.data.subscribe( (event : DataEvent) => {
@@ -95,7 +91,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     }
 
     onUserChange(user) {
-        logger.log("User has changed: " + (user?user.username:'N/A'));
+        logger.debug("User has changed: " + (user?user.username:'N/A'));
         let token = null;
         this.mapItem.createdBy = user ? user.username : null;
     }
@@ -124,7 +120,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         })
         .then( () => {
             //then request a URI for the new map
-            return this.itemService.getUri(this.mapItem); 
+            return this.itemService.getUri(this.mapItem);
         })
         .then(uri => {
             if(!uri) throw new Error("Unable to generate a URI for the new map");
@@ -148,8 +144,8 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
             });
             this.mapItem.baseLayer = this.data.getBaseLayer();
 
-            logger.debug("Saving Map as...");
-            logger.debug(JSON.stringify(this.mapItem, null, ' '))
+            // logger.debug("Saving Map as...");
+            // logger.debug(JSON.stringify(this.mapItem, null, ' '))
 
             //and then save the map
             return this.itemService.save(map)

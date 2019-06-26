@@ -1,0 +1,27 @@
+<div class="c-constraint__editor">
+    <p>Select one or more resource types from the list below and click "Apply"</p>
+    <br>
+
+    <div *ngFor="let itemType of ITEM_TYPES">
+        <div class="list-item list-item--heading d-flex flex-justify-between flex-align-center">
+            <span class="{{getIconClass(itemType)}} is-themed"></span>
+            <div class="flex-1">{{getItemTypeLabel(itemType)}}</div>
+            <button type="button" class="btn btn-sm btn-link"
+                (click)="isExpanded[itemType]=!isExpanded[itemType]">
+                <span class="fas"
+                    [ngClass]="{'fa-chevron-down':!isExpanded[itemType],'fa-chevron-up':isExpanded[itemType]}">
+                </span>
+            </button>
+        </div>
+        <div *ngIf="isExpanded[itemType]">
+            <div *ngFor="let resType of (getCodec().getOptions()[itemType]||[])"
+                class="list-item" [ngClass]="{selected:isSelected(resType)}" (click)="select(resType)">
+                {{resType.label}}
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <button type="button" class="btn btn-primary applyBtn" (click)="apply()">Apply</button>
+    </footer>
+</div>

@@ -83,7 +83,7 @@ export class NG2HttpClient {
         //set any remaining headers...
 
         opts.headers = new HttpHeaders(headers);
-        logger.log("HttpClient headers: ", opts.headers.keys().map(key => opts.headers.get(key)) );
+        // logger.debug("HttpClient headers: ", opts.headers.keys().map(key => opts.headers.get(key)) );
 
         if(opts.body) {
             return new HttpRequest<any>(options.method, options.url, opts.body, opts);

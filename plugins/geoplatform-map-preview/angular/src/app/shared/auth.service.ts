@@ -36,7 +36,7 @@ export class PluginAuthService {
 
         const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
-            // console.log("Received Auth Message: " + msg.name);
+            // logger.debug("Received Auth Message: " + msg.name);
             switch(msg.name){
                 case 'userAuthenticated': this.onUserChange(msg.user); break;
                 case 'userSignOut': this.onUserChange(null); break;
@@ -53,14 +53,14 @@ export class PluginAuthService {
         })
         .then( user => { this.onUserChange(user); })
         .catch(e => {
-            // console.log("AuthService.init() - Error retrieving user: " + e.message);
+            // logger.debug("AuthService.init() - Error retrieving user: " + e.message);
             this.onUserChange(null);
         });
     }
 
     onUserChange(user : GeoPlatformUser) {
-        console.log("User: " + (user ? user.username : 'N/A'));
-        // console.log('AuthService.onUserChange() returned ' +
+        logger.debug("User: " + (user ? user.username : 'N/A'));
+        // logger.debug('AuthService.onUserChange() returned ' +
         //     JSON.stringify(user, null, ' '));
         this.user = user;
         this.rpm.setUserId( user ? user.id : null);
@@ -87,10 +87,10 @@ export class PluginAuthService {
      */
     check() : Promise<GeoPlatformUser> {
         if(!this.authService) {
-            logger.log("No auth service to check token with...");
+            logger.warn("No auth service to check token with...");
             return Promise.resolve(null);
         }
-        logger.log("Checking with auth service for token");
+        logger.debug("Checking with auth service for token");
         return this.authService.check().then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
             return user;
