@@ -453,7 +453,9 @@ class OpenID_Connect_Generic_Client_Wrapper {
 
 		// Sets a cookie with the access_token info.
 		$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
-		setcookie('geop_auth_cookie', $token_response['access_token'], $token_response['expires_in'] + $now, $compath . '/checktoken/');
+		$comdomain = isset($_ENV['root_url']) ? $_ENV['root_url'] : "";
+
+		setcookie('geop_auth_cookie', $token_response['access_token'], $token_response['expires_in'] + $now, $compath . '/checktoken/', $comdomain, true, true);
 
 		if ( isset( $token_response[ 'refresh_expires_in' ] ) ) {
 			$refresh_expires_in = $token_response[ 'refresh_expires_in' ];
