@@ -205,6 +205,11 @@ button.btn.btn-sm {
     cursor: pointer;
     border-bottom: 1px solid #ddd;
 }
+.list-item.list-item--heading {
+    cursor: default;
+    font-weight: 700;
+    background: #eee;
+}
 a.list-item, .list-item a {
     color: #4A90E2;
 }

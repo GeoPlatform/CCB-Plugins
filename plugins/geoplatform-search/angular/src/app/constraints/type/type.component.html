@@ -3,10 +3,8 @@
     <br>
 
     <div *ngFor="let opt of options" class="list-item gp-{{opt.id.toLowerCase().replace(':','-')}}"
-        [ngClass]="{selected:isSelected(opt)}"
-        (click)="select(opt)">
-        <!-- <span [inlineSVG]="getIconPath(opt)" class="svg-icon"></span> -->
-        <span class="{{getIconClass(opt)}} is-themed"></span> 
+        [ngClass]="{selected:isSelected(opt)}" (click)="select(opt)">
+        <span class="{{getIconClass(opt)}} is-themed"></span>
         {{opt.label}}
         <span class="badge badge-secondary">{{opt.count?opt.count:''}}</span>
     </div>

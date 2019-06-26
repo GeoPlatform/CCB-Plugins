@@ -9,6 +9,9 @@ import {
 import { environment } from '../../environments/environment';
 import { authServiceFactory } from './auth.factory';
 import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { logger } from './logger';
+
+
 
 
 @Injectable()
@@ -33,7 +36,7 @@ export class PluginAuthService {
 
         const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
-            // console.log("Received Auth Message: " + msg.name);
+            // logger.debug("Received Auth Message: " + msg.name);
             switch(msg.name){
                 case 'userAuthenticated': this.onUserChange(msg.user); break;
                 case 'userSignOut': this.onUserChange(null); break;
@@ -50,14 +53,14 @@ export class PluginAuthService {
         })
         .then( user => { this.onUserChange(user); })
         .catch(e => {
-            // console.log("AuthService.init() - Error retrieving user: " + e.message);
+            // logger.debug("AuthService.init() - Error retrieving user: " + e.message);
             this.onUserChange(null);
         });
     }
 
     onUserChange(user : GeoPlatformUser) {
-        console.log("User: " + (user ? user.username : 'N/A'));
-        // console.log('AuthService.onUserChange() returned ' +
+        logger.debug("User: " + (user ? user.username : 'N/A'));
+        // logger.debug('AuthService.onUserChange() returned ' +
         //     JSON.stringify(user, null, ' '));
         this.user = user;
         this.rpm.setUserId( user ? user.id : null);
@@ -83,10 +86,12 @@ export class PluginAuthService {
      * @return GeoPlatformUser or null
      */
     check() : Promise<GeoPlatformUser> {
-        if(!this.authService) return Promise.resolve(null);
-        return this.authService.checkWithClient(null)
-        .then( token => this.authService.getUser() )
-        .then( user => {
+        if(!this.authService) {
+            logger.warn("No auth service to check token with...");
+            return Promise.resolve(null);
+        }
+        logger.debug("Checking with auth service for token");
+        return this.authService.check().then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
             return user;
         });

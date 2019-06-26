@@ -17,6 +17,7 @@ import { logger } from "../shared/logger";
 
 
 const GEOPLATFORM_MAP_TYPE = "http://www.geoplatform.gov/ont/openmap/GeoplatformMap";
+const IS_DEV = 'development' === environment.env;
 
 
 @Component({
@@ -33,6 +34,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
     public isKeywordsCollapsed : boolean = true;
     public error : Error;
+    public isSaving : boolean;
 
     public mapItem : MapItem = {
         uri         : null,
@@ -64,6 +66,9 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
     ngOnInit() {
         super.ngOnInit();
+
+        this.itemService.client.setAuthToken( () => { return this.getAuthToken(); });
+
         if(this.data) {
             this.dataSubscription = this.data.subscribe( (event : DataEvent) => {
                 this.onDataEvent(event);
@@ -87,18 +92,17 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     }
 
     onUserChange(user) {
+        logger.debug("User has changed: " + (user?user.username:'N/A'));
         let token = null;
-        if(user) {
-            this.mapItem.createdBy = user.username;
-            token = this.getAuthToken();
-        }
-        this.itemService.client.setAuthToken(token);
+        this.mapItem.createdBy = user ? user.username : null;
     }
 
     /**
      *
      */
     createMap() {
+
+        this.isSaving = true;
 
         if(!this.mapItem.createdBy) {
             logger.warn("User not authenticated, aborting create...");
@@ -107,20 +111,19 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
         Promise.resolve(this.getUser())
         .then( user => {
-            if('development' !== environment.env) {
-                // first, ensure token isn't in weird expired/revoked state
-                return this.checkAuth().then( user => {
-                    this.onUserChange(user);
-                    if(!user) throw new Error("Not signed in");
-                });
-            } else {
+            if(IS_DEV) {
                 this.onUserChange(user);
-                Promise.resolve(true);
+                return Promise.resolve(null);
             }
+            // ensure token isn't in weird expired/revoked state
+            return this.checkAuth().then( user => {
+                this.onUserChange(user);
+                if(!user) throw new Error("Not signed in");
+            });
         })
         .then( () => {
             //then request a URI for the new map
-            return this.itemService.getUri(this.mapItem);            // return null; //use if testing create without actually saving
+            return this.itemService.getUri(this.mapItem);
         })
         .then(uri => {
             if(!uri) throw new Error("Unable to generate a URI for the new map");
@@ -144,8 +147,8 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
             });
             this.mapItem.baseLayer = this.data.getBaseLayer();
 
-            logger.debug("Saving Map as...");
-            logger.debug(JSON.stringify(this.mapItem, null, ' '))
+            // logger.debug("Saving Map as...");
+            // logger.debug(JSON.stringify(this.mapItem, null, ' '))
 
             //and then save the map
             return this.itemService.save(map)
@@ -153,13 +156,27 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         })
         .then( created => {
             if(!created) throw new Error("No response when attempting to create the map");
-            //TODO display success message!
+            this.isSaving = false;
 
             //for now, take user to the map's IDp page
             (window as any).location.href = '/resources/maps/' + created.id;
         })
         .catch( (e:Error) => {
+            this.isSaving = false;
             //display error message to user
+
+            if( ~e.message.indexOf('it matches an existing item; ID:') ) {
+                let expr = new RegExp(/ID\:\s([a-z0-9]+)\sURI/gi);
+                let matches = expr.exec(e.message);
+                if(matches && matches.length) {
+                    let id = matches[1];
+                    let url = window.location.href;
+                    url = url.substring(0, url.indexOf("/resources/map")) + '/resources/maps/' + id;
+                    e.message = "The map you are creating already exists. " +
+                        '<a target="_blank" href="' + url + '">View item</a>';
+                }
+            }
+
             this.error = e;
             logger.error("Unable to create map because of: " + e.message);
         });

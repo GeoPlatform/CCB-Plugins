@@ -67,6 +67,9 @@ function geopoauth_register_authorize(){
 		global $post;
 		if ($post->post_name == 'checktoken'){
 			$header = "Authorization: Bearer " . get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
+			if (isset($_COOKIE['geop_auth_cookie'])){
+				$header = "Authorization: Bearer " . $_COOKIE['geop_auth_cookie'];
+			}
 			header($header);
 		}
 	}

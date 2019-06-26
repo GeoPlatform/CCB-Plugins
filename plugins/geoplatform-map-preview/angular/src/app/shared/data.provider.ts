@@ -79,7 +79,7 @@ export class DataProvider {
         publishers  : [],
         usedBy      : [],
         classifiers : {},
-        extent      : {}
+        extent      : null
     };
 
     //object holding spatial extent of all data

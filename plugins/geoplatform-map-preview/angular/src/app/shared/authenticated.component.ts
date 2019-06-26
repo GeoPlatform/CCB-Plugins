@@ -3,6 +3,7 @@ import { ISubscription }                from "rxjs/Subscription";
 import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 import { authServiceFactory }           from './auth.factory';
 import { PluginAuthService } from './auth.service';
+import { logger } from './logger';
 
 /**
  * Base class that can be used to hook authentication notifications into
@@ -34,7 +35,7 @@ export abstract class AuthenticatedComponent {
                 this.onUserChange(this.user);
             },
             error : (err: any) => {
-                console.log("Unable to get authenticated user info: " +
+                logger.error("Unable to get authenticated user info: ",
                     (err as Error).message);
             },
             complete : () => { }

@@ -70,7 +70,8 @@ export class PickerComponent implements OnInit, OnDestroy {
         //DT-2166 ensure 'types' filter is always at top
         if('Types' === a.label) return -1;
         if('Types' === b.label) return 1;
-
+        if('Type Specializations' === a.label) return -1;
+        if('Type Specializations' === b.label) return 1;
         return a.label < b.label ? -1 : 1
     });
 

@@ -17,7 +17,8 @@ export class TypeCodec implements Codec {
             let t = ItemTypes[k];
             return  t !== ItemTypes.CONCEPT &&
                     t !== ItemTypes.CONCEPT_SCHEME &&
-                    t !== ItemTypes.STANDARD;
+                    t !== ItemTypes.STANDARD &&
+                    t !== ItemTypes.RIGHTS_STATEMENT;
         })
         .map(k=>{
             let v = ItemTypes[k], label = ItemTypeLabels[v];
