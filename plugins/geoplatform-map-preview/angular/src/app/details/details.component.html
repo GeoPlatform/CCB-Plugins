@@ -95,7 +95,7 @@
                 [iconClass]="'icon-community'"
                 [value]="mapItem?.usedBy">
             </gpmp-array-property>
-            
+
 
         </div>
 
@@ -113,7 +113,7 @@
                 <span class="gpicons exclamation-circle"></span>
                 Unable to Create Map
             </strong>
-            <div>{{error.message}}</div>
+            <div [innerHTML]="error.message"></div>
             <div class="u-text--right">
                 <button type="button" class="btn btn-sm btn-light" (click)="error=null">
                     DISMISS
@@ -123,8 +123,12 @@
 
         <div class="m-article__desc" *ngIf="getUser()">
             <button type="button" class="btn btn-block btn-primary"
-                (click)="createMap()">
-                Create
+                (click)="createMap()" [disabled]="isSaving">
+                <span *ngIf="!isSaving">Create</span>
+                <span *ngIf="isSaving">
+                    <span class="fas fa-hourglass fa-spin"></span>
+                    Creating...
+                </span>
             </button>
         </div>
 

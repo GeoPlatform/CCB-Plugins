@@ -34,6 +34,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
     public isKeywordsCollapsed : boolean = true;
     public error : Error;
+    public isSaving : boolean;
 
     public mapItem : MapItem = {
         uri         : null,
@@ -101,6 +102,8 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
      */
     createMap() {
 
+        this.isSaving = true;
+
         if(!this.mapItem.createdBy) {
             logger.warn("User not authenticated, aborting create...");
             return;
@@ -153,13 +156,27 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         })
         .then( created => {
             if(!created) throw new Error("No response when attempting to create the map");
-            //TODO display success message!
+            this.isSaving = false;
 
             //for now, take user to the map's IDp page
             (window as any).location.href = '/resources/maps/' + created.id;
         })
         .catch( (e:Error) => {
+            this.isSaving = false;
             //display error message to user
+
+            if( ~e.message.indexOf('it matches an existing item; ID:') ) {
+                let expr = new RegExp(/ID\:\s([a-z0-9]+)\sURI/gi);
+                let matches = expr.exec(e.message);
+                if(matches && matches.length) {
+                    let id = matches[1];
+                    let url = window.location.href;
+                    url = url.substring(0, url.indexOf("/resources/map")) + '/resources/maps/' + id;
+                    e.message = "The map you are creating already exists. " +
+                        '<a target="_blank" href="' + url + '">View item</a>';
+                }
+            }
+
             this.error = e;
             logger.error("Unable to create map because of: " + e.message);
         });

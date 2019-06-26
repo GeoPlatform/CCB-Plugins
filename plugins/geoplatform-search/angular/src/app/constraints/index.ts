@@ -63,7 +63,7 @@ SearchEditorRegistry.registerEditor( "themes", "Themes", ThemeComponent );
 SearchEditorRegistry.registerEditor( "topics", "Topics", TopicComponent );
 SearchEditorRegistry.registerEditor( "types", "Types", TypeComponent );
 SearchEditorRegistry.registerEditor( "semantic", "Semantic Concepts", SemanticComponent );
-SearchEditorRegistry.registerEditor( "resourceType", "Type Specializations", ResourceTypeComponent );
+// SearchEditorRegistry.registerEditor( "resourceType", "Type Specializations", ResourceTypeComponent );
 
 
 
@@ -93,7 +93,7 @@ class CodecFactory {
         this.registerCodec(new TemporalCodec());
         this.registerCodec(new SemanticCodec(http));
         this.registerCodec(new SimilarityCodec(http));
-        this.registerCodec(new ResourceTypeCodec(http));
+        // this.registerCodec(new ResourceTypeCodec(http));
     }
 
     registerCodec(codec : Codec) {
