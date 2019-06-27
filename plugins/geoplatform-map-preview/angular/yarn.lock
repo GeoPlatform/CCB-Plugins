@@ -2888,28 +2888,29 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
+"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#0.2.3":
   version "0.2.3"
-  resolved "git+http://github.com/GeoPlatform/client-api.git#bb8d4bddfc64f903b5dfdf14d73db282f0c17809"
+  resolved "git+http://github.com/GeoPlatform/client-api.git#5688e8b6f20479fc29906e9e5a170fc93bf0c475"
   dependencies:
     jquery "^3.3.1"
     q "1.1.2"
     request "^2.75.0"
 
-"geoplatform.client@git+https://github.com/GeoPlatform/client-api.git#develop":
+"geoplatform.client@git+https://github.com/GeoPlatform/client-api.git#0.2.3":
   version "0.2.3"
-  resolved "git+https://github.com/GeoPlatform/client-api.git#49c00694ae57a231090b7e38a19cae8280e98231"
+  uid "5688e8b6f20479fc29906e9e5a170fc93bf0c475"
+  resolved "git+https://github.com/GeoPlatform/client-api.git#5688e8b6f20479fc29906e9e5a170fc93bf0c475"
   dependencies:
     jquery "^3.3.1"
     q "1.1.2"
     request "^2.75.0"
 
-"geoplatform.mapcore@git+http://github.com/GeoPlatform/map-core.git#develop":
+"geoplatform.mapcore@git+http://github.com/GeoPlatform/map-core.git#0.2.1":
   version "0.2.1"
-  resolved "git+http://github.com/GeoPlatform/map-core.git#0a51837f86d9f3c4f205dfc57d6c24137a594efc"
+  resolved "git+http://github.com/GeoPlatform/map-core.git#99d35e935153b8ae7423bfc8ff97ba20021d284a"
   dependencies:
     esri-leaflet "2.2.3"
-    geoplatform.client "git+https://github.com/GeoPlatform/client-api.git#develop"
+    geoplatform.client "git+https://github.com/GeoPlatform/client-api.git#0.2.3"
     jquery "^3.3.1"
     leaflet "1.1.0"
     leaflet-draw "0.4.9"
@@ -2921,13 +2922,13 @@ generate-object-property@^1.1.0:
   version "0.0.0"
   resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#dfaf6323b0d3bb39bfb4c0e009a5018e6d151f64"
 
-"geoplatform.rpm@git+https://github.com/GeoPlatform/rpm-js#develop":
-  version "0.1.6"
-  resolved "git+https://github.com/GeoPlatform/rpm-js#528881380bd9fa8ec9400ac157a1b00e7ec6591c"
+"geoplatform.rpm@git+https://github.com/GeoPlatform/rpm-js#0.2.6":
+  version "0.2.6"
+  resolved "git+https://github.com/GeoPlatform/rpm-js#849686563a128c2b724613028d52ea756744021d"
 
-"geoplatform.style@git+http://github.com/GeoPlatform/style.git#develop":
+"geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.1":
   version "2.0.1"
-  resolved "git+http://github.com/GeoPlatform/style.git#be346700a8712285348266d22441b12794e16813"
+  resolved "git+http://github.com/GeoPlatform/style.git#c94bceb9d380171207b8e89bc8e779e7f0953156"
 
 get-caller-file@^1.0.1:
   version "1.0.3"

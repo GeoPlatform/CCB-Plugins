@@ -2875,7 +2875,7 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
+"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#0.2.3":
   version "0.2.3"
   resolved "git+http://github.com/GeoPlatform/client-api.git#5688e8b6f20479fc29906e9e5a170fc93bf0c475"
   dependencies:
@@ -2883,13 +2883,13 @@ generate-object-property@^1.1.0:
     q "1.1.2"
     request "^2.75.0"
 
-"geoplatform.rpm@git+https://github.com/GeoPlatform/rpm-js#develop":
-  version "0.1.6"
-  resolved "git+https://github.com/GeoPlatform/rpm-js#774d07b2060521bac8aa3f19d6438d00d741e709"
+"geoplatform.rpm@git+https://github.com/GeoPlatform/rpm-js#0.2.6":
+  version "0.2.6"
+  resolved "git+https://github.com/GeoPlatform/rpm-js#849686563a128c2b724613028d52ea756744021d"
 
-"geoplatform.style@git+http://github.com/GeoPlatform/style.git#develop":
+"geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.1":
   version "2.0.1"
-  resolved "git+http://github.com/GeoPlatform/style.git#47dbce63e14946e0938987d48303e10c677e5ad5"
+  resolved "git+http://github.com/GeoPlatform/style.git#c94bceb9d380171207b8e89bc8e779e7f0953156"
 
 get-caller-file@^1.0.1:
   version "1.0.3"

@@ -2532,9 +2532,9 @@ generate-object-property@^1.1.0:
   dependencies:
     is-property "^1.0.0"
 
-"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#develop":
+"geoplatform.client@git+http://github.com/GeoPlatform/client-api.git#0.2.3":
   version "0.2.3"
-  resolved "git+http://github.com/GeoPlatform/client-api.git#c4ce0f7d726bd9c6d7a26e3fd7dff306a7e4a19b"
+  resolved "git+http://github.com/GeoPlatform/client-api.git#5688e8b6f20479fc29906e9e5a170fc93bf0c475"
   dependencies:
     jquery "^3.3.1"
     q "1.1.2"
@@ -2544,9 +2544,9 @@ generate-object-property@^1.1.0:
   version "0.0.0"
   resolved "git+https://github.com/GeoPlatform/ng-gpoauth.git#dfaf6323b0d3bb39bfb4c0e009a5018e6d151f64"
 
-"geoplatform.style@git+http://github.com/GeoPlatform/style.git#develop":
+"geoplatform.style@git+http://github.com/GeoPlatform/style.git#2.0.1":
   version "2.0.1"
-  resolved "git+http://github.com/GeoPlatform/style.git#1ae8b67eaf27ed8a731509e318b3d8ad4a616045"
+  resolved "git+http://github.com/GeoPlatform/style.git#c94bceb9d380171207b8e89bc8e779e7f0953156"
 
 get-caller-file@^1.0.1:
   version "1.0.3"
