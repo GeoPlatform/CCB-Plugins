@@ -65,10 +65,17 @@ add_action('template_redirect', 'geopoauth_register_authorize');
 function geopoauth_register_authorize(){
 	if (is_page()){
 		global $post;
+		if (!is_user_logged_in()){
+			$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
+			setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, TRUE);
+		}
 		if ($post->post_name == 'checktoken'){
-			$header = "Authorization: Bearer " . get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
-			if (isset($_COOKIE['geop_auth_cookie'])){
-				$header = "Authorization: Bearer " . $_COOKIE['geop_auth_cookie'];
+			$header = "Authorization: Bearer cheese";
+			if (is_user_logged_in()){
+				$header = "Authorization: Bearer " . get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
+				if (isset($_COOKIE['geop_auth_cookie'])){
+					$header = "Authorization: Bearer " . $_COOKIE['geop_auth_cookie'];
+				}
 			}
 			header($header);
 		}

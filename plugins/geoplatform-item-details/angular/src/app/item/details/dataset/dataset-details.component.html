@@ -9,12 +9,12 @@
 
 <!-- Product Types -->
 <div class="m-article__desc" *ngIf="isEO()">
-    <div><strong>Product Types ({{item.productTypes?.length||0}}) </strong></div>
-    <span *ngFor="let type of item.productTypes; let $index=index;">
+    <div><strong>Product Types ({{item?.productTypes?.length||0}}) </strong></div>
+    <span *ngFor="let type of item?.productTypes; let $index=index;">
         <span *ngIf="$index>0">, </span>
         <gpid-resource-link [item]="type"></gpid-resource-link>
     </span>
-    <em *ngIf="!item.productTypes.length">No product typess associated</em>
+    <em *ngIf="!item?.productTypes || !item?.productTypes?.length">No product typess associated</em>
 </div>
 
 
