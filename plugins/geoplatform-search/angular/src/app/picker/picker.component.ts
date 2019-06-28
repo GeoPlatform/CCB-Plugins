@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
+import { Config } from 'geoplatform.client';
 
 import { Constraint, Constraints } from '../models/constraint';
 import { Codec } from '../models/codec';
@@ -61,7 +62,7 @@ export class PickerComponent implements OnInit, OnDestroy {
     public inPickerMode: boolean = true;
     private activeConstraint : any = null;
     private listener : ISubscription;
-    public helpBaseUrl : string = environment.helpUrl;
+    public helpBaseUrl : string = Config.helpUrl;
 
     private options = EditorRegistry.getEditors().sort((
         a: { key: string; label: string; component: any; },
