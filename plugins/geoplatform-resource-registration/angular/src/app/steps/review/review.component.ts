@@ -22,6 +22,7 @@ import {map, flatMap, startWith} from 'rxjs/operators';
 import {
     Config, ItemService, ItemTypes, ServiceService
 } from 'geoplatform.client';
+import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 
 import { AppEvent } from '../../app.component';
@@ -34,6 +35,7 @@ import {
 } from '../../item-service.provider';
 import { AppError } from '../../model';
 import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
+import { PluginAuthService } from '../../auth.service';
 
 const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
     return k.indexOf("secondary")<0 && k.indexOf("community")<0
@@ -70,17 +72,15 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         private formBuilder: FormBuilder,
         private itemService : ItemService,
         private svcService : ServiceService,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private authService : PluginAuthService
     ) {
         this.formGroup = this.formBuilder.group({
             done: ['']
         });
-
-        // this.httpClient = new NG2HttpClient(http);
     }
 
     ngOnInit() {
-
         this.eventsSubscription = this.appEvents.subscribe((event:AppEvent) => {
             this.onAppEvent(event);
         });
@@ -176,18 +176,24 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
         this.status.isSaving = true;
 
-        this.generateURI().then( item => {
-            // return new ItemService(Config.ualUrl, this.httpClient).save(item)
-            return this.itemService.save(item);
+        this.authService.check().then( ( user : GeoPlatformUser ) => {
+            if(!user) throw new Error("Not signed in");
+
+            //update createdBy to match refreshed user token
+            if(this.data[ModelProperties.CREATED_BY] !== user.username)
+                this.data[ModelProperties.CREATED_BY] = user.username;
+
+            //if authorized, create a URI for the new resource
+            return this.generateURI();
         })
-        .then( (persisted) => {
+        //then attempt to create it
+        .then( item => this.itemService.save(item) )
+        .then( ( persisted : any) => {
 
             if(ItemTypes.SERVICE === persisted.type) {
-                //TODO call harvest on newly persisted service
+                //call harvest on newly persisted service
                 return this.svcService.harvest(persisted.id)
-                .then( layers => {
-                    return persisted;   //resolve the parent service
-                })
+                .then( layers => persisted )   //resolve the parent service
                 .catch( e => {
                     // this.hasError = new StepError("Unable to Register Service Layers",
                     //     e.message);
@@ -204,7 +210,6 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
             //update internal data with saved copy
             Object.assign(this.data, persisted);
-            // callback(persisted);
         })
         .catch( e => {
             this.status.isSaving = false;
@@ -238,7 +243,6 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
             return Promise.resolve(this.data);
         }
 
-        // return new ItemService(Config.ualUrl, this.httpClient)
         return this.itemService
         .getUri(this.data)
         .then( uri => {
@@ -247,7 +251,6 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
         })
         .catch( (e:Error) => {
             return Promise.reject(new Error("Unable to generate a URI for the resource"));
-            // this.hasError = new StepError("Error Generating URI", e.message);
         });
 
     }
