@@ -176,8 +176,10 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
         this.status.isSaving = true;
 
+        // console.log("Checking auth token state...");
         this.authService.check().then( ( user : GeoPlatformUser ) => {
-            if(!user) throw new Error("Not signed in");
+            if(!user) return Promise.reject(new Error("Not signed in"));
+            // console.log("Token refreshed for " + user.username);
 
             //update createdBy to match refreshed user token
             if(this.data[ModelProperties.CREATED_BY] !== user.username)
