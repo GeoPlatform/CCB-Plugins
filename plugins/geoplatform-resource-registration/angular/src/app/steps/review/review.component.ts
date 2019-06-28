@@ -19,9 +19,13 @@ import {
 
 import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
+import * as md5 from "md5";
 import {
     Config, ItemService, ItemTypes, ServiceService
 } from 'geoplatform.client';
+import * as GPAPI from 'geoplatform.client';
+const URIFactory = GPAPI.URIFactory(md5);
+
 import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
 
 
@@ -186,10 +190,11 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
                 this.data[ModelProperties.CREATED_BY] = user.username;
 
             //if authorized, create a URI for the new resource
-            return this.generateURI();
+            this.generateURI();
+
+            //then attempt to create it
+            return this.itemService.save(this.data);
         })
-        //then attempt to create it
-        .then( item => this.itemService.save(item) )
         .then( ( persisted : any) => {
 
             if(ItemTypes.SERVICE === persisted.type) {
@@ -239,22 +244,16 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     /**
      * @return {Promise} resolving the resource with its new uri added
      */
-    private generateURI() : Promise<any> {
+    private generateURI() : string {
 
-        if(this.data.uri) {
-            return Promise.resolve(this.data);
-        }
-
-        return this.itemService
-        .getUri(this.data)
-        .then( uri => {
+        if(!this.data.uri) {
+            let uri = URIFactory(this.data);
+            if(!uri) {
+                throw new Error("Unable to generate a URI for the resource");
+            }
             this.data.uri = uri;
-            return Promise.resolve(this.data);
-        })
-        .catch( (e:Error) => {
-            return Promise.reject(new Error("Unable to generate a URI for the resource"));
-        });
-
+        }
+        return this.data;
     }
 
 

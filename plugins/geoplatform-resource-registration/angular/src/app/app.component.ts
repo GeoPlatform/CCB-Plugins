@@ -298,9 +298,9 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // title: 'test2',
             // ----------------------------------
         };
-        // if('development' === environment.env) {
-        //    this.item.createdBy = 'tester';
-        // }
+        if('development' === environment.env) {
+           this.item.createdBy = 'tester';
+        }
         if(this.user) {
             this.item[ModelProperties.CREATED_BY] = this.user.username;
         }

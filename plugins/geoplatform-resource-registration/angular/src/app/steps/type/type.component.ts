@@ -16,10 +16,14 @@ import {
 import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 
+import * as md5 from "md5";
+
 import {
     ItemTypes, Config, ItemService, ServiceService,
     UtilsService, Query, QueryParameters
 } from 'geoplatform.client';
+import * as GPAPI from 'geoplatform.client';
+const URIFactory = GPAPI.URIFactory(md5);
 
 import { AppEvent } from '../../app.component';
 import {
@@ -34,7 +38,6 @@ import {
 } from '../../item-service.provider';
 
 const URL_VALIDATOR = Validators.pattern("https?://.+");
-
 
 interface ResourceType {
     label:string;
@@ -467,6 +470,9 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
     private checkDebounce = null;
 
+    /**
+     * Debounce wrapper around existence check using URI of item being registered
+     */
     checkExists() {
         if(this.checkDebounce) {
             clearTimeout(this.checkDebounce);
@@ -477,11 +483,13 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         }, 500);
     }
 
+    /**
+     *
+     */
     doCheckExists() {
-        this.getURI().then( uri => {
-            if(!uri) return Promise.resolve({results:[]});
-            return this.itemService.search({uri:uri});
-        })
+        let uri = this.getURI();
+        if(!uri) return Promise.resolve({results:[]});
+        return this.itemService.search({uri:uri})
         .then( response => {
             if(response.results.length) { //Item already exists!
                 this.doesExist = this.getResourceLink(response.results[0]);
@@ -496,10 +504,10 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
         });
     }
 
-    getURI() : Promise<any> {
-        if(this.formGroup.invalid) return Promise.resolve(null);
+    getURI() : string {
+        if(this.formGroup.invalid) return null;
         let obj = this.formGroup.value;
-        return this.itemService.getUri(obj);
+        return URIFactory(obj);
     }
 
     getResourceLink(item) {
