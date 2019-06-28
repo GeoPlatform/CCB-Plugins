@@ -83,6 +83,7 @@ function geopoauth_register_authorize(){
 }
 
 function geopoauth_establish_globals() {
+	$geopoauth_portalUrl = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : 'https://www.geoplatform.gov';
 	$geopoauth_home = home_url();
 	$geopoauth_login = wp_login_url();
 	$geopoauth_logout = wp_logout_url();
@@ -98,6 +99,7 @@ function geopoauth_establish_globals() {
   GeoPlatform.config = {
      wpUrl: "$geopoauth_home",
      ualUrl: "$geopoauth_ualUrl",
+		 portalUrl: "$geopoauth_portalUrl",
      rpm: {
        rpmUrl: "$geopoauth_rpmUrl",
        rpmToken: "$geopoauth_token",

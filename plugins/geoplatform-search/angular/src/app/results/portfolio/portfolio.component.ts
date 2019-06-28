@@ -219,8 +219,9 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
             default: type = item.type.replace(/^.+\:/i, '').toLowerCase() + 's'; break;
         }
-        if(type) return `${environment.wpUrl}/resources/${type}/${item.id}`;
-        else return '/resources';
+        let url = '/resources';
+        if(type) url = Config.portalUrl + `/resources/${type}/${item.id}`;
+        return url;
 
     }
 
@@ -235,7 +236,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
             default: type = item.type.replace(/^.+\:/i, '').toLowerCase() + 's'; break;
         }
-        return `${environment.wpUrl}/resources/${type}/${id}`;
+        return Config.portalUrl + `/resources/${type}/${id}`;
     }
 
 
