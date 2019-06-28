@@ -89,12 +89,11 @@ export class PluginAuthService {
      */
     check() : Promise<GeoPlatformUser> {
         if(!this.authService) {
-            let testUser : GeoPlatformUser = {username:'tester'} as GeoPlatformUser;
-            return Promise.resolve(testUser);
+            console.log("[WARN] No auth service to check token with...");
+            return Promise.resolve(null);
         }
-        return this.authService.checkWithClient(null)
-        .then( token => this.authService.getUser() )
-        .then( user => {
+        // console.log("[DEBUG] Checking with auth service for token");
+        return this.authService.check().then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
             return user;
         });

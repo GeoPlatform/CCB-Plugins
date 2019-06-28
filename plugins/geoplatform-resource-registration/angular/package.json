@@ -33,6 +33,7 @@
     "jquery": "^3.4.0",
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.13",
+    "md5": "2.2.1",
     "ng-inline-svg": "^6.2.1",
     "popper.js": "^1.14.7",
     "q": "1.4.1",
