@@ -113,7 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 ## Changelog
 
 ### 4.0.0 ###
-* Release pending
+* Release July 1, 2019
 
 - Complete visual overhaul.
 - Front page is now widgetized, allowing wider customization options.
