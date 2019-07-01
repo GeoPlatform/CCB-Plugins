@@ -25,7 +25,7 @@
         "core-js": "^2.4.1",
         "esri-leaflet": "2.1.2",
         "geoplatform.client": "git+http://github.com/GeoPlatform/client-api.git#0.2.3",
-        "geoplatform.mapcore": "git+http://github.com/GeoPlatform/map-core.git#0.2.1",
+        "geoplatform.mapcore": "git+http://github.com/GeoPlatform/map-core.git#0.2.2",
         "geoplatform.ngoauth": "git+https://github.com/GeoPlatform/ng-gpoauth.git#0.1.0",
         "geoplatform.rpm": "git+https://github.com/GeoPlatform/rpm-js#0.2.6",
         "geoplatform.style": "git+http://github.com/GeoPlatform/style.git#2.0.1",
