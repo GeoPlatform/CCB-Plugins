@@ -113,7 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 == Changelog ==
 
 ## 4.1.0
-* Release pending
+* Release July 1, 2019
 
 - Upgrade of parent theme to version 4.
 - Movement of numerous operations and files to parent theme.

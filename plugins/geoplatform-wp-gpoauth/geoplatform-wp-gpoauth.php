@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.0.1
+ * @since             1.0.3
  * @package           Geoplatform_Wp_Gpoauth
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform WP GPOAuth
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Provides a variety of support functions for the GeoPlatform Portal experience.
- * Version:           1.0.1
+ * Version:           1.0.3
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOWPOAUTH_PLUGIN', '1.0.1' ); // <-- Is this a typo?
+define( 'GEOWPOAUTH_PLUGIN', '1.0.3' ); // <-- Is this a typo?
 
 
 // Sets the parameters of and then creates the token page. It deletes any old
