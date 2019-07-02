@@ -9,35 +9,33 @@ const FORMATS = buildFormats();
 function buildFormats() {
     let result = {};
 
-    result[ItemTypes.DATASET] = [
-        {label: "JSON", value: "json"},
+    Object.keys(ItemTypes).forEach( key => {
+        let type = ItemTypes[key];
+
+        //every type can be exported as json
+        result[type] = [ {label: "JSON", value: "json"} ];
+    });
+
+    result[ItemTypes.DATASET] = result[ItemTypes.DATASET].concat([
         {label: "ISO 19139", value: "iso19139"},
         {label: "ISO 19115-3", value: "iso19115"},
         {label: "ISO 19115-3 GeoPlatform Profile", value: "gpfm"}
-    ];
-    result[ItemTypes.SERVICE] = [
-        {label: "JSON", value: "json"},
+    ]);
+    result[ItemTypes.SERVICE] = result[ItemTypes.SERVICE].concat([
         {label: "ISO 19139", value: "iso19139"},
         {label: "ISO 19115-3", value: "iso19115"},
         {label: "ISO 19115-3 GeoPlatform Profile", value: "gpfm"}
-    ];
-    result[ItemTypes.LAYER] = [
-        {label: "JSON", value: "json"},
+    ]);
+    result[ItemTypes.LAYER] = result[ItemTypes.LAYER].concat([
         {label: "ISO 19139 GeoPlatform Profile", value: "gpfm"}
-    ];
-    result[ItemTypes.MAP] = [
-        {label: "JSON", value: "json"},
+    ]);
+    result[ItemTypes.MAP] = result[ItemTypes.MAP].concat([
         {label: "ISO 19115-3 GeoPlatform Profile", value: "gpfm"},
         {label: "KML", value: "kml"},
         {label: "Web Map Context", value: "wmc"}
-    ];
-    result[ItemTypes.GALLERY] = [
-        {label: "JSON", value: "json"}
-    ];
-    result[ItemTypes.COMMUNITY] = [
-        {label: "JSON", value: "json"}
-    ];
+    ]);
     return result;
+    
 }
 
 
