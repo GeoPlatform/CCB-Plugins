@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             2.1.0
+ * @since             2.1.1
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
- * Version:           2.1.0
+ * Version:           2.1.1
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSERVE_PLUGIN', '2.1.0' );
+define( 'GEOSERVE_PLUGIN', '2.1.1' );
 
 /**
  * The code that runs during plugin activation.
@@ -189,10 +189,18 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	$geopserve_ual_domain = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
 
 	// Item Details plugin detection. If found, will pass off the relevant
-	// redirected url to the function. If not, it will set it to OE.
-	$geopserve_redirect_url = isset($_ENV['oe_url']) ? $_ENV['oe_url'] : "https://oe.geoplatform.gov/view/";
+	// redirected url to the function. If not, it will set it to the associated
+	// environment's Item Detail page on portal.
+	$geopserve_redirect_url = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : "https://www.geoplatform.gov";
 	if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
-		$geopserve_redirect_url = home_url() . "/" . "resources/" . strtolower($geopserve_tab_array[$geopserve_current_page]['name']) . "/";
+		$geopserve_redirect_url = home_url();
+	$geopserve_redirect_url = $geopserve_redirect_url . "/resources/" . strtolower($geopserve_tab_array[$geopserve_current_page]['name']) . "/";
+
+	// Basically the same as above but for Search plugin.
+	$geopserve_search_url = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : "https://www.geoplatform.gov";
+	if ( is_plugin_active('geoplatform-search/geoplatform-search.php') )
+		$geopserve_search_url = home_url();
+	$geopserve_search_url = $geopserve_search_url . "/geoplatform-search/#/?createdBy=";
 
 	// Javascript block for full-carousel controls.
 	?>
@@ -220,7 +228,8 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				cat_name: "<?php echo $geopserve_tab_array[$geopserve_current_page]['name'] ?>",
 				per_page: "<?php echo $geopserve_shortcode_array['count'] ?>",
 				ual_domain: "<?php echo $geopserve_ual_domain ?>",
-				redirect: "<?php echo $geopserve_redirect_url ?>",
+				redirect_url: "<?php echo $geopserve_redirect_url ?>",
+				search_url: "<?php echo $geopserve_search_url ?>",
 				home: "<?php echo home_url() ?>",
 				failsafe: "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>",
 				search_state: "<?php echo $geopserve_search_state ?>",

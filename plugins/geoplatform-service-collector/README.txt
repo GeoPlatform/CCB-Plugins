@@ -4,7 +4,7 @@ Donate link: https://www.imagemattersllc.com
 Tags: comments, spam
 Requires at least: 3.0.1
 Tested up to: 5.2.0
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,11 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 2. This is the second screen shot
 
 == Changelog ==
+
+= 2.1.1 =
+* Fixed bug causing incorrect results when filtering by KG Classifiers.
+* Fixed bug causing broken endpoints for results.
+* Numerous small tweaks.
 
 = 2.1.0 =
 * Reorganization of carousel generation procedure, greatly improving performance.
