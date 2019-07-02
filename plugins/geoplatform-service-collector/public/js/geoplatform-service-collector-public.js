@@ -146,7 +146,7 @@ function geopserve_gen_list(geopserve_options){
 			for (var i = 0; i < geopserve_max_panes; i++){
 
 				// Grabs the id and uses it to construct an item details href.
-				var geopserve_asset_link = geopserve_options.redirect + geopserve_results[i].id;
+				var geopserve_asset_link = geopserve_options.redirect_url + geopserve_results[i].id;
 
 				// Sets the title of the asset.
 				var geopserve_label_text = geopserve_results[i].label;
@@ -171,9 +171,9 @@ function geopserve_gen_list(geopserve_options){
 					geopserve_under_label_name = geopserve_results[i].createdBy;
 
 				// Sets up a GeoPlatform Search endpoint.
-				var geopserve_under_label_href = geopserve_options.home + "/geoplatform-search/";
+				var geopserve_under_label_href = geopserve_options.search_url;
 				if (typeof geopserve_results[i].createdBy != 'undefined')
-					geopserve_under_label_href = geopserve_options.home + "/geoplatform-search/#/?createdBy=" + geopserve_under_label_name;
+					geopserve_under_label_href = geopserve_options.search_url + geopserve_under_label_name;
 
 				// Finds the creation date.
 				var geopserve_under_label_created = "Unkown creation time";
@@ -210,7 +210,7 @@ function geopserve_gen_list(geopserve_options){
 				// Sets clone value, if present.
 				var geopserve_clone_val = "none";
 				if (geopserve_results[i].hasOwnProperty('_cloneOf'))
-					geopserve_clone_val = geopserve_options.redirect + geopserve_results[i]._cloneOf;
+					geopserve_clone_val = geopserve_options.redirect_url + geopserve_results[i]._cloneOf;
 
 				// Makes it an object.
 				var geopserve_gen_element = {
