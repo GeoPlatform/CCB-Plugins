@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ItemTypes } from 'geoplatform.client';
 
 @Component({
   selector: 'gpid-details-related',
@@ -8,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class RelatedDetailsComponent implements OnInit {
 
     @Input() item : any;
+    public TYPES : any = ItemTypes;
 
     constructor() { }
 

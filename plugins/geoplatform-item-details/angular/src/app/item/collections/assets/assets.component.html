@@ -1,0 +1,18 @@
+<div>
+    <span class="fas"
+        [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
+        (click)="toggleCollapsed()">
+    </span>
+    <strong>Associated Assets ({{assets?.length||0}})</strong>
+</div>
+<div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
+    Expand to see assets are associated with this resource
+</div>
+<div [ngClass]="{'is-hidden':isCollapsed}">
+    <em *ngIf="!assets||!assets.length">None specified</em>
+    <div *ngIf="assets?.length" class="m-list">
+        <div *ngFor="let asset of assets" class="m-list__item">
+            <gpid-resource-link [item]="asset"></gpid-resource-link>
+        </div>
+    </div>
+</div>

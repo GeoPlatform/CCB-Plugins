@@ -5,7 +5,7 @@
     <button class="btn btn-secondary btn-block dropdown-toggle"
         type="button" id="dropdownMenuButton"
         ngbDropdownToggle aria-haspopup="true" aria-expanded="false"
-        [disabled]="!formats.length">
+        [disabled]="!formats||!formats.length">
         Export as
     </button>
     <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownMenuButton">

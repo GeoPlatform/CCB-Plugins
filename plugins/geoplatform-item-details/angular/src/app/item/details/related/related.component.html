@@ -26,8 +26,7 @@
     </div>
 
     <div class="m-article__desc" *ngIf="item?.datasets">
-        <gpid-datasets [data]="item.datasets">
-        </gpid-datasets>
+        <gpid-datasets [data]="item.datasets"></gpid-datasets>
     </div>
 
 
@@ -45,6 +44,12 @@
     <div class="m-article__desc">
         <gpid-used-by [communities]="item?.usedBy"></gpid-used-by>
     </div>
+
+
+    <div class="m-article__desc" *ngIf="'Topic'===item?.type">
+        <gpid-assets [assets]="item?.assets"></gpid-assets>
+    </div>
+
 
     <!-- Related Resources -->
     <div class="m-article__desc">

@@ -198,7 +198,7 @@ if ($geopserve_valid_bool == 'true'){
   if ($geopserve_type_usedby_bool == 'true')
     $geopserve_shortcode_final .= " usedby='" . $geopserve_type_usedby_text . "'";
   if ($geopserve_type_class_bool == 'true')
-    $geopserve_shortcode_final .= " class='" . $geopserve_type_class_text . " kg='" . $geopserve_type_class_type . "'";
+    $geopserve_shortcode_final .= " class='" . $geopserve_type_class_text . "' kg='" . $geopserve_type_class_type . "'";
 
   // Closing out the string.
   $geopserve_shortcode_final .= "]";
