@@ -1370,6 +1370,11 @@
 
             this.currentVisibility = !!bool;
 
+            //safest bet for hiding layers is to alter their container
+            if (this.options.renderer._container) {
+                this.options.renderer._container.style.display = bool ? '' : 'none';
+            }
+
             //clustered features
             if (this.cluster && this.cluster._featureGroup && this.cluster._featureGroup._layers) {
                 for (var id in this.cluster._featureGroup._layers) {
@@ -1685,12 +1690,18 @@
             throw new Error("WMS layer's service does not defined a service url");
         }
 
+        var supportedCrs = layer.crs || [];
+        if (supportedCrs && supportedCrs.length > 0 && ~supportedCrs.indexOf("ESPG:3857")) {
+            console.log("Layer '" + layer.label + "' does not support " + "EPSG:3857 Spherical Mercator projection and may not render appropriately or at all.");
+        }
+
+        //determine proper version of the WMS spec to use
         var version = '1.1.1';
-        if (service.api && service.api.length) {
-            var is130 = service.api.filter(function (api) {
-                return api.accessURL.indexOf('wms/1.3.0') > 0;
-            }).length > 0;
-            if (is130) version = '1.3.0';
+        var versions = service.serviceTypeVersions || [];
+        if (versions.length && versions.indexOf('1.1.1') < 0) {
+            version = versions[0];
+        } else {
+            console.log("Warning: WMS Service doesn't list supported versions, assuming 1.1.1");
         }
 
         var opts = {
@@ -1721,29 +1732,1002 @@
      * git://github.com/socib/Leaflet.TimeDimension.git
      *
      */
-    L.TimeDimension=(L.Layer||L.Class).extend({includes:L.Evented||L.Mixin.Events,initialize:function(a){L.setOptions(this,a), this._availableTimes=this._generateAvailableTimes(), this._currentTimeIndex=-1, this._loadingTimeIndex=-1, this._loadingTimeout=this.options.loadingTimeout||3e3, this._syncedLayers=[], this._availableTimes.length>0&&this.setCurrentTime(this.options.currentTime||this._getDefaultCurrentTime()), this.options.lowerLimitTime&&this.setLowerLimit(this.options.lowerLimitTime), this.options.upperLimitTime&&this.setUpperLimit(this.options.upperLimitTime);},getAvailableTimes:function(){return this._availableTimes},getCurrentTimeIndex:function(){return-1===this._currentTimeIndex?this._availableTimes.length-1:this._currentTimeIndex},getCurrentTime:function(){var a=-1;return a=-1!==this._loadingTimeIndex?this._loadingTimeIndex:this.getCurrentTimeIndex(), a>=0?this._availableTimes[a]:null},isLoading:function(){return-1!==this._loadingTimeIndex},setCurrentTimeIndex:function(a){var b=this._upperLimit||this._availableTimes.length-1,c=this._lowerLimit||0;if(a=Math.min(Math.max(c,a),b), !(0>a)){this._loadingTimeIndex=a;var d=this._availableTimes[a];this._checkSyncedLayersReady(this._availableTimes[this._loadingTimeIndex])?this._newTimeIndexLoaded():(this.fire("timeloading",{time:d}), setTimeout(function(a){a==this._loadingTimeIndex&&this._newTimeIndexLoaded();}.bind(this,a),this._loadingTimeout));}},_newTimeIndexLoaded:function(){if(-1!==this._loadingTimeIndex){var a=this._availableTimes[this._loadingTimeIndex];this._currentTimeIndex=this._loadingTimeIndex, this.fire("timeload",{time:a}), this._loadingTimeIndex=-1;}},_checkSyncedLayersReady:function(a){for(var b=0,c=this._syncedLayers.length;c>b;b++)if(this._syncedLayers[b].isReady&&!this._syncedLayers[b].isReady(a))return!1;return!0},setCurrentTime:function(a){var b=this._seekNearestTimeIndex(a);this.setCurrentTimeIndex(b);},seekNearestTime:function(a){var b=this._seekNearestTimeIndex(a);return this._availableTimes[b]},nextTime:function(a,b){a||(a=1);var c=this._currentTimeIndex,d=this._upperLimit||this._availableTimes.length-1,e=this._lowerLimit||0;this._loadingTimeIndex>-1&&(c=this._loadingTimeIndex), c+=a, c>d&&(c=b?e:d), e>c&&(c=b?d:e), this.setCurrentTimeIndex(c);},prepareNextTimes:function(a,b,c){a||(a=1);var d=this._currentTimeIndex,e=d;this._loadingTimeIndex>-1&&(d=this._loadingTimeIndex);for(var f=0,g=this._syncedLayers.length;g>f;f++)this._syncedLayers[f].setMinimumForwardCache&&this._syncedLayers[f].setMinimumForwardCache(b);for(var h=b,i=this._upperLimit||this._availableTimes.length-1,j=this._lowerLimit||0;h>0;){if(d+=a, d>i){if(!c)break;d=j;}if(j>d){if(!c)break;d=i;}if(e===d)break;this.fire("timeloading",{time:this._availableTimes[d]}), h--;}},getNumberNextTimesReady:function(a,b,c){a||(a=1);var d=this._currentTimeIndex;this._loadingTimeIndex>-1&&(d=this._loadingTimeIndex);for(var e=b,f=0,g=this._upperLimit||this._availableTimes.length-1,h=this._lowerLimit||0;e>0;){if(d+=a, d>g){if(!c){e=0, f=b;break}d=h;}if(h>d){if(!c){e=0, f=b;break}d=g;}var i=this._availableTimes[d];this._checkSyncedLayersReady(i)&&f++, e--;}return f},previousTime:function(a,b){this.nextTime(-1*a,b);},registerSyncedLayer:function(a){this._syncedLayers.push(a), a.on("timeload",this._onSyncedLayerLoaded,this);},unregisterSyncedLayer:function(a){var b=this._syncedLayers.indexOf(a);-1!=b&&this._syncedLayers.splice(b,1), a.off("timeload",this._onSyncedLayerLoaded,this);},_onSyncedLayerLoaded:function(a){a.time==this._availableTimes[this._loadingTimeIndex]&&this._checkSyncedLayersReady(a.time)&&this._newTimeIndexLoaded();},_generateAvailableTimes:function(){if(this.options.times)return L.TimeDimension.Util.parseTimesExpression(this.options.times);if(this.options.timeInterval){var a=L.TimeDimension.Util.parseTimeInterval(this.options.timeInterval),b=this.options.period||"P1D",c=this.options.validTimeRange||void 0;return L.TimeDimension.Util.explodeTimeRange(a[0],a[1],b,c)}return[]},_getDefaultCurrentTime:function(){var a=this._seekNearestTimeIndex((new Date).getTime());return this._availableTimes[a]},_seekNearestTimeIndex:function(a){for(var b=0,c=this._availableTimes.length;c>b&&!(a<this._availableTimes[b]);b++);return b>0&&b--, b},setAvailableTimes:function(a,b){var c=this.getCurrentTime(),d=this.getLowerLimit(),e=this.getUpperLimit();if("extremes"==b){var f=this.options.period||"P1D";this._availableTimes=L.TimeDimension.Util.explodeTimeRange(new Date(a[0]),new Date(a[a.length-1]),f);}else{var g=L.TimeDimension.Util.parseTimesExpression(a);if(0===this._availableTimes.length)this._availableTimes=g;else if("intersect"==b)this._availableTimes=L.TimeDimension.Util.intersect_arrays(g,this._availableTimes);else if("union"==b)this._availableTimes=L.TimeDimension.Util.union_arrays(g,this._availableTimes);else{if("replace"!=b)throw"Merge available times mode not implemented: "+b;this._availableTimes=g;}}d&&this.setLowerLimit(d), e&&this.setUpperLimit(e), this.setCurrentTime(c), this.fire("availabletimeschanged",{availableTimes:this._availableTimes,currentTime:c});},getLowerLimit:function(){return this._availableTimes[this.getLowerLimitIndex()]},getUpperLimit:function(){return this._availableTimes[this.getUpperLimitIndex()]},setLowerLimit:function(a){var b=this._seekNearestTimeIndex(a);this.setLowerLimitIndex(b);},setUpperLimit:function(a){var b=this._seekNearestTimeIndex(a);this.setUpperLimitIndex(b);},setLowerLimitIndex:function(a){this._lowerLimit=Math.min(Math.max(a||0,0),this._upperLimit||this._availableTimes.length-1), this.fire("limitschanged",{lowerLimit:this._lowerLimit,upperLimit:this._upperLimit});},setUpperLimitIndex:function(a){this._upperLimit=Math.max(Math.min(a,this._availableTimes.length-1),this._lowerLimit||0), this.fire("limitschanged",{lowerLimit:this._lowerLimit,upperLimit:this._upperLimit});},getLowerLimitIndex:function(){return this._lowerLimit},getUpperLimitIndex:function(){return this._upperLimit}}), L.Map.addInitHook(function(){this.options.timeDimension&&(this.timeDimension=L.timeDimension(this.options.timeDimensionOptions||{}));}), L.timeDimension=function(a){return new L.TimeDimension(a)}, L.TimeDimension.Util={getTimeDuration:function(a){if("undefined"==typeof nezasa)throw"iso8601-js-period library is required for Leatlet.TimeDimension: https://github.com/nezasa/iso8601-js-period";return nezasa.iso8601.Period.parse(a,!0)},addTimeDuration:function(a,b,c){"undefined"==typeof c&&(c=!0), ("string"==typeof b||b instanceof String)&&(b=this.getTimeDuration(b));var d=b.length,e=c?"getUTC":"get",f=c?"setUTC":"set";d>0&&0!=b[0]&&a[f+"FullYear"](a[e+"FullYear"]()+b[0]), d>1&&0!=b[1]&&a[f+"Month"](a[e+"Month"]()+b[1]), d>2&&0!=b[2]&&a[f+"Date"](a[e+"Date"]()+7*b[2]), d>3&&0!=b[3]&&a[f+"Date"](a[e+"Date"]()+b[3]), d>4&&0!=b[4]&&a[f+"Hours"](a[e+"Hours"]()+b[4]), d>5&&0!=b[5]&&a[f+"Minutes"](a[e+"Minutes"]()+b[5]), d>6&&0!=b[6]&&a[f+"Seconds"](a[e+"Seconds"]()+b[6]);},subtractTimeDuration:function(a,b,c){("string"==typeof b||b instanceof String)&&(b=this.getTimeDuration(b));for(var d=[],e=0,f=b.length;f>e;e++)d.push(-b[e]);this.addTimeDuration(a,d,c);},parseAndExplodeTimeRange:function(a){var b=a.split("/"),c=new Date(Date.parse(b[0])),d=new Date(Date.parse(b[1])),e=b.length>2?b[2]:"P1D";return this.explodeTimeRange(c,d,e)},explodeTimeRange:function(a,b,c,d){var e=this.getTimeDuration(c),f=[],g=new Date(a.getTime()),h=null,i=null,j=null,k=null;if(void 0!==d){var l=d.split("/");h=l[0].split(":")[0], i=l[0].split(":")[1], j=l[1].split(":")[0], k=l[1].split(":")[1];}for(;b>g;)(void 0===d||g.getUTCHours()>=h&&g.getUTCHours()<=j)&&(g.getUTCHours()!=h||g.getUTCMinutes()>=i)&&(g.getUTCHours()!=j||g.getUTCMinutes()<=k)&&f.push(g.getTime()), this.addTimeDuration(g,e);return g>=b&&f.push(b.getTime()), f},parseTimeInterval:function(a){var b=a.split("/");if(2!=b.length)throw"Incorrect ISO9601 TimeInterval: "+a;var c=Date.parse(b[0]),d=null,e=null;return isNaN(c)?(e=this.getTimeDuration(b[0]), d=Date.parse(b[1]), c=new Date(d), this.subtractTimeDuration(c,e,!0), d=new Date(d)):(d=Date.parse(b[1]), isNaN(d)?(e=this.getTimeDuration(b[1]), d=new Date(c), this.addTimeDuration(d,e,!0)):d=new Date(d), c=new Date(c)), [c,d]},parseTimesExpression:function(a){var b=[];if(!a)return b;if("string"==typeof a||a instanceof String)for(var c,d,e=a.split(","),f=0,g=e.length;g>f;f++)c=e[f], 3==c.split("/").length?b=b.concat(this.parseAndExplodeTimeRange(c)):(d=Date.parse(c), isNaN(d)||b.push(d));else b=a;return b.sort(function(a,b){return a-b})},intersect_arrays:function(a,b){for(var c=a.slice(0),d=b.slice(0),e=[];c.length>0&&d.length>0;)c[0]<d[0]?c.shift():c[0]>d[0]?d.shift():(e.push(c.shift()), d.shift());return e},union_arrays:function(a,b){for(var c=a.slice(0),d=b.slice(0),e=[];c.length>0&&d.length>0;)c[0]<d[0]?e.push(c.shift()):c[0]>d[0]?e.push(d.shift()):(e.push(c.shift()), d.shift());return c.length>0?e=e.concat(c):d.length>0&&(e=e.concat(d)), e}}, L.TimeDimension.Layer=(L.Layer||L.Class).extend({includes:L.Evented||L.Mixin.Events,options:{opacity:1,zIndex:1},initialize:function(a,b){L.setOptions(this,b||{}), this._map=null, this._baseLayer=a, this._currentLayer=null, this._timeDimension=this.options.timeDimension||null;},addTo:function(a){return a.addLayer(this), this},onAdd:function(a){this._map=a, !this._timeDimension&&a.timeDimension&&(this._timeDimension=a.timeDimension), this._timeDimension.on("timeloading",this._onNewTimeLoading,this), this._timeDimension.on("timeload",this._update,this), this._timeDimension.registerSyncedLayer(this), this._update();},onRemove:function(a){this._timeDimension.unregisterSyncedLayer(this), this._timeDimension.off("timeloading",this._onNewTimeLoading,this), this._timeDimension.off("timeload",this._update,this), this.eachLayer(a.removeLayer,a), this._map=null;},eachLayer:function(a,b){return a.call(b,this._baseLayer), this},setZIndex:function(a){return this.options.zIndex=a, this._baseLayer.setZIndex&&this._baseLayer.setZIndex(a), this._currentLayer&&this._currentLayer.setZIndex&&this._currentLayer.setZIndex(a), this},setOpacity:function(a){return this.options.opacity=a, this._baseLayer.setOpacity&&this._baseLayer.setOpacity(a), this._currentLayer&&this._currentLayer.setOpacity&&this._currentLayer.setOpacity(a), this},bringToBack:function(){return this._currentLayer?(this._currentLayer.bringToBack(), this):void 0},bringToFront:function(){return this._currentLayer?(this._currentLayer.bringToFront(), this):void 0},_onNewTimeLoading:function(a){this.fire("timeload",{time:a.time});},isReady:function(a){return!0},_update:function(){return!0},getBaseLayer:function(){return this._baseLayer},getBounds:function(){var a=new L.LatLngBounds;return this._currentLayer&&a.extend(this._currentLayer.getBounds?this._currentLayer.getBounds():this._currentLayer.getLatLng()), a}}), L.timeDimension.layer=function(a,b){return new L.TimeDimension.Layer(a,b)}, L.TimeDimension.Layer.WMS=L.TimeDimension.Layer.extend({initialize:function(a,b){L.TimeDimension.Layer.prototype.initialize.call(this,a,b), this._timeCacheBackward=this.options.cacheBackward||this.options.cache||0, this._timeCacheForward=this.options.cacheForward||this.options.cache||0, this._wmsVersion=this.options.wmsVersion||this.options.version||a.options.version||"1.1.1", this._getCapabilitiesParams=this.options.getCapabilitiesParams||{}, this._getCapabilitiesAlternateUrl=this.options.getCapabilitiesUrl||null, this._getCapabilitiesAlternateLayerName=this.options.getCapabilitiesLayerName||null, this._proxy=this.options.proxy||null, this._updateTimeDimension=this.options.updateTimeDimension||!1, this._setDefaultTime=this.options.setDefaultTime||!1, this._updateTimeDimensionMode=this.options.updateTimeDimensionMode||"intersect", this._layers={}, this._defaultTime=0, this._availableTimes=[], this._capabilitiesRequested=!1, (this._updateTimeDimension||this.options.requestTimeFromCapabilities)&&this._requestTimeDimensionFromCapabilities(), this._baseLayer.on("load",function(){this._baseLayer.setLoaded(!0), this.fire("timeload",{time:this._defaultTime});}.bind(this));},getEvents:function(){var a=L.bind(this._unvalidateCache,this);return{moveend:a,zoomend:a}},eachLayer:function(a,b){for(var c in this._layers)this._layers.hasOwnProperty(c)&&a.call(b,this._layers[c]);return L.TimeDimension.Layer.prototype.eachLayer.call(this,a,b)},_onNewTimeLoading:function(a){var b=this._getLayerForTime(a.time);this._map.hasLayer(b)||this._map.addLayer(b);},isReady:function(a){var b=this._getLayerForTime(a);return this.options.bounds&&this._map&&!this._map.getBounds().contains(this.options.bounds)?!0:b.isLoaded()},onAdd:function(a){L.TimeDimension.Layer.prototype.onAdd.call(this,a), 0==this._availableTimes.length?this._requestTimeDimensionFromCapabilities():this._updateTimeDimensionAvailableTimes();},_update:function(){if(this._map){var a=this._timeDimension.getCurrentTime(),b=this._getLayerForTime(a);null==this._currentLayer&&(this._currentLayer=b), this._map.hasLayer(b)?this._showLayer(b,a):this._map.addLayer(b);}},setOpacity:function(a){L.TimeDimension.Layer.prototype.setOpacity.apply(this,arguments);for(var b in this._layers)this._layers.hasOwnProperty(b)&&this._layers[b].setOpacity&&this._layers[b].setOpacity(a);},setZIndex:function(a){L.TimeDimension.Layer.prototype.setZIndex.apply(this,arguments);for(var b in this._layers)this._layers.hasOwnProperty(b)&&this._layers[b].setZIndex&&this._layers[b].setZIndex(a);},setParams:function(a,b){L.extend(this._baseLayer.options,a), this._baseLayer.setParams&&this._baseLayer.setParams(a,b);for(var c in this._layers)this._layers.hasOwnProperty(c)&&this._layers[c].setParams&&(this._layers[c].setLoaded(!1), this._layers[c].setParams(a,b));return this},_unvalidateCache:function(){var a=this._timeDimension.getCurrentTime();for(var b in this._layers)a!=b&&this._layers.hasOwnProperty(b)&&(this._layers[b].setLoaded(!1), this._layers[b].redraw());},_evictCachedTimes:function(a,b){var c=this._getLoadedTimes(),d=String(this._currentTime),e=c.indexOf(d),f=[];if(b>-1){var g=e-b;g>0&&(f=c.splice(0,g), this._removeLayers(f));}if(a>-1){e=c.indexOf(d);var g=c.length-e-a-1;g>0&&(f=c.splice(e+a+1,g), this._removeLayers(f));}},_showLayer:function(a,b){this._currentLayer&&this._currentLayer!==a&&this._currentLayer.hide(), a.show(), this._currentLayer&&this._currentLayer===a||(this._currentLayer=a, this._currentTime=b, this._evictCachedTimes(this._timeCacheForward,this._timeCacheBackward));},_getLayerForTime:function(a){if(0==a||a==this._defaultTime||null==a)return this._baseLayer;if(this._layers.hasOwnProperty(a))return this._layers[a];var b=this._getNearestTime(a);if(this._layers.hasOwnProperty(b))return this._layers[b];var c=this._createLayerForTime(b);return this._layers[a]=c, c.on("load",function(a,b){a.setLoaded(!0), this._layers[b]||(this._layers[b]=a), this._timeDimension&&b==this._timeDimension.getCurrentTime()&&!this._timeDimension.isLoading()&&this._showLayer(a,b), this.fire("timeload",{time:b});}.bind(this,c,a)), c.onAdd=function(a){Object.getPrototypeOf(this).onAdd.call(this,a), this.hide();}.bind(c), c},_createLayerForTime:function(a){var b=this._baseLayer.options;return b.time=new Date(a).toISOString(), new this._baseLayer.constructor(this._baseLayer.getURL(),b)},_getLoadedTimes:function(){var a=[];for(var b in this._layers)this._layers.hasOwnProperty(b)&&a.push(b);return a.sort(function(a,b){return a-b})},_removeLayers:function(a){for(var b=0,c=a.length;c>b;b++)this._map&&this._map.removeLayer(this._layers[a[b]]), delete this._layers[a[b]];},setMinimumForwardCache:function(a){a>this._timeCacheForward&&(this._timeCacheForward=a);},_requestTimeDimensionFromCapabilities:function(){if(!this._capabilitiesRequested){this._capabilitiesRequested=!0;var a=this._getCapabilitiesUrl();this._proxy&&(a=this._proxy+"?url="+encodeURIComponent(a));var b=new XMLHttpRequest;b.addEventListener("load",function(a){var b=a.currentTarget.responseXML;this._defaultTime=Date.parse(this._getDefaultTimeFromCapabilities(b)), this._setDefaultTime=this._setDefaultTime||this._timeDimension&&0==this._timeDimension.getAvailableTimes().length, this.setAvailableTimes(this._parseTimeDimensionFromCapabilities(b)), this._setDefaultTime&&this._timeDimension&&this._timeDimension.setCurrentTime(this._defaultTime);}.bind(this)), b.overrideMimeType("application/xml"), b.open("GET",a), b.send();}},_getCapabilitiesUrl:function(){var a=this._baseLayer.getURL();this._getCapabilitiesAlternateUrl&&(a=this._getCapabilitiesAlternateUrl);var b=L.extend({},this._getCapabilitiesParams,{request:"GetCapabilities",service:"WMS",version:this._wmsVersion});return a+=L.Util.getParamString(b,a,b.uppercase)},_parseTimeDimensionFromCapabilities:function(a){var b=a.querySelectorAll('Layer[queryable="1"]'),c=this._baseLayer.wmsParams.layers,d=null,e=null;return b.forEach(function(a){a.querySelector("Name").innerHTML===c&&(d=a);}), d&&(e=this._getTimesFromLayerCapabilities(d), e||(e=this._getTimesFromLayerCapabilities(d.parentNode))), e},_getTimesFromLayerCapabilities:function(a){var b=null,c=a.querySelectorAll("Dimension[name='time']");if(c&&c.length&&c[0].textContent.length)b=c[0].textContent.trim();else{var d=a.querySelectorAll("Extent[name='time']");d&&d.length&&d[0].textContent.length&&(b=d[0].textContent.trim());}return b},_getDefaultTimeFromCapabilities:function(a){var b=a.querySelectorAll('Layer[queryable="1"]'),c=this._baseLayer.wmsParams.layers,d=null;b.forEach(function(a){a.querySelector("Name").innerHTML===c&&(d=a);});var e=0;return d&&(e=this._getDefaultTimeFromLayerCapabilities(d), 0==e&&(e=this._getDefaultTimeFromLayerCapabilities(d.parentNode))), e},_getDefaultTimeFromLayerCapabilities:function(a){var b=0,c=a.querySelectorAll("Dimension[name='time']");if(c&&c.length&&c[0].attributes["default"])b=c[0].attributes["default"];else{var d=a.querySelectorAll("Extent[name='time']");d&&d.length&&d[0].attributes["default"]&&(b=d[0].attributes["default"]);}return b},setAvailableTimes:function(a){this._availableTimes=L.TimeDimension.Util.parseTimesExpression(a), this._updateTimeDimensionAvailableTimes();},_updateTimeDimensionAvailableTimes:function(){(this._timeDimension&&this._updateTimeDimension||this._timeDimension&&0==this._timeDimension.getAvailableTimes().length)&&(this._timeDimension.setAvailableTimes(this._availableTimes,this._updateTimeDimensionMode), this._setDefaultTime&&this._defaultTime>0&&this._timeDimension.setCurrentTime(this._defaultTime));},_getNearestTime:function(a){if(this._layers.hasOwnProperty(a))return a;if(0==this._availableTimes.length)return a;for(var b=0,c=this._availableTimes.length;c>b&&!(a<this._availableTimes[b]);b++);return b>0&&b--, a!=this._availableTimes[b], this._availableTimes[b]}}), L.NonTiledLayer||(L.NonTiledLayer=(L.Layer||L.Class).extend({})), L.NonTiledLayer.include({_visible:!0,_loaded:!1,_originalUpdate:L.NonTiledLayer.prototype._update,_originalOnRemove:L.NonTiledLayer.prototype.onRemove,_update:function(){(this._visible||!this._loaded)&&this._originalUpdate();},onRemove:function(a){this._loaded=!1, this._originalOnRemove(a);},setLoaded:function(a){this._loaded=a;},isLoaded:function(){return this._loaded},hide:function(){this._visible=!1, this._div.style.display="none";},show:function(){this._visible=!0, this._div.style.display="block";},getURL:function(){return this._wmsUrl}}), L.TileLayer.include({_visible:!0,_loaded:!1,_originalUpdate:L.TileLayer.prototype._update,_update:function(){(this._visible||!this._loaded)&&this._originalUpdate();},setLoaded:function(a){this._loaded=a;},isLoaded:function(){return this._loaded},hide:function(){this._visible=!1, this._container&&(this._container.style.display="none");},show:function(){this._visible=!0, this._container&&(this._container.style.display="block");},getURL:function(){return this._url}}), L.timeDimension.layer.wms=function(a,b){return new L.TimeDimension.Layer.WMS(a,b)}, L.TimeDimension.Layer.GeoJson=L.TimeDimension.Layer.extend({initialize:function(a,b){L.TimeDimension.Layer.prototype.initialize.call(this,a,b), this._updateTimeDimension=this.options.updateTimeDimension||!1, this._updateTimeDimensionMode=this.options.updateTimeDimensionMode||"extremes", this._duration=this.options.duration||null, this._addlastPoint=this.options.addlastPoint||!1, this._waitForReady=this.options.waitForReady||!1, this._defaultTime=0, this._availableTimes=[], this._loaded=!1, 0==this._baseLayer.getLayers().length?this._waitForReady?this._baseLayer.on("ready",this._onReadyBaseLayer,this):this._loaded=!0:(this._loaded=!0, this._setAvailableTimes()), this._baseLayer.on("layeradd",function(){this._loaded&&this._setAvailableTimes();}.bind(this));},onAdd:function(a){L.TimeDimension.Layer.prototype.onAdd.call(this,a), this._loaded&&this._setAvailableTimes();},eachLayer:function(a,b){return this._currentLayer&&a.call(b,this._currentLayer), L.TimeDimension.Layer.prototype.eachLayer.call(this,a,b)},isReady:function(a){return this._loaded},_update:function(){if(this._map&&this._loaded){var a=(this._timeDimension.getCurrentTime(), this._timeDimension.getCurrentTime()),b=0;if(this._duration){var c=new Date(a);L.TimeDimension.Util.subtractTimeDuration(c,this._duration,!0), b=c.getTime();}for(var d=L.geoJson(null,this._baseLayer.options),e=this._baseLayer.getLayers(),f=0,g=e.length;g>f;f++){var h=this._getFeatureBetweenDates(e[f].feature,b,a);if(h&&(d.addData(h), this._addlastPoint&&"LineString"==h.geometry.type&&h.geometry.coordinates.length>0)){var i=h.properties;i.last=!0, d.addData({type:"Feature",properties:i,geometry:{type:"Point",coordinates:h.geometry.coordinates[h.geometry.coordinates.length-1]}});}}this._currentLayer&&this._map.removeLayer(this._currentLayer), d.getLayers().length&&(d.addTo(this._map), this._currentLayer=d);}},_setAvailableTimes:function(){var a=[];this._availableTimes=[];for(var b=this._baseLayer.getLayers(),c=0,d=b.length;d>c;c++)b[c].feature&&(a=L.TimeDimension.Util.union_arrays(a,this._getFeatureTimes(b[c].feature)));for(var c=0,d=a.length;d>c;c++){var e=a[c];("string"==typeof e||e instanceof String)&&(e=Date.parse(e.trim())), this._availableTimes.push(e);}this._timeDimension&&(this._updateTimeDimension||0==this._timeDimension.getAvailableTimes().length)&&this._timeDimension.setAvailableTimes(this._availableTimes,this._updateTimeDimensionMode);},_getFeatureTimes:function(a){return a.properties?a.properties.hasOwnProperty("coordTimes")?a.properties.coordTimes:a.properties.hasOwnProperty("times")?a.properties.times:a.properties.hasOwnProperty("linestringTimestamps")?a.properties.linestringTimestamps:a.properties.hasOwnProperty("time")?[a.properties.time]:[]:[]},_getFeatureBetweenDates:function(a,b,c){var d=this._getFeatureTimes(a);if(0==d.length)return a;for(var e=[],f=0,g=d.length;g>f;f++){var h=d[f];("string"==typeof h||h instanceof String)&&(h=Date.parse(h.trim())), e.push(h);}if(e[0]>c||e[g-1]<b)return null;var i=null,j=null,g=e.length;if(e[g-1]>b)for(var f=0;g>f;f++)if(null===i&&e[f]>b&&(i=f), e[f]>c){j=f;break}null===i&&(i=0), null===j&&(j=g);var k=[];return k=a.geometry.coordinates[0].length?a.geometry.coordinates.slice(i,j):a.geometry.coordinates, {type:"Feature",properties:a.properties,geometry:{type:a.geometry.type,coordinates:k}}},_onReadyBaseLayer:function(){this._loaded=!0, this._setAvailableTimes(), this._update();}}), L.timeDimension.layer.geoJson=function(a,b){return new L.TimeDimension.Layer.GeoJson(a,b)}, L.TimeDimension.Player=(L.Layer||L.Class).extend({includes:L.Evented||L.Mixin.Events,initialize:function(a,b){L.setOptions(this,a), this._timeDimension=b, this._paused=!1, this._buffer=this.options.buffer||5, this._minBufferReady=this.options.minBufferReady||1, this._waitingForBuffer=!1, this._loop=this.options.loop||!1, this._steps=1, this._timeDimension.on("timeload",function(a){this.release(), this._waitingForBuffer=!1;}.bind(this)), this.setTransitionTime(this.options.transitionTime||1e3), this._timeDimension.on("limitschanged availabletimeschanged timeload",function(a){this._timeDimension.prepareNextTimes(this._steps,this._minBufferReady,this._loop);}.bind(this));},_tick:function(){var a=this._getMaxIndex(),b=this._timeDimension.getCurrentTimeIndex()>=a&&this._steps>0,c=0==this._timeDimension.getCurrentTimeIndex()&&this._steps<0;if((b||c)&&!this._loop)return this.pause(), this.stop(), void this.fire("animationfinished");if(!this._paused){var d=0,e=this._bufferSize;if(this._minBufferReady>0)if(d=this._timeDimension.getNumberNextTimesReady(this._steps,e,this._loop), this._waitingForBuffer){if(e>d)return void this.fire("waiting",{buffer:e,available:d});this.fire("running"), this._waitingForBuffer=!1;}else if(d<this._minBufferReady)return this._waitingForBuffer=!0, this._timeDimension.prepareNextTimes(this._steps,e,this._loop), void this.fire("waiting",{buffer:e,available:d});this.pause(), this._timeDimension.nextTime(this._steps,this._loop), e>0&&this._timeDimension.prepareNextTimes(this._steps,e,this._loop);}},_getMaxIndex:function(){return Math.min(this._timeDimension.getAvailableTimes().length-1,this._timeDimension.getUpperLimitIndex()||1/0)},start:function(a){this._intervalID||(this._steps=a||1, this._waitingForBuffer=!1, this.options.startOver&&this._timeDimension.getCurrentTimeIndex()===this._getMaxIndex()&&this._timeDimension.setCurrentTimeIndex(this._timeDimension.getLowerLimitIndex()||0), this.release(), this._intervalID=window.setInterval(L.bind(this._tick,this),this._transitionTime), this._tick(), this.fire("play"), this.fire("running"));},stop:function(){this._intervalID&&(clearInterval(this._intervalID), this._intervalID=null, this._waitingForBuffer=!1, this.fire("stop"));},pause:function(){this._paused=!0;},release:function(){this._paused=!1;},getTransitionTime:function(){return this._transitionTime},isPlaying:function(){return this._intervalID?!0:!1},isWaiting:function(){return this._waitingForBuffer},isLooped:function(){return this._loop},setLooped:function(a){this._loop=a, this.fire("loopchange",{loop:a});},setTransitionTime:function(a){this._transitionTime=a, "function"==typeof this._buffer?this._bufferSize=this._buffer.call(this,this._transitionTime,this._minBufferReady,this._loop):this._bufferSize=this._buffer, this._intervalID&&(this.stop(), this.start(this._steps)), this.fire("speedchange",{transitionTime:a,buffer:this._bufferSize});},getSteps:function(){return this._steps}}), L.UI=L.ui=L.UI||{}, L.UI.Knob=L.Draggable.extend({options:{className:"knob",step:1,rangeMin:0,rangeMax:10},initialize:function(a,b){L.setOptions(this,b), this._element=L.DomUtil.create("div",this.options.className||"knob",a), L.Draggable.prototype.initialize.call(this,this._element,this._element), this._container=a, this.on("predrag",function(){this._newPos.y=0, this._newPos.x=this._adjustX(this._newPos.x);},this), this.on("dragstart",function(){L.DomUtil.addClass(a,"dragging");}), this.on("dragend",function(){L.DomUtil.removeClass(a,"dragging");}), L.DomEvent.on(this._element,"dblclick",function(a){this.fire("dblclick",a);},this), L.DomEvent.disableClickPropagation(this._element), this.enable();},_getProjectionCoef:function(){return(this.options.rangeMax-this.options.rangeMin)/(this._container.offsetWidth||this._container.style.width)},_update:function(){this.setPosition(L.DomUtil.getPosition(this._element).x);},_adjustX:function(a){var b=this._toValue(a)||this.getMinValue();return this._toX(this._adjustValue(b))},_adjustValue:function(a){return a=Math.max(this.getMinValue(),Math.min(this.getMaxValue(),a)), a-=this.options.rangeMin, a=Math.round(a/this.options.step)*this.options.step, a+=this.options.rangeMin, a=Math.round(100*a)/100},_toX:function(a){var b=(a-this.options.rangeMin)/this._getProjectionCoef();return b},_toValue:function(a){var b=a*this._getProjectionCoef()+this.options.rangeMin;return b},getMinValue:function(){return this.options.minValue||this.options.rangeMin},getMaxValue:function(){return this.options.maxValue||this.options.rangeMax},setStep:function(a){this.options.step=a, this._update();},setPosition:function(a){L.DomUtil.setPosition(this._element,L.point(this._adjustX(a),0)), this.fire("positionchanged");},getPosition:function(){return L.DomUtil.getPosition(this._element).x},setValue:function(a){this.setPosition(this._toX(a));},getValue:function(){return this._adjustValue(this._toValue(this.getPosition()))}}), L.Control.TimeDimension=L.Control.extend({options:{styleNS:"leaflet-control-timecontrol",position:"bottomleft",title:"Time Control",backwardButton:!0,forwardButton:!0,playButton:!0,playReverseButton:!1,loopButton:!1,displayDate:!0,timeSlider:!0,timeSliderDragUpdate:!1,limitSliders:!1,limitMinimumRange:5,speedSlider:!0,minSpeed:.1,maxSpeed:10,speedStep:.1,timeSteps:1,autoPlay:!1,playerOptions:{transitionTime:1e3}},initialize:function(a){L.Control.prototype.initialize.call(this,a), this._dateUTC=!0, this._timeDimension=this.options.timeDimension||null;},onAdd:function(a){var b;return this._map=a, !this._timeDimension&&a.timeDimension&&(this._timeDimension=a.timeDimension), this._initPlayer(), b=L.DomUtil.create("div","leaflet-bar leaflet-bar-horizontal leaflet-bar-timecontrol"), this.options.backwardButton&&(this._buttonBackward=this._createButton("Backward",b)), this.options.playReverseButton&&(this._buttonPlayReversePause=this._createButton("Play Reverse",b)), this.options.playButton&&(this._buttonPlayPause=this._createButton("Play",b)), this.options.forwardButton&&(this._buttonForward=this._createButton("Forward",b)), this.options.loopButton&&(this._buttonLoop=this._createButton("Loop",b)), this.options.displayDate&&(this._displayDate=this._createButton("Date",b)), this.options.timeSlider&&(this._sliderTime=this._createSliderTime(this.options.styleNS+" timecontrol-slider timecontrol-dateslider",b)), this.options.speedSlider&&(this._sliderSpeed=this._createSliderSpeed(this.options.styleNS+" timecontrol-slider timecontrol-speed",b)), this._steps=this.options.timeSteps||1, this._timeDimension.on("timeload",this._update,this), this._timeDimension.on("timeload",this._onPlayerStateChange,this), this._timeDimension.on("timeloading",this._onTimeLoading,this), this._timeDimension.on("limitschanged availabletimeschanged",this._onTimeLimitsChanged,this), L.DomEvent.disableClickPropagation(b), b},addTo:function(){return L.Control.prototype.addTo.apply(this,arguments), this._onPlayerStateChange(), this._onTimeLimitsChanged(), this._update(), this},onRemove:function(){this._player.off("play stop running loopchange speedchange",this._onPlayerStateChange,this), this._player.off("waiting",this._onPlayerWaiting,this), this._timeDimension.off("timeload",this._update,this), this._timeDimension.off("timeload",this._onPlayerStateChange,this), this._timeDimension.off("timeloading",this._onTimeLoading,this), this._timeDimension.off("limitschanged availabletimeschanged",this._onTimeLimitsChanged,this);},_initPlayer:function(){this._player||(this.options.player?this._player=this.options.player:this._player=new L.TimeDimension.Player(this.options.playerOptions,this._timeDimension)), this.options.autoPlay&&this._player.start(this._steps), this._player.on("play stop running loopchange speedchange",this._onPlayerStateChange,this), this._player.on("waiting",this._onPlayerWaiting,this), this._onPlayerStateChange();},_onTimeLoading:function(a){a.time==this._timeDimension.getCurrentTime()&&this._displayDate&&L.DomUtil.addClass(this._displayDate,"loading");},_onTimeLimitsChanged:function(){var a=this._timeDimension.getLowerLimitIndex(),b=this._timeDimension.getUpperLimitIndex(),c=this._timeDimension.getAvailableTimes().length-1;this._limitKnobs&&(this._limitKnobs[0].options.rangeMax=c, this._limitKnobs[1].options.rangeMax=c, this._limitKnobs[0].setValue(a||0), this._limitKnobs[1].setValue(b||c)), this._sliderTime&&(this._sliderTime.options.rangeMax=c, this._sliderTime._update());},_onPlayerWaiting:function(a){this._buttonPlayPause&&this._player.getSteps()>0&&(L.DomUtil.addClass(this._buttonPlayPause,"loading"), this._buttonPlayPause.innerHTML=this._getDisplayLoadingText(a.available,a.buffer)), this._buttonPlayReversePause&&this._player.getSteps()<0&&(L.DomUtil.addClass(this._buttonPlayReversePause,"loading"), this._buttonPlayReversePause.innerHTML=this._getDisplayLoadingText(a.available,a.buffer));},_onPlayerStateChange:function(){if(this._buttonPlayPause&&(this._player.isPlaying()&&this._player.getSteps()>0?(L.DomUtil.addClass(this._buttonPlayPause,"pause"), L.DomUtil.removeClass(this._buttonPlayPause,"play")):(L.DomUtil.removeClass(this._buttonPlayPause,"pause"), L.DomUtil.addClass(this._buttonPlayPause,"play")), this._player.isWaiting()&&this._player.getSteps()>0?L.DomUtil.addClass(this._buttonPlayPause,"loading"):(this._buttonPlayPause.innerHTML="", L.DomUtil.removeClass(this._buttonPlayPause,"loading"))), this._buttonPlayReversePause&&(this._player.isPlaying()&&this._player.getSteps()<0?L.DomUtil.addClass(this._buttonPlayReversePause,"pause"):L.DomUtil.removeClass(this._buttonPlayReversePause,"pause"), this._player.isWaiting()&&this._player.getSteps()<0?L.DomUtil.addClass(this._buttonPlayReversePause,"loading"):(this._buttonPlayReversePause.innerHTML="", L.DomUtil.removeClass(this._buttonPlayReversePause,"loading"))), this._buttonLoop&&(this._player.isLooped()?L.DomUtil.addClass(this._buttonLoop,"looped"):L.DomUtil.removeClass(this._buttonLoop,"looped")), this._sliderSpeed&&!this._draggingSpeed){var a=this._player.getTransitionTime()||1e3;a=Math.round(1e4/a)/10, this._sliderSpeed.setValue(a);}},_update:function(){if(this._timeDimension)if(this._timeDimension.getCurrentTimeIndex()>=0){var a=new Date(this._timeDimension.getCurrentTime());this._displayDate&&(L.DomUtil.removeClass(this._displayDate,"loading"), this._displayDate.innerHTML=this._getDisplayDateFormat(a)), this._sliderTime&&!this._slidingTimeSlider&&this._sliderTime.setValue(this._timeDimension.getCurrentTimeIndex());}else this._displayDate&&(this._displayDate.innerHTML=this._getDisplayNoTimeError());},_createButton:function(a,b){var c=L.DomUtil.create("a",this.options.styleNS+" timecontrol-"+a.toLowerCase(),b);return c.href="#", c.title=a, L.DomEvent.addListener(c,"click",L.DomEvent.stopPropagation).addListener(c,"click",L.DomEvent.preventDefault).addListener(c,"click",this["_button"+a.replace(/ /i,"")+"Clicked"],this), c},_createSliderTime:function(a,b){var c,d,e,f,g;return c=L.DomUtil.create("div",a,b), d=L.DomUtil.create("div","slider",c), e=this._timeDimension.getAvailableTimes().length-1, this.options.limitSliders&&(g=this._limitKnobs=this._createLimitKnobs(d)), f=new L.UI.Knob(d,{className:"knob main",rangeMin:0,rangeMax:e}), f.on("dragend",function(a){var b=a.target.getValue();this._sliderTimeValueChanged(b), this._slidingTimeSlider=!1;},this), f.on("drag",function(a){this._slidingTimeSlider=!0;var b=this._timeDimension.getAvailableTimes()[a.target.getValue()];if(b){var c=new Date(b);this._displayDate&&(this._displayDate.innerHTML=this._getDisplayDateFormat(c)), this.options.timeSliderDragUpdate&&this._sliderTimeValueChanged(a.target.getValue());}},this), f.on("predrag",function(){var a,b;g&&(a=g[0].getPosition(), b=g[1].getPosition(), this._newPos.x<a&&(this._newPos.x=a), this._newPos.x>b&&(this._newPos.x=b));},f), L.DomEvent.on(d,"click",function(a){if(!L.DomUtil.hasClass(a.target,"knob")){var b=a.touches&&1===a.touches.length?a.touches[0]:a,c=L.DomEvent.getMousePosition(b,d).x;g?g[0].getPosition()<=c&&c<=g[1].getPosition()&&(f.setPosition(c), this._sliderTimeValueChanged(f.getValue())):(f.setPosition(c), this._sliderTimeValueChanged(f.getValue()));}},this), f.setPosition(0), f},_createLimitKnobs:function(a){L.DomUtil.addClass(a,"has-limits");var b=this._timeDimension.getAvailableTimes().length-1,c=L.DomUtil.create("div","range",a),d=new L.UI.Knob(a,{className:"knob lower",rangeMin:0,rangeMax:b}),e=new L.UI.Knob(a,{className:"knob upper",rangeMin:0,rangeMax:b});return L.DomUtil.setPosition(c,0), d.setPosition(0), e.setPosition(b), d.on("dragend",function(a){var b=a.target.getValue();this._sliderLimitsValueChanged(b,e.getValue());},this), e.on("dragend",function(a){var b=a.target.getValue();this._sliderLimitsValueChanged(d.getValue(),b);},this), d.on("drag positionchanged",function(){L.DomUtil.setPosition(c,L.point(d.getPosition(),0)), c.style.width=e.getPosition()-d.getPosition()+"px";},this), e.on("drag positionchanged",function(){c.style.width=e.getPosition()-d.getPosition()+"px";},this), e.on("predrag",function(){var a=d._toX(d.getValue()+this.options.limitMinimumRange);e._newPos.x<=a&&(e._newPos.x=a);},this), d.on("predrag",function(){var a=e._toX(e.getValue()-this.options.limitMinimumRange);d._newPos.x>=a&&(d._newPos.x=a);},this), d.on("dblclick",function(){this._timeDimension.setLowerLimitIndex(0);},this), e.on("dblclick",function(){this._timeDimension.setUpperLimitIndex(this._timeDimension.getAvailableTimes().length-1);},this), [d,e]},_createSliderSpeed:function(a,b){var c=L.DomUtil.create("div",a,b),d=L.DomUtil.create("span","speed",c),e=L.DomUtil.create("div","slider",c),f=Math.round(1e4/(this._player.getTransitionTime()||1e3))/10;d.innerHTML=this._getDisplaySpeed(f);var g=new L.UI.Knob(e,{step:this.options.speedStep,rangeMin:this.options.minSpeed,rangeMax:this.options.maxSpeed});return g.on("dragend",function(a){var b=a.target.getValue();this._draggingSpeed=!1, d.innerHTML=this._getDisplaySpeed(b), this._sliderSpeedValueChanged(b);},this), g.on("drag",function(a){this._draggingSpeed=!0, d.innerHTML=this._getDisplaySpeed(a.target.getValue());},this), g.on("positionchanged",function(a){d.innerHTML=this._getDisplaySpeed(a.target.getValue());},this), L.DomEvent.on(e,"click",function(a){if(a.target!==g._element){var b=a.touches&&1===a.touches.length?a.touches[0]:a,c=L.DomEvent.getMousePosition(b,e).x;g.setPosition(c), d.innerHTML=this._getDisplaySpeed(g.getValue()), this._sliderSpeedValueChanged(g.getValue());}},this), g},_buttonBackwardClicked:function(){this._timeDimension.previousTime(this._steps);},_buttonForwardClicked:function(){this._timeDimension.nextTime(this._steps);},_buttonLoopClicked:function(){this._player.setLooped(!this._player.isLooped());},_buttonPlayClicked:function(){this._player.isPlaying()?this._player.stop():this._player.start(this._steps);},_buttonPlayReverseClicked:function(){this._player.isPlaying()?this._player.stop():this._player.start(-1*this._steps);},_buttonDateClicked:function(){this._toggleDateUTC();},_sliderTimeValueChanged:function(a){this._timeDimension.setCurrentTimeIndex(a);},_sliderLimitsValueChanged:function(a,b){this._timeDimension.setLowerLimitIndex(a), this._timeDimension.setUpperLimitIndex(b);},_sliderSpeedValueChanged:function(a){this._player.setTransitionTime(1e3/a);},_toggleDateUTC:function(){this._dateUTC?(L.DomUtil.removeClass(this._displayDate,"utc"), this._displayDate.title="Local Time"):(L.DomUtil.addClass(this._displayDate,"utc"), this._displayDate.title="UTC Time"), this._dateUTC=!this._dateUTC, this._update();},_getDisplayDateFormat:function(a){return this._dateUTC?a.toISOString():a.toLocaleString()},_getDisplaySpeed:function(a){return a+"fps"},_getDisplayLoadingText:function(a,b){return"<span>"+Math.floor(a/b*100)+"%</span>"},_getDisplayNoTimeError:function(){return"Time not available"}}), L.Map.addInitHook(function(){this.options.timeDimensionControl&&(this.timeDimensionControl=L.control.timeDimension(this.options.timeDimensionControlOptions||{}), this.addControl(this.timeDimensionControl));}), L.control.timeDimension=function(a){return new L.Control.TimeDimension(a)};
+    /*jshint indent: 4, browser:true*/
+    /*global L*/
+    /*
+     * L.TimeDimension: TimeDimension object manages the time component of a layer.
+     * It can be shared among different layers and it can be added to a map, and become
+     * the default timedimension component for any layer added to the map.
+     */
 
-    var TimeDimension = /*#__PURE__*/Object.freeze({
+    L.TimeDimension = (L.Layer || L.Class).extend({
+
+        includes: (L.Evented || L.Mixin.Events),
+
+        initialize: function (options) {
+            L.setOptions(this, options);
+            // _availableTimes is an array with all the available times in ms.
+            this._availableTimes = this._generateAvailableTimes();
+            this._currentTimeIndex = -1;
+            this._loadingTimeIndex = -1;
+            this._loadingTimeout = this.options.loadingTimeout || 3000;
+            this._syncedLayers = [];
+            if (this._availableTimes.length > 0) {
+                this.setCurrentTime(this.options.currentTime || this._getDefaultCurrentTime());
+            }
+            if (this.options.lowerLimitTime) {
+                this.setLowerLimit(this.options.lowerLimitTime);
+            }
+            if (this.options.upperLimitTime) {
+                this.setUpperLimit(this.options.upperLimitTime);
+            }
+        },
+
+        getAvailableTimes: function () {
+            return this._availableTimes;
+        },
+
+        getCurrentTimeIndex: function () {
+            if (this._currentTimeIndex === -1) {
+                return this._availableTimes.length - 1;
+            }
+            return this._currentTimeIndex;
+        },
+
+        getCurrentTime: function () {
+            var index = -1;
+            if (this._loadingTimeIndex !== -1) {
+                index = this._loadingTimeIndex;
+            } else {
+                index = this.getCurrentTimeIndex();
+            }
+            if (index >= 0) {
+                return this._availableTimes[index];
+            } else {
+                return null;
+            }
+        },
+
+        isLoading: function () {
+            return (this._loadingTimeIndex !== -1);
+        },
+
+        setCurrentTimeIndex: function (newIndex) {
+            var upperLimit = this._upperLimit || this._availableTimes.length - 1;
+            var lowerLimit = this._lowerLimit || 0;
+            //clamp the value
+            newIndex = Math.min(Math.max(lowerLimit, newIndex), upperLimit);
+            if (newIndex < 0) {
+                return;
+            }
+            this._loadingTimeIndex = newIndex;
+            var newTime = this._availableTimes[newIndex];
+
+            if (this._checkSyncedLayersReady(this._availableTimes[this._loadingTimeIndex])) {
+                this._newTimeIndexLoaded();
+            } else {
+                this.fire('timeloading', {
+                    time: newTime
+                });
+                // add timeout of 3 seconds if layers doesn't response
+                setTimeout((function (index) {
+                    if (index == this._loadingTimeIndex) {
+
+                        this._newTimeIndexLoaded();
+                    }
+                }).bind(this, newIndex), this._loadingTimeout);
+            }
+
+        },
+
+        _newTimeIndexLoaded: function () {
+            if (this._loadingTimeIndex === -1) {
+                return;
+            }
+            var time = this._availableTimes[this._loadingTimeIndex];
+
+            this._currentTimeIndex = this._loadingTimeIndex;
+            this.fire('timeload', {
+                time: time
+            });
+            this._loadingTimeIndex = -1;
+        },
+
+        _checkSyncedLayersReady: function (time) {
+            for (var i = 0, len = this._syncedLayers.length; i < len; i++) {
+                if (this._syncedLayers[i].isReady) {
+                    if (!this._syncedLayers[i].isReady(time)) {
+    					return false;
+                    }
+                }
+            }
+            return true;
+        },
+
+        setCurrentTime: function (time) {
+            var newIndex = this._seekNearestTimeIndex(time);
+            this.setCurrentTimeIndex(newIndex);
+        },
+
+        seekNearestTime: function (time) {
+            var index = this._seekNearestTimeIndex(time);
+            return this._availableTimes[index];
+        },
+
+        nextTime: function (numSteps, loop) {
+            if (!numSteps) {
+                numSteps = 1;
+            }
+            var newIndex = this._currentTimeIndex;
+            var upperLimit = this._upperLimit || this._availableTimes.length - 1;
+            var lowerLimit = this._lowerLimit || 0;
+            if (this._loadingTimeIndex > -1) {
+                newIndex = this._loadingTimeIndex;
+            }
+            newIndex = newIndex + numSteps;
+            if (newIndex > upperLimit) {
+                if (!!loop) {
+                    newIndex = lowerLimit;
+                } else {
+                    newIndex = upperLimit;
+                }
+            }
+            // loop backwards
+            if (newIndex < lowerLimit) {
+                if (!!loop) {
+                    newIndex = upperLimit;
+                } else {
+                    newIndex = lowerLimit;
+                }
+            }
+            this.setCurrentTimeIndex(newIndex);
+        },
+
+        prepareNextTimes: function (numSteps, howmany, loop) {
+            if (!numSteps) {
+                numSteps = 1;
+            }
+
+            var newIndex = this._currentTimeIndex;
+            var currentIndex = newIndex;
+            if (this._loadingTimeIndex > -1) {
+                newIndex = this._loadingTimeIndex;
+            }
+            // assure synced layers have a buffer/cache of at least howmany elements
+            for (var i = 0, len = this._syncedLayers.length; i < len; i++) {
+                if (this._syncedLayers[i].setMinimumForwardCache) {
+                    this._syncedLayers[i].setMinimumForwardCache(howmany);
+                }
+            }
+            var count = howmany;
+            var upperLimit = this._upperLimit || this._availableTimes.length - 1;
+            var lowerLimit = this._lowerLimit || 0;
+            while (count > 0) {
+                newIndex = newIndex + numSteps;
+                if (newIndex > upperLimit) {
+                    if (!!loop) {
+                        newIndex = lowerLimit;
+                    } else {
+                        break;
+                    }
+                }
+                if (newIndex < lowerLimit) {
+                    if (!!loop) {
+                        newIndex = upperLimit;
+                    } else {
+                        break;
+                    }
+                }
+                if (currentIndex === newIndex) {
+                    //we looped around the timeline
+                    //no need to load further, the next times are already loading
+                    break;
+                }
+                this.fire('timeloading', {
+                    time: this._availableTimes[newIndex]
+                });
+                count--;
+            }
+        },
+
+        getNumberNextTimesReady: function (numSteps, howmany, loop) {
+            if (!numSteps) {
+                numSteps = 1;
+            }
+
+            var newIndex = this._currentTimeIndex;
+            if (this._loadingTimeIndex > -1) {
+                newIndex = this._loadingTimeIndex;
+            }
+            var count = howmany;
+            var ready = 0;
+            var upperLimit = this._upperLimit || this._availableTimes.length - 1;
+            var lowerLimit = this._lowerLimit || 0;
+            while (count > 0) {
+                newIndex = newIndex + numSteps;
+                if (newIndex > upperLimit) {
+                    if (!!loop) {
+                        newIndex = lowerLimit;
+                    } else {
+                        count = 0;
+                        ready = howmany;
+                        break;
+                    }
+                }
+                if (newIndex < lowerLimit) {
+                    if (!!loop) {
+                        newIndex = upperLimit;
+                    } else {
+                        count = 0;
+                        ready = howmany;
+                        break;
+                    }
+                }
+                var time = this._availableTimes[newIndex];
+                if (this._checkSyncedLayersReady(time)) {
+                    ready++;
+                }
+                count--;
+            }
+            return ready;
+        },
+
+        previousTime: function (numSteps, loop) {
+            this.nextTime(numSteps*(-1), loop);
+        },
+
+        registerSyncedLayer: function (layer) {
+            this._syncedLayers.push(layer);
+            layer.on('timeload', this._onSyncedLayerLoaded, this);
+        },
+
+        unregisterSyncedLayer: function (layer) {
+            var index = this._syncedLayers.indexOf(layer);
+            if (index != -1) {
+                this._syncedLayers.splice(index, 1);
+            }
+            layer.off('timeload', this._onSyncedLayerLoaded, this);
+        },
+
+        _onSyncedLayerLoaded: function (e) {
+            if (e.time == this._availableTimes[this._loadingTimeIndex] && this._checkSyncedLayersReady(e.time)) {
+                this._newTimeIndexLoaded();
+            }
+        },
+
+        _generateAvailableTimes: function () {
+            if (this.options.times) {
+                return L.TimeDimension.Util.parseTimesExpression(this.options.times);
+            } else if (this.options.timeInterval) {
+                var tiArray = L.TimeDimension.Util.parseTimeInterval(this.options.timeInterval);
+                var period = this.options.period || 'P1D';
+                var validTimeRange = this.options.validTimeRange || undefined;
+                return L.TimeDimension.Util.explodeTimeRange(tiArray[0], tiArray[1], period, validTimeRange);
+            } else {
+                return [];
+            }
+        },
+
+        _getDefaultCurrentTime: function () {
+            var index = this._seekNearestTimeIndex(new Date().getTime());
+            return this._availableTimes[index];
+        },
+
+        _seekNearestTimeIndex: function (time) {
+            var newIndex = 0;
+            var len = this._availableTimes.length;
+            for (; newIndex < len; newIndex++) {
+                if (time < this._availableTimes[newIndex]) {
+                    break;
+                }
+            }
+            // We've found the first index greater than the time. Return the previous
+            if (newIndex > 0) {
+                newIndex--;
+            }
+            return newIndex;
+        },
+
+        setAvailableTimes: function (times, mode) {
+            var currentTime = this.getCurrentTime(),
+                lowerLimitTime = this.getLowerLimit(),
+                upperLimitTime = this.getUpperLimit();
+
+            if (mode == 'extremes') {
+                var period = this.options.period || 'P1D';
+                this._availableTimes = L.TimeDimension.Util.explodeTimeRange(new Date(times[0]), new Date(times[times.length - 1]), period);
+            } else {
+                var parsedTimes = L.TimeDimension.Util.parseTimesExpression(times);
+                if (this._availableTimes.length === 0) {
+                    this._availableTimes = parsedTimes;
+                } else if (mode == 'intersect') {
+                    this._availableTimes = L.TimeDimension.Util.intersect_arrays(parsedTimes, this._availableTimes);
+                } else if (mode == 'union') {
+                    this._availableTimes = L.TimeDimension.Util.union_arrays(parsedTimes, this._availableTimes);
+                } else if (mode == 'replace') {
+                    this._availableTimes = parsedTimes;
+                } else {
+                    throw 'Merge available times mode not implemented: ' + mode;
+                }
+            }
+
+            if (lowerLimitTime) {
+                this.setLowerLimit(lowerLimitTime); //restore lower limit
+            }
+            if (upperLimitTime) {
+                this.setUpperLimit(upperLimitTime); //restore upper limit
+            }
+            this.setCurrentTime(currentTime);
+            this.fire('availabletimeschanged', {
+                availableTimes: this._availableTimes,
+                currentTime: currentTime
+            });
+
+        },
+        getLowerLimit: function () {
+            return this._availableTimes[this.getLowerLimitIndex()];
+        },
+        getUpperLimit: function () {
+            return this._availableTimes[this.getUpperLimitIndex()];
+        },
+        setLowerLimit: function (time) {
+            var index = this._seekNearestTimeIndex(time);
+            this.setLowerLimitIndex(index);
+        },
+        setUpperLimit: function (time) {
+            var index = this._seekNearestTimeIndex(time);
+            this.setUpperLimitIndex(index);
+        },
+        setLowerLimitIndex: function (index) {
+            this._lowerLimit = Math.min(Math.max(index || 0, 0), this._upperLimit || this._availableTimes.length - 1);
+            this.fire('limitschanged', {
+                lowerLimit: this._lowerLimit,
+                upperLimit: this._upperLimit
+            });
+        },
+        setUpperLimitIndex: function (index) {
+            this._upperLimit = Math.max(Math.min(index, this._availableTimes.length - 1), this._lowerLimit || 0);
+            this.fire('limitschanged', {
+                lowerLimit: this._lowerLimit,
+                upperLimit: this._upperLimit
+            });
+        },
+        getLowerLimitIndex: function () {
+            return this._lowerLimit;
+        },
+        getUpperLimitIndex: function () {
+            return this._upperLimit;
+        }
+    });
+
+    L.Map.addInitHook(function () {
+        if (this.options.timeDimension) {
+            this.timeDimension = L.timeDimension(this.options.timeDimensionOptions || {});
+        }
+    });
+
+    L.timeDimension = function (options) {
+        return new L.TimeDimension(options);
+    };
+
+    /*
+     * L.TimeDimension.Util
+     */
+
+    L.TimeDimension.Util = {
+        getTimeDuration: function(ISODuration) {
+            if (typeof nezasa === 'undefined') {
+                throw "iso8601-js-period library is required for Leatlet.TimeDimension: https://github.com/nezasa/iso8601-js-period";
+            }
+            return nezasa.iso8601.Period.parse(ISODuration, true);
+        },
+
+        addTimeDuration: function(date, duration, utc) {
+            if (typeof utc === 'undefined') {
+                utc = true;
+            }
+            if (typeof duration == 'string' || duration instanceof String) {
+                duration = this.getTimeDuration(duration);
+            }
+            var l = duration.length;
+            var get = utc ? "getUTC" : "get";
+            var set = utc ? "setUTC" : "set";
+
+            if (l > 0 && duration[0] != 0) {
+                date[set + "FullYear"](date[get + "FullYear"]() + duration[0]);
+            }
+            if (l > 1 && duration[1] != 0) {
+                date[set + "Month"](date[get + "Month"]() + duration[1]);
+            }
+            if (l > 2 && duration[2] != 0) {
+                // weeks
+                date[set + "Date"](date[get + "Date"]() + (duration[2] * 7));
+            }
+            if (l > 3 && duration[3] != 0) {
+                date[set + "Date"](date[get + "Date"]() + duration[3]);
+            }
+            if (l > 4 && duration[4] != 0) {
+                date[set + "Hours"](date[get + "Hours"]() + duration[4]);
+            }
+            if (l > 5 && duration[5] != 0) {
+                date[set + "Minutes"](date[get + "Minutes"]() + duration[5]);
+            }
+            if (l > 6 && duration[6] != 0) {
+                date[set + "Seconds"](date[get + "Seconds"]() + duration[6]);
+            }
+        },
+
+        subtractTimeDuration: function(date, duration, utc) {
+            if (typeof duration == 'string' || duration instanceof String) {
+                duration = this.getTimeDuration(duration);
+            }
+            var subDuration = [];
+            for (var i = 0, l = duration.length; i < l; i++) {
+                subDuration.push(-duration[i]);
+            }
+            this.addTimeDuration(date, subDuration, utc);
+        },
+
+        parseAndExplodeTimeRange: function(timeRange) {
+            var tr = timeRange.split('/');
+            var startTime = new Date(Date.parse(tr[0]));
+            var endTime = new Date(Date.parse(tr[1]));
+            var duration = tr.length > 2 ? tr[2] : "P1D";
+
+            return this.explodeTimeRange(startTime, endTime, duration);
+        },
+
+        explodeTimeRange: function(startTime, endTime, ISODuration, validTimeRange) {
+            var duration = this.getTimeDuration(ISODuration);
+            var result = [];
+            var currentTime = new Date(startTime.getTime());
+            var minHour = null,
+                minMinutes = null,
+                maxHour = null,
+                maxMinutes = null;
+            if (validTimeRange !== undefined) {
+                var validTimeRangeArray = validTimeRange.split('/');
+                minHour = validTimeRangeArray[0].split(':')[0];
+                minMinutes = validTimeRangeArray[0].split(':')[1];
+                maxHour = validTimeRangeArray[1].split(':')[0];
+                maxMinutes = validTimeRangeArray[1].split(':')[1];
+            }
+            while (currentTime < endTime) {
+                if (validTimeRange === undefined ||
+                    (currentTime.getUTCHours() >= minHour && currentTime.getUTCHours() <= maxHour)
+                ) {
+                    if ((currentTime.getUTCHours() != minHour || currentTime.getUTCMinutes() >= minMinutes) &&
+                        (currentTime.getUTCHours() != maxHour || currentTime.getUTCMinutes() <= maxMinutes)) {
+                        result.push(currentTime.getTime());
+                    }
+                }
+                this.addTimeDuration(currentTime, duration);
+            }
+            if (currentTime >= endTime){
+                result.push(endTime.getTime());
+            }
+            return result;
+        },
+
+        parseTimeInterval: function(timeInterval) {
+            var parts = timeInterval.split("/");
+            if (parts.length != 2) {
+                throw "Incorrect ISO9601 TimeInterval: " + timeInterval;
+            }
+            var startTime = Date.parse(parts[0]);
+            var endTime = null;
+            var duration = null;
+            if (isNaN(startTime)) {
+                // -> format duration/endTime
+                duration = this.getTimeDuration(parts[0]);
+                endTime = Date.parse(parts[1]);
+                startTime = new Date(endTime);
+                this.subtractTimeDuration(startTime, duration, true);
+                endTime = new Date(endTime);
+            } else {
+                endTime = Date.parse(parts[1]);
+                if (isNaN(endTime)) {
+                    // -> format startTime/duration
+                    duration = this.getTimeDuration(parts[1]);
+                    endTime = new Date(startTime);
+                    this.addTimeDuration(endTime, duration, true);
+                } else {
+                    // -> format startTime/endTime
+                    endTime = new Date(endTime);
+                }
+                startTime = new Date(startTime);
+            }
+            return [startTime, endTime];
+        },
+
+        parseTimesExpression: function(times) {
+            var result = [];
+            if (!times) {
+                return result;
+            }
+            if (typeof times == 'string' || times instanceof String) {
+                var timeRanges = times.split(",");
+                var timeRange;
+                var timeValue;
+                for (var i=0, l=timeRanges.length; i<l; i++){
+                    timeRange = timeRanges[i];
+                    if (timeRange.split("/").length == 3) {
+                        result = result.concat(this.parseAndExplodeTimeRange(timeRange));
+                    } else {
+                        timeValue = Date.parse(timeRange);
+                        if (!isNaN(timeValue)) {
+                            result.push(timeValue);
+                        }
+                    }
+                }
+            } else {
+                result = times;
+            }
+            return result.sort(function(a, b) {
+                return a - b;
+            });
+        },
+
+        intersect_arrays: function(arrayA, arrayB) {
+            var a = arrayA.slice(0);
+            var b = arrayB.slice(0);
+            var result = [];
+            while (a.length > 0 && b.length > 0) {
+                if (a[0] < b[0]) {
+                    a.shift();
+                } else if (a[0] > b[0]) {
+                    b.shift();
+                } else /* they're equal */ {
+                    result.push(a.shift());
+                    b.shift();
+                }
+            }
+            return result;
+        },
+
+        union_arrays: function(arrayA, arrayB) {
+            var a = arrayA.slice(0);
+            var b = arrayB.slice(0);
+            var result = [];
+            while (a.length > 0 && b.length > 0) {
+                if (a[0] < b[0]) {
+                    result.push(a.shift());
+                } else if (a[0] > b[0]) {
+                    result.push(b.shift());
+                } else /* they're equal */ {
+                    result.push(a.shift());
+                    b.shift();
+                }
+            }
+            if (a.length > 0) {
+                result = result.concat(a);
+            } else if (b.length > 0) {
+                result = result.concat(b);
+            }
+            return result;
+        }
+
+    };
+
+    /*
+     * L.TimeDimension.Layer:  an abstract Layer that can be managed/synchronized with a TimeDimension.
+     * The constructor recieves a layer (of any kind) and options.
+     * Any children class should implement `_onNewTimeLoading`, `isReady` and `_update` functions
+     * to react to time changes.
+     */
+
+    L.TimeDimension.Layer = (L.Layer || L.Class).extend({
+
+        includes: (L.Evented || L.Mixin.Events),
+        options: {
+            opacity: 1,
+            zIndex: 1
+        },
+
+        initialize: function(layer, options) {
+            L.setOptions(this, options || {});
+            this._map = null;
+            this._baseLayer = layer;
+            this._currentLayer = null;
+            this._timeDimension = this.options.timeDimension || null;
+        },
+
+        addTo: function(map) {
+            map.addLayer(this);
+            return this;
+        },
+
+        onAdd: function(map) {
+            this._map = map;
+            if (!this._timeDimension && map.timeDimension) {
+                this._timeDimension = map.timeDimension;
+            }
+            this._timeDimension.on("timeloading", this._onNewTimeLoading, this);
+            this._timeDimension.on("timeload", this._update, this);
+            this._timeDimension.registerSyncedLayer(this);
+            this._update();
+        },
+
+        onRemove: function(map) {
+            this._timeDimension.unregisterSyncedLayer(this);
+            this._timeDimension.off("timeloading", this._onNewTimeLoading, this);
+            this._timeDimension.off("timeload", this._update, this);
+            this.eachLayer(map.removeLayer, map);
+            this._map = null;
+        },
+
+        eachLayer: function(method, context) {
+            method.call(context, this._baseLayer);
+            return this;
+        },
+
+        setZIndex: function(zIndex) {
+            this.options.zIndex = zIndex;
+            if (this._baseLayer.setZIndex) {
+                this._baseLayer.setZIndex(zIndex);
+            }
+            if (this._currentLayer && this._currentLayer.setZIndex) {
+                this._currentLayer.setZIndex(zIndex);
+            }
+            return this;
+        },
+
+        setOpacity: function(opacity) {
+            this.options.opacity = opacity;
+            if (this._baseLayer.setOpacity) {
+                this._baseLayer.setOpacity(opacity);
+            }
+            if (this._currentLayer && this._currentLayer.setOpacity) {
+                this._currentLayer.setOpacity(opacity);
+            }
+            return this;
+        },
+
+        bringToBack: function() {
+            if (!this._currentLayer) {
+                return;
+            }
+            this._currentLayer.bringToBack();
+            return this;
+        },
+
+        bringToFront: function() {
+            if (!this._currentLayer) {
+                return;
+            }
+            this._currentLayer.bringToFront();
+            return this;
+        },
+
+        _onNewTimeLoading: function(ev) {
+            // to be implemented for each type of layer
+            this.fire('timeload', {
+                time: ev.time
+            });
+            return;
+        },
+
+        isReady: function(time) {
+            // to be implemented for each type of layer
+            return true;
+        },
+
+        _update: function() {
+            // to be implemented for each type of layer
+            return true;
+        },
+
+        getBaseLayer: function() {
+            return this._baseLayer;
+        },
+
+        getBounds: function() {
+            var bounds = new L.LatLngBounds();
+            if (this._currentLayer) {
+                bounds.extend(this._currentLayer.getBounds ? this._currentLayer.getBounds() : this._currentLayer.getLatLng());
+            }
+            return bounds;
+        }
 
     });
 
-    // function tdPolyFill(options) {
-    //     return new WMST(options);
-    // }
-    //
-    // var TimeDimension = L.TimeDimension;
-    // var timeDimension = L.timeDimension || tdPolyFill;
+    L.timeDimension.layer = function(layer, options) {
+        return new L.TimeDimension.Layer(layer, options);
+    };
+    /*
+     * L.TimeDimension.Layer.WMS: wms Layer associated to a TimeDimension
+     */
 
-    var WMST = (TimeDimension && undefined || L$1.TileLayer).WMS.extend({
+    L.TimeDimension.Layer.WMS = L.TimeDimension.Layer.extend({
 
-        //override default parser to query all Layers (whether queryable or not)
-        _parseTimeDimensionFromCapabilities: function _parseTimeDimensionFromCapabilities(xml) {
-            var layers = xml.querySelectorAll('Layer');
+        initialize: function(layer, options) {
+            L.TimeDimension.Layer.prototype.initialize.call(this, layer, options);
+            this._timeCacheBackward = this.options.cacheBackward || this.options.cache || 0;
+            this._timeCacheForward = this.options.cacheForward || this.options.cache || 0;
+            this._wmsVersion = this.options.wmsVersion || this.options.version || layer.options.version || "1.1.1";
+            this._getCapabilitiesParams = this.options.getCapabilitiesParams || {};
+            this._getCapabilitiesAlternateUrl = this.options.getCapabilitiesUrl || null;
+            this._getCapabilitiesAlternateLayerName = this.options.getCapabilitiesLayerName || null;
+            this._proxy = this.options.proxy || null;
+            this._updateTimeDimension = this.options.updateTimeDimension || false;
+            this._setDefaultTime = this.options.setDefaultTime || false;
+            this._updateTimeDimensionMode = this.options.updateTimeDimensionMode || 'intersect'; // 'union' or 'replace'
+            this._layers = {};
+            this._defaultTime = 0;
+            this._availableTimes = [];
+            this._capabilitiesRequested = false;
+            if (this._updateTimeDimension || this.options.requestTimeFromCapabilities) {
+                this._requestTimeDimensionFromCapabilities();
+            }
+
+            this._baseLayer.on('load', (function() {
+                this._baseLayer.setLoaded(true);
+                this.fire('timeload', {
+                    time: this._defaultTime
+                });
+            }).bind(this));
+        },
+
+        getEvents: function() {
+            var clearCache = L.bind(this._unvalidateCache, this);
+            return {
+                moveend: clearCache,
+                zoomend: clearCache
+            }
+        },
+
+        eachLayer: function(method, context) {
+            for (var prop in this._layers) {
+                if (this._layers.hasOwnProperty(prop)) {
+                    method.call(context, this._layers[prop]);
+                }
+            }
+            return L.TimeDimension.Layer.prototype.eachLayer.call(this, method, context);
+        },
+
+        _onNewTimeLoading: function(ev) {
+            //
+            var layer = this._getLayerForTime(ev.time);
+            if (!this._map.hasLayer(layer)) {
+                this._map.addLayer(layer);
+                //
+            }
+        },
+
+        isReady: function(time) {
+            var layer = this._getLayerForTime(time);
+            if (this.options.bounds && this._map)
+                if (!this._map.getBounds().contains(this.options.bounds))
+                    return true;
+            return layer.isLoaded();
+        },
+
+        onAdd: function(map) {
+            L.TimeDimension.Layer.prototype.onAdd.call(this, map);
+            if (this._availableTimes.length == 0) {
+                this._requestTimeDimensionFromCapabilities();
+            } else {
+                this._updateTimeDimensionAvailableTimes();
+            }
+        },
+
+        _update: function() {
+            if (!this._map)
+                return;
+            var time = this._timeDimension.getCurrentTime();
+            // It will get the layer for this time (create or get)
+            // Then, the layer will be loaded if necessary, adding it to the map (and show it after loading).
+            // If it already on the map (but probably hidden), it will be shown
+            var layer = this._getLayerForTime(time);
+            if (this._currentLayer == null) {
+                this._currentLayer = layer;
+            }
+            if (!this._map.hasLayer(layer)) {
+                this._map.addLayer(layer);
+            } else {
+                this._showLayer(layer, time);
+            }
+        },
+
+        setOpacity: function(opacity) {
+            L.TimeDimension.Layer.prototype.setOpacity.apply(this, arguments);
+            // apply to all preloaded caches
+            for (var prop in this._layers) {
+                if (this._layers.hasOwnProperty(prop) && this._layers[prop].setOpacity) {
+                    this._layers[prop].setOpacity(opacity);
+                }
+            }
+        },
+
+        setZIndex: function(zIndex){
+            L.TimeDimension.Layer.prototype.setZIndex.apply(this, arguments);
+            // apply to all preloaded caches
+            for (var prop in this._layers) {
+                if (this._layers.hasOwnProperty(prop) && this._layers[prop].setZIndex) {
+                    this._layers[prop].setZIndex(zIndex);
+                }
+            }
+        },
+
+        setParams: function(params, noRedraw) {
+            L.extend(this._baseLayer.options, params);
+            if (this._baseLayer.setParams) {
+                this._baseLayer.setParams(params, noRedraw);
+            }
+            for (var prop in this._layers) {
+                if (this._layers.hasOwnProperty(prop) && this._layers[prop].setParams) {
+                    this._layers[prop].setLoaded(false); // mark it as unloaded
+                    this._layers[prop].setParams(params, noRedraw);
+                }
+            }
+            return this;
+        },
+
+        _unvalidateCache: function() {
+            var time = this._timeDimension.getCurrentTime();
+            for (var prop in this._layers) {
+                if (time != prop && this._layers.hasOwnProperty(prop)) {
+                    this._layers[prop].setLoaded(false); // mark it as unloaded
+                    this._layers[prop].redraw();
+                }
+            }
+        },
+
+        _evictCachedTimes: function(keepforward, keepbackward) {
+            // Cache management
+            var times = this._getLoadedTimes();
+            var strTime = String(this._currentTime);
+            var index = times.indexOf(strTime);
+            var remove = [];
+            // remove times before current time
+            if (keepbackward > -1) {
+                var objectsToRemove = index - keepbackward;
+                if (objectsToRemove > 0) {
+                    remove = times.splice(0, objectsToRemove);
+                    this._removeLayers(remove);
+                }
+            }
+            if (keepforward > -1) {
+                index = times.indexOf(strTime);
+                var objectsToRemove = times.length - index - keepforward - 1;
+                if (objectsToRemove > 0) {
+                    remove = times.splice(index + keepforward + 1, objectsToRemove);
+                    this._removeLayers(remove);
+                }
+            }
+        },
+        _showLayer: function(layer, time) {
+            if (this._currentLayer && this._currentLayer !== layer) {
+                this._currentLayer.hide();
+            }
+            layer.show();
+            if (this._currentLayer && this._currentLayer === layer) {
+                return;
+            }
+            this._currentLayer = layer;
+            this._currentTime = time;
+
+
+            this._evictCachedTimes(this._timeCacheForward, this._timeCacheBackward);
+        },
+
+        _getLayerForTime: function(time) {
+            if (time == 0 || time == this._defaultTime || time == null) {
+                return this._baseLayer;
+            }
+            if (this._layers.hasOwnProperty(time)) {
+                return this._layers[time];
+            }
+            var nearestTime = this._getNearestTime(time);
+            if (this._layers.hasOwnProperty(nearestTime)) {
+                return this._layers[nearestTime];
+            }
+
+            var newLayer = this._createLayerForTime(nearestTime);
+
+            this._layers[time] = newLayer;
+
+            newLayer.on('load', (function(layer, time) {
+                layer.setLoaded(true);
+                // this time entry should exists inside _layers
+                // but it might be deleted by cache management
+                if (!this._layers[time]) {
+                    this._layers[time] = layer;
+                }
+                if (this._timeDimension && time == this._timeDimension.getCurrentTime() && !this._timeDimension.isLoading()) {
+                    this._showLayer(layer, time);
+                }
+                //
+                this.fire('timeload', {
+                    time: time
+                });
+            }).bind(this, newLayer, time));
+
+            // Hack to hide the layer when added to the map.
+            // It will be shown when timeload event is fired from the map (after all layers are loaded)
+            newLayer.onAdd = (function(map) {
+                Object.getPrototypeOf(this).onAdd.call(this, map);
+                this.hide();
+            }).bind(newLayer);
+            return newLayer;
+        },
+
+        _createLayerForTime:function(time){
+            var wmsParams = this._baseLayer.options;
+            wmsParams.time = new Date(time).toISOString();
+            return new this._baseLayer.constructor(this._baseLayer.getURL(), wmsParams);
+        },
+
+        _getLoadedTimes: function() {
+            var result = [];
+            for (var prop in this._layers) {
+                if (this._layers.hasOwnProperty(prop)) {
+                    result.push(prop);
+                }
+            }
+            return result.sort(function(a, b) {
+                return a - b;
+            });
+        },
+
+        _removeLayers: function(times) {
+            for (var i = 0, l = times.length; i < l; i++) {
+                if (this._map)
+                    this._map.removeLayer(this._layers[times[i]]);
+                delete this._layers[times[i]];
+            }
+        },
+
+        setMinimumForwardCache: function(value) {
+            if (value > this._timeCacheForward) {
+                this._timeCacheForward = value;
+            }
+        },
+
+        _requestTimeDimensionFromCapabilities: function() {
+            if (this._capabilitiesRequested) {
+                return;
+            }
+            this._capabilitiesRequested = true;
+            var url = this._getCapabilitiesUrl();
+            if (this._proxy) {
+                url = this._proxy + '?url=' + encodeURIComponent(url);
+            }
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", (function(xhr) {
+                var data = xhr.currentTarget.responseXML;
+                this._defaultTime = Date.parse(this._getDefaultTimeFromCapabilities(data));
+                this._setDefaultTime = this._setDefaultTime || (this._timeDimension && this._timeDimension.getAvailableTimes().length == 0);
+                this.setAvailableTimes(this._parseTimeDimensionFromCapabilities(data));
+                if (this._setDefaultTime && this._timeDimension) {
+                    this._timeDimension.setCurrentTime(this._defaultTime);
+                }
+            }).bind(this));
+            oReq.overrideMimeType('application/xml');
+            oReq.open("GET", url);
+            oReq.send();
+        },
+
+        _getCapabilitiesUrl: function() {
+            var url = this._baseLayer.getURL();
+            if (this._getCapabilitiesAlternateUrl)
+                url = this._getCapabilitiesAlternateUrl;
+            var params = L.extend({}, this._getCapabilitiesParams, {
+              'request': 'GetCapabilities',
+              'service': 'WMS',
+              'version': this._wmsVersion
+            });
+            url = url + L.Util.getParamString(params, url, params.uppercase);
+            return url;
+        },
+
+        _parseTimeDimensionFromCapabilities: function(xml) {
+            var layers = xml.querySelectorAll('Layer[queryable="1"]');
             var layerName = this._baseLayer.wmsParams.layers;
             var layer = null;
             var times = null;
 
-            layers.forEach(function (current) {
+            layers.forEach(function(current) {
                 if (current.querySelector("Name").innerHTML === layerName) {
                     layer = current;
                 }
@@ -1758,26 +2742,1248 @@
             return times;
         },
 
-        //override default parser to fall back if Dimension is provided but has no values
-        _getTimesFromLayerCapabilities: function _getTimesFromLayerCapabilities(layer) {
+        _getTimesFromLayerCapabilities: function(layer) {
             var times = null;
             var dimensions = layer.querySelectorAll("Dimension[name='time']");
             if (dimensions && dimensions.length && dimensions[0].textContent.length) {
                 times = dimensions[0].textContent.trim();
-            }
-            if (!times || !times.length) {
+            } else {
                 var extents = layer.querySelectorAll("Extent[name='time']");
                 if (extents && extents.length && extents[0].textContent.length) {
                     times = extents[0].textContent.trim();
                 }
             }
-            if (times && ~times.indexOf("current")) {
-                times = times.replace('current', new Date().toISOString());
-            }
             return times;
+        },
+
+        _getDefaultTimeFromCapabilities: function(xml) {
+            var layers = xml.querySelectorAll('Layer[queryable="1"]');
+            var layerName = this._baseLayer.wmsParams.layers;
+            var layer = null;
+
+            layers.forEach(function(current) {
+                if (current.querySelector("Name").innerHTML === layerName) {
+                    layer = current;
+                }
+            });
+
+            var defaultTime = 0;
+            if (layer) {
+                defaultTime = this._getDefaultTimeFromLayerCapabilities(layer);
+                if (defaultTime == 0) {
+                    defaultTime = this._getDefaultTimeFromLayerCapabilities(layer.parentNode);
+                }
+            }
+            return defaultTime;
+        },
+
+        _getDefaultTimeFromLayerCapabilities: function(layer) {
+            var defaultTime = 0;
+            var dimensions = layer.querySelectorAll("Dimension[name='time']");
+            if (dimensions && dimensions.length && dimensions[0].attributes.default) {
+                defaultTime = dimensions[0].attributes.default;
+            } else {
+                var extents = layer.querySelectorAll("Extent[name='time']");
+                if (extents && extents.length && extents[0].attributes.default) {
+                    defaultTime = extents[0].attributes.default;
+                }
+            }
+            return defaultTime;
+        },
+
+        setAvailableTimes: function(times) {
+            this._availableTimes = L.TimeDimension.Util.parseTimesExpression(times);
+            this._updateTimeDimensionAvailableTimes();
+        },
+
+        _updateTimeDimensionAvailableTimes: function() {
+            if ((this._timeDimension && this._updateTimeDimension) ||
+                (this._timeDimension && this._timeDimension.getAvailableTimes().length == 0)) {
+                this._timeDimension.setAvailableTimes(this._availableTimes, this._updateTimeDimensionMode);
+                if (this._setDefaultTime && this._defaultTime > 0) {
+                    this._timeDimension.setCurrentTime(this._defaultTime);
+                }
+            }
+        },
+
+        _getNearestTime: function(time) {
+            if (this._layers.hasOwnProperty(time)) {
+                return time;
+            }
+            if (this._availableTimes.length == 0) {
+                return time;
+            }
+            var index = 0;
+            var len = this._availableTimes.length;
+            for (; index < len; index++) {
+                if (time < this._availableTimes[index]) {
+                    break;
+                }
+            }
+            // We've found the first index greater than the time. Get the previous
+            if (index > 0) {
+                index--;
+            }
+            if (time != this._availableTimes[index]) {
+
+
+            }
+            return this._availableTimes[index];
+        },
+
+    });
+
+    if (!L.NonTiledLayer) {
+        L.NonTiledLayer = (L.Layer || L.Class).extend({});
+    }
+
+    L.NonTiledLayer.include({
+        _visible: true,
+        _loaded: false,
+
+        _originalUpdate: L.NonTiledLayer.prototype._update,
+        _originalOnRemove: L.NonTiledLayer.prototype.onRemove,
+
+        _update: function() {
+            if (!this._visible && this._loaded) {
+                return;
+            }
+            this._originalUpdate();
+        },
+
+        onRemove: function(map) {
+            this._loaded = false;
+            this._originalOnRemove(map);
+        },
+
+        setLoaded: function(loaded) {
+            this._loaded = loaded;
+        },
+
+        isLoaded: function() {
+            return this._loaded;
+        },
+
+        hide: function() {
+            this._visible = false;
+            this._div.style.display = 'none';
+        },
+
+        show: function() {
+            this._visible = true;
+            this._div.style.display = 'block';
+        },
+
+        getURL: function() {
+            return this._wmsUrl;
         }
 
     });
+
+    L.TileLayer.include({
+        _visible: true,
+        _loaded: false,
+
+        _originalUpdate: L.TileLayer.prototype._update,
+
+        _update: function() {
+            if (!this._visible && this._loaded) {
+                return;
+            }
+            this._originalUpdate();
+        },
+
+        setLoaded: function(loaded) {
+            this._loaded = loaded;
+        },
+
+        isLoaded: function() {
+            return this._loaded;
+        },
+
+        hide: function() {
+            this._visible = false;
+            if (this._container) {
+                this._container.style.display = 'none';
+            }
+        },
+
+        show: function() {
+            this._visible = true;
+            if (this._container) {
+                this._container.style.display = 'block';
+            }
+        },
+
+        getURL: function() {
+            return this._url;
+        }
+
+    });
+
+    L.timeDimension.layer.wms = function(layer, options) {
+        return new L.TimeDimension.Layer.WMS(layer, options);
+    };
+
+    /*
+     * L.TimeDimension.Layer.GeoJson:
+     */
+
+    L.TimeDimension.Layer.GeoJson = L.TimeDimension.Layer.extend({
+
+        initialize: function(layer, options) {
+            L.TimeDimension.Layer.prototype.initialize.call(this, layer, options);
+            this._updateTimeDimension = this.options.updateTimeDimension || false;
+            this._updateTimeDimensionMode = this.options.updateTimeDimensionMode || 'extremes'; // 'union', 'replace' or extremes
+            this._duration = this.options.duration || null;
+            this._addlastPoint = this.options.addlastPoint || false;
+            this._waitForReady = this.options.waitForReady || false;
+            this._defaultTime = 0;
+            this._availableTimes = [];
+            this._loaded = false;
+            if (this._baseLayer.getLayers().length == 0) {
+                if (this._waitForReady){
+                    this._baseLayer.on("ready", this._onReadyBaseLayer, this);
+                }else{
+                    this._loaded = true;
+                }
+            } else {
+                this._loaded = true;
+                this._setAvailableTimes();
+            }
+            // reload available times if data is added to the base layer
+            this._baseLayer.on('layeradd', (function () {
+                if (this._loaded) {
+                    this._setAvailableTimes();
+                }
+            }).bind(this));
+        },
+
+        onAdd: function(map) {
+            L.TimeDimension.Layer.prototype.onAdd.call(this, map);
+            if (this._loaded) {
+                this._setAvailableTimes();
+            }
+        },
+
+        eachLayer: function(method, context) {
+            if (this._currentLayer) {
+                method.call(context, this._currentLayer);
+            }
+            return L.TimeDimension.Layer.prototype.eachLayer.call(this, method, context);
+        },
+
+        isReady: function(time) {
+            return this._loaded;
+        },
+
+        _update: function() {
+            if (!this._map)
+                return;
+            if (!this._loaded) {
+                return;
+            }
+
+            var time = this._timeDimension.getCurrentTime();
+
+            var maxTime = this._timeDimension.getCurrentTime(),
+                minTime = 0;
+            if (this._duration) {
+                var date = new Date(maxTime);
+                L.TimeDimension.Util.subtractTimeDuration(date, this._duration, true);
+                minTime = date.getTime();
+            }
+
+            // new coordinates:
+            var layer = L.geoJson(null, this._baseLayer.options);
+            var layers = this._baseLayer.getLayers();
+            for (var i = 0, l = layers.length; i < l; i++) {
+                var feature = this._getFeatureBetweenDates(layers[i].feature, minTime, maxTime);
+                if (feature) {
+                    layer.addData(feature);
+                    if (this._addlastPoint && feature.geometry.type == "LineString") {
+                        if (feature.geometry.coordinates.length > 0) {
+                            var properties = feature.properties;
+                            properties.last = true;
+                            layer.addData({
+                                type: 'Feature',
+                                properties: properties,
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: feature.geometry.coordinates[feature.geometry.coordinates.length - 1]
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+
+            if (this._currentLayer) {
+                this._map.removeLayer(this._currentLayer);
+            }
+            if (layer.getLayers().length) {
+                layer.addTo(this._map);
+                this._currentLayer = layer;
+            }
+        },
+
+        _setAvailableTimes: function() {
+            var times = [];
+            this._availableTimes = [];
+            var layers = this._baseLayer.getLayers();
+            for (var i = 0, l = layers.length; i < l; i++) {
+                if (layers[i].feature) {
+                    times = L.TimeDimension.Util.union_arrays(
+                        times,
+                        this._getFeatureTimes(layers[i].feature)
+                    );
+                }
+            }
+            // String dates to ms
+            for (var i = 0, l = times.length; i < l; i++) {
+                var time = times[i];
+                if (typeof time == 'string' || time instanceof String) {
+                    time = Date.parse(time.trim());
+                }
+                this._availableTimes.push(time);
+            }
+            if (this._timeDimension && (this._updateTimeDimension || this._timeDimension.getAvailableTimes().length == 0)) {
+                this._timeDimension.setAvailableTimes(this._availableTimes, this._updateTimeDimensionMode);
+            }
+        },
+
+        _getFeatureTimes: function(feature) {
+            if (!feature.properties) {
+                return [];
+            }
+            if (feature.properties.hasOwnProperty('coordTimes')) {
+                return feature.properties.coordTimes;
+            }
+            if (feature.properties.hasOwnProperty('times')) {
+                return feature.properties.times;
+            }
+            if (feature.properties.hasOwnProperty('linestringTimestamps')) {
+                return feature.properties.linestringTimestamps;
+            }
+            if (feature.properties.hasOwnProperty('time')) {
+                return [feature.properties.time];
+            }
+            return [];
+        },
+
+        _getFeatureBetweenDates: function(feature, minTime, maxTime) {
+            var featureStringTimes = this._getFeatureTimes(feature);
+            if (featureStringTimes.length == 0) {
+                return feature;
+            }
+            var featureTimes = [];
+            for (var i = 0, l = featureStringTimes.length; i < l; i++) {
+                var time = featureStringTimes[i];
+                if (typeof time == 'string' || time instanceof String) {
+                    time = Date.parse(time.trim());
+                }
+                featureTimes.push(time);
+            }
+
+            if (featureTimes[0] > maxTime || featureTimes[l - 1] < minTime) {
+                return null;
+            }
+            var index_min = null,
+                index_max = null,
+                l = featureTimes.length;
+            if (featureTimes[l - 1] > minTime) {
+                for (var i = 0; i < l; i++) {
+                    if (index_min === null && featureTimes[i] > minTime) {
+                        // set index_min the first time that current time is greater the minTime
+                        index_min = i;
+                    }
+                    if (featureTimes[i] > maxTime) {
+                        index_max = i;
+                        break;
+                    }
+                }
+            }
+            if (index_min === null) {
+                index_min = 0;
+            }
+            if (index_max === null) {
+                index_max = l;
+            }
+            var new_coordinates = [];
+            if (feature.geometry.coordinates[0].length) {
+                new_coordinates = feature.geometry.coordinates.slice(index_min, index_max);
+            } else {
+                new_coordinates = feature.geometry.coordinates;
+            }
+            return {
+                type: 'Feature',
+                properties: feature.properties,
+                geometry: {
+                    type: feature.geometry.type,
+                    coordinates: new_coordinates
+                }
+            };
+        },
+
+        _onReadyBaseLayer: function() {
+            this._loaded = true;
+            this._setAvailableTimes();
+            this._update();
+        },
+
+    });
+
+    L.timeDimension.layer.geoJson = function(layer, options) {
+        return new L.TimeDimension.Layer.GeoJson(layer, options);
+    };
+
+    /*jshint indent: 4, browser:true*/
+    /*global L*/
+
+
+    /*
+     * L.TimeDimension.Player
+     */
+    //'use strict';
+    L.TimeDimension.Player = (L.Layer || L.Class).extend({
+
+        includes: (L.Evented || L.Mixin.Events),
+        initialize: function(options, timeDimension) {
+            L.setOptions(this, options);
+            this._timeDimension = timeDimension;
+            this._paused = false;
+            this._buffer = this.options.buffer || 5;
+            this._minBufferReady = this.options.minBufferReady || 1;
+            this._waitingForBuffer = false;
+            this._loop = this.options.loop || false;
+            this._steps = 1;
+            this._timeDimension.on('timeload', (function(data) {
+                this.release(); // free clock
+                this._waitingForBuffer = false; // reset buffer
+            }).bind(this));
+            this.setTransitionTime(this.options.transitionTime || 1000);
+
+            this._timeDimension.on('limitschanged availabletimeschanged timeload', (function(data) {
+                this._timeDimension.prepareNextTimes(this._steps, this._minBufferReady, this._loop);
+            }).bind(this));
+        },
+
+
+        _tick: function() {
+            var maxIndex = this._getMaxIndex();
+            var maxForward = (this._timeDimension.getCurrentTimeIndex() >= maxIndex) && (this._steps > 0);
+            var maxBackward = (this._timeDimension.getCurrentTimeIndex() == 0) && (this._steps < 0);
+            if (maxForward || maxBackward) {
+                // we reached the last step
+                if (!this._loop) {
+                    this.pause();
+                    this.stop();
+                    this.fire('animationfinished');
+                    return;
+                }
+            }
+
+            if (this._paused) {
+                return;
+            }
+            var numberNextTimesReady = 0,
+                buffer = this._bufferSize;
+
+            if (this._minBufferReady > 0) {
+                numberNextTimesReady = this._timeDimension.getNumberNextTimesReady(this._steps, buffer, this._loop);
+                // If the player was waiting, check if all times are loaded
+                if (this._waitingForBuffer) {
+                    if (numberNextTimesReady < buffer) {
+
+                        this.fire('waiting', {
+                            buffer: buffer,
+                            available: numberNextTimesReady
+                        });
+                        return;
+                    } else {
+                        // all times loaded
+
+                        this.fire('running');
+                        this._waitingForBuffer = false;
+                    }
+                } else {
+                    // check if player has to stop to wait and force to full all the buffer
+                    if (numberNextTimesReady < this._minBufferReady) {
+
+                        this._waitingForBuffer = true;
+                        this._timeDimension.prepareNextTimes(this._steps, buffer, this._loop);
+                        this.fire('waiting', {
+                            buffer: buffer,
+                            available: numberNextTimesReady
+                        });
+                        return;
+                    }
+                }
+            }
+            this.pause();
+            this._timeDimension.nextTime(this._steps, this._loop);
+            if (buffer > 0) {
+                this._timeDimension.prepareNextTimes(this._steps, buffer, this._loop);
+            }
+        },
+
+        _getMaxIndex: function(){
+           return Math.min(this._timeDimension.getAvailableTimes().length - 1,
+                           this._timeDimension.getUpperLimitIndex() || Infinity);
+        },
+
+        start: function(numSteps) {
+            if (this._intervalID) return;
+            this._steps = numSteps || 1;
+            this._waitingForBuffer = false;
+            if (this.options.startOver){
+                if (this._timeDimension.getCurrentTimeIndex() === this._getMaxIndex()){
+                     this._timeDimension.setCurrentTimeIndex(this._timeDimension.getLowerLimitIndex() || 0);
+                }
+            }
+            this.release();
+            this._intervalID = window.setInterval(
+                L.bind(this._tick, this),
+                this._transitionTime);
+            this._tick();
+            this.fire('play');
+            this.fire('running');
+        },
+
+        stop: function() {
+            if (!this._intervalID) return;
+            clearInterval(this._intervalID);
+            this._intervalID = null;
+            this._waitingForBuffer = false;
+            this.fire('stop');
+        },
+
+        pause: function() {
+            this._paused = true;
+        },
+
+        release: function () {
+            this._paused = false;
+        },
+
+        getTransitionTime: function() {
+            return this._transitionTime;
+        },
+
+        isPlaying: function() {
+            return this._intervalID ? true : false;
+        },
+
+        isWaiting: function() {
+            return this._waitingForBuffer;
+        },
+        isLooped: function() {
+            return this._loop;
+        },
+
+        setLooped: function(looped) {
+            this._loop = looped;
+            this.fire('loopchange', {
+                loop: looped
+            });
+        },
+
+        setTransitionTime: function(transitionTime) {
+            this._transitionTime = transitionTime;
+            if (typeof this._buffer === 'function') {
+                this._bufferSize = this._buffer.call(this, this._transitionTime, this._minBufferReady, this._loop);
+
+            } else {
+                this._bufferSize = this._buffer;
+            }
+            if (this._intervalID) {
+                this.stop();
+                this.start(this._steps);
+            }
+            this.fire('speedchange', {
+                transitionTime: transitionTime,
+                buffer: this._bufferSize
+            });
+        },
+
+        getSteps: function() {
+            return this._steps;
+        }
+    });
+
+    /*jshint indent: 4, browser:true*/
+    /*global L*/
+
+    /*
+     * L.Control.TimeDimension: Leaflet control to manage a timeDimension
+     */
+
+    L.UI = L.ui = L.UI || {};
+    L.UI.Knob = L.Draggable.extend({
+        options: {
+            className: 'knob',
+            step: 1,
+            rangeMin: 0,
+            rangeMax: 10
+                //minValue : null,
+                //maxValue : null
+        },
+        initialize: function(slider, options) {
+            L.setOptions(this, options);
+            this._element = L.DomUtil.create('div', this.options.className || 'knob', slider);
+            L.Draggable.prototype.initialize.call(this, this._element, this._element);
+            this._container = slider;
+            this.on('predrag', function() {
+                this._newPos.y = 0;
+                this._newPos.x = this._adjustX(this._newPos.x);
+            }, this);
+            this.on('dragstart', function() {
+                L.DomUtil.addClass(slider, 'dragging');
+            });
+            this.on('dragend', function() {
+                L.DomUtil.removeClass(slider, 'dragging');
+            });
+            L.DomEvent.on(this._element, 'dblclick', function(e) {
+                this.fire('dblclick', e);
+            }, this);
+            L.DomEvent.disableClickPropagation(this._element);
+            this.enable();
+        },
+
+        _getProjectionCoef: function() {
+            return (this.options.rangeMax - this.options.rangeMin) / (this._container.offsetWidth || this._container.style.width);
+        },
+        _update: function() {
+            this.setPosition(L.DomUtil.getPosition(this._element).x);
+        },
+        _adjustX: function(x) {
+            var value = this._toValue(x) || this.getMinValue();
+            return this._toX(this._adjustValue(value));
+        },
+
+        _adjustValue: function(value) {
+            value = Math.max(this.getMinValue(), Math.min(this.getMaxValue(), value)); //clamp value
+            value = value - this.options.rangeMin; //offsets to zero
+
+            //snap the value to the closet step
+            value = Math.round(value / this.options.step) * this.options.step;
+            value = value + this.options.rangeMin; //restore offset
+            value = Math.round(value * 100) / 100; // *100/100 to avoid floating point precision problems
+
+            return value;
+        },
+
+        _toX: function(value) {
+            var x = (value - this.options.rangeMin) / this._getProjectionCoef();
+            //
+            return x;
+        },
+
+        _toValue: function(x) {
+            var v = x * this._getProjectionCoef() + this.options.rangeMin;
+            //
+            return v;
+        },
+
+        getMinValue: function() {
+            return this.options.minValue || this.options.rangeMin;
+        },
+        getMaxValue: function() {
+            return this.options.maxValue || this.options.rangeMax;
+        },
+
+        setStep: function(step) {
+            this.options.step = step;
+            this._update();
+        },
+
+        setPosition: function(x) {
+            L.DomUtil.setPosition(this._element,
+                L.point(this._adjustX(x), 0));
+            this.fire('positionchanged');
+        },
+        getPosition: function() {
+            return L.DomUtil.getPosition(this._element).x;
+        },
+
+        setValue: function(v) {
+            //
+            this.setPosition(this._toX(v));
+        },
+
+        getValue: function() {
+            return this._adjustValue(this._toValue(this.getPosition()));
+        }
+    });
+
+
+    /*
+     * L.Control.TimeDimension: Leaflet control to manage a timeDimension
+     */
+
+    L.Control.TimeDimension = L.Control.extend({
+        options: {
+            styleNS: 'leaflet-control-timecontrol',
+            position: 'bottomleft',
+            title: 'Time Control',
+            backwardButton: true,
+            forwardButton: true,
+            playButton: true,
+            playReverseButton: false,
+            loopButton: false,
+            displayDate: true,
+            timeSlider: true,
+            timeSliderDragUpdate: false,
+            limitSliders: false,
+            limitMinimumRange: 5,
+            speedSlider: true,
+            minSpeed: 0.1,
+            maxSpeed: 10,
+            speedStep: 0.1,
+            timeSteps: 1,
+            autoPlay: false,
+            playerOptions: {
+                transitionTime: 1000
+            }
+        },
+
+        initialize: function(options) {
+            L.Control.prototype.initialize.call(this, options);
+            this._dateUTC = true;
+            this._timeDimension = this.options.timeDimension || null;
+        },
+
+        onAdd: function(map) {
+            var container;
+            this._map = map;
+            if (!this._timeDimension && map.timeDimension) {
+                this._timeDimension = map.timeDimension;
+            }
+            this._initPlayer();
+
+            container = L.DomUtil.create('div', 'leaflet-bar leaflet-bar-horizontal leaflet-bar-timecontrol');
+            if (this.options.backwardButton) {
+                this._buttonBackward = this._createButton('Backward', container);
+            }
+            if (this.options.playReverseButton) {
+                this._buttonPlayReversePause = this._createButton('Play Reverse', container);
+            }
+            if (this.options.playButton) {
+                this._buttonPlayPause = this._createButton('Play', container);
+            }
+            if (this.options.forwardButton) {
+                this._buttonForward = this._createButton('Forward', container);
+            }
+            if (this.options.loopButton) {
+                this._buttonLoop = this._createButton('Loop', container);
+            }
+            if (this.options.displayDate) {
+                this._displayDate = this._createButton('Date', container);
+            }
+            if (this.options.timeSlider) {
+                this._sliderTime = this._createSliderTime(this.options.styleNS + ' timecontrol-slider timecontrol-dateslider', container);
+            }
+            if (this.options.speedSlider) {
+                this._sliderSpeed = this._createSliderSpeed(this.options.styleNS + ' timecontrol-slider timecontrol-speed', container);
+            }
+
+            this._steps = this.options.timeSteps || 1;
+
+            this._timeDimension.on('timeload',  this._update, this);
+            this._timeDimension.on('timeload',  this._onPlayerStateChange, this);
+            this._timeDimension.on('timeloading', this._onTimeLoading, this);
+
+            this._timeDimension.on('limitschanged availabletimeschanged', this._onTimeLimitsChanged, this);
+
+            L.DomEvent.disableClickPropagation(container);
+
+            return container;
+        },
+        addTo: function() {
+            //To be notified AFTER the component was added to the DOM
+            L.Control.prototype.addTo.apply(this, arguments);
+            this._onPlayerStateChange();
+            this._onTimeLimitsChanged();
+            this._update();
+            return this;
+        },
+        onRemove: function() {
+            this._player.off('play stop running loopchange speedchange', this._onPlayerStateChange, this);
+            this._player.off('waiting', this._onPlayerWaiting, this);
+            //this._player = null;  keep it for later re-add
+
+            this._timeDimension.off('timeload',  this._update, this);
+            this._timeDimension.off('timeload',  this._onPlayerStateChange, this);
+            this._timeDimension.off('timeloading', this._onTimeLoading, this);
+            this._timeDimension.off('limitschanged availabletimeschanged', this._onTimeLimitsChanged, this);
+        },
+
+        _initPlayer: function() {
+            if (!this._player){ // in case of remove/add
+                if (this.options.player) {
+                    this._player = this.options.player;
+                } else {
+                    this._player = new L.TimeDimension.Player(this.options.playerOptions, this._timeDimension);
+                }
+            }
+            if (this.options.autoPlay) {
+                this._player.start(this._steps);
+            }
+            this._player.on('play stop running loopchange speedchange', this._onPlayerStateChange, this);
+            this._player.on('waiting', this._onPlayerWaiting, this);
+            this._onPlayerStateChange();
+        },
+
+        _onTimeLoading : function(data) {
+            if (data.time == this._timeDimension.getCurrentTime()) {
+                if (this._displayDate) {
+                    L.DomUtil.addClass(this._displayDate, 'loading');
+                }
+            }
+        },
+
+        _onTimeLimitsChanged: function() {
+            var lowerIndex = this._timeDimension.getLowerLimitIndex(),
+                upperIndex = this._timeDimension.getUpperLimitIndex(),
+                max = this._timeDimension.getAvailableTimes().length - 1;
+
+            if (this._limitKnobs) {
+                this._limitKnobs[0].options.rangeMax = max;
+                this._limitKnobs[1].options.rangeMax = max;
+                this._limitKnobs[0].setValue(lowerIndex || 0);
+                this._limitKnobs[1].setValue(upperIndex || max);
+            }
+            if (this._sliderTime) {
+                this._sliderTime.options.rangeMax = max;
+                this._sliderTime._update();
+            }
+        },
+
+        _onPlayerWaiting: function(evt) {
+            if (this._buttonPlayPause && this._player.getSteps() > 0) {
+                L.DomUtil.addClass(this._buttonPlayPause, 'loading');
+                this._buttonPlayPause.innerHTML = this._getDisplayLoadingText(evt.available, evt.buffer);
+            }
+            if (this._buttonPlayReversePause && this._player.getSteps() < 0) {
+                L.DomUtil.addClass(this._buttonPlayReversePause, 'loading');
+                this._buttonPlayReversePause.innerHTML = this._getDisplayLoadingText(evt.available, evt.buffer);
+            }
+        },
+        _onPlayerStateChange: function() {
+            if (this._buttonPlayPause) {
+                if (this._player.isPlaying() && this._player.getSteps() > 0) {
+                    L.DomUtil.addClass(this._buttonPlayPause, 'pause');
+                    L.DomUtil.removeClass(this._buttonPlayPause, 'play');
+                } else {
+                    L.DomUtil.removeClass(this._buttonPlayPause, 'pause');
+                    L.DomUtil.addClass(this._buttonPlayPause, 'play');
+                }
+                if (this._player.isWaiting() && this._player.getSteps() > 0) {
+                    L.DomUtil.addClass(this._buttonPlayPause, 'loading');
+                } else {
+                    this._buttonPlayPause.innerHTML = '';
+                    L.DomUtil.removeClass(this._buttonPlayPause, 'loading');
+                }
+            }
+            if (this._buttonPlayReversePause) {
+                if (this._player.isPlaying() && this._player.getSteps() < 0) {
+                    L.DomUtil.addClass(this._buttonPlayReversePause, 'pause');
+                } else {
+                    L.DomUtil.removeClass(this._buttonPlayReversePause, 'pause');
+                }
+                if (this._player.isWaiting() && this._player.getSteps() < 0) {
+                    L.DomUtil.addClass(this._buttonPlayReversePause, 'loading');
+                } else {
+                    this._buttonPlayReversePause.innerHTML = '';
+                    L.DomUtil.removeClass(this._buttonPlayReversePause, 'loading');
+                }
+            }
+            if (this._buttonLoop) {
+                if (this._player.isLooped()) {
+                    L.DomUtil.addClass(this._buttonLoop, 'looped');
+                } else {
+                    L.DomUtil.removeClass(this._buttonLoop, 'looped');
+                }
+            }
+            if (this._sliderSpeed && !this._draggingSpeed) {
+                var speed =  this._player.getTransitionTime() || 1000;//transitionTime
+                speed = Math.round(10000 / speed) /10; // 1s / transition
+                this._sliderSpeed.setValue(speed);
+            }
+        },
+
+        _update: function() {
+            if (!this._timeDimension) {
+                return;
+            }
+            if (this._timeDimension.getCurrentTimeIndex() >= 0) {
+                var date = new Date(this._timeDimension.getCurrentTime());
+                if (this._displayDate) {
+                    L.DomUtil.removeClass(this._displayDate, 'loading');
+                    this._displayDate.innerHTML = this._getDisplayDateFormat(date);
+                }
+                if (this._sliderTime && !this._slidingTimeSlider) {
+                    this._sliderTime.setValue(this._timeDimension.getCurrentTimeIndex());
+                }
+            } else {
+                if (this._displayDate) {
+                    this._displayDate.innerHTML = this._getDisplayNoTimeError();
+                }
+            }
+        },
+
+        _createButton: function(title, container) {
+            var link = L.DomUtil.create('a', this.options.styleNS + ' timecontrol-' + title.toLowerCase(), container);
+            link.href = '#';
+            link.title = title;
+
+            L.DomEvent
+                .addListener(link, 'click', L.DomEvent.stopPropagation)
+                .addListener(link, 'click', L.DomEvent.preventDefault)
+                .addListener(link, 'click', this['_button' + title.replace(/ /i, '') + 'Clicked'], this);
+
+            return link;
+        },
+
+        _createSliderTime: function(className, container) {
+            var sliderContainer,
+                sliderbar,
+                max,
+                knob, limits;
+            sliderContainer = L.DomUtil.create('div', className, container);
+            /*L.DomEvent
+                .addListener(sliderContainer, 'click', L.DomEvent.stopPropagation)
+                .addListener(sliderContainer, 'click', L.DomEvent.preventDefault);*/
+
+            sliderbar = L.DomUtil.create('div', 'slider', sliderContainer);
+            max = this._timeDimension.getAvailableTimes().length - 1;
+
+            if (this.options.limitSliders) {
+                limits = this._limitKnobs = this._createLimitKnobs(sliderbar);
+            }
+            knob = new L.UI.Knob(sliderbar, {
+                className: 'knob main',
+                rangeMin: 0,
+                rangeMax: max
+            });
+            knob.on('dragend', function(e) {
+                var value = e.target.getValue();
+                this._sliderTimeValueChanged(value);
+                this._slidingTimeSlider = false;
+            }, this);
+            knob.on('drag', function(e) {
+                this._slidingTimeSlider = true;
+                var time = this._timeDimension.getAvailableTimes()[e.target.getValue()];
+                if (time) {
+                    var date = new Date(time);
+                    if (this._displayDate) {
+                      this._displayDate.innerHTML = this._getDisplayDateFormat(date);
+                    }
+                    if (this.options.timeSliderDragUpdate){
+                        this._sliderTimeValueChanged(e.target.getValue());
+                    }
+                }
+            }, this);
+
+            knob.on('predrag', function() {
+                var minPosition, maxPosition;
+                if (limits) {
+                    //limits the position between lower and upper knobs
+                    minPosition = limits[0].getPosition();
+                    maxPosition = limits[1].getPosition();
+                    if (this._newPos.x < minPosition) {
+                        this._newPos.x = minPosition;
+                    }
+                    if (this._newPos.x > maxPosition) {
+                        this._newPos.x = maxPosition;
+                    }
+                }
+            }, knob);
+            L.DomEvent.on(sliderbar, 'click', function(e) {
+                if (L.DomUtil.hasClass(e.target, 'knob')) {
+                    return; //prevent value changes on drag release
+                }
+                var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
+                    x = L.DomEvent.getMousePosition(first, sliderbar).x;
+                if (limits) { // limits exits
+                    if (limits[0].getPosition() <= x && x <= limits[1].getPosition()) {
+                        knob.setPosition(x);
+                        this._sliderTimeValueChanged(knob.getValue());
+                    }
+                } else {
+                    knob.setPosition(x);
+                    this._sliderTimeValueChanged(knob.getValue());
+                }
+
+            }, this);
+            knob.setPosition(0);
+
+            return knob;
+        },
+
+
+        _createLimitKnobs: function(sliderbar) {
+            L.DomUtil.addClass(sliderbar, 'has-limits');
+            var max = this._timeDimension.getAvailableTimes().length - 1;
+            var rangeBar = L.DomUtil.create('div', 'range', sliderbar);
+            var lknob = new L.UI.Knob(sliderbar, {
+                className: 'knob lower',
+                rangeMin: 0,
+                rangeMax: max
+            });
+            var uknob = new L.UI.Knob(sliderbar, {
+                className: 'knob upper',
+                rangeMin: 0,
+                rangeMax: max
+            });
+
+
+            L.DomUtil.setPosition(rangeBar, 0);
+            lknob.setPosition(0);
+            uknob.setPosition(max);
+
+            //Add listeners for value changes
+            lknob.on('dragend', function(e) {
+                var value = e.target.getValue();
+                this._sliderLimitsValueChanged(value, uknob.getValue());
+            }, this);
+            uknob.on('dragend', function(e) {
+                var value = e.target.getValue();
+                this._sliderLimitsValueChanged(lknob.getValue(), value);
+            }, this);
+
+            //Add listeners to position the range bar
+            lknob.on('drag positionchanged', function() {
+                L.DomUtil.setPosition(rangeBar, L.point(lknob.getPosition(), 0));
+                rangeBar.style.width = uknob.getPosition() - lknob.getPosition() + 'px';
+            }, this);
+
+            uknob.on('drag positionchanged', function() {
+                rangeBar.style.width = uknob.getPosition() - lknob.getPosition() + 'px';
+            }, this);
+
+            //Add listeners to prevent overlaps
+            uknob.on('predrag', function() {
+                //bond upper to lower
+                var lowerPosition = lknob._toX(lknob.getValue() + this.options.limitMinimumRange);
+                if (uknob._newPos.x <= lowerPosition) {
+                    uknob._newPos.x = lowerPosition;
+                }
+            }, this);
+
+            lknob.on('predrag', function() {
+                //bond lower to upper
+                var upperPosition = uknob._toX(uknob.getValue() - this.options.limitMinimumRange);
+                if (lknob._newPos.x >= upperPosition) {
+                    lknob._newPos.x = upperPosition;
+                }
+            }, this);
+
+            lknob.on('dblclick', function() {
+                this._timeDimension.setLowerLimitIndex(0);
+            }, this);
+            uknob.on('dblclick', function() {
+                this._timeDimension.setUpperLimitIndex(this._timeDimension.getAvailableTimes().length - 1);
+            }, this);
+
+            return [lknob, uknob];
+        },
+
+
+        _createSliderSpeed: function(className, container) {
+            var sliderContainer = L.DomUtil.create('div', className, container);
+            /* L.DomEvent
+                .addListener(sliderContainer, 'click', L.DomEvent.stopPropagation)
+                .addListener(sliderContainer, 'click', L.DomEvent.preventDefault);
+    */
+            var speedLabel = L.DomUtil.create('span', 'speed', sliderContainer);
+            var sliderbar = L.DomUtil.create('div', 'slider', sliderContainer);
+            var initialSpeed = Math.round(10000 / (this._player.getTransitionTime() || 1000)) / 10;
+            speedLabel.innerHTML = this._getDisplaySpeed(initialSpeed);
+
+            var knob = new L.UI.Knob(sliderbar, {
+                step: this.options.speedStep,
+                rangeMin: this.options.minSpeed,
+                rangeMax: this.options.maxSpeed
+            });
+
+            knob.on('dragend', function(e) {
+                var value = e.target.getValue();
+                this._draggingSpeed = false;
+                speedLabel.innerHTML = this._getDisplaySpeed(value);
+                this._sliderSpeedValueChanged(value);
+            }, this);
+            knob.on('drag', function(e) {
+                this._draggingSpeed = true;
+                speedLabel.innerHTML = this._getDisplaySpeed(e.target.getValue());
+            }, this);
+             knob.on('positionchanged', function (e) {
+                speedLabel.innerHTML = this._getDisplaySpeed(e.target.getValue());
+            }, this);
+
+            L.DomEvent.on(sliderbar, 'click', function(e) {
+                if (e.target === knob._element) {
+                    return; //prevent value changes on drag release
+                }
+                var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
+                    x = L.DomEvent.getMousePosition(first, sliderbar).x;
+                knob.setPosition(x);
+                speedLabel.innerHTML = this._getDisplaySpeed(knob.getValue());
+                this._sliderSpeedValueChanged(knob.getValue());
+            }, this);
+            return knob;
+        },
+
+        _buttonBackwardClicked: function() {
+            this._timeDimension.previousTime(this._steps);
+        },
+
+        _buttonForwardClicked: function() {
+            this._timeDimension.nextTime(this._steps);
+        },
+        _buttonLoopClicked: function() {
+            this._player.setLooped(!this._player.isLooped());
+        },
+
+        _buttonPlayClicked: function() {
+            if (this._player.isPlaying()) {
+                this._player.stop();
+            } else {
+                this._player.start(this._steps);
+            }
+        },
+
+        _buttonPlayReverseClicked: function() {
+            if (this._player.isPlaying()) {
+                this._player.stop();
+            } else {
+                this._player.start(this._steps * (-1));
+            }
+        },
+
+        _buttonDateClicked: function(){
+            this._toggleDateUTC();
+        },
+
+        _sliderTimeValueChanged: function(newValue) {
+            this._timeDimension.setCurrentTimeIndex(newValue);
+        },
+
+        _sliderLimitsValueChanged: function(lowerLimit, upperLimit) {
+            this._timeDimension.setLowerLimitIndex(lowerLimit);
+            this._timeDimension.setUpperLimitIndex(upperLimit);
+        },
+
+        _sliderSpeedValueChanged: function(newValue) {
+            this._player.setTransitionTime(1000 / newValue);
+        },
+
+        _toggleDateUTC: function() {
+            if (this._dateUTC) {
+                L.DomUtil.removeClass(this._displayDate, 'utc');
+                this._displayDate.title = 'Local Time';
+            } else {
+                L.DomUtil.addClass(this._displayDate, 'utc');
+                this._displayDate.title = 'UTC Time';
+            }
+            this._dateUTC = !this._dateUTC;
+            this._update();
+        },
+
+        _getDisplayDateFormat: function(date) {
+            return this._dateUTC ? date.toISOString() : date.toLocaleString();
+        },
+        _getDisplaySpeed: function(fps) {
+            return fps + 'fps';
+        },
+        _getDisplayLoadingText: function(available, buffer) {
+            return '<span>' + Math.floor(available / buffer * 100) + '%</span>';
+        },
+        _getDisplayNoTimeError: function() {
+            return 'Time not available';
+        }
+
+    });
+
+    L.Map.addInitHook(function() {
+        if (this.options.timeDimensionControl) {
+            this.timeDimensionControl = L.control.timeDimension(this.options.timeDimensionControlOptions || {});
+            this.addControl(this.timeDimensionControl);
+        }
+    });
+
+    L.control.timeDimension = function(options) {
+        return new L.Control.TimeDimension(options);
+    };
+
+    var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+    function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+    function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+    var WMST = function (_L$TimeDimension$Laye) {
+        _inherits(WMST, _L$TimeDimension$Laye);
+
+        function WMST(layer, opts) {
+            _classCallCheck(this, WMST);
+
+            return _possibleConstructorReturn(this, (WMST.__proto__ || Object.getPrototypeOf(WMST)).call(this, layer, opts));
+        }
+
+        //override default parser to query all Layers (whether queryable or not)
+
+
+        _createClass(WMST, [{
+            key: "_parseTimeDimensionFromCapabilities",
+            value: function _parseTimeDimensionFromCapabilities(xml) {
+                var layers = xml.querySelectorAll('Layer');
+                var layerName = this._baseLayer.wmsParams.layers;
+                var layer = null;
+                var times = null;
+
+                layers.forEach(function (current) {
+                    if (current.querySelector("Name").innerHTML === layerName) {
+                        layer = current;
+                    }
+                });
+                if (layer) {
+                    times = this._getTimesFromLayerCapabilities(layer);
+                    if (!times) {
+                        times = this._getTimesFromLayerCapabilities(layer.parentNode);
+                    }
+                }
+
+                return times;
+            }
+
+            //override default parser to fall back if Dimension is provided but has no values
+
+        }, {
+            key: "_getTimesFromLayerCapabilities",
+            value: function _getTimesFromLayerCapabilities(layer) {
+                var times = null;
+                var dimensions = layer.querySelectorAll("Dimension[name='time']");
+                if (dimensions && dimensions.length && dimensions[0].textContent.length) {
+                    times = dimensions[0].textContent.trim();
+                }
+                if (!times || !times.length) {
+                    var extents = layer.querySelectorAll("Extent[name='time']");
+                    if (extents && extents.length && extents[0].textContent.length) {
+                        times = extents[0].textContent.trim();
+                    }
+                }
+                if (times && ~times.indexOf("current")) {
+                    times = times.replace('current', new Date().toISOString());
+                }
+                return times;
+            }
+        }]);
+
+        return WMST;
+    }(L$1.TimeDimension.Layer.WMS);
 
     function wmst(gpLayer) {
 
@@ -1796,11 +4002,11 @@
         };
         if (GeoPlatformClient.Config.leafletPane) opts.pane = GeoPlatformClient.Config.leafletPane;
 
-        var leafletLayer = new L$1.TileLayer.CustomWMS(url, opts);
+        var leafletLayer = new WMS(url, opts);
 
         var proxyUrl = GeoPlatformClient.Config.ualUrl + '/api/services/' + service.id + '/proxy/capabilities';
 
-        var tdOpts = {};
+        var tdOpts = { times: null };
 
         if (gpLayer.temporal) {
 
@@ -1811,13 +4017,125 @@
         }
 
         return new WMST(leafletLayer, {
-            timeDimension: timeDimension(tdOpts),
+            timeDimension: new L$1.TimeDimension(tdOpts),
             proxy: proxyUrl
         });
     }
 
-    L$1.TileLayer.WMST = WMST;
-    L$1.tileLayer.wmst = wmst;
+    /*L.*/L$1.TileLayer.WMST = WMST;
+    /*L.*/L$1.tileLayer.wmst = wmst;
+
+    // import * as TimeDimension from 'leaflet-timedimension/dist/leaflet.timedimension.min';
+    // // import { TimeDimension, timeDimension } from "../libs/L.TimeDimension";
+    //
+    // import {Config} from 'geoplatform.client';
+    //
+    //
+    // // function tdPolyFill(options) {
+    // //     return new WMST(options);
+    // // }
+    // //
+    // // var TimeDimension = L.TimeDimension;
+    // // var timeDimension = L.timeDimension || tdPolyFill;
+    //
+    // var WMST = (TimeDimension && TimeDimension.Layer || TileLayer).WMS.extend({
+    //
+    //     //override default parser to query all Layers (whether queryable or not)
+    //     _parseTimeDimensionFromCapabilities: function(xml) {
+    //         var layers = xml.querySelectorAll('Layer');
+    //         var layerName = this._baseLayer.wmsParams.layers;
+    //         var layer = null;
+    //         var times = null;
+    //
+    //         layers.forEach(function(current) {
+    //             if (current.querySelector("Name").innerHTML === layerName) {
+    //                 layer = current;
+    //             }
+    //         });
+    //         if (layer) {
+    //             times = this._getTimesFromLayerCapabilities(layer);
+    //             if (!times) {
+    //                 times = this._getTimesFromLayerCapabilities(layer.parentNode);
+    //             }
+    //         }
+    //
+    //         return times;
+    //     },
+    //
+    //     //override default parser to fall back if Dimension is provided but has no values
+    //     _getTimesFromLayerCapabilities: function(layer) {
+    //         var times = null;
+    //         var dimensions = layer.querySelectorAll("Dimension[name='time']");
+    //         if (dimensions && dimensions.length && dimensions[0].textContent.length) {
+    //             times = dimensions[0].textContent.trim();
+    //         }
+    //         if(!times || !times.length) {
+    //             var extents = layer.querySelectorAll("Extent[name='time']");
+    //             if (extents && extents.length && extents[0].textContent.length) {
+    //                 times = extents[0].textContent.trim();
+    //             }
+    //         }
+    //         if(times && ~times.indexOf("current")) {
+    //             times = times.replace('current', new Date().toISOString());
+    //         }
+    //         return times;
+    //     }
+    //
+    // });
+    //
+    //
+    //
+    //
+    // function wmst(gpLayer) {
+    //
+    //     let service = gpLayer.services[0];
+    //     let url = service.href;
+    //
+    //     if(!url) {
+    //         throw new Error("WMST Layer's service does not defined a service url");
+    //     }
+    //
+    //     let opts = {
+    //         layers: gpLayer.layerName,
+    //         transparent: true,
+    //         format: "image/png",
+    //         wmvId: gpLayer.layerId
+    //     };
+    //     if(Config.leafletPane)
+    //         opts.pane = Config.leafletPane;
+    //
+    //     let leafletLayer = new TileLayer.CustomWMS( url, opts );
+    //
+    //     let proxyUrl = Config.ualUrl + '/api/services/' +
+    //         service.id + '/proxy/capabilities';
+    //
+    //     let tdOpts = {};
+    //
+    //     if(gpLayer.temporal) {
+    //
+    //         let d1 = gpLayer.temporal.startDate ?
+    //             new Date(gpLayer.temporal.startDate) : new Date();
+    //         let d2 = gpLayer.temporal.endDate ?
+    //             new Date(gpLayer.temporal.endDate) : new Date();
+    //
+    //         tdOpts.times = d1.toISOString() + '/' + d2.toISOString() + '/P1D';
+    //     }
+    //
+    //     return new WMST(leafletLayer, {
+    //         timeDimension: timeDimension(tdOpts),
+    //         proxy: proxyUrl
+    //     });
+    // }
+    //
+    //
+    // TileLayer.WMST = WMST;
+    // tileLayer.wmst = wmst;
+    //
+    // export {
+    //     WMST as default,
+    //     WMST,
+    //     wmst
+    // };
 
     if (typeof Object.assign != 'function') {
         // Must be writable: true, enumerable: false, configurable: true
@@ -1857,7 +4175,7 @@
     // Simple templating facility, accepts a template string of the form `'Hello {a}, {b}'`
     // and a data object like `{a: 'foo', b: 'bar'}`, returns evaluated string
     // `('Hello foo, bar')`. You can also specify functions instead of strings for
-    // data values â€” they will be evaluated passing `data` as an argument.
+    // data values — they will be evaluated passing `data` as an argument.
     function template(str, data) {
         return str.replace(paramRe, function (str, key) {
             var value = data[key];
@@ -2144,9 +4462,9 @@
         });
     }
 
-    var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+    var _createClass$1 = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+    function _classCallCheck$1(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
     /**
      * Fetches style information from GeoPlatform UAL
@@ -2168,13 +4486,13 @@
 
     var LayerFactory = function () {
         function LayerFactory() {
-            _classCallCheck(this, LayerFactory);
+            _classCallCheck$1(this, LayerFactory);
 
             this.factories = []; // A list of configured factory functors to instantiate layers
             this.init();
         }
 
-        _createClass(LayerFactory, [{
+        _createClass$1(LayerFactory, [{
             key: "register",
             value: function register(fn) {
                 if (typeof fn === 'function') {
@@ -2298,6 +4616,47 @@
                     }
                     return null;
                 });
+
+                this.register(function (layer) {
+
+                    if (!layer) return null;
+
+                    var MBVTRT = 'http://www.geoplatform.gov/ont/openlayer/MapBoxVectorTileLayer';
+                    var resourceTypes = layer.resourceTypes || [];
+                    if (resourceTypes.indexOf(MBVTRT) < 0) {
+                        //not tagged as VT layer
+                        return null;
+                    }
+
+                    var href = layer.href;
+                    if (!href || href.indexOf(".pbf") < 0) {
+                        console.log("LayerFactory - Layer does not define an Access URL");
+                        return null; //missing URL
+                    }
+
+                    //if Leaflet vector grid plugin is not installed, can't render VT Layers
+                    if (typeof L$1.vectorGrid === 'undefined' && typeof L$1.vectorGrid.protobuf === 'undefined') {
+                        console.log("LayerFactory - Leaflet Vector Tiles plugin not found");
+                        return null;
+                    }
+
+                    // let styleFn = function(featureProperties, z){
+                    //     let fill = '#AD816E';
+                    //     return { color: fill, weight: 1 };
+                    // };
+                    //
+                    // var styles = {
+                    //     "nc_wetlands" : styleFn,
+                    //     "va_wetlands": styleFn
+                    // };
+                    var opts = {
+                        rendererFactory: L$1.canvas.tile
+                        // ,
+                        // vectorTileLayerStyles: styles,
+                    };
+                    if (GeoPlatformClient.Config.leafletPane) opts.pane = GeoPlatformClient.Config.leafletPane;
+                    return L$1.vectorGrid.protobuf(href, opts);
+                });
             }
         }]);
 
@@ -2396,13 +4755,13 @@
     //
     // export default LayerFactory;
 
-    var _createClass$1 = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+    var _createClass$2 = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-    function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+    function _possibleConstructorReturn$1(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-    function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+    function _inherits$1(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-    function _classCallCheck$1(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+    function _classCallCheck$2(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
     var ItemTypes = GeoPlatformClient__default.ItemTypes;
     var ServiceFactory = GeoPlatformClient__default.ServiceFactory;
@@ -2411,13 +4770,13 @@
 
     var Listener = function () {
         function Listener() {
-            _classCallCheck$1(this, Listener);
+            _classCallCheck$2(this, Listener);
 
             //listeners to be unregistered upon destroy
             this._listeners = {};
         }
 
-        _createClass$1(Listener, [{
+        _createClass$2(Listener, [{
             key: "on",
             value: function on(type, listener) {
                 if (!this._listeners[type]) this._listeners[type] = [];
@@ -2448,12 +4807,12 @@
     }();
 
     var MapInstance = function (_Listener) {
-        _inherits(MapInstance, _Listener);
+        _inherits$1(MapInstance, _Listener);
 
         function MapInstance(key) {
-            _classCallCheck$1(this, MapInstance);
+            _classCallCheck$2(this, MapInstance);
 
-            var _this = _possibleConstructorReturn(this, (MapInstance.__proto__ || Object.getPrototypeOf(MapInstance)).call(this));
+            var _this = _possibleConstructorReturn$1(this, (MapInstance.__proto__ || Object.getPrototypeOf(MapInstance)).call(this));
 
             _this.setHttpClient(new HttpClient$2());
             _this.setServiceFactory(ServiceFactory);
@@ -2510,7 +4869,7 @@
             return _this;
         }
 
-        _createClass$1(MapInstance, [{
+        _createClass$2(MapInstance, [{
             key: "dispose",
             value: function dispose() {
                 this.destroyMap();
@@ -2647,9 +5006,26 @@
                 metadata = metadata || {};
 
                 //map layers
-                metadata.layers = this._layerStates.slice(0);
+                metadata.layers = this._layerStates.map(function (state) {
+                    var result = {
+                        visibility: state.visibility || true,
+                        opacity: isNaN(state.opacity) ? 1.0 : state.opacity * 1,
+                        layer: {
+                            type: state.layer.type || ItemTypes.LAYER,
+                            id: state.layer.id,
+                            uri: state.layer.uri,
+                            label: state.layer.label
+                        }
+                    };
+                    return result;
+                });
                 // ... UAL should support accepting just an id here, so we'll do just that
-                metadata.baseLayer = this._baseLayerDef;
+                metadata.baseLayer = {
+                    type: this._baseLayerDef.type || ItemTypes.LAYER,
+                    id: this._baseLayerDef.id,
+                    uri: this._baseLayerDef.uri,
+                    label: this._baseLayerDef.label
+                };
 
                 metadata.annotations = this._featureLayer ? { title: "Map Features", geoJSON: this._featureLayer.toGeoJSON() } : null;
 
@@ -3084,7 +5460,11 @@
 
                     leafletLayer = LayerFactory$1.create(layer);
                     if (!leafletLayer) {
-                        throw new Error("Could not create leaflet layer for GP Layer '" + layer.id + "'");
+                        var msg = "Could not create leaflet instance for GP Layer '" + layer.id + "'.";
+                        if (!layer.services || !layer.services.length) {
+                            msg += '  The layer instance has no services included, ' + 'which will prevent most layers from being displayed.';
+                        }
+                        throw new Error(msg);
                     }
                 } catch (e) {
                     this.logLayerError(layer.id, "Layer '" + layer.label + "' could not be added to the " + "map instance; " + e.message);
@@ -3738,30 +6118,7 @@
                 this._mapId = map.id;
                 this._mapDef = map;
 
-                map.extent = map.extent || {};
-                var west = isNaN(map.extent.minx) ? -179.0 : map.extent.minx * 1.0;
-                var east = isNaN(map.extent.maxx) ? 179.0 : map.extent.maxx * 1.0;
-                var south = isNaN(map.extent.miny) ? -89.0 : map.extent.miny * 1.0;
-                var north = isNaN(map.extent.maxy) ? 89.0 : map.extent.maxy * 1.0;
-
-                //ensure x,y is ordered correctly
-                var t = void 0;
-                if (west > east) {
-                    t = Math.min(west, east);
-                    east = map.extent.maxx = Math.max(west, east);
-                    west = map.extent.minx = t;
-                }
-                if (south > north) {
-                    t = Math.min(south, north);
-                    north = map.extent.maxy = Math.max(south, north);
-                    south = map.extent.miny = t;
-                }
-
-                //prevent out-of-bounds extents
-                if (west < -180.0) west = -179.0;
-                if (east > 180.0) east = 179.0;
-                if (south < -90.0) south = -89.0;
-                if (north > 90.0) north = 89.0;
+                map.extent = this.ensureExtent(map.extent);
 
                 //set extent from loaded map
                 this._defaultExtent = map.extent;
@@ -3790,6 +6147,42 @@
 
                 this.clean();
                 this.notify('map:loaded', map);
+            }
+
+            /**
+             * @param {object} extent
+             * @return {object} corrected or default extent
+             */
+
+        }, {
+            key: "ensureExtent",
+            value: function ensureExtent(extent) {
+
+                var west = !extent || isNaN(extent.minx) ? -179.0 : extent.minx * 1.0;
+                var east = !extent || isNaN(extent.maxx) ? 179.0 : extent.maxx * 1.0;
+                var south = !extent || isNaN(extent.miny) ? -89.0 : extent.miny * 1.0;
+                var north = !extent || isNaN(extent.maxy) ? 89.0 : extent.maxy * 1.0;
+
+                //ensure x,y is ordered correctly
+                var t = void 0;
+                if (west > east) {
+                    t = Math.min(west, east);
+                    east = Math.max(west, east);
+                    west = t;
+                }
+                if (south > north) {
+                    t = Math.min(south, north);
+                    north = Math.max(south, north);
+                    south = t;
+                }
+
+                //prevent out-of-bounds extents
+                if (west < -180.0) west = -179.0;
+                if (east > 180.0) east = 179.0;
+                if (south < -90.0) south = -89.0;
+                if (north > 90.0) north = 89.0;
+
+                return { minx: west, miny: south, maxx: east, maxy: north };
             }
 
             /**
