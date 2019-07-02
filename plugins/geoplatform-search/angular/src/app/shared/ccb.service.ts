@@ -9,18 +9,18 @@ import { ISubscription } from "rxjs/Subscription";
 import { environment } from "../../environments/environment";
 import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
 
-const V1_SEARCH_ENDPOINT = Config.wpUrl + '/wp-json/geoplatform-search/v1/gpsearch';
-const V2_USERS_ENDPOINT = Config.wpUrl + '/wp-json/wp/v2/users?per_page=100';
-
-
 @Injectable()
 export class CCBService {
 
     private baseUrl : string;
+    private v1SearchEndpoint : string;
+    private v2UserEndpoint : string;
     private usersList : any = {};
 
     constructor(private http : HttpClient) {
-        this.baseUrl = Config.wpUrl;
+        this.baseUrl = Config.wpUrl || 'https://www.geoplatform.gov';
+        this.v1SearchEndpoint = this.baseUrl + '/wp-json/geoplatform-search/v1/gpsearch';
+        this.v2UserEndpoint = this.baseUrl + '/wp-json/wp/v2/users?per_page=100';
         this.updateUserList();
     }
 
@@ -73,7 +73,7 @@ export class CCBService {
         delete qobj.includeFacets;
 
         let params : HttpParams = new HttpParams({fromObject: qobj});
-        let url = V1_SEARCH_ENDPOINT;
+        let url = this.v1SearchEndpoint;
         return new HttpRequest<any>('GET', url, { params:params });
     }
 
@@ -117,7 +117,7 @@ export class CCBService {
 
     updateUserList() {
         //cache a list of users
-        let url = V2_USERS_ENDPOINT;
+        let url = this.v2UserEndpoint;
         this.execute( new HttpRequest<any>('GET', url) )
         .then( response => {
             let users = response.results;
