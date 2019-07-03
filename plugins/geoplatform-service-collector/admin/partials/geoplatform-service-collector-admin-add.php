@@ -190,7 +190,7 @@ if ($geopserve_valid_bool == 'true'){
   if ($geopserve_type_theme_bool == 'true')
     $geopserve_shortcode_final .= " theme='" . $geopserve_type_theme_text . "'";
   if ($geopserve_type_title_bool == 'true')
-    $geopserve_shortcode_final .= " title='" . $geopserve_type_title_text . "'";
+    $geopserve_shortcode_final .= " label='" . $geopserve_type_title_text . "'";
   if ($geopserve_type_keyword_bool == 'true')
     $geopserve_shortcode_final .= " keyword='" . $geopserve_type_keyword_text . "'";
   if ($geopserve_type_topic_bool == 'true')
