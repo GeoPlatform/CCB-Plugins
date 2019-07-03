@@ -172,7 +172,7 @@ if ($geopserve_valid_bool == 'true'){
 
   // Begin shortcode construction. Adds title, count, cats, and adds, which are
   // mandatory for each carousel.
-  $geopserve_shortcode_final = "[geopserve label='" . $geopserve_title . "' count='" . $geopserve_count . "' cat='" . $geopserve_cats_final . "' adds='" . $geopserve_adds_final . "'";
+  $geopserve_shortcode_final = "[geopserve title='" . $geopserve_title . "' count='" . $geopserve_count . "' cat='" . $geopserve_cats_final . "' adds='" . $geopserve_adds_final . "'";
 
   // Compact output styling. Currently impossible to set.
   if ($geopserve_format_final == 'compact')
@@ -190,7 +190,7 @@ if ($geopserve_valid_bool == 'true'){
   if ($geopserve_type_theme_bool == 'true')
     $geopserve_shortcode_final .= " theme='" . $geopserve_type_theme_text . "'";
   if ($geopserve_type_title_bool == 'true')
-    $geopserve_shortcode_final .= " title='" . $geopserve_type_title_text . "'";
+    $geopserve_shortcode_final .= " label='" . $geopserve_type_title_text . "'";
   if ($geopserve_type_keyword_bool == 'true')
     $geopserve_shortcode_final .= " keyword='" . $geopserve_type_keyword_text . "'";
   if ($geopserve_type_topic_bool == 'true')
