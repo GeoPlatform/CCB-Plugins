@@ -75,6 +75,42 @@ function deactivate_geoplatform_map_preview() {
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-geoplatform-map-preview.php';
 
+// Establishes the global GeoPlatform class if it hasn't been set yet.
+function geopmappreview_establish_globals() {
+	$geopoauth_portalUrl = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : 'https://www.geoplatform.gov';
+	$geopoauth_home = home_url();
+	$geopoauth_login = wp_login_url();
+	$geopoauth_logout = wp_logout_url();
+	$geopoauth_ualUrl = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+	$geopoauth_rpmUrl = isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov';
+	$geopoauth_idpUrl = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+	$geopoauth_token = isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '';
+
+	$geopoauth_stuff = <<<_GEOPLATFORMVAR
+  <script type="text/javascript">
+  if(typeof(GeoPlatform) === 'undefined') GeoPlatform = {};
+  GeoPlatform.config = {
+     wpUrl: "$geopoauth_home",
+     ualUrl: "$geopoauth_ualUrl",
+		 portalUrl: "$geopoauth_portalUrl",
+     rpm: {
+       rpmUrl: "$geopoauth_rpmUrl",
+       rpmToken: "$geopoauth_token",
+     },
+     auth: {
+       APP_BASE_URL: "$geopoauth_home",
+       IDP_BASE_URL: "$geopoauth_idpUrl",
+       LOGIN_URL: "$geopoauth_login",
+       LOGOUT_URL: "$geopoauth_logout",
+      }
+  }
+  </script>
+_GEOPLATFORMVAR;
+
+	echo $geopoauth_stuff;
+}
+add_action('wp_head', 'geopmappreview_establish_globals');
+
 // Sets the parameters of and then creates the page. It deletes any
 // old version of that page before each generation.
 function geopmappreview_add_interface_page() {
