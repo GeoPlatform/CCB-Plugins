@@ -20,7 +20,16 @@
         </div>
     </header>
 
-    <app-root></app-root>
+    <app-root>
+
+        <!--
+            This will be removed by angular on load
+            We include this so the user sees something other than a white screen
+            while all the page includes are being resolved.
+        -->
+        <div class="m-message--warning">Fetching item details, please wait...</div>
+
+    </app-root>
 
 </body>
 </html>

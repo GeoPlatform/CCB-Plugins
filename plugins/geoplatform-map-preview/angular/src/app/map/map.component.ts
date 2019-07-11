@@ -6,15 +6,15 @@ import { ISubscription } from "rxjs/Subscription";
 
 import {
     Config, ItemTypes, MapService, LayerService, ServiceFactory
-} from "geoplatform.client";
+} from "@geoplatform/client";
+import { NG2HttpClient } from '@geoplatform/client/angular';
 
 import {
-    MapFactory, MapInstance, OSM, LayerFactory, L, DefaultBaseLayer
-} from "geoplatform.mapcore";
+    MapFactory, MapInstance, OSM, LayerFactory, DefaultBaseLayer
+} from "@geoplatform/mapcore";
 
 
-// import * as Leaflet from 'leaflet';
-// var L = require('leaflet');
+import * as L from 'leaflet';
 import * as esri from "esri-leaflet";
 import "leaflet.vectorgrid";
 
@@ -22,7 +22,7 @@ import {
     DataProvider, Events, DataEvent, Extent, LayerState
 } from '../shared/data.provider';
 import { layerServiceProvider } from '../shared/service.provider';
-import { NG2HttpClient } from '../shared/http-client';
+// import { NG2HttpClient } from '../shared/http-client';
 import { environment } from '../../environments/environment';
 import { logger } from '../shared/logger';
 

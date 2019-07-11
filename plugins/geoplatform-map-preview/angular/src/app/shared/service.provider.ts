@@ -6,8 +6,10 @@ import {
     LayerService,
     UtilsService,
     KGService
-} from 'geoplatform.client';
-import { NG2HttpClient } from './http-client';
+} from '@geoplatform/client';
+import { NG2HttpClient } from '@geoplatform/client/angular';
+
+// import { NG2HttpClient } from './http-client';
 
 
 

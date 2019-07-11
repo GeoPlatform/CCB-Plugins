@@ -28,7 +28,7 @@ import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 import { AutocompleteMatChipComponent } from "./autocomplete.component";
-import { TokenInterceptor } from 'geoplatform.ngoauth/angular'
+import { TokenInterceptor } from 'ng-gpoauth/angular'
 import { PluginAuthService } from "./auth.service";
 
 import {

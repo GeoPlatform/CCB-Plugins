@@ -6,7 +6,7 @@ import {
     SimpleChanges
 } from '@angular/core';
 
-import { ItemTypes } from 'geoplatform.client';
+import { ItemTypes } from '@geoplatform/client';
 
 import { ISubscription } from "rxjs/Subscription";
 

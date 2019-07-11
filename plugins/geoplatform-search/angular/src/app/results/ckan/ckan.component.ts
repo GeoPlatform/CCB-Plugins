@@ -7,7 +7,7 @@ import { ISubscription } from "rxjs/Subscription";
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 import { CkanService } from '../../shared/ckan.service';
 import { Constraints, Constraint } from '../../models/constraint';
@@ -83,8 +83,11 @@ export class CkanComponent implements OnInit {
         // will most likely be needed to derive the CKAN org name.
         let publisher = constraints.get(QueryParameters.PUBLISHERS_ID);
         if(publisher) {
-            let orgs = (publisher.value as any[]).map(pub=>findOrgName(pub)).filter(o=>!!o);
-            this.query.set(QueryParameters.PUBLISHERS_ID, orgs);
+            let orgs = (publisher.value as any[])
+                .map(pub=>findOrgName(pub))
+                .filter(o=>!!o)
+                .map(o => o.uniqueId);
+            this.query.setPublishers(orgs);
         }
 
         this.queryChange.next(this.query);

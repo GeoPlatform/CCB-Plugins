@@ -17,10 +17,10 @@ import { environment } from '../environments/environment';
 //
 // // Adds window.RPMService to global namespace
 // import { RPMServiceFactory, RPMService } from 'geoplatform.rpm';
-import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
-import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'gp.rpm/src/iRPMService'
 
-import { TrackingService } from 'geoplatform.client';
+import { TrackingService } from '@geoplatform/client';
 const trackingService = new TrackingService({ provider : RPMServiceFactory() })
 
 //Leaflet does some magic rewrites to css to reference images,
@@ -35,7 +35,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'marker-shadow.png',
 });
 
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
 
 
 import { AppComponent } from './app.component';

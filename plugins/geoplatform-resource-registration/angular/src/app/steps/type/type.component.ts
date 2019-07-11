@@ -20,9 +20,10 @@ import * as md5 from "md5";
 
 import {
     ItemTypes, Config, ItemService, ServiceService,
-    UtilsService, Query, QueryParameters
+    UtilsService, Query, QueryParameters, Item
 } from 'geoplatform.client';
 import * as GPAPI from 'geoplatform.client';
+
 const URIFactory = GPAPI.URIFactory(md5);
 
 import { AppEvent } from '../../app.component';
@@ -417,7 +418,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     }
 
     // public filterPublishers(value: string): Promise<string[]> {
-    filterPublishers = (value:string) : Promise<string[]> => {
+    filterPublishers = (value:string) : Promise<void | Item[]> => {
 
         let current = this.getValue(ModelProperties.PUBLISHERS) || [];
         current = current.map(c=>c.id);
@@ -444,7 +445,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
    * @param value
    * @return Query of ItemTypes.Topic
    */
-  filterParentTopics = (value:string) : Promise<string[]> => {
+  filterParentTopics = (value:string) : Promise<void | Item[]> => {
 
        let current = this.getValue(ModelProperties.SUBTOPIC_OF) || [];
        current = current.map(c=>c.id);

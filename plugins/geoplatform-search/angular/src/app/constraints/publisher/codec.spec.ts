@@ -4,7 +4,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 import { Params } from '@angular/router';
-import { Config, QueryParameters, ItemTypes } from "geoplatform.client";
+import { Config, QueryParameters, ItemTypes } from "@geoplatform/client";
 
 import { PublisherCodec } from './codec';
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';

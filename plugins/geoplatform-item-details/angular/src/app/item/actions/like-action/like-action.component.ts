@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTypes, Config, ItemService } from "geoplatform.client";
+import { ItemTypes, Config, ItemService } from "@geoplatform/client";
 
 import { ItemHelper } from '../../../shared/item-helper';
 

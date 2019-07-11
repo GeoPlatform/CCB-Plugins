@@ -12,7 +12,7 @@ import { fromPromise } from 'rxjs/observable/fromPromise';
 declare const L: any;   //needed this way to ensure leaflet-draw is properly imported
 import 'leaflet-draw';
 
-import { Config, UtilsService } from 'geoplatform.client';
+import { Config, UtilsService } from '@geoplatform/client';
 
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';

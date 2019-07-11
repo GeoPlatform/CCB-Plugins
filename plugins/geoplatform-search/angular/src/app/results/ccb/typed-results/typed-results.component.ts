@@ -4,7 +4,7 @@ import {
 import { Subject } from 'rxjs/Subject';
 import { ISubscription } from "rxjs/Subscription";
 
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 import { CCBService } from '../../../shared/ccb.service';
 import { CreatorCodec } from '../../../constraints/creator/codec';

@@ -1,5 +1,5 @@
 
-import { ItemTypes } from "geoplatform.client";
+import { ItemTypes } from "@geoplatform/client";
 
 import { environment } from '../../environments/environment';
 

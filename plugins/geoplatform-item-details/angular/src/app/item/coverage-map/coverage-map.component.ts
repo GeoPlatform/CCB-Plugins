@@ -4,14 +4,16 @@ import { HttpClient } from '@angular/common/http';
 
 import {
     Config, ItemTypes, MapService, LayerService, ServiceFactory
-} from "geoplatform.client";
+} from "@geoplatform/client";
+
+import { NG2HttpClient } from '@geoplatform/client/angular';
 
 import {
-    MapFactory, MapInstance, OSM, LayerFactory, L, DefaultBaseLayer
-} from "geoplatform.mapcore";
+    MapFactory, MapInstance, OSM, LayerFactory, DefaultBaseLayer
+} from "@geoplatform/mapcore";
 
 
-// // import * as L from 'leaflet';
+import * as L from 'leaflet';
 // var L = require('leaflet');
 import * as esri from "esri-leaflet";
 import "leaflet.vectorgrid";
@@ -19,7 +21,7 @@ import "leaflet.vectorgrid";
 
 
 import { ResetExtentControl } from './reset-extent';
-import { NG2HttpClient } from '../../shared/http-client';
+// import { NG2HttpClient } from '../../shared/http-client';
 
 const EXTENT_STYLE = {
     color: "transparent",
@@ -100,7 +102,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
 
     ngOnDestroy() {
         if(this.map) {
-            this.map.remove();
+            this.map.destroyMap();
             this.map = null;
         }
     }
@@ -240,7 +242,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
                     console.log("WARN: Could not render extent as a path layer");
                     return;
                 }
-                this.extentLayer.addLayer(l);
+                (this.extentLayer as any).addLayer(l);
 
             } else if(this.extentLayer) {
                 //if loading a map or layer, don't show extent layer

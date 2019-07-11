@@ -1,6 +1,6 @@
 
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTypes, ItemService } from 'geoplatform.client';
+import { ItemTypes, ItemService } from '@geoplatform/client';
 import { ItemHelper } from '../../../shared/item-helper';
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { PluginAuthService } from '../../../shared/auth.service';
@@ -69,7 +69,7 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
 
             if(!user) throw new Error("Not signed in");
             let token = this.getAuthToken();
-            this.itemService.client.setAuthToken(token);
+            this.itemService.getClient().setAuthToken(token);
 
             //then trigger the clone operation
             return this.itemService.clone(this.item.id, this.overrides);

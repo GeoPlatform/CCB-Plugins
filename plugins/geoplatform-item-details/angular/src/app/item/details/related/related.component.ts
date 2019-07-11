@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTypes } from 'geoplatform.client';
+import { ItemTypes } from '@geoplatform/client';
 
 @Component({
   selector: 'gpid-details-related',

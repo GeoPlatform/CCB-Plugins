@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Config, ItemService } from "geoplatform.client";
-import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { Config, ItemService } from "@geoplatform/client";
+import { NG2HttpClient } from '@geoplatform/client/angular';
+
+import { RPMService } from 'gp.rpm/src/iRPMService'
 
 import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
-import { NG2HttpClient } from "./shared/http-client";
 import { environment } from '../environments/environment';
 import { itemServiceProvider } from './shared/service.provider';
 import { PluginAuthService } from './shared/auth.service';
@@ -33,7 +34,6 @@ export class AppComponent implements OnInit, OnDestroy {
         private rpm: RPMService,
         private authService : PluginAuthService
     ) {
-
     }
 
     ngOnInit() {
@@ -55,11 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
         .then( item => {
             this.item = item;
             const TYPE = ItemHelper.getTypeLabel(item);
-            this.updatePageTitle(
-                `GeoPlatform Resource : ${TYPE}`
-                // ItemHelper.getLabel(this.item)
-            );
-            ;
+            this.updatePageTitle(`GeoPlatform Resource : ${TYPE}`);
             this.rpm.logEvent(TYPE, 'Viewed', item.id);
         })
         .catch( e => {

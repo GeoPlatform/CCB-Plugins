@@ -28,7 +28,6 @@ node_modules
 
 
 plugins/geoplatform-item-details/admin/partials/geoplatform-item-details-recreate.php
-plugins/geoplatform-item-details/angular/package-lock.json
 plugins/geoplatform-resource-registration/admin/partials/geoplatform-resource-registration-recreate.php
 plugins/geoplatform-resource-registration/public/css/fontawesome-webfont.*.*
 plugins/geoplatform-resource-registration/public/css/geoplatform-icons-font.*.*

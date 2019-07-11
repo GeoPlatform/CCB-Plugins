@@ -15,7 +15,7 @@ import { ReviewComponent } from './steps/review/review.component';
 
 import { PluginAuthService }    from './auth.service';
 import { AuthenticatedComponent } from './authenticated.component';
-import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { GeoPlatformUser } from 'ng-gpoauth/angular';
 
 import {
     ModelProperties, AppEventTypes, StepEventTypes

@@ -4,11 +4,11 @@ import { ISubscription } from "rxjs/Subscription";
 
 import {
     ngGpoauthFactory, AuthService, GeoPlatformUser
-} from 'geoplatform.ngoauth/angular';
+} from 'ng-gpoauth/angular';
 
 import { environment } from '../../environments/environment';
 import { authServiceFactory } from './auth.factory';
-import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { RPMService } from 'gp.rpm/src/iRPMService'
 import { logger } from './logger';
 
 

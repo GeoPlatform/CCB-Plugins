@@ -1,6 +1,6 @@
 import { Observable, Observer, Subject }          from 'rxjs';
 import { ISubscription }                from "rxjs/Subscription";
-import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { AuthService, GeoPlatformUser } from 'ng-gpoauth/angular';
 
 import { PluginAuthService } from './auth.service';
 

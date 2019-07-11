@@ -1,7 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { GoogleCharts } from 'google-charts';
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
 
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../shared/http-client';

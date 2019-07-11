@@ -1,5 +1,5 @@
 
-import { ItemTypes, ItemTypeLabels } from "geoplatform.client";
+import { ItemTypes, ItemTypeLabels } from "@geoplatform/client";
 
 import { environment } from '../../environments/environment';
 
@@ -21,7 +21,7 @@ export class ItemHelper {
             type === ItemTypes.LAYER   || type === ItemTypes.MAP       ||
             type === ItemTypes.GALLERY || type === ItemTypes.COMMUNITY ||
             type === ItemTypes.APPLICATION || type === ItemTypes.TOPIC ||
-            type === ItemTypes.WEBSITE || type === ItemTypes.IMAGE_PRODUCT
+            type === ItemTypes.WEBSITE
         );
     }
 
@@ -115,7 +115,6 @@ export class ItemHelper {
             case ItemTypes.COMMUNITY : return 'communities';
             //different name
             case ItemTypes.CONTACT : return 'contacts'; //instead of "vcards"
-            case ItemTypes.IMAGE_PRODUCT : return 'products'; //instead of "vcards"
             //remainder
             default: return type.replace(/^[a-z]+\:/i, '').toLowerCase() + 's';
 

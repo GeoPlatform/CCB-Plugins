@@ -6,7 +6,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 
 @Injectable()

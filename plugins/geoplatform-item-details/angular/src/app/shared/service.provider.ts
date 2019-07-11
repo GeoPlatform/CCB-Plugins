@@ -1,9 +1,11 @@
+import { NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
     Config, ItemService, ServiceService, UtilsService, KGService
-} from 'geoplatform.client';
+} from '@geoplatform/client';
 
-import { NG2HttpClient } from './http-client';
+import { NG2HttpClient } from '@geoplatform/client/angular';
+// import { NG2HttpClient } from './http-client';
 
 
 //singleton instances

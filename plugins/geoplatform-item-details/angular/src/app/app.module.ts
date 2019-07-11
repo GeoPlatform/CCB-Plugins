@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 // import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
+
+import "zone.js/dist/zone-patch-rxjs";
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { InlineSVGModule } from 'ng-inline-svg';
@@ -11,8 +14,8 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { ChartsModule } from 'ng2-charts';
 
 // Adds window.RPMService to global namespace
-import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
-import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
+import { RPMService } from 'gp.rpm/src/iRPMService'
 
 
 //configure the necessary environment variables needed by GeoPlatformClient
@@ -31,7 +34,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'marker-shadow.png',
 });
 
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
 
 
 

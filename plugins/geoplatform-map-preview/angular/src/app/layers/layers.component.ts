@@ -3,7 +3,7 @@ import {
     Input, Output, EventEmitter, SimpleChanges, HostBinding
 } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
-import { Query, LayerService } from "geoplatform.client";
+import { Query, LayerService } from "@geoplatform/client";
 
 import { DataProvider, DataEvent, Events } from '../shared/data.provider';
 import { layerServiceProvider } from '../shared/service.provider';

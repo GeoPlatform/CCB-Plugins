@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ItemTypes, Config, ItemService } from "geoplatform.client";
+import { ItemTypes, Config, ItemService } from "@geoplatform/client";
 
 import { NG2HttpClient } from "../../../shared/http-client";
 import { environment } from '../../../../environments/environment';
@@ -35,7 +35,7 @@ export class DeleteActionComponent implements OnInit {
     doAction() : string {
         if(!this.item) return;
 
-        this.itemService.delete(this.item)
+        this.itemService.remove(this.item.id)
         .then( (response) => {
             //success!
             //show message and then re-direct back to ... ???

@@ -7,7 +7,7 @@ import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 
 import { environment } from "../../environments/environment";
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 @Injectable()
 export class CCBService {

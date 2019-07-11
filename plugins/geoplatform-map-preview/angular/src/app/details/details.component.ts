@@ -3,11 +3,11 @@ import {
     Input, HostBinding
 } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
-import { ItemService, ItemTypes } from 'geoplatform.client';
-import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { ItemService, ItemTypes, Map } from '@geoplatform/client';
+import { GeoPlatformUser } from 'ng-gpoauth/angular';
 
 import {
-    DataProvider, DataEvent, Events, MapItem, Extent, LayerState
+    DataProvider, DataEvent, Events, Extent, LayerState
 } from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { PluginAuthService } from '../shared/auth.service';
@@ -36,7 +36,8 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     public error : Error;
     public isSaving : boolean;
 
-    public mapItem : MapItem = {
+    public mapItem : Map = {
+        id          : null,
         uri         : null,
         type        : ItemTypes.MAP,
         title       : "My New Map",
@@ -67,7 +68,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     ngOnInit() {
         super.ngOnInit();
 
-        this.itemService.client.setAuthToken( () => { return this.getAuthToken(); });
+        this.itemService.getClient().setAuthToken( () => { return this.getAuthToken(); });
 
         if(this.data) {
             this.dataSubscription = this.data.subscribe( (event : DataEvent) => {

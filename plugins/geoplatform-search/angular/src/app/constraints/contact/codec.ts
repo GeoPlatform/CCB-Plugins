@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Params } from '@angular/router';
-import { Config, Query, QueryParameters, ItemService } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemService } from '@geoplatform/client';
 import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';
 import { Codec } from '../../models/codec';

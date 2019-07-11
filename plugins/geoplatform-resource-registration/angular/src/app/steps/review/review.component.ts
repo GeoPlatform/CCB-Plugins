@@ -24,9 +24,10 @@ import {
     Config, ItemService, ItemTypes, ServiceService
 } from 'geoplatform.client';
 import * as GPAPI from 'geoplatform.client';
+
 const URIFactory = GPAPI.URIFactory(md5);
 
-import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { GeoPlatformUser } from 'ng-gpoauth/angular';
 
 
 import { AppEvent } from '../../app.component';
@@ -271,7 +272,7 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
                 break;
             case AppEventTypes.AUTH:
                 let token = event.value.token;
-                this.itemService.client.setAuthToken( token as string);
+                this.itemService.getClient().setAuthToken( token as string);
                 break;
         }
     }

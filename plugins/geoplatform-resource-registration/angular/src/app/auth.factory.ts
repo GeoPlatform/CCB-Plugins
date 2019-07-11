@@ -1,4 +1,4 @@
-import { ngGpoauthFactory, AuthService } from 'geoplatform.ngoauth/angular';
+import { ngGpoauthFactory, AuthService } from 'ng-gpoauth/angular';
 import { environment } from '../environments/environment';
 
 //should be exported by gp-ngoauth but isn't so we are declaring it here...

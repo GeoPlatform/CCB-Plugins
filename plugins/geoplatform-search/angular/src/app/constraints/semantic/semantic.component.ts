@@ -13,9 +13,10 @@ import {
 } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/observable/fromPromise';
 
-import { Config, KGService, KGQuery } from 'geoplatform.client';
+import { Config, KGService, KGQuery } from '@geoplatform/client';
+import { NG2HttpClient } from "@geoplatform/client/angular";
 
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
 
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';

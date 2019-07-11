@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
 
 import { Constraint, Constraints } from '../models/constraint';
 import { Codec } from '../models/codec';

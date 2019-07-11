@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, OnDestroy, SimpleChanges, Input } from '@angular/core';
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
 
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { PluginAuthService } from '../../../shared/auth.service';

@@ -1,5 +1,5 @@
 
-import { Query, QueryParameters } from "geoplatform.client";
+import { Query, QueryParameters } from "@geoplatform/client";
 import { Codec } from './codec';
 
 

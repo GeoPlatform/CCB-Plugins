@@ -1,9 +1,10 @@
 import { NgZone, Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { Config, Query, QueryParameters, ItemService, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemService, ItemTypes } from '@geoplatform/client';
+import { NG2HttpClient } from "@geoplatform/client/angular";
 
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
 
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';

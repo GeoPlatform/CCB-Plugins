@@ -17,9 +17,8 @@ import {
 import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 import {
-    Config, ItemService, Query, QueryParameters, ItemTypes
+    Config, ItemService, Query, QueryParameters, ItemTypes, Item
 } from 'geoplatform.client';
-
 
 import { AppEvent } from '../../app.component';
 import { StepComponent, StepEvent, StepError } from '../step.component';
@@ -154,7 +153,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
      * @param current - currently-selected values
      * @return Promise of an array of strings
      */
-    filterValues(query : Query, current : string[]) : Promise<string[]> {
+    filterValues(query : Query, current : string[]) : Promise<void | Item[]> {
         return this.itemService.search(query)
         .then( response => {
             let hits = response.results;
@@ -173,7 +172,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting communities
      */
-    filterCommunities = (value: string) : Promise<string[]> => {
+    filterCommunities = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.COMMUNITIES);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
@@ -184,7 +183,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting themes
      */
-    filterThemes = (value: string) : Promise<string[]> => {
+    filterThemes = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.THEMES);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
@@ -201,7 +200,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting concept schemes
      */
-    filterSchemes = (value: string) : Promise<string[]> => {
+    filterSchemes = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.THEME_SCHEME);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
@@ -212,7 +211,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting topics
      */
-    filterTopics = (value: string) : Promise<string[]> => {
+    filterTopics = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.TOPICS);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;

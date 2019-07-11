@@ -4,9 +4,10 @@ import { Observable, Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 import {
     Config, Query, QueryParameters, ItemService, ItemTypes
-} from 'geoplatform.client';
+} from '@geoplatform/client';
+import { NG2HttpClient } from "@geoplatform/client/angular";
 
-import { NG2HttpClient } from '../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../shared/NG2HttpClient';
 import { itemServiceFactory } from '../shared/service.provider';
 
 import { Constraint, Constraints } from '../models/constraint';
@@ -42,7 +43,7 @@ export class ItemListConstraint {
 
     constructor(
         private _ngZone: NgZone,
-        private http : HttpClient
+        protected http : HttpClient
     ) {
         this.service = itemServiceFactory(http);
         // this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));

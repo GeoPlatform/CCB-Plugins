@@ -6,9 +6,11 @@ import { HttpClient } from '@angular/common/http';
 // } from 'rxjs/operators';
 // import { fromPromise } from 'rxjs/observable/fromPromise';
 
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import * as Q from 'q';
-import { Config, Query, QueryParameters, KGService } from 'geoplatform.client';
+import { Config, Query, QueryParameters, KGService, KGQuery } from '@geoplatform/client';
+import { NG2HttpClient } from '@geoplatform/client/angular';
+
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
@@ -96,7 +98,8 @@ export class SemanticCodec implements Codec {
 
         if(!needResolving.length) return Q.resolve(cached);
 
-        let query = { uri: needResolving.join(',') }
+        let query = new KGQuery();
+        query.setParameter( 'uri', needResolving.join(',') );
         return this.service.suggest(query)
         .then( response => {
             //cached the ones we had to resolve

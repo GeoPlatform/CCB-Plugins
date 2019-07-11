@@ -12,10 +12,10 @@ import {
     Query, QueryParameters, QueryFields,
     ItemService, ItemTypes,
     TrackingService, TrackingEvent
-} from 'geoplatform.client';
+} from '@geoplatform/client';
+import { NG2HttpClient } from '@geoplatform/client/angular';
 
-
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import { Constraints, Constraint } from '../../models/constraint';
 import { CreatorCodec } from '../../constraints/creator/codec';
 import { SimilarityCodec } from '../../constraints/similarity/codec';
@@ -49,6 +49,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     private queryChange: Subject<Query> = new Subject<Query>();
 
     constructor(
+        private http : HttpClient,
         private itemService : ItemService,
         private trackingSvc : TrackingService
     ) {
@@ -197,8 +198,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     findSimilarTo(item) {
-        let http = this.itemService.client;
-        let constraint = new SimilarityCodec(http).toConstraint(item);
+        let constraint = new SimilarityCodec(this.http).toConstraint(item);
         this.constraints.set(constraint);
     }
 
@@ -216,7 +216,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.GALLERY: type = "galleries"; break;
             case ItemTypes.COMMUNITY: type = "communities"; break;
             case ItemTypes.CONTACT: type = "contacts"; break;
-            case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
             default: type = item.type.replace(/^.+\:/i, '').toLowerCase() + 's'; break;
         }
         let url = '/resources';
@@ -233,7 +232,6 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
             case ItemTypes.GALLERY: type = "galleries"; break;
             case ItemTypes.COMMUNITY: type = "communities"; break;
             case ItemTypes.CONTACT: type = "contacts"; break;
-            case ItemTypes.IMAGE_PRODUCT: type = "products"; break;
             default: type = item.type.replace(/^.+\:/i, '').toLowerCase() + 's'; break;
         }
         return Config.portalUrl + `/resources/${type}/${id}`;

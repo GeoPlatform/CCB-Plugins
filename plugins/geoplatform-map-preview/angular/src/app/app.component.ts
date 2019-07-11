@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Config, Query, ItemTypes, ItemService } from 'geoplatform.client';
+import { Config, Query, ItemTypes, ItemService } from '@geoplatform/client';
+import { NG2HttpClient } from '@geoplatform/client/angular';
 
 import { itemServiceProvider } from './shared/service.provider';
 import { DataProvider } from './shared/data.provider';
-import { NG2HttpClient } from './shared/http-client';
+// import { NG2HttpClient } from './shared/http-client';
 import { ItemHelper } from './shared/item-helper';
 import { AuthenticatedComponent } from './shared/authenticated.component';
 import { PluginAuthService } from './shared/auth.service';

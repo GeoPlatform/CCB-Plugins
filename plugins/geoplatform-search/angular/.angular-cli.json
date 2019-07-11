@@ -32,7 +32,7 @@
                 "styles.css"
             ],
             "scripts": [
-                "../node_modules/geoplatform.rpm/dist/js/gp.rpm.browser.js",
+                "../node_modules/gp.rpm/dist/js/gp.rpm.browser.js",
                 "../node_modules/jquery/dist/jquery.slim.js",
                 "../node_modules/popper.js/dist/umd/popper.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.js",

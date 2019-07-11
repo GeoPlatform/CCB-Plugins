@@ -3,7 +3,7 @@ import {
     Input, ElementRef
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ItemTypes, Config, ItemService } from "geoplatform.client";
+import { ItemTypes, Config, ItemService } from "@geoplatform/client";
 
 import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";

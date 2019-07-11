@@ -5,7 +5,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs/Subject';
 import { ISubscription } from "rxjs/Subscription";
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 import { CCBService } from '../../shared/ccb.service';
 import { Constraints, Constraint } from '../../models/constraint';

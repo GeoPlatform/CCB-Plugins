@@ -3,7 +3,7 @@ import {
     Input, Output, EventEmitter, SimpleChanges 
 } from '@angular/core';
 
-import { QueryParameters } from 'geoplatform.client';
+import { QueryParameters } from '@geoplatform/client';
 
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';

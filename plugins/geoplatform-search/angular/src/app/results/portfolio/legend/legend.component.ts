@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ItemTypes, ItemTypeLabels } from 'geoplatform.client';
+import { ItemTypes, ItemTypeLabels } from '@geoplatform/client';
 
 import { environment } from '../../../../environments/environment';
 
