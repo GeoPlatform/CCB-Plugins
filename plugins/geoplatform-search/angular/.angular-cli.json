@@ -24,7 +24,7 @@
             "testTsconfig": "tsconfig.spec.json",
             "prefix": "app",
             "styles": [
-                "../node_modules/geoplatform.style/src/icons/geoplatform-icons-font.css",
+                "../node_modules/@geoplatform/style/src/icons/geoplatform-icons-font.css",
                 "../node_modules/bootstrap/dist/css/bootstrap.css",
                 "../node_modules/font-awesome/css/font-awesome.css",
                 "../node_modules/leaflet/dist/leaflet.css",
@@ -32,7 +32,7 @@
                 "styles.css"
             ],
             "scripts": [
-                "../node_modules/gp.rpm/dist/js/gp.rpm.browser.js",
+                "../node_modules/@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js",
                 "../node_modules/jquery/dist/jquery.slim.js",
                 "../node_modules/popper.js/dist/umd/popper.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.js",

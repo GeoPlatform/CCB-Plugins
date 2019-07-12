@@ -8,7 +8,7 @@ import {
 
 import { environment } from '../../environments/environment';
 import { authServiceFactory } from './auth.factory';
-import { RPMService } from 'gp.rpm/src/iRPMService'
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 
 

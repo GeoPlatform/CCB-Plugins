@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { ItemTypes, Config, ItemService } from "@geoplatform/client";
-import { RPMService } from 'gp.rpm/src/iRPMService'
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 
 const FORMATS = buildFormats();
@@ -35,7 +35,7 @@ function buildFormats() {
         {label: "Web Map Context", value: "wmc"}
     ]);
     return result;
-    
+
 }
 
 

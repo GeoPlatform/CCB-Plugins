@@ -148,7 +148,9 @@ export class MapComponent implements OnInit, OnChanges {
      */
     setDefaultBaseLayer() {
         return DefaultBaseLayer.get(this.layerService).then(baseLayer => {
-            this.map.setBaseLayer(baseLayer);
+            if(this.map) {
+                this.map.setBaseLayer(baseLayer);
+            }
             return baseLayer;
         });
     }

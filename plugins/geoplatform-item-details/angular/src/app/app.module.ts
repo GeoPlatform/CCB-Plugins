@@ -14,8 +14,8 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { ChartsModule } from 'ng2-charts';
 
 // Adds window.RPMService to global namespace
-import { RPMServiceFactory } from 'gp.rpm/dist/js/gp.rpm.browser.js';
-import { RPMService } from 'gp.rpm/src/iRPMService'
+import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 
 //configure the necessary environment variables needed by GeoPlatformClient

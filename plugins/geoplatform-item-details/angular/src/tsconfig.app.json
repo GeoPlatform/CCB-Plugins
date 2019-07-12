@@ -6,6 +6,7 @@
         "module": "es6",
         "target": "es6",
         "paths": {
+            "@deps": ["../node_modules"],
             "@app" : ["./src/app"],
             "@geoplatform/client/angular": ["../node_modules/@geoplatform/client/dist/angular"]
         },

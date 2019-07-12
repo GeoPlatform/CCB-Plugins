@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Config, ItemService } from "@geoplatform/client";
 import { NG2HttpClient } from '@geoplatform/client/angular';
 
-import { RPMService } from 'gp.rpm/src/iRPMService'
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';

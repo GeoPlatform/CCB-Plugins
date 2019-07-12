@@ -2,7 +2,7 @@ import { Subject } from 'rxjs';
 import { ISubscription } from "rxjs/Subscription";
 import {
     Query, ItemService, ItemTypes,
-    Item, Map, Layer, Service
+    Item, Map as MapItem, Layer, Service
 } from '@geoplatform/client';
 import { logger } from './logger';
 
@@ -68,7 +68,7 @@ export class DataProvider {
     private itemService : ItemService;
 
     //object holding map metadata (title, etc)
-    private details : Map = {
+    private details : MapItem = {
         id          : null,
         uri         : null,
         type        : ItemTypes.MAP,
