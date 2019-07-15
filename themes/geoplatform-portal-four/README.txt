@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
  - Fixed theme icon bug causing plugin icons to fail.
+ - Added communities redirect to only impact actual portal sites.
 
 ## 4.1.0
 * Release July 1, 2019
