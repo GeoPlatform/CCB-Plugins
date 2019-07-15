@@ -3,8 +3,8 @@
 -Contributors: imagemattersllc, kevins713, lheazel
 -Requires at least: WordPress 4.6.4
 -Tested up to: WordPress 5.2.0
--Stable tag: 4.1.0
--Version: 4.1.0
+-Stable tag: 4.1.1
+-Version: 4.1.1
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -111,6 +111,11 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
+
+## 4.1.1
+* Release pending
+
+ - Fixed theme icon bug causing plugin icons to fail.
 
 ## 4.1.0
 * Release July 1, 2019
