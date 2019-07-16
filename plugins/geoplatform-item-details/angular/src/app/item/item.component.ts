@@ -72,7 +72,7 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
         // if(!this.authService.isAuthenticated()) return false;
         // let user = this.authService.getUser();
 
-        //TODO use ng-gpoauth to see if user has credentials and
+        //TODO use @geoplatform/oauth-ng to see if user has credentials and
         // proper privileges for each supported action
         switch(action) {
         case 'edit' : return false;

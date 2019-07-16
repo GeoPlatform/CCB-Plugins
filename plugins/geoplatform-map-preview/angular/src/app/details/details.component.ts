@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { ISubscription } from "rxjs/Subscription";
 import { ItemService, ItemTypes, Map } from '@geoplatform/client';
-import { GeoPlatformUser } from 'ng-gpoauth/angular';
+import { GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 
 import {
     DataProvider, DataEvent, Events, Extent, LayerState
