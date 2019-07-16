@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Fixed style guide dependency bug.
+- Removed Bootstrap Javascript dependency.
 
 ### 4.0.0 ###
 * Release July 1, 2019
