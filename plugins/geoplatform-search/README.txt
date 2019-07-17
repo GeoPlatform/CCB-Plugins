@@ -5,7 +5,7 @@ Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-search
 Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
-Tested up to: 5.2.0
+Tested up to: 5.2.2
 Stable tag: 1.0.12
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
@@ -112,10 +112,6 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 
 = 1.0.3 =
 * Initial release.
-
-== Upgrade Notice ==
-
-Initial release.
 
 == Copyright and License Notice ==
 

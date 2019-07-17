@@ -1,14 +1,12 @@
-=== GeoPlatform Asset Carousel ===
-Contributors: imagemattersllc
+=== Plugin Name ===
+Contributors: (this should be a list of wordpress.org userid's)
 Donate link: https://www.imagemattersllc.com
-Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-asset-carousel
-Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
-Requires at least: 4.6.4
-Requires PHP: 7.2.0
-Tested up to: 5.2.2
-Stable tag: 2.1.1
-License: Apache 2.0
-License URI:  http://www.apache.org/licenses/LICENSE-2.0
+Tags: comments, spam
+Requires at least: 3.0.1
+Tested up to: 3.4
+Stable tag: 4.3
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
 
@@ -45,7 +43,7 @@ This section describes how to install the plugin and get it working.
 
 e.g.
 
-1. Upload `geoplatform-service-collector.php` to the `/wp-content/plugins/` directory
+1. Upload `geoplatform-item-details.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
 
@@ -69,22 +67,12 @@ directory take precedence. For example, `/assets/screenshot-1.png` would win ove
 
 == Changelog ==
 
-= 2.1.1 =
-* Fixed bug causing incorrect results when filtering by KG Classifiers.
-* Fixed bug causing broken endpoints for results.
-* Numerous small tweaks.
+= 1.0 =
+* A change since the previous version.
+* Another change.
 
-= 2.1.0 =
-* Reorganization of carousel generation procedure, greatly improving performance.
-
-= 2.0.1 =
-* Feature and styling tweaks.
-
-= 2.0.0 =
-* Complete admin and functional redesign. Extensive interactive options added.
-
-= 1.0.0 =
-* Initial release.
+= 0.5 =
+* List versions from most recent at top to oldest at bottom.
 
 == Upgrade Notice ==
 
