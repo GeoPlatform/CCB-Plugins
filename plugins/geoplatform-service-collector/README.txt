@@ -2,7 +2,7 @@
 Contributors: imagemattersllc
 Donate link: https://www.imagemattersllc.com
 Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-asset-carousel
-Tags:GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery
+Tags: GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Dataset, dataset, Service, service, Layer, layer, Map, map, Gallery, gallery, Application, application, Website, website
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 5.2.2
@@ -10,117 +10,78 @@ Stable tag: 2.1.1
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+Embed customized lists of curated GeoPlatform assets (Datasets, Services, Layers, Maps, Galleries, Applications, Websites, and Topics) into your Community pages and posts.  
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
-
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-
-A few notes about the sections above:
-
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
-
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+The GeoPlatform Asset Carousel is used to embed customized lists of curated GeoPlatform assets (Datasets, Services, Layers, Maps, Galleries, Applications, Websites, and Topics) into your Community pages and posts. The Asset Carousel plugin (ACp) supports pre-set (configurable) constraints so that the Assets listed are filtered to just those needed for presentation to users in specific contexts. The Asset Carousel gives users an immediate path to accessing and acting on GeoPlatform Assets.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+**From the Marketplace**
 
-e.g.
+1. Navigate to "Plugins > Add New."
+2. Search for the plugin "Geoplatform Asset Carousel."
+3. Select "Install" and then "Activate."
 
-1. Upload `geoplatform-service-collector.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
-1. Place `<?php do_action('plugin_name_hook'); ?>` in your templates
+**Manual Installation Through GUI**
+
+1. Navigate to "Plugins > Add New."
+2. Select "Upload Plugin" and then "Browse..."
+3. Navigate to the plugin's zip file and select it.
+4. Select "Install Now" and then "Active."
+
+**Manual Installation Through File Structure**
+
+1. If you possess this plugin in a zipped format, unzip it.
+2. Using an FTP client or command line, connect to your Wordpress server.
+3. Copy the plugin's unzipped file structure into your remote plugins directory.
+4. Navigate to "Plugins > Installed Plugins" and activate it.
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= How do I control what types of Assets are listed? =
 
 An answer to that question.
 
-= What about foo bar? =
+= How do I constrain the Assets listed to just those of my Community or a specific Topic? =
 
 Answer to foo bar dilemma.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. https://www.geoplatform.gov/wp-content/uploads/2019/07/R16-AssetCarouselPlugin-768x575.png
+
+2. https://www.geoplatform.gov/ngda/biodiversity/
 
 == Changelog ==
 
-= 2.1.1 =
-* Fixed bug causing incorrect results when filtering by KG Classifiers.
-* Fixed bug causing broken endpoints for results.
-* Numerous small tweaks.
-
-= 2.1.0 =
-* Reorganization of carousel generation procedure, greatly improving performance.
-
-= 2.0.1 =
-* Feature and styling tweaks.
-
-= 2.0.0 =
-* Complete admin and functional redesign. Extensive interactive options added.
-
-= 1.0.0 =
-* Initial release.
+= 1.0 =
+First release packaged with GeoPlatform Release 16
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
+Initial release.
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
+== Copyright and License Notice ==
 
-== Arbitrary section ==
+GeoPlatform Asset Carousel plugin for listing registered Assets of GeoPlatform.gov.
+Copyright (C) 2019 Image Matters LLC
 
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 
-== A brief Markdown Example ==
+(http://www.apache.org/licenses/LICENSE-2.0)
 
-Ordered list:
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-1. Some feature
-1. Another feature
-1. Something else about the plugin
+== Contact Information ==
+Authors:
+Image Matters LLC
+201 Loudoun St, SW
+Leesburg, Virginia 20175
+USA
+(www.imagemattersllc.com)
 
-Unordered list:
+Technical Support:
+servicedesk@geoplatform.gov
 
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`
