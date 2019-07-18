@@ -17,11 +17,11 @@ function gpp_getEnv($name, $def){
 function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
-	wp_enqueue_style( 'flaticons-css', get_stylesheet_directory_uri() . '/font/flaticon.css');
 	wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
 	wp_enqueue_style( 'geop_style', get_template_directory_uri() . '/css/geop-style.css');
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'child-style', get_stylesheet_directory_uri() . '/style.css', array( $parent_style ), wp_get_theme()->get('Version'));
+	wp_enqueue_style( 'flaticons-css', get_stylesheet_directory_uri() . '/font/flaticon.css');
 
 	if (is_page_template('page-templates/page_style-guide.php'))
 		wp_enqueue_style( 'styleguide-css', get_template_directory_uri() . '/css/styleguide.css');
@@ -66,9 +66,11 @@ if ( !current_user_can('administrator')){
 
 // If the homepage is navigated to via communities.geoplatform.gov, this function
 // will ensure that the user is redirected to the communities resource page.
+// Possesses additional check to ensure this only happens on proper portal pages.
 function geop_portal_redirect(){
 	$geopportal_domain = $_SERVER["SERVER_NAME"];
-	if ($geopportal_domain == "communities.geoplatform.gov"){
+	$geopportal_home_url = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : "https://www.geoplatform.gov";
+	if ($geopportal_domain == "communities.geoplatform.gov" && home_url() == $geopportal_home_url){
 		wp_redirect(home_url() . '/resources/communities/');
 		exit;
 	}

@@ -95,6 +95,41 @@ register_activation_hook( __FILE__, 'activate_geoplatform_item_details' );
 register_activation_hook( __FILE__, 'geopitems_add_interface_page' );
 register_deactivation_hook( __FILE__, 'deactivate_geoplatform_item_details' );
 
+// Establishes the global GeoPlatform class if it hasn't been set yet.
+function geopitems_establish_globals() {
+	$geopoauth_portalUrl = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : 'https://www.geoplatform.gov';
+	$geopoauth_home = home_url();
+	$geopoauth_login = wp_login_url();
+	$geopoauth_logout = wp_logout_url();
+	$geopoauth_ualUrl = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+	$geopoauth_rpmUrl = isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov';
+	$geopoauth_idpUrl = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+	$geopoauth_token = isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '';
+
+	$geopoauth_stuff = <<<_GEOPLATFORMVAR
+  <script type="text/javascript">
+  if(typeof(GeoPlatform) === 'undefined') GeoPlatform = {};
+  GeoPlatform.config = {
+     wpUrl: "$geopoauth_home",
+     ualUrl: "$geopoauth_ualUrl",
+		 portalUrl: "$geopoauth_portalUrl",
+     rpm: {
+       rpmUrl: "$geopoauth_rpmUrl",
+       rpmToken: "$geopoauth_token",
+     },
+     auth: {
+       APP_BASE_URL: "$geopoauth_home",
+       IDP_BASE_URL: "$geopoauth_idpUrl",
+       LOGIN_URL: "$geopoauth_login",
+       LOGOUT_URL: "$geopoauth_logout",
+      }
+  }
+  </script>
+_GEOPLATFORMVAR;
+
+	echo $geopoauth_stuff;
+}
+add_action('wp_head', 'geopitems_establish_globals');
 
 // Redirect logic for item details page. Will redirect to UAL if...
 // 1) There is a recognized Accept header element.

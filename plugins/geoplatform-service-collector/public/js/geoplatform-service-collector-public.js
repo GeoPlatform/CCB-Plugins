@@ -237,12 +237,8 @@ function geopserve_gen_list(geopserve_options){
 			// RPM Reporting
 			try {
 				if(typeof RPMService != 'undefined') {
-					var RPM = typeof window.RPM != 'object' ? window.RPM : RPMService();
-					var EVENT = 'Displayed';
-
-					// debugger
-					// Map Displayed
-					// RPM.logSearch(query.query)
+					// Log Search
+					RPM.logSearch(query.query)
 				} else {
 					console.log("Error: Unable to track Asset usage -- RPM library not loaded")
 				}

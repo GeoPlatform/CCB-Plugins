@@ -208,6 +208,23 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
         echo "</div>";
       echo "</div>";
 
+    ?>
+    <script type="text/javascript">
+
+      // Toggles user info visibility.
+			jQuery(document).ready(function() {
+
+				jQuery("#geopccb_header_user_dropdown_parent").click(function(event){
+          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+					jQuery("#geopccb_header_user_dropdown_child").toggleClass("show");
+          jQuery("#geopccb_header_user_dropdown_parent").toggleClass("show");
+				});
+
+		  });
+		</script>
+
+    <?php
     } else {
 
       // What's output if the user is not logged in.

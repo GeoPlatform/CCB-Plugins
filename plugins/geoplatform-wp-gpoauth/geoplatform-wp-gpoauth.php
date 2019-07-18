@@ -82,6 +82,7 @@ function geopoauth_register_authorize(){
 	}
 }
 
+// Establishes the global GeoPlatform class if it hasn't been set yet.
 function geopoauth_establish_globals() {
 	$geopoauth_portalUrl = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : 'https://www.geoplatform.gov';
 	$geopoauth_home = home_url();
@@ -91,7 +92,6 @@ function geopoauth_establish_globals() {
 	$geopoauth_rpmUrl = isset($_ENV['rpm_url']) ? $_ENV['rpm_url'] : 'https://rpm.geoplatform.gov';
 	$geopoauth_idpUrl = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
 	$geopoauth_token = isset($_ENV['rpm_token']) ? $_ENV['rpm_token'] : '';
-	$cache_buster = time();
 
 	$geopoauth_stuff = <<<_GEOPLATFORMVAR
   <script type="text/javascript">
@@ -112,7 +112,17 @@ function geopoauth_establish_globals() {
       }
   }
   </script>
+_GEOPLATFORMVAR;
 
+	echo $geopoauth_stuff;
+}
+add_action('wp_head', 'geopoauth_establish_globals');
+
+
+function geopoauth_establish_rpm() {
+	$cache_buster = time();
+
+	$geopoauth_stuff = <<<_GEOPLATFORMRPM
   <!-- RPM Reporting -->
   <script src="https://s3.amazonaws.com/geoplatform-cdn/gp.rpm/stable/js/gp.rpm.browser.min.js?t=$cache_buster"></script>
   <script type="text/javascript">
@@ -129,8 +139,8 @@ function geopoauth_establish_globals() {
 	 */
 	window.RPM = RPMService();
   </script>
-_GEOPLATFORMVAR;
+_GEOPLATFORMRPM;
 
 	echo $geopoauth_stuff;
 }
-add_action('wp_head', 'geopoauth_establish_globals');
+add_action('wp_head', 'geopoauth_establish_rpm');

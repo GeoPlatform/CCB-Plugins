@@ -5,7 +5,7 @@ Plugin URI: https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-maps
 Tags: map, maps, Open Map, GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Interactive, interactive, leaflet, client-api, mapcore
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
-Tested up to: 5.2.0
+Tested up to: 5.2.2
 Stable tag: 2.0.5
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
@@ -102,10 +102,6 @@ If you were able to successfully add a map to your shortcode collection but not 
 
 = 1.0.9 =
 * Initial release.
-
-== Upgrade Notice ==
-
-Initial release.
 
 == Copyright and License Notice ==
 
