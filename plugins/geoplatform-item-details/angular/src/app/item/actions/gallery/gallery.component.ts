@@ -38,11 +38,11 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
         super.init();
         this.type = ItemHelper.getTypeLabel(this.item);
         this.keywords = null;
-        this.maxSuggested = 10;
+        this.maxSuggested = 5;
         this.totalSuggested = 0;
         this.query = new Query()
-            .types(ItemTypes.GALLERY)
-            .pageSize(this.maxSuggested);
+        .types(ItemTypes.GALLERY)
+        .pageSize(this.maxSuggested);
         //don't bother with galleries already containing this item
         this.query.setParameter('facet.items.asset_id.not', this.item.id);
         this.awaitingInput = false;
@@ -55,10 +55,11 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
 
     onUserChange(user) {
         super.onUserChange(user);
-        this.query.setParameter(
-            QueryParameters.CREATED_BY,
-            user ? user.username : null
-        );
+
+        if(!this.canUserEdit()) {
+            //normal users can only add to galleries they have created
+            this.query.setParameter( QueryParameters.CREATED_BY, user ? user.username : null );
+        } //else editors can add to any gallery
     }
 
     /**
@@ -75,10 +76,13 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
         this.suggestGalleries(this.keywords);
     }
 
-    suggestGalleries(keywords) {
+    suggestGalleries(keywords ?: string, resetPaging ?: boolean) {
         this.searching = true;
         this.keywords = keywords;
         this.query.q(this.keywords);
+        if(true === resetPaging) {
+            this.query.setPage(0);
+        }
         this.itemService.search(this.query)
         .then( response => {
             this.suggested = response.results;
@@ -187,6 +191,31 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
             }
             return this.ensureUnique(gallery);
         });
+    }
+
+
+    getPagingInfo () {
+        let page = this.query.getPage();
+        let size = this.query.getPageSize();
+        return ((page * size) + 1) + " - " + Math.min(this.totalSuggested, (page+1) * size);
+    }
+
+    firstPage() {
+        this.query.setPage(0);
+        this.suggestGalleries(this.keywords);
+    }
+    prevPage() {
+        this.query.setPage(this.query.getPage()-1);
+        this.suggestGalleries(this.keywords);
+    }
+    nextPage() {
+        this.query.setPage(this.query.getPage()+1);
+        this.suggestGalleries(this.keywords);
+    }
+    hasNextPage() {
+        let page = this.query.getPage();
+        let size = this.query.getPageSize();
+        return ((page+1)*size) < this.totalSuggested;
     }
 
 }
