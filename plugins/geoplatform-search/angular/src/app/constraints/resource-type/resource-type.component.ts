@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { ItemTypes, ItemTypeLabels } from '@geoplatform/client';
 
-import { ISubscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import {
     Constraint, Constraints, ConstraintEditor, Facet, FacetCount
@@ -35,7 +35,7 @@ export class ResourceTypeComponent implements OnInit, OnChanges, OnDestroy, Cons
     public ITEM_TYPES : string[];
     public ITEM_TYPE_LABELS : any = ItemTypeLabels;
     private codec : ResourceTypeCodec;
-    private facetListener : ISubscription;
+    private facetListener : Subscription;
 
     public isExpanded : {[key:string]:boolean} = {};
 

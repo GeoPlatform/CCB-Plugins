@@ -1,8 +1,8 @@
 import {
     Component, OnInit, Input, OnChanges, OnDestroy, SimpleChanges, SimpleChange
 } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { ISubscription } from "rxjs/Subscription";
+import { Subject, Subscription } from "rxjs";
+import { debounceTime } from 'rxjs/operators';
 
 import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
@@ -24,7 +24,7 @@ export class TypedResultsComponent implements OnInit {
     @Input() constraints: Constraints;
     @Input() service : CCBService;
 
-    private listener : ISubscription;
+    private listener : Subscription;
     public pageSize : number = 20;
     public sortField : string = 'modified,desc';
     public query : Query;
@@ -43,7 +43,7 @@ export class TypedResultsComponent implements OnInit {
 
         //use a subject so we can debounce query execution events
         this.queryChange
-            .debounceTime(500)
+            .pipe( debounceTime(500) )
             .subscribe((query) => this.executeQuery() );
     }
 
@@ -146,7 +146,7 @@ export class TypedResultsComponent implements OnInit {
         // return `../${ServerRoutes.ASSETS}${item.type}.svg`;
         return `../${environment.assets}${item.type}.svg`;
     }
-    
+
     getIconClass(item) {
         return 'icon-' + item.type;
     }

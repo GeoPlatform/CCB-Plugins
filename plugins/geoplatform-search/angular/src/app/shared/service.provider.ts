@@ -1,15 +1,20 @@
 import { HttpClient } from '@angular/common/http';
 import {
-    Config, ItemService, ServiceService, UtilsService, KGService
+    Config, ItemService, ServiceService, UtilsService, KGService, TrackingService
 } from '@geoplatform/client';
 // import { NG2HttpClient } from './NG2HttpClient';
 import { NG2HttpClient } from '@geoplatform/client/angular';
+import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
+
+
 
 var client : NG2HttpClient = null;
 var itemService : ItemService = null;
 var svcService : ServiceService = null;
 var utilsService : UtilsService = null;
 var kgService : KGService = null;
+var trackingService : TrackingService = null;
 
 export function itemServiceFactory( http : HttpClient ) {
     if(itemService) return itemService;
@@ -42,6 +47,11 @@ export function kgServiceFactory( http : HttpClient ) {
     // console.log(Config);
     kgService = new KGService(Config.ualUrl, client);
     return kgService;
+}
+export function trackingServiceFactory ( ) {
+    if(trackingService) return trackingService;
+    trackingService = new TrackingService({ provider : RPMServiceFactory() })
+    return trackingService;
 }
 
 export let itemServiceProvider = {

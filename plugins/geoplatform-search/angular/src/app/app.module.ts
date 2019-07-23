@@ -5,7 +5,6 @@ import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@ang
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 import { NgbModule, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { InlineSVGModule } from 'ng-inline-svg';
 // import { ServerRoutes } from './server-routes.enum';
 
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
@@ -13,15 +12,12 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
 
-// import { MatomoModule } from 'ngx-matomo';
-//
 // // Adds window.RPMService to global namespace
 // import { RPMServiceFactory, RPMService } from 'geoplatform.rpm';
 import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
 import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 import { TrackingService } from '@geoplatform/client';
-const trackingService = new TrackingService({ provider : RPMServiceFactory() })
 
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
@@ -158,10 +154,7 @@ export function initializeApp() {
     FormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    NgbModule.forRoot(),
-    InlineSVGModule
-    // ,
-    // MatomoModule
+    NgbModule
   ],
   providers: [
       CCBService,
@@ -174,10 +167,6 @@ export function initializeApp() {
       {
         provide: RPMService,
         useValue: RPMServiceFactory()
-      },
-      {
-          provide : TrackingService,
-          useValue : trackingService
       },
       {
           provide: APP_INITIALIZER,

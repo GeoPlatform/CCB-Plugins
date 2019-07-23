@@ -4,9 +4,8 @@ import {
     SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ISubscription } from "rxjs/Subscription";
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
+import { Subject, Subscription } from "rxjs";
+import { debounceTime } from 'rxjs/operators';
 import {
     Config,
     Query, QueryParameters, QueryFields,
@@ -24,19 +23,18 @@ import { PagingEvent } from '../../shared/paging/paging.component';
 // import { ServerRoutes } from '../../server-routes.enum'
 import { environment } from '../../../environments/environment';
 
-import { itemServiceProvider } from '../../shared/service.provider';
+import { itemServiceFactory, trackingServiceFactory } from '../../shared/service.provider';
 
 
 @Component({
     selector: 'results-portfolio',
     templateUrl: './portfolio.component.html',
-    styleUrls: ['./portfolio.component.css'],
-    providers: [itemServiceProvider]
+    styleUrls: ['./portfolio.component.css']
 })
 export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() constraints: Constraints;
-    private listener : ISubscription;
+    private listener : Subscription;
     public totalResults : number = 0;
     public pageSize : number = 10;
     public sortField : string;
@@ -47,12 +45,12 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     public isLoading : boolean = false;
     public showLegend : boolean = false;
     private queryChange: Subject<Query> = new Subject<Query>();
+    private itemService : ItemService;
+    private trackingService : TrackingService;
 
-    constructor(
-        private http : HttpClient,
-        private itemService : ItemService,
-        private trackingSvc : TrackingService
-    ) {
+    constructor( private http : HttpClient ) {
+        this.itemService = itemServiceFactory(http);
+        this.trackingService = trackingServiceFactory();
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = '_score,desc';
         this.defaultQuery.sort(this.sortField);
@@ -68,7 +66,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
         //use a subject so we can debounce query execution events
         this.queryChange
-            .debounceTime(500)
+            .pipe( debounceTime(500) )
             .subscribe((query) => this.executeQuery() );
     }
 
@@ -139,7 +137,7 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
 
             //show facet counts in picker filters...
             this.constraints.updateFacetCounts(response.facets);
-            this.trackingSvc.logSearch(this.query.query, response.totalResults);
+            this.trackingService.logSearch(this.query.query, response.totalResults);
         })
         .catch( e => {
             console.log("An error occurred: " + e.message);

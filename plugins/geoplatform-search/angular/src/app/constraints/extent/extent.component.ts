@@ -3,11 +3,10 @@ import {
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of, from } from 'rxjs';
 import {
     catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge
 } from 'rxjs/operators';
-import { fromPromise } from 'rxjs/observable/fromPromise';
 
 declare const L: any;   //needed this way to ensure leaflet-draw is properly imported
 import 'leaflet-draw';
@@ -41,12 +40,12 @@ class GazetteerTypeaheadService implements HttpTypeaheadService {
     }
 
     search(term: string) {
-        if (term === '') return Observable.of([]);
+        if (term === '') return of([]);
 
-        return fromPromise(this.service.locate(term))
+        return from(this.service.locate(term))
         .pipe(
             //catch and gracefully handle rejections
-            catchError(error => Observable.of([]))
+            catchError(error => of([]))
         );
     }
 }

@@ -4,7 +4,7 @@ import {
 } from '@angular/common/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { ISubscription } from "rxjs/Subscription";
+import { map } from "rxjs/operators";
 
 import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
@@ -45,12 +45,14 @@ export class CkanService {
      */
     execute(request : HttpRequest<any>) {
         return this.http.request(request)
-        .map( (event: HttpEvent<any>) => {
-            if (event instanceof HttpResponse) {
-                return (event as HttpResponse<any>).body;
-            }
-            return {};
-        })
+        .pipe(
+            map( (event: HttpEvent<any>) => {
+                if (event instanceof HttpResponse) {
+                    return (event as HttpResponse<any>).body;
+                }
+                return {};
+            })
+        )
         .toPromise()
         .catch( err => {
             // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));
