@@ -18,7 +18,7 @@ import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 import {
     Config, KGService, KGQuery, KGClassifiers, ItemTypes
-} from 'geoplatform.client';
+} from '@geoplatform/client';
 
 import { AppEvent } from '../../app.component';
 import {
@@ -30,15 +30,14 @@ import { NG2HttpClient } from '../../http-client';
 import {
     ModelProperties, ClassifierTypes, AppEventTypes
 } from '../../model';
-import { kgServiceProvider } from '../../item-service.provider';
+import { kgServiceFactory } from '../../item-service.provider';
 
 
 
 @Component({
   selector: 'wizard-step-enrich',
   templateUrl: './enrich.component.html',
-  styleUrls: ['./enrich.component.less'],
-  providers: [kgServiceProvider]
+  styleUrls: ['./enrich.component.less']
 })
 export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
@@ -53,14 +52,16 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     public PROPS : any = ModelProperties;
 
     private eventsSubscription: any;
+    private kgService : KGService;
 
     formOpts : any = {};
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private kgService : KGService
+        http: HttpClient
     ) {
+        this.kgService = kgServiceFactory(http);
 
         //initialize form controls
         Object.keys(ClassifierTypes).forEach( key => {

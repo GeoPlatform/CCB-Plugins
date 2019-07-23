@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { Observable, Subject } from 'rxjs';
 import { MatStepper, MatIconRegistry } from '@angular/material';
-import { ItemTypes, ItemService } from 'geoplatform.client';
+import { ItemTypes, ItemService } from '@geoplatform/client';
 import * as Q from "q";
 
-import { itemServiceProvider } from './item-service.provider';
+import { itemServiceFactory } from './item-service.provider';
 import { StepComponent, StepEvent } from './steps/step.component';
 import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
@@ -15,7 +16,7 @@ import { ReviewComponent } from './steps/review/review.component';
 
 import { PluginAuthService }    from './auth.service';
 import { AuthenticatedComponent } from './authenticated.component';
-import { GeoPlatformUser } from 'ng-gpoauth/angular';
+import { GeoPlatformUser } from '@geoplatform/oauth-ng/angular/angular';
 
 import {
     ModelProperties, AppEventTypes, StepEventTypes
@@ -33,30 +34,34 @@ export interface AppEvent {
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less'],
-  providers: [ itemServiceProvider ]
+  styleUrls: ['./app.component.less']
 })
 export class AppComponent extends AuthenticatedComponent implements OnInit {
 
     @Output() appEvents: Subject<AppEvent> = new Subject<AppEvent>();
 
-    @ViewChild('stepper')           stepper: MatStepper;
-    @ViewChild(TypeComponent)       step1: StepComponent;
-    @ViewChild(AdditionalComponent) step2: StepComponent;
-    @ViewChild(EnrichComponent)     step3: StepComponent;
-    @ViewChild(ReviewComponent)     step4: StepComponent;
+    /*
+     * Using "static:true" to prevent ExpressionHasChanged errors involving the
+     * active stepControl set in the app.component template
+     */
+    @ViewChild('stepper', {static:true})           stepper: MatStepper;
+    @ViewChild(TypeComponent, {static:true})       step1: StepComponent;
+    @ViewChild(AdditionalComponent, {static:true}) step2: StepComponent;
+    @ViewChild(EnrichComponent, {static:true})     step3: StepComponent;
+    @ViewChild(ReviewComponent, {static:true})     step4: StepComponent;
 
     public item : any;
+    private itemService : ItemService;
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private itemService : ItemService,
         matIconRegistry: MatIconRegistry,
-        authService : PluginAuthService
+        authService : PluginAuthService,
+        http: HttpClient
     ) {
         super(authService);
-
+        this.itemService = itemServiceFactory(http);
         matIconRegistry.registerFontClassAlias('fontawesome', 'fas');
         matIconRegistry.registerFontClassAlias('geoplatform-icons-font', 'gp');
 
@@ -221,7 +226,7 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
 
         let prevStep = event.previouslySelectedStep;
         if(!prevStep) { console.log("Stepper error!"); return; }
-        let formGroup : FormGroup = prevStep.stepControl as FormGroup;
+        let formGroup : FormGroup = (prevStep.stepControl as any) as FormGroup;
         if(!formGroup) { console.log("Stepper error!"); return; }
 
         //handle type first since it's needed by other fields

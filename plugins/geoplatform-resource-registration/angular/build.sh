@@ -14,7 +14,7 @@ ASSETDEST="../assets"
 # to suplement the new shiny "advanced" Angular tool.
 #
 # Thanks Google!
-ng build --prod --configuration=${1:-prod} --output-hashing=none
+ng build --prod --configuration=${1:-production} --output-hashing=none
 
 declare -a names=(
   "main"

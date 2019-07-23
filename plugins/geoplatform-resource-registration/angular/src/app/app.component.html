@@ -9,7 +9,7 @@
     </div>
 </div>
 
-<mat-horizontal-stepper linear #stepper labelPosition="bottom"
+<mat-horizontal-stepper [linear]="true" #stepper labelPosition="bottom"
     (selectionChange)="onStepperEvent($event)">
 
     <mat-step label="Select Resource Type" [stepControl]="stepOneForm">

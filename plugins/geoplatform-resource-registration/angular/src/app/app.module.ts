@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
 
 
 import {
@@ -28,7 +28,7 @@ import { AdditionalComponent } from './steps/additional/additional.component';
 import { EnrichComponent } from './steps/enrich/enrich.component';
 import { ReviewComponent } from './steps/review/review.component';
 import { AutocompleteMatChipComponent } from "./autocomplete.component";
-import { TokenInterceptor } from 'ng-gpoauth/angular'
+import { TokenInterceptor } from '@geoplatform/oauth-ng/angular'
 import { PluginAuthService } from "./auth.service";
 
 import {

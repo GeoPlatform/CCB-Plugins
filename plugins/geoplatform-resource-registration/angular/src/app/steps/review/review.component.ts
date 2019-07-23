@@ -22,12 +22,12 @@ import {map, flatMap, startWith} from 'rxjs/operators';
 import * as md5 from "md5";
 import {
     Config, ItemService, ItemTypes, ServiceService
-} from 'geoplatform.client';
-import * as GPAPI from 'geoplatform.client';
+} from '@geoplatform/client';
+import * as GPAPI from '@geoplatform/client';
 
 const URIFactory = GPAPI.URIFactory(md5);
 
-import { GeoPlatformUser } from 'ng-gpoauth/angular';
+import { GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 
 
 import { AppEvent } from '../../app.component';
@@ -36,7 +36,7 @@ import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 import { ClassifierTypes } from '../../model';
 import {
-    itemServiceProvider, serviceServiceProvider
+    itemServiceFactory, svcServiceFactory
 } from '../../item-service.provider';
 import { AppError } from '../../model';
 import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
@@ -50,8 +50,7 @@ const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
 @Component({
   selector: 'wizard-step-review',
   templateUrl: './review.component.html',
-  styleUrls: ['./review.component.less'],
-  providers: [ itemServiceProvider, serviceServiceProvider ]
+  styleUrls: ['./review.component.less']
 })
 export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepComponent {
 
@@ -71,15 +70,18 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
     // httpClient : NG2HttpClient;
     private eventsSubscription: any;
-
+    private itemService : ItemService;
+    private svcService : ServiceService;
 
     constructor(
         private formBuilder: FormBuilder,
-        private itemService : ItemService,
-        private svcService : ServiceService,
         private sanitizer: DomSanitizer,
-        private authService : PluginAuthService
+        private authService : PluginAuthService,
+        http: HttpClient
     ) {
+        this.itemService = itemServiceFactory(http);
+        this.svcService = svcServiceFactory(http);
+        
         this.formGroup = this.formBuilder.group({
             done: ['']
         });
