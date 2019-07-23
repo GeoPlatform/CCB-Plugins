@@ -9,7 +9,7 @@ import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
 import { PluginAuthService } from '../shared/auth.service';
 import { AuthenticatedComponent} from '../shared/authenticated.component';
-import { itemServiceProvider } from '../shared/service.provider';
+import { itemServiceFactory } from '../shared/service.provider';
 
 const MAX_DESC_LENGTH = 550;
 
@@ -18,8 +18,7 @@ const MAX_DESC_LENGTH = 550;
 @Component({
   selector: 'gpid-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./item.component.less']
 })
 export class ItemComponent extends AuthenticatedComponent implements OnInit {
 
@@ -28,13 +27,15 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
     public hasLongDescription : boolean = false;
     public descriptionCollapsed: boolean = true;
     public TYPES = ItemTypes;
+    private itemService : ItemService;
 
     constructor(
         private el: ElementRef,
-        private itemService: ItemService,
+        http: HttpClient,
         authService : PluginAuthService
     ) {
         super(authService);
+        this.itemService = itemServiceFactory(http);
     }
 
     ngOnInit() {

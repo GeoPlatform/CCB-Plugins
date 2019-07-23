@@ -1,11 +1,14 @@
-import { NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
     Config, ItemService, ServiceService, UtilsService, KGService
 } from '@geoplatform/client';
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 import { NG2HttpClient } from '@geoplatform/client/angular';
 // import { NG2HttpClient } from './http-client';
+
+import { environment } from '../../environments/environment';
 
 
 //singleton instances
@@ -14,6 +17,7 @@ var _itemService : ItemService = null;
 var _svcService : ServiceService = null;
 var _utilsService : UtilsService = null;
 var _kgService : KGService = null;
+var _rpmService : RPMService = null;
 
 
 
@@ -50,6 +54,12 @@ export function kgServiceFactory( http : HttpClient ) {
     return _kgService;
 }
 
+export function rpmServiceFactory() {
+    if(_rpmService) return _rpmService;
+    _rpmService = new RPMService(environment.rpmUrl, environment.rpmToken);
+    return _rpmService;
+}
+
 
 export let itemServiceProvider = {
     provide: ItemService,
@@ -73,4 +83,19 @@ export let kgServiceProvider = {
     provide: KGService,
     useFactory: kgServiceFactory,
     deps: [ HttpClient ]
+}
+
+export let rpmServiceProvider = {
+    provide: RPMService,
+    useFactory: rpmServiceFactory
+}
+
+
+
+
+@Injectable()
+export class NGItemService extends ItemService {
+    constructor( http : HttpClient ) {
+        super(Config.ualUrl, new NG2HttpClient(http));
+    }
 }

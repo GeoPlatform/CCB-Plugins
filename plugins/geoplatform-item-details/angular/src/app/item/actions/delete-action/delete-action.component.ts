@@ -4,19 +4,20 @@ import { ItemTypes, Config, ItemService } from "@geoplatform/client";
 
 import { NG2HttpClient } from "../../../shared/http-client";
 import { environment } from '../../../../environments/environment';
-import { itemServiceProvider } from '../../../shared/service.provider';
+import { itemServiceFactory } from '../../../shared/service.provider';
 
 @Component({
   selector: 'gpid-delete-action',
   templateUrl: './delete-action.component.html',
-  styleUrls: ['./delete-action.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./delete-action.component.less']
 })
 export class DeleteActionComponent implements OnInit {
 
     @Input() item : any;
+    private itemService : ItemService;
 
-    constructor(private itemService : ItemService) {
+    constructor( http : HttpClient) {
+        this.itemService = itemServiceFactory(http);
     }
 
     ngOnInit() {

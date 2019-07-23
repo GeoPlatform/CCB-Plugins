@@ -39,7 +39,7 @@ export class UsageComponent implements OnInit {
 
     @Input() item : any;
 
-    @ViewChild(BaseChartDirective)
+    @ViewChild(BaseChartDirective, {static: true})
     private usageChart: BaseChartDirective;
 
     public isCollapsed : boolean = false;

@@ -5,11 +5,14 @@ import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@ang
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 // import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 
-import "zone.js/dist/zone-patch-rxjs";
+/*
+The following was necessary for some async processing (forgotten which), but
+is causing max call stack exceeded errors when running in latest angular (8.1.2)
+ */
+// import "zone.js/dist/zone-patch-rxjs";
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { InlineSVGModule } from 'ng-inline-svg';
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { ChartsModule } from 'ng2-charts';
 
@@ -34,7 +37,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'marker-shadow.png',
 });
 
-import { Config } from '@geoplatform/client';
+import { Config, ItemService } from '@geoplatform/client';
 
 
 
@@ -83,30 +86,28 @@ import { DownloadActionComponent } from './item/actions/download/download.compon
 import { PreviewActionComponent } from './item/actions/preview/preview.component';
 import { CloneActionComponent } from './item/actions/clone/clone.component';
 import { OperatesOnComponent } from './item/collections/operates-on/operates-on.component';
-
-
-import { PluginAuthService } from './shared/auth.service';
-
-import {
-    itemServiceProvider,
-    serviceServiceProvider,
-    utilsServiceProvider,
-    kgServiceProvider
-} from './shared/service.provider';
-
-
-
-
-
-
-import { RPMStatsService } from './shared/rpmstats.service';
 import { ProductComponent } from './item/details/product/product.component';
 import { AssetsComponent } from './item/collections/assets/assets.component';
 import { GalleryActionComponent } from './item/actions/gallery/gallery.component';
 
+
+import { RPMStatsService } from './shared/rpmstats.service';
 let RPMStatsServiceFactory = (http: HttpClient) => {
     return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
 }
+
+import { PluginAuthService } from './shared/auth.service';
+
+import {
+    NGItemService,
+    itemServiceProvider,
+    serviceServiceProvider,
+    utilsServiceProvider,
+    kgServiceProvider,
+    rpmServiceProvider
+} from './shared/service.provider';
+
+
 
 
 
@@ -195,8 +196,7 @@ export function initializeApp() {
         FormsModule,
         HttpClientModule,
         HttpClientJsonpModule,
-        NgbModule.forRoot(),
-        InlineSVGModule,
+        NgbModule,
         ChartsModule
     ],
     providers: [
@@ -205,20 +205,18 @@ export function initializeApp() {
             useFactory: initializeApp,
             multi: true
         },
+        NGItemService,
+        // itemServiceProvider,
+        serviceServiceProvider,
+        utilsServiceProvider,
+        kgServiceProvider,
+        rpmServiceProvider,
         PluginAuthService,
         {
             provide: RPMStatsService,
             useFactory: RPMStatsServiceFactory,
             deps: [HttpClient]
-        },
-        {
-            provide: RPMService,
-            useValue: RPMServiceFactory()
-        },
-        itemServiceProvider,
-        serviceServiceProvider,
-        utilsServiceProvider,
-        kgServiceProvider
+        }
     ],
     entryComponents: [
         //dynamic components go here

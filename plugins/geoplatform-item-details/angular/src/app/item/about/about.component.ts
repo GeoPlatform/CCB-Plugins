@@ -1,22 +1,25 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Config, ItemTypes, ItemService } from '@geoplatform/client';
 
-import { ItemTypes, ItemService } from '@geoplatform/client';
-
+import { NG2HttpClient } from "../../shared/http-client";
 import { ItemHelper } from '../../shared/item-helper';
-import { itemServiceProvider } from '../../shared/service.provider';
+import { itemServiceFactory } from '../../shared/service.provider';
 
 @Component({
   selector: 'gpid-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./about.component.less']
 })
 export class AboutComponent implements OnInit {
 
     @Input() item : any;
     public clonedFrom : any;
+    private itemService : ItemService;
 
-    constructor(private itemService : ItemService) { }
+    constructor( http : HttpClient) {
+        this.itemService = itemServiceFactory(http);
+    }
 
     ngOnInit() {
 

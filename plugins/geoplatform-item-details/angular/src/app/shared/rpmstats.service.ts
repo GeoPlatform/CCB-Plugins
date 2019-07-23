@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { curry
-       , mapObjIndexed
-       , zipObj
-       , mergeWithKey } from 'ramda'
+import { curry, mapObjIndexed, zipObj, mergeWithKey } from 'ramda'
+import { map } from 'rxjs/operators';
 
 const MONTHS = [
     'Jan','Feb','Mar','Apr','May','Jun',
@@ -74,17 +72,17 @@ export class RPMStatsService {
     //        Public API       //
     public getPastWeekUsage(id: string){
         return this.getUsageForRange(this.usageRequest('day', 'previous7', id))
-                    .map(aggragateSiteStatsResponse)
+        .pipe( map(aggragateSiteStatsResponse) );
     }
 
     public getPastMonthUsage(id: string) {
         return this.getUsageForRange(this.usageRequest('day', 'previous30', id))
-                    .map(aggragateSiteStatsResponse)
+        .pipe( map(aggragateSiteStatsResponse) );
     }
 
     public getPastYearUsage(id: string) {
         return this.getUsageForRange(this.usageRequest('month', 'last12', id))
-                    .map(aggragateSiteStatsResponse)
+        .pipe( map(aggragateSiteStatsResponse) );
     }
 
     //          Exposed Helpers           //

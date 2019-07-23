@@ -1,17 +1,18 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService, Query, QueryParameters } from '@geoplatform/client';
 
+import { NG2HttpClient } from "../../../shared/http-client";
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { PluginAuthService } from '../../../shared/auth.service';
-import { itemServiceProvider } from '../../../shared/service.provider';
+import { itemServiceFactory } from '../../../shared/service.provider';
 import { ItemHelper } from '../../../shared/item-helper';
 
 
 @Component({
   selector: 'gpid-gallery-action',
   templateUrl: './gallery.component.html',
-  styleUrls: ['./gallery.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./gallery.component.less']
 })
 export class GalleryActionComponent extends AuthenticatedComponent implements OnInit {
 
@@ -25,13 +26,15 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
     public keywords : string;
     public query : Query;
     public error : Error;
+    private itemService : ItemService;
 
 
     constructor(
-        private itemService : ItemService,
+        http : HttpClient,
         authService : PluginAuthService
     ) {
         super(authService);
+        this.itemService = itemServiceFactory(http);
     }
 
     ngOnInit() {
