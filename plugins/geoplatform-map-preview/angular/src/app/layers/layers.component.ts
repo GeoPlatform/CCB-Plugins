@@ -2,11 +2,12 @@ import {
     Component, OnInit, OnDestroy, OnChanges,
     Input, Output, EventEmitter, SimpleChanges, HostBinding
 } from '@angular/core';
-import { ISubscription } from "rxjs/Subscription";
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from "rxjs";
 import { Query, LayerService } from "@geoplatform/client";
 
 import { DataProvider, DataEvent, Events } from '../shared/data.provider';
-import { layerServiceProvider } from '../shared/service.provider';
+import { layerServiceFactory } from '../shared/service.provider';
 import { logger } from "../shared/logger";
 
 
@@ -24,8 +25,7 @@ const BASE_LAYER_RT = 'http://www.geoplatform.gov/ont/openlayer/BaseLayer';
 @Component({
   selector: 'gpmp-layer-list',
   templateUrl: './layers.component.html',
-  styleUrls: ['./layers.component.less'],
-  providers: [layerServiceProvider]
+  styleUrls: ['./layers.component.less']
 })
 export class LayersComponent implements OnInit {
 
@@ -41,10 +41,11 @@ export class LayersComponent implements OnInit {
     public services : any[];
     public baseLayers : any[] = [];
     public selectedBaseLayer : any;
-    private dataSubscription : ISubscription;
+    private dataSubscription : Subscription;
 
+    constructor( http: HttpClient ) {
 
-    constructor( layerService : LayerService ) {
+        let layerService : LayerService = layerServiceFactory(http);
 
         let query = new Query().resourceTypes(BASE_LAYER_RT)
             .fields('*').facets([]).pageSize(20);

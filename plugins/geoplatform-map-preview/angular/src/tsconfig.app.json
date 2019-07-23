@@ -3,8 +3,6 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "es6",
-    "target": "es6",
     "paths": {
         "@app" : ["./src/app"],
         "@geoplatform/client/angular": ["../node_modules/@geoplatform/client/dist/angular"]

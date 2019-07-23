@@ -2,7 +2,8 @@ import {
     Component, OnInit, OnDestroy, OnChanges, SimpleChanges,
     Input, HostBinding
 } from '@angular/core';
-import { ISubscription } from "rxjs/Subscription";
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from "rxjs";
 import { ItemService, ItemTypes, Map } from '@geoplatform/client';
 import { GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 
@@ -11,7 +12,7 @@ import {
 } from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { PluginAuthService } from '../shared/auth.service';
-import { itemServiceProvider } from '../shared/service.provider';
+import { itemServiceFactory } from '../shared/service.provider';
 import { environment } from '../../environments/environment';
 import { logger } from "../shared/logger";
 
@@ -23,8 +24,7 @@ const IS_DEV = 'development' === environment.env;
 @Component({
   selector: 'gpmp-map-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./details.component.less']
 })
 export class DetailsComponent extends AuthenticatedComponent implements OnInit, OnDestroy {
 
@@ -56,13 +56,15 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
     public keyword : string;
 
-    private dataSubscription : ISubscription;
+    private dataSubscription : Subscription;
+    private itemService : ItemService;
 
     constructor(
-        private itemService : ItemService,
+        http: HttpClient,
         authService : PluginAuthService
     ) {
         super(authService);
+        this.itemService = itemServiceFactory(http);
     }
 
     ngOnInit() {

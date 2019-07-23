@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Config, Query, ItemTypes, ItemService } from '@geoplatform/client';
 import { NG2HttpClient } from '@geoplatform/client/angular';
 
-import { itemServiceProvider } from './shared/service.provider';
+import { itemServiceFactory } from './shared/service.provider';
 import { DataProvider } from './shared/data.provider';
 // import { NG2HttpClient } from './shared/http-client';
 import { ItemHelper } from './shared/item-helper';
@@ -16,8 +17,7 @@ const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)\/map/i;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less'],
-  providers: [ itemServiceProvider ]
+  styleUrls: ['./app.component.less']
 })
 export class AppComponent extends AuthenticatedComponent implements OnInit, OnDestroy {
 
@@ -25,14 +25,16 @@ export class AppComponent extends AuthenticatedComponent implements OnInit, OnDe
     public item : any;
     public data : DataProvider;
     private _authService : PluginAuthService;
+    private itemService : ItemService;
 
     constructor(
-        private itemService : ItemService,
-        authService : PluginAuthService
+        authService : PluginAuthService,
+        http: HttpClient
     ) {
         super(authService);
+        this.itemService = itemServiceFactory(http);
         this._authService = authService;
-        this.data = new DataProvider(itemService);
+        this.data = new DataProvider(this.itemService);
     }
 
     ngOnInit() {

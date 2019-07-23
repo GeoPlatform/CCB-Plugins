@@ -1,5 +1,4 @@
-import { Subject } from 'rxjs';
-import { ISubscription } from "rxjs/Subscription";
+import { Subject, Subscription } from 'rxjs';
 import {
     Query, ItemService, ItemTypes,
     Item, Map as MapItem, Layer, Service
@@ -419,7 +418,7 @@ export class DataProvider {
     }
 
 
-    subscribe( callback : any ) : ISubscription {
+    subscribe( callback : any ) : Subscription {
         return this.sub.subscribe( callback );
     }
 

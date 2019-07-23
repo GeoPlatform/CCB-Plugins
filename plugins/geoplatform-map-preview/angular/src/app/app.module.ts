@@ -11,6 +11,7 @@ import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 //configure the necessary environment variables needed by GeoPlatformClient
 import { Config } from '@geoplatform/client';
+import { NG2HttpClient } from '@geoplatform/client/angular';
 import { environment } from '../environments/environment';
 
 
@@ -39,7 +40,7 @@ import {
 
 import { RPMStatsService } from './shared/rpmstats.service';
 let RPMStatsServiceFactory = (http: HttpClient) => {
-    return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
+    return new RPMStatsService(http)
 }
 
 export function initializeApp() {

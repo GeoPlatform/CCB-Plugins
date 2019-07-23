@@ -2,7 +2,7 @@ import {
     Component, OnInit, Input, OnChanges, SimpleChanges
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ISubscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import {
     Config, ItemTypes, MapService, LayerService, ServiceFactory
@@ -21,8 +21,7 @@ import "leaflet.vectorgrid";
 import {
     DataProvider, Events, DataEvent, Extent, LayerState
 } from '../shared/data.provider';
-import { layerServiceProvider } from '../shared/service.provider';
-// import { NG2HttpClient } from '../shared/http-client';
+import { layerServiceFactory } from '../shared/service.provider';
 import { environment } from '../../environments/environment';
 import { logger } from '../shared/logger';
 
@@ -39,8 +38,7 @@ const EXTENT_STYLE = {
 @Component({
   selector: 'gpmp-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.less'],
-  providers: [layerServiceProvider]
+  styleUrls: ['./map.component.less']
 })
 export class MapComponent implements OnInit, OnChanges {
 
@@ -53,14 +51,14 @@ export class MapComponent implements OnInit, OnChanges {
     private httpClient : NG2HttpClient;
     private map : MapInstance;
     private extentLayer : L.Layer;
-    private dataSubscription : ISubscription;
+    private dataSubscription : Subscription;
     private extentTimer : any;
+    private layerService : LayerService;
 
-    constructor(
-        private layerService : LayerService,
-        http : HttpClient
-    ) {
+    constructor( http : HttpClient ) {
         this.httpClient = new NG2HttpClient(http);
+        this.layerService = layerServiceFactory(http);
+
         // this.httpClient.setAuthToken(function() {
         //     //uses token cached by ng-common's AuthenticationService
         //     let token = AuthenticationService.getJWTfromLocalStorage();
