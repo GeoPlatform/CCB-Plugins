@@ -58,7 +58,7 @@ function aggragateSiteStatsResponse(apiResponse: MatomoMultiSiteAPIReponse): Mat
 }
 
 
-@Injectable()
+
 export class RPMStatsService {
 
     private rpmUrl: string;

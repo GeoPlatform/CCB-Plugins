@@ -18,10 +18,8 @@ import * as L from 'leaflet';
 import * as esri from "esri-leaflet";
 import "leaflet.vectorgrid";
 
-
-
 import { ResetExtentControl } from './reset-extent';
-// import { NG2HttpClient } from '../../shared/http-client';
+
 
 const EXTENT_STYLE = {
     color: "transparent",
@@ -65,24 +63,24 @@ export class CoverageMapComponent implements OnInit, OnChanges {
 
     ngOnInit() {
 
-        this.initMap();
+        this.initMap().then( () => {
 
-        if(this.mapId) {
-            this.loadMap(this.mapId);
+            if(this.mapId) {
+                this.loadMap(this.mapId);
 
-        } else {
-            this.setDefaultBaseLayer()
-            .then( () => {
+            } else {
+                this.setDefaultBaseLayer().then( () => {
 
-                if(this.layerId) {
-                    this.loadLayer(this.layerId);
+                    if(this.layerId) {
+                        this.loadLayer(this.layerId);
 
-                } else if(this.isValidExtent(this.extent)) {
-                    this.setExtent(this.extent);
+                    } else if(this.isValidExtent(this.extent)) {
+                        this.setExtent(this.extent);
 
-                }
-            });
-        }
+                    }
+                });
+            }
+        });
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -110,48 +108,53 @@ export class CoverageMapComponent implements OnInit, OnChanges {
     /**
      *
      */
-    initMap() {
+    initMap() : Promise<void> {
 
-        let map = L.map("item-coverage-map", {
-            zoomControl: true,
-            center: [38, -96],
-            zoom: 3,
-            minZoom: 2,
-            maxZoom: 21,
-            maxBounds: [[-90,-180],[90,180]]
+        return new Promise<void>( (resolve, reject) => {
+
+            let map = L.map("item-coverage-map", {
+                zoomControl: true,
+                center: [38, -96],
+                zoom: 3,
+                minZoom: 1,
+                maxZoom: 21,
+                maxBounds: [[-90,-180],[90,180]]
+            });
+
+            if(Config.leafletPane) {
+                //create pane for all "overlay" layers to be added to...
+                // and put it just atop the default tile pane
+                map.createPane(Config.leafletPane);
+                map.getPane(Config.leafletPane).style.zIndex = '250';
+            }
+
+            //...
+            this.extentControl = new ResetExtentControl();
+            this.extentControl.addTo(map);
+
+
+            this.map = MapFactory.get('GPMVMAP');
+            this.map.setMap(map);
+            this.map.setErrorHandler( (error) => {
+                this.errors.push(error);
+            });
+
+            let httpClient = new NG2HttpClient(this.http);
+            // httpClient.setAuthToken(function() {
+            //     //uses token cached by ng-common's AuthenticationService
+            //     let token = AuthenticationService.getJWTfromLocalStorage();
+            //     return token;
+            // });
+            this.map.setHttpClient(httpClient);
+            this.map.setServiceFactory(this.getServiceFactory());
+
+            //configure layer factory with service created here so it uses proper
+            // env vars and http client
+            LayerFactory.setLayerService(this.layerService);
+
+            resolve();
+
         });
-
-        if(Config.leafletPane) {
-            //create pane for all "overlay" layers to be added to...
-            // and put it just atop the default tile pane
-            map.createPane(Config.leafletPane);
-            map.getPane(Config.leafletPane).style.zIndex = '250';
-        }
-
-        //...
-        this.extentControl = new ResetExtentControl();
-        this.extentControl.addTo(map);
-
-
-        this.map = MapFactory.get('GPMVMAP');
-        this.map.setMap(map);
-        this.map.setErrorHandler( (error) => {
-            this.errors.push(error);
-        });
-
-        let httpClient = new NG2HttpClient(this.http);
-        // httpClient.setAuthToken(function() {
-        //     //uses token cached by ng-common's AuthenticationService
-        //     let token = AuthenticationService.getJWTfromLocalStorage();
-        //     return token;
-        // });
-        this.map.setHttpClient(httpClient);
-        this.map.setServiceFactory(this.getServiceFactory());
-
-        //configure layer factory with service created here so it uses proper
-        // env vars and http client
-        let layerService = ServiceFactory(ItemTypes.LAYER, Config.ualUrl, this.httpClient);
-        LayerFactory.setLayerService(layerService);
     }
 
     /**
@@ -206,8 +209,7 @@ export class CoverageMapComponent implements OnInit, OnChanges {
      * @param {string} id - GP Layer object to load
      */
     loadLayer(id) {
-        this.layerService.get(id)
-        .then( layer => {
+        this.layerService.get(id).then( layer => {
             if(layer.extent) {
                 this.setExtent(layer.extent);
             }

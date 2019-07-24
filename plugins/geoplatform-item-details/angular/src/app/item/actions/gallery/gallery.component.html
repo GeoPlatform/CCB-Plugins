@@ -1,75 +1,76 @@
-<button type="button"
-    class="btn btn-secondary btn-block"
-    title="Add this Resource to a Gallery"
-    *ngIf="isSupported()"
-    [disabled]="awaitingInput"
-    (click)="promptForInput()">
-    <span class="icon-gallery"></span>
-    Add to Gallery
-</button>
-<div *ngIf="awaitingInput" class="m-action-prompt">
-    <br>
+<div class="m-action" *ngIf="isSupported()">
+    <button type="button"
+        class="btn btn-secondary btn-block"
+        title="Add this Resource to a Gallery"
+        [disabled]="awaitingInput"
+        (click)="promptForInput()">
+        <span class="icon-gallery"></span>
+        Add to Gallery
+    </button>
+    <div *ngIf="awaitingInput" class="m-action-prompt">
+        <br>
 
-    <div class="u-mg-bottom--sm d-flex flex-justify-between flex-align-center"
-        ng-if="totalSuggested > maxSuggested">
-        <span class="u-text--sm">{{totalSuggested}} Galleries available</span>
-        <div class="flex-1">
-            <button type="button" class="btn btn-sm btn-link"
-                ng-disabled="query.getPage()===0"
-                ng-click="firstPage()">
-                <span class="fas fa-fast-backward"></span>
-            </button>
-            <button type="button" class="btn btn-sm btn-link"
-                ng-disabled="query.getPage()===0"
-                ng-click="prevPage()">
-                <span class="fas fa-backward"></span>
-            </button>
-            <button type="button" class="btn btn-sm btn-link disabled">
-                {{getPagingInfo()}}
-            </button>
-            <button type="button" class="btn btn-sm btn-link"
-                ng-disabled="!hasNextPage()"
-                ng-click="nextPage()">
-                <span class="fas fa-forward"></span>
-            </button>
+        <div class="u-mg-bottom--sm d-flex flex-justify-between flex-align-center"
+            ng-if="totalSuggested > maxSuggested">
+            <span class="u-text--sm">{{totalSuggested}} Galleries available</span>
+            <div class="flex-1">
+                <button type="button" class="btn btn-sm btn-link"
+                    ng-disabled="query.getPage()===0"
+                    ng-click="firstPage()">
+                    <span class="fas fa-fast-backward"></span>
+                </button>
+                <button type="button" class="btn btn-sm btn-link"
+                    ng-disabled="query.getPage()===0"
+                    ng-click="prevPage()">
+                    <span class="fas fa-backward"></span>
+                </button>
+                <button type="button" class="btn btn-sm btn-link disabled">
+                    {{getPagingInfo()}}
+                </button>
+                <button type="button" class="btn btn-sm btn-link"
+                    ng-disabled="!hasNextPage()"
+                    ng-click="nextPage()">
+                    <span class="fas fa-forward"></span>
+                </button>
+            </div>
         </div>
-    </div>
 
 
-    <div class="u-mg-bottom--sm"
-        *ngIf="(keywords && keywords.length) || (totalSuggested > maxSuggested)">
-        <div class="input-group-slick flex-1">
-            <span class="fas fa-search"></span>
-            <input type="text" class="form-control" placeholder="Filter galleries"
-                [(ngModel)]="keywords"
-                (keyup.enter)="suggestGalleries(keywords)">
-            <span class="fas fa-times" *ngIf="keywords && keywords.length"
-                (click)="suggestGalleries(null,true)">
-            </span>
+        <div class="u-mg-bottom--sm"
+            *ngIf="(keywords && keywords.length) || (totalSuggested > maxSuggested)">
+            <div class="input-group-slick flex-1">
+                <span class="fas fa-search"></span>
+                <input type="text" class="form-control" placeholder="Filter galleries"
+                    [(ngModel)]="keywords"
+                    (keyup.enter)="suggestGalleries(keywords)">
+                <span class="fas fa-times" *ngIf="keywords && keywords.length"
+                    (click)="suggestGalleries(null,true)">
+                </span>
+            </div>
         </div>
-    </div>
-    <div class="list-group">
-        <div *ngIf="!suggested || !suggested.length" class="list-group-item">
-            <em>No galleries found</em>
+        <div class="list-group">
+            <div *ngIf="!suggested || !suggested.length" class="list-group-item">
+                <em>No galleries found</em>
+            </div>
+            <a *ngFor="let gallery of suggested"
+                class="list-group-item list-group-item-action"
+                (click)="addToGallery(gallery)"
+                title="Add {{type}} to this Gallery">
+                <span class="icon-gallery"></span> {{gallery.label}}
+            </a>
+            <a title="Add to a new Gallery" (click)="addToNewGallery()"
+                class="list-group-item list-group-item-action list-group-item-info">
+                <span class="fas fa-plus"></span> Add to a New Gallery
+            </a>
+            <a title="Abort adding to a gallery" (click)="awaitingInput=false"
+                class="list-group-item list-group-item-action list-group-item-secondary">
+                <span class="fas fa-times"></span> Cancel
+            </a>
         </div>
-        <a *ngFor="let gallery of suggested"
-            class="list-group-item list-group-item-action"
-            (click)="addToGallery(gallery)"
-            title="Add {{type}} to this Gallery">
-            <span class="icon-gallery"></span> {{gallery.label}}
-        </a>
-        <a title="Add to a new Gallery" (click)="addToNewGallery()"
-            class="list-group-item list-group-item-action list-group-item-info">
-            <span class="fas fa-plus"></span> Add to a New Gallery
-        </a>
-        <a title="Abort adding to a gallery" (click)="awaitingInput=false"
-            class="list-group-item list-group-item-action list-group-item-secondary">
-            <span class="fas fa-times"></span> Cancel
-        </a>
-    </div>
-    <div *ngIf="error" class="m-message--error">
-        <span class="gpicons exclamation-circle"></span>
-        <strong>An Error Occurred</strong>
-        <div>{{error.message}}</div>
+        <div *ngIf="error" class="m-message--error">
+            <span class="gpicons exclamation-circle"></span>
+            <strong>An Error Occurred</strong>
+            <div>{{error.message}}</div>
+        </div>
     </div>
 </div>

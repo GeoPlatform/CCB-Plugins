@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService } from "@geoplatform/client";
 
@@ -18,8 +18,8 @@ export class ServiceLayersComponent implements OnInit {
     public layerTotal: number = 0;  //total layers including nested ones
     private itemService : ItemService;
 
-    constructor( http : HttpClient) {
-        this.itemService = itemServiceFactory(http);
+    constructor( @Inject(ItemService) itemService : ItemService ) {
+        this.itemService = itemService;
     }
 
     ngOnInit() {

@@ -1,4 +1,6 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import {
+    Inject, Component, OnInit, OnChanges, SimpleChanges, Input
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService } from '@geoplatform/client';
 
@@ -17,8 +19,8 @@ export class AboutComponent implements OnInit {
     public clonedFrom : any;
     private itemService : ItemService;
 
-    constructor( http : HttpClient) {
-        this.itemService = itemServiceFactory(http);
+    constructor( @Inject(ItemService) itemService : ItemService ) {
+        this.itemService = itemService;
     }
 
     ngOnInit() {

@@ -1,5 +1,4 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Inject, Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 
 import { Config, ItemService } from "@geoplatform/client";
 import { NG2HttpClient } from '@geoplatform/client/angular';
@@ -9,7 +8,6 @@ import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
 import { environment } from '../environments/environment';
-import { itemServiceFactory, rpmServiceFactory } from './shared/service.provider';
 import { PluginAuthService } from './shared/auth.service';
 
 
@@ -31,11 +29,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
     constructor(
         private el: ElementRef,
-        private http: HttpClient,
-        private authService : PluginAuthService
+        private authService : PluginAuthService,
+        @Inject(ItemService) itemService: ItemService,
+        @Inject(RPMService) rpm : RPMService
     ) {
-        this.itemService = itemServiceFactory(http);
-        this.rpm = rpmServiceFactory();
+        this.itemService = itemService;
+        this.rpm = rpm;
     }
 
     ngOnInit() {

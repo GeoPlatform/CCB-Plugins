@@ -122,26 +122,6 @@
         </div>
 
 
-
-        <div class="m-section-group" *ngIf="hasCoverage()">
-            <div class="m-article">
-                <div class="m-article__heading">
-                    <span *ngIf="TYPES.MAP===item?.type">Map Preview</span>
-                    <span *ngIf="TYPES.LAYER===item?.type">Layer Preview</span>
-                    <span *ngIf="TYPES.MAP!==item?.type&&TYPES.LAYER!==item?.type">
-                        Geographic Extent
-                    </span>
-                </div>
-                <br>
-                <gpid-coverage-map
-                    [extent]="item?.extent"
-                    [mapId]="TYPES.MAP===item?.type?item.id:null"
-                    [layerId]="TYPES.LAYER===item?.type?item.id:null">
-                </gpid-coverage-map>
-            </div>
-        </div>
-
-
         <!-- Related Resources (non-Asset associations) -->
         <gpid-details-related *ngIf="isAsset()" [item]="item" class="m-section-group">
         </gpid-details-related>
@@ -173,18 +153,22 @@
         <!-- THUMBNAIL -->
         <gpid-depiction class="m-article" [item]="item"></gpid-depiction>
 
+        <!-- Preview / Extent Map -->
+        <gpid-coverage-map *ngIf="hasCoverage()"
+            [extent]="item?.extent"
+            [mapId]="TYPES.MAP===item?.type?item.id:null"
+            [layerId]="TYPES.LAYER===item?.type?item.id:null">
+        </gpid-coverage-map>
 
         <!-- ACTIONS -->
         <div class="m-article p-item__actions">
 
             <gpid-primary-action [item]="item"></gpid-primary-action>
 
-            <div *ngIf="isAsset()">
-                <gpid-preview-action [item]="item"></gpid-preview-action>
-                <gpid-like-action [item]="item" [service]="itemService"></gpid-like-action>
-                <gpid-download-action [item]="item"></gpid-download-action>
-                <gpid-export-action [item]="item" [service]="itemService"></gpid-export-action>
-            </div>
+            <gpid-preview-action [item]="item" *ngIf="isAsset()"></gpid-preview-action>
+            <gpid-like-action [item]="item" [service]="itemService" *ngIf="isAsset()"></gpid-like-action>
+            <gpid-download-action [item]="item" *ngIf="isAsset()"></gpid-download-action>
+            <gpid-export-action [item]="item" [service]="itemService" *ngIf="isAsset()"></gpid-export-action>
 
             <gpid-edit-action [item]="item"></gpid-edit-action>
             <!-- <gpid-delete-action [item]="item"></gpid-delete-action> -->
@@ -195,10 +179,8 @@
 
         </div>
 
-
         <!-- ABOUT -->
         <gpid-about [item]="item" class="m-article"></gpid-about>
-
 
         <!-- Keywords -->
         <gpid-keywords [keywords]="item?.keywords" class="m-article"></gpid-keywords>

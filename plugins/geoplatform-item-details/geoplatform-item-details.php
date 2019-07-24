@@ -186,11 +186,11 @@ add_action('generate_rewrite_rules', 'geopitems_add_rewrite_rules');
 // Additional dependency enqueues.
 function geopitems_page_enqueues(){
 	if (is_page('geoplatform-items')){
-		wp_enqueue_script( 'inline_bundle', plugin_dir_url( __FILE__ ) . 'public/js/inline.bundle.js', array(), false, true );
-		wp_enqueue_script( 'polyfills_bundle', plugin_dir_url( __FILE__ ) . 'public/js/polyfills.bundle.js', array(), false, true );
-		wp_enqueue_script( 'scripts_bundle', plugin_dir_url( __FILE__ ) . 'public/js/scripts.bundle.js', array(), false, true );
-		wp_enqueue_script( 'main_bundle', plugin_dir_url( __FILE__ ) . 'public/js/main.bundle.js', array(), false, true );
-		wp_enqueue_style( 'styles_bundle', plugin_dir_url( __FILE__ ) . 'public/css/styles.bundle.css', array(), false, 'all' );
+		wp_enqueue_script( 'runtime_bundle',   plugin_dir_url( __FILE__ ) . 'public/js/runtime.js',   array(), false, true );
+		wp_enqueue_script( 'polyfills_bundle', plugin_dir_url( __FILE__ ) . 'public/js/polyfills.js', array(), false, true );
+		wp_enqueue_script( 'scripts_bundle',   plugin_dir_url( __FILE__ ) . 'public/js/scripts.js',   array(), false, true );
+		wp_enqueue_script( 'main_bundle',      plugin_dir_url( __FILE__ ) . 'public/js/main.js',      array(), false, true );
+		wp_enqueue_style( 'styles_bundle',     plugin_dir_url( __FILE__ ) . 'public/css/styles.css',  array(), false, 'all' );
 	}
 }
 add_action( 'template_redirect', 'geopitems_page_enqueues' );

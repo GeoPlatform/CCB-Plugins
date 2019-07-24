@@ -1,6 +1,6 @@
 import {
-    Component, OnInit, OnChanges, SimpleChanges, OnDestroy,
-    Input, ElementRef
+    Inject, Component, OnInit, OnChanges, OnDestroy,
+    Input, ElementRef, SimpleChanges
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ItemTypes, Config, ItemService } from "@geoplatform/client";
@@ -31,11 +31,11 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
 
     constructor(
         private el: ElementRef,
-        http: HttpClient,
+        @Inject(ItemService) itemService : ItemService,
         authService : PluginAuthService
     ) {
         super(authService);
-        this.itemService = itemServiceFactory(http);
+        this.itemService = itemService;
     }
 
     ngOnInit() {

@@ -1,7 +1,8 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import {
+    Inject, Component, OnInit, OnChanges, SimpleChanges, Input
+} from '@angular/core';
 import { ItemTypes, Config, ItemService } from "@geoplatform/client";
 import { RPMService } from '@geoplatform/rpm/src/iRPMService'
-import { itemServiceFactory, rpmServiceFactory } from '../../../shared/service.provider';
 
 const FORMATS = buildFormats();
 
@@ -53,8 +54,8 @@ export class ExportActionComponent implements OnInit {
     public formats : any[];
     private rpm: RPMService
 
-    constructor() {
-        this.rpm = rpmServiceFactory();
+    constructor( @Inject(RPMService) rpm : RPMService ) {
+        this.rpm = rpm;
     }
 
     ngOnInit() {

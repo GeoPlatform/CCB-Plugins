@@ -1,5 +1,5 @@
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Inject, Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService } from '@geoplatform/client';
 import { ItemHelper } from '../../../shared/item-helper';
@@ -23,9 +23,12 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
     public error : Error;
     private itemService : ItemService;
 
-    constructor( http : HttpClient, authService : PluginAuthService ) {
+    constructor(
+        @Inject(ItemService) itemService : ItemService,
+        authService : PluginAuthService
+    ) {
         super(authService);
-        this.itemService = itemServiceFactory(http);
+        this.itemService = itemService;
     }
 
     ngOnInit() {

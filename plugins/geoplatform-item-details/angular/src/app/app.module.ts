@@ -108,6 +108,8 @@ import {
 } from './shared/service.provider';
 
 
+import { NG2HttpClient } from '@geoplatform/client/angular';
+
 
 
 
@@ -205,8 +207,14 @@ export function initializeApp() {
             useFactory: initializeApp,
             multi: true
         },
-        NGItemService,
-        // itemServiceProvider,
+        {
+            provide: NG2HttpClient,
+            useFactory: (http:HttpClient) => {
+                return new NG2HttpClient(http);
+            },
+            deps: [HttpClient]
+        },
+        itemServiceProvider,
         serviceServiceProvider,
         utilsServiceProvider,
         kgServiceProvider,
