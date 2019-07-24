@@ -46,29 +46,29 @@ echo "<div>";
                     echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
                     echo "</li>";
                   }
-                  wp_nav_menu( array( 'theme_location' => 'community-links' ) );
+                  wp_nav_menu( array( 'theme_location' => 'community-links', 'fallback_cb' => false ) );
 
                 echo "</ul>";
                 echo "<br>";
               echo "</div>";
 
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-left' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-left', 'fallback_cb' => false ) );
             echo "</div>";
 
             echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-center' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-center', 'fallback_cb' => false ) );
             echo "</div>";
 
             echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-right-col1', 'fallback_cb' => false ) );
             echo "</div>";
 
             echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col2')) ? esc_html(wp_get_nav_menu_name('footer-right-col2')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-right-col2' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col2')) ? esc_html(wp_get_nav_menu_name('footer-right-col2')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-right-col2', 'fallback_cb' => false ) );
             echo "</div>";
 
           echo "</div>";

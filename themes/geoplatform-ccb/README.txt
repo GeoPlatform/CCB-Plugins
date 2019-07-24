@@ -113,6 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Rebranded "Community Links" to "Header Bar" to avoid confusion with Category Links.
 - Removed Bootstrap controls in response to removal of Bootstrap.js from theme.
 - Added Mega-Menu Control to customization menu, allows visibility toggling of both mega-menus.
+- Mega-menu entries will now not appear if no content is assigned to that menu entry.
 
  = 4.0.1 =
 * Release July 24, 2019
