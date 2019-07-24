@@ -1869,11 +1869,11 @@ if ( ! function_exists ( 'geop_ccb_linkmenu_register' ) ) {
 
     $wp_customize->add_control('linkmenu_controls',array(
         'type' => 'radio',
-        'label' => 'Community Links Style',
+        'label' => 'Header Bar Style',
         'section' => 'font_section',
-        'description' => "The Community Links menu can be shown in three formats: Integrated with the header bar, or a solitary menu bar either above or below the page title.",
+        'description' => "The Header Bar menu can be shown in three formats: integrated with the header, or as a solitary menu bar either above or below the page title.",
         'choices' => array(
-            'integrated' => __('Header Bar Integration', 'geoplatform-ccb'),
+            'integrated' => __('Header Integration', 'geoplatform-ccb'),
             'above' => __('Dedicated Bar Above',  'geoplatform-ccb'),
             'below' => __('Dedicated Bar Below',  'geoplatform-ccb'),
           ),
