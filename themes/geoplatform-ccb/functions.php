@@ -1294,7 +1294,6 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'call2action_text_setting' => 'Learn More',
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
       'font_choice' => 'lato',
-      'bootstrap_controls' => 'on',
       'breadcrumb_controls' => 'on',
       'blogcount_controls' => '5',
       'searchbar_controls' => 'wp',
@@ -1813,28 +1812,28 @@ if ( ! function_exists ( 'geop_ccb_feature_card_register' ) ) {
 }
 
 // Adds bootstrap controls to Customize => GeoPlatform Controls.
-if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
-  function geop_ccb_bootstrap_register($wp_customize){
-
-    $wp_customize->add_setting('bootstrap_controls',array(
-        'default' => 'on',
-        'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
-    ));
-
-    $wp_customize->add_control('bootstrap_controls',array(
-        'type' => 'radio',
-        'label' => 'Bootstrap Controls',
-        'section' => 'font_section',
-        'description' => "The GeoPlatform themes utilize Bootstrap for several operations, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here.",
-        'choices' => array(
-            'on' => __('Enabled', 'geoplatform-ccb'),
-            'off' => __('Disabled',  'geoplatform-ccb'),
-            // 'gone' => __('No Menu', 'geoplatform-ccb')
-          ),
-    ));
-  }
-  add_action( 'customize_register', 'geop_ccb_bootstrap_register');
-}
+// if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
+//   function geop_ccb_bootstrap_register($wp_customize){
+//
+//     $wp_customize->add_setting('bootstrap_controls',array(
+//         'default' => 'on',
+//         'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
+//     ));
+//
+//     $wp_customize->add_control('bootstrap_controls',array(
+//         'type' => 'radio',
+//         'label' => 'Bootstrap Controls',
+//         'section' => 'font_section',
+//         'description' => "The GeoPlatform themes utilize Bootstrap for several operations, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here.",
+//         'choices' => array(
+//             'on' => __('Enabled', 'geoplatform-ccb'),
+//             'off' => __('Disabled',  'geoplatform-ccb'),
+//             // 'gone' => __('No Menu', 'geoplatform-ccb')
+//           ),
+//     ));
+//   }
+//   add_action( 'customize_register', 'geop_ccb_bootstrap_register');
+// }
 
 // Adds breadcrumb controls to Customize => GeoPlatform Controls.
 if ( ! function_exists ( 'geop_ccb_breadcrumb_register' ) ) {
