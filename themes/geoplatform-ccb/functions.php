@@ -412,16 +412,16 @@ if ( ! function_exists ( 'geop_ccb_sanitize_featured_card' ) ) {
 }
 
 /**
- * Sanitization callback functions for customizer bootstrap
+ * Sanitization callback functions for customizer megamenu
  *
  * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
  * @param [type] $geop_ccb_value
  * @return void
  */
-if ( ! function_exists ( 'geop_ccb_sanitize_bootstrap' ) ) {
-	function geop_ccb_sanitize_bootstrap( $geop_ccb_value ) {
-		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
-			$geop_ccb_value = 'on';
+if ( ! function_exists ( 'geop_ccb_sanitize_megamenu' ) ) {
+	function geop_ccb_sanitize_megamenu( $geop_ccb_value ) {
+    if ( ! in_array( $geop_ccb_value, array( 'both', 'head', 'foot', 'none' ) ) )
+			$geop_ccb_value = 'both';
 		return $geop_ccb_value;
 	}
 }
@@ -1295,6 +1295,7 @@ if ( ! function_exists ( 'geop_ccb_get_option_defaults' ) ) {
 			'map_gallery_link_box_setting' => 'https://ual.geoplatform.gov/api/galleries/6c47d5d45264bedce3ac13ca14d0a0f7',
       'font_choice' => 'lato',
       'breadcrumb_controls' => 'on',
+      'megamenu_controls' => 'both',
       'blogcount_controls' => '5',
       'searchbar_controls' => 'wp',
       'postbanner_controls' => 'off',
@@ -1812,28 +1813,29 @@ if ( ! function_exists ( 'geop_ccb_feature_card_register' ) ) {
 }
 
 // Adds bootstrap controls to Customize => GeoPlatform Controls.
-// if ( ! function_exists ( 'geop_ccb_bootstrap_register' ) ) {
-//   function geop_ccb_bootstrap_register($wp_customize){
-//
-//     $wp_customize->add_setting('bootstrap_controls',array(
-//         'default' => 'on',
-//         'sanitize_callback' => 'geop_ccb_sanitize_bootstrap',
-//     ));
-//
-//     $wp_customize->add_control('bootstrap_controls',array(
-//         'type' => 'radio',
-//         'label' => 'Bootstrap Controls',
-//         'section' => 'font_section',
-//         'description' => "The GeoPlatform themes utilize Bootstrap for several operations, but some plugins use Bootstrap as well. When both are active at the same time it can cause errors or loss of function. In such cases, it is advised to disable Bootstrap in the plugin settings or here.",
-//         'choices' => array(
-//             'on' => __('Enabled', 'geoplatform-ccb'),
-//             'off' => __('Disabled',  'geoplatform-ccb'),
-//             // 'gone' => __('No Menu', 'geoplatform-ccb')
-//           ),
-//     ));
-//   }
-//   add_action( 'customize_register', 'geop_ccb_bootstrap_register');
-// }
+if ( ! function_exists ( 'geop_ccb_megamenu_register' ) ) {
+  function geop_ccb_megamenu_register($wp_customize){
+
+    $wp_customize->add_setting('megamenu_controls',array(
+        'default' => 'both',
+        'sanitize_callback' => 'geop_ccb_sanitize_megamenu',
+    ));
+
+    $wp_customize->add_control('megamenu_controls',array(
+        'type' => 'radio',
+        'label' => 'Mega-Menu Controls',
+        'section' => 'font_section',
+        'description' => "This theme features two mega-menus on each page, one at the top and another at the bottom. You can control their visibility here.",
+        'choices' => array(
+            'both' => __('Both Enabled', 'geoplatform-ccb'),
+            'head' => __('Top Menu Only',  'geoplatform-ccb'),
+            'foot' => __('Bottom Menu Only',  'geoplatform-ccb'),
+            'none' => __('Both Disabled',  'geoplatform-ccb'),
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_megamenu_register');
+}
 
 // Adds breadcrumb controls to Customize => GeoPlatform Controls.
 if ( ! function_exists ( 'geop_ccb_breadcrumb_register' ) ) {

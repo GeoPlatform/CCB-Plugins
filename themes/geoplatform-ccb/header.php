@@ -126,15 +126,18 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
           echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
         echo "</div>";
       }
-      ?>
 
-      <!-- Megamenu opener/closer, can't be PHP echoed. -->
-      <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
-        <span class="is-hidden--xs">More</span>
-        <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
-      </a>
+      // Displays the megamenu button, but only if enabled.
+      if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head'){
+        ?>
+        <!-- Megamenu opener/closer, can't be PHP echoed. -->
+        <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+          <span class="is-hidden--xs">More</span>
+          <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
+        </a>
+        <?php
+      }
 
-      <?php
     echo "</nav>";
 
     // This ENTIRE section handles the user info logic.

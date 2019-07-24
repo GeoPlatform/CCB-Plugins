@@ -81,11 +81,6 @@ The Community Core Bundle (CCB) enables independent development of a self-contai
 
 No, GeoPlatform plugins work independently of the theme.
 
-* The dropdown menu no longer functions.
-
-This is most likely due to conflicting uses of the Bootstrap library. The GeoPlatform CCB theme utilizes Bootstrap for some of its operations, and loading that asset with a plugin as well can cause conflicts. It is advised to avoid using that plugin.
-
-
 == Copyright ==
 
 GeoPlatform-CCB for use with GeoPlatform.gov products and general use.
@@ -117,6 +112,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 - Rebranded "Community Links" to "Header Bar" to avoid confusion with Category Links.
 - Removed Bootstrap controls in response to removal of Bootstrap.js from theme.
+- Added Mega-Menu Control to customization menu, allows visibility toggling of both mega-menus.
 
  = 4.0.1 =
 * Release July 24, 2019

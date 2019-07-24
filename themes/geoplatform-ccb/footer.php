@@ -13,21 +13,24 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 echo "<div>";
   echo "<footer class='o-footer'>";
 
-      echo "<a class='u-float--right' href='#'>";
-        echo "<span class='fas fa-arrow-up'></span> to top";
-      echo "</a>";
+      // Displays the below only if the megamenu is enabled in the footer.
+      if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'foot'){
 
-      ?>
-      <!-- Left in HTML so that Javascript will work. -->
-      <div>
-          <a onClick="toggleClass('#footer-megamenu','is-collapsed')">
-              <span class="fas fa-angle-down"></span>
-              Menu
-          </a>
-          <hr>
-      </div>
+        echo "<a class='u-float--right' href='#'>";
+          echo "<span class='fas fa-arrow-up'></span> to top";
+        echo "</a>";
 
-      <?php
+        ?>
+        <!-- Left in HTML so that Javascript will work. -->
+        <div>
+            <a onClick="toggleClass('#footer-megamenu','is-collapsed')">
+                <span class="fas fa-angle-down"></span>
+                Menu
+            </a>
+            <hr>
+        </div>
+        <?php
+      }
       // Footer Megamenu section.
       echo "<nav class='m-megamenu is-collapsed' id='footer-megamenu'>";
         echo "<div class='m-megamenu__content'>";
@@ -94,6 +97,13 @@ echo "<div>";
 
             // http://biostall.com/add-character-between-menu-items-in-wordpress-using-wp_nav_menu-function/
             echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
+
+            // Moves the "To Top" operation to the right of the Footer Bar if footer megamenu is disabled.
+            if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'none'){
+              echo "<a class='u-float--right' href='#'>";
+                echo "<span class='fas fa-arrow-up'></span> to top";
+              echo "</a>";
+            }
 
           echo "</div>";
         echo "</div>";
