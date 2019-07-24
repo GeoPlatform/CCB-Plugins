@@ -13,21 +13,24 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 echo "<div>";
   echo "<footer class='o-footer'>";
 
-      echo "<a class='u-float--right' href='#'>";
-        echo "<span class='fas fa-arrow-up'></span> to top";
-      echo "</a>";
+      // Displays the below only if the megamenu is enabled in the footer.
+      if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'foot'){
 
-      ?>
-      <!-- Left in HTML so that Javascript will work. -->
-      <div>
-          <a onClick="toggleClass('#footer-megamenu','is-collapsed')">
-              <span class="fas fa-angle-down"></span>
-              Menu
-          </a>
-          <hr>
-      </div>
+        echo "<a class='u-float--right' href='#'>";
+          echo "<span class='fas fa-arrow-up'></span> to top";
+        echo "</a>";
 
-      <?php
+        ?>
+        <!-- Left in HTML so that Javascript will work. -->
+        <div>
+            <a onClick="toggleClass('#footer-megamenu','is-collapsed')">
+                <span class="fas fa-angle-down"></span>
+                Menu
+            </a>
+            <hr>
+        </div>
+        <?php
+      }
       // Footer Megamenu section.
       echo "<nav class='m-megamenu is-collapsed' id='footer-megamenu'>";
         echo "<div class='m-megamenu__content'>";
@@ -43,29 +46,29 @@ echo "<div>";
                     echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
                     echo "</li>";
                   }
-                  wp_nav_menu( array( 'theme_location' => 'community-links' ) );
+                  wp_nav_menu( array( 'theme_location' => 'community-links', 'fallback_cb' => false ) );
 
                 echo "</ul>";
                 echo "<br>";
               echo "</div>";
 
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-left' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-left')) ? esc_html(wp_get_nav_menu_name('footer-left')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-left', 'fallback_cb' => false ) );
             echo "</div>";
 
             echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-center' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-center')) ? esc_html(wp_get_nav_menu_name('footer-center')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-center', 'fallback_cb' => false ) );
             echo "</div>";
 
             echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-right-col1' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col1')) ? esc_html(wp_get_nav_menu_name('footer-right-col1')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-right-col1', 'fallback_cb' => false ) );
             echo "</div>";
 
             echo "<div class='col'>";
-              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col2')) ? esc_html(wp_get_nav_menu_name('footer-right-col2')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'footer-right-col2' ) );
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('footer-right-col2')) ? esc_html(wp_get_nav_menu_name('footer-right-col2')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'footer-right-col2', 'fallback_cb' => false ) );
             echo "</div>";
 
           echo "</div>";
@@ -94,6 +97,13 @@ echo "<div>";
 
             // http://biostall.com/add-character-between-menu-items-in-wordpress-using-wp_nav_menu-function/
             echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
+
+            // Moves the "To Top" operation to the right of the Footer Bar if footer megamenu is disabled.
+            if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'none'){
+              echo "<a class='u-float--right' href='#'>";
+                echo "<span class='fas fa-arrow-up'></span> to top";
+              echo "</a>";
+            }
 
           echo "</div>";
         echo "</div>";

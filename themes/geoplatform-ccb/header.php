@@ -126,15 +126,18 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
           echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
         echo "</div>";
       }
-      ?>
 
-      <!-- Megamenu opener/closer, can't be PHP echoed. -->
-      <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
-        <span class="is-hidden--xs">More</span>
-        <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
-      </a>
+      // Displays the megamenu button, but only if enabled.
+      if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head'){
+        ?>
+        <!-- Megamenu opener/closer, can't be PHP echoed. -->
+        <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+          <span class="is-hidden--xs">More</span>
+          <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
+        </a>
+        <?php
+      }
 
-      <?php
     echo "</nav>";
 
     // This ENTIRE section handles the user info logic.
@@ -285,29 +288,29 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
                   echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
                   echo "</li>";
               }
-              wp_nav_menu( array( 'theme_location' => 'community-links' ) );
+              wp_nav_menu( array( 'theme_location' => 'community-links', 'fallback_cb' => false ) );
 
             echo "</ul>";
             echo "<br>";
           echo "</div>";
 
-          echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-left')) ? esc_html(wp_get_nav_menu_name('header-left')) : 'Example Menu Title') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'header-left' ) );
+          echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-left')) ? esc_html(wp_get_nav_menu_name('header-left')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'header-left', 'fallback_cb' => false ) );
           echo "</div>";
 
           echo "<div class='col'>";
-            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-center')) ? esc_html(wp_get_nav_menu_name('header-center')) : 'Example Menu Title') . "</div>";
-            wp_nav_menu( array( 'theme_location' => 'header-center' ) );
+            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-center')) ? esc_html(wp_get_nav_menu_name('header-center')) : '') . "</div>";
+            wp_nav_menu( array( 'theme_location' => 'header-center', 'fallback_cb' => false ) );
           echo "</div>";
 
           echo "<div class='col'>";
-            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col1')) ? esc_html(wp_get_nav_menu_name('header-right-col1')) : 'Example Menu Title') . "</div>";
-            wp_nav_menu( array( 'theme_location' => 'header-right-col1' ) );
+            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col1')) ? esc_html(wp_get_nav_menu_name('header-right-col1')) : '') . "</div>";
+            wp_nav_menu( array( 'theme_location' => 'header-right-col1', 'fallback_cb' => false ) );
           echo "</div>";
 
           echo "<div class='col'>";
-            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col2')) ? esc_html(wp_get_nav_menu_name('header-right-col2')) : 'Example Menu Title') . "</div>";
-            wp_nav_menu( array( 'theme_location' => 'header-right-col2' ) );
+            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col2')) ? esc_html(wp_get_nav_menu_name('header-right-col2')) : '') . "</div>";
+            wp_nav_menu( array( 'theme_location' => 'header-right-col2', 'fallback_cb' => false ) );
           echo "</div>";
 
         echo "</div>";

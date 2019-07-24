@@ -3,8 +3,8 @@
 **Contributors:** imagemattersllc, kevins713, lheazel
 **Requires at least:** WordPress 4.6.4   
 **Tested up to:** WordPress 5.2.0
-**Stable tag:** 4.0.1
-**Version:** 4.0.1
+**Stable tag:** 4.0.2
+**Version:** 4.0.2
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -82,10 +82,6 @@ The Community Core Bundle (CCB) enables independent development of a self-contai
 
 No, GeoPlatform plugins work independently of the theme.
 
-* The dropdown menu no longer functions.
-
-This is most likely due to conflicting uses of the Bootstrap library. The GeoPlatform CCB theme utilizes Bootstrap for some of its operations, and loading that asset with a plugin as well can cause conflicts. It is advised to avoid using that plugin.
-
 ## Copyright
 
 GeoPlatform-CCB for use by GeoPlatform.gov hosted communities and for general use.
@@ -112,8 +108,16 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
-### 4.0.1 ###
+### 4.0.2 ###
 * Release pending
+
+- Rebranded "Community Links" to "Header Bar" to avoid confusion with Category Links.
+- Removed Bootstrap controls in response to removal of Bootstrap.js from theme.
+- Added Mega-Menu Control to customization menu, allows visibility toggling of both mega-menus.
+- Mega-menu entries will now not appear if no content is assigned to that menu entry.
+
+### 4.0.1 ###
+* Release July 24, 2019
 
 - Fixed style guide dependency bug.
 - Removed Bootstrap Javascript dependency.
