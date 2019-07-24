@@ -28,9 +28,7 @@ export class SimilarityComponent implements OnInit {
     constructor(private http : HttpClient) { }
 
     ngOnInit() {
-
         this.codec = new SimilarityCodec(this.http);
-
         this.value = this.codec.getValue(this.constraints);
     }
 

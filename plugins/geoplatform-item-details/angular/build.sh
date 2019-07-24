@@ -31,13 +31,13 @@ for name in "${names[@]}"; do
 done
 
 # 'scripts' doesn't have variants
-echo $JSDEST/scripts.js " <- " $NGDIST/scripts.js
+echo $NGDIST/scripts.js " -> " $JSDEST/scripts.js
 cp $NGDIST/scripts.js $JSDEST/scripts.js
 cp $NGDIST/scripts.js.map $JSDEST/scripts.js.map
 
 
 # Don't forget the Styles! (they count too!)
-echo $CSSDEST/styles.css " <- " $NGDIST/styles.css
+echo $NGDIST/styles.css " -> " $CSSDEST/styles.css
 cp $NGDIST/styles.css $CSSDEST/styles.css
 cp $NGDIST/styles.css.map $CSSDEST/styles.css.map
 
@@ -49,5 +49,5 @@ cp $NGDIST/*.woff2 $CSSDEST
 cp $NGDIST/*.ttf $CSSDEST
 
 # Move assets as well!
-echo $ASSETDEST " <- " $NGDIST/assets
+echo $NGDIST/assets " -> " $ASSETDEST
 cp -R $NGDIST/assets/* $ASSETDEST

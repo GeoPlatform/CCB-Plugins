@@ -158,12 +158,6 @@ export function initializeApp() {
   ],
   providers: [
       CCBService,
-      // EnvironmentSettings,
-      // {
-      //     provide: APP_INITIALIZER,
-      //     useFactory: initializeApp,
-      //     deps: [EnvironmentSettings], multi: true
-      // }
       {
         provide: RPMService,
         useValue: RPMServiceFactory()

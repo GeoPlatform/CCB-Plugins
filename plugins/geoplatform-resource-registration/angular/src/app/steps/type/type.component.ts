@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy,
+    Inject, Component, OnInit, OnChanges, OnDestroy,
     Input, Output, EventEmitter, SimpleChanges,
     ViewChild, ElementRef
 } from '@angular/core';
@@ -91,11 +91,16 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     formOpts: any = {};
 
 
-    constructor(private formBuilder: FormBuilder, http:HttpClient) {
+    constructor(
+        private formBuilder: FormBuilder,
+        @Inject(ItemService) itemService : ItemService,
+        @Inject(ServiceService) svcService : ServiceService,
+        @Inject(UtilsService) utilsService : UtilsService,
+    ) {
 
-        this.itemService = itemServiceFactory(http);
-        this.svcService = svcServiceFactory(http);
-        this.utilsService = utilsServiceFactory(http);
+        this.itemService = itemService;
+        this.svcService = svcService;
+        this.utilsService = utilsService;
 
         this.formOpts[ModelProperties.TYPE] = ['', Validators.required];
         this.formOpts[ModelProperties.TITLE] = ['', Validators.required];

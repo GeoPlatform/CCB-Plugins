@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Inject, Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config, Query, ItemTypes, ItemService } from '@geoplatform/client';
 import { NG2HttpClient } from '@geoplatform/client/angular';
@@ -29,10 +29,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit, OnDe
 
     constructor(
         authService : PluginAuthService,
-        http: HttpClient
+        @Inject(ItemService) itemService : ItemService
     ) {
         super(authService);
-        this.itemService = itemServiceFactory(http);
+        this.itemService = itemService;
         this._authService = authService;
         this.data = new DataProvider(this.itemService);
     }

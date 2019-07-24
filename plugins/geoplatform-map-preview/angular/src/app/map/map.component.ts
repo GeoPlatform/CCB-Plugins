@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, Input, OnChanges, SimpleChanges
+    Inject, Component, OnInit, Input, OnChanges, SimpleChanges
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from "rxjs";
@@ -55,9 +55,9 @@ export class MapComponent implements OnInit, OnChanges {
     private extentTimer : any;
     private layerService : LayerService;
 
-    constructor( http : HttpClient ) {
-        this.httpClient = new NG2HttpClient(http);
-        this.layerService = layerServiceFactory(http);
+    constructor( @Inject(LayerService) layerService : LayerService ) {
+        this.layerService = layerService;
+        this.httpClient = layerService.getClient();
 
         // this.httpClient.setAuthToken(function() {
         //     //uses token cached by ng-common's AuthenticationService

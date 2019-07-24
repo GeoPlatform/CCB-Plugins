@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnDestroy, OnChanges, SimpleChanges,
+    Inject, Component, OnInit, OnDestroy, OnChanges, SimpleChanges,
     Input, HostBinding
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -60,11 +60,11 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     private itemService : ItemService;
 
     constructor(
-        http: HttpClient,
+        @Inject(ItemService) itemService : ItemService,
         authService : PluginAuthService
     ) {
         super(authService);
-        this.itemService = itemServiceFactory(http);
+        this.itemService = itemService;
     }
 
     ngOnInit() {

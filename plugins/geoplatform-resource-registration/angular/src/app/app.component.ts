@@ -1,4 +1,6 @@
-import { Component, OnInit, OnDestroy, Output, ViewChild } from '@angular/core';
+import {
+    Inject, Component, OnInit, OnDestroy, Output, ViewChild
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
@@ -58,10 +60,10 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
         private formBuilder: FormBuilder,
         matIconRegistry: MatIconRegistry,
         authService : PluginAuthService,
-        http: HttpClient
+        @Inject(ItemService) itemService : ItemService
     ) {
         super(authService);
-        this.itemService = itemServiceFactory(http);
+        this.itemService = itemService;
         matIconRegistry.registerFontClassAlias('fontawesome', 'fas');
         matIconRegistry.registerFontClassAlias('geoplatform-icons-font', 'gp');
 

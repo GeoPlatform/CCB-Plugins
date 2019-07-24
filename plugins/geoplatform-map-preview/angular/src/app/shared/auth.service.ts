@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, Observer, Subject, Subscription } from 'rxjs';
 
 import {
@@ -23,9 +23,9 @@ export class PluginAuthService {
     private authService : AuthService;
     private rpm: RPMService;
 
-    constructor() {
+    constructor( @Inject(RPMService) rpm : RPMService ) {
         this.authService = authServiceFactory();
-        this.rpm = rpmServiceFactory();
+        this.rpm = rpm;
         this.init();
     }
 

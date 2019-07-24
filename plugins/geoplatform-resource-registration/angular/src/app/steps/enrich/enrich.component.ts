@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
+    Inject, Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -59,9 +59,9 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        http: HttpClient
+        @Inject(KGService) kgService : KGService
     ) {
-        this.kgService = kgServiceFactory(http);
+        this.kgService = kgService;
 
         //initialize form controls
         Object.keys(ClassifierTypes).forEach( key => {
@@ -70,9 +70,6 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
             this.formOpts['$'+key] =  ['']; //temp fields for autocompletes
         });
         this.formGroup = this.formBuilder.group(this.formOpts);
-
-        // let client = new NG2HttpClient(http);
-        // this.kgService = new KGService(Config.ualUrl, client);
     }
 
     ngOnInit() {

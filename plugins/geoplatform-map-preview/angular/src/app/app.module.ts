@@ -34,6 +34,7 @@ import { PluginAuthService } from './shared/auth.service';
 import {
     itemServiceProvider,
     serviceServiceProvider,
+    layerServiceProvider,
     utilsServiceProvider,
     kgServiceProvider
 } from './shared/service.provider';
@@ -114,6 +115,7 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
       },
       itemServiceProvider,
       serviceServiceProvider,
+      layerServiceProvider,
       utilsServiceProvider,
       kgServiceProvider
   ],

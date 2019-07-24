@@ -14,20 +14,27 @@ ASSETDEST="../assets"
 # to suplement the new shiny "advanced" Angular tool.
 #
 # Thanks Google!
-ng build --prod --configuration=${1:-production} --output-hashing=none
+ng build --build-optimizer=false --prod --configuration=${1:-production} --sourceMap=true --output-hashing=none
+
+
 
 declare -a names=(
   "main"
-  "scripts"
   "polyfills"
   "runtime"
 )
 
 for name in "${names[@]}"; do
-  echo $NGDIST/$name-es2015.js " -> " $JSDEST/$name.bundle.js
-  cp $NGDIST/$name-es2015.js $JSDEST/$name.bundle.js
-  cp $NGDIST/$name-es2015.js.map $JSDEST/$name.bundle.js.map
+  echo $NGDIST/$name.js " -> " $JSDEST/$name-es2015.js
+  cp $NGDIST/$name-es2015.js $JSDEST/$name.js
+  cp $NGDIST/$name-es2015.js.map $JSDEST/$name.js.map
 done
+
+# 'scripts' doesn't have variants
+echo $NGDIST/scripts.js " -> " $JSDEST/scripts.js
+cp $NGDIST/scripts.js $JSDEST/scripts.js
+cp $NGDIST/scripts.js.map $JSDEST/scripts.js.map
+
 
 # Don't forget the Styles! (they count too!)
 echo $NGDIST/styles.css " -> " $CSSDEST/styles.css
@@ -35,11 +42,11 @@ cp $NGDIST/styles.css $CSSDEST/styles.css
 cp $NGDIST/styles.css.map $CSSDEST/styles.css.map
 
 # Copy all the other files types as well
-# cp $NGDIST/*.eot $CSSDEST
-# cp $NGDIST/*.svg $CSSDEST
-# cp $NGDIST/*.woff $CSSDEST
-# cp $NGDIST/*.woff2 $CSSDEST
-# cp $NGDIST/*.ttf $CSSDEST
+#cp $NGDIST/*.eot $CSSDEST
+#cp $NGDIST/*.svg $CSSDEST
+#cp $NGDIST/*.woff $CSSDEST
+#cp $NGDIST/*.woff2 $CSSDEST
+#cp $NGDIST/*.ttf $CSSDEST
 
 # Move assets as well!
 echo $NGDIST/assets " -> " $ASSETDEST

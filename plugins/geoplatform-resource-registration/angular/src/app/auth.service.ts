@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable, Observer, Subject, Subscription } from 'rxjs';
 
 import {
@@ -7,7 +7,7 @@ import {
 
 import { environment } from '../environments/environment';
 import { authServiceFactory } from './auth.factory';
-// import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+// import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 
 
@@ -20,11 +20,13 @@ export class PluginAuthService {
         {} as { [key:string]: Observer<GeoPlatformUser> };
     private gpAuthSubscription : Subscription;
     private authService : AuthService;
+    // private rpm: RPMService;
 
     constructor(
-        // private rpm: RPMService
+        // @Inject(RPMService) rpm: RPMService
     ) {
         this.authService = authServiceFactory();
+        // this.rpm = rpm;
         this.init();
     }
 

@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
+    Inject, Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -67,10 +67,10 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     constructor(
         private formBuilder: FormBuilder,
-        private http : HttpClient
+        @Inject(ItemService) itemService : ItemService
     ) {
 
-        this.itemService = itemServiceFactory(http);
+        this.itemService = itemService;
 
         //initialize form controls
         this.formOpts[ModelProperties.KEYWORDS] = [''];

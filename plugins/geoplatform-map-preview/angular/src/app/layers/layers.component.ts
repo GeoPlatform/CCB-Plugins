@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnDestroy, OnChanges,
+    Inject, Component, OnInit, OnDestroy, OnChanges,
     Input, Output, EventEmitter, SimpleChanges, HostBinding
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -43,9 +43,7 @@ export class LayersComponent implements OnInit {
     public selectedBaseLayer : any;
     private dataSubscription : Subscription;
 
-    constructor( http: HttpClient ) {
-
-        let layerService : LayerService = layerServiceFactory(http);
+    constructor( @Inject(LayerService) layerService : LayerService ) {
 
         let query = new Query().resourceTypes(BASE_LAYER_RT)
             .fields('*').facets([]).pageSize(20);
