@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Inject, Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService, Query, QueryParameters } from '@geoplatform/client';
 
 import { NG2HttpClient } from "../../../shared/http-client";
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { PluginAuthService } from '../../../shared/auth.service';
-import { itemServiceFactory } from '../../../shared/service.provider';
 import { ItemHelper } from '../../../shared/item-helper';
 
 
@@ -30,11 +29,11 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
 
 
     constructor(
-        http : HttpClient,
+        @Inject(ItemService) itemService : ItemService,
         authService : PluginAuthService
     ) {
         super(authService);
-        this.itemService = itemServiceFactory(http);
+        this.itemService = itemService;
     }
 
     ngOnInit() {

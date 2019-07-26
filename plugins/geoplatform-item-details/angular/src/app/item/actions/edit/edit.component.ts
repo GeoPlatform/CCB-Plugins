@@ -7,8 +7,8 @@ import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'gpid-edit-action',
-  templateUrl: './edit-action.component.html',
-  styleUrls: ['./edit-action.component.less']
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.less']
 })
 export class EditActionComponent extends AuthenticatedComponent implements OnInit {
 

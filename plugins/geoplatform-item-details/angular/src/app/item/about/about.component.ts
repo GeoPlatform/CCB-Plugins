@@ -6,7 +6,6 @@ import { Config, ItemTypes, ItemService } from '@geoplatform/client';
 
 import { NG2HttpClient } from "../../shared/http-client";
 import { ItemHelper } from '../../shared/item-helper';
-import { itemServiceFactory } from '../../shared/service.provider';
 
 @Component({
   selector: 'gpid-about',

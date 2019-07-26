@@ -14,7 +14,7 @@ ASSETDEST="../assets"
 # to suplement the new shiny "advanced" Angular tool.
 #
 # Thanks Google!
-ng build --build-optimizer=false --prod --configuration=${1:-production} --sourceMap=true --output-hashing=none
+ng build --prod --configuration=${1:-production} --sourceMap=true --output-hashing=none
 
 
 

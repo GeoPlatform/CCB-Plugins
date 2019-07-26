@@ -10,8 +10,8 @@ const GP_MAP_TYPE = 'http://www.geoplatform.gov/ont/openmap/GeoplatformMap';
 
 @Component({
   selector: 'gpid-primary-action',
-  templateUrl: './primary-action.component.html',
-  styleUrls: ['./primary-action.component.less']
+  templateUrl: './primary.component.html',
+  styleUrls: ['./primary.component.less']
 })
 export class PrimaryActionComponent implements OnInit {
 

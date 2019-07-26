@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import {
+    HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS,
+    HttpClient, HttpHeaders, HttpParams, HttpResponse
+} from '@angular/common/http';
 // import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 
 /*
@@ -38,6 +40,7 @@ L.Icon.Default.mergeOptions({
 });
 
 import { Config, ItemService } from '@geoplatform/client';
+import { GeoPlatformClientModule, NG2HttpClient } from '@geoplatform/client/angular';
 
 
 
@@ -60,15 +63,25 @@ import { UseConstraintsComponent } from './item/use-constraints/use-constraints.
 
 import { UsedByComponent } from './item/collections/used-by/used-by.component';
 import { RelatedComponent } from './item/collections/related/related.component';
-import { ServiceLayersComponent, ServiceLayerComponent } from './item/collections/service-layers/service-layers.component';
-import { GalleryItemsComponent } from './item/collections/gallery-items/gallery-items.component';
+import {
+    ServiceLayersComponent, ServiceLayerComponent
+} from './item/collections/service-layers/service-layers.component';
+import {
+    GalleryItemsComponent
+} from './item/collections/gallery-items/gallery-items.component';
 import { MapLayersComponent } from './item/collections/map-layers/map-layers.component';
-import { CommunityMembersComponent } from './item/collections/community-members/community-members.component';
-import { DatasetDistributionsComponent } from './item/collections/dataset-distributions/dataset-distributions.component';
+import {
+    CommunityMembersComponent
+} from './item/collections/community-members/community-members.component';
+import {
+    DatasetDistributionsComponent
+} from './item/collections/dataset-distributions/dataset-distributions.component';
 import { ServicesComponent } from './item/collections/services/services.component';
 import { DatasetsComponent } from './item/collections/datasets/datasets.component';
 import { ThemesComponent } from './item/collections/themes/themes.component';
 import { TopicsComponent } from './item/collections/topics/topics.component';
+import { OperatesOnComponent } from './item/collections/operates-on/operates-on.component';
+import { AssetsComponent } from './item/collections/assets/assets.component';
 
 import { AssetDetailsComponent } from './item/details/asset/asset.component'
 import { ServiceDetailsComponent } from './item/details/service/service-details.component';
@@ -76,18 +89,16 @@ import { LayerDetailsComponent } from './item/details/layer/layer-details.compon
 import { DatasetDetailsComponent } from './item/details/dataset/dataset-details.component';
 import { ContactDetailsComponent } from './item/details/contact/contact-details.component';
 import { RelatedDetailsComponent } from './item/details/related/related.component';
+import { ProductComponent } from './item/details/product/product.component';
 
-import { PrimaryActionComponent } from './item/actions/primary-action/primary-action.component';
-import { ExportActionComponent } from './item/actions/export-action/export-action.component';
-import { EditActionComponent } from './item/actions/edit-action/edit-action.component';
-import { DeleteActionComponent } from './item/actions/delete-action/delete-action.component';
-import { LikeActionComponent } from './item/actions/like-action/like-action.component';
+import { PrimaryActionComponent } from './item/actions/primary/primary.component';
+import { ExportActionComponent } from './item/actions/export/export.component';
+import { EditActionComponent } from './item/actions/edit/edit.component';
+import { DeleteActionComponent } from './item/actions/delete/delete.component';
+import { LikeActionComponent } from './item/actions/like/like.component';
 import { DownloadActionComponent } from './item/actions/download/download.component';
 import { PreviewActionComponent } from './item/actions/preview/preview.component';
 import { CloneActionComponent } from './item/actions/clone/clone.component';
-import { OperatesOnComponent } from './item/collections/operates-on/operates-on.component';
-import { ProductComponent } from './item/details/product/product.component';
-import { AssetsComponent } from './item/collections/assets/assets.component';
 import { GalleryActionComponent } from './item/actions/gallery/gallery.component';
 
 
@@ -97,18 +108,7 @@ let RPMStatsServiceFactory = (http: HttpClient) => {
 }
 
 import { PluginAuthService } from './shared/auth.service';
-
-import {
-    NGItemService,
-    itemServiceProvider,
-    serviceServiceProvider,
-    utilsServiceProvider,
-    kgServiceProvider,
-    rpmServiceProvider
-} from './shared/service.provider';
-
-
-import { NG2HttpClient } from '@geoplatform/client/angular';
+import { rpmServiceProvider } from './shared/service.provider';
 
 
 
@@ -199,7 +199,8 @@ export function initializeApp() {
         HttpClientModule,
         HttpClientJsonpModule,
         NgbModule,
-        ChartsModule
+        ChartsModule,
+        GeoPlatformClientModule
     ],
     providers: [
         {
@@ -207,17 +208,6 @@ export function initializeApp() {
             useFactory: initializeApp,
             multi: true
         },
-        {
-            provide: NG2HttpClient,
-            useFactory: (http:HttpClient) => {
-                return new NG2HttpClient(http);
-            },
-            deps: [HttpClient]
-        },
-        itemServiceProvider,
-        serviceServiceProvider,
-        utilsServiceProvider,
-        kgServiceProvider,
         rpmServiceProvider,
         PluginAuthService,
         {

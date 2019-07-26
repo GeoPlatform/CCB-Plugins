@@ -6,8 +6,8 @@ import { ItemHelper } from '../../../shared/item-helper';
 
 @Component({
   selector: 'gpid-like-action',
-  templateUrl: './like-action.component.html',
-  styleUrls: ['./like-action.component.less']
+  templateUrl: './like.component.html',
+  styleUrls: ['./like.component.less']
 })
 export class LikeActionComponent implements OnInit {
 

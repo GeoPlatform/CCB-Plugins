@@ -7,7 +7,7 @@ import { AuthenticatedComponent } from '../../../shared/authenticated.component'
 import { PluginAuthService } from '../../../shared/auth.service';
 import { environment } from '../../../../environments/environment';
 import { NG2HttpClient } from '../../../shared/http-client';
-import { itemServiceFactory } from '../../../shared/service.provider';
+
 
 @Component({
   selector: 'gpid-clone-action',

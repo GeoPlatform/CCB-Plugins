@@ -9,7 +9,7 @@ import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
 import { PluginAuthService } from '../shared/auth.service';
 import { AuthenticatedComponent} from '../shared/authenticated.component';
-import { itemServiceFactory } from '../shared/service.provider';
+
 
 const MAX_DESC_LENGTH = 550;
 

@@ -43,8 +43,8 @@ function buildFormats() {
 
 @Component({
   selector: 'gpid-export-action',
-  templateUrl: './export-action.component.html',
-  styleUrls: ['./export-action.component.less']
+  templateUrl: './export.component.html',
+  styleUrls: ['./export.component.less']
 })
 export class ExportActionComponent implements OnInit {
 

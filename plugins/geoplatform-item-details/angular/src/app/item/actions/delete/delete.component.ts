@@ -1,23 +1,22 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Inject, Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ItemTypes, Config, ItemService } from "@geoplatform/client";
 
 import { NG2HttpClient } from "../../../shared/http-client";
 import { environment } from '../../../../environments/environment';
-import { itemServiceFactory } from '../../../shared/service.provider';
 
 @Component({
   selector: 'gpid-delete-action',
-  templateUrl: './delete-action.component.html',
-  styleUrls: ['./delete-action.component.less']
+  templateUrl: './delete.component.html',
+  styleUrls: ['./delete.component.less']
 })
 export class DeleteActionComponent implements OnInit {
 
     @Input() item : any;
     private itemService : ItemService;
 
-    constructor( http : HttpClient) {
-        this.itemService = itemServiceFactory(http);
+    constructor( @Inject(ItemService) itemService : ItemService ) {
+        this.itemService = itemService;
     }
 
     ngOnInit() {

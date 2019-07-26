@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Config, ItemTypes, ItemService } from "@geoplatform/client";
 
 import { NG2HttpClient } from "../../../shared/http-client";
-import { itemServiceFactory } from '../../../shared/service.provider';
 
 @Component({
   selector: 'gpid-service-layers',
