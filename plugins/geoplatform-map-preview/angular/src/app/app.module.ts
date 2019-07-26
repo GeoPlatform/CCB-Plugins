@@ -11,7 +11,7 @@ import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 //configure the necessary environment variables needed by GeoPlatformClient
 import { Config } from '@geoplatform/client';
-import { NG2HttpClient } from '@geoplatform/client/angular';
+import { GeoPlatformClientModule, NG2HttpClient } from '@geoplatform/client/angular';
 import { environment } from '../environments/environment';
 
 
@@ -31,13 +31,13 @@ L.Icon.Default.mergeOptions({
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { PluginAuthService } from './shared/auth.service';
 
-import {
-    itemServiceProvider,
-    serviceServiceProvider,
-    layerServiceProvider,
-    utilsServiceProvider,
-    kgServiceProvider
-} from './shared/service.provider';
+// import {
+//     itemServiceProvider,
+//     serviceServiceProvider,
+//     layerServiceProvider,
+//     utilsServiceProvider,
+//     kgServiceProvider
+// } from './shared/service.provider';
 
 import { RPMStatsService } from './shared/rpmstats.service';
 let RPMStatsServiceFactory = (http: HttpClient) => {
@@ -95,7 +95,8 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
       BrowserModule,
       FormsModule,
       HttpClientModule,
-      HttpClientJsonpModule
+      HttpClientJsonpModule,
+      GeoPlatformClientModule
   ],
   providers: [
       {
@@ -112,12 +113,7 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
       {
           provide: RPMService,
           useValue: RPMServiceFactory()
-      },
-      itemServiceProvider,
-      serviceServiceProvider,
-      layerServiceProvider,
-      utilsServiceProvider,
-      kgServiceProvider
+      }
   ],
   bootstrap: [AppComponent]
 })

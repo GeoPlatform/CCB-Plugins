@@ -21,7 +21,6 @@ import "leaflet.vectorgrid";
 import {
     DataProvider, Events, DataEvent, Extent, LayerState
 } from '../shared/data.provider';
-import { layerServiceFactory } from '../shared/service.provider';
 import { environment } from '../../environments/environment';
 import { logger } from '../shared/logger';
 

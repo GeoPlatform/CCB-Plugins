@@ -12,7 +12,6 @@ import {
 } from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { PluginAuthService } from '../shared/auth.service';
-import { itemServiceFactory } from '../shared/service.provider';
 import { environment } from '../../environments/environment';
 import { logger } from "../shared/logger";
 

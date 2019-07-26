@@ -7,7 +7,6 @@ import { Subscription } from "rxjs";
 import { Query, LayerService } from "@geoplatform/client";
 
 import { DataProvider, DataEvent, Events } from '../shared/data.provider';
-import { layerServiceFactory } from '../shared/service.provider';
 import { logger } from "../shared/logger";
 
 

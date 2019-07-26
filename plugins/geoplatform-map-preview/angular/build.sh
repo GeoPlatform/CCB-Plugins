@@ -25,7 +25,7 @@ declare -a names=(
 )
 
 for name in "${names[@]}"; do
-  echo $NGDIST/$name.js " -> " $JSDEST/$name-es2015.js
+  echo $NGDIST/$name-es2015.js " -> " $JSDEST/$name.js
   cp $NGDIST/$name-es2015.js $JSDEST/$name.js
   cp $NGDIST/$name-es2015.js.map $JSDEST/$name.js.map
 done
