@@ -12,14 +12,15 @@ declare const L: any;   //needed this way to ensure leaflet-draw is properly imp
 import 'leaflet-draw';
 
 import { Config, UtilsService } from '@geoplatform/client';
+import { NG2HttpClient, utilsServiceProviderFactory } from '@geoplatform/client/angular';
 
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 import { ExtentCodec } from './codec';
 
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { utilsServiceFactory } from '../../shared/service.provider';
 import { HttpTypeaheadService } from '../../shared/typeahead';
-import { utilsServiceFactory } from '../../shared/service.provider';
 
 
 
@@ -35,8 +36,7 @@ class GazetteerTypeaheadService implements HttpTypeaheadService {
     private service : UtilsService;
 
     constructor(private http: HttpClient) {
-        let client = new NG2HttpClient(http);
-        this.service = utilsServiceFactory(http);//new UtilsService(Config.ualUrl, client);
+        this.service = utilsServiceProviderFactory(http);
     }
 
     search(term: string) {

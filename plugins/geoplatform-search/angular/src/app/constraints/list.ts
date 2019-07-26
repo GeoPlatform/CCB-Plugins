@@ -5,10 +5,10 @@ import { debounceTime } from 'rxjs/operators';
 import {
     Config, Query, QueryParameters, ItemService, ItemTypes
 } from '@geoplatform/client';
-import { NG2HttpClient } from "@geoplatform/client/angular";
+import { NG2HttpClient, itemServiceProviderFactory } from '@geoplatform/client/angular';
 
 // import { NG2HttpClient } from '../shared/NG2HttpClient';
-import { itemServiceFactory } from '../shared/service.provider';
+// import { itemServiceFactory } from '../shared/service.provider';
 
 import { Constraint, Constraints } from '../models/constraint';
 
@@ -45,7 +45,7 @@ export class ItemListConstraint {
         private _ngZone: NgZone,
         protected http : HttpClient
     ) {
-        this.service = itemServiceFactory(http);
+        this.service = itemServiceProviderFactory(http);
     }
 
     initialize(constraints: Constraints) {

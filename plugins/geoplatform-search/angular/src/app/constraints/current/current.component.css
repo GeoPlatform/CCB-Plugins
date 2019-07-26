@@ -6,6 +6,7 @@
     align-items: center;
     font-size: 1.25em;
     font-weight: 700;
+    text-transform: uppercase;
 }
 .o-current-constraints .heading span {
     flex: 1;

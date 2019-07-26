@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Params } from '@angular/router';
 import { Config, Query, QueryParameters, ItemService } from '@geoplatform/client';
+import { itemServiceProviderFactory } from '@geoplatform/client/angular';
 
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 
-import { itemServiceFactory } from '../../shared/service.provider';
+// import { itemServiceFactory } from '../../shared/service.provider';
 
 export class CommunityCodec implements Codec {
 
     private service : ItemService;
 
     constructor(private http : HttpClient) {
-        this.service = itemServiceFactory(http);
+        this.service = itemServiceProviderFactory(http);
     }
 
     getKey() : string { return QueryParameters.USED_BY_ID; };

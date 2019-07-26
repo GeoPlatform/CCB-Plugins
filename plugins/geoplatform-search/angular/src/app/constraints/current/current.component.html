@@ -7,7 +7,7 @@
         <span>Current Filters</span>
         <button type="button" class="btn btn-outline-danger btn-sm"
             title="Remove all constraints"
-            (click)="clear()">
+            *ngIf="!isClosed" (click)="clear()">
             clear all
         </button>
     </div>
@@ -41,7 +41,7 @@
             <div *ngIf="isMultiValue(constraint)">
                 <div *ngFor="let value of constraint.value"
                     class="m-constraint__value">
-                    <button type="button" class="btn btn-light btn-sm"
+                    <button type="button" class="btn btn-link btn-sm"
                         title="Remove this value"
                         (click)="removeValue(constraint, value)">
                         <span class="far fa-times-circle t-fg--danger"></span>

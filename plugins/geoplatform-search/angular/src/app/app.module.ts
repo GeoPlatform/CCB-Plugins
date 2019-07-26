@@ -17,7 +17,9 @@ import { environment } from '../environments/environment';
 import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
 import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
-import { TrackingService } from '@geoplatform/client';
+import { Config, TrackingService } from '@geoplatform/client';
+import { GeoPlatformClientModule } from '@geoplatform/client/angular';
+
 
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
@@ -30,8 +32,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: 'marker-icon.png',
   shadowUrl: 'marker-shadow.png',
 });
-
-import { Config } from '@geoplatform/client';
 
 
 import { AppComponent } from './app.component';
@@ -69,12 +69,12 @@ import { SimilarityComponent } from './constraints/similarity/similarity.compone
 import { LegendComponent } from './results/portfolio/legend/legend.component';
 
 
-import {
-    itemServiceProvider,
-    serviceServiceProvider,
-    utilsServiceProvider,
-    kgServiceProvider
-} from './shared/service.provider';
+// import {
+//     itemServiceProvider,
+//     serviceServiceProvider,
+//     utilsServiceProvider,
+//     kgServiceProvider
+// } from './shared/service.provider';
 
 
 
@@ -154,6 +154,7 @@ export function initializeApp() {
     FormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
+    GeoPlatformClientModule,
     NgbModule
   ],
   providers: [
@@ -167,10 +168,10 @@ export function initializeApp() {
           useFactory: initializeApp,
           multi: true
       },
-      itemServiceProvider,
-      serviceServiceProvider,
-      utilsServiceProvider,
-      kgServiceProvider,
+      // itemServiceProvider,
+      // serviceServiceProvider,
+      // utilsServiceProvider,
+      // kgServiceProvider,
       {
           provide: NgbDateAdapter,
           useClass: UTCDatepickerAdapter

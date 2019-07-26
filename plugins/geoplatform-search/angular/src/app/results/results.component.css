@@ -5,6 +5,9 @@
     padding-top: 0.25em;
     padding-left: 1em;
 }
+.nav-tabs.nav-tabs--gp>li.nav-item>a.nav-link {
+    text-transform: uppercase;
+}
 .nav-tabs.nav-tabs--gp>li.nav-item>a.nav-link.active,
 .nav-tabs.nav-tabs--gp>li.nav-item>a.nav-link.active:focus,
 .nav-tabs.nav-tabs--gp>li.nav-item>a.nav-link.active:hover {

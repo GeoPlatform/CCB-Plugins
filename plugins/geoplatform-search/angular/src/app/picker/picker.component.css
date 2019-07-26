@@ -30,6 +30,7 @@
     align-items: center;
     font-size: 1.25em;
     font-weight: 700;
+    text-transform: uppercase;
 }
 .m-constraint-selector__heading span {
     flex: 1;
@@ -54,4 +55,10 @@
 .m-constraint__option:hover {
     background-color: #f5f5f5;
     font-weight: 700;
+}
+
+
+
+.c-constraint-container {
+    width: 22em;
 }

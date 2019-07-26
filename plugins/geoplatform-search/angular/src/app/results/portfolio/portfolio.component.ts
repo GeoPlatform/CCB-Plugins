@@ -1,7 +1,6 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy,
-    Input, Output, EventEmitter,
-    SimpleChanges, SimpleChange
+    Inject, Component, OnInit, OnChanges, OnDestroy,
+    Input, Output, EventEmitter, SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject, Subscription } from "rxjs";
@@ -23,7 +22,7 @@ import { PagingEvent } from '../../shared/paging/paging.component';
 // import { ServerRoutes } from '../../server-routes.enum'
 import { environment } from '../../../environments/environment';
 
-import { itemServiceFactory, trackingServiceFactory } from '../../shared/service.provider';
+import { trackingServiceFactory } from '../../shared/service.provider';
 
 
 @Component({
@@ -48,8 +47,11 @@ export class PortfolioComponent implements OnInit, OnChanges, OnDestroy {
     private itemService : ItemService;
     private trackingService : TrackingService;
 
-    constructor( private http : HttpClient ) {
-        this.itemService = itemServiceFactory(http);
+    constructor(
+        private http : HttpClient,
+        @Inject(ItemService) itemService : ItemService
+    ) {
+        this.itemService = itemService;
         this.trackingService = trackingServiceFactory();
         this.defaultQuery = new Query().pageSize(this.pageSize);
         this.sortField = '_score,desc';
