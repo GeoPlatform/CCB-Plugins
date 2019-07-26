@@ -25,12 +25,10 @@ import {
     StepComponent, StepEvent, StepError
 } from '../step.component';
 import { environment } from '../../../environments/environment';
-import { NG2HttpClient } from '../../http-client';
 
 import {
     ModelProperties, ClassifierTypes, AppEventTypes
 } from '../../model';
-import { kgServiceFactory } from '../../item-service.provider';
 
 
 

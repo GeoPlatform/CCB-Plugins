@@ -8,6 +8,7 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Config } from '@geoplatform/client';
+import { GeoPlatformClientModule } from '@geoplatform/client/angular';
 
 
 import {
@@ -31,12 +32,12 @@ import { AutocompleteMatChipComponent } from "./autocomplete.component";
 import { TokenInterceptor } from '@geoplatform/oauth-ng/angular'
 import { PluginAuthService } from "./auth.service";
 
-import {
-    itemServiceProvider,
-    serviceServiceProvider,
-    utilsServiceProvider,
-    kgServiceProvider
-} from './item-service.provider';
+// import {
+//     itemServiceProvider,
+//     serviceServiceProvider,
+//     utilsServiceProvider,
+//     kgServiceProvider
+// } from './item-service.provider';
 
 export function initializeApp() {
   return () => {
@@ -107,7 +108,8 @@ export class PrettyJsonPipe implements PipeTransform {
         MatListModule, MatStepperModule, MatFormFieldModule,
         MatDatepickerModule, MatNativeDateModule, MatSelectModule,
         MatCheckboxModule, MatAutocompleteModule, MatIconModule,
-        MatChipsModule, MatProgressSpinnerModule
+        MatChipsModule, MatProgressSpinnerModule,
+        GeoPlatformClientModule
     ],
     providers: [
         {
@@ -121,10 +123,6 @@ export class PrettyJsonPipe implements PipeTransform {
         //     multi: true
         // },
         PluginAuthService,
-        itemServiceProvider,
-        serviceServiceProvider,
-        utilsServiceProvider,
-        kgServiceProvider,
         MatIconRegistry
     ],
     bootstrap: [AppComponent]

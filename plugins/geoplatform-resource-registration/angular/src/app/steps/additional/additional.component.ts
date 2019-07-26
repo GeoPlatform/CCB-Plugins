@@ -23,10 +23,8 @@ import {
 import { AppEvent } from '../../app.component';
 import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
-import { NG2HttpClient } from '../../http-client';
 
 import { ModelProperties, AppEventTypes } from '../../model';
-import { itemServiceFactory } from '../../item-service.provider';
 
 
 const URL_VALIDATOR = Validators.pattern("https?://.+");

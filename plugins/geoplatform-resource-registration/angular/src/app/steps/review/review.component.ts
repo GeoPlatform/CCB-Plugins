@@ -35,9 +35,7 @@ import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 import { ClassifierTypes } from '../../model';
-import {
-    itemServiceFactory, svcServiceFactory
-} from '../../item-service.provider';
+
 import { AppError } from '../../model';
 import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
 import { PluginAuthService } from '../../auth.service';

@@ -9,7 +9,6 @@ import { MatStepper, MatIconRegistry } from '@angular/material';
 import { ItemTypes, ItemService } from '@geoplatform/client';
 import * as Q from "q";
 
-import { itemServiceFactory } from './item-service.provider';
 import { StepComponent, StepEvent } from './steps/step.component';
 import { TypeComponent } from './steps/type/type.component';
 import { AdditionalComponent } from './steps/additional/additional.component';
