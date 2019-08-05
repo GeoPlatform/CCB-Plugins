@@ -14,15 +14,6 @@
 
 // Getting theme mods for search bar and mega-menu hiding checks.
 $geopccb_theme_options = geop_ccb_get_theme_mods();
-
-// Bootstrap determination logic.
-$geopccb_bootstrap_use = true;
-if (get_theme_mod('bootstrap_controls', $geopccb_theme_options['bootstrap_controls']) == 'gone')
-  $geopccb_bootstrap_use = false;
-elseif (isset($post)){
-  if ( $post->post_name == 'geoplatform-search' || $post->post_name == 'register' || $post->post_name == 'geoplatform-items' )
-    $geopccb_bootstrap_use = false;
-}
 ?>
 
 <!-- HTML head stuff -->
