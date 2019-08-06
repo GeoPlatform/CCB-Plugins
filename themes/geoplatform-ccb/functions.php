@@ -53,21 +53,6 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
 }
 
-// Loads bootstrap resources, but only for pages that aren't Angular with bundled
-// OR if bootstrap is turned off.
-// if ( ! function_exists ( 'geopccb_enqueue_bootstrap' ) ) {
-//   function geopccb_enqueue_bootstrap() {
-//     $geop_ccb_options = geop_ccb_get_theme_mods();
-//
-//   	if ( (get_theme_mod('bootstrap_controls', $geop_ccb_options['bootstrap_controls']) == 'on')
-//         && ( !is_page( array('geoplatform-search', 'register', 'geoplatform-items', 'geoplatform-map-preview') ) )
-//         && ( !wp_script_is('geop_bootstrap_js' ) ) ){
-//   		wp_enqueue_script( 'geop_bootstrap_js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
-//   	}
-//   }
-//   add_action( 'wp_enqueue_scripts', 'geopccb_enqueue_bootstrap' );
-// }
-
 /**
  * Override banner background-image as the custom header
  *
@@ -1992,4 +1977,21 @@ if ( ! function_exists ( 'geop_ccb_lower_community_links' ) ) {
       echo strip_tags( wp_nav_menu( $geopccb_head_menu_array ), '<a>' );
     echo "</ul>";
   }
+}
+
+/**
+ * CDN Distribution handler
+ *
+ * @link https://github.com/YahnisElsts/plugin-update-checker
+ */
+if ( ! function_exists ( 'geop_ccb_distro_manager' ) ) {
+  function geop_ccb_distro_manager() {
+    require dirname(__FILE__) . '/plugin-update-checker-4.7/plugin-update-checker.php';
+    $myUpdateChecker = Puc_v4_Factory::buildUpdateChecker(
+    	'https://raw.githubusercontent.com/GeoPlatform/CCB-Plugins/develop/config/gp-ccb-update-details.json',
+    	__FILE__,
+    	'geoplatform-ccb'
+    );
+  }
+  geop_ccb_distro_manager();
 }
