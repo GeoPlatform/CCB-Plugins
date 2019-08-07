@@ -164,7 +164,7 @@ function geopsearch_shortcode_creation($atts){
 	  <div class="row">
   		<form id="geoplatformsearchform">
       	<div class="input-group-slick input-group-slick--lg" style="width: 100%; font-family: Lato,Helvetica,Arial,sans-serif;">
-          <span class="glyphicon glyphicon-search"></span>
+          <span class="icon fas fa-search"></span>
           <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg">
           <button id="geoplatformsearchbutton" type="button" class="btn btn-primary">Search</button>
         </div>

@@ -109,7 +109,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 ## Changelog
 
 ### 4.0.3 ###
-* Release pending
+* Release August 9, 2019
 
 - Added automatic update notification and one-click update execution functionality.
 
