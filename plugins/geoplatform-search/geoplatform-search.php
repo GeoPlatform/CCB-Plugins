@@ -156,35 +156,35 @@ add_action( 'template_redirect', 'geopsearch_page_enqueues' );
 
 // Hook backbone for shortcode interpretation.
 function geopsearch_shortcode_creation($atts){
-  ob_start();?>
+  ob_start();
 
-	<!-- Search bar section. -->
-	<br>
-	<div class="container-fluid">
-	  <div class="row">
-  		<form id="geoplatformsearchform">
-      	<div class="input-group-slick input-group-slick--lg" style="width: 100%; font-family: Lato,Helvetica,Arial,sans-serif;">
-          <span class="icon fas fa-search"></span>
-          <input id="geoplatformsearchfield" type="text" placeholder="Search the GeoPlatform" class="form-control input-lg">
-          <button id="geoplatformsearchbutton" type="button" class="btn btn-primary">Search</button>
-        </div>
-	    </form>
-	  </div>
-	</div>
+	// Search bar output
+	echo "<br>";
+	echo "<form id='geoplatformsearchform'>";
+	  echo "<div class='input-group-slick geopsearch-shortcode-div'>";
+	    echo "<span class='icon fas fa-search'></span>";
+	    echo "<input type='text' class='form-control' id='geoplatformsearchfield' style='padding-right:5em' placeholder='" . esc_attr( 'Search the GeoPlatform', 'geoplatform-ccb' ) . "'/>";
+	    echo "<button type='submit' class='btn btn-default' id='geoplatformsearchbutton'>". __( 'Search', 'geoplatform-ccb') . "</button>";
+	  echo "</div>";
+	echo "</form>";
+	echo "<br>";
 
+	?>
+
+	<!-- Javascript integration -->
 	<script>
 
 	// Code section. First jQuery triggers off of form submission (enter button) and
 	// navigates to the geoplatform-search page with the search field params.
-	jQuery( "#geoplatformsearchform" ).submit(function( event ) {
-	  event.preventDefault();
-	  window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
-	});
+	  jQuery( "#geoplatformsearchform" ).submit(function( event ) {
+	    event.preventDefault();
+	    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield').val();
+	  });
 
 	// Functionally identical to above, triggered by submit button press.
-	jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
-	  window.location.href='geoplatform-search/#/?q='+jQuery('#geoplatformsearchfield').val();
-	});
+	  jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
+	    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield').val();
+	  });
 	</script>
 
 	<?php
