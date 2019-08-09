@@ -11,7 +11,7 @@
     <div *ngIf="errors && errors.length">
         <br>
         <strong> Errors encountered: </strong>
-        <div *ngFor="let error of errors" class="u-mg-bottom--sm u-text--sm">
+        <div *ngFor="let error of errors" class="u-mg-bottom--sm u-text--sm u-break--all">
             <span class="fas fa-exclamation-circle t-fg--danger"></span>
             {{error.message}}
         </div>
@@ -21,7 +21,7 @@
         <br>
         <strong> Warnings encountered: </strong>
         <div *ngFor="let warning of warnings">
-            <span class="fas fa-exclamation-triangle t-fg--warning"></span>
+            <span class="fas fa-exclamation-triangle t-fg--warning u-break--all"></span>
             {{warning.message}}
         </div>
     </div>
