@@ -109,9 +109,10 @@ Source: (https://getbootstrap.com/docs/3.3/)
 ## Changelog
 
 ### 4.0.3 ###
-* Release pending
+* Release August 9, 2019
 
 - Added automatic update notification and one-click update execution functionality.
+- Widened search bars in the header to reasonable widths.
 
 ### 4.0.2 ###
 * Release August 5, 2019
