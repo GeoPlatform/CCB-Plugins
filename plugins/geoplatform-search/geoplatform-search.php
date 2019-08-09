@@ -158,13 +158,15 @@ add_action( 'template_redirect', 'geopsearch_page_enqueues' );
 function geopsearch_shortcode_creation($atts){
   ob_start();
 
+	// Random number in case of multiple search inputs on one page.
+	$geopsearch_rand = rand(0, 999);
 	// Search bar output
 	echo "<br>";
-	echo "<form id='geoplatformsearchform'>";
+	echo "<form id='geoplatformsearchform" . $geopsearch_rand . "'>";
 	  echo "<div class='input-group-slick geopsearch-shortcode-div'>";
 	    echo "<span class='icon fas fa-search'></span>";
-	    echo "<input type='text' class='form-control' id='geoplatformsearchfield' style='padding-right:5em' placeholder='" . esc_attr( 'Search the GeoPlatform', 'geoplatform-ccb' ) . "'/>";
-	    echo "<button type='submit' class='btn btn-default' id='geoplatformsearchbutton'>". __( 'Search', 'geoplatform-ccb') . "</button>";
+	    echo "<input type='text' class='form-control' id='geoplatformsearchfield" . $geopsearch_rand . "' style='padding-right:5em' placeholder='" . esc_attr( 'Search the GeoPlatform', 'geoplatform-ccb' ) . "'/>";
+	    echo "<button type='submit' class='btn btn-default' id='geoplatformsearchbutton" . $geopsearch_rand . "'>". __( 'Search', 'geoplatform-ccb') . "</button>";
 	  echo "</div>";
 	echo "</form>";
 	echo "<br>";
@@ -176,14 +178,14 @@ function geopsearch_shortcode_creation($atts){
 
 	// Code section. First jQuery triggers off of form submission (enter button) and
 	// navigates to the geoplatform-search page with the search field params.
-	  jQuery( "#geoplatformsearchform" ).submit(function( event ) {
+	  jQuery( "#geoplatformsearchform<?php echo $geopsearch_rand ?>" ).submit(function( event ) {
 	    event.preventDefault();
-	    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield').val();
+	    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield<?php echo $geopsearch_rand ?>').val();
 	  });
 
 	// Functionally identical to above, triggered by submit button press.
-	  jQuery( "#geoplatformsearchbutton" ).click(function( event ) {
-	    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield').val();
+	  jQuery( "#geoplatformsearchbutton<?php echo $geopsearch_rand ?>" ).click(function( event ) {
+	    window.location.href='<?php echo home_url('geoplatform-search') ?>/#/?q='+jQuery('#geoplatformsearchfield<?php echo $geopsearch_rand ?>').val();
 	  });
 	</script>
 
