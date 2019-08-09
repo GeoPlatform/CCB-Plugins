@@ -3,11 +3,10 @@ import {
     Input, Output, EventEmitter, SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ISubscription } from "rxjs/Subscription";
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/debounceTime';
+import { Subject, Subscription } from "rxjs";
+import { debounceTime } from 'rxjs/operators';
 
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 import { CkanService } from '../../shared/ckan.service';
 import { Constraints, Constraint } from '../../models/constraint';
@@ -26,7 +25,7 @@ export class CkanComponent implements OnInit {
     @Input() constraints: Constraints;
 
     private service : CkanService;
-    private listener : ISubscription;
+    private listener : Subscription;
     public totalResults : number = 0;
     public pageSize : number = 10;
     public query : Query;
@@ -44,7 +43,7 @@ export class CkanComponent implements OnInit {
 
         //use a subject so we can debounce query execution events
         this.queryChange
-            .debounceTime(500)
+            .pipe( debounceTime(500) )
             .subscribe((query) => this.executeQuery() );
     }
 
@@ -83,8 +82,11 @@ export class CkanComponent implements OnInit {
         // will most likely be needed to derive the CKAN org name.
         let publisher = constraints.get(QueryParameters.PUBLISHERS_ID);
         if(publisher) {
-            let orgs = (publisher.value as any[]).map(pub=>findOrgName(pub)).filter(o=>!!o);
-            this.query.set(QueryParameters.PUBLISHERS_ID, orgs);
+            let orgs = (publisher.value as any[])
+                .map(pub=>findOrgName(pub))
+                .filter(o=>!!o)
+                .map(o => o.uniqueId);
+            this.query.setPublishers(orgs);
         }
 
         this.queryChange.next(this.query);

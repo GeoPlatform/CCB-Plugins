@@ -1,6 +1,5 @@
-import { Observable, Observer, Subject }          from 'rxjs';
-import { ISubscription }                from "rxjs/Subscription";
-import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { Observable, Observer, Subject, Subscription } from 'rxjs';
+import { AuthService, GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 import { authServiceFactory }           from './auth.factory';
 import { PluginAuthService } from './auth.service';
 import { logger } from './logger';
@@ -12,7 +11,7 @@ import { logger } from './logger';
 export abstract class AuthenticatedComponent {
 
     public user : GeoPlatformUser;
-    private gpAuthSubscription : ISubscription;
+    private gpAuthSubscription : Subscription;
 
     constructor( private authService : PluginAuthService ) {
 

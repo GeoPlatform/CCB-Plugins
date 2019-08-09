@@ -7,15 +7,15 @@ import {
     SimpleChanges
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of, from } from 'rxjs';
 import {
     catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge
 } from 'rxjs/operators';
-import { fromPromise } from 'rxjs/observable/fromPromise';
 
-import { Config, KGService, KGQuery } from 'geoplatform.client';
+import { Config, KGService, KGQuery } from '@geoplatform/client';
+import { NG2HttpClient } from "@geoplatform/client/angular";
 
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
 
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';
@@ -43,7 +43,7 @@ class RecommenderTypeaheadService implements HttpTypeaheadService {
     }
 
     search(term: string) {
-        if (term === '') return Observable.of([]);
+        if (term === '') return of([]);
 
         this.listQuery.q(term);
         let promise = this.service.suggest(this.listQuery)
@@ -51,7 +51,7 @@ class RecommenderTypeaheadService implements HttpTypeaheadService {
         // .catch(e => {
             // return Promise.reject(e)
         // });
-        return fromPromise(promise).pipe(
+        return from(promise).pipe(
             map((response:any) => response.results||[]),
             //catch and gracefully handle rejections
             catchError(error => {
@@ -84,7 +84,7 @@ export class SemanticComponent implements OnInit, OnChanges, OnDestroy, Constrai
     public totalResults : number = 0;
     public listFilter: string = "";
     private listQuery: KGQuery = new KGQuery().pageSize(10);
-    public selections : [{uri:string}] = [] as [{uri:string}];
+    public selections : {uri:string}[] = [] as {uri:string}[];
     private resultsSrc = new Subject<any>();
     public resultsObs$ = this.resultsSrc.asObservable();
 

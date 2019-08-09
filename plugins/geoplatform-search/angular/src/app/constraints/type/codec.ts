@@ -1,6 +1,6 @@
 
 import { Params } from '@angular/router';
-import { Query, QueryParameters, ItemTypes, ItemTypeLabels } from 'geoplatform.client';
+import { Query, QueryParameters, ItemTypes, ItemTypeLabels } from '@geoplatform/client';
 import {
     Constraint, MultiValueConstraint, Constraints, FacetCount
 } from '../../models/constraint';

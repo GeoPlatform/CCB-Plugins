@@ -1,5 +1,5 @@
-
-import { Query, QueryParameters } from "geoplatform.client";
+import { Observable, Subject, Subscription } from 'rxjs';
+import { Query, QueryParameters } from "@geoplatform/client";
 import { Codec } from './codec';
 
 
@@ -157,8 +157,7 @@ export class CompoundConstraint extends Constraint {
 
 
 
-import { Observable, Subject } from 'rxjs';
-import { ISubscription } from "rxjs/Subscription";
+
 
 
 /**
@@ -169,12 +168,12 @@ export class Constraints {
     events : Subject<Constraint> = new Subject<Constraint>();
     facetEvents : Subject<Facet[]> = new Subject<Facet[]>();
 
-    public constraints : [Constraint] = [] as [Constraint];
+    public constraints : Constraint[] = [] as Constraint[];
     public facets : Facet[] = [] as Facet[];
 
     constructor() { }
 
-    on( callback : any ) : ISubscription {
+    on( callback : any ) : Subscription {
         return this.events.subscribe( callback );
     }
 
@@ -217,7 +216,7 @@ export class Constraints {
     }
 
     clear() {
-        this.constraints = [] as [Constraint];
+        this.constraints = [] as Constraint[];
         this.events.next(null);
     }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { QueryParameters } from 'geoplatform.client';
+import { QueryParameters } from '@geoplatform/client';
 
 import { Constraints, Constraint, MultiValueConstraint } from '../../models/constraint';
 import { TemporalCodec, Constants as TemporalConstants } from '../temporal/codec';

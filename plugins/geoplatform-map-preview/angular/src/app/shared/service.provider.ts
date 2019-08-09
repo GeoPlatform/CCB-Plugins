@@ -1,93 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import {
-    Config,
-    ItemService,
-    ServiceService,
-    LayerService,
-    UtilsService,
-    KGService
-} from 'geoplatform.client';
-import { NG2HttpClient } from './http-client';
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
+import { environment } from '../../environments/environment';
 
+var _rpmService : RPMService = null;
 
-
-var client : NG2HttpClient = null;
-var itemService : ItemService = null;
-var svcService : ServiceService = null;
-var utilsService : UtilsService = null;
-var kgService : KGService = null;
-var lyrService : LayerService = null;
-
-
-
-
-export function itemServiceFactory( http : HttpClient ) {
-    if(itemService) return itemService;
-    if(client === null) client = new NG2HttpClient(http);
-    // console.log("Creating ItemService using:");
-    // console.log(Config);
-    itemService = new ItemService(Config.ualUrl, client);
-    return itemService;
-}
-export function svcServiceFactory( http : HttpClient ) {
-    if(svcService) return svcService;
-    if(client === null) client = new NG2HttpClient(http);
-    // console.log("Creating ServiceService using:");
-    // console.log(Config);
-    svcService = new ServiceService(Config.ualUrl, client);
-    return svcService;
-}
-export function lyrServiceFactory( http : HttpClient ) {
-    if(lyrService) return lyrService;
-    if(client === null) client = new NG2HttpClient(http);
-    // console.log("Creating LayerService using:");
-    // console.log(Config);
-    lyrService = new LayerService(Config.ualUrl, client);
-    return lyrService;
-}
-export function utilsServiceFactory( http : HttpClient ) {
-    if(utilsService) return utilsService;
-    if(client === null) client = new NG2HttpClient(http);
-    // console.log("Creating UtilsService using:");
-    // console.log(Config);
-    utilsService = new UtilsService(Config.ualUrl, client);
-    return utilsService;
-}
-export function kgServiceFactory( http : HttpClient ) {
-    if(kgService) return kgService;
-    if(client === null) client = new NG2HttpClient(http);
-    // console.log("Creating KGService using:");
-    // console.log(Config);
-    kgService = new KGService(Config.ualUrl, client);
-    return kgService;
+export function rpmServiceFactory() {
+    if(_rpmService) return _rpmService;
+    _rpmService = new RPMService(environment.rpmUrl, environment.rpmToken);
+    return _rpmService;
 }
 
-export let itemServiceProvider = {
-    provide: ItemService,
-    useFactory: itemServiceFactory,
-    deps: [ HttpClient ]
-}
-
-export let serviceServiceProvider = {
-    provide: ServiceService,
-    useFactory: svcServiceFactory,
-    deps: [ HttpClient ]
-}
-
-export let layerServiceProvider = {
-    provide: LayerService,
-    useFactory: lyrServiceFactory,
-    deps: [ HttpClient ]
-}
-
-export let utilsServiceProvider = {
-    provide: UtilsService,
-    useFactory: utilsServiceFactory,
-    deps: [ HttpClient ]
-}
-
-export let kgServiceProvider = {
-    provide: KGService,
-    useFactory: kgServiceFactory,
-    deps: [ HttpClient ]
+export let rpmServiceProvider = {
+    provide: RPMService,
+    useFactory: rpmServiceFactory
 }

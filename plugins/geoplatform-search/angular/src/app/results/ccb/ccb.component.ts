@@ -3,9 +3,9 @@ import {
     Input, Output, EventEmitter, SimpleChanges, SimpleChange
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs/Subject';
-import { ISubscription } from "rxjs/Subscription";
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 import { CCBService } from '../../shared/ccb.service';
 import { Constraints, Constraint } from '../../models/constraint';
@@ -24,7 +24,7 @@ export class CcbComponent implements OnInit {
     @Input() constraints: Constraints;
 
     public service : CCBService;
-    private listener : ISubscription;
+    private listener : Subscription;
     public totalResults : number = 0;
     private defaultQuery : Query;
     public pageSize : number = 20;
@@ -52,7 +52,7 @@ export class CcbComponent implements OnInit {
 
         //use a subject so we can debounce query execution events
         this.queryChange
-            .debounceTime(500)
+            .pipe( debounceTime(500) )
             .subscribe((query) => this.executeQuery() );
     }
 

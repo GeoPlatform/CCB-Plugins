@@ -1,6 +1,6 @@
 
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
-import { ItemTypeLabels } from 'geoplatform.client';
+import { ItemTypeLabels } from '@geoplatform/client';
 
 /*
  * Limits an array of entries to a maximum number

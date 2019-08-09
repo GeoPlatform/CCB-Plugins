@@ -6,7 +6,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { async, inject, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { InlineSVGModule } from 'ng-inline-svg';
-import { Config, QueryParameters } from 'geoplatform.client';
+import { Config, QueryParameters } from '@geoplatform/client';
 
 import { Constraint, Constraints } from '../../models/constraint';
 import { PortfolioComponent } from './portfolio.component';

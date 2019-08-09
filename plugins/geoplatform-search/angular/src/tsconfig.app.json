@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "./",
-    "module": "es2015",
+    "paths": {
+        "@app" : ["./src/app"],
+        "@geoplatform/client/angular": ["../node_modules/@geoplatform/client/dist/angular"]
+    },
     "types": []
   },
   "exclude": [

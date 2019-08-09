@@ -1,5 +1,5 @@
 
-import { L } from "geoplatform.mapcore";
+import * as L from "leaflet";
 
 
 export var ResetExtentControl = L.Control.extend({
@@ -19,7 +19,7 @@ export var ResetExtentControl = L.Control.extend({
         var container = L.DomUtil.create('div', 'leaflet-control-extent leaflet-bar');
         var link = L.DomUtil.create('a', classes, container);
         link.innerHTML = '<span class="fas fa-globe-americas"></span>';
-		link.href = '#';
+		(link as any).href = '#';
 		link.title = "Reset map to resource's extent";
 
 

@@ -5,7 +5,7 @@ import {
 } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
 // import { ServerRoutes } from '../server-routes.enum'
 import { environment } from '../../environments/environment';
 
@@ -21,8 +21,8 @@ import { environment } from '../../environments/environment';
 @Injectable()
 export class EnvironmentSettings {
 
-    public envNull: Config = null;
-    private envSubject: Subject<Config> = new Subject<Config>();
+    public envNull : any = null;
+    private envSubject: Subject<any> = new Subject<any>();
 
     constructor(private http: HttpClient) { }
 
@@ -41,7 +41,7 @@ export class EnvironmentSettings {
         });
     }
 
-    public subscribe(caller: any, callback: (caller: any, es: Config) => void) {
+    public subscribe(caller: any, callback: (caller: any, es: any) => void) {
         this.envSubject.subscribe( (env) => {
             if (env === null) return;
             callback(caller, env);

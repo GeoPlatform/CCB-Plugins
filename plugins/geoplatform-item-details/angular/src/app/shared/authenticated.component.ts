@@ -1,6 +1,5 @@
-import { Observable, Observer, Subject }          from 'rxjs';
-import { ISubscription }                from "rxjs/Subscription";
-import { AuthService, GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { Observable, Observer, Subject, Subscription } from 'rxjs';
+import { AuthService, GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 
 import { PluginAuthService } from './auth.service';
 
@@ -15,7 +14,7 @@ const EDIT_ROLE = 'gp_editor';
 export abstract class AuthenticatedComponent {
 
     public user : GeoPlatformUser;
-    private gpAuthSubscription : ISubscription;
+    private gpAuthSubscription : Subscription;
     // protected authService : AuthService;
 
     constructor(private authService : PluginAuthService) {

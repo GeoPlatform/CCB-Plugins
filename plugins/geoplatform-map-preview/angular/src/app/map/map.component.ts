@@ -1,28 +1,26 @@
 import {
-    Component, OnInit, Input, OnChanges, SimpleChanges
+    Inject, Component, OnInit, Input, OnChanges, SimpleChanges
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ISubscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import {
     Config, ItemTypes, MapService, LayerService, ServiceFactory
-} from "geoplatform.client";
+} from "@geoplatform/client";
+import { NG2HttpClient } from '@geoplatform/client/angular';
 
 import {
-    MapFactory, MapInstance, OSM, LayerFactory, L, DefaultBaseLayer
-} from "geoplatform.mapcore";
+    MapFactory, MapInstance, OSM, LayerFactory, DefaultBaseLayer
+} from "@geoplatform/mapcore";
 
 
-// import * as Leaflet from 'leaflet';
-// var L = require('leaflet');
+import * as L from 'leaflet';
 import * as esri from "esri-leaflet";
 import "leaflet.vectorgrid";
 
 import {
     DataProvider, Events, DataEvent, Extent, LayerState
 } from '../shared/data.provider';
-import { layerServiceProvider } from '../shared/service.provider';
-import { NG2HttpClient } from '../shared/http-client';
 import { environment } from '../../environments/environment';
 import { logger } from '../shared/logger';
 
@@ -39,8 +37,7 @@ const EXTENT_STYLE = {
 @Component({
   selector: 'gpmp-map',
   templateUrl: './map.component.html',
-  styleUrls: ['./map.component.less'],
-  providers: [layerServiceProvider]
+  styleUrls: ['./map.component.less']
 })
 export class MapComponent implements OnInit, OnChanges {
 
@@ -53,14 +50,14 @@ export class MapComponent implements OnInit, OnChanges {
     private httpClient : NG2HttpClient;
     private map : MapInstance;
     private extentLayer : L.Layer;
-    private dataSubscription : ISubscription;
+    private dataSubscription : Subscription;
     private extentTimer : any;
+    private layerService : LayerService;
 
-    constructor(
-        private layerService : LayerService,
-        http : HttpClient
-    ) {
-        this.httpClient = new NG2HttpClient(http);
+    constructor( @Inject(LayerService) layerService : LayerService ) {
+        this.layerService = layerService;
+        this.httpClient = layerService.getClient();
+
         // this.httpClient.setAuthToken(function() {
         //     //uses token cached by ng-common's AuthenticationService
         //     let token = AuthenticationService.getJWTfromLocalStorage();
@@ -148,7 +145,9 @@ export class MapComponent implements OnInit, OnChanges {
      */
     setDefaultBaseLayer() {
         return DefaultBaseLayer.get(this.layerService).then(baseLayer => {
-            this.map.setBaseLayer(baseLayer);
+            if(this.map) {
+                this.map.setBaseLayer(baseLayer);
+            }
             return baseLayer;
         });
     }

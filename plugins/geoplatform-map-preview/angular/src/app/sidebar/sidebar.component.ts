@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { ISubscription } from "rxjs/Subscription";
 
 import { DataProvider } from '../shared/data.provider';
 

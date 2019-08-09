@@ -1,17 +1,17 @@
 import {
-    Component, OnInit, OnDestroy, OnChanges, SimpleChanges,
+    Inject, Component, OnInit, OnDestroy, OnChanges, SimpleChanges,
     Input, HostBinding
 } from '@angular/core';
-import { ISubscription } from "rxjs/Subscription";
-import { ItemService, ItemTypes } from 'geoplatform.client';
-import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { HttpClient } from '@angular/common/http';
+import { Subscription } from "rxjs";
+import { ItemService, ItemTypes, Map } from '@geoplatform/client';
+import { GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 
 import {
-    DataProvider, DataEvent, Events, MapItem, Extent, LayerState
+    DataProvider, DataEvent, Events, Extent, LayerState
 } from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { PluginAuthService } from '../shared/auth.service';
-import { itemServiceProvider } from '../shared/service.provider';
 import { environment } from '../../environments/environment';
 import { logger } from "../shared/logger";
 
@@ -23,8 +23,7 @@ const IS_DEV = 'development' === environment.env;
 @Component({
   selector: 'gpmp-map-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./details.component.less']
 })
 export class DetailsComponent extends AuthenticatedComponent implements OnInit, OnDestroy {
 
@@ -36,7 +35,8 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     public error : Error;
     public isSaving : boolean;
 
-    public mapItem : MapItem = {
+    public mapItem : Map = {
+        id          : null,
         uri         : null,
         type        : ItemTypes.MAP,
         title       : "My New Map",
@@ -55,19 +55,21 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
     public keyword : string;
 
-    private dataSubscription : ISubscription;
+    private dataSubscription : Subscription;
+    private itemService : ItemService;
 
     constructor(
-        private itemService : ItemService,
+        @Inject(ItemService) itemService : ItemService,
         authService : PluginAuthService
     ) {
         super(authService);
+        this.itemService = itemService;
     }
 
     ngOnInit() {
         super.ngOnInit();
 
-        this.itemService.client.setAuthToken( () => { return this.getAuthToken(); });
+        this.itemService.getClient().setAuthToken( () => { return this.getAuthToken(); });
 
         if(this.data) {
             this.dataSubscription = this.data.subscribe( (event : DataEvent) => {

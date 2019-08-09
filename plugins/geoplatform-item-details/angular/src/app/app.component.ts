@@ -1,14 +1,13 @@
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Inject, Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 
-import { Config, ItemService } from "geoplatform.client";
-import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { Config, ItemService } from "@geoplatform/client";
+import { NG2HttpClient } from '@geoplatform/client/angular';
+
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 import { ItemHelper } from './shared/item-helper';
 import { ItemDetailsError } from './shared/item-details-error';
-import { NG2HttpClient } from "./shared/http-client";
 import { environment } from '../environments/environment';
-import { itemServiceProvider } from './shared/service.provider';
 import { PluginAuthService } from './shared/auth.service';
 
 
@@ -18,22 +17,24 @@ const URL_REGEX = /resources\/([A-Za-z]+)\/([a-z0-9]+)/i;
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    providers: [itemServiceProvider]
+    styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
 
     public item : any;
     public error : ItemDetailsError;
+    private itemService : ItemService;
     private template: any;
+    private rpm: RPMService;
 
     constructor(
         private el: ElementRef,
-        private itemService : ItemService,
-        private rpm: RPMService,
-        private authService : PluginAuthService
+        private authService : PluginAuthService,
+        @Inject(ItemService) itemService: ItemService,
+        @Inject(RPMService) rpm : RPMService
     ) {
-
+        this.itemService = itemService;
+        this.rpm = rpm;
     }
 
     ngOnInit() {
@@ -55,12 +56,8 @@ export class AppComponent implements OnInit, OnDestroy {
         .then( item => {
             this.item = item;
             const TYPE = ItemHelper.getTypeLabel(item);
-            this.updatePageTitle(
-                `GeoPlatform Resource : ${TYPE}`
-                // ItemHelper.getLabel(this.item)
-            );
-            ;
-            this.rpm.logEvent(TYPE, 'Viewed', item.id);
+            this.updatePageTitle(`GeoPlatform Resource : ${TYPE}`);
+            // this.rpm.logEvent(TYPE, 'Viewed', item.id);
         })
         .catch( e => {
             //display error message indicating failure to load item

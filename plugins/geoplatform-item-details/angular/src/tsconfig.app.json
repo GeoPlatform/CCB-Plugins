@@ -3,7 +3,14 @@
     "compilerOptions": {
         "outDir": "../out-tsc/app",
         "baseUrl": "./",
-        "module": "es2015",
+        "paths": {
+            "@deps": ["../node_modules"],
+            "@app" : ["./src/app"],
+            "@geoplatform/client/angular": ["../node_modules/@geoplatform/client/dist/angular"],
+            "core-js/es7/reflect": [
+                "../node_modules/core-js/proposals/reflect-metadata"
+              ],
+        },
         "types": [ "node" ],
         "typeRoots": [
             "node_modules/@types"

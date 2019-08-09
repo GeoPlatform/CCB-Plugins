@@ -1,6 +1,8 @@
-import { Subject } from 'rxjs';
-import { ISubscription } from "rxjs/Subscription";
-import { Query, ItemService, ItemTypes } from 'geoplatform.client';
+import { Subject, Subscription } from 'rxjs';
+import {
+    Query, ItemService, ItemTypes,
+    Item, Map as MapItem, Layer, Service
+} from '@geoplatform/client';
 import { logger } from './logger';
 
 
@@ -37,26 +39,26 @@ export interface LayerState {
 }
 
 
-export interface Item {
-    uri         : string;
-    type        : string;
-    title       : string;
-    description : string;
-    createdBy   : string;
-    keywords   ?: string[];
-    themes     ?: any[];
-    topics     ?: any[];
-    usedBy     ?: any[];
-    publishers ?: any[];
-    classifiers?: {[key:string]:any};
-    resourceTypes ?: any[];
-    extent     ?: { minx ?: number; maxx ?: number; miny ?: number; maxy ?: number; };
-}
-
-export interface MapItem extends Item {
-    layers      : LayerState[];
-    baseLayer  ?: any;
-}
+// export interface Item {
+//     uri         : string;
+//     type        : string;
+//     title       : string;
+//     description : string;
+//     createdBy   : string;
+//     keywords   ?: string[];
+//     themes     ?: any[];
+//     topics     ?: any[];
+//     usedBy     ?: any[];
+//     publishers ?: any[];
+//     classifiers?: {[key:string]:any};
+//     resourceTypes ?: any[];
+//     extent     ?: { minx ?: number; maxx ?: number; miny ?: number; maxy ?: number; };
+// }
+//
+// export interface MapItem extends Item {
+//     layers      : LayerState[];
+//     baseLayer  ?: any;
+// }
 
 
 export class DataProvider {
@@ -66,6 +68,7 @@ export class DataProvider {
 
     //object holding map metadata (title, etc)
     private details : MapItem = {
+        id          : null,
         uri         : null,
         type        : ItemTypes.MAP,
         title       : null,
@@ -415,7 +418,7 @@ export class DataProvider {
     }
 
 
-    subscribe( callback : any ) : ISubscription {
+    subscribe( callback : any ) : Subscription {
         return this.sub.subscribe( callback );
     }
 

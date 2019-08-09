@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { ItemTypes } from "geoplatform.client";
-import { OSM } from "geoplatform.mapcore";
+import { ItemTypes } from "@geoplatform/client";
+import { OSM } from "@geoplatform/mapcore";
 
 const MBVTRT = "http://www.geoplatform.gov/ont/openlayer/MapBoxVectorTileLayer";
 
@@ -31,7 +31,7 @@ export class ServicesComponent implements OnInit {
 
         if(ItemTypes.LAYER === this.item.type) {
 
-            if(OSM.test(this.item)) 
+            if(OSM.test(this.item))
                 return false;
             else {
                 let rts = this.item.resourceTypes || [];

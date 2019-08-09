@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
+    Inject, Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -18,27 +18,24 @@ import { Observable, Subject } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 import {
     Config, KGService, KGQuery, KGClassifiers, ItemTypes
-} from 'geoplatform.client';
+} from '@geoplatform/client';
 
 import { AppEvent } from '../../app.component';
 import {
     StepComponent, StepEvent, StepError
 } from '../step.component';
 import { environment } from '../../../environments/environment';
-import { NG2HttpClient } from '../../http-client';
 
 import {
     ModelProperties, ClassifierTypes, AppEventTypes
 } from '../../model';
-import { kgServiceProvider } from '../../item-service.provider';
 
 
 
 @Component({
   selector: 'wizard-step-enrich',
   templateUrl: './enrich.component.html',
-  styleUrls: ['./enrich.component.less'],
-  providers: [kgServiceProvider]
+  styleUrls: ['./enrich.component.less']
 })
 export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
 
@@ -53,14 +50,16 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
     public PROPS : any = ModelProperties;
 
     private eventsSubscription: any;
+    private kgService : KGService;
 
     formOpts : any = {};
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private kgService : KGService
+        @Inject(KGService) kgService : KGService
     ) {
+        this.kgService = kgService;
 
         //initialize form controls
         Object.keys(ClassifierTypes).forEach( key => {
@@ -69,9 +68,6 @@ export class EnrichComponent implements OnInit, OnDestroy, StepComponent {
             this.formOpts['$'+key] =  ['']; //temp fields for autocompletes
         });
         this.formGroup = this.formBuilder.group(this.formOpts);
-
-        // let client = new NG2HttpClient(http);
-        // this.kgService = new KGService(Config.ualUrl, client);
     }
 
     ngOnInit() {

@@ -1,15 +1,15 @@
 import {
-    Component, OnInit, OnChanges, SimpleChanges, OnDestroy,
-    Input, ElementRef
+    Inject, Component, OnInit, OnChanges, OnDestroy,
+    Input, ElementRef, SimpleChanges
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ItemTypes, Config, ItemService } from "geoplatform.client";
+import { ItemTypes, Config, ItemService } from "@geoplatform/client";
 
 import { ItemHelper } from '../shared/item-helper';
 import { NG2HttpClient } from "../shared/http-client";
 import { PluginAuthService } from '../shared/auth.service';
 import { AuthenticatedComponent} from '../shared/authenticated.component';
-import { itemServiceProvider } from '../shared/service.provider';
+
 
 const MAX_DESC_LENGTH = 550;
 
@@ -18,8 +18,7 @@ const MAX_DESC_LENGTH = 550;
 @Component({
   selector: 'gpid-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./item.component.less']
 })
 export class ItemComponent extends AuthenticatedComponent implements OnInit {
 
@@ -28,13 +27,15 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
     public hasLongDescription : boolean = false;
     public descriptionCollapsed: boolean = true;
     public TYPES = ItemTypes;
+    private itemService : ItemService;
 
     constructor(
         private el: ElementRef,
-        private itemService: ItemService,
+        @Inject(ItemService) itemService : ItemService,
         authService : PluginAuthService
     ) {
         super(authService);
+        this.itemService = itemService;
     }
 
     ngOnInit() {
@@ -72,7 +73,7 @@ export class ItemComponent extends AuthenticatedComponent implements OnInit {
         // if(!this.authService.isAuthenticated()) return false;
         // let user = this.authService.getUser();
 
-        //TODO use ng-gpoauth to see if user has credentials and
+        //TODO use @geoplatform/oauth-ng to see if user has credentials and
         // proper privileges for each supported action
         switch(action) {
         case 'edit' : return false;

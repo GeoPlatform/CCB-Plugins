@@ -2,11 +2,14 @@
     <p>Select one or more types from the list below and click "Apply"</p>
     <br>
 
-    <div *ngFor="let opt of options" class="list-item gp-{{opt.id.toLowerCase().replace(':','-')}}"
+    <div *ngFor="let opt of options"
+        class="list-item d-flex flex-justify-between flex-align-center"
         [ngClass]="{selected:isSelected(opt)}" (click)="select(opt)">
-        <span class="{{getIconClass(opt)}} is-themed"></span>
-        {{opt.label}}
-        <span class="badge badge-secondary">{{opt.count?opt.count:''}}</span>
+        <span class="flex-1">
+            <span class="{{getIconClass(opt)}} is-themed"></span>
+            {{opt.label}}
+        </span>
+        <span class="badge badge-secondary">{{opt.count?opt.count:'0'}}</span>
     </div>
 
     <footer>

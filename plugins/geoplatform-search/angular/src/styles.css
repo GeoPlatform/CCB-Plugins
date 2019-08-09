@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 
-@import "../node_modules/geoplatform.style/dist/css/platform.css";
+@import "../node_modules/@geoplatform/style/dist/css/platform.css";
 
 @import "overrides.css";
 @import "icons.css";
@@ -121,8 +121,15 @@ button.btn.btn-sm {
     padding: 0.5em 1em;
     background: #f9f9f9;
     border: 1px solid #ddd;
+    font-size: 0.875em;
 }
-.c-constraint__editor .list-item { margin: 0 -1em; }
+.c-constraint__editor .list-item {
+    margin:     0 -1em;
+    word-break: break-word;
+    background-color: transparent;
+}
+.c-constraint__editor a.list-item { color: #2079c5; }
+
 .c-constraint__editor footer {
     display: flex;
     justify-content: flex-end;

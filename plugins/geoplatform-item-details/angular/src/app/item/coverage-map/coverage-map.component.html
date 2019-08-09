@@ -1,5 +1,10 @@
-<div>
 
+<div class="m-article">
+    <div class="m-article__heading">
+        <span *ngIf="mapId || layerId">Preview</span>
+        <span *ngIf="!mapId && !layerId">Geographic Extent</span>
+    </div>
+    <br>
 
     <div class="m-map-container" id="item-coverage-map"></div>
 

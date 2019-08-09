@@ -44,5 +44,7 @@ span.fas.fa-caret-up {
 .m-action {
     margin-bottom: 1em;
     padding-bottom: 1em;
-    border-bottom: 1px solid #ddd;
+}
+.p-item__actions > *:last-child .m-action {
+    border-bottom: none;
 }

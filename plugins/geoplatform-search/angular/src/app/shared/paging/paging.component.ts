@@ -3,7 +3,7 @@ import {
     Input, Output, EventEmitter
 } from '@angular/core';
 
-import { Query } from "geoplatform.client";
+import { Query } from "@geoplatform/client";
 
 
 export interface PagingEvent {
