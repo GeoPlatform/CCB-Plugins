@@ -1777,7 +1777,7 @@ if ( ! function_exists ( 'geop_ccb_feature_card_register' ) ) {
   function geop_ccb_feature_card_register($wp_customize){
 
     $wp_customize->add_setting('feature_controls',array(
-        'default' => 'on',
+        'default' => 'fade',
         'sanitize_callback' => 'geop_ccb_sanitize_featured_card',
     ));
 
