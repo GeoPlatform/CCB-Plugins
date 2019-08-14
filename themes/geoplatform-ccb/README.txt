@@ -112,6 +112,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 - Head megamenu only generates now if the header More button is enabled.
 - Changed featured card and gallery widget shading application method to permit custom CSS application.
+- Added option title controls for featured and gallery front page widgets.
 
  = 4.0.3 =
 * Release August 9, 2019
