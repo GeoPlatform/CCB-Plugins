@@ -30,6 +30,10 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
       $geopccb_gallery_id = apply_filters('widget_title', $instance['geopccb_gallery_id']);
 		else
     	$geopccb_gallery_id = "aea7f60a21362a06dbc11bb37078df38";
+		if (array_key_exists('geopccb_gallery_text', $instance) && isset($instance['geopccb_gallery_text']) && !empty($instance['geopccb_gallery_text']))
+      $geopccb_gallery_text = apply_filters('widget_title', $instance['geopccb_gallery_text']);
+		else
+    	$geopccb_gallery_text = "";
 
 		$geopccb_invalid_bool = false;
 		$geopccb_error_report = '';
@@ -93,7 +97,14 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 			if ($geopccb_map_card_style == 'outline' || $geopccb_map_card_style == 'both')
 				$geopccb_map_card_outline = " widget-featured-fade-outline";
 
-			echo "<div class='p-landing-page__community-menu'>";
+			if (empty($geopccb_gallery_text)){
+				echo "<div class='p-landing-page__community-menu'>";
+			}
+			else {
+				echo "<div class='widget-featured-topborder'>";
+					echo "<div class='m-article__heading m-article__heading--front-page' style='margin-bottom:0em;margin-top:1em;' title='Featured Pages'>" . __(sanitize_text_field($geopccb_gallery_text), 'geoplatform-ccb') . "</div>";
+					echo "<div class='p-landing-page__community-menu' style='border-top:0px;'>";
+			}
 
 			foreach($geopccb_result['items'] as $geopccb_map){
 				try {
@@ -156,7 +167,7 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 					} //catch
 				}
 
-				echo "</div>";
+				echo (empty($geopccb_gallery_text) ? "</div>" : "</div></div>");
 
 			}	else {
 				echo "<div class='widget-maps-error-out'>";
@@ -171,6 +182,7 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 
     // Checks for entries in the widget admin boxes and provides defaults if empty.
 		$geopccb_gallery_id = ! empty( $instance['geopccb_gallery_id'] ) ? $instance['geopccb_gallery_id'] : 'aea7f60a21362a06dbc11bb37078df38';
+		$geopccb_gallery_text = ! empty( $instance['geopccb_gallery_text'] ) ? $instance['geopccb_gallery_text'] : '';
 
 		// HTML for the widget control box.
 		echo "<p>";
@@ -180,12 +192,17 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 			echo "<label for='" . $this->get_field_id( 'geopccb_gallery_id' ) . "'>Gallery ID:</label>";
 			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_gallery_id' ) . "' name='" . $this->get_field_name( 'geopccb_gallery_id' ) . "' value='" . esc_attr( $geopccb_gallery_id ) . "' />";
 		echo "</p>";
+		echo "<p>";
+			echo "<label for='" . $this->get_field_id( 'geopccb_gallery_text' ) . "'>Section Title:</label>";
+			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_gallery_text' ) . "' name='" . $this->get_field_name( 'geopccb_gallery_text' ) . "' value='" . esc_attr( $geopccb_gallery_text ) . "' />";
+		echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
 		$instance[ 'geopccb_gallery_id' ] = strip_tags( $new_instance[ 'geopccb_gallery_id' ] );
+		$instance[ 'geopccb_gallery_text' ] = strip_tags( $new_instance[ 'geopccb_gallery_text' ] );
 
 		return $instance;
 	}
