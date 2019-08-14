@@ -111,7 +111,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Head megamenu only generates now if the header More button is enabled.
-- Changed featured card shading application method to permit custom CSS application.
+- Changed featured card and gallery widget shading application method to permit custom CSS application.
 
  = 4.0.3 =
 * Release August 9, 2019
