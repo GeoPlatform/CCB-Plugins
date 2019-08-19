@@ -149,7 +149,10 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    function geopccb_add_featured_post($geopccb_post){
 	      $geopccb_temp_array = array();
 
-	      $geopccb_temp_array['name'] = get_the_title($geopccb_post);
+				if(!empty($geopccb_post->geopccb_featcard_title))
+					$geopccb_temp_array['name'] = $geopccb_post->geopccb_featcard_title;
+				else
+					$geopccb_temp_array['name'] = get_the_title($geopccb_post);
 
 	      if (has_post_thumbnail($geopccb_post))
 	        $geopccb_temp_array['thumb'] = get_the_post_thumbnail_url($geopccb_post);
@@ -254,7 +257,6 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
       $geopccb_featured_card_outline = " widget-featured-fade-outline";
 
 		// ELEMENTS
-
 		if (empty($geopccb_community_text)){
 	    echo "<div class='p-landing-page__community-menu'>";
 	      for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {

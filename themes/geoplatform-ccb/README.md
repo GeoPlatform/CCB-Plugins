@@ -114,6 +114,8 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Head megamenu only generates now if the header More button is enabled.
 - Changed featured card and gallery widget shading application method to permit custom CSS application.
 - Added option title controls for featured and gallery front page widgets.
+- Added custom Featured Card input for posts and pages that appears in the Featured Posts widget.
+- Fixed bug preventing functionality of custom Breadcrumb output.
 
 ### 4.0.3 ###
 * Release August 9, 2019

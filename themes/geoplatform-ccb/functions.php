@@ -1178,7 +1178,7 @@ if ( ! function_exists ( 'geopccb_add_breadcrumb_title' ) ) {
   function geopccb_add_breadcrumb_title() {
       add_meta_box(
           'geopccb_breadcrumb_title_id',          // this is HTML id of the box on edit screen
-          'Breadcrumb Title',    // title of the box
+          'Breadcrumb and Card Controls',    // title of the box
           'geopccb_breadcrumb_box_content',   // function to be called to display the checkboxes, see the function below
   				array(
   					'post',
@@ -1196,8 +1196,9 @@ if ( ! function_exists ( 'geopccb_add_breadcrumb_title' ) ) {
 // display the metabox
 if ( ! function_exists ( 'geopccb_breadcrumb_box_content' ) ) {
   function geopccb_breadcrumb_box_content($post) {
-  	echo "<input type='text' name='geopccb_breadcrumb_title' id='geopccb_breadcrumb_title' value='" . $post->geopccb_breadcrumb_title . "' style='width:30%;'>";
-  	echo "<p class='description'>Assign an optional title for the post to be displayed in the header breadcrumbs and in Resource Elements panes.<br>If left blank, the breadcrumbs and panes will display the post's proper title.</p>";
+  	echo "<p><b>Breadcrumb:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b><input type='text' name='geopccb_breadcrumb_title' id='geopccb_breadcrumb_title' value='" . $post->geopccb_breadcrumb_title . "' style='width:30%;'></p>";
+    echo "<p><b>Featured Card:&nbsp&nbsp</b><input type='text' name='geopccb_featcard_title' id='geopccb_featcard_title' value='" . $post->geopccb_featcard_title . "' style='width:30%;'></p>";
+  	echo "<p class='description'>Assign optional titles for the post to be displayed in the header breadcrumbs and in Resource Elements panes.<br>If left blank, the breadcrumbs and panes will display the post's proper title.</p>";
   }
 }
 
@@ -1208,6 +1209,11 @@ if ( ! function_exists ( 'geopccb_breadcrumb_post_data' ) ) {
       update_post_meta( $post_id, 'geopccb_breadcrumb_title', '' );
     else
   		update_post_meta( $post_id, 'geopccb_breadcrumb_title', $_POST['geopccb_breadcrumb_title'] );
+
+    if ( !isset( $_POST['geopccb_featcard_title'] ) || is_null( $_POST['geopccb_featcard_title']) || empty( $_POST['geopccb_featcard_title'] ))
+      update_post_meta( $post_id, 'geopccb_featcard_title', '' );
+    else
+  		update_post_meta( $post_id, 'geopccb_featcard_title', $_POST['geopccb_featcard_title'] );
   }
   add_action( 'save_post', 'geopccb_breadcrumb_post_data' );
 }

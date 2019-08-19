@@ -45,8 +45,8 @@ if (get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_cont
     // Adds breadcrumb elements from array to sub-header, starting from end to beginning of array.
     for ($i = count($geopportal_breadcrumb_array)-1; $i >= 0; $i--) {
       $geop_portal_bread_title = get_the_title($geopportal_breadcrumb_array[$i]);
-      if(!empty($geopportal_breadcrumb_array[$i]->geopportal_breadcrumb_title)){
-        $geop_portal_bread_title = $geopportal_breadcrumb_array[$i]->geopportal_breadcrumb_title;
+      if(!empty($geopportal_breadcrumb_array[$i]->geopccb_breadcrumb_title)){
+        $geop_portal_bread_title = $geopportal_breadcrumb_array[$i]->geopccb_breadcrumb_title;
       }
       echo "<li><a href='" . get_the_permalink($geopportal_breadcrumb_array[$i]) . "'>" . $geop_portal_bread_title . "</a></li>";
     }
