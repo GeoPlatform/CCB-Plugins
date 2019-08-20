@@ -671,12 +671,14 @@ if ( ! function_exists ( 'geop_ccb_tags_categories_support_query' ) ) {
 if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
  	function geop_ccb_frontpage() {
  		register_sidebar(
- 		array(
- 			'id' => 'geoplatform-widgetized-page',
- 			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-four' ),
- 			'description' => __( 'Widgets that go on the portal front page can be added here.', 'geoplatform-ccb' ),
- 			'class' => 'widget-class'
- 		)
+   		array(
+   			'id' => 'geoplatform-widgetized-page',
+   			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-four' ),
+   			'description' => __( 'Widgets that go on the portal front page can be added here.', 'geoplatform-ccb' ),
+        'class' => 'widget-class',
+        'before_widget' => '',
+        'after-widget' => '',
+    	)
  		);
  	}
 	add_action( 'widgets_init', 'geop_ccb_frontpage' );
@@ -688,12 +690,16 @@ if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
 if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
  	function geop_ccb_sidebar() {
  		register_sidebar(
- 		array(
- 			'id' => 'geoplatform-widgetized-page-sidebar',
- 			'name' => __( 'Sidebar Widgets', 'geoplatform-portal-four' ),
- 			'description' => __( "Widgets that go in the sidebar can be added here.", 'geoplatform-ccb' ),
- 			'class' => 'widget-class'
- 		)
+   		array(
+   			'id' => 'geoplatform-widgetized-page-sidebar',
+   			'name' => __( 'Sidebar Widgets', 'geoplatform-portal-four' ),
+   			'description' => __( "Widgets that go in the sidebar can be added here.", 'geoplatform-ccb' ),
+   			'class' => 'widget-class',
+        'before_title' => '<div class="m-article__heading">',
+        'after_title' => '</div>',
+        'before_widget' => '<article class="m-article">',
+        'after_widget' => '</article>',
+   		)
  		);
  	}
  	add_action( 'widgets_init', 'geop_ccb_sidebar' );

@@ -115,6 +115,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Added option title controls for featured and gallery front page widgets.
 - Added custom Featured Card input for posts and pages that appears in the Featured Posts widget.
 - Fixed bug preventing functionality of custom Breadcrumb output.
+- Fixed bug causing stylistic conflict with built-in sidebar widgets.
 
  = 4.0.3 =
 * Release August 9, 2019
