@@ -22,7 +22,7 @@ RUN rm -rf /usr/src/wordpress/wp-content/themes/*
 ########### Install common dependencies ################
 # tinymce-advanced:
 RUN curl -L -o /usr/src/tinymce-advanced.zip \
-					https://downloads.wordpress.org/plugin/tinymce-advanced.4.7.11.zip; \
+					https://downloads.wordpress.org/plugin/tinymce-advanced.5.2.1.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/tinymce-advanced.zip; \
 		rm /usr/src/tinymce-advanced.zip
@@ -56,11 +56,11 @@ RUN curl -L -o /usr/src/download-manager.zip \
 		rm /usr/src/download-manager.zip
 
 # classic-editor:
-RUN curl -L -o /usr/src/classic-editor.zip \
-					https://downloads.wordpress.org/plugin/classic-editor.1.4.zip; \
-	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
-					/usr/src/classic-editor.zip; \
-		rm /usr/src/classic-editor.zip
+# RUN curl -L -o /usr/src/classic-editor.zip \
+#					https://downloads.wordpress.org/plugin/classic-editor.1.4.zip; \
+#	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
+#					/usr/src/classic-editor.zip; \
+#		rm /usr/src/classic-editor.zip
 
 ########### Install Developer Dependencies #############
 # theme check:
