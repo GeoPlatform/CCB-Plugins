@@ -250,9 +250,9 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
       $geopccb_featured_card_outline = "-webkit-text-stroke-width: 0.3px; -webkit-text-stroke-color: #000000;";
 
 		// ELEMENTS
-    echo "<div class='p-landing-page__community-menu'>";
+    echo "<div class='p-landing-page__community-menu featured-flex-parent'>";
       for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
-        echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
+        echo "<a class='m-tile m-tile--16x9 featured-flex-child' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
           echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
           echo "<div class='m-tile__body' style='background:" . $geopccb_featured_card_fade . "'>";
             echo "<div class='m-tile__heading' style='" . $geopccb_featured_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
