@@ -59,6 +59,8 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
         super.onUserChange(user);
 
         let token = this.getAuthToken();
+        console.log("AddToGallery.onUserChange() - Using token: ");
+        console.log(token);
         this.itemService.getClient().setAuthToken(token);
 
         if(!this.canUserEdit()) {

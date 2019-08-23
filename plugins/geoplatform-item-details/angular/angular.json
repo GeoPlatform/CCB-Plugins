@@ -35,7 +35,7 @@
               "node_modules/leaflet.markercluster/dist/MarkerCluster.css",
               "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
               "src/overrides.less",
-              "src/styles.css"
+              "src/styles.less"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.slim.js",
@@ -158,7 +158,7 @@
               "node_modules/leaflet.markercluster/dist/MarkerCluster.css",
               "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
               "src/overrides.less",
-              "src/styles.css"
+              "src/styles.less"
             ],
             "assets": [
               {
