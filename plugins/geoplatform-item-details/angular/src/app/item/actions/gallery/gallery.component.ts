@@ -59,8 +59,6 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
         super.onUserChange(user);
 
         let token = this.getAuthToken();
-        console.log("AddToGallery.onUserChange() - Using token: ");
-        console.log(token);
         this.itemService.getClient().setAuthToken(token);
 
         if(!this.canUserEdit()) {
@@ -73,7 +71,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
      * @return boolean
      */
     isSupported () {
-        return this.item && this.item.id && this.isAuthenticated();
+        return this.item && this.item.id// && this.isAuthenticated();
     }
 
     doAction () {  }
@@ -104,6 +102,11 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
      */
     addToGallery(gallery) {
 
+        //already clicked, don't do it again
+        if(gallery.isPatched || gallery.isPatching) return;  
+
+        gallery.isPatching = true;
+
         let patch = [{
             op:"add",
             path:"/items",
@@ -122,11 +125,14 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
 
         this.itemService.patch(gallery.id, patch)
         .then( updated => { //open gallery it was added to
+            gallery.isPatching = false;
+            gallery.isPatched = true;
             let url = Config.wpUrl + '/resources/' +
                 ItemHelper.getTypeKey(updated) + '/' + updated.id;
-            window.location.href = url;
+            window.open(url, '_blank');
         })
         .catch( (err) => {
+            gallery.isPatching = false;
             this.error = new Error("Failed to add to selected gallery: " + err.message);
         });
     }
