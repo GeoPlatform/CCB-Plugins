@@ -542,8 +542,22 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				// Layer toggle detector and executor. Must be put placed here as the
 				// elements involved cannot be manipulated outside of the promise stack.
 				jQuery('.layer_button_class_<?php echo $geopmap_divrand; ?>').click(function(){
-					GeopMapInstance.toggleLayerVisibility(jQuery(this).attr('text'));
+					var layerId = jQuery(this).attr('text');
+					GeopMapInstance.toggleLayerVisibility(layerId);
 					jQuery(this).children().toggleClass('<?php echo $geopmap_check_icon . " " . $geopmap_uncheck_icon ?>');
+
+					// Report to RPM if possible
+					var layerState = GeopMapInstance.getLayerState(layerId)
+					if(layerState){
+						if(typeof RPMService != 'undefined') {
+							var RPM = typeof window.RPM != 'object' ? window.RPM : RPMService();
+							if( layerState.visibility == true) {
+								RPM.logEvent('Layer', 'Added', layerId)
+							} else {
+								RPM.logEvent('Layer', 'Removed', layerId)
+							}
+						}
+					}
 				});
 			}
 			else {

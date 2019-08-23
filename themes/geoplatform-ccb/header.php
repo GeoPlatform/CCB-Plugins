@@ -75,7 +75,7 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
         // -->
     echo "<h1 class='a-brand'>";
       echo "<img alt='GP' src='" . get_stylesheet_directory_uri() . "/img/logo.svg' style='width:1em'>";
-      echo "<a href='" . home_url() . "/' title='Home'>GeoPlatform.gov</a>";
+      echo "<a href='https://www.geoplatform.gov' title='Home'>GeoPlatform.gov</a>";
     echo "</h1>";
 
     //Banner stuff
@@ -266,50 +266,54 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
       }
     echo "</div>";
 
-    // New Megamenu area.
-    echo "<nav class='m-megamenu' id='header-megamenu'>";
-      echo "<div class='m-megamenu__content'>";
-        echo "<div class='col'>";
-          echo "<div class='d-lg-none d-xl-none'>";
-            echo "<div class='m-megamenu__heading'>Navigation</div>";
-            echo "<ul class='menu' role='menu'>";
-
-              if ($geopccb_search_format == 'gp'){
-                  echo "<li role='menuitem'>";
-                  echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
-                  echo "</li>";
-              }
-              wp_nav_menu( array( 'theme_location' => 'community-links', 'fallback_cb' => false ) );
-
-            echo "</ul>";
-            echo "<br>";
-          echo "</div>";
-
-          echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-left')) ? esc_html(wp_get_nav_menu_name('header-left')) : '') . "</div>";
-              wp_nav_menu( array( 'theme_location' => 'header-left', 'fallback_cb' => false ) );
-          echo "</div>";
-
+    // New Megamenu area. Hides if the the More button is disabled.
+    if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head'){
+      echo "<nav class='m-megamenu' id='header-megamenu'>";
+        echo "<div class='m-megamenu__content'>";
           echo "<div class='col'>";
-            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-center')) ? esc_html(wp_get_nav_menu_name('header-center')) : '') . "</div>";
-            wp_nav_menu( array( 'theme_location' => 'header-center', 'fallback_cb' => false ) );
+            echo "<div class='d-lg-none d-xl-none'>";
+              echo "<div class='m-megamenu__heading'>Navigation</div>";
+              echo "<ul class='menu' role='menu'>";
+
+                if ($geopccb_search_format == 'gp'){
+                    echo "<li role='menuitem'>";
+                    echo "<a role='menuitem' class='d-md-none' href='" . home_url('geoplatform-search') . "'>Search</a>";
+                    echo "</li>";
+                }
+                wp_nav_menu( array( 'theme_location' => 'community-links', 'fallback_cb' => false ) );
+
+              echo "</ul>";
+              echo "<br>";
+            echo "</div>";
+
+            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-left')) ? esc_html(wp_get_nav_menu_name('header-left')) : '') . "</div>";
+                wp_nav_menu( array( 'theme_location' => 'header-left', 'fallback_cb' => false ) );
+            echo "</div>";
+
+            echo "<div class='col'>";
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-center')) ? esc_html(wp_get_nav_menu_name('header-center')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'header-center', 'fallback_cb' => false ) );
+            echo "</div>";
+
+            echo "<div class='col'>";
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col1')) ? esc_html(wp_get_nav_menu_name('header-right-col1')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'header-right-col1', 'fallback_cb' => false ) );
+            echo "</div>";
+
+            echo "<div class='col'>";
+              echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col2')) ? esc_html(wp_get_nav_menu_name('header-right-col2')) : '') . "</div>";
+              wp_nav_menu( array( 'theme_location' => 'header-right-col2', 'fallback_cb' => false ) );
+            echo "</div>";
+
           echo "</div>";
 
-          echo "<div class='col'>";
-            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col1')) ? esc_html(wp_get_nav_menu_name('header-right-col1')) : '') . "</div>";
-            wp_nav_menu( array( 'theme_location' => 'header-right-col1', 'fallback_cb' => false ) );
-          echo "</div>";
+          ?>
+          <!-- Another section that cannot be echoed. -->
+          <button type="button" class="btn btn-link btn-block" onclick="toggleClass('#header-megamenu','is-open')">
+            <span class="fas fa-caret-up"></span>
+          </button>
+          <?php
 
-          echo "<div class='col'>";
-            echo "<div class='m-megamenu__heading'>" . (esc_html(wp_get_nav_menu_name('header-right-col2')) ? esc_html(wp_get_nav_menu_name('header-right-col2')) : '') . "</div>";
-            wp_nav_menu( array( 'theme_location' => 'header-right-col2', 'fallback_cb' => false ) );
-          echo "</div>";
-
-        echo "</div>";
-
-        ?>
-        <!-- Another section that cannot be echoed. -->
-        <button type="button" class="btn btn-link btn-block" onclick="toggleClass('#header-megamenu','is-open')">
-          <span class="fas fa-caret-up"></span>
-        </button>
-      </nav>
-</header>
+      echo "</nav>";
+    }
+echo "</header>";

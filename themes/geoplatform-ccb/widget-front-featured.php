@@ -30,6 +30,10 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
       $geopccb_community_link = apply_filters('widget_title', $instance['geopccb_community_link']);
 		else
     	$geopccb_community_link = "Front Page";
+		if (array_key_exists('geopccb_community_text', $instance) && isset($instance['geopccb_community_text']) && !empty($instance['geopccb_community_text']))
+      $geopccb_community_text = apply_filters('widget_title', $instance['geopccb_community_text']);
+		else
+    	$geopccb_community_text = "";
 
     // Sets default image.
     $geopccb_category_image_default = get_template_directory_uri() . "/img/default-category-photo.jpeg";
@@ -145,7 +149,10 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    function geopccb_add_featured_post($geopccb_post){
 	      $geopccb_temp_array = array();
 
-	      $geopccb_temp_array['name'] = get_the_title($geopccb_post);
+				if(!empty($geopccb_post->geopccb_featcard_title))
+					$geopccb_temp_array['name'] = $geopccb_post->geopccb_featcard_title;
+				else
+					$geopccb_temp_array['name'] = get_the_title($geopccb_post);
 
 	      if (has_post_thumbnail($geopccb_post))
 	        $geopccb_temp_array['thumb'] = get_the_post_thumbnail_url($geopccb_post);
@@ -241,28 +248,42 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     }
 
     $geopccb_featured_card_style = get_theme_mod('feature_controls', 'fade');
-    $geopccb_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0))";
+    $geopccb_featured_card_fade = "widget-featured-fade-zero";
     $geopccb_featured_card_outline = "";
 
     if ($geopccb_featured_card_style == 'fade' || $geopccb_featured_card_style == 'both')
-      $geopccb_featured_card_fade = "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))";
+      $geopccb_featured_card_fade = "widget-featured-fade-five";
     if ($geopccb_featured_card_style == 'outline' || $geopccb_featured_card_style == 'both')
-      $geopccb_featured_card_outline = "-webkit-text-stroke-width: 0.3px; -webkit-text-stroke-color: #000000;";
+      $geopccb_featured_card_outline = " widget-featured-fade-outline";
 
 		// ELEMENTS
-    echo "<div class='p-landing-page__community-menu'>";
-      for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
-        echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
-          echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
-          echo "<div class='m-tile__body' style='background:" . $geopccb_featured_card_fade . "'>";
-            echo "<div class='m-tile__heading' style='" . $geopccb_featured_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
-            // echo "<div class='m-tile-desc'>";
-            //   echo esc_attr( __( $geopccb_final_objects_array[$i]['excerpt'], 'geoplatform-ccb' ) );
-            // echo "</div>";
-          echo "</div>";
-        echo "</a>";
-      }
-    echo "</div>";
+		if (empty($geopccb_community_text)){
+	    echo "<div class='p-landing-page__community-menu featured-flex-parent'>";
+	      for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
+	        echo "<a class='m-tile m-tile--16x9 featured-flex-child' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
+	          echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
+	          echo "<div class='m-tile__body " . $geopccb_featured_card_fade . "'>";
+	            echo "<div class='m-tile__heading". $geopccb_featured_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
+	          echo "</div>";
+	        echo "</a>";
+	      }
+	    echo "</div>";
+		}
+		else {
+			echo "<div class='widget-featured-topborder'>";
+				echo "<div class='m-article__heading m-article__heading--front-page' style='margin-bottom:0em;margin-top:1em;' title='Featured Pages'>" . __(sanitize_text_field($geopccb_community_text), 'geoplatform-ccb') . "</div>";
+		    echo "<div class='p-landing-page__community-menu featured-flex-parent' style='border-top:0px;'>";
+		      for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
+		        echo "<a class='m-tile m-tile--16x9 featured-flex-child' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
+		          echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
+		          echo "<div class='m-tile__body " . $geopccb_featured_card_fade . "'>";
+		            echo "<div class='m-tile__heading". $geopccb_featured_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
+		          echo "</div>";
+		        echo "</a>";
+		      }
+		    echo "</div>";
+			echo "</div>";
+		}
 	}
 
   // The admin side of the widget.
@@ -270,6 +291,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
     // Checks for entries in the widget admin boxes and provides defaults if empty.
 		$geopccb_community_link = ! empty( $instance['geopccb_community_link'] ) ? $instance['geopccb_community_link'] : 'Front Page';
+		$geopccb_community_text = ! empty( $instance['geopccb_community_text'] ) ? $instance['geopccb_community_text'] : '';
 
 		// HTML for the widget control box.
 		echo "<p>";
@@ -279,12 +301,17 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 			echo "<label for='" . $this->get_field_id( 'geopccb_community_link' ) . "'>Source Category:</label>";
 			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_community_link' ) . "' name='" . $this->get_field_name( 'geopccb_community_link' ) . "' value='" . esc_attr( $geopccb_community_link ) . "' />";
 		echo "</p>";
+		echo "<p>";
+			echo "<label for='" . $this->get_field_id( 'geopccb_community_text' ) . "'>Section Title:</label>";
+			echo "<input type='text' id='" . $this->get_field_id( 'geopccb_community_text' ) . "' name='" . $this->get_field_name( 'geopccb_community_text' ) . "' value='" . esc_attr( $geopccb_community_text ) . "' />";
+		echo "</p>";
 	}
 
 	public function update( $new_instance, $old_instance ) {
 		$instance = $old_instance;
 
 		$instance[ 'geopccb_community_link' ] = strip_tags( $new_instance[ 'geopccb_community_link' ] );
+		$instance[ 'geopccb_community_text' ] = strip_tags( $new_instance[ 'geopccb_community_text' ] );
 
 		return $instance;
 	}

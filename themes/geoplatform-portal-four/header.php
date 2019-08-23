@@ -45,7 +45,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                     <a class="btn btn-link dropdown-toggle is-hidden--xs" href="<?php echo home_url('resources'); ?>" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
                         Explore
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton" style="z-index:9999;">
                         <a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Datasets</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_services')); ?>">Services</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_layers')); ?>">Layers</a>
@@ -161,7 +161,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
     </div>
 
-    <nav class="m-megamenu" id="header-megamenu">
+    <nav class="m-megamenu" id="header-megamenu" style="z-index:9998;">
         <div class="m-megamenu__content">
 
             <div class="col">
@@ -216,5 +216,22 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
             <span class="fas fa-caret-up"></span>
         </button>
     </nav>
+
+<!-- If the megamenu is open when either other header menu buttons are pressed, this will close it. -->
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      jQuery("#explore-resources-button").click(function(event){
+        if (jQuery('#header-megamenu').hasClass("is-open")){
+          jQuery('#header-megamenu').toggleClass("is-open");
+        }
+      });
+
+      jQuery("#userSignInButton").click(function(event){
+        if (jQuery('#header-megamenu').hasClass("is-open")){
+          jQuery('#header-megamenu').toggleClass("is-open");
+        }
+      });
+    });
+  </script>
 
 </header>
