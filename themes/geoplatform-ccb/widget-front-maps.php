@@ -98,7 +98,7 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 				$geopccb_map_card_outline = " widget-featured-fade-outline";
 
 			if (empty($geopccb_gallery_text)){
-				echo "<div class='p-landing-page__community-menu'>";
+				echo "<div class='p-landing-page__community-menu featured-flex-parent'>";
 			}
 			else {
 				echo "<div class='widget-featured-topborder'>";
@@ -153,7 +153,7 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 					}
 					$geopccb_label = $geopccb_map['label'];
 
-					echo "<a class='m-tile m-tile--16x9' href='" . esc_url( $geopccb_href ) . "' title='" . esc_attr( __( $geopccb_label, 'geoplatform-ccb' ) ) . "'>";
+					echo "<a class='m-tile m-tile--16x9 featured-flex-child' href='" . esc_url( $geopccb_href ) . "' title='" . esc_attr( __( $geopccb_label, 'geoplatform-ccb' ) ) . "'>";
 	          echo "<div class='m-tile__thumbnail'><img alt='" . get_template_directory_uri() . "/img/img-404.png' src='" . esc_url($geopccb_thumbnail) . "'></div>";
 	          echo "<div class='m-tile__body " . $geopccb_map_card_fade . "'>";
 	            echo "<div class='m-tile__heading". $geopccb_map_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_label), 'geoplatform-ccb' ) ) . "</div>";
