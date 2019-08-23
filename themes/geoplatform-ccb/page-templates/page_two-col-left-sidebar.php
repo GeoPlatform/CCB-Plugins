@@ -13,9 +13,16 @@
  $geopccb_theme_options = geop_ccb_get_theme_mods();
 
  if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on'){
+
+   $geopccb_banner_card_style = get_theme_mod('feature_controls', 'fade');
+   $geopccb_banner_card_fade = "widget-featured-fade-zero";
+
+   if ($geopccb_banner_card_style == 'fade' || $geopccb_banner_card_style == 'both')
+     $geopccb_banner_card_fade = "widget-featured-fade-five";
+
    // ELEMENTS
    echo "<div class='widget-banner-main'>";
-     echo "<div class='widget-banner-sub'>";
+     echo "<div class='widget-banner-sub " . $geopccb_banner_card_fade . "'>";
        echo "<div class='widget-banner-container container'>";
          echo "<div class='m-article__heading' style='color:white'>";
            echo esc_attr(the_title(), 'geoplatform-ccb');

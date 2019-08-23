@@ -112,8 +112,9 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Head megamenu only generates now if the header More button is enabled.
-- Changed featured card and gallery widget shading application method to permit custom CSS application.
-- Added option title controls for featured and gallery front page widgets.
+- Changed featured card shading application method to permit custom CSS application.
+- Extended featured card shading and outline controls to all GeoPlatform front page widgets.
+- Added optional title controls for featured and gallery front page widgets.
 - Added custom Featured Card input for posts and pages that appears in the Featured Posts widget.
 - Fixed bug preventing functionality of custom Breadcrumb output.
 - Fixed bug causing stylistic conflict with built-in sidebar widgets.

@@ -1797,7 +1797,7 @@ if ( ! function_exists ( 'geop_ccb_feature_card_register' ) ) {
         'type' => 'radio',
         'label' => 'Feature Card Appearance',
         'section' => 'font_section',
-        'description' => "To make the text on featured cards stand out you can darken the image or outline the title text.",
+        'description' => "To make the text on front page widgets stand out, you can choose to darken the image, outline the text, both, or neither. Please note that darkening the text does not apply to the Banner widget, but will affect banners across the site.",
         'choices' => array(
             'fade' => __('Fade the Image', 'geoplatform-ccb'),
             'outline' => __('Outline the Text',  'geoplatform-ccb'),

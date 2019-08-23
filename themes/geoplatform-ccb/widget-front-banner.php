@@ -43,9 +43,15 @@ class Geopccb_Front_Page_Banner_Widget extends WP_Widget {
 		else
     	$geopccb_banner_cta_link = "https://www.geoplatform.gov/";
 
+		$geopccb_banner_card_style = get_theme_mod('feature_controls', 'fade');
+    $geopccb_banner_card_fade = "widget-featured-fade-zero";
+
+		if ($geopccb_banner_card_style == 'fade' || $geopccb_banner_card_style == 'both')
+			$geopccb_banner_card_fade = "widget-featured-fade-five";
+
 		// ELEMENTS
     echo "<div class='widget-banner-main'>";
-			echo "<div class='widget-banner-sub'>";
+			echo "<div class='widget-banner-sub " . $geopccb_banner_card_fade . "'>";
 				echo "<div class='widget-banner-container container'>";
 					echo $geopccb_banner_content;
 					if ( !empty($geopccb_banner_cta_text) ){
