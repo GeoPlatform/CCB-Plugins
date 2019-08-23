@@ -44,7 +44,6 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 		      </a>
 		      <a href="<?php echo home_url('ngda/cadastre/'); ?>" class="u-text--center">
 						<span class="fas fa-3x fa-scroll t-fg--blue-dk"></span><br>
-						<!-- <span class="fas fa-3x icon-ngda-cadastre t-fg--blue-dk"></span><br> -->
 						<span class="u-text--sm">Cadastre</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/climate/'); ?>" class="u-text--center">
@@ -56,8 +55,7 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Cultural Resources</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/elevation/'); ?>" class="u-text--center">
-						<!-- <span class="fas fa-3x fa-mountain t-fg--blue-dk"></span><br> -->
-						<span class="fas fa-3x icon-ngda-elevation t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x fa-mountain t-fg--blue-dk"></span><br>
 						<span class="u-text--sm">Elevation</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/geodeticcontrol/'); ?>" class="u-text--center">
