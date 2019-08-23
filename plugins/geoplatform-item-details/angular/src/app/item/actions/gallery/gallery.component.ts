@@ -73,7 +73,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
      * @return boolean
      */
     isSupported () {
-        return this.item && this.item.id// && this.isAuthenticated();
+        return this.item && this.item.id && this.isAuthenticated();
     }
 
     doAction () {  }
