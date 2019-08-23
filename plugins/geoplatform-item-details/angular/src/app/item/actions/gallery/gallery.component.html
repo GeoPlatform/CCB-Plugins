@@ -15,21 +15,21 @@
             <span class="u-text--sm">{{totalSuggested}} Galleries available</span>
             <div class="flex-1">
                 <button type="button" class="btn btn-sm btn-link"
-                    ng-disabled="query.getPage()===0"
-                    ng-click="firstPage()">
+                    [disabled]="query.getPage()===0"
+                    (click)="firstPage()">
                     <span class="fas fa-fast-backward"></span>
                 </button>
                 <button type="button" class="btn btn-sm btn-link"
-                    ng-disabled="query.getPage()===0"
-                    ng-click="prevPage()">
+                    [disabled]="query.getPage()===0"
+                    (click)="prevPage()">
                     <span class="fas fa-backward"></span>
                 </button>
                 <button type="button" class="btn btn-sm btn-link disabled">
                     {{getPagingInfo()}}
                 </button>
                 <button type="button" class="btn btn-sm btn-link"
-                    ng-disabled="!hasNextPage()"
-                    ng-click="nextPage()">
+                    [disabled]="!hasNextPage()"
+                    (click)="nextPage()">
                     <span class="fas fa-forward"></span>
                 </button>
             </div>

@@ -42,10 +42,14 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
         super.destroy();
     }
 
-    // onUserChange(user) {
-    //     super.onUserChange(user);
-    //     console.log("Clone.onUserChange() : " + JSON.stringify(user, null, ' '));
-    // }
+    onUserChange(user) {
+        super.onUserChange(user);
+
+        let token = this.getAuthToken();
+        this.itemService.getClient().setAuthToken(token);
+
+        // console.log("Clone.onUserChange() : " + JSON.stringify(user, null, ' '));
+    }
 
     isSupported() {
         return this.item && ItemHelper.isAsset(this.item);

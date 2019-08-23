@@ -58,6 +58,9 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
     onUserChange(user) {
         super.onUserChange(user);
 
+        let token = this.getAuthToken();
+        this.itemService.getClient().setAuthToken(token);
+
         if(!this.canUserEdit()) {
             //normal users can only add to galleries they have created
             this.query.setParameter( QueryParameters.CREATED_BY, user ? user.username : null );
@@ -68,7 +71,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
      * @return boolean
      */
     isSupported () {
-        return this.item && this.item.id && this.isAuthenticated();
+        return this.item && this.item.id// && this.isAuthenticated();
     }
 
     doAction () {  }
