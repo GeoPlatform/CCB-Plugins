@@ -71,7 +71,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
      * @return boolean
      */
     isSupported () {
-        return this.item && this.item.id// && this.isAuthenticated();
+        return this.item && this.item.id && this.isAuthenticated();
     }
 
     doAction () {  }
@@ -103,7 +103,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
     addToGallery(gallery) {
 
         //already clicked, don't do it again
-        if(gallery.isPatched || gallery.isPatching) return;  
+        if(gallery.isPatched || gallery.isPatching) return;
 
         gallery.isPatching = true;
 
