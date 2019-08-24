@@ -56,7 +56,10 @@
                 class="list-group-item list-group-item-action"
                 (click)="addToGallery(gallery)"
                 title="Add {{type}} to this Gallery">
-                <span class="icon-gallery"></span> {{gallery.label}}
+                <span *ngIf="!gallery.isPatching && !gallery.isPatched" class="icon-gallery is-themed"></span>
+                <span *ngIf="gallery.isPatching" class="fas fa-spinner fa-spin t-fg--info"></span>
+                <span *ngIf="gallery.isPatched" class="fas fa-check-circle t-fg--success"></span>
+                {{gallery.label}}
             </a>
             <a title="Add to a new Gallery" (click)="addToNewGallery()"
                 class="list-group-item list-group-item-action list-group-item-info">
