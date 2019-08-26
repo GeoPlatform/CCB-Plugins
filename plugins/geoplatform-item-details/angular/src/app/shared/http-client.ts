@@ -5,14 +5,8 @@ import {
     HttpClient, HttpRequest, HttpHeaders, HttpParams,
     HttpResponse, HttpEvent, HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { of } from 'rxjs/observable/of';
-import { catchError, map, tap } from 'rxjs/operators';
-import { ISubscription } from "rxjs/Subscription";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
+import { Observable, Subject, throwError, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 
 import { ItemDetailsError } from './item-details-error';
@@ -94,12 +88,14 @@ export class NG2HttpClient {
      */
     execute(request : HttpRequest<any>) {
         return this.http.request(request)
-        .map( (event: HttpEvent<any>) => {
-            if (event instanceof HttpResponse) {
-                return (event as HttpResponse<any>).body;
-            }
-            return {};
-        })
+        .pipe(
+            map( (event: HttpEvent<any>) => {
+                if (event instanceof HttpResponse) {
+                    return (event as HttpResponse<any>).body;
+                }
+                return {};
+            })
+        )
         .toPromise()
         .catch( err => {
             // console.log("NG2HttpClient.catch() - " + JSON.stringify(err));

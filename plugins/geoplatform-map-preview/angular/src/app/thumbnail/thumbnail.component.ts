@@ -6,7 +6,7 @@ import {
     DomSanitizer, SafeResourceUrl, SafeUrl
 } from '@angular/platform-browser';
 
-import { Config, ItemTypes } from "geoplatform.client";
+import { Config, ItemTypes } from "@geoplatform/client";
 
 import { environment } from '../../environments/environment';
 

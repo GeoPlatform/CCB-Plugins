@@ -3,24 +3,24 @@ import {
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of, from } from 'rxjs';
 import {
     catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge
 } from 'rxjs/operators';
-import { fromPromise } from 'rxjs/observable/fromPromise';
 
 declare const L: any;   //needed this way to ensure leaflet-draw is properly imported
 import 'leaflet-draw';
 
-import { Config, UtilsService } from 'geoplatform.client';
+import { Config, UtilsService } from '@geoplatform/client';
+import { NG2HttpClient, utilsServiceProviderFactory } from '@geoplatform/client/angular';
 
 import { Constraint, Constraints, ConstraintEditor } from '../../models/constraint';
 import { Codec } from '../../models/codec';
 import { ExtentCodec } from './codec';
 
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { utilsServiceFactory } from '../../shared/service.provider';
 import { HttpTypeaheadService } from '../../shared/typeahead';
-import { utilsServiceFactory } from '../../shared/service.provider';
 
 
 
@@ -36,17 +36,16 @@ class GazetteerTypeaheadService implements HttpTypeaheadService {
     private service : UtilsService;
 
     constructor(private http: HttpClient) {
-        let client = new NG2HttpClient(http);
-        this.service = utilsServiceFactory(http);//new UtilsService(Config.ualUrl, client);
+        this.service = utilsServiceProviderFactory(http);
     }
 
     search(term: string) {
-        if (term === '') return Observable.of([]);
+        if (term === '') return of([]);
 
-        return fromPromise(this.service.locate(term))
+        return from(this.service.locate(term))
         .pipe(
             //catch and gracefully handle rejections
-            catchError(error => Observable.of([]))
+            catchError(error => of([]))
         );
     }
 }

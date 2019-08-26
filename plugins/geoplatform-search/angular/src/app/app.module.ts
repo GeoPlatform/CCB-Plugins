@@ -5,7 +5,6 @@ import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@ang
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Routes, RouterModule } from '@angular/router';
 import { NgbModule, NgbDateAdapter } from '@ng-bootstrap/ng-bootstrap';
-import { InlineSVGModule } from 'ng-inline-svg';
 // import { ServerRoutes } from './server-routes.enum';
 
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
@@ -13,15 +12,14 @@ import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 //configure the necessary environment variables needed by GeoPlatformClient
 import { environment } from '../environments/environment';
 
-// import { MatomoModule } from 'ngx-matomo';
-//
 // // Adds window.RPMService to global namespace
 // import { RPMServiceFactory, RPMService } from 'geoplatform.rpm';
-import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
-import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
-import { TrackingService } from 'geoplatform.client';
-const trackingService = new TrackingService({ provider : RPMServiceFactory() })
+import { Config, TrackingService } from '@geoplatform/client';
+import { GeoPlatformClientModule } from '@geoplatform/client/angular';
+
 
 //Leaflet does some magic rewrites to css to reference images,
 // so by exposing leaflet images under "assets" in .angular-cli.json
@@ -34,8 +32,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: 'marker-icon.png',
   shadowUrl: 'marker-shadow.png',
 });
-
-import { Config } from 'geoplatform.client';
 
 
 import { AppComponent } from './app.component';
@@ -73,12 +69,12 @@ import { SimilarityComponent } from './constraints/similarity/similarity.compone
 import { LegendComponent } from './results/portfolio/legend/legend.component';
 
 
-import {
-    itemServiceProvider,
-    serviceServiceProvider,
-    utilsServiceProvider,
-    kgServiceProvider
-} from './shared/service.provider';
+// import {
+//     itemServiceProvider,
+//     serviceServiceProvider,
+//     utilsServiceProvider,
+//     kgServiceProvider
+// } from './shared/service.provider';
 
 
 
@@ -158,36 +154,24 @@ export function initializeApp() {
     FormsModule,
     HttpClientModule,
     HttpClientJsonpModule,
-    NgbModule.forRoot(),
-    InlineSVGModule
-    // ,
-    // MatomoModule
+    GeoPlatformClientModule,
+    NgbModule
   ],
   providers: [
       CCBService,
-      // EnvironmentSettings,
-      // {
-      //     provide: APP_INITIALIZER,
-      //     useFactory: initializeApp,
-      //     deps: [EnvironmentSettings], multi: true
-      // }
       {
         provide: RPMService,
         useValue: RPMServiceFactory()
-      },
-      {
-          provide : TrackingService,
-          useValue : trackingService
       },
       {
           provide: APP_INITIALIZER,
           useFactory: initializeApp,
           multi: true
       },
-      itemServiceProvider,
-      serviceServiceProvider,
-      utilsServiceProvider,
-      kgServiceProvider,
+      // itemServiceProvider,
+      // serviceServiceProvider,
+      // utilsServiceProvider,
+      // kgServiceProvider,
       {
           provide: NgbDateAdapter,
           useClass: UTCDatepickerAdapter

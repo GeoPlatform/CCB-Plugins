@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import {
     Config, ItemService, ServiceService, UtilsService, KGService
-} from 'geoplatform.client';
+} from '@geoplatform/client';
+
 import { NG2HttpClient } from './http-client';
 
 var client : NG2HttpClient = null;

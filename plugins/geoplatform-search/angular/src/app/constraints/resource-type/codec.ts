@@ -2,11 +2,13 @@
 import { Params } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { NG2HttpClient } from '../../shared/NG2HttpClient';
+// import { NG2HttpClient } from '../../shared/NG2HttpClient';
 import {
     Config, Query, QueryParameters,
     ItemTypes, ItemTypeLabels, UtilsService
-} from 'geoplatform.client';
+} from '@geoplatform/client';
+import { NG2HttpClient } from "@geoplatform/client/angular";
+
 import {
     Constraint, MultiValueConstraint, Constraints, FacetCount
 } from '../../models/constraint';

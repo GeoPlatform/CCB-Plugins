@@ -6,11 +6,12 @@ import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/comm
 
 
 // Adds window.RPMService to global namespace
-import { RPMServiceFactory } from 'geoplatform.rpm/dist/js/gp.rpm.browser.js';
-import { RPMService } from 'geoplatform.rpm/src/iRPMService'
+import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 //configure the necessary environment variables needed by GeoPlatformClient
-import { Config } from 'geoplatform.client';
+import { Config } from '@geoplatform/client';
+import { GeoPlatformClientModule, NG2HttpClient } from '@geoplatform/client/angular';
 import { environment } from '../environments/environment';
 
 
@@ -30,16 +31,17 @@ L.Icon.Default.mergeOptions({
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { PluginAuthService } from './shared/auth.service';
 
-import {
-    itemServiceProvider,
-    serviceServiceProvider,
-    utilsServiceProvider,
-    kgServiceProvider
-} from './shared/service.provider';
+// import {
+//     itemServiceProvider,
+//     serviceServiceProvider,
+//     layerServiceProvider,
+//     utilsServiceProvider,
+//     kgServiceProvider
+// } from './shared/service.provider';
 
 import { RPMStatsService } from './shared/rpmstats.service';
 let RPMStatsServiceFactory = (http: HttpClient) => {
-    return new RPMStatsService(environment.rpmUrl, environment.rpmToken, http)
+    return new RPMStatsService(http)
 }
 
 export function initializeApp() {
@@ -93,7 +95,8 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
       BrowserModule,
       FormsModule,
       HttpClientModule,
-      HttpClientJsonpModule
+      HttpClientJsonpModule,
+      GeoPlatformClientModule
   ],
   providers: [
       {
@@ -110,11 +113,7 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
       {
           provide: RPMService,
           useValue: RPMServiceFactory()
-      },
-      itemServiceProvider,
-      serviceServiceProvider,
-      utilsServiceProvider,
-      kgServiceProvider
+      }
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { Params } from '@angular/router';
-import { QueryParameters } from "geoplatform.client";
+import { QueryParameters } from "@geoplatform/client";
 
 import { Constraint, Constraints } from '../models/constraint';
 import { Codec } from '../models/codec';

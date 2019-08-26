@@ -4,10 +4,10 @@ import {
 } from '@angular/common/http';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { ISubscription } from "rxjs/Subscription";
+import { map } from "rxjs/operators";
 
 import { environment } from "../../environments/environment";
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 @Injectable()
 export class CCBService {
@@ -87,24 +87,26 @@ export class CCBService {
         let isUsersReq = null === request.params.get('type');
 
         return this.http.request(request)
-        .map( (event: HttpEvent<any>) => {
-            if (event instanceof HttpResponse) {
-                let res : HttpResponse<any> = event as HttpResponse<any>;
+        .pipe(
+            map( (event: HttpEvent<any>) => {
+                if (event instanceof HttpResponse) {
+                    let res : HttpResponse<any> = event as HttpResponse<any>;
 
-                let wpTotal : any = (isUsersReq) ?
-                    res.headers.get('X-WP-Total') :
-                    res.body.totalResults;
-                let total : number = isNaN(wpTotal) ? 0 : wpTotal*1;
+                    let wpTotal : any = (isUsersReq) ?
+                        res.headers.get('X-WP-Total') :
+                        res.body.totalResults;
+                    let total : number = isNaN(wpTotal) ? 0 : wpTotal*1;
 
-                let results = (isUsersReq) ? res.body||[] :
-                    (res.body.results||[]).map( it => { return this.fixResult(it) });
-                return {
-                    results: results,
-                    totalResults: total as number
-                };
-            }
-            return { totalResults: 0, results: [] };
-        })
+                    let results = (isUsersReq) ? res.body||[] :
+                        (res.body.results||[]).map( it => { return this.fixResult(it) });
+                    return {
+                        results: results,
+                        totalResults: total as number
+                    };
+                }
+                return { totalResults: 0, results: [] };
+            })
+        )
         .toPromise()
         .catch( err => {
             // console.log("CCBService.catch() - " + JSON.stringify(err));

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Config, Query } from 'geoplatform.client';
+import { Config, Query } from '@geoplatform/client';
 import { Constraints } from '../models/constraint';
 
 @Component({

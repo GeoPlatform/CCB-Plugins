@@ -66,6 +66,23 @@
   }
 }
 
+.widget-featured-fade-zero {
+  background: linear-gradient(rgba(0, 0, 0, 0.0), rgba(0, 0, 0, 0.0));
+}
+
+.widget-featured-fade-five {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+
+.widget-featured-fade-outline {
+  -webkit-text-stroke-width: 0.3px;
+  -webkit-text-stroke-color: #000000;
+}
+
+.widget-featured-topborder {
+  border-top: 1px solid #bbb;
+}
+
 .featured-flex-parent {
   display: flex;
   flex-wrap: wrap;

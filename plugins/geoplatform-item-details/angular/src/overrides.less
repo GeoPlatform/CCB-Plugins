@@ -2,6 +2,13 @@
 /* app-specific, component-agnostic style overrides */
 
 
+//prevent side column from growing too big at higher resolutions
+@media (min-width: 992px) {
+    .l-body--two-column > .l-body__side-column {
+        max-width: 30%;
+    }
+}
+
 
 .m-section-group, .m-article {
     display: block;
@@ -18,4 +25,9 @@
 
 .leaflet-bar a:not(.btn) {
     color: #333;
+}
+
+//temporary
+.m-article .a-badge--light {
+    background-color: lighten(#ddd,10%);
 }

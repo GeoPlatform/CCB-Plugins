@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy,
+    Inject, Component, OnInit, OnChanges, OnDestroy,
     Input, Output, EventEmitter, SimpleChanges,
     ViewChild, ElementRef
 } from '@angular/core';
@@ -20,9 +20,10 @@ import * as md5 from "md5";
 
 import {
     ItemTypes, Config, ItemService, ServiceService,
-    UtilsService, Query, QueryParameters
-} from 'geoplatform.client';
-import * as GPAPI from 'geoplatform.client';
+    UtilsService, Query, QueryParameters, Item
+} from '@geoplatform/client';
+import * as GPAPI from '@geoplatform/client';
+
 const URIFactory = GPAPI.URIFactory(md5);
 
 import { AppEvent } from '../../app.component';
@@ -34,7 +35,7 @@ import { environment } from '../../../environments/environment';
 
 import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
 import {
-    itemServiceProvider, serviceServiceProvider, utilsServiceProvider
+    itemServiceFactory, svcServiceFactory, utilsServiceFactory
 } from '../../item-service.provider';
 
 const URL_VALIDATOR = Validators.pattern("https?://.+");
@@ -53,8 +54,7 @@ interface Topics {
 @Component({
   selector: 'wizard-step-type',
   templateUrl: './type.component.html',
-  styleUrls: ['./type.component.less'],
-  providers: [ itemServiceProvider, serviceServiceProvider, utilsServiceProvider ]
+  styleUrls: ['./type.component.less']
 })
 export class TypeComponent implements OnInit, OnChanges, StepComponent {
 
@@ -84,16 +84,23 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     private availableResourceTypes: { type: string; values: ResourceType[]; } =
         {} as { type: string; values: ResourceType[]; };
 
+    private itemService: ItemService;
+    private svcService : ServiceService;
+    private utilsService : UtilsService;
 
     formOpts: any = {};
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private itemService: ItemService,
-        private svcService : ServiceService,
-        private utilsService : UtilsService
+        @Inject(ItemService) itemService : ItemService,
+        @Inject(ServiceService) svcService : ServiceService,
+        @Inject(UtilsService) utilsService : UtilsService,
     ) {
+
+        this.itemService = itemService;
+        this.svcService = svcService;
+        this.utilsService = utilsService;
 
         this.formOpts[ModelProperties.TYPE] = ['', Validators.required];
         this.formOpts[ModelProperties.TITLE] = ['', Validators.required];
@@ -417,7 +424,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
     }
 
     // public filterPublishers(value: string): Promise<string[]> {
-    filterPublishers = (value:string) : Promise<string[]> => {
+    filterPublishers = (value:string) : Promise<void | Item[]> => {
 
         let current = this.getValue(ModelProperties.PUBLISHERS) || [];
         current = current.map(c=>c.id);
@@ -444,7 +451,7 @@ export class TypeComponent implements OnInit, OnChanges, StepComponent {
    * @param value
    * @return Query of ItemTypes.Topic
    */
-  filterParentTopics = (value:string) : Promise<string[]> => {
+  filterParentTopics = (value:string) : Promise<void | Item[]> => {
 
        let current = this.getValue(ModelProperties.SUBTOPIC_OF) || [];
        current = current.map(c=>c.id);

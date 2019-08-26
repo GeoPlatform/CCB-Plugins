@@ -1,13 +1,14 @@
 import { NgZone } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { ISubscription } from "rxjs/Subscription";
+import { Observable, Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import {
     Config, Query, QueryParameters, ItemService, ItemTypes
-} from 'geoplatform.client';
+} from '@geoplatform/client';
+import { NG2HttpClient, itemServiceProviderFactory } from '@geoplatform/client/angular';
 
-import { NG2HttpClient } from '../shared/NG2HttpClient';
-import { itemServiceFactory } from '../shared/service.provider';
+// import { NG2HttpClient } from '../shared/NG2HttpClient';
+// import { itemServiceFactory } from '../shared/service.provider';
 
 import { Constraint, Constraints } from '../models/constraint';
 
@@ -29,7 +30,7 @@ export class ItemListConstraint {
     public totalResults : number = 0;
     public listQuery : Query;
     public listFilter: string = null;
-    private selections : [{id:string}] = [] as [{id:string}];
+    private selections : {id:string}[] = [];
     protected service : ItemService;
     private resultsSrc = new Subject<any>();
     public resultsObs$ = this.resultsSrc.asObservable();
@@ -38,15 +39,13 @@ export class ItemListConstraint {
     public error : { label: string, message: string, code?:number } = null;
 
     private keywordSubject: Subject<string> = new Subject<string>();
-    private keywordSub : ISubscription;
+    private keywordSub : Subscription;
 
     constructor(
         private _ngZone: NgZone,
-        private http : HttpClient
+        protected http : HttpClient
     ) {
-        this.service = itemServiceFactory(http);
-        // this.service = new ItemService(Config.ualUrl, new NG2HttpClient(http));
-
+        this.service = itemServiceProviderFactory(http);
     }
 
     initialize(constraints: Constraints) {
@@ -68,7 +67,9 @@ export class ItemListConstraint {
         }
         this.refreshOptions();
 
-        this.keywordSub = this.keywordSubject.debounceTime(300).subscribe(text => {
+        this.keywordSub = this.keywordSubject
+        .pipe( debounceTime(300) )
+        .subscribe(text => {
             //don't need to update this.listFilter (should already be)
             this.refreshOptions();
         });

@@ -55,7 +55,8 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Cultural Resources</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/elevation/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-mountain t-fg--blue-dk"></span><br>
+						<!-- <span class="fas fa-3x fa-mountain t-fg--blue-dk"></span><br> -->
+						<span class="fas fa-3x ngda-elevation t-fg--blue-dk"></span><br>
 						<span class="u-text--sm">Elevation</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/geodeticcontrol/'); ?>" class="u-text--center">

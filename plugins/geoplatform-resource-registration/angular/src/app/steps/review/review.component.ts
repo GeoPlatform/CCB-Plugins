@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
+    Inject, Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -22,11 +22,12 @@ import {map, flatMap, startWith} from 'rxjs/operators';
 import * as md5 from "md5";
 import {
     Config, ItemService, ItemTypes, ServiceService
-} from 'geoplatform.client';
-import * as GPAPI from 'geoplatform.client';
+} from '@geoplatform/client';
+import * as GPAPI from '@geoplatform/client';
+
 const URIFactory = GPAPI.URIFactory(md5);
 
-import { GeoPlatformUser } from 'geoplatform.ngoauth/angular';
+import { GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 
 
 import { AppEvent } from '../../app.component';
@@ -34,9 +35,7 @@ import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
 import { NG2HttpClient } from '../../http-client';
 import { ClassifierTypes } from '../../model';
-import {
-    itemServiceProvider, serviceServiceProvider
-} from '../../item-service.provider';
+
 import { AppError } from '../../model';
 import { ModelProperties, AppEventTypes, StepEventTypes } from '../../model';
 import { PluginAuthService } from '../../auth.service';
@@ -49,8 +48,7 @@ const CLASSIFIERS = Object.keys(ClassifierTypes).filter(k=> {
 @Component({
   selector: 'wizard-step-review',
   templateUrl: './review.component.html',
-  styleUrls: ['./review.component.less'],
-  providers: [ itemServiceProvider, serviceServiceProvider ]
+  styleUrls: ['./review.component.less']
 })
 export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepComponent {
 
@@ -70,15 +68,19 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
 
     // httpClient : NG2HttpClient;
     private eventsSubscription: any;
-
+    private itemService : ItemService;
+    private svcService : ServiceService;
 
     constructor(
         private formBuilder: FormBuilder,
-        private itemService : ItemService,
-        private svcService : ServiceService,
         private sanitizer: DomSanitizer,
-        private authService : PluginAuthService
+        private authService : PluginAuthService,
+        @Inject(ItemService) itemService : ItemService,
+        @Inject(ServiceService) svcService : ServiceService
     ) {
+        this.itemService = itemService;
+        this.svcService = svcService;
+
         this.formGroup = this.formBuilder.group({
             done: ['']
         });
@@ -271,7 +273,7 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
                 break;
             case AppEventTypes.AUTH:
                 let token = event.value.token;
-                this.itemService.client.setAuthToken( token as string);
+                this.itemService.getClient().setAuthToken( token as string);
                 break;
         }
     }

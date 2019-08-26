@@ -1,5 +1,5 @@
 import {
-    Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
+    Inject, Component, OnInit, OnChanges, OnDestroy, SimpleChanges,
     Input, Output, EventEmitter, ViewChild, ElementRef
 } from '@angular/core';
 import {
@@ -14,20 +14,17 @@ import {
     MatAutocomplete
 } from '@angular/material';
 
-import { Observable, Subject } from 'rxjs';
-import {map, flatMap, startWith} from 'rxjs/operators';
+import { Observable, Subject, fromEvent } from 'rxjs';
+import {map, flatMap, startWith, take} from 'rxjs/operators';
 import {
-    Config, ItemService, Query, QueryParameters, ItemTypes
-} from 'geoplatform.client';
-
+    Config, ItemService, Query, QueryParameters, ItemTypes, Item
+} from '@geoplatform/client';
 
 import { AppEvent } from '../../app.component';
 import { StepComponent, StepEvent, StepError } from '../step.component';
 import { environment } from '../../../environments/environment';
-import { NG2HttpClient } from '../../http-client';
 
 import { ModelProperties, AppEventTypes } from '../../model';
-import { itemServiceProvider } from '../../item-service.provider';
 
 
 const URL_VALIDATOR = Validators.pattern("https?://.+");
@@ -38,8 +35,7 @@ interface ISize { width: number; height: number; }
 @Component({
   selector: 'wizard-step-additional',
   templateUrl: './additional.component.html',
-  styleUrls: ['./additional.component.less'],
-  providers: [ itemServiceProvider ]
+  styleUrls: ['./additional.component.less']
 })
 export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
@@ -59,18 +55,21 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
     private eventsSubscription: any;
     private authToken : string;
+    private itemService : ItemService;
 
-    @ViewChild('keywordsInput') keywordsField: ElementRef;
-    @ViewChild('thumbFileInput') thumbFile: ElementRef;
+    @ViewChild('keywordsInput', {static:false}) keywordsField: ElementRef;
+    @ViewChild('thumbFileInput', {static:false}) thumbFile: ElementRef;
 
     formOpts : any = {};
 
 
     constructor(
         private formBuilder: FormBuilder,
-        private http : HttpClient,
-        private itemService : ItemService
+        @Inject(ItemService) itemService : ItemService
     ) {
+
+        this.itemService = itemService;
+
         //initialize form controls
         this.formOpts[ModelProperties.KEYWORDS] = [''];
         this.formOpts['$'+ModelProperties.KEYWORDS] = [''];
@@ -154,7 +153,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
      * @param current - currently-selected values
      * @return Promise of an array of strings
      */
-    filterValues(query : Query, current : string[]) : Promise<string[]> {
+    filterValues(query : Query, current : string[]) : Promise<void | Item[]> {
         return this.itemService.search(query)
         .then( response => {
             let hits = response.results;
@@ -173,7 +172,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting communities
      */
-    filterCommunities = (value: string) : Promise<string[]> => {
+    filterCommunities = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.COMMUNITIES);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
@@ -184,7 +183,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting themes
      */
-    filterThemes = (value: string) : Promise<string[]> => {
+    filterThemes = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.THEMES);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
@@ -201,7 +200,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting concept schemes
      */
-    filterSchemes = (value: string) : Promise<string[]> => {
+    filterSchemes = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.THEME_SCHEME);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
@@ -212,7 +211,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
     /**
      * Filter function for autocompleting topics
      */
-    filterTopics = (value: string) : Promise<string[]> => {
+    filterTopics = (value: string) : Promise<void | Item[]> => {
         let current = this.getValues(ModelProperties.TOPICS);
         current = current.map(c=>c.id);
         const filterValue = typeof(value) === 'string' ? value.toLowerCase() : null;
@@ -328,7 +327,8 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
         var reader = new FileReader();
         reader.onload = (e) => {
 
-            this.getImgSize(reader.result).subscribe( (dims) => {
+            this.getImgSize( reader.result as string)
+            .subscribe( (dims) => {
 
                 if(dims.width > 800 || dims.height > 600) {
                     this.thumbError = new Error(
@@ -339,7 +339,7 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
 
                 } else {
                     this.thumbError = null;
-                    let encoded = reader.result.replace(/^data:(.*;base64,)?/, '');
+                    let encoded = (reader.result as string).replace(/^data:(.*;base64,)?/, '');
                     if ((encoded.length % 4) > 0) {
                         encoded += '='.repeat(4 - (encoded.length % 4));
                     }
@@ -377,7 +377,9 @@ export class AdditionalComponent implements OnInit, OnDestroy, StepComponent {
             };
         }
         var image = new Image();
-        let $loadedImg = Observable.fromEvent(image, "load").take(1).map(mapLoadedImage);
+        let $loadedImg = fromEvent(image, "load")
+            .pipe( take(1) )
+            .pipe( map(mapLoadedImage) );
         image.src = imageSrc;
         return $loadedImg;
     }

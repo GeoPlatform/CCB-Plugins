@@ -1,9 +1,8 @@
 import { NgZone, Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
-import { ISubscription } from "rxjs/Subscription";
-import { Config, Query, QueryParameters, ItemTypes } from 'geoplatform.client';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { Config, Query, QueryParameters, ItemTypes } from '@geoplatform/client';
 
 import { Constraints, Constraint } from './models/constraint';
 import { Codec } from './models/codec';
@@ -17,7 +16,7 @@ import { CodecFactory, FreeTextCodec } from './constraints';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-    private listener : ISubscription;
+    private listener : Subscription;
     private codecFactory : CodecFactory;
     private freeTextCodec : FreeTextCodec = new FreeTextCodec();
 

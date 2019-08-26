@@ -1,18 +1,18 @@
 
-import { Component, OnInit, Input } from '@angular/core';
-import { ItemTypes, ItemService } from 'geoplatform.client';
+import { Inject, Component, OnInit, Input } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Config, ItemTypes, ItemService } from '@geoplatform/client';
 import { ItemHelper } from '../../../shared/item-helper';
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { PluginAuthService } from '../../../shared/auth.service';
 import { environment } from '../../../../environments/environment';
 import { NG2HttpClient } from '../../../shared/http-client';
-import { itemServiceProvider } from '../../../shared/service.provider';
+
 
 @Component({
   selector: 'gpid-clone-action',
   templateUrl: './clone.component.html',
-  styleUrls: ['./clone.component.less'],
-  providers: [itemServiceProvider]
+  styleUrls: ['./clone.component.less']
 })
 export class CloneActionComponent extends AuthenticatedComponent implements OnInit {
 
@@ -21,12 +21,14 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
     public awaitingInput : boolean = false;
     public overrides : {[key:string]:any};
     public error : Error;
+    private itemService : ItemService;
 
     constructor(
-        private itemService : ItemService,
+        @Inject(ItemService) itemService : ItemService,
         authService : PluginAuthService
     ) {
         super(authService);
+        this.itemService = itemService;
     }
 
     ngOnInit() {
@@ -40,10 +42,14 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
         super.destroy();
     }
 
-    // onUserChange(user) {
-    //     super.onUserChange(user);
-    //     console.log("Clone.onUserChange() : " + JSON.stringify(user, null, ' '));
-    // }
+    onUserChange(user) {
+        super.onUserChange(user);
+
+        let token = this.getAuthToken();
+        this.itemService.getClient().setAuthToken(token);
+
+        // console.log("Clone.onUserChange() : " + JSON.stringify(user, null, ' '));
+    }
 
     isSupported() {
         return this.item && ItemHelper.isAsset(this.item);
@@ -69,7 +75,7 @@ export class CloneActionComponent extends AuthenticatedComponent implements OnIn
 
             if(!user) throw new Error("Not signed in");
             let token = this.getAuthToken();
-            this.itemService.client.setAuthToken(token);
+            this.itemService.getClient().setAuthToken(token);
 
             //then trigger the clone operation
             return this.itemService.clone(this.item.id, this.overrides);

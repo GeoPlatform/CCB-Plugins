@@ -11,7 +11,7 @@ import {
     MatChipInputEvent,
     MatAutocomplete
 } from '@angular/material';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import {map, flatMap, startWith} from 'rxjs/operators';
 
 /**
@@ -95,13 +95,13 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
     public hiddenFieldName : string;
     public filteredOptions: Observable<string[]>;
 
-    @ViewChild('acmcAutoComplete') matAutoComplete: MatAutocomplete;
-    @ViewChild('acmcInput', { read: MatAutocompleteTrigger }) acTrigger: MatAutocompleteTrigger;
-    @ViewChild('acmcInput') field: ElementRef;
+    @ViewChild('acmcAutoComplete', {static:false}) matAutoComplete: MatAutocomplete;
+    @ViewChild('acmcInput', { read: MatAutocompleteTrigger,static:false }) acTrigger: MatAutocompleteTrigger;
+    @ViewChild('acmcInput', {static:false}) field: ElementRef;
 
     //for allowing custom mat-option templates to be provided
     // as content to this component's element
-    @ContentChild(TemplateRef) templateRef;
+    @ContentChild(TemplateRef, {static:false}) templateRef;
 
     constructor() { }
 
@@ -109,7 +109,7 @@ export class AutocompleteMatChipComponent implements OnInit, OnDestroy {
         let field = this.formGroup.get('$'+this.fieldName);
         if(!field) {
             console.log(`Warning: field named '${this.fieldName}' not found in form`);
-            this.filteredOptions = Observable.of([]);
+            this.filteredOptions = of([]);
             return;
         }
         this.filteredOptions = field.valueChanges.pipe(

@@ -671,12 +671,14 @@ if ( ! function_exists ( 'geop_ccb_tags_categories_support_query' ) ) {
 if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
  	function geop_ccb_frontpage() {
  		register_sidebar(
- 		array(
- 			'id' => 'geoplatform-widgetized-page',
- 			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-four' ),
- 			'description' => __( 'Widgets that go on the portal front page can be added here.', 'geoplatform-ccb' ),
- 			'class' => 'widget-class'
- 		)
+   		array(
+   			'id' => 'geoplatform-widgetized-page',
+   			'name' => __( 'Frontpage Widgets', 'geoplatform-portal-four' ),
+   			'description' => __( 'Widgets that go on the portal front page can be added here.', 'geoplatform-ccb' ),
+        'class' => 'widget-class',
+        'before_widget' => '',
+        'after-widget' => '',
+    	)
  		);
  	}
 	add_action( 'widgets_init', 'geop_ccb_frontpage' );
@@ -688,12 +690,16 @@ if ( ! function_exists ( 'geop_ccb_frontpage' ) ) {
 if ( ! function_exists ( 'geop_ccb_sidebar' ) ) {
  	function geop_ccb_sidebar() {
  		register_sidebar(
- 		array(
- 			'id' => 'geoplatform-widgetized-page-sidebar',
- 			'name' => __( 'Sidebar Widgets', 'geoplatform-portal-four' ),
- 			'description' => __( "Widgets that go in the sidebar can be added here.", 'geoplatform-ccb' ),
- 			'class' => 'widget-class'
- 		)
+   		array(
+   			'id' => 'geoplatform-widgetized-page-sidebar',
+   			'name' => __( 'Sidebar Widgets', 'geoplatform-portal-four' ),
+   			'description' => __( "Widgets that go in the sidebar can be added here.", 'geoplatform-ccb' ),
+   			'class' => 'widget-class',
+        'before_title' => '<div class="m-article__heading">',
+        'after_title' => '</div>',
+        'before_widget' => '<article class="m-article">',
+        'after_widget' => '</article>',
+   		)
  		);
  	}
  	add_action( 'widgets_init', 'geop_ccb_sidebar' );
@@ -1178,7 +1184,7 @@ if ( ! function_exists ( 'geopccb_add_breadcrumb_title' ) ) {
   function geopccb_add_breadcrumb_title() {
       add_meta_box(
           'geopccb_breadcrumb_title_id',          // this is HTML id of the box on edit screen
-          'Breadcrumb Title',    // title of the box
+          'Breadcrumb and Card Controls',    // title of the box
           'geopccb_breadcrumb_box_content',   // function to be called to display the checkboxes, see the function below
   				array(
   					'post',
@@ -1196,8 +1202,9 @@ if ( ! function_exists ( 'geopccb_add_breadcrumb_title' ) ) {
 // display the metabox
 if ( ! function_exists ( 'geopccb_breadcrumb_box_content' ) ) {
   function geopccb_breadcrumb_box_content($post) {
-  	echo "<input type='text' name='geopccb_breadcrumb_title' id='geopccb_breadcrumb_title' value='" . $post->geopccb_breadcrumb_title . "' style='width:30%;'>";
-  	echo "<p class='description'>Assign an optional title for the post to be displayed in the header breadcrumbs and in Resource Elements panes.<br>If left blank, the breadcrumbs and panes will display the post's proper title.</p>";
+  	echo "<p><b>Breadcrumb:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b><input type='text' name='geopccb_breadcrumb_title' id='geopccb_breadcrumb_title' value='" . $post->geopccb_breadcrumb_title . "' style='width:30%;'></p>";
+    echo "<p><b>Featured Card:&nbsp&nbsp</b><input type='text' name='geopccb_featcard_title' id='geopccb_featcard_title' value='" . $post->geopccb_featcard_title . "' style='width:30%;'></p>";
+  	echo "<p class='description'>Assign optional titles for the post to be displayed in the header breadcrumbs and in Resource Elements panes.<br>If left blank, the breadcrumbs and panes will display the post's proper title.</p>";
   }
 }
 
@@ -1208,6 +1215,11 @@ if ( ! function_exists ( 'geopccb_breadcrumb_post_data' ) ) {
       update_post_meta( $post_id, 'geopccb_breadcrumb_title', '' );
     else
   		update_post_meta( $post_id, 'geopccb_breadcrumb_title', $_POST['geopccb_breadcrumb_title'] );
+
+    if ( !isset( $_POST['geopccb_featcard_title'] ) || is_null( $_POST['geopccb_featcard_title']) || empty( $_POST['geopccb_featcard_title'] ))
+      update_post_meta( $post_id, 'geopccb_featcard_title', '' );
+    else
+  		update_post_meta( $post_id, 'geopccb_featcard_title', $_POST['geopccb_featcard_title'] );
   }
   add_action( 'save_post', 'geopccb_breadcrumb_post_data' );
 }
@@ -1777,7 +1789,7 @@ if ( ! function_exists ( 'geop_ccb_feature_card_register' ) ) {
   function geop_ccb_feature_card_register($wp_customize){
 
     $wp_customize->add_setting('feature_controls',array(
-        'default' => 'on',
+        'default' => 'fade',
         'sanitize_callback' => 'geop_ccb_sanitize_featured_card',
     ));
 
@@ -1785,7 +1797,7 @@ if ( ! function_exists ( 'geop_ccb_feature_card_register' ) ) {
         'type' => 'radio',
         'label' => 'Feature Card Appearance',
         'section' => 'font_section',
-        'description' => "To make the text on featured cards stand out you can darken the image or outline the title text.",
+        'description' => "To make the text on front page widgets stand out, you can choose to darken the image, outline the text, both, or neither. Please note that darkening the text does not apply to the Banner widget, but will affect banners across the site.",
         'choices' => array(
             'fade' => __('Fade the Image', 'geoplatform-ccb'),
             'outline' => __('Outline the Text',  'geoplatform-ccb'),

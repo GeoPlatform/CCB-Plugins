@@ -1,5 +1,5 @@
 import { Params } from '@angular/router';
-import { QueryParameters, ItemTypes } from "geoplatform.client";
+import { QueryParameters, ItemTypes } from "@geoplatform/client";
 
 import { TypeCodec } from './codec';
 import { Constraint, MultiValueConstraint, Constraints } from '../../models/constraint';

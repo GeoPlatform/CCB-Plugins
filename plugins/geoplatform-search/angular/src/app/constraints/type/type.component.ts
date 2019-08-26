@@ -6,9 +6,9 @@ import {
     SimpleChanges
 } from '@angular/core';
 
-import { ItemTypes } from 'geoplatform.client';
+import { ItemTypes } from '@geoplatform/client';
 
-import { ISubscription } from "rxjs/Subscription";
+import { Subscription } from "rxjs";
 
 import {
     Constraint, Constraints, ConstraintEditor, Facet, FacetCount
@@ -35,7 +35,7 @@ export class TypeComponent implements OnInit, OnChanges, OnDestroy, ConstraintEd
     private codec : TypeCodec = new TypeCodec();
     public options : { key:string; label:string; id:string; count: number; }[];
 
-    private facetListener : ISubscription;
+    private facetListener : Subscription;
 
     constructor() { }
 

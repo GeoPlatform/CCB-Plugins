@@ -1,9 +1,10 @@
 
 import { Component, Injectable, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import {
-    catchError, debounceTime, distinctUntilChanged, map, tap, switchMap, merge
+    catchError, debounceTime, distinctUntilChanged,
+    map, tap, switchMap, merge
 } from 'rxjs/operators';
 
 
@@ -86,7 +87,7 @@ export class NgbdTypeaheadHttp {
                     catchError( e => {
                         this.searchFailed = true;
                         this.searchError = e;
-                        return Observable.of([]);
+                        return of([]);
                     })
                 )
             ),
