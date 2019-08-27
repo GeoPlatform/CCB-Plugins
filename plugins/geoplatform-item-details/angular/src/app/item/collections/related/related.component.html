@@ -23,6 +23,9 @@
                 {{rel.label||rel.href}}
             </a>
             <p class="t-fg--gray-md" *ngIf="rel.description">{{rel.description}}</p>
+            <div *ngIf="rel.contentId">
+                <a href="{{apiBase}}/api/store/{{rel.contentId}}" target="_blank">View Content</a>
+            </div>
         </div>
     </div>
 

@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Config } from "@geoplatform/client";
+
 
 @Component({
   selector: 'gpid-related',
@@ -7,12 +9,14 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class RelatedComponent implements OnInit {
 
-    @Input() related : any[];
+    @Input() related   : any[];
     public isCollapsed : boolean = true;
+    public apiBase     : string;
 
     constructor() { }
 
     ngOnInit() {
+        this.apiBase = Config.ualUrl;
     }
 
     toggleCollapsed () {

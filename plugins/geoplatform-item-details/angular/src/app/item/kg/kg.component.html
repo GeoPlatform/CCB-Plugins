@@ -12,32 +12,27 @@
 
     <div [ngClass]="{'is-hidden':isCollapsed}">
 
-        <div *ngFor="let key of getKeys()" class="m-article__desc">
-            <span class="fas"
-                *ngIf="classifiers && classifiers[key] && classifiers[key].length"
-                [ngClass]="{'fa-caret-down':isClassifierCollapsed[key],'fa-caret-up':!isClassifierCollapsed[key]}"
-                (click)="toggleDisplay(key)">
-            </span>
-            <strong>
-                {{classifierLabels[key]}}
-                <sup *ngIf="classifiers && classifiers[key] && classifiers[key].length">
-                    ({{classifiers[key].length}})
-                </sup>
-            </strong>
-
-            <div *ngIf="classifiers && classifiers[key] && classifiers[key].length"
-                [ngClass]="{'is-hidden':!isClassifierCollapsed[key]}" class="t-fg--gray-md">
+        <div *ngFor="let key of getKeys()" class="m-article__desc u-pd-left--md">
+            <div class="a-heading">
+                <span class="fas"
+                    [ngClass]="{'fa-caret-up':isClassifierCollapsed[key],'fa-caret-down':!isClassifierCollapsed[key]}"
+                    (click)="toggleDisplay(key)">
+                </span>
+                {{classifierLabels[key]}} ({{classifiers[key]?.length||0}})
+            </div>
+            <div [ngClass]="{'is-hidden':isClassifierCollapsed[key]}" class="t-fg--gray-md">
                 Expand to see values for this classifier
             </div>
-            <div [ngClass]="{'is-hidden':isClassifierCollapsed[key]}">
-                <div *ngIf="classifiers && classifiers[key]">
-                    <div *ngFor="let val of classifiers[key]">
-                        <gpid-resource-link [item]="val"></gpid-resource-link>
-                    </div>
+            <div [ngClass]="{'is-hidden':!isClassifierCollapsed[key]}">
+                <div *ngIf="!classifiers[key]?.length" class="t-fg--gray-md t-text--italic">
+                    No values specified
+                </div>
+                <div *ngFor="let val of classifiers[key]">
+                    <gpid-resource-link [item]="val"></gpid-resource-link>
                 </div>
             </div>
 
         </div>
-        
+
     </div>
 </div>

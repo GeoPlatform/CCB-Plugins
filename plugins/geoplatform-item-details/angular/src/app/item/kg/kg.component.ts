@@ -29,7 +29,7 @@ export class KgComponent implements OnInit {
 
     @Input() classifiers : any;
 
-    public isCollapsed : boolean = true;
+    public isCollapsed : boolean = false;
     public isClassifierCollapsed : any = {};
 
     public activeTab : string = 'purposes';

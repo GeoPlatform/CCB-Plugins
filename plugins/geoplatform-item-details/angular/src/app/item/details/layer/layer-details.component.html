@@ -1,8 +1,9 @@
 <div class="m-article__desc">
     <div><strong>Layer Type</strong></div>
     <div *ngIf="item?.layerType">{{item.layerType}}</div>
-    <div *ngIf="!item?.layerType" class="t-fg--warning">
-        <span class="fas fa-exclamation-triangle"></span>
+    <div *ngIf="!item?.layerType" class="t-text--italic" 
+        [ngClass]="{'t-fg--warning':!validate('layerType')}">
+        <span *ngIf="!validate('layerType')" class="fas fa-exclamation-triangle"></span>
         Layer does not specify a layer type
     </div>
 </div>
@@ -10,8 +11,9 @@
 <div class="m-article__desc">
     <div><strong>Layer Name</strong></div>
     <div *ngIf="item?.layerName">{{item.layerName}}</div>
-    <div *ngIf="!item?.layerName" class="t-fg--danger">
-        <span class="fas fa-exclamation-circle"></span>
+    <div *ngIf="!item?.layerName" class="t-text--italic"
+        [ngClass]="{'t-fg--danger':!validate('layerName')}">
+        <span *ngIf="!validate('layerName')" class="fas fa-exclamation-circle"></span>
         Layer does not specify a layer name
     </div>
 </div>
@@ -20,8 +22,10 @@
     <div><strong>Supported Formats</strong></div>
     <div *ngIf="!item?.supportedFormats"></div>
     <span *ngFor="let format of item?.supportedFormats">{{format}}</span>
-    <div *ngIf="!item?.supportedFormats || !item?.supportedFormats?.length" class="t-fg--warning">
-        <span class="fas fa-exclamation-triangle"></span>
+    <div *ngIf="!item?.supportedFormats || !item?.supportedFormats.length"
+         class="t-text--italic"
+        [ngClass]="{'t-fg--warning':!validate('supportedFormats')}">
+        <span *ngIf="!validate('supportedFormats')" class="fas fa-exclamation-triangle"></span>
         Layer does not specify any formats
     </div>
 </div>
