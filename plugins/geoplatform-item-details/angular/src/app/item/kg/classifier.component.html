@@ -1,0 +1,20 @@
+<div>
+    <div class="a-heading">
+        <span class="fas"
+            [ngClass]="{'fa-caret-up':isCollapsed,'fa-caret-down':!isCollapsed}"
+            (click)="isCollapsed=!isCollapsed">
+        </span>
+        {{label}} ({{values?.length||0}})
+    </div>
+    <div [ngClass]="{'is-hidden':isCollapsed}" class="t-fg--gray-md">
+        Expand to see values for this classifier
+    </div>
+    <div [ngClass]="{'is-hidden':!isCollapsed}">
+        <div *ngIf="!values || !values.length" class="t-fg--gray-md t-text--italic">
+            No values specified
+        </div>
+        <div *ngFor="let val of values">
+            <gpid-resource-link [item]="val"></gpid-resource-link>
+        </div>
+    </div>
+</div>

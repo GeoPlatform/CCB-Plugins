@@ -51,6 +51,7 @@ import { ItemComponent } from './item/item.component';
 import { UsageComponent } from './item/usage/usage.component';
 import { ServiceStatsComponent } from './item/service-stats/service-stats.component';
 import { KgComponent } from './item/kg/kg.component';
+import { ClassifierComponent } from './item/kg/classifier.component';
 import { AboutComponent } from './item/about/about.component';
 import {
     DepictionComponent, ImageFallbackDirective
@@ -148,6 +149,7 @@ export function initializeApp() {
         UsageComponent,
         ServiceStatsComponent,
         KgComponent,
+        ClassifierComponent,
         AboutComponent,
         DepictionComponent,
         ImageFallbackDirective,
