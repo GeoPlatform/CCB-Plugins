@@ -172,7 +172,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
         // fetch JSON-LD representation of this item...
-        this.itemService.get(item.id + '.jsonld')
+        this.itemService.get(item.id + '.jsonld', { params: {'embedded':true} })
         .then( json => {
             // ... and then write it into the page
             const jsonStr = json ? JSON.stringify(json, null, 2) : '';
