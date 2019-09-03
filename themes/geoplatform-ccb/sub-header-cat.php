@@ -13,8 +13,11 @@
  global $wp;
 $geopccb_theme_options = geop_ccb_get_theme_mods();
 
-if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'below')
-  geop_ccb_lower_community_links();
+if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'below'){
+  echo "<div class='geopccb-header-bar'>";
+    geop_ccb_lower_community_links();
+  echo "</div>";
+}
 
 if (get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_controls']) == 'on'){
 
