@@ -235,7 +235,7 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
   // Title bar portion.
   echo "<div class='community-link-menu-control'>";
     if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above'){
-      echo "<div>";
+      echo "<div class='geopccb-header-bar'>";
         geop_ccb_lower_community_links();
       echo "</div>";
     }

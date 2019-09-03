@@ -20,8 +20,11 @@ $geop_portal_excerpt_overflow = false;
 $geop_portal_excerpt = wp_strip_all_tags(wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true)));
 
 // Outputs the community-links menu here if enabled here.
-if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'below')
-  geop_ccb_lower_community_links();
+if (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'below'){
+  echo "<div class='geopccb-header-bar'>";
+    geop_ccb_lower_community_links();
+  echo "</div>";
+}
 
 // Sets up and displays (if enabled) the breadcrumbs.
 $geop_portal_bread_title = get_the_title($post);
