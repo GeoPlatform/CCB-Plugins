@@ -209,6 +209,7 @@ export class LayersComponent implements OnInit {
                     <span *ngIf="isLayerSelected()" class="far fa-check-square"
                         [ngClass]="{'t-fg--gray-lt':!isSelected&&isParentSelected}">
                     </span>
+                    <span class="sr-only">Add or remove this layer from the map</span>
                 </button>
                 <div [style.width.em]="level>1?level:0" [style.height.px]="1"></div>
                 <div *ngIf="item.parentLayer||item.parentLayer_id"

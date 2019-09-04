@@ -7,7 +7,12 @@
     </gp-pagination>
     <div class="flex-1"></div>
     <div class="c-sort">
-        <select [(ngModel)]="sortField" (change)="onSortChange()">
+        <label class="sr-only" id="{{type}}SortLabel" for="{{type}}SortField">
+            Sort results
+        </label>
+        <select [(ngModel)]="sortField" (change)="onSortChange()"
+            id="{{type}}SortField" attr.aria-labelledby="{{type}}SortLabel"
+            title="Select how to sort results">
             <option value="modified,desc">Most recently modified</option>
             <option value="modified,asc">Least recently modified</option>
             <option value="label,asc">Name (A-Z)</option>

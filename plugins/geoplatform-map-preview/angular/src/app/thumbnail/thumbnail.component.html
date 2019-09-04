@@ -11,11 +11,12 @@
     </div>
 
     <!-- if there is a thumbnail with URL -->
-    <img *ngIf="hasURL()" src="{{item.thumbnail.url}}" fallback="{{getFallbackUrl()}}">
+    <img *ngIf="hasURL()" src="{{item.thumbnail.url}}" fallback="{{getFallbackUrl()}}"
+        alt="{{item.label}} Thumbnail">
 
     <!-- if there is a thumbnail with base64 data -->
     <div *ngIf="hasContentData()" class="is-16x9">
-        <img
+        <img alt="{{item.label}} Thumbnail"
             [style.background-size]="'contain'"
             [style.background-repeat]="'no-repeat'"
             [style.background-image]="getBackgroundImage()">

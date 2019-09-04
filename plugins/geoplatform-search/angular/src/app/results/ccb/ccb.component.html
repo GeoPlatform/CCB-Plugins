@@ -6,32 +6,15 @@
     <footer><a (click)="error=null">DISMISS</a></footer>
 </div>
 
-
-
 <ul class="nav nav-tabs nav-tabs--gp">
-
     <li class="nav-item" *ngFor="let type of wpTypes">
         <a class="nav-link" [ngClass]="{active:isActive(type)}"
             (click)="setActive(type)">
             {{type}}
         </a>
     </li>
-
-    <!-- <li class="nav-item">
-        <a class="nav-link" [ngClass]="{active:isActive('pages')}"
-            (click)="setActive('pages')">Pages</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [ngClass]="{active:isActive('posts')}"
-            (click)="setActive('posts')">Posts</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" [ngClass]="{active:isActive('media')}"
-            (click)="setActive('media')">Files</a>
-    </li> -->
 </ul>
 <div class="tab-content">
-
     <div class="tab-pane" *ngFor="let type of wpTypes" [ngClass]="{active:isActive(type)}">
         <div class="pages__results">
             <ccb-typed-results
@@ -41,33 +24,4 @@
             </ccb-typed-results>
         </div>
     </div>
-
-    <!--
-    <div class="tab-pane" [ngClass]="{active:isActive('pages')}">
-        <div class="pages__results">
-            <ccb-typed-results
-                [type]="'pages'"
-                [service]="service"
-                [constraints]="constraints">
-            </ccb-typed-results>
-        </div>
-    </div>
-    <div class="tab-pane" [ngClass]="{active:isActive('posts')}">
-        <div class="posts__results">
-            <ccb-typed-results
-                [type]="'posts'"
-                [service]="service"
-                [constraints]="constraints">
-            </ccb-typed-results>
-        </div>
-    </div>
-    <div class="tab-pane" [ngClass]="{active:isActive('media')}">
-        <div class="media__results">
-            <ccb-typed-results
-                [type]="'media'"
-                [service]="service"
-                [constraints]="constraints">
-            </ccb-typed-results>
-        </div>
-    </div> -->
 </div>

@@ -3,6 +3,7 @@
         <button type="button" class="btn btn-sm btn-link" (click)="isClosed=!isClosed">
             <span *ngIf="isClosed" class="far fa-plus-square"></span>
             <span *ngIf="!isClosed" class="far fa-minus-square"></span>
+            <span class="sr-only">toggle current filters list</span>
         </button>
         <span>Current Filters</span>
         <button type="button" class="btn btn-outline-danger btn-sm"

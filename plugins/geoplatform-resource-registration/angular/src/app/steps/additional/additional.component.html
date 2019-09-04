@@ -99,6 +99,7 @@
                                 <!-- File Upload -->
                                 <div>
                                     <input type="file" accept="image/*" style="display:none"
+                                    aria-label="Select image file to use"
                                         #thumbFileInput (change)="onFileUpload()">
                                     <input type="hidden" formControlName="{{PROPS.FORM_THUMBNAIL_CONTENT}}">
                                     <button mat-raised-button (click)="triggerFileUpload()">

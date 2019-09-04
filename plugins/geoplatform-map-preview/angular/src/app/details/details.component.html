@@ -8,7 +8,8 @@
                 <div class="a-heading">Title <sup class="t-fg--danger">*</sup></div>
                 <div class="input-group-slick">
                     <input type="text" class="form-control" [(ngModel)]="mapItem.title"
-                        placeholder="A title is required">
+                        placeholder="A title is required"
+                        aria-label="Map Title">
                     <span *ngIf="!mapItem.title || !mapItem.title.length"
                         class="fas fa-exclamation-circle t-fg--danger"></span>
                 </div>
@@ -19,7 +20,8 @@
                 <div class="a-heading">Description</div>
                 <textarea rows="3" class="form-control"
                     [(ngModel)]="mapItem.description"
-                    placeholder="A description is recommended"></textarea>
+                    placeholder="A description is recommended"
+                    aria-label="Map Description"></textarea>
                 <div class="u-text--sm t-fg--gray-md">Provide a description of the map</div>
             </div>
 
@@ -31,6 +33,7 @@
                         (click)="isKeywordsCollapsed=!isKeywordsCollapsed">
                         <span *ngIf="isKeywordsCollapsed" class="fas fa-chevron-down"></span>
                         <span *ngIf="!isKeywordsCollapsed" class="fas fa-chevron-up"></span>
+                        <span class="sr-only">Hide/Show keywords</span>
                     </button>
                 </div>
                 <div *ngIf="!isKeywordsCollapsed">
@@ -39,9 +42,11 @@
                     </span>
                     <div class="input-group-slick">
                         <input type="text" class="form-control"
-                            [(ngModel)]="keyword" (keyup.enter)="addKeyword($event)">
+                            [(ngModel)]="keyword" (keyup.enter)="addKeyword($event)"
+                            aria-label="Add a keyword">
                         <button type="button" class="btn btn-secondary" (click)="addKeyword()">
                             <span class="fas fa-plus"></span>
+                            <span class="sr-only">Click to add entered keyword to map</span>
                         </button>
                     </div>
                     <div class="u-text--sm t-fg--gray-md">Provide keywords for the map</div>
