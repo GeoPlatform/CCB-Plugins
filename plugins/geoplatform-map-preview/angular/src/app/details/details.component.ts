@@ -4,7 +4,11 @@ import {
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from "rxjs";
-import { ItemService, ItemTypes, Map } from '@geoplatform/client';
+import * as md5 from "md5";
+import { ItemService, ItemTypes, Map, URIFactory } from '@geoplatform/client';
+
+const URIF = URIFactory(md5);
+
 import { GeoPlatformUser } from '@geoplatform/oauth-ng/angular';
 
 import {
@@ -125,7 +129,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         })
         .then( () => {
             //then request a URI for the new map
-            return this.itemService.getUri(this.mapItem);
+            return URIF(this.mapItem);
         })
         .then(uri => {
             if(!uri) throw new Error("Unable to generate a URI for the new map");
