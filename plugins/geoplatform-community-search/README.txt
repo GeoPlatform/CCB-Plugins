@@ -6,7 +6,7 @@ Tags: search, community, community search, geoplatform, shortcode, interactive, 
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 5.0.1
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -78,6 +78,9 @@ Examine your shortcode carefully. Ensure that there are no typos and the correct
 3. Customize individual interfaces directly, providing an array of interactive options.
 
 == Changelog ==
+
+= 1.0.9 =
+* Included client-api to 0.3.0, did not apply update.
 
 = 1.0.8 =
 * Dependency update.

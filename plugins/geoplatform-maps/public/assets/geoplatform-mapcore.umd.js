@@ -9,7 +9,7 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @return {?}
@@ -18,9 +18,12 @@ This software has been approved for release by the U.S. Department of the Interi
         if (typeof Object.assign != 'function') {
             // Must be writable: true, enumerable: false, configurable: true
             Object.defineProperty(Object, "assign", {
-                value: function assign(target, varArgs) {
+                value: ( /**
+                 * @param {?} target
+                 * @param {?} varArgs
+                 * @return {?}
+                 */function assign(target, varArgs) {
                     if (target == null) { // TypeError if undefined or null
-                        // TypeError if undefined or null
                         throw new TypeError('Cannot convert undefined or null to object');
                     }
                     /** @type {?} */
@@ -29,7 +32,6 @@ This software has been approved for release by the U.S. Department of the Interi
                         /** @type {?} */
                         var nextSource = arguments[index];
                         if (nextSource != null) { // Skip over if undefined or null
-                            // Skip over if undefined or null
                             for (var nextKey in nextSource) {
                                 // Avoid bugs when hasOwnProperty is shadowed
                                 if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
@@ -39,7 +41,7 @@ This software has been approved for release by the U.S. Department of the Interi
                         }
                     }
                     return to;
-                },
+                }),
                 writable: true,
                 configurable: true
             });
@@ -48,9 +50,12 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ɵ0 = function (options) {
+    var ɵ0 = /**
+     * @param {?} options
+     * @return {?}
+     */ function (options) {
         L.Util.setOptions(this, options);
         this._dataLoaders = {};
         // Try to set the zoom control this control is attached to from the
@@ -58,7 +63,10 @@ This software has been approved for release by the U.S. Department of the Interi
         if (this.options.zoomControl !== null) {
             this.zoomControl = this.options.zoomControl;
         }
-    }, ɵ1 = function (map) {
+    }, ɵ1 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         this._addLayerListeners(map);
         this._addMapListeners(map);
         // Try to set the zoom control this control is attached to from the map
@@ -71,6 +79,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 this.zoomControl = map.zoomsliderControl;
             }
         }
+        // Create the loading indicator
         /** @type {?} */
         var classes = 'leaflet-control-loading';
         /** @type {?} */
@@ -87,10 +96,16 @@ This software has been approved for release by the U.S. Department of the Interi
         }
         this._indicator = L.DomUtil.create('a', classes, container);
         return container;
-    }, ɵ2 = function (map) {
+    }, ɵ2 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         this._removeLayerListeners(map);
         this._removeMapListeners(map);
-    }, ɵ3 = function (map) {
+    }, ɵ3 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         if (this.zoomControl && !this.options.separate) {
             // Override Control.removeFrom() to avoid clobbering the entire
             // _container, which is the same as zoomControl's
@@ -104,22 +119,34 @@ This software has been approved for release by the U.S. Department of the Interi
             // parent method so we don't leave behind an empty container
             return L.Control.prototype.remove.call(this);
         }
-    }, ɵ4 = function (id) {
+    }, ɵ4 = /**
+     * @param {?} id
+     * @return {?}
+     */ function (id) {
         this._dataLoaders[id] = true;
         this.updateIndicator();
-    }, ɵ5 = function (id) {
+    }, ɵ5 = /**
+     * @param {?} id
+     * @return {?}
+     */ function (id) {
         delete this._dataLoaders[id];
         this.updateIndicator();
-    }, ɵ6 = function () {
+    }, ɵ6 = /**
+     * @return {?}
+     */ function () {
         if (this.isLoading()) {
             this._showIndicator();
         }
         else {
             this._hideIndicator();
         }
-    }, ɵ7 = function () {
+    }, ɵ7 = /**
+     * @return {?}
+     */ function () {
         return this._countLoaders() > 0;
-    }, ɵ8 = function () {
+    }, ɵ8 = /**
+     * @return {?}
+     */ function () {
         /** @type {?} */
         var size = 0;
         /** @type {?} */
@@ -129,7 +156,9 @@ This software has been approved for release by the U.S. Department of the Interi
                 size++;
         }
         return size;
-    }, ɵ9 = function () {
+    }, ɵ9 = /**
+     * @return {?}
+     */ function () {
         // Show loading indicator
         L.DomUtil.addClass(this._indicator, 'is-loading');
         // If zoomControl exists, make the zoom-out button not last
@@ -138,7 +167,9 @@ This software has been approved for release by the U.S. Department of the Interi
                 L.DomUtil.removeClass(this.zoomControl._zoomOutButton, 'leaflet-bar-part-bottom');
             }
         }
-    }, ɵ10 = function () {
+    }, ɵ10 = /**
+     * @return {?}
+     */ function () {
         // Hide loading indicator
         L.DomUtil.removeClass(this._indicator, 'is-loading');
         // If zoomControl exists, make the zoom-out button last
@@ -147,11 +178,20 @@ This software has been approved for release by the U.S. Department of the Interi
                 L.DomUtil.addClass(this.zoomControl._zoomOutButton, 'leaflet-bar-part-bottom');
             }
         }
-    }, ɵ11 = function (e) {
+    }, ɵ11 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         this.addLoader(this.getEventId(e));
-    }, ɵ12 = function (e) {
+    }, ɵ12 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         this.removeLoader(this.getEventId(e));
-    }, ɵ13 = function (e) {
+    }, ɵ13 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         if (e.id) {
             return e.id;
         }
@@ -159,7 +199,10 @@ This software has been approved for release by the U.S. Department of the Interi
             return e.layer._leaflet_id;
         }
         return e.target._leaflet_id;
-    }, ɵ14 = function (e) {
+    }, ɵ14 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         if (!e.layer || !e.layer.on)
             return;
         try {
@@ -173,33 +216,48 @@ This software has been approved for release by the U.S. Department of the Interi
                 ' event handlers to layer', e.layer);
             console.warn('L.Control.Loading: Full details', exception);
         }
-    }, ɵ15 = function (map) {
+    }, ɵ15 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         // Add listeners for begin and end of load to any layers already on the
         // map
-        map.eachLayer(function (layer) {
+        map.eachLayer(( /**
+         * @param {?} layer
+         * @return {?}
+         */function (layer) {
             if (!layer.on)
                 return;
             layer.on({
                 loading: this._handleLoading,
                 load: this._handleLoad
             }, this);
-        }, this);
+        }), this);
         // When a layer is added to the map, add listeners for begin and end
         // of load
         map.on('layeradd', this._layerAdd, this);
-    }, ɵ16 = function (map) {
+    }, ɵ16 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         // Remove listeners for begin and end of load from all layers
-        map.eachLayer(function (layer) {
+        map.eachLayer(( /**
+         * @param {?} layer
+         * @return {?}
+         */function (layer) {
             if (!layer.off)
                 return;
             layer.off({
                 loading: this._handleLoading,
                 load: this._handleLoad
             }, this);
-        }, this);
+        }), this);
         // Remove layeradd listener from map
         map.off('layeradd', this._layerAdd, this);
-    }, ɵ17 = function (map) {
+    }, ɵ17 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         // Add listeners to the map for (custom) dataloading and dataload
         // events, eg, for AJAX calls that affect the map but will not be
         // reflected in the above layer events.
@@ -208,7 +266,10 @@ This software has been approved for release by the U.S. Department of the Interi
             dataload: this._handleLoad,
             layerremove: this._handleLoad
         }, this);
-    }, ɵ18 = function (map) {
+    }, ɵ18 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         map.off({
             dataloading: this._handleLoading,
             dataload: this._handleLoad,
@@ -231,57 +292,73 @@ This software has been approved for release by the U.S. Department of the Interi
                 top: "83%"
             }
         },
-        initialize: ɵ0,
-        onAdd: ɵ1,
-        onRemove: ɵ2,
-        removeFrom: ɵ3,
-        addLoader: ɵ4,
-        removeLoader: ɵ5,
-        updateIndicator: ɵ6,
-        isLoading: ɵ7,
-        _countLoaders: ɵ8,
-        _showIndicator: ɵ9,
-        _hideIndicator: ɵ10,
-        _handleLoading: ɵ11,
-        _handleLoad: ɵ12,
-        getEventId: ɵ13,
-        _layerAdd: ɵ14,
-        _addLayerListeners: ɵ15,
-        _removeLayerListeners: ɵ16,
-        _addMapListeners: ɵ17,
-        _removeMapListeners: ɵ18
+        initialize: (ɵ0),
+        onAdd: (ɵ1),
+        onRemove: (ɵ2),
+        removeFrom: (ɵ3),
+        addLoader: (ɵ4),
+        removeLoader: (ɵ5),
+        updateIndicator: (ɵ6),
+        isLoading: (ɵ7),
+        _countLoaders: (ɵ8),
+        _showIndicator: (ɵ9),
+        _hideIndicator: (ɵ10),
+        _handleLoading: (ɵ11),
+        _handleLoad: (ɵ12),
+        getEventId: (ɵ13),
+        _layerAdd: (ɵ14),
+        _addLayerListeners: (ɵ15),
+        _removeLayerListeners: (ɵ16),
+        _addMapListeners: (ɵ17),
+        _removeMapListeners: (ɵ18)
     });
-    if (( /** @type {?} */(window)).L) {
+    if ((( /** @type {?} */(window))).L) {
         /** @type {?} */
-        var L_1 = ( /** @type {?} */(window)).L;
+        var L_1 = (( /** @type {?} */(window))).L;
         L_1.Control.Loading = loadingControl;
-        L_1.Control.loading = function (options) {
+        L_1.Control.loading = ( /**
+         * @param {?} options
+         * @return {?}
+         */function (options) {
             return new L_1.Control.Loading(options);
-        };
+        });
     }
-    L.Map.addInitHook(function () {
+    L.Map.addInitHook(( /**
+     * @return {?}
+     */function () {
         if (this.options.loadingControl) {
             this.loadingControl = new loadingControl();
             this.addControl(this.loadingControl);
         }
-    });
+    }));
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ɵ0$1 = function (map) {
+    var ɵ0$1 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         /** @type {?} */
         var className = 'leaflet-control-zoom leaflet-bar leaflet-control';
         /** @type {?} */
         var container = L.DomUtil.create('div', className);
         this._createButton('&#8674;', 'Measure', 'leaflet-control-measure leaflet-bar-part leaflet-bar-part-top-and-bottom', container, this._toggleMeasure, this);
         return container;
-    }, ɵ1$1 = function (html, title, className, container, fn, context) {
+    }, ɵ1$1 = /**
+     * @param {?} html
+     * @param {?} title
+     * @param {?} className
+     * @param {?} container
+     * @param {?} fn
+     * @param {?} context
+     * @return {?}
+     */ function (html, title, className, container, fn, context) {
         /** @type {?} */
         var link = L.DomUtil.create('a', className, container);
         link.innerHTML = html;
-        ( /** @type {?} */(link)).href = '#';
+        (( /** @type {?} */(link))).href = '#';
         link.title = title;
         L.DomEvent
             .on(link, 'click', L.DomEvent.stopPropagation)
@@ -289,7 +366,9 @@ This software has been approved for release by the U.S. Department of the Interi
             .on(link, 'click', fn, context)
             .on(link, 'dblclick', L.DomEvent.stopPropagation);
         return link;
-    }, ɵ2$1 = function () {
+    }, ɵ2$1 = /**
+     * @return {?}
+     */ function () {
         this._measuring = !this._measuring;
         if (this._measuring) {
             L.DomUtil.addClass(this._container, 'leaflet-control-measure-on');
@@ -299,7 +378,9 @@ This software has been approved for release by the U.S. Department of the Interi
             L.DomUtil.removeClass(this._container, 'leaflet-control-measure-on');
             this._stopMeasuring();
         }
-    }, ɵ3$1 = function () {
+    }, ɵ3$1 = /**
+     * @return {?}
+     */ function () {
         this._oldCursor = this._map._container.style.cursor;
         this._map._container.style.cursor = 'crosshair';
         this._doubleClickZoom = this._map.doubleClickZoom.enabled();
@@ -315,7 +396,9 @@ This software has been approved for release by the U.S. Department of the Interi
         if (!this._points) {
             this._points = [];
         }
-    }, ɵ4$1 = function () {
+    }, ɵ4$1 = /**
+     * @return {?}
+     */ function () {
         this._map._container.style.cursor = this._oldCursor;
         L.DomEvent
             //.off((document as Document), 'keydown', this._onKeyDown, this)
@@ -329,18 +412,21 @@ This software has been approved for release by the U.S. Department of the Interi
             this._layerPaint.clearLayers();
         }
         this._restartPath();
-    }, ɵ5$1 = function (e) {
+    }, ɵ5$1 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         if (!e.latlng || !this._lastPoint) {
             return;
         }
         if (!this._layerPaintPathTemp) {
             /** @type {?} */
-            var opts = /** @type {?} */ ({
+            var opts = ( /** @type {?} */({
                 color: 'black',
                 weight: 1.5,
                 clickable: false,
                 dashArray: '6,3'
-            });
+            }));
             this._layerPaintPathTemp = L.polyline([this._lastPoint, e.latlng], opts)
                 .addTo(this._layerPaint);
         }
@@ -356,7 +442,10 @@ This software has been approved for release by the U.S. Department of the Interi
             var distance = e.latlng.distanceTo(this._lastPoint);
             this._updateTooltipDistance(this._distance + distance, distance);
         }
-    }, ɵ6$1 = function (e) {
+    }, ɵ6$1 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         // Skip if no coordinates
         if (!e.latlng) {
             return;
@@ -376,11 +465,11 @@ This software has been approved for release by the U.S. Department of the Interi
         // If this is already the second click, add the location to the fix path (create one first if we don't have one)
         if (this._lastPoint && !this._layerPaintPath) {
             /** @type {?} */
-            var opts = /** @type {?} */ ({
+            var opts = ( /** @type {?} */({
                 color: 'black',
                 weight: 2,
                 clickable: false
-            });
+            }));
             this._layerPaintPath = L.polyline([this._lastPoint], opts).addTo(this._layerPaint);
         }
         if (this._layerPaintPath) {
@@ -391,7 +480,7 @@ This software has been approved for release by the U.S. Department of the Interi
             this._layerPaint.removeLayer(this._lastCircle);
         }
         /** @type {?} */
-        var markerOpts = /** @type {?} */ ({
+        var markerOpts = ( /** @type {?} */({
             color: 'black',
             opacity: 1,
             weight: 1,
@@ -399,12 +488,16 @@ This software has been approved for release by the U.S. Department of the Interi
             fillOpacity: 1,
             radius: 2,
             clickable: this._lastCircle ? true : false
-        });
+        }));
         this._lastCircle = new L.CircleMarker(e.latlng, markerOpts).addTo(this._layerPaint);
-        this._lastCircle.on('click', function () { this._finishPath(); }, this);
+        this._lastCircle.on('click', ( /**
+         * @return {?}
+         */function () { this._finishPath(); }), this);
         // Save current location as last location
         this._lastPoint = e.latlng;
-    }, ɵ7$1 = function () {
+    }, ɵ7$1 = /**
+     * @return {?}
+     */ function () {
         // Remove the last end marker as well as the last (moving tooltip)
         if (this._lastCircle) {
             this._layerPaint.removeLayer(this._lastCircle);
@@ -417,26 +510,40 @@ This software has been approved for release by the U.S. Department of the Interi
         }
         // Reset everything
         this._restartPath();
-    }, ɵ8$1 = function () {
+    }, ɵ8$1 = /**
+     * @return {?}
+     */ function () {
         this._distance = 0;
         this._tooltip = undefined;
         this._lastCircle = undefined;
         this._lastPoint = undefined;
         this._layerPaintPath = undefined;
         this._layerPaintPathTemp = undefined;
-    }, ɵ9$1 = function (position) {
+    }, ɵ9$1 = /**
+     * @param {?} position
+     * @return {?}
+     */ function (position) {
         /** @type {?} */
         var icon = L.divIcon({
             className: 'leaflet-measure-tooltip',
             iconAnchor: [-5, -5]
         });
-        this._tooltip = L.marker(position, {
+        /** @type {?} */
+        var opts = {
             icon: icon,
             clickable: false
-        }).addTo(this._layerPaint);
-    }, ɵ10$1 = function (position) {
+        };
+        this._tooltip = L.marker(position, ( /** @type {?} */(opts))).addTo(this._layerPaint);
+    }, ɵ10$1 = /**
+     * @param {?} position
+     * @return {?}
+     */ function (position) {
         this._tooltip.setLatLng(position);
-    }, ɵ11$1 = function (total, difference) {
+    }, ɵ11$1 = /**
+     * @param {?} total
+     * @param {?} difference
+     * @return {?}
+     */ function (total, difference) {
         /** @type {?} */
         var totalRound = this._round(total);
         /** @type {?} */
@@ -447,9 +554,15 @@ This software has been approved for release by the U.S. Department of the Interi
             text += '<div class="leaflet-measure-tooltip-difference">(+' + differenceRound + ' nm)</div>';
         }
         this._tooltip._icon.innerHTML = text;
-    }, ɵ12$1 = function (val) {
+    }, ɵ12$1 = /**
+     * @param {?} val
+     * @return {?}
+     */ function (val) {
         return Math.round((val / 1852) * 10) / 10;
-    }, ɵ13$1 = function (e) {
+    }, ɵ13$1 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         if (e.keyCode == 27) {
             // If not in path exit measuring mode, else just finish path
             if (!this._lastPoint) {
@@ -465,52 +578,66 @@ This software has been approved for release by the U.S. Department of the Interi
         options: {
             position: 'topleft'
         },
-        onAdd: ɵ0$1,
-        _createButton: ɵ1$1,
-        _toggleMeasure: ɵ2$1,
-        _startMeasuring: ɵ3$1,
-        _stopMeasuring: ɵ4$1,
-        _mouseMove: ɵ5$1,
-        _mouseClick: ɵ6$1,
-        _finishPath: ɵ7$1,
-        _restartPath: ɵ8$1,
-        _createTooltip: ɵ9$1,
-        _updateTooltipPosition: ɵ10$1,
-        _updateTooltipDistance: ɵ11$1,
-        _round: ɵ12$1,
-        _onKeyDown: ɵ13$1
+        onAdd: (ɵ0$1),
+        _createButton: (ɵ1$1),
+        _toggleMeasure: (ɵ2$1),
+        _startMeasuring: (ɵ3$1),
+        _stopMeasuring: (ɵ4$1),
+        _mouseMove: (ɵ5$1),
+        _mouseClick: (ɵ6$1),
+        _finishPath: (ɵ7$1),
+        _restartPath: (ɵ8$1),
+        _createTooltip: (ɵ9$1),
+        _updateTooltipPosition: (ɵ10$1),
+        _updateTooltipDistance: (ɵ11$1),
+        _round: (ɵ12$1),
+        _onKeyDown: (ɵ13$1)
     });
-    if (( /** @type {?} */(window)).L) {
+    if ((( /** @type {?} */(window))).L) {
         /** @type {?} */
-        var L_1$1 = ( /** @type {?} */(window)).L;
+        var L_1$1 = (( /** @type {?} */(window))).L;
         L_1$1.Control.Measure = measureControl;
-        L_1$1.control.measure = function (options) {
+        L_1$1.control.measure = ( /**
+         * @param {?} options
+         * @return {?}
+         */function (options) {
             return new L_1$1.Control.Measure(options);
-        };
+        });
     }
     L.Map.mergeOptions({
         measureControl: false
     });
-    L.Map.addInitHook(function () {
+    L.Map.addInitHook(( /**
+     * @return {?}
+     */function () {
         if (this.options.measureControl) {
             this.measureControl = new measureControl();
             this.addControl(this.measureControl);
         }
-    });
+    }));
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ɵ0$2 = function (map) {
+    var ɵ0$2 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         this._container = L.DomUtil.create('div', 'leaflet-control-mouseposition');
         L.DomEvent.disableClickPropagation(this._container);
         map.on('mousemove', this._onMouseMove, this);
         this._container.innerHTML = this.options.emptyString;
         return this._container;
-    }, ɵ1$2 = function (map) {
+    }, ɵ1$2 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         map.off('mousemove', this._onMouseMove);
-    }, ɵ2$2 = function (e) {
+    }, ɵ2$2 = /**
+     * @param {?} e
+     * @return {?}
+     */ function (e) {
         /** @type {?} */
         var lng = this.options.lngFormatter ? this.options.lngFormatter(e.latlng.lng) : L.Util.formatNum(e.latlng.lng, this.options.numDigits);
         /** @type {?} */
@@ -533,9 +660,9 @@ This software has been approved for release by the U.S. Department of the Interi
             latFormatter: undefined,
             prefix: ""
         },
-        onAdd: ɵ0$2,
-        onRemove: ɵ1$2,
-        _onMouseMove: ɵ2$2
+        onAdd: (ɵ0$2),
+        onRemove: (ɵ1$2),
+        _onMouseMove: (ɵ2$2)
     });
     // if( (window as any).L) {
     //     const L = (window as any).L;
@@ -544,19 +671,24 @@ This software has been approved for release by the U.S. Department of the Interi
     //         return new L.Control.MousePosition(options);
     //     };
     // }
-    ( /** @type {?} */(L.Control)).MousePosition = positionControl;
-    ( /** @type {?} */(L.control)).mousePosition = function (options) {
-        return new ( /** @type {?} */(L.Control)).MousePosition(options);
-    };
+    (( /** @type {?} */(L.Control))).MousePosition = positionControl;
+    (( /** @type {?} */(L.control))).mousePosition = ( /**
+     * @param {?} options
+     * @return {?}
+     */function (options) {
+        return new (( /** @type {?} */(L.Control))).MousePosition(options);
+    });
     L.Map.mergeOptions({
         positionControl: false
     });
-    L.Map.addInitHook(function () {
+    L.Map.addInitHook(( /**
+     * @return {?}
+     */function () {
         if (this.options.positionControl) {
             this.positionControl = new positionControl();
             this.addControl(this.positionControl);
         }
-    });
+    }));
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -589,7 +721,7 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var FeatureEditor = /** @class */ (function () {
         function FeatureEditor(map, feature, options) {
@@ -666,14 +798,19 @@ This software has been approved for release by the U.S. Department of the Interi
             function () {
                 if (!this.visible)
                     return;
-                this.originalFeature = /** @type {?} */ (L.GeoJSON.geometryToLayer(this.feature.toGeoJSON()));
-                this.feature.properties["_editing"] = true;
+                this.originalFeature = ( /** @type {?} */(L.GeoJSON.geometryToLayer(this.feature.toGeoJSON())));
+                this.feature.properties._editing = true;
+                // get Leaflet.Map from instance
                 /** @type {?} */
                 var map = this.map.getMap();
+                // find feature layer for specific feature
                 /** @type {?} */
                 var feature = this.map.getFeatureLayer(this.feature.properties.id);
                 if (!feature)
                     return;
+                //clone feature layer and wrap with FeatureGroup
+                // because Leaflet.Draw requires edited features
+                // be within a FeatureGroup
                 /** @type {?} */
                 var editingLayer = this.editingLayer = new L.FeatureGroup().addTo(map);
                 //if the feature being edited is a multi-geometry
@@ -683,37 +820,54 @@ This software has been approved for release by the U.S. Department of the Interi
                 if (this.feature.geometry.type.indexOf("Multi") === 0) {
                     /** @type {?} */
                     var type_1 = this.feature.geometry.type.replace("Multi", "");
-                    this.feature.geometry.coordinates.each(function (childCoords) {
+                    this.feature.geometry.coordinates.each(( /**
+                     * @param {?} childCoords
+                     * @return {?}
+                     */function (childCoords) {
                         /** @type {?} */
                         var shape = { type: type_1, coordinates: childCoords };
                         new L.GeoJSON(shape, {
-                            onEachFeature: function (feature, layer) {
+                            onEachFeature: ( /**
+                             * @param {?} feature
+                             * @param {?} layer
+                             * @return {?}
+                             */function (feature, layer) {
                                 editingLayer.addLayer(layer);
-                            }
+                            })
                         });
-                    });
+                    }));
                 }
                 else if (this.feature.geometry.type === 'GeometryCollection') {
-                    this.feature.geometry.geometries.each(function (childGeometry) {
+                    this.feature.geometry.geometries.each(( /**
+                     * @param {?} childGeometry
+                     * @return {?}
+                     */function (childGeometry) {
                         new L.GeoJSON(childGeometry, {
-                            onEachFeature: function (feature, layer) {
+                            onEachFeature: ( /**
+                             * @param {?} feature
+                             * @param {?} layer
+                             * @return {?}
+                             */function (feature, layer) {
                                 editingLayer.addLayer(layer);
-                            }
+                            })
                         });
-                    });
+                    }));
                 }
                 else {
-                    new L.GeoJSON(feature.toGeoJSON()).eachLayer(function (layer) {
+                    new L.GeoJSON(feature.toGeoJSON()).eachLayer(( /**
+                     * @param {?} layer
+                     * @return {?}
+                     */function (layer) {
                         editingLayer.addLayer(layer);
-                    });
+                    }));
                 }
                 //make this feature invisible
                 this.showOriginalLayer(false);
                 //register LeafletDraw control with Edit mode only
                 // using just the feature layer identified
-                this.tool = new EditFeature(/** @type {?} */ ({
+                this.tool = new EditFeature(( /** @type {?} */({
                     featureGroup: editingLayer
-                })).addTo(map);
+                }))).addTo(map);
                 this.tool.activate();
             };
         /**
@@ -728,7 +882,7 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (save) {
-                this.feature.properties["_editing"] = false;
+                this.feature.properties._editing = false;
                 if (typeof (save) === 'undefined' || save) {
                     //if geometry changed
                     if (this.tool && this.tool.hasBeenEdited()) {
@@ -741,10 +895,13 @@ This software has been approved for release by the U.S. Department of the Interi
                         /** @type {?} */
                         var coords_1 = [];
                         /** @type {?} */
-                        var geometry_1 = void 0;
-                        this.editingLayer.eachLayer(function (layer) {
+                        var geometry_1;
+                        this.editingLayer.eachLayer(( /**
+                         * @param {?} layer
+                         * @return {?}
+                         */function (layer) {
                             /** @type {?} */
-                            var feature = ( /** @type {?} */(layer)).toGeoJSON();
+                            var feature = (( /** @type {?} */(layer))).toGeoJSON();
                             geometry_1 = feature.geometry;
                             if (isMulti_1) {
                                 coords_1[coords_1.length] = geometry_1.coordinates;
@@ -752,7 +909,7 @@ This software has been approved for release by the U.S. Department of the Interi
                             else if (isGeomColl_1) {
                                 geoms_1[geoms_1.length] = feature;
                             }
-                        });
+                        }));
                         //update existing feature with edited information
                         if (isMulti_1)
                             this.feature.geometry.coordinates = coords_1;
@@ -838,14 +995,22 @@ This software has been approved for release by the U.S. Department of the Interi
                 if (!this.editingLayer)
                     this.map.updateFeature(this.feature);
                 else {
+                    //don't need to update existing rendered feature
+                    // because it's been hidden and a temporary 'editing' version
+                    // is on the map. So we need to update that instead.
+                    // this.map.updateFeature(this.feature);
+                    //update 'editing' version of the feature in question
                     /** @type {?} */
-                    var style_1 = this.feature.properties["style"];
-                    this.editingLayer.eachLayer(function (layer) {
+                    var style_1 = this.feature.properties.style;
+                    this.editingLayer.eachLayer(( /**
+                     * @param {?} layer
+                     * @return {?}
+                     */function (layer) {
                         //do nothing for markers
-                        if (( /** @type {?} */(layer)).feature.geometry.type !== 'Point') {
-                            ( /** @type {?} */(layer)).setStyle(style_1);
+                        if ((( /** @type {?} */(layer))).feature.geometry.type !== 'Point') {
+                            (( /** @type {?} */(layer))).setStyle(style_1);
                         }
-                    });
+                    }));
                 }
             };
         /**
@@ -893,7 +1058,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 /** @type {?} */
                 var opts = {};
                 //needed or else L.EditToolbar.Edit fails to addHooks for PolyLine features
-                ( /** @type {?} */(opts)).selectedPathOptions = {
+                (( /** @type {?} */(opts))).selectedPathOptions = {
                     dashArray: '10, 10',
                     fill: true,
                     fillColor: '#fe57a1',
@@ -901,7 +1066,7 @@ This software has been approved for release by the U.S. Department of the Interi
                     // Whether to user the existing layers color
                     maintainColor: false
                 };
-                ( /** @type {?} */(opts)).featureGroup = ( /** @type {?} */(this.options)).featureGroup;
+                (( /** @type {?} */(opts))).featureGroup = (( /** @type {?} */(this.options))).featureGroup;
                 this.handler = new leafletDraw.Draw.EditToolbar.Edit(map, opts);
                 /** @type {?} */
                 var container = L.DomUtil.create('div', 'leaflet-edit-feature');
@@ -947,358 +1112,22 @@ This software has been approved for release by the U.S. Department of the Interi
             function () {
                 /** @type {?} */
                 var result = false;
-                if (( /** @type {?} */(this.options)).featureGroup) {
-                    ( /** @type {?} */(this.options)).featureGroup.eachLayer(function (layer) {
+                if ((( /** @type {?} */(this.options))).featureGroup) {
+                    (( /** @type {?} */(this.options))).featureGroup.eachLayer(( /**
+                     * @param {?} layer
+                     * @return {?}
+                     */function (layer) {
                         result = result || layer.edited;
-                    });
+                    }));
                 }
                 return result;
             };
         return EditFeature;
     }(L.Control));
-    // import {
-    //     Map, Layer, FeatureGroup, Control, GeoJSON, popup,
-    //     Util, DomUtil, DomEvent, Evented
-    // } from 'leaflet';
-    // import * as Editable from "leaflet-editable";
-    //
-    // import MapInstance from '../map/instance';
-    //
-    //
-    //
-    //
-    //
-    // const CALLBACKS = {
-    //     'marker'    : 'startMarker',
-    //     'line'      : 'startPolyline',
-    //     'polygon'   : 'startPolygon',
-    //     'rectangle' : 'startRectangle',
-    //     'circle'    : 'startCircle'
-    // };
-    //
-    //
-    // export const Events = {
-    //     FEATURE_CREATED: 'feature:created',
-    //     FEATURE_REMOVED: 'feature:removed',
-    //     FEATURE_EDITED: 'feature:edited'
-    // };
-    //
-    //
-    // export default class FeatureEditor extends Evented {
-    //
-    //     private map : MapInstance;
-    //     private editor : Editable;
-    //     private editLayer : FeatureGroup;
-    //     private featuresLayer : FeatureGroup;
-    //
-    //     constructor(map : MapInstance, options ?: any) {
-    //         super();
-    //
-    //         this.map = map;
-    //
-    //         let leafletMap : Map = map.getMap();
-    //         if(!leafletMap) throw new Error("No Leaflet map is configured");
-    //
-    //         this.featuresLayer = map.getFeatureLayer();
-    //
-    //         this.editLayer = new FeatureGroup();
-    //         this.editLayer.addTo(leafletMap);
-    //
-    //         let opts : any = {};
-    //         Object.assign(opts, options||{}, {
-    //             //editLayer : ...
-    //             featuresLayer : this.editLayer //map.getFeatureLayer()
-    //             // drawingCSSClass: 'leaflet-editable-drawing',
-    //             // drawingCursor: 'crosshair',
-    //             // skipMiddleMarkers: true
-    //         });
-    //
-    //         //create and register editable instance on leaflet map
-    //         let editor = new Editable(leafletMap, opts);
-    //         (leafletMap as any).editTools = editor;
-    //         this.editor = editor;
-    //
-    //         this.editor.on('editable:drawing:end', (event : any) => {
-    //             //have to wrap handler in a timeout in order to not inadvertently
-    //             // block the clean up of event handlers within Editable
-    //             setTimeout(() => { this.onFeatureCreated(event) },50);
-    //         });
-    //         // this.editor.on('editable:editing', (event : any) => { this.onFeatureEdited(event) })
-    //
-    //         this.editor.on('editable:drawing:start', (event: any) => console.log("Drawing Start") );
-    //         this.editor.on('editable:drawing:end', (event: any) => console.log("Drawing End") );
-    //         this.editor.on('editable:drawing:cancel', (event: any) => console.log("Drawing Cancel") );
-    //         this.editor.on('editable:drawing:commit', (event: any) => console.log("Drawing Commit") );
-    //
-    //         this.editor.on(
-    //             'editable:drawing:start editable:drawing:end ' +
-    //             'editable:drawing:cancel editable:drawing:commit ' +
-    //             'editable:drawing:mousedown editable:drawing:mouseup ' +
-    //             'editable:drawing:click editable:drawing:move ' +
-    //             'editable:drawing:clicked',
-    //             (event : any) => {
-    //                 console.log("Editor event: " + event.type);
-    //                 if(event.layer && event.layer.options.popup) {
-    //                     this.updateFeaturePopup(event.layer, event.layer.options.popup);
-    //                 }
-    //             }
-    //         );
-    //
-    //         this.editor.on(
-    //             'editable:vertex:new editable:vertex:click ' +
-    //             'editable:vertex:clicked editable:vertex:rawclick ' +
-    //             'editable:vertex:deleted editable:vertex:ctrlclick ' +
-    //             'editable:vertex:shiftclick editable:vertex:metakeyclick ' +
-    //             'editable:vertex:altclick editable:vertex:contextmenu ' +
-    //             'editable:vertex:mousedown editable:vertex:drag ' +
-    //             'editable:vertex:dragstart editable:vertex:dragend ' +
-    //             'editable:middlemarker:mousedown',
-    //             (event : any) => {
-    //                 console.log("Vertex event: " + event.type);
-    //                 // if(event.layer && event.layer.options.popup) {
-    //                 //     this.updateFeaturePopup(event.layer, event.layer.options.popup);
-    //                 // }
-    //             }
-    //         );
-    //
-    //         if(opts.marker) {
-    //             leafletMap.addControl(new EditControl({
-    //                 position: opts.position || 'topleft',
-    //                 callback: editor[CALLBACKS.marker],
-    //                 kind: 'marker',
-    //                 html: opts.marker.icon ? opts.marker.icon : '🖈'
-    //             }));
-    //         }
-    //         if(opts.line) {
-    //             leafletMap.addControl(new EditControl({
-    //                 position: opts.position || 'topleft',
-    //                 callback: editor[CALLBACKS.line],
-    //                 kind: 'line',
-    //                 html: opts.line.icon ? opts.line.icon : '\\/\\'
-    //             }));
-    //         }
-    //         if(opts.polygon) {
-    //             leafletMap.addControl(new EditControl({
-    //                 position: opts.position || 'topleft',
-    //                 callback: editor[CALLBACKS.polygon],
-    //                 kind: 'polygon',
-    //                 html: opts.polygon.icon ? opts.polygon.icon : '▰'
-    //             }));
-    //         }
-    //         if(opts.rectangle) {
-    //             leafletMap.addControl(new EditControl({
-    //                 position: opts.position || 'topleft',
-    //                 callback: editor[CALLBACKS.rectangle],
-    //                 kind: 'rectangle',
-    //                 html: opts.rectangle.icon ? opts.rectangle.icon : '⬛'
-    //             }));
-    //         }
-    //         if(opts.circle) {
-    //             leafletMap.addControl(new EditControl({
-    //                 position: opts.position || 'topleft',
-    //                 callback: editor[CALLBACKS.circle],
-    //                 kind: 'circle',
-    //                 html: opts.circle.icon ? opts.circle.icon : '⬤'
-    //             }));
-    //         }
-    //     }
-    //
-    //     isDrawing() : boolean {
-    //         return this.editor ? this.editor.drawing() : false;
-    //     }
-    //
-    //     cancel() {
-    //         if(this.editor) this.editor.stopDrawing();
-    //     }
-    //
-    //     /**
-    //      * @param feature Feature to be edited
-    //      */
-    //     enableFeatureEdit( feature : any ) {
-    //         if(!feature) return;
-    //
-    //         if(!feature.properties) feature.properties = {};
-    //
-    //         let fid =  this.getFeatureId(feature, true);
-    //
-    //         //make a clone of the feature to be edited
-    //         let json = (feature as any).toGeoJSON();
-    //         let editedLayer = GeoJSON.geometryToLayer(json);
-    //         Util.setOptions(editedLayer, { originalLayerId : fid });
-    //
-    //         //hide that feature on featuresLayer
-    //         this.map.setFeatureVisibility(feature, false);
-    //
-    //         //and add the editble clone of it to the edit layer
-    //         this.editLayer.addLayer(editedLayer);
-    //         (editedLayer as any).toggleEdit();
-    //     }
-    //
-    //     /**
-    //      * @param feature Feature being edited
-    //      */
-    //     applyFeatureEdit( feature : any ) {
-    //
-    //         let editedLayer = this.findEditedFeatureLayer(feature);
-    //         if(!editedLayer) return;
-    //
-    //         (editedLayer as any).toggleEdit();                   //turn off editor
-    //
-    //         let json = (editedLayer as any).toGeoJSON();
-    //         this.editLayer.removeLayer(editedLayer);    //remove from edit layer
-    //
-    //         // let updatedLayer = GeoJSON.geometryToLayer(json);
-    //         this.map.replaceFeature(json);
-    //         this.map.setFeatureVisibility(feature, true);
-    //
-    //     }
-    //
-    //     /**
-    //      * @param feature Feature being edited
-    //      */
-    //     cancelFeatureEdit( feature : any ) {
-    //
-    //         let editedLayer = this.findEditedFeatureLayer(feature);
-    //         if(!editedLayer) return;
-    //
-    //         (editedLayer as any).toggleEdit();                   //turn off editor
-    //         this.editLayer.removeLayer(editedLayer);    //and remove from edit layer
-    //
-    //         //re-show the original feature layer
-    //         this.map.setFeatureVisibility(feature, true);
-    //
-    //     }
-    //
-    //     /**
-    //      * @param feature Feature Layer associated with an editable feature
-    //      * @return editable Feature Layer assocaited with the specified parameter Feature Layer
-    //      */
-    //     findEditedFeatureLayer( feature : any ) : Layer {
-    //         let editedLayer : Layer = null;
-    //         this.editLayer.eachLayer( (layer : any) => {
-    //             let fid = this.getFeatureId(layer);
-    //             if( !editedLayer && fid == layer.originalLayerId ) {
-    //                 editedLayer = layer as Layer;
-    //             }
-    //         });
-    //         return editedLayer;
-    //     }
-    //
-    //     /**
-    //      * @param feature Feature
-    //      * @param createAsNeeded flag indicating whether to create an ID if feature has none
-    //      * @return feature id or null
-    //      */
-    //     getFeatureId( feature : any , createAsNeeded ?: boolean) : string {
-    //         if(!feature) return null;
-    //         if(!feature.properties) feature.properties = {};
-    //         let featureId = feature.properties.id || null;
-    //         if(!featureId && true === createAsNeeded)
-    //             featureId = feature.properties.id = Math.round(Math.random()*9999);
-    //         return featureId;
-    //     }
-    //
-    //
-    //
-    //
-    //     onFeatureCreated(event : any) {
-    //         let feature : any = event.layer;
-    //
-    //         if( typeof(feature.editEnabled) !== 'undefined' && feature.editEnabled() ) {
-    //             feature.toggleEdit();
-    //         }
-    //
-    //         this.editLayer.removeLayer(feature);
-    //         if(this.featuresLayer) {
-    //             this.featuresLayer.addLayer(feature);
-    //             feature.on('dblclick', DomEvent.stop).on('dblclick', () => {
-    //
-    //                 (feature as any).toggleEdit();
-    //
-    //                 if(feature.editEnabled()) { //'editable:enable'
-    //                     //add a save and cancel btn...
-    //
-    //                     let latLng = null;
-    //                     if(typeof(feature.getLatLng) !== 'undefined') {
-    //                         latLng = feature.getLatLng();
-    //                     } else if(typeof(feature.getCenter()) !== 'undefined') {
-    //                         latLng = feature.getCenter();
-    //                     }
-    //
-    //                     let fp = popup({
-    //                         autoClose: false,
-    //                         closeButton: false,
-    //                         closeOnEscapeKey: false,
-    //                         closeOnClick: false
-    //                     }).setLatLng(latLng)
-    //                     .setContent('<button type="button">Save</button> &nbsp;&nbsp;&nbsp; <button type="button">Cancel</button>')
-    //                     .openOn(this.map.getMap());
-    //
-    //                     Util.setOptions(feature, {popup : fp});
-    //
-    //                 } else if( feature.options.popup ) {
-    //                     feature.options.popup.remove();
-    //                     // feature.editor.off('editable:drawing:start,editable:drawing:end,editable:drawing:cancel,editable:drawing:commit,editable:drawing:mousedown,editable:drawing:mouseup,editable:drawing:click,editable:drawing:move,editable:drawing:clicked');
-    //
-    //                 }
-    //             });
-    //         }
-    //         this.fire(Events.FEATURE_CREATED, feature);
-    //     }
-    //
-    //     onFeatureEdited(event : any) {
-    //         let feature = event.layer;
-    //         this.fire(Events.FEATURE_EDITED, feature);
-    //     }
-    //
-    //
-    //     updateFeaturePopup(feature, popup) {
-    //         let latLng = null;
-    //         if(typeof(feature.getLatLng) !== 'undefined') {
-    //             latLng = feature.getLatLng();
-    //         } else if(typeof(feature.getCenter()) !== 'undefined') {
-    //             latLng = feature.getCenter();
-    //         }
-    //         if(latLng)
-    //             popup.setLatLng(latLng);
-    //     }
-    // }
-    //
-    //
-    //
-    //
-    //
-    // class EditControl extends Control {
-    //
-    //     constructor(options ?: any) {
-    //         super(options);
-    //     }
-    //
-    //     initialize (options ?: any) {
-    // 		Util.setOptions(this, options);
-    //     }
-    //
-    //     onAdd (map : Map) {
-    //         let container : HTMLElement = DomUtil.create('div', 'leaflet-control leaflet-bar'),
-    //             activateBtn : HTMLAnchorElement = DomUtil.create('a', '', container) as HTMLAnchorElement;
-    //
-    //         activateBtn.href = '#';
-    //         activateBtn.title = 'Create a new ' + (this.options as any).kind;
-    //         activateBtn.innerHTML = (this.options as any).html;
-    //
-    //         DomEvent.on(activateBtn, 'click', DomEvent.stop)
-    //         .on(activateBtn, 'click', function () {
-    //             (window as any).LAYER = this.options.callback.call( (map as any).editTools );
-    //         }, this);
-    //
-    //         return container;
-    //     }
-    //
-    // }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var LayerResourceTypes = {
@@ -1309,47 +1138,70 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @param layerService - optional, LayerService to use to fetch the layer
+     * @return Promise resolving OpenStreet Map GeoPlatform Layer
      */
     var OSM = {
         /**
-         * @param {Object} layer - GeoPlatform Layer object
-         * @return {boolean} true if is an OSM layer
+         * @param layer - GeoPlatform Layer object
+         * @return boolean, true if is an OSM layer
          */
-        test: function (layer) {
+        test: ( /**
+         * @param {?} layer
+         * @return {?}
+         */function (layer) {
             return layer &&
                 layer.resourceTypes &&
                 layer.resourceTypes.length &&
                 ~layer.resourceTypes.indexOf(LayerResourceTypes.OSM);
-        },
-        get: function (layerService) {
+        }),
+        get: ( /**
+         * @param {?=} layerService
+         * @return {?}
+         */function (layerService) {
+            /** @type {?} */
             var query = client.QueryFactory()
                 .fields('*')
                 .resourceTypes(LayerResourceTypes.OSM);
             if (!layerService)
                 layerService = new client.LayerService(client.Config.ualUrl, new client.XHRHttpClient());
             return layerService.search(query)
-                .then(function (response) { return response.results.length ? response.results[0] : null; });
-        }
+                .then(( /**
+         * @param {?} response
+         * @return {?}
+         */function (response) { return response.results.length ? response.results[0] : null; }));
+        })
     };
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var WORLD_STREET_LAYER = '86a8babde086689e21248669ba4ed579';
-    var ɵ0$3 = function (layerService) {
+    var ɵ0$3 = /**
+     * @param {?} layerService
+     * @return {?}
+     */ function (layerService) {
         if (!layerService) {
             layerService = new client.LayerService(client.Config.ualUrl, new client.XHRHttpClient());
         }
         /** @type {?} */
         var baseLayerId = client.Config.defaultBaseLayerId || WORLD_STREET_LAYER;
         return layerService.get(baseLayerId)
-            .catch(function (e) {
+            .catch(( /**
+     * @param {?} e
+     * @return {?}
+     */function (e) {
             return OSM.get();
-        });
-    }, ɵ1$3 = function (layer) {
+        }));
+    }, ɵ1$3 = /**
+     * @param {?} layer
+     * @return {?}
+     */ function (layer) {
         /** @type {?} */
         var id = null;
         if (layer && layer.id)
@@ -1362,24 +1214,28 @@ This software has been approved for release by the U.S. Department of the Interi
     };
     /** @type {?} */
     var DefaultBaseLayer = {
-        get: ɵ0$3,
-        set: ɵ1$3
+        get: (ɵ0$3),
+        set: (ɵ1$3)
     };
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var ogcExpr = /OGC.+\(([A-Z\-]+)\)/;
     /** @type {?} */
     var esriExpr = /Esri REST ([A-Za-z]+) Service/;
     /** @type {?} */
-    var keyFn = function (expr, str) {
+    var keyFn = ( /**
+     * @param {?} expr
+     * @param {?} str
+     * @return {?}
+     */function (expr, str) {
         /** @type {?} */
         var m = expr.exec(str);
         return (m && m.length) ? m[1] : null;
-    };
+    });
     /** @type {?} */
     var types = {
         ESRI_FEATURE_SERVER: {
@@ -1493,10 +1349,12 @@ This software has been approved for release by the U.S. Department of the Interi
                 svc = service;
             }
             else { // otherwise, use defaults
-                // otherwise, use defaults
                 svc = new client.ItemService(url, new client.XHRHttpClient());
             }
-            svc.search(query).then(function (data) {
+            svc.search(query).then(( /**
+             * @param {?} data
+             * @return {?}
+             */function (data) {
                 for (var i = 0; i < data.results.length; ++i) {
                     /** @type {?} */
                     var type = data.results[i];
@@ -1527,18 +1385,24 @@ This software has been approved for release by the U.S. Department of the Interi
                     types[key] = type;
                 }
                 // console.log(types);
-            })
-                .catch(function (error) {
+            }))
+                .catch(( /**
+         * @param {?} error
+         * @return {?}
+         */function (error) {
                 console.log("Error loading supported service types: " + error.message);
-            });
+            }));
         }
     }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ɵ0$5 = function (options) {
+    var ɵ0$5 = /**
+     * @param {?} options
+     * @return {?}
+     */ function (options) {
         esri.FeatureManager.prototype.initialize.call(this, options);
         options = L.Util.setOptions(this, options);
         this._layers = {};
@@ -1546,16 +1410,25 @@ This software has been approved for release by the U.S. Department of the Interi
         this.cluster = new L.MarkerClusterGroup(options);
         this._key = 'c' + (Math.random() * 1e9).toString(36).replace('.', '_');
         this.cluster.addEventParent(this);
-    }, ɵ1$4 = function (map) {
+    }, ɵ1$4 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         esri.FeatureManager.prototype.onAdd.call(this, map);
         this._map.addLayer(this.cluster);
         // NOTE !!!!!!!
         // Using this type of layer requires map.maxZoom to be set during map creation!
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    }, ɵ2$3 = function (map) {
+    }, ɵ2$3 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         esri.FeatureManager.prototype.onRemove.call(this, map);
         this._map.removeLayer(this.cluster);
-    }, ɵ3$2 = function (features) {
+    }, ɵ3$2 = /**
+     * @param {?} features
+     * @return {?}
+     */ function (features) {
         /** @type {?} */
         var markers = [];
         for (var i = features.length - 1; i >= 0; i--) {
@@ -1588,7 +1461,10 @@ This software has been approved for release by the U.S. Department of the Interi
         if (markers.length) {
             this.cluster.addLayers(markers);
         }
-    }, ɵ4$2 = function (ids) {
+    }, ɵ4$2 = /**
+     * @param {?} ids
+     * @return {?}
+     */ function (ids) {
         /** @type {?} */
         var layersToAdd = [];
         for (var i = ids.length - 1; i >= 0; i--) {
@@ -1600,7 +1476,11 @@ This software has been approved for release by the U.S. Department of the Interi
             layersToAdd.push(layer);
         }
         this.cluster.addLayers(layersToAdd);
-    }, ɵ5$2 = function (ids, permanent) {
+    }, ɵ5$2 = /**
+     * @param {?} ids
+     * @param {?} permanent
+     * @return {?}
+     */ function (ids, permanent) {
         /** @type {?} */
         var layersToRemove = [];
         for (var i = ids.length - 1; i >= 0; i--) {
@@ -1618,7 +1498,10 @@ This software has been approved for release by the U.S. Department of the Interi
             }
         }
         this.cluster.removeLayers(layersToRemove);
-    }, ɵ6$2 = function (id) {
+    }, ɵ6$2 = /**
+     * @param {?} id
+     * @return {?}
+     */ function (id) {
         /** @type {?} */
         var layer = this._layers[id];
         if (layer) {
@@ -1626,12 +1509,22 @@ This software has been approved for release by the U.S. Department of the Interi
             this.setFeatureStyle(layer.feature.id, this.options.style);
         }
         return this;
-    }, ɵ7$2 = function (style) {
-        this.eachFeature(function (layer) {
+    }, ɵ7$2 = /**
+     * @param {?} style
+     * @return {?}
+     */ function (style) {
+        this.eachFeature(( /**
+         * @param {?} layer
+         * @return {?}
+         */function (layer) {
             this.setFeatureStyle(layer.feature.id, style);
-        }, this);
+        }), this);
         return this;
-    }, ɵ8$2 = function (id, style) {
+    }, ɵ8$2 = /**
+     * @param {?} id
+     * @param {?} style
+     * @return {?}
+     */ function (id, style) {
         /** @type {?} */
         var layer = this._layers[id];
         if (typeof style === 'function') {
@@ -1640,12 +1533,19 @@ This software has been approved for release by the U.S. Department of the Interi
         if (layer.setStyle) {
             layer.setStyle(style);
         }
-    }, ɵ9$2 = function (fn, context) {
+    }, ɵ9$2 = /**
+     * @param {?} fn
+     * @param {?} context
+     * @return {?}
+     */ function (fn, context) {
         for (var i in this._layers) {
             fn.call(context, this._layers[i]);
         }
         return this;
-    }, ɵ10$2 = function (id) {
+    }, ɵ10$2 = /**
+     * @param {?} id
+     * @return {?}
+     */ function (id) {
         return this._layers[id];
     };
     /** @type {?} */
@@ -1655,36 +1555,36 @@ This software has been approved for release by the U.S. Department of the Interi
             CLUSTEREVENTS: 'clusterclick clusterdblclick clustermouseover clustermouseout clustermousemove clustercontextmenu'
         },
         /**
-           * Constructor
-           */
-        initialize: ɵ0$5,
+         * Constructor
+         */
+        initialize: (ɵ0$5),
         /**
-           * Layer Interface
-           */
-        onAdd: ɵ1$4,
-        onRemove: ɵ2$3,
+         * Layer Interface
+         */
+        onAdd: (ɵ1$4),
+        onRemove: (ɵ2$3),
         /**
-           * Feature Management Methods
-           */
-        createLayers: ɵ3$2,
-        addLayers: ɵ4$2,
-        removeLayers: ɵ5$2,
+         * Feature Management Methods
+         */
+        createLayers: (ɵ3$2),
+        addLayers: (ɵ4$2),
+        removeLayers: (ɵ5$2),
         /**
-           * Styling Methods
-           */
-        resetStyle: ɵ6$2,
-        setStyle: ɵ7$2,
-        setFeatureStyle: ɵ8$2,
+         * Styling Methods
+         */
+        resetStyle: (ɵ6$2),
+        setStyle: (ɵ7$2),
+        setFeatureStyle: (ɵ8$2),
         /**
-           * Utility Methods
-           */
-        eachFeature: ɵ9$2,
-        getFeature: ɵ10$2
+         * Utility Methods
+         */
+        eachFeature: (ɵ9$2),
+        getFeature: (ɵ10$2)
     });
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Fetches style information from GeoPlatform UAL
@@ -1694,11 +1594,14 @@ This software has been approved for release by the U.S. Department of the Interi
     function featureStyleResolver(id) {
         /** @type {?} */
         var service = new client.LayerService(client.Config.ualUrl, new client.XHRHttpClient());
-        return service.style(id).catch(function (e) {
+        return service.style(id).catch(( /**
+         * @param {?} e
+         * @return {?}
+         */function (e) {
             /** @type {?} */
             var err = new Error("Unable to download style for layer " + id + " because of an error; " + e.message);
             return Promise.reject(err);
-        });
+        }));
         // return new Promise<any>( (resolve, reject) => {
         //
         //     if(!jQuery) {
@@ -1720,7 +1623,7 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @param {?} feature
@@ -1730,17 +1633,24 @@ This software has been approved for release by the U.S. Department of the Interi
         /** @type {?} */
         var props = Object.keys(feature.properties);
         /** @type {?} */
-        var pFn = function (list, names) {
+        var pFn = ( /**
+         * @param {?} list
+         * @param {?} names
+         * @return {?}
+         */function (list, names) {
             if (!list || !list.find)
                 return null;
             /** @type {?} */
-            var match = list.find(function (name) {
+            var match = list.find(( /**
+             * @param {?} name
+             * @return {?}
+             */function (name) {
                 /** @type {?} */
                 var lc = name.toLowerCase();
                 return names.indexOf(lc) >= 0;
-            });
+            }));
             return match;
-        };
+        });
         /** @type {?} */
         var titleProp = pFn(props, ['title', 'name', 'label']);
         /** @type {?} */
@@ -1813,11 +1723,15 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var jQuery = jquery;
-    var ɵ0$6 = function (feature, latlng) {
+    var ɵ0$6 = /**
+     * @param {?} feature
+     * @param {?} latlng
+     * @return {?}
+     */ function (feature, latlng) {
         /** @type {?} */
         var style = feature && feature.properties ? feature.properties.style : null;
         if (!style && typeof this.options.style === 'function') {
@@ -1836,7 +1750,8 @@ This software has been approved for release by the U.S. Department of the Interi
         style.opacity = style['stroke-opacity'] || style.opacity || 0.9;
         style.fillOpacity = style['fill-opacity'] || style.opacity || 0.3;
         style.fillColor = style.fill || style.color || '#03f';
-        style.renderer = this.options.renderer;
+        style.renderer = this.options.renderer; //important for pane!
+        //important for pane!
         /** @type {?} */
         var marker = null;
         if (style.shape === 'image') {
@@ -1855,7 +1770,7 @@ This software has been approved for release by the U.S. Department of the Interi
             /** @type {?} */
             var mopts = { icon: icon };
             if (client.Config.leafletPane)
-                ( /** @type {?} */(mopts)).pane = client.Config.leafletPane;
+                (( /** @type {?} */(mopts))).pane = client.Config.leafletPane;
             marker = L.marker(latlng, mopts);
         }
         else {
@@ -1865,12 +1780,19 @@ This software has been approved for release by the U.S. Department of the Interi
         var popupTemplate = this.options.popupTemplate || featurePopupTemplate;
         marker.bindPopup(popupTemplate(feature));
         return marker;
-    }, ɵ1$5 = function (feature, layer) {
+    }, ɵ1$5 = /**
+     * @param {?} feature
+     * @param {?} layer
+     * @return {?}
+     */ function (feature, layer) {
         if (!feature || !feature.geometry || feature.geometry.type === 'Point') {
             return;
         }
         layer.bindPopup(featurePopupTemplate(feature));
-    }, ɵ2$4 = function (options) {
+    }, ɵ2$4 = /**
+     * @param {?} options
+     * @return {?}
+     */ function (options) {
         var _this = this;
         options = options || {};
         if (client.Config.leafletPane)
@@ -1883,33 +1805,48 @@ This software has been approved for release by the U.S. Department of the Interi
         // when spiderfied (some get stuck under the spider legs)
         options.spiderfyDistanceMultiplier = 2;
         /** @type {?} */
-        var getGPStyle = function () { return _this._gpStyle; };
+        var getGPStyle = ( /**
+         * @return {?}
+         */function () { return _this._gpStyle; });
         options.style = options.style || getGPStyle;
         if (options.styleResolver) {
             this.styleResolver = options.styleResolver;
         }
+        //in order to put features-based layers into same pane as tile layers,
+        // must specify renderer and set desired pane on that
         /** @type {?} */
         var svgOpts = {};
         if (client.Config.leafletPane)
-            ( /** @type {?} */(svgOpts)).pane = client.Config.leafletPane;
+            (( /** @type {?} */(svgOpts))).pane = client.Config.leafletPane;
         /** @type {?} */
         var renderer = (L.SVG && L.svg(svgOpts)) || (L.Canvas && L.canvas());
         options.renderer = renderer;
         BaseClusteredFeatureLayer.prototype.initialize.call(this, options);
-        this.on('load', function () {
+        this.on('load', ( /**
+         * @return {?}
+         */function () {
             if (typeof this.options.zIndex !== 'undefined')
                 this.setZIndex(this.options.zIndex);
-        });
-    }, ɵ3$3 = function (map) {
+        }));
+    }, ɵ3$3 = /**
+     * @param {?} map
+     * @return {?}
+     */ function (map) {
         BaseClusteredFeatureLayer.prototype.onAdd.call(this, map);
         if (this.options.layerId) {
             this.loadStyle(this.options.layerId);
         }
-    }, ɵ4$3 = function (features) {
+    }, ɵ4$3 = /**
+     * @param {?} features
+     * @return {?}
+     */ function (features) {
         BaseClusteredFeatureLayer.prototype.createLayers.call(this, features);
         this.setVisibility(this.currentVisibility);
         this.setOpacity(this.currentOpacity);
-    }, ɵ5$3 = function (index) {
+    }, ɵ5$3 = /**
+     * @param {?} index
+     * @return {?}
+     */ function (index) {
         this.options.zIndex = index;
         for (var id in this._layers) {
             /** @type {?} */
@@ -1922,7 +1859,9 @@ This software has been approved for release by the U.S. Department of the Interi
                 lyr._renderer._container.style.zIndex = index;
             }
         }
-    }, ɵ6$3 = function () {
+    }, ɵ6$3 = /**
+     * @return {?}
+     */ function () {
         this.currentVisibility = !this.currentVisibility;
         this.setVisibility(this.currentVisibility);
         // //clustered features
@@ -1940,7 +1879,10 @@ This software has been approved for release by the U.S. Department of the Interi
         //     for(let id in this._layers)
         //         this._layers[id].toggleVisibility();
         // }
-    }, ɵ7$3 = function (bool) {
+    }, ɵ7$3 = /**
+     * @param {?} bool
+     * @return {?}
+     */ function (bool) {
         this.currentVisibility = !!bool;
         if (this.options.renderer._container) {
             this.options.renderer._container.style.display = bool ? '' : 'none';
@@ -1951,6 +1893,10 @@ This software has been approved for release by the U.S. Department of the Interi
                 /** @type {?} */
                 var layer = this.cluster._featureGroup._layers[id];
                 if (layer._icon) {
+                    //probably is a more efficient way to do this,
+                    // but this works currently.
+                    // TODO look at using
+                    //  markerCluster.refreshIconOptions({className:'invisible'});
                     /** @type {?} */
                     var icon = jQuery(layer._icon);
                     if (bool)
@@ -1971,7 +1917,10 @@ This software has been approved for release by the U.S. Department of the Interi
                     layer.setStyle({ display: bool ? '' : 'none' });
             }
         }
-    }, ɵ8$3 = function (opacity) {
+    }, ɵ8$3 = /**
+     * @param {?} opacity
+     * @return {?}
+     */ function (opacity) {
         this.currentOpacity = isNaN(opacity) ? 1.0 : opacity * 1;
         //clustered features
         if (this.cluster && this.cluster._featureGroup && this.cluster._featureGroup._layers) {
@@ -1992,22 +1941,37 @@ This software has been approved for release by the U.S. Department of the Interi
                     layer.setOpacity(opacity);
             }
         }
-    }, ɵ9$3 = function (style) {
-        this.eachFeature(function (layer) {
+    }, ɵ9$3 = /**
+     * @param {?} style
+     * @return {?}
+     */ function (style) {
+        this.eachFeature(( /**
+         * @param {?} layer
+         * @return {?}
+         */function (layer) {
             this.setFeatureStyle(layer.feature.id, style);
-        }, this);
-    }, ɵ10$3 = function (gpLayerId) {
+        }), this);
+    }, ɵ10$3 = /**
+     * @param {?} gpLayerId
+     * @return {?}
+     */ function (gpLayerId) {
         var _this = this;
         if (this.options.styleLoader) {
             this.options.styleLoader(gpLayerId)
-                .then(function (json) {
+                .then(( /**
+         * @param {?} json
+         * @return {?}
+         */function (json) {
                 if (!json)
                     return;
                 /** @type {?} */
                 var style = null;
                 if (json && json.styles) {
                     /** @type {?} */
-                    var featureFn_1 = function (feature) {
+                    var featureFn_1 = ( /**
+                     * @param {?} feature
+                     * @return {?}
+                     */function (feature) {
                         /** @type {?} */
                         var property = this.property || this.field1;
                         /** @type {?} */
@@ -2016,7 +1980,10 @@ This software has been approved for release by the U.S. Department of the Interi
                         var style = null;
                         if (this.styles) {
                             /** @type {?} */
-                            var wrapper = this.styles.find(function (sw) { return sw.value === v; });
+                            var wrapper = this.styles.find(( /**
+                             * @param {?} sw
+                             * @return {?}
+                             */function (sw) { return sw.value === v; }));
                             if (wrapper) {
                                 style = wrapper.style;
                                 style.radius = style['stroke-width'] || style.radius || 4;
@@ -2032,11 +1999,17 @@ This software has been approved for release by the U.S. Department of the Interi
                         }
                         // console.log("Using style: " + JSON.stringify(style));
                         return style;
-                    };
+                    });
                     /** @type {?} */
-                    var styleFn = function () { return featureFn_1(json); };
+                    var styleFn = ( /**
+                     * @return {?}
+                     */function () { return featureFn_1(json); });
                     _this.options.style = styleFn;
-                    setTimeout(function (layer, style) { layer.setStyle(style); }, 1000, _this, styleFn);
+                    setTimeout(( /**
+                     * @param {?} layer
+                     * @param {?} style
+                     * @return {?}
+                     */function (layer, style) { layer.setStyle(style); }), 1000, _this, styleFn);
                     return;
                 }
                 else if (json && typeof (json.push) !== 'undefined') {
@@ -2061,54 +2034,62 @@ This software has been approved for release by the U.S. Department of the Interi
                     for (var id in _this._layers)
                         _this._layers[id].setStyle(obj);
                 }
-            })
-                .catch(function (e) {
+            }))
+                .catch(( /**
+         * @param {?} e
+         * @return {?}
+         */function (e) {
                 console.log("Error fetching feature layer style");
                 console.log(e);
-            });
+            }));
         }
     };
-    /** *
+    /**
      * Clustered Feature Layer
      * Provides custom style loading and point-ilization as well
      * as adding visibility and opacity manipulation methods
-      @type {?} */
+     * @type {?}
+     */
     var ClusteredFeatureLayer = BaseClusteredFeatureLayer.extend({
         currentVisibility: true,
         currentOpacity: 1.0,
         _gpStyle: { color: "#00f", weight: 2, fillColor: '#00f', fillOpacity: 0.3 },
         /**
-             * @param {object} feature - GeoJSON Point Feature
-             * @param {L.LatLng} latlng
-             * @return {L.Marker}
-             */
-        pointToLayerFn: ɵ0$6,
+         * @param feature - GeoJSON Point Feature
+         * @param latlng - L.LatLng
+         * @return L.Marker
+         */
+        pointToLayerFn: (ɵ0$6),
         /**
-             * for all non-point features, bind a popup
-             * @param {object} feature - GeoJSON feature
-             * @param {L.Layer} layer - layer representing feature
-             */
-        eachFeatureFn: ɵ1$5,
-        initialize: ɵ2$4,
-        onAdd: ɵ3$3,
-        /** override super class' method to set viz/opac after sub layers created */
-        createLayers: ɵ4$3,
+         * for all non-point features, bind a popup
+         * @param feature - GeoJSON feature
+         * @param layer - L.Layer representing feature
+         */
+        eachFeatureFn: (ɵ1$5),
+        initialize: (ɵ2$4),
+        onAdd: (ɵ3$3),
         /**
-             * @param {integer} index
-             */
-        setZIndex: ɵ5$3,
-        /** */
-        toggleVisibility: ɵ6$3,
+         * override super class' method to set viz/opac after sub layers created
+         */
+        createLayers: (ɵ4$3),
         /**
-             * @param {boolean} bool - flag
-             */
-        setVisibility: ɵ7$3,
+         * @param index
+         */
+        setZIndex: (ɵ5$3),
         /**
-             * @param {number} opacity
-             */
-        setOpacity: ɵ8$3,
-        setStyle: ɵ9$3,
-        loadStyle: ɵ10$3
+         *
+         */
+        toggleVisibility: (ɵ6$3),
+        /**
+         * @param bool - flag
+         */
+        setVisibility: (ɵ7$3),
+        /**
+         * @param opacity
+         */
+        setOpacity: (ɵ8$3),
+        setStyle: (ɵ9$3),
+        loadStyle: (ɵ10$3)
     });
     /**
      * @param {?} layer - GeoPlatform Layer object
@@ -2138,9 +2119,9 @@ This software has been approved for release by the U.S. Department of the Interi
             layerId: layer.id
         };
         if (client.Config.leafletPane)
-            ( /** @type {?} */(opts)).pane = client.Config.leafletPane;
+            (( /** @type {?} */(opts))).pane = client.Config.leafletPane;
         if (options && options.leafletPane)
-            ( /** @type {?} */(opts)).pane = options.leafletPane;
+            (( /** @type {?} */(opts))).pane = options.leafletPane;
         return new ClusteredFeatureLayer(opts);
     }
     /**
@@ -2168,24 +2149,42 @@ This software has been approved for release by the U.S. Department of the Interi
         var styleUrl = url.replace('feeds', 'styles') +
             (url[url.length - 1] === '/' ? '' : '/') + layer.id;
         /** @type {?} */
-        var styleLoaderFactory = function (url) {
-            return function (layerId) {
-                return new Promise(function (resolve, reject) {
+        var styleLoaderFactory = ( /**
+         * @param {?} url
+         * @return {?}
+         */function (url) {
+            return ( /**
+             * @param {?} layerId
+             * @return {?}
+             */function (layerId) {
+                return new Promise(( /**
+                 * @param {?} resolve
+                 * @param {?} reject
+                 * @return {?}
+                 */function (resolve, reject) {
                     if (!jQuery) {
                         reject(new Error("Unable to load GeoJSON feed style, jQuery is not installed"));
                     }
                     jQuery.ajax(url, {
                         dataType: 'json',
-                        success: function (data) { resolve(data); },
-                        error: function (xhr, status, message) {
+                        success: ( /**
+                         * @param {?} data
+                         * @return {?}
+                         */function (data) { resolve(data); }),
+                        error: ( /**
+                         * @param {?} xhr
+                         * @param {?} status
+                         * @param {?} message
+                         * @return {?}
+                         */function (xhr, status, message) {
                             /** @type {?} */
                             var em = "geoJsonFeed() -\n                            Error loading style information for layer " + layerId + " : " + message;
                             reject(new Error(em));
-                        }
+                        })
                     });
-                });
-            };
-        };
+                }));
+            });
+        });
         /** @type {?} */
         var opts = {
             url: layerUrl,
@@ -2196,15 +2195,15 @@ This software has been approved for release by the U.S. Department of the Interi
             styleLoader: styleLoaderFactory(styleUrl)
         };
         if (client.Config.leafletPane)
-            ( /** @type {?} */(opts)).pane = client.Config.leafletPane;
+            (( /** @type {?} */(opts))).pane = client.Config.leafletPane;
         if (options && options.leafletPane)
-            ( /** @type {?} */(opts)).pane = options.leafletPane;
+            (( /** @type {?} */(opts))).pane = options.leafletPane;
         return new ClusteredFeatureLayer(opts);
     }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var jQuery$1 = jquery;
@@ -2246,20 +2245,24 @@ This software has been approved for release by the U.S. Department of the Interi
                 return this._enabled;
             };
         /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} map
-         * @return {?}
+         * @return {THIS}
          */
         WMS.prototype.onRemove = /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} map
-         * @return {?}
+         * @return {THIS}
          */
             function (map) {
                 //if GFI is enabled, disable it before removing
-                if (this.isGetFeatureInfoEnabled())
-                    this.disableGetFeatureInfo();
+                if (( /** @type {?} */(this)).isGetFeatureInfoEnabled())
+                    ( /** @type {?} */(this)).disableGetFeatureInfo();
                 // Triggered when the layer is removed from a map.
                 //   Unregister a click listener, then do all the upstream WMS things
-                return _super.prototype.onRemove.call(this, map);
+                return _super.prototype.onRemove.call(( /** @type {?} */(this)), map);
             };
         /**
          * @param {?} evt
@@ -2270,6 +2273,7 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (evt) {
+                // Make an AJAX request to the server and hope for the best
                 /** @type {?} */
                 var url = this.getFeatureInfoUrl(evt.latlng);
                 /** @type {?} */
@@ -2304,6 +2308,7 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (latlng) {
+                // Construct a GetFeatureInfo request URL given a point
                 /** @type {?} */
                 var point = this._map.latLngToContainerPoint(latlng);
                 /** @type {?} */
@@ -2324,7 +2329,8 @@ This software has been approved for release by the U.S. Department of the Interi
                     j: point.y //1.3.0
                 };
                 /** @type {?} */
-                var wmvId = ( /** @type {?} */(this.wmsParams)).wmvId;
+                var wmvId = (( /** @type {?} */(this.wmsParams))).wmvId;
+                // return this._url + Util.getParamString(params, this._url, true);
                 /** @type {?} */
                 var url = '/api/layers/' + wmvId + '/feature';
                 return client.Config.ualUrl + url + L.Util.getParamString(params, url, true);
@@ -2380,6 +2386,7 @@ This software has been approved for release by the U.S. Department of the Interi
         /** @type {?} */
         var formats = layer.formats;
         if (formats && formats.length) {
+            //look for common formats that make sense first...
             /** @type {?} */
             var idx = 0;
             /** @type {?} */
@@ -2413,6 +2420,7 @@ This software has been approved for release by the U.S. Department of the Interi
         if (!url) {
             throw new Error("WMS layer's service does not defined a service url");
         }
+        //pick output format for the raster images
         /** @type {?} */
         var format = determineWMSFormat(layer);
         /** @type {?} */
@@ -2421,6 +2429,7 @@ This software has been approved for release by the U.S. Department of the Interi
             console.log("Layer '" + layer.label + "' does not support " +
                 "EPSG:3857 Spherical Mercator projection and may not render appropriately or at all.");
         }
+        //determine proper version of the WMS spec to use
         /** @type {?} */
         var version = '1.1.1';
         /** @type {?} */
@@ -2440,20 +2449,20 @@ This software has been approved for release by the U.S. Department of the Interi
             version: version
         };
         if (client.Config.leafletPane) {
-            ( /** @type {?} */(opts)).pane = client.Config.leafletPane;
+            (( /** @type {?} */(opts))).pane = client.Config.leafletPane;
         }
         return new WMS(url, opts);
     }
-    if (( /** @type {?} */(window)).L) {
+    if ((( /** @type {?} */(window))).L) {
         /** @type {?} */
-        var L_1$2 = ( /** @type {?} */(window)).L;
+        var L_1$2 = (( /** @type {?} */(window))).L;
         L_1$2.TileLayer.WMS = WMS;
         L_1$2.tileLayer.wms = wms;
     }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var WMST = /** @class */ (function (_super) {
         __extends(WMST, _super);
@@ -2461,14 +2470,17 @@ This software has been approved for release by the U.S. Department of the Interi
             return _super.call(this, layer, opts) || this;
         }
         //override default parser to query all Layers (whether queryable or not)
+        //override default parser to query all Layers (whether queryable or not)
         /**
          * @param {?} xml
          * @return {?}
          */
-        WMST.prototype._parseTimeDimensionFromCapabilities = /**
-         * @param {?} xml
-         * @return {?}
-         */
+        WMST.prototype._parseTimeDimensionFromCapabilities =
+            //override default parser to query all Layers (whether queryable or not)
+            /**
+             * @param {?} xml
+             * @return {?}
+             */
             function (xml) {
                 /** @type {?} */
                 var layers = xml.querySelectorAll('Layer');
@@ -2478,11 +2490,14 @@ This software has been approved for release by the U.S. Department of the Interi
                 var layer = null;
                 /** @type {?} */
                 var times = null;
-                layers.forEach(function (current) {
+                layers.forEach(( /**
+                 * @param {?} current
+                 * @return {?}
+                 */function (current) {
                     if (current.querySelector("Name").innerHTML === layerName) {
                         layer = current;
                     }
-                });
+                }));
                 if (layer) {
                     times = this._getTimesFromLayerCapabilities(layer);
                     if (!times) {
@@ -2492,14 +2507,17 @@ This software has been approved for release by the U.S. Department of the Interi
                 return times;
             };
         //override default parser to fall back if Dimension is provided but has no values
+        //override default parser to fall back if Dimension is provided but has no values
         /**
          * @param {?} layer
          * @return {?}
          */
-        WMST.prototype._getTimesFromLayerCapabilities = /**
-         * @param {?} layer
-         * @return {?}
-         */
+        WMST.prototype._getTimesFromLayerCapabilities =
+            //override default parser to fall back if Dimension is provided but has no values
+            /**
+             * @param {?} layer
+             * @return {?}
+             */
             function (layer) {
                 /** @type {?} */
                 var times = null;
@@ -2542,7 +2560,7 @@ This software has been approved for release by the U.S. Department of the Interi
             wmvId: gpLayer.layerId
         };
         if (client.Config.leafletPane)
-            ( /** @type {?} */(opts)).pane = client.Config.leafletPane;
+            (( /** @type {?} */(opts))).pane = client.Config.leafletPane;
         /** @type {?} */
         var leafletLayer = new WMS(url, opts);
         /** @type {?} */
@@ -2564,26 +2582,35 @@ This software has been approved for release by the U.S. Department of the Interi
             proxy: proxyUrl
         });
     }
-    if (( /** @type {?} */(window)).L) {
+    if ((( /** @type {?} */(window))).L) {
         /** @type {?} */
-        var L_1$3 = ( /** @type {?} */(window)).L;
+        var L_1$3 = (( /** @type {?} */(window))).L;
         L_1$3.TileLayer.WMST = WMST;
         L_1$3.tileLayer.wmst = wmst;
     }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var paramRe = /\{ *([\w_-]+) *\}/g;
+    // @function template(str: String, data: Object): String
+    // Simple templating facility, accepts a template string of the form `'Hello {a}, {b}'`
+    // and a data object like `{a: 'foo', b: 'bar'}`, returns evaluated string
+    // `('Hello foo, bar')`. You can also specify functions instead of strings for
+    // data values — they will be evaluated passing `data` as an argument.
     /**
      * @param {?} str
      * @param {?} data
      * @return {?}
      */
     function template(str, data) {
-        return str.replace(paramRe, function (str, key) {
+        return str.replace(paramRe, ( /**
+         * @param {?} str
+         * @param {?} key
+         * @return {?}
+         */function (str, key) {
             /** @type {?} */
             var value = data[key];
             if (value === undefined) {
@@ -2596,9 +2623,14 @@ This software has been approved for release by the U.S. Department of the Interi
                 value = value(data);
             }
             return value;
-        });
+        }));
     }
-    var WMTS = /** @class */ (function (_super) {
+    /*
+     * inspired by and uses code from https://github.com/mylen/leaflet.TileLayer.WMTS
+     */
+    var /*
+     * inspired by and uses code from https://github.com/mylen/leaflet.TileLayer.WMTS
+     */ WMTS = /** @class */ (function (_super) {
         __extends(WMTS, _super);
         function WMTS(url, options) {
             return _super.call(this, url, options) || this;
@@ -2614,7 +2646,6 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (url, options) {
-                // (String, Object)
                 this._url = url;
                 this.defaultWmtsParams = {
                     service: 'WMTS',
@@ -2646,15 +2677,19 @@ This software has been approved for release by the U.S. Department of the Interi
                 L.Util.setOptions(this, options);
             };
         /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} map
-         * @return {?}
+         * @return {THIS}
          */
         WMTS.prototype.onAdd = /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} map
-         * @return {?}
+         * @return {THIS}
          */
             function (map) {
-                this._crs = ( /** @type {?} */(this.options)).crs || ( /** @type {?} */(map.options)).crs;
+                ( /** @type {?} */(this))._crs = (( /** @type {?} */(( /** @type {?} */(this)).options))).crs || (( /** @type {?} */(map.options))).crs;
                 return _super.prototype.onAdd.call(this, map);
             };
         /**
@@ -2666,8 +2701,9 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (coords) {
+                // (Point, Number) -> String
                 /** @type {?} */
-                var tileSize = /** @type {?} */ (this.options.tileSize);
+                var tileSize = ( /** @type {?} */(this.options.tileSize));
                 /** @type {?} */
                 var nwPoint = coords.multiplyBy(tileSize);
                 nwPoint.x += 1;
@@ -2682,6 +2718,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 var se = this._crs.project(this._map.unproject(sePoint, zoom));
                 /** @type {?} */
                 var tilewidth = se.x - nw.x;
+                //zoom = this._map.getZoom();
                 /** @type {?} */
                 var ident = this.matrixIds[zoom].identifier;
                 /** @type {?} */
@@ -2730,21 +2767,25 @@ This software has been approved for release by the U.S. Department of the Interi
                 return url;
             };
         /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} params
          * @param {?} noRedraw
-         * @return {?}
+         * @return {THIS}
          */
         WMTS.prototype.setParams = /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} params
          * @param {?} noRedraw
-         * @return {?}
+         * @return {THIS}
          */
             function (params, noRedraw) {
-                L.Util.extend(this.wmtsParams, params);
+                L.Util.extend(( /** @type {?} */(this)).wmtsParams, params);
                 if (!noRedraw) {
-                    this.redraw();
+                    ( /** @type {?} */(this)).redraw();
                 }
-                return this;
+                return ( /** @type {?} */(this));
             };
         /**
          * @return {?}
@@ -2753,10 +2794,11 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function () {
-                /** *
+                /**
                  * the matrix3857 represents the projection
                  * for in the IGN WMTS for the google coordinates.
-                  @type {?} */
+                 * @type {?}
+                 */
                 var matrixIds3857 = new Array(22);
                 for (var i = 0; i < 22; i++) {
                     matrixIds3857[i] = {
@@ -2802,28 +2844,37 @@ This software has been approved for release by the U.S. Department of the Interi
             format: "image/png"
         };
         if (client.Config.leafletPane)
-            ( /** @type {?} */(options)).pane = client.Config.leafletPane;
+            (( /** @type {?} */(options))).pane = client.Config.leafletPane;
         /** @type {?} */
-        var distro = (layer.distributions || []).find(function (dist) {
+        var distro = (layer.distributions || []).find(( /**
+         * @param {?} dist
+         * @return {?}
+         */function (dist) {
             //ensure dist isn't 'null'
             return dist && dist.href && (dist.mediaType === 'image/png' || dist.mediaType === 'image/jpeg');
-        });
+        }));
         if (distro) {
             url = distro.href;
             options.format = distro.mediaType;
             /** @type {?} */
             var params = distro.parameters || [];
-            params.forEach(function (param) {
+            params.forEach(( /**
+             * @param {?} param
+             * @return {?}
+             */function (param) {
+                //ignore wmts specific parameters, WMTS layer will populate those values
+                // based upon map state.
                 /** @type {?} */
                 var plc = param.name.toLowerCase();
                 if ("tilematrix" === plc || "tilerow" === plc || "tilecol" === plc)
                     return;
+                //for all other parameters, try to fill in default or initial values
                 /** @type {?} */
                 var value = param.defaultValue || param.values && param.values.length && param.values[0];
                 if (value !== null && value !== undefined) {
                     url = url.replace('{' + param.name + '}', value);
                 }
-            });
+            }));
         }
         else {
             throw new Error("WTMS Layer - layer " + layer.id +
@@ -2834,16 +2885,16 @@ This software has been approved for release by the U.S. Department of the Interi
                 ". Please make sure it is defined by either the service or a distribution on the layer itself.");
         return new WMTS(url, options);
     }
-    if (( /** @type {?} */(window)).L) {
+    if ((( /** @type {?} */(window))).L) {
         /** @type {?} */
-        var L_1$4 = ( /** @type {?} */(window)).L;
+        var L_1$4 = (( /** @type {?} */(window))).L;
         L_1$4.TileLayer.WMTS = WMTS;
         L_1$4.tileLayer.wmts = wmts;
     }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var EsriTileLayer = /** @class */ (function (_super) {
         __extends(EsriTileLayer, _super);
@@ -2861,7 +2912,6 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (url, options) {
-                // (String, Object)
                 if (!url)
                     throw new Error("Layer was not configured with a URL");
                 this.defaultESRIParams = {
@@ -2870,6 +2920,11 @@ This software has been approved for release by the U.S. Department of the Interi
                     transparent: true,
                     format: 'png32',
                     f: 'image'
+                    // srs:          '4326',
+                    // bboxsr:       '4326',
+                    // bbox:         null,
+                    // size:         '256,256',
+                    // imagesr:      '4326'
                 };
                 if (url.indexOf("/export") < 0) {
                     /** @type {?} */
@@ -2907,16 +2962,20 @@ This software has been approved for release by the U.S. Department of the Interi
                 L.Util.setOptions(this, options);
             };
         /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} map
-         * @return {?}
+         * @return {THIS}
          */
         EsriTileLayer.prototype.onAdd = /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} map
-         * @return {?}
+         * @return {THIS}
          */
             function (map) {
-                this._crs = ( /** @type {?} */(this.options)).crs || ( /** @type {?} */(map.options)).crs;
-                this.esriParams.srs = this.esriParams.imagesr = this.esriParams.bboxsr = this._crs.code;
+                ( /** @type {?} */(this))._crs = (( /** @type {?} */(( /** @type {?} */(this)).options))).crs || (( /** @type {?} */(map.options))).crs;
+                ( /** @type {?} */(this)).esriParams.srs = ( /** @type {?} */(this)).esriParams.imagesr = ( /** @type {?} */(this)).esriParams.bboxsr = ( /** @type {?} */(this))._crs.code;
                 return _super.prototype.onAdd.call(this, map);
             };
         /**
@@ -2928,10 +2987,11 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (tilePoint) {
+                // (Point, Number) -> String
                 /** @type {?} */
                 var map = this._map;
                 /** @type {?} */
-                var tileSize = /** @type {?} */ (this.options.tileSize);
+                var tileSize = ( /** @type {?} */(this.options.tileSize));
                 /** @type {?} */
                 var nwPoint = tilePoint.multiplyBy(tileSize);
                 /** @type {?} */
@@ -2955,21 +3015,25 @@ This software has been approved for release by the U.S. Department of the Interi
                 return url + L.Util.getParamString(params, url, true) + '&BBOX=' + bbox;
             };
         /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} params
          * @param {?} noRedraw
-         * @return {?}
+         * @return {THIS}
          */
         EsriTileLayer.prototype.setParams = /**
+         * @template THIS
+         * @this {THIS}
          * @param {?} params
          * @param {?} noRedraw
-         * @return {?}
+         * @return {THIS}
          */
             function (params, noRedraw) {
-                L.Util.extend(this.esriParams, params);
+                L.Util.extend(( /** @type {?} */(this)).esriParams, params);
                 if (!noRedraw) {
-                    this.redraw();
+                    ( /** @type {?} */(this)).redraw();
                 }
-                return this;
+                return ( /** @type {?} */(this));
             };
         /**
          * @param {?} tilePoint
@@ -2986,18 +3050,22 @@ This software has been approved for release by the U.S. Department of the Interi
             };
         return EsriTileLayer;
     }(L.TileLayer));
-    if (( /** @type {?} */(window)).L) {
+    if ((( /** @type {?} */(window))).L) {
         /** @type {?} */
-        var L_1$5 = ( /** @type {?} */(window)).L;
+        var L_1$5 = (( /** @type {?} */(window))).L;
         L_1$5.TileLayer.ESRI = EsriTileLayer;
-        L_1$5.tileLayer.esri = function (url, options) {
+        L_1$5.tileLayer.esri = ( /**
+         * @param {?} url
+         * @param {?} options
+         * @return {?}
+         */function (url, options) {
             return new L_1$5.TileLayer.ESRI(url, options);
-        };
+        });
     }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @return {?}
@@ -3015,7 +3083,7 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Class representing an evaluatable expression associated with a layer style,
@@ -3073,9 +3141,12 @@ This software has been approved for release by the U.S. Department of the Interi
             /** @type {?} */
             var arr = filter.slice(0);
             this.operator = arr[0];
-            this.args = arr.splice(1).map(function (arg) {
+            this.args = arr.splice(1).map(( /**
+             * @param {?} arg
+             * @return {?}
+             */function (arg) {
                 return Array.isArray(arg) ? new Expression(arg) : arg;
-            });
+            }));
         }
         /**
          * @param properties - map of feature properties to use in evaluating the expression for a specific feature instance
@@ -3148,7 +3219,6 @@ This software has been approved for release by the U.S. Department of the Interi
                     case 'id': return properties.id;
                     case 'geometry-type': return geometryType;
                     case 'match': //works like a switch statement
-                        //works like a switch statement
                         return this.findMatch(properties, zoom, geometryType);
                 }
                 return null;
@@ -3205,26 +3275,30 @@ This software has been approved for release by the U.S. Department of the Interi
                 var result = null;
                 /** @type {?} */
                 var end = this.args.length - 1;
+                //the input value to test against
+                //  ... should be value of Input portion (ie, "Lake" for wetlands)
                 /** @type {?} */
                 var value = this.getArg(0, properties, zoom, geometryType);
                 // console.log("Expression.match - " + JSON.stringify(value) );
                 //find value inside remaining args to assign style associated with that value
-                this.args.forEach(function (arg, i) {
+                this.args.forEach(( /**
+                 * @param {?} arg
+                 * @param {?} i
+                 * @return {?}
+                 */function (arg, i) {
                     // ignore first arg (see above) and last arg (it's the fallback value)
                     // also skip if we've already found a match
                     if (result !== null || i === 0 || i === end)
                         return;
                     if (Array.isArray(arg)) { //array of literal values
-                        //array of literal values
                         if (~arg.indexOf(value)) {
                             result = _this.args[i + 1]; //match, return next value in array
                         }
                     }
                     else if (arg == value) { //literal value
-                        //literal value
                         result = _this.args[i + 1]; //match, return next value in array
                     }
-                });
+                }));
                 if (!result)
                     result = this.args[end]; //last arg is always fallback value
                 // console.log("Match returned: " + result);
@@ -3237,9 +3311,12 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function () {
-                return [this.operator].concat(this.args.map(function (arg) {
+                return [this.operator].concat(this.args.map(( /**
+                 * @param {?} arg
+                 * @return {?}
+                 */function (arg) {
                     return (typeof (arg.evaluate) !== 'undefined') ? arg.toString() : arg;
-                })).join(',');
+                }))).join(',');
             };
         return Expression;
     }());
@@ -3258,16 +3335,27 @@ This software has been approved for release by the U.S. Department of the Interi
         }
         /** @type {?} */
         var result = {};
-        style.layers.forEach(function (layer) {
+        style.layers.forEach(( /**
+         * @param {?} layer
+         * @return {?}
+         */function (layer) {
             result[layer.id] = styleFunctionFactory(layer); //new LayerStyle( layer ).getStyleFunction()
-        });
+        }));
         return result;
     }
-    var ɵ0$7 = function (layerStyle) {
-        /** *
+    var ɵ0$7 = /**
+     * @param {?} layerStyle
+     * @return {?}
+     */ function (layerStyle) {
+        /**
          *
-          @type {?} */
-        var parseValue = function (value, fallback) {
+         * @type {?}
+         */
+        var parseValue = ( /**
+         * @param {?} value
+         * @param {?=} fallback
+         * @return {?}
+         */function (value, fallback) {
             if (value && Array.isArray(value) && value.length) {
                 return new Expression(value);
             }
@@ -3275,7 +3363,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 return value;
             else
                 return fallback || null;
-        };
+        });
         /** @type {?} */
         var layerPaint = layerStyle.paint;
         /** @type {?} */
@@ -3300,29 +3388,38 @@ This software has been approved for release by the U.S. Department of the Interi
             //fill opacity
             fillColor: fillColor //fill color
         };
-        return function (properties, zoom, geomType) {
+        return ( /**
+         * @param {?} properties
+         * @param {?} zoom
+         * @param {?} geomType
+         * @return {?}
+         */function (properties, zoom, geomType) {
             /** @type {?} */
             var result = {};
-            Object.keys(style).forEach(function (key) {
+            Object.keys(style).forEach(( /**
+             * @param {?} key
+             * @return {?}
+             */function (key) {
                 /** @type {?} */
                 var styleVal = style[key];
                 if (styleVal && typeof (styleVal.evaluate) !== 'undefined')
                     result[key] = styleVal.evaluate(properties, zoom, geomType);
                 else
                     result[key] = styleVal;
-            });
+            }));
             return result;
-        };
+        });
     };
-    /** *
+    /**
      * \@param layer MapBox Style Spec Layer definition
      * \@return Function accepting feature properties, zoom level, and geometry type and returning a Leaflet style object
-      @type {?} */
-    var styleFunctionFactory = (ɵ0$7);
+     * @type {?}
+     */
+    var styleFunctionFactory = ((ɵ0$7));
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var STYLE_CONCEPT = {
@@ -3350,7 +3447,7 @@ This software has been approved for release by the U.S. Department of the Interi
             return null; //missing URL
         }
         /** @type {?} */
-        var Leaflet = /** @type {?} */ (L);
+        var Leaflet = ( /** @type {?} */(L));
         //if Leaflet vector grid plugin is not installed, can't render VT Layers
         if (typeof (Leaflet.vectorGrid) === 'undefined' &&
             typeof (Leaflet.vectorGrid.protobuf) === 'undefined') {
@@ -3359,16 +3456,22 @@ This software has been approved for release by the U.S. Department of the Interi
         }
         /** @type {?} */
         var opts = {
-            rendererFactory: ( /** @type {?} */(L.canvas)).tile
+            rendererFactory: (( /** @type {?} */(L.canvas))).tile
+            // ,
+            // getFeatureId: function( feature : any ) { return feature.properties.id; }
         };
         if (client.Config.leafletPane)
             opts.pane = client.Config.leafletPane;
         /** @type {?} */
         var result = Leaflet.vectorGrid.protobuf(href, opts);
+        //If the layer object defines styles to use, resolve them and apply the style(s)
         /** @type {?} */
         var style = null;
         /** @type {?} */
-        var styles = (layer.related || []).filter(function (rel) {
+        var styles = (layer.related || []).filter(( /**
+         * @param {?} rel
+         * @return {?}
+         */function (rel) {
             if (!rel.role)
                 return false;
             if (rel.role.uri === DEFAULT_STYLE_CONCEPT.uri) {
@@ -3376,7 +3479,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 return false;
             }
             return rel.role.uri === STYLE_CONCEPT.uri;
-        });
+        }));
         style = style || (styles.length ? styles[0] : null);
         if (style) {
             applyVectorTileStyle(layer, result, style);
@@ -3396,16 +3499,22 @@ This software has been approved for release by the U.S. Department of the Interi
         }
         //fetch clob definition of style to use...
         fetchStyleDefinition(layer.id, styleResource)
-            .then(function (styleDef) {
+            .then(( /**
+     * @param {?} styleDef
+     * @return {?}
+     */function (styleDef) {
             /** @type {?} */
-            var layerInst = ( /** @type {?} */(leafletLayer));
+            var layerInst = (( /** @type {?} */(leafletLayer)));
             layerInst.options.vectorTileLayerStyles = parseMapBoxStyle(styleDef);
             layerInst.redraw();
-        })
-            .catch(function (e) {
+        }))
+            .catch(( /**
+     * @param {?} e
+     * @return {?}
+     */function (e) {
             console.log("An error occurred fetching the style definition for layer '" +
                 layer.label + "'. " + e.message + ". Using default Leaflet style.");
-        });
+        }));
     }
     /**
      * @param {?} layerId string identifier of GeoPlatform Layer object
@@ -3433,7 +3542,7 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /*
      * Extend base Leaflet layer class to ensure there's always a function
@@ -3442,12 +3551,18 @@ This software has been approved for release by the U.S. Department of the Interi
      */
     L.Layer.include({
         // Redefining a method
-        setZIndex: function (value) {
+        setZIndex: ( /**
+         * @param {?} value
+         * @return {?}
+         */function (value) {
             //do nothing in this abstract class, let impls do the work
-        },
-        setOpacity: function (value) {
+        }),
+        setOpacity: ( /**
+         * @param {?} value
+         * @return {?}
+         */function (value) {
             //do nothing in this abstract class, let impls do the work
-        }
+        })
     });
     /**
      * Fetches style information from GeoPlatform UAL
@@ -3458,17 +3573,30 @@ This software has been approved for release by the U.S. Department of the Interi
         if (!service || typeof (service.style) !== 'function') {
             throw new Error("Must provide a LayerService instance");
         }
-        return function featureStyleResolver(id) {
-            return new Promise(function (resolve, reject) {
+        return ( /**
+         * @param {?} id
+         * @return {?}
+         */function featureStyleResolver(id) {
+            return new Promise(( /**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */function (resolve, reject) {
                 service.style(id)
-                    .then(function (result) { return resolve(result); })
-                    .catch(function (e) {
+                    .then(( /**
+             * @param {?} result
+             * @return {?}
+             */function (result) { return resolve(result); }))
+                    .catch(( /**
+             * @param {?} e
+             * @return {?}
+             */function (e) {
                     /** @type {?} */
                     var msg = "Error loading style information for layer " + id + " : " + e.message;
                     reject(new Error(msg));
-                });
-            });
-        };
+                }));
+            }));
+        });
     }
     /**
      * Layer Factory
@@ -3599,15 +3727,21 @@ This software has been approved for release by the U.S. Department of the Interi
             function () {
                 var _this = this;
                 //OSM factory
-                this.register(function (layer) {
+                this.register(( /**
+                 * @param {?} layer
+                 * @return {?}
+                 */function (layer) {
                     if (layer && layer.resourceTypes &&
                         layer.resourceTypes.length &&
                         ~layer.resourceTypes.indexOf(LayerResourceTypes.OSM)) {
                         return OSMLayerFactory();
                     }
-                });
+                }));
                 // ESRI factory
-                this.register(function (layer) {
+                this.register(( /**
+                 * @param {?} layer
+                 * @return {?}
+                 */function (layer) {
                     if (!layer || !layer.services || !layer.services.length)
                         return null;
                     /** @type {?} */
@@ -3619,7 +3753,7 @@ This software has been approved for release by the U.S. Department of the Interi
                     /** @type {?} */
                     var typeUri = svcType ? svcType.uri : null;
                     /** @type {?} */
-                    var 
+                    var
                     // srs     = layer.supportedCRS ? layer.supportedCRS[0] : null,
                     format = layer.supportedFormats ? layer.supportedFormats[0] : null;
                     /** @type {?} */
@@ -3635,11 +3769,12 @@ This software has been approved for release by the U.S. Department of the Interi
                     if (types.ESRI_MAP_SERVER &&
                         types.ESRI_MAP_SERVER.uri === typeUri) {
                         checkUrl(url);
-                        opts = /** @type {?} */ ({
+                        opts = ( /** @type {?} */({
                             layers: layer.layerName,
                             transparent: true,
                             format: format || "png32"
-                        });
+                        }));
+                        // if(srs) opts.srs = srs;
                         /** @type {?} */
                         var supportedCrs = layer.crs || [];
                         if (supportedCrs && supportedCrs.length > 0 && ~supportedCrs.indexOf("ESPG:3857")) {
@@ -3673,9 +3808,12 @@ This software has been approved for release by the U.S. Department of the Interi
                         return esri.imageMapLayer(opts);
                     }
                     return null;
-                });
+                }));
                 // OGC factory
-                this.register(function (layer) {
+                this.register(( /**
+                 * @param {?} layer
+                 * @return {?}
+                 */function (layer) {
                     if (!layer || !layer.services || !layer.services.length)
                         return null;
                     /** @type {?} */
@@ -3694,8 +3832,11 @@ This software has been approved for release by the U.S. Department of the Interi
                         return wmts(layer);
                     }
                     return null;
-                });
-                this.register(function (layer) {
+                }));
+                this.register(( /**
+                 * @param {?} layer
+                 * @return {?}
+                 */function (layer) {
                     if (!layer || !layer.services || !layer.services.length)
                         return null;
                     /** @type {?} */
@@ -3710,14 +3851,16 @@ This software has been approved for release by the U.S. Department of the Interi
                         });
                     }
                     return null;
-                });
-                this.register(function (layer) {
+                }));
+                this.register(( /**
+                 * @param {?} layer
+                 * @return {?}
+                 */function (layer) {
                     if (!layer)
                         return null;
                     /** @type {?} */
                     var resourceTypes = layer.resourceTypes || [];
                     if (resourceTypes.indexOf(LayerResourceTypes.MapBoxVectorTile) < 0) { //not tagged as VT layer
-                        //not tagged as VT layer
                         return null;
                     }
                     return mapBoxVectorTileLayer(layer);
@@ -3742,7 +3885,7 @@ This software has been approved for release by the U.S. Department of the Interi
                     // }
                     // if(Config.leafletPane) opts.pane = Config.leafletPane;
                     // return Leaflet.vectorGrid.protobuf(href, opts);
-                });
+                }));
             };
         return LayerFactory;
     }());
@@ -3750,13 +3893,19 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var jQuery$2 = jquery;
     /** @type {?} */
     var EsriFeatureLayer = esri.FeatureLayer;
-    var ɵ0$8 = function (feature, latlng) {
+    var ɵ0$8 = /**
+     * @param {?} feature
+     * @param {?} latlng
+     * @return {?}
+     */ function (feature, latlng) {
+        // console.log("Feature: " + feature.id);
+        // console.log("Feature: " + feature.id);
         /** @type {?} */
         var style = feature && feature.properties ? feature.properties.style : null;
         if (!style && typeof this.options.style === 'function') {
@@ -3787,7 +3936,7 @@ This software has been approved for release by the U.S. Department of the Interi
             /** @type {?} */
             var mopts = { icon: icon };
             if (client.Config.leafletPane)
-                ( /** @type {?} */(mopts)).pane = client.Config.leafletPane;
+                (( /** @type {?} */(mopts))).pane = client.Config.leafletPane;
             marker = L.marker(latlng, mopts);
         }
         else {
@@ -3804,23 +3953,34 @@ This software has been approved for release by the U.S. Department of the Interi
         var popupTemplate = this.options.popupTemplate || featurePopupTemplate;
         marker.bindPopup(popupTemplate(feature));
         return marker;
-    }, ɵ1$6 = function (feature, layer) {
+    }, ɵ1$6 = /**
+     * @param {?} feature
+     * @param {?} layer
+     * @return {?}
+     */ function (feature, layer) {
         if (!feature || !feature.geometry || feature.geometry.type === 'Point') {
             return;
         }
         layer.bindPopup(featurePopupTemplate(feature));
-    }, ɵ2$5 = function (options) {
+    }, ɵ2$5 = /**
+     * @param {?} options
+     * @return {?}
+     */ function (options) {
         var _this = this;
         options = options || {};
         if (client.Config.leafletPane)
             options.pane = client.Config.leafletPane;
         /** @type {?} */
-        var getGPStyle = function () { return _this._gpStyle; };
+        var getGPStyle = ( /**
+         * @return {?}
+         */function () { return _this._gpStyle; });
         options.style = options.style || getGPStyle();
+        //in order to put features-based layers into same pane as tile layers,
+        // must specify renderer and set desired pane on that
         /** @type {?} */
         var svgOpts = {};
         if (client.Config.leafletPane)
-            ( /** @type {?} */(svgOpts)).pane = client.Config.leafletPane;
+            (( /** @type {?} */(svgOpts))).pane = client.Config.leafletPane;
         /** @type {?} */
         var renderer = (L.SVG && L.svg(svgOpts)) || (L.Canvas && L.canvas());
         options.renderer = renderer;
@@ -3828,40 +3988,59 @@ This software has been approved for release by the U.S. Department of the Interi
         options.onEachFeature = L.Util.bind(this.eachFeatureFn, this);
         // options.fields = ['FID', 'type', 'title', 'geometry'];
         FeatureLayer$1.prototype.initialize.call(this, options);
-        this.on('load', function () {
+        this.on('load', ( /**
+         * @return {?}
+         */function () {
             if (typeof this.options.zIndex !== 'undefined')
                 this.setZIndex(this.options.zIndex);
-        });
-    }, ɵ3$4 = function (index) {
+        }));
+    }, ɵ3$4 = /**
+     * @param {?} index
+     * @return {?}
+     */ function (index) {
         this.options.zIndex = index;
         for (var id in this._layers)
             this._layers[id].setZIndex(index);
-    }, ɵ4$4 = function () {
+    }, ɵ4$4 = /**
+     * @return {?}
+     */ function () {
         for (var id in this._layers) {
             /** @type {?} */
             var layer = this._layers[id];
             if (layer.toggleVisibility)
                 this._layers[id].toggleVisibility();
         }
-    }, ɵ5$4 = function (opacity) {
+    }, ɵ5$4 = /**
+     * @param {?} opacity
+     * @return {?}
+     */ function (opacity) {
         for (var id in this._layers) {
             /** @type {?} */
             var layer = this._layers[id];
             if (layer.setOpacity)
                 layer.setOpacity(opacity);
         }
-    }, ɵ6$4 = function (gpLayerId) {
+    }, ɵ6$4 = /**
+     * @param {?} gpLayerId
+     * @return {?}
+     */ function (gpLayerId) {
         var _this = this;
         if (this.options.styleLoader) {
             this.options.styleLoader(gpLayerId)
-                .then(function (json) {
+                .then(( /**
+         * @param {?} json
+         * @return {?}
+         */function (json) {
                 if (!json)
                     return;
                 /** @type {?} */
                 var style = null;
                 if (json && json.styles) {
                     /** @type {?} */
-                    var featureFn_1 = function (feature) {
+                    var featureFn_1 = ( /**
+                     * @param {?} feature
+                     * @return {?}
+                     */function (feature) {
                         /** @type {?} */
                         var property = this.property || this.field1;
                         /** @type {?} */
@@ -3870,7 +4049,10 @@ This software has been approved for release by the U.S. Department of the Interi
                         var style = null;
                         if (this.styles) {
                             /** @type {?} */
-                            var wrapper = this.styles.find(function (sw) { return sw.value === v; });
+                            var wrapper = this.styles.find(( /**
+                             * @param {?} sw
+                             * @return {?}
+                             */function (sw) { return sw.value === v; }));
                             if (wrapper) {
                                 style = wrapper.style;
                                 style.radius = style.radius || style['stroke-width'] || 4;
@@ -3883,9 +4065,11 @@ This software has been approved for release by the U.S. Department of the Interi
                         }
                         // console.log("Using style: " + JSON.stringify(style));
                         return style;
-                    };
+                    });
                     /** @type {?} */
-                    var styleFn = function () { return featureFn_1(json); };
+                    var styleFn = ( /**
+                     * @return {?}
+                     */function () { return featureFn_1(json); });
                     _this.options.style = styleFn;
                     _this.setStyle(styleFn);
                     return;
@@ -3912,42 +4096,46 @@ This software has been approved for release by the U.S. Department of the Interi
                     for (var id in _this._layers)
                         _this._layers[id].setStyle(obj);
                 }
-            })
-                .catch(function (e) {
+            }))
+                .catch(( /**
+         * @param {?} e
+         * @return {?}
+         */function (e) {
                 console.log("Error fetching feature layer style");
                 console.log(e);
-            });
+            }));
         }
     };
-    /** *
+    /**
      * Feature Layer
      * Provides custom style loading and point-ilization as well
      * as adding visibility and opacity manipulation methods
-      @type {?} */
+     * @type {?}
+     */
     var FeatureLayer$1 = EsriFeatureLayer.extend({
         _gpStyle: { color: "#00f", weight: 2, fillColor: '#00f', fillOpacity: 0.3 },
         /**
-             * @param {object} feature - GeoJSON Point Feature
-             * @param {L.LatLng} latlng
-             * @return {L.Marker}
-             */
-        pointToLayerFn: ɵ0$8,
+         * @param feature - GeoJSON Point Feature
+         * @param latlng - L.LatLng
+         * @return L.Marker
+         */
+        pointToLayerFn: (ɵ0$8),
         /**
-             * for all non-point features, bind a popup
-             * @param {object} feature - GeoJSON feature
-             * @param {L.Layer} layer - layer representing feature
-             */
-        eachFeatureFn: ɵ1$6,
-        initialize: ɵ2$5,
-        setZIndex: ɵ3$4,
-        toggleVisibility: ɵ4$4,
-        setOpacity: ɵ5$4,
-        loadStyle: ɵ6$4
+         * for all non-point features, bind a popup
+         * @param feature - GeoJSON feature
+         * @param layer - L.Layer layer representing feature
+         */
+        eachFeatureFn: (ɵ1$6),
+        initialize: (ɵ2$5),
+        setZIndex: (ɵ3$4),
+        toggleVisibility: (ɵ4$4),
+        setOpacity: (ɵ5$4),
+        loadStyle: (ɵ6$4)
     });
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var jQuery$3 = jquery;
@@ -4014,7 +4202,10 @@ This software has been approved for release by the U.S. Department of the Interi
                     return;
                 /** @type {?} */
                 var args = Array.prototype.slice.call(arguments, 1);
-                this._listeners[type].forEach(function (l) { l.apply(null, args); });
+                this._listeners[type].forEach(( /**
+                 * @param {?} l
+                 * @return {?}
+                 */function (l) { l.apply(null, args); }));
             };
         return Listener;
     }());
@@ -4025,52 +4216,50 @@ This software has been approved for release by the U.S. Department of the Interi
             _this.setHttpClient(new client.XHRHttpClient());
             _this.setServiceFactory(client.ServiceFactory);
             //generate random key (see factory below)
-            //generate random key (see factory below)
             _this._key = key || Math.ceil(Math.random() * 9999);
-            //registry id of current map if available
             //registry id of current map if available
             _this._mapId = null,
                 //definition of map (ie, from server)
-                //definition of map (ie, from server)
                 _this._mapDef = _this.initializeMapDefinition(),
-                //primary map instance (ie, leaflet)
                 //primary map instance (ie, leaflet)
                 _this._mapInstance = null,
                 //default map extent (if map doesn't have one for being saved)
-                //default map extent (if map doesn't have one for being saved)
                 _this._defaultExtent = null,
-                //current base layer object and leaflet instance
                 //current base layer object and leaflet instance
                 _this._baseLayerDef = null,
                 _this._baseLayer = null,
                 //set definitions of layer states (including layer info) on map
-                //set definitions of layer states (including layer info) on map
                 _this._layerStates = [],
-                //map layer def ids with leaflet instances
                 //map layer def ids with leaflet instances
                 _this._layerCache = {},
                 //errors generated by layers loading
-                //errors generated by layers loading
                 _this._layerErrors = [],
-                _this._layerErrorHandler = function (e) {
+                _this._layerErrorHandler = ( /**
+                 * @param {?} e
+                 * @return {?}
+                 */function (e) {
                     console.log("MapInstance.defaultLayerErrorHandler() - " + e.id + " : " + e.message);
-                },
-                //layer used to store features on map
+                }),
                 //layer used to store features on map
                 _this._featureLayer = null,
                 _this._featureLayerVisible = true,
                 //set of registered map tools
-                //set of registered map tools
                 _this._tools = [],
-                //state management
                 //state management
                 _this.state = { dirty: false }; // jshint ignore:line
             _this._geoJsonLayerOpts = {
-                style: function (feature) {
+                style: ( /**
+                 * @param {?} feature
+                 * @return {?}
+                 */function (feature) {
                     if (feature.properties.style)
                         return feature.properties.style;
-                },
-                onEachFeature: function (feature, layer) {
+                }),
+                onEachFeature: ( /**
+                 * @param {?} feature
+                 * @param {?} layer
+                 * @return {?}
+                 */function (feature, layer) {
                     /** @type {?} */
                     var style = { weight: 2, color: '#03f', opacity: 0.9, radius: 4, fillColor: '#03f', fillOpacity: 0.5 };
                     if (~feature.geometry.type.indexOf('Point')) {
@@ -4085,11 +4274,15 @@ This software has been approved for release by the U.S. Department of the Interi
                     feature.properties.style = props.style || style;
                     layer.bindTooltip(props.label);
                     /*
-                                    toggle: setLabelNoHide(bool)
-                                    it may only exist on markers!
-                                    */
-                },
-                pointToLayer: function (feature, latlng) {
+                    toggle: setLabelNoHide(bool)
+                    it may only exist on markers!
+                    */
+                }),
+                pointToLayer: ( /**
+                 * @param {?} feature
+                 * @param {?} latlng
+                 * @return {?}
+                 */function (feature, latlng) {
                     /** @type {?} */
                     var style = feature.properties.style || {};
                     style.radius = style.radius || 4;
@@ -4099,7 +4292,7 @@ This software has been approved for release by the U.S. Department of the Interi
                     style.fillOpacity = style.opacity;
                     style.fillColor = style.color;
                     return L.circleMarker(latlng, style);
-                }
+                })
             };
             return _this;
         }
@@ -4221,14 +4414,17 @@ This software has been approved for release by the U.S. Department of the Interi
                 this._layerErrorHandler = fn;
             };
         //-----------------
+        //-----------------
         /**
          * @param {?} layerId
          * @return {?}
          */
-        MapInstance.prototype.getLayerStateIndex = /**
-         * @param {?} layerId
-         * @return {?}
-         */
+        MapInstance.prototype.getLayerStateIndex =
+            //-----------------
+            /**
+             * @param {?} layerId
+             * @return {?}
+             */
             function (layerId) {
                 if (!layerId)
                     return -1;
@@ -4254,12 +4450,15 @@ This software has been approved for release by the U.S. Department of the Interi
                 return index >= 0 ? this._layerStates[index] : null;
             };
         //-----------------
+        //-----------------
         /**
          * @return {?}
          */
-        MapInstance.prototype.initializeMapDefinition = /**
-         * @return {?}
-         */
+        MapInstance.prototype.initializeMapDefinition =
+            //-----------------
+            /**
+             * @return {?}
+             */
             function () {
                 return {
                     type: client.ItemTypes.MAP,
@@ -4289,7 +4488,10 @@ This software has been approved for release by the U.S. Department of the Interi
             function (metadata) {
                 metadata = metadata || {};
                 //map layers
-                metadata.layers = this._layerStates.map(function (state) {
+                metadata.layers = this._layerStates.map(( /**
+                 * @param {?} state
+                 * @return {?}
+                 */function (state) {
                     /** @type {?} */
                     var result = {
                         visibility: state.visibility || true,
@@ -4301,7 +4503,7 @@ This software has been approved for release by the U.S. Department of the Interi
                         }
                     };
                     return result;
-                });
+                }));
                 // ... UAL should support accepting just an id here, so we'll do just that
                 metadata.baseLayer = {
                     id: this._baseLayerDef.id,
@@ -4310,6 +4512,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 };
                 metadata.annotations = this._featureLayer ?
                     { title: "Map Features", geoJSON: this._featureLayer.toGeoJSON() } : null;
+                //geographic extent
                 /** @type {?} */
                 var extent = this._mapInstance.getBounds();
                 metadata.extent = {
@@ -4330,10 +4533,10 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?} Leaflet toolbar
          */
             function () {
-                if (!( /** @type {?} */(this._mapInstance)).drawControl)
+                if (!(( /** @type {?} */(this._mapInstance))).drawControl)
                     return null;
                 /** @type {?} */
-                var toolbars = ( /** @type {?} */(this._mapInstance)).drawControl._toolbars;
+                var toolbars = (( /** @type {?} */(this._mapInstance))).drawControl._toolbars;
                 /** @type {?} */
                 var toolbar = null;
                 for (var key in toolbars) {
@@ -4397,25 +4600,34 @@ This software has been approved for release by the U.S. Department of the Interi
             function (error, id) {
                 var _this = this;
                 /** @type {?} */
-                var finder = function (l) { return l.id === id || (l.layer && l.layer.id === id); };
+                var finder = ( /**
+                 * @param {?} l
+                 * @return {?}
+                 */function (l) { return l.id === id || (l.layer && l.layer.id === id); });
                 if (!this._layerErrors.find(finder)) {
                     /** @type {?} */
                     var obj_1 = this.logLayerError(id, "Layer ('" + id + "') failed to completely load. " +
                         "It may be inaccessible or misconfigured.");
                     /** @type {?} */
-                    var url = ( /** @type {?} */(error)).tile.src;
+                    var url = (( /** @type {?} */(error))).tile.src;
                     /** @type {?} */
                     var params = { id: id };
-                    url.substring(url.indexOf("?") + 1, url.length).split('&').forEach(function (param) {
+                    url.substring(url.indexOf("?") + 1, url.length).split('&').forEach(( /**
+                     * @param {?} param
+                     * @return {?}
+                     */function (param) {
                         /** @type {?} */
                         var p = param.split('=');
                         params[p[0]] = p[1];
-                    });
+                    }));
                     /** @type {?} */
-                    var layerService = /** @type {?} */ (this.getService(client.ItemTypes.LAYER));
+                    var layerService = ( /** @type {?} */(this.getService(client.ItemTypes.LAYER)));
                     if (layerService) {
                         layerService.validate(id, params)
-                            .catch(function (e) {
+                            .catch(( /**
+                     * @param {?} e
+                     * @return {?}
+                     */function (e) {
                             /** @type {?} */
                             var def = _this._layerStates.find(finder);
                             if (def) {
@@ -4423,7 +4635,7 @@ This software has been approved for release by the U.S. Department of the Interi
                                     "Reported cause: " + e.message;
                             }
                             _this.notify('layer:error', obj_1);
-                        });
+                        }));
                     }
                 }
             };
@@ -4442,6 +4654,8 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (layerId, errorMsg) {
+                // console.log("MapInstance.logLayerError() - layer "  + id +
+                //     " generated error '" + errorMsg + "'");
                 /** @type {?} */
                 var err = { id: layerId, message: errorMsg };
                 this._layerErrors.push(err);
@@ -4451,16 +4665,18 @@ This software has been approved for release by the U.S. Department of the Interi
                 return err;
             };
         /* -- State Management of internal model -- */
+        /* -- State Management of internal model -- */
         /**
          * @param {?=} event
          * @param {...?} options
          * @return {?}
          */
-        MapInstance.prototype.touch = /**
-         * @param {?=} event
-         * @param {...?} options
-         * @return {?}
-         */
+        MapInstance.prototype.touch = /* -- State Management of internal model -- */
+            /**
+             * @param {?=} event
+             * @param {...?} options
+             * @return {?}
+             */
             function (event) {
                 var options = [];
                 for (var _i = 1; _i < arguments.length; _i++) {
@@ -4491,14 +4707,22 @@ This software has been approved for release by the U.S. Department of the Interi
         /* ==============================================
             Map manipulation operations
            ============================================== */
+        /* --------------------------------------- */
+        /* ==============================================
+                Map manipulation operations
+               ============================================== */
         /**
          * @param {?} map
          * @return {?}
          */
-        MapInstance.prototype.setMap = /**
-         * @param {?} map
-         * @return {?}
-         */
+        MapInstance.prototype.setMap = /* --------------------------------------- */
+            /* ==============================================
+                    Map manipulation operations
+                   ============================================== */
+            /**
+             * @param {?} map
+             * @return {?}
+             */
             function (map) { this._mapInstance = map; };
         /**
          * @return  map instance
@@ -4653,26 +4877,35 @@ This software has been approved for release by the U.S. Department of the Interi
         /**
          * @param layer Leaflet Layer instance or object definition
          */
+        /* ==============================================
+                Layer operations
+               ============================================== */
         /**
          * @param {?} layer Leaflet Layer instance or object definition
          * @return {?}
          */
-        MapInstance.prototype.setBaseLayer = /**
-         * @param {?} layer Leaflet Layer instance or object definition
-         * @return {?}
-         */
+        MapInstance.prototype.setBaseLayer = /* ==============================================
+                Layer operations
+               ============================================== */
+            /**
+             * @param {?} layer Leaflet Layer instance or object definition
+             * @return {?}
+             */
             function (layer) {
                 var _this = this;
                 /** @type {?} */
                 var promise = null;
                 if (!layer) {
                     /** @type {?} */
-                    var svc = /** @type {?} */ (this.getService(client.ItemTypes.LAYER));
+                    var svc = ( /** @type {?} */(this.getService(client.ItemTypes.LAYER)));
                     promise = DefaultBaseLayer.get(svc);
                 }
                 else
                     promise = Promise.resolve(layer);
-                promise.then(function (layer) {
+                promise.then(( /**
+                 * @param {?} layer
+                 * @return {?}
+                 */function (layer) {
                     /** @type {?} */
                     var leafletLayer = LayerFactory$1.create(layer);
                     if (!leafletLayer) {
@@ -4681,26 +4914,28 @@ This software has been approved for release by the U.S. Department of the Interi
                         return;
                     }
                     _this._mapInstance.addLayer(leafletLayer);
-                    ( /** @type {?} */(leafletLayer)).setZIndex(0);
+                    (( /** @type {?} */(leafletLayer))).setZIndex(0); //set at bottom
+                    //set at bottom
                     /** @type {?} */
                     var oldBaseLayer = _this._baseLayer;
                     if (oldBaseLayer) {
                         _this._mapInstance.removeLayer(oldBaseLayer);
                     }
                     //remember new base layer
-                    //remember new base layer
                     _this._baseLayer = leafletLayer;
                     _this._baseLayerDef = layer;
                     //will notify listeners
-                    //will notify listeners
                     _this.touch('baselayer:changed', layer, leafletLayer);
                     // this.notify('baselayer:changed', layer, leafletLayer);
-                })
-                    .catch(function (e) {
+                }))
+                    .catch(( /**
+             * @param {?} e
+             * @return {?}
+             */function (e) {
                     console.log("MapInstance.setBaseLayer() - Error getting base layer for map : " + e.message);
                     _this.logLayerError(layer.id, "Error setting baselayer on map " +
                         "because of the following error(s): " + e.message);
-                });
+                }));
             };
         /**
          * @return array of base layers definitions that can be used
@@ -4711,9 +4946,15 @@ This software has been approved for release by the U.S. Department of the Interi
         /**
          * @return {?} array of base layers definitions that can be used
          */
+        // getBaseLayerOptions () {
+        //     return this._baseLayerOptions;
+        // },
         MapInstance.prototype.getBaseLayer = /**
          * @return {?} array of base layers definitions that can be used
          */
+            // getBaseLayerOptions () {
+            //     return this._baseLayerOptions;
+            // },
             function () { return this._baseLayerDef; };
         /**
          * @return list of layer states containing layer information
@@ -4792,17 +5033,19 @@ This software has been approved for release by the U.S. Department of the Interi
                 if (typeof (layers.push) === 'undefined') {
                     layers = [layers];
                 }
-                layers.forEach(function (obj, index) {
+                layers.forEach(( /**
+                 * @param {?} obj
+                 * @param {?} index
+                 * @return {?}
+                 */function (obj, index) {
                     /** @type {?} */
                     var layer = null;
                     /** @type {?} */
                     var state = null;
                     if (obj.type && obj.type === client.ItemTypes.LAYER) { //is a layer
-                        //is a layer
                         layer = obj;
                     }
                     else if (obj.layer) { //is layer state
-                        //is layer state
                         layer = obj.layer; // containing a layer
                         state = obj;
                     }
@@ -4816,6 +5059,8 @@ This software has been approved for release by the U.S. Department of the Interi
                         return;
                     if (!state) {
                         try {
+                            //wrapped in try{}catch because layer may contain circular reference
+                            // which will cause error when used by JSON methods
                             /** @type {?} */
                             var layerCopy = JSON.parse(JSON.stringify(layer));
                             state = {
@@ -4832,7 +5077,7 @@ This software has been approved for release by the U.S. Department of the Interi
                     var z = layers.length - index;
                     state.zIndex = z;
                     _this.addLayerWithState(layer, state);
-                });
+                }));
                 this.touch('layers:changed');
             };
         /**
@@ -4878,7 +5123,10 @@ This software has been approved for release by the U.S. Department of the Interi
                     this._layerCache[layer.id] = leafletLayer;
                 //listen for layer errors so we can inform the user
                 // that a layer hasn't been loaded in a useful way
-                leafletLayer.on('tileerror', function (e) { _this.handleLayerError(e); });
+                leafletLayer.on('tileerror', ( /**
+                 * @param {?} e
+                 * @return {?}
+                 */function (e) { _this.handleLayerError(e); }));
                 this._mapInstance.addLayer(leafletLayer);
                 if (!isNaN(state.zIndex) && leafletLayer.setZIndex)
                     leafletLayer.setZIndex(state.zIndex);
@@ -4889,13 +5137,17 @@ This software has been approved for release by the U.S. Department of the Interi
                 if (!state.visibility || state.opacity < 1) {
                     // initialize layer visibility and opacity async, or else
                     // some of the layers won't get properly initialized
-                    setTimeout(function (layer, state) {
+                    setTimeout(( /**
+                     * @param {?} layer
+                     * @param {?} state
+                     * @return {?}
+                     */function (layer, state) {
                         _this.setLayerVisibility(layer, state.visibility);
                         _this.setLayerOpacity(layer, state.opacity);
                         //TODO notify of change
                         //DT-2102 timeout needs to be large enough or else
                         // feature layers won't get opacity updated on map load
-                    }, 2000, leafletLayer, state);
+                    }), 2000, leafletLayer, state);
                 }
             };
         /**
@@ -4923,7 +5175,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 if (isNaN(to))
                     to = this._layerStates.length - 1;
                 /** @type {?} */
-                var copy = this._layerStates.splice(from, 1)[0]; //grab layer being moved
+                var copy = this._layerStates.splice(from, 1)[0];
                 this._layerStates.splice(to, 0, copy);
                 for (var z = 1, i = this._layerStates.length - 1; i >= 0; --i, ++z) {
                     /** @type {?} */
@@ -4956,6 +5208,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 /** @type {?} */
                 var layerInstance = this._layerCache[id];
                 if (layerInstance) {
+                    //remove layer from tracked defs array
                     /** @type {?} */
                     var index = this.getLayerStateIndex(id);
                     // console.log("MapInstance.removeLayer(" + id + ")");
@@ -5032,13 +5285,14 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (layerInstance, visible) {
-                if (( /** @type {?} */(layerInstance)).setVisibility) {
+                if ((( /** @type {?} */(layerInstance))).setVisibility) {
                     //using custom method provided in src/layer/module.js
-                    ( /** @type {?} */(layerInstance)).setVisibility(visible);
+                    (( /** @type {?} */(layerInstance))).setVisibility(visible);
                 }
-                else if (( /** @type {?} */(layerInstance))._container) {
+                else if ((( /** @type {?} */(layerInstance)))._container) {
+                    //otherwise, using jquery on dom directly
                     /** @type {?} */
-                    var el = jQuery$3(( /** @type {?} */(layerInstance))._container);
+                    var el = jQuery$3((( /** @type {?} */(layerInstance)))._container);
                     // if(visible) el.removeClass("invisible");
                     // else el.addClass('invisible');
                     el.css({ 'display': visible ? '' : 'none' });
@@ -5071,6 +5325,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 }
                 //adjust rendered leaflet layer
                 opacity = this.setLayerOpacity(layerInstance, opacity);
+                // if overlay layer, update state value
                 /** @type {?} */
                 var state = this.getLayerState(id);
                 if (state)
@@ -5104,10 +5359,10 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?} normalized opacity value between 0 and 1.0
          */
             function (layerInstance, opacity) {
-                if (layerInstance && ( /** @type {?} */(layerInstance)).setOpacity) {
+                if (layerInstance && (( /** @type {?} */(layerInstance))).setOpacity) {
                     if (opacity > 1.0)
                         opacity = opacity / 100.0;
-                    ( /** @type {?} */(layerInstance)).setOpacity(opacity);
+                    (( /** @type {?} */(layerInstance))).setOpacity(opacity);
                     this.touch('map:layer:changed');
                 }
                 return opacity;
@@ -5153,11 +5408,11 @@ This software has been approved for release by the U.S. Department of the Interi
                     if (typeof (layerInstance.enableGetFeatureInfo) !== 'undefined') {
                         if (layerInstance.isGetFeatureInfoEnabled()) {
                             layerInstance.disableGetFeatureInfo();
-                            jQuery$3(( /** @type {?} */(this._mapInstance))._container).removeClass('selectable-cursor');
+                            jQuery$3((( /** @type {?} */(this._mapInstance)))._container).removeClass('selectable-cursor');
                         }
                         else {
                             layerInstance.enableGetFeatureInfo();
-                            jQuery$3(( /** @type {?} */(this._mapInstance))._container).addClass('selectable-cursor');
+                            jQuery$3((( /** @type {?} */(this._mapInstance)))._container).addClass('selectable-cursor');
                         }
                     }
                 }
@@ -5168,17 +5423,23 @@ This software has been approved for release by the U.S. Department of the Interi
         /**
          * @return array of features on the map
          */
+        /* ==============================================
+               Feature operations
+               ============================================== */
         /**
          * @return {?} array of features on the map
          */
-        MapInstance.prototype.getFeatures = /**
-         * @return {?} array of features on the map
-         */
+        MapInstance.prototype.getFeatures = /* ==============================================
+               Feature operations
+               ============================================== */
+            /**
+             * @return {?} array of features on the map
+             */
             function () {
                 if (this._featureLayer) {
                     /** @type {?} */
                     var geojson_1 = this._featureLayer.toGeoJSON();
-                    return ( /** @type {?} */(geojson_1)).features;
+                    return (( /** @type {?} */(geojson_1))).features;
                 }
                 return [];
             };
@@ -5206,7 +5467,6 @@ This software has been approved for release by the U.S. Department of the Interi
                     this.addFeatures(json.features);
                 }
                 else { //single feature
-                    //single feature
                     this.addFeature(json, true);
                 }
             };
@@ -5224,16 +5484,20 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (json, fireEvent) {
-                var _this = this;
                 // var type = json.type;
                 // var coordinates = json.coordinates;
+                var _this = this;
                 if (!this._featureLayer) {
                     // _featureLayer = geoJSON([], _geoJsonLayerOpts).addTo(_mapInstance);
                     this._featureLayer = L.featureGroup().addTo(this._mapInstance);
                 }
+                // _featureLayer.addData(json);
                 /** @type {?} */
                 var opts = jQuery$3.extend({}, this._geoJsonLayerOpts);
-                L.geoJSON(json, opts).eachLayer(function (l) { return _this.addFeatureLayer(l); });
+                L.geoJSON(json, opts).eachLayer(( /**
+                 * @param {?} l
+                 * @return {?}
+                 */function (l) { return _this.addFeatureLayer(l); }));
                 if (typeof (fireEvent) === 'undefined' || fireEvent === true)
                     this.touch('features:changed');
                 else
@@ -5255,9 +5519,10 @@ This software has been approved for release by the U.S. Department of the Interi
                 /** @type {?} */
                 var layer = this.getFeatureLayer(featureJson.properties.id);
                 if (layer) {
-                    ( /** @type {?} */(layer)).feature = featureJson;
+                    (( /** @type {?} */(layer))).feature = featureJson;
                     //update style
                     layer.setStyle(featureJson.properties.style);
+                    //rebind label in case that changed
                     /** @type {?} */
                     var label = featureJson.properties.label ||
                         "Untitled " + featureJson.geometry.type + " Feature";
@@ -5291,6 +5556,7 @@ This software has been approved for release by the U.S. Department of the Interi
          */
             function (featureJson) {
                 var _this = this;
+                //find existing layer for this feature
                 /** @type {?} */
                 var layer = this.getFeatureLayer(featureJson.properties.id);
                 if (layer) {
@@ -5298,7 +5564,10 @@ This software has been approved for release by the U.S. Department of the Interi
                     this._featureLayer.removeLayer(layer);
                     //add replacement
                     L.geoJSON(featureJson, this._geoJsonLayerOpts)
-                        .eachLayer(function (l) { return _this.addFeatureLayer(l); });
+                        .eachLayer(( /**
+                 * @param {?} l
+                 * @return {?}
+                 */function (l) { return _this.addFeatureLayer(l); }));
                     this.touch("map:feature:changed");
                 }
             };
@@ -5322,9 +5591,9 @@ This software has been approved for release by the U.S. Department of the Interi
                         var extent = layer.getBounds();
                         this._mapInstance.fitBounds(extent);
                     }
-                    else if (typeof (( /** @type {?} */(layer)).getLatLng) !== 'undefined') {
+                    else if (typeof ((( /** @type {?} */(layer))).getLatLng) !== 'undefined') {
                         /** @type {?} */
-                        var latLng = ( /** @type {?} */(layer)).getLatLng();
+                        var latLng = (( /** @type {?} */(layer))).getLatLng();
                         this._mapInstance.panTo(latLng);
                     }
                     else {
@@ -5394,9 +5663,9 @@ This software has been approved for release by the U.S. Department of the Interi
                 /** @type {?} */
                 var features = this._featureLayer.getLayers();
                 for (var i = 0; i < features.length; ++i) {
-                    if (( /** @type {?} */(features[i])).feature &&
-                        ( /** @type {?} */(features[i])).feature.properties.id === featureId) {
-                        return ( /** @type {?} */(features[i]));
+                    if ((( /** @type {?} */(features[i]))).feature &&
+                        (( /** @type {?} */(features[i]))).feature.properties.id === featureId) {
+                        return (( /** @type {?} */(features[i])));
                     }
                 }
                 return null;
@@ -5446,14 +5715,26 @@ This software has been approved for release by the U.S. Department of the Interi
          * finds leaf node layers and adds them to the
          * map's feature group
          */
+        /*
+             * method for adding feature layers to the map
+             * when these layers may be layer groups.
+             * finds leaf node layers and adds them to the
+             * map's feature group
+             */
         /**
          * @param {?} layer
          * @return {?}
          */
-        MapInstance.prototype.addFeatureLayer = /**
-         * @param {?} layer
-         * @return {?}
-         */
+        MapInstance.prototype.addFeatureLayer = /*
+             * method for adding feature layers to the map
+             * when these layers may be layer groups.
+             * finds leaf node layers and adds them to the
+             * map's feature group
+             */
+            /**
+             * @param {?} layer
+             * @return {?}
+             */
             function (layer) {
                 this._addFeatureLayer(layer);
                 this.touch("features:changed");
@@ -5474,35 +5755,44 @@ This software has been approved for release by the U.S. Department of the Interi
          */
             function (layer) {
                 var _this = this;
-                if (!( /** @type {?} */(layer)).feature && layer instanceof L.LayerGroup) {
-                    layer.eachLayer(function (child) {
+                if (!(( /** @type {?} */(layer))).feature && layer instanceof L.LayerGroup) {
+                    layer.eachLayer(( /**
+                     * @param {?} child
+                     * @return {?}
+                     */function (child) {
                         _this._addFeatureLayer(child);
-                    });
+                    }));
                 }
                 else {
                     this._featureLayer.addLayer(layer);
                 }
             };
         //toggle visibility of parent feature layer
+        //toggle visibility of parent feature layer
         /**
          * @param {?} layer
          * @param {?} visibility
          * @return {?}
          */
-        MapInstance.prototype.setFeatureLayerVisibility = /**
-         * @param {?} layer
-         * @param {?} visibility
-         * @return {?}
-         */
+        MapInstance.prototype.setFeatureLayerVisibility =
+            //toggle visibility of parent feature layer
+            /**
+             * @param {?} layer
+             * @param {?} visibility
+             * @return {?}
+             */
             function (layer, visibility) {
                 var _this = this;
                 if (!layer)
                     return;
                 this._featureLayerVisible = visibility;
                 if (layer.getLayers) {
-                    layer.getLayers().forEach(function (child) {
+                    layer.getLayers().forEach(( /**
+                     * @param {?} child
+                     * @return {?}
+                     */function (child) {
                         _this.setFeatureLayerVisibility(child, visibility);
-                    });
+                    }));
                 }
                 else {
                     /** @type {?} */
@@ -5518,14 +5808,20 @@ This software has been approved for release by the U.S. Department of the Interi
          * @param metadata
          * @return resolving persisted map
          */
+        /* ==============================================
+               Map lifecycle operations
+               ============================================== */
         /**
          * @param {?} metadata
          * @return {?} resolving persisted map
          */
-        MapInstance.prototype.save = /**
-         * @param {?} metadata
-         * @return {?} resolving persisted map
-         */
+        MapInstance.prototype.save = /* ==============================================
+               Map lifecycle operations
+               ============================================== */
+            /**
+             * @param {?} metadata
+             * @return {?} resolving persisted map
+             */
             function (metadata) {
                 return this.saveMap(metadata);
             };
@@ -5544,6 +5840,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 var _this = this;
                 /** @type {?} */
                 var metadata = md || {};
+                //add GeoPlatformMap resource type if not already present
                 /** @type {?} */
                 var gpMapType = 'http://www.geoplatform.gov/ont/openmap/GeoplatformMap';
                 metadata.resourceTypes = metadata.resourceTypes || [];
@@ -5559,9 +5856,16 @@ This software has been approved for release by the U.S. Department of the Interi
                     content.title = content.label;
                 }
                 // console.log("Updating: " + JSON.stringify(map));
-                return new Promise(function (resolve, reject) {
+                return new Promise(( /**
+                 * @param {?} resolve
+                 * @param {?} reject
+                 * @return {?}
+                 */function (resolve, reject) {
                     _this.getService(client.ItemTypes.MAP).save(content)
-                        .then(function (result) {
+                        .then(( /**
+                 * @param {?} result
+                 * @return {?}
+                 */function (result) {
                         //track new map's info so we can update it with next save
                         if (!_this._mapId)
                             _this._mapId = result.id;
@@ -5569,16 +5873,19 @@ This software has been approved for release by the U.S. Department of the Interi
                         _this._defaultExtent = result.extent;
                         _this.clean();
                         resolve(result);
-                    })
-                        .catch(function (err) {
+                    }))
+                        .catch(( /**
+                 * @param {?} err
+                 * @return {?}
+                 */function (err) {
                         console.log("MapCore MapInstance.saveMap() - " +
                             "The requested map could not be saved because: " + err.message);
                         /** @type {?} */
                         var e = new Error("The requested map could not be saved because of the following error(s): " +
                             err.message);
                         reject(e);
-                    });
-                });
+                    }));
+                }));
             };
         /**
          * Retrieve a map's descriptor from the registry
@@ -5620,8 +5927,15 @@ This software has been approved for release by the U.S. Department of the Interi
          */
             function (mapId) {
                 var _this = this;
-                return new Promise(function (resolve, reject) {
-                    _this.fetchMap(mapId).then(function (map) {
+                return new Promise(( /**
+                 * @param {?} resolve
+                 * @param {?} reject
+                 * @return {?}
+                 */function (resolve, reject) {
+                    _this.fetchMap(mapId).then(( /**
+                     * @param {?} map
+                     * @return {?}
+                     */function (map) {
                         if (!map) {
                             throw new Error("The requested map ('" + mapId +
                                 "') came back null");
@@ -5630,32 +5944,44 @@ This software has been approved for release by the U.S. Department of the Interi
                             throw new Error("The requested map ('" + mapId +
                                 "') came back as a string");
                         }
-                        else if (( /** @type {?} */(map)).message) {
+                        else if ((( /** @type {?} */(map))).message) {
                             throw new Error("There was an error loading the requested map ('" +
-                                mapId + "'): " + ( /** @type {?} */(map)).message);
+                                mapId + "'): " + (( /** @type {?} */(map))).message);
                         }
                         //loading a map by its ID, so we need to increment it's view count
                         if ('development' !== client.Config.env) {
-                            setTimeout(function (map) {
+                            setTimeout(( /**
+                             * @param {?} map
+                             * @return {?}
+                             */function (map) {
+                                //update view count
                                 /** @type {?} */
                                 var views = map.statistics ? (map.statistics.numViews || 0) : 0;
                                 /** @type {?} */
                                 var patch = [{ op: 'replace', path: '/statistics/numViews', value: views + 1 }];
                                 _this.getService(client.ItemTypes.MAP).patch(map.id, patch)
                                     // this.mapService.patch(map.id, patch)
-                                    .then(function (updated) { map.statistics = updated.statistics; })
-                                    .catch(function (e) {
+                                    .then(( /**
+                             * @param {?} updated
+                             * @return {?}
+                             */function (updated) { map.statistics = updated.statistics; }))
+                                    .catch(( /**
+                             * @param {?} e
+                             * @return {?}
+                             */function (e) {
                                     console.log("MapInstance.loadMap() - Error updating view " +
                                         "count for map ('" + mapId + "'): " + e);
-                                });
-                            }, 1000, map);
+                                }));
+                            }), 1000, map);
                         }
-                        //load the map into the viewer
                         //load the map into the viewer
                         _this.loadMapFromObj(map);
                         resolve(map);
-                    })
-                        .catch(function (err) {
+                    }))
+                        .catch(( /**
+                 * @param {?} err
+                 * @return {?}
+                 */function (err) {
                         console.log("MapInstance.loadMap() - " +
                             "The requested map could not be loaded because " + err.message);
                         /** @type {?} */
@@ -5663,8 +5989,8 @@ This software has been approved for release by the U.S. Department of the Interi
                             "') could not be loaded because of the following error(s): " +
                             err.message);
                         reject(e);
-                    });
-                });
+                    }));
+                }));
             };
         /**
          * Load a map from its descriptor as the current
@@ -5684,9 +6010,9 @@ This software has been approved for release by the U.S. Department of the Interi
          * @return {?}
          */
             function (map) {
-                var _this = this;
                 // console.log("Loading Map Object");
                 // console.log(map);
+                var _this = this;
                 this._mapId = map.id;
                 this._mapDef = map;
                 map.extent = this.ensureExtent(map.extent);
@@ -5695,9 +6021,12 @@ This software has been approved for release by the U.S. Department of the Interi
                 /** @type {?} */
                 var extent = map.extent;
                 //remove existing layers
-                this._mapInstance.eachLayer(function (l) {
+                this._mapInstance.eachLayer(( /**
+                 * @param {?} l
+                 * @return {?}
+                 */function (l) {
                     _this._mapInstance.removeLayer(l);
-                });
+                }));
                 this._layerCache = {};
                 this._layerStates = [];
                 //set new base layer
@@ -5741,6 +6070,7 @@ This software has been approved for release by the U.S. Department of the Interi
                 var south = !extent || isNaN(extent.miny) ? -89.0 : extent.miny * 1.0;
                 /** @type {?} */
                 var north = !extent || isNaN(extent.maxy) ? 89.0 : extent.maxy * 1.0;
+                //ensure x,y is ordered correctly
                 /** @type {?} */
                 var t;
                 if (west > east) {
@@ -5808,16 +6138,22 @@ This software has been approved for release by the U.S. Department of the Interi
         /* ==============================================
             Tool operations
            ============================================== */
+        /* ==============================================
+                Tool operations
+               ============================================== */
         /**
          * @param {?} id
          * @param {?} tool
          * @return {?}
          */
-        MapInstance.prototype.registerTool = /**
-         * @param {?} id
-         * @param {?} tool
-         * @return {?}
-         */
+        MapInstance.prototype.registerTool = /* ==============================================
+                Tool operations
+               ============================================== */
+            /**
+             * @param {?} id
+             * @param {?} tool
+             * @return {?}
+             */
             function (id, tool) {
                 this._tools[id] = tool;
             };
@@ -5845,19 +6181,25 @@ This software has been approved for release by the U.S. Department of the Interi
             function (id, finish) {
                 if (!this._tools[id])
                     return false;
-                this._tools[id].activate(function () {
+                this._tools[id].activate(( /**
+                 * @return {?}
+                 */function () {
                     this.notify('tool:disabled', id);
-                });
+                }));
                 this.notify('tool:enabled', id);
             };
+        /* ----------- MISC ------------ */
+        //https://github.com/gsklee/ngStorage
         /* ----------- MISC ------------ */
         //https://github.com/gsklee/ngStorage
         /**
          * @return {?}
          */
-        MapInstance.prototype.cacheMap = /**
-         * @return {?}
-         */
+        MapInstance.prototype.cacheMap = /* ----------- MISC ------------ */
+            //https://github.com/gsklee/ngStorage
+            /**
+             * @return {?}
+             */
             function () {
                 if (this.state && this.state.dirty) {
                     /** @type {?} */
@@ -5887,19 +6229,26 @@ This software has been approved for release by the U.S. Department of the Interi
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var cache = {};
     var factory = {
-        get: function (key) {
+        get: ( /**
+         * @param {?} key
+         * @return {?}
+         */function (key) {
             if (key && cache[key])
                 return cache[key];
+            /** @type {?} */
             var instance = new MapInstance(key);
             cache[instance._key] = instance;
             return instance;
-        },
-        dispose: function (key) {
+        }),
+        dispose: ( /**
+         * @param {?} key
+         * @return {?}
+         */function (key) {
             if (key) {
                 cache[key].dispose();
                 delete cache[key];
@@ -5907,18 +6256,18 @@ This software has been approved for release by the U.S. Department of the Interi
             else {
                 cache = null;
             }
-        }
+        })
     };
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     Polyfills();
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,uselessCode} checked by tsc
+     * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.LoadingControl = loadingControl;

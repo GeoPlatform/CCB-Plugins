@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              www.geoplatform.gov
- * @since             1.0.8
+ * @since             1.0.9
  * @package           GP_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Community Search
  * Plugin URI:        https://www.geoplatform.gov/about-geoplatform/ctk/geoplatform-community-search
  * Description:       Search for geoplatform community objects.
- * Version:           1.0.8
+ * Version:           1.0.9
  * Author:            Image Matters LLC
  * Author URI:        http://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -28,7 +28,7 @@ define("GP_SEARCH_UAL", "https://ual.geoplatform.gov");
 define('GP_SEARCH_DIR', plugin_dir_path(__FILE__));
 define('GP_SEARCH_URL', plugin_dir_url(__FILE__));
 define('GP_SEARCH_NAME', "GeoPlatform Community Search");
-define('GP_SEARCH_VERSION', "1.0.8");
+define('GP_SEARCH_VERSION', "1.0.9");
 
 
 /**
@@ -55,7 +55,9 @@ function geopcomsearch_add_script() {
   wp_enqueue_script('geopcomsearch_framework');
   wp_register_script('geopcomsearch_q', GP_SEARCH_URL . 'assets/js/q_2.0.3.js', array(), null);
   wp_enqueue_script('geopcomsearch_q');
-  wp_register_script('geopcomsearch_client_api', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
+  wp_register_script( 'geopcomsearch_axios', GP_SEARCH_URL . 'assets/js/axios.js', array(), null );
+  wp_enqueue_script('geopcomsearch_axios');
+  wp_register_script('geopcomsearch_client_api', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array( 'geopcomsearch_axios' ), null);
   wp_enqueue_script('geopcomsearch_client_api');
 }
 add_action( 'wp_print_scripts', 'geopcomsearch_add_script' );
@@ -130,7 +132,9 @@ function geopcomsearch_add_admin_script() {
   wp_enqueue_script('geopcomsearch_framework');
   wp_register_script('geopcomsearch_q', GP_SEARCH_URL . 'assets/js/q_2.0.3.js', array(), null);
   wp_enqueue_script('geopcomsearch_q');
-  wp_register_script('geopcomsearch_client_api', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array(), null);
+  wp_register_script( 'geopcomsearch_axios', GP_SEARCH_URL . 'assets/js/axios.js', array(), null );
+  wp_enqueue_script('geopcomsearch_axios');
+  wp_register_script('geopcomsearch_client_api', GP_SEARCH_URL . 'assets/js/geoplatform.client.min.js', array( 'geopcomsearch_axios' ), null);
   wp_enqueue_script('geopcomsearch_client_api');
   wp_register_style('geopcomsearchadmin_css', GP_SEARCH_URL . 'assets/css/geoplatform-community-search-admin.css', false, 'all');
   wp_enqueue_style('geopcomsearchadmin_css');
