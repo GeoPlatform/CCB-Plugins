@@ -101,7 +101,8 @@ class Geoplatform_Service_Collector_Public {
 		if ( !wp_script_is('geop_bootstrap_js') && !is_page( array('geoplatform-search', 'geoplatform-items', 'register', 'geoplatform-map-preview' ) ) )
 			wp_enqueue_script( 'geop_bootstrap_js', plugin_dir_url( __FILE__ ) . 'js/bootstrap.bundle.min.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( 'geop_q', plugin_dir_url( __FILE__ ) . 'js/q_2.0.3.js', array(), $this->version, false );
-		wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'js/geoplatform.client.js', array(), $this->version, false );
+		wp_enqueue_script( 'geop_axios', plugin_dir_url( __FILE__ ) . 'assets/axios.js', array(), $this->version, false );
+		wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'js/geoplatform-client.umd.min.js', array( 'geop_axios' ), $this->version, false );
 		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'js/geoplatform.js', array(), $this->version, false );
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/geoplatform-service-collector-public.js', array( 'jquery' ), $this->version, false );
 	}

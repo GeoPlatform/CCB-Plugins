@@ -37,9 +37,9 @@
 function geopserve_gen_list(geopserve_options){
 
 	// Service collection setup.
-	const Query = GeoPlatformClient.Query;
+	const Query = geoplatform.client.Query;
 	// const Classifiers = GeoPlatformClient.KGClassifiers;
-	let itemSvc = new GeoPlatformClient.ItemService(geopserve_options.ual_domain, new GeoPlatformClient.JQueryHttpClient());
+	let itemSvc = new geoplatform.client.ItemService(geopserve_options.ual_domain, new geoplatform.client.XHRHttpClient());
 	var query = new Query();
 	var countQuery = new Query();
 
@@ -336,7 +336,7 @@ function geopserve_gen_list_element(geopserve_gen_element){
 // Grabs results fromm the Client-API.
 function geopserve_list_retrieve_objects(query, geopserve_ual) {
 	var deferred = Q.defer();
-	var service = new GeoPlatform.ItemService(geopserve_ual, new GeoPlatform.JQueryHttpClient());
+	var service = new GeoPlatform.ItemService(geopserve_ual, new GeoPlatform.XHRHttpClient());
 	service.search(query)
 		.then(function (response) { deferred.resolve(response); })
 		.catch(function (e) { deferred.reject(e); });
@@ -374,7 +374,7 @@ function geopserve_createEl(geopserve_el_atts){
 // query results by.
 function geopserve_typeGrab(geopserve_cat_in){
 
-	const ItemTypes = GeoPlatformClient.ItemTypes;
+	const ItemTypes = geoplatform.client.ItemTypes;
 
 	var geopserve_typeMap = {
 		Datasets: ItemTypes.DATASET,

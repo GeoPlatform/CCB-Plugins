@@ -448,7 +448,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			var geopmap_leafBase = L.map("container_<?php echo $geopmap_divrand;?>", geopmap_options);
 
 			// Instantiates GeopMapInstance, passing the leaflet map and view constants.
-			var GeopMapInstance = GeoPlatformMapCore.MapFactory.get();
+			var GeopMapInstance = geoplatform.mapcore.MapFactory.get();
 			GeopMapInstance.setMap(geopmap_leafBase);
 			GeopMapInstance.setView(51.505, -0.09, 13);
 

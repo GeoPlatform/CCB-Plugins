@@ -77,10 +77,10 @@ If you were able to successfully add a map to your shortcode collection but not 
 == Changelog ==
 
 = 2.0.5 =
-* Updated Client-API to include improvements.
+* Updated Client-API to 0.3.0 and Mapcore to 0.3.0.
 
 = 2.0.4 =
-* Updated Client-API to 2.0.0 and Mapcore to 0.2.0.
+* Updated Client-API to 0.2.0 and Mapcore to 0.2.0.
 
 = 2.0.3 =
 * View Details will now navigate to the map's details page at www.geoplatform.gov if the Item Details sister plugin is missing.
