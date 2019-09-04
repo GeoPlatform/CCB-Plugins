@@ -134,6 +134,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         .then(uri => {
             if(!uri) throw new Error("Unable to generate a URI for the new map");
             this.mapItem.uri = uri;
+            this.mapItem.id = null;
             return this.mapItem;
         })
         .then( map => {
@@ -232,6 +233,9 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     updateDetails( details : {[key:string]:any} ) {
 
         Object.keys(this.mapItem).forEach( property => {
+            //don't copy id or uri or type
+            if('id' === property || 'uri' === property || 'type' === property) return;
+
             let value = details[property] || null;
             if('title' === property) {
                 value = 'Map of ' + value;
