@@ -1,11 +1,17 @@
 <div class="l-body">
     <div class="l-header">
+        <label class="sr-only" id="keywordsLabel" for="keywordsField">
+            Filter using keywords
+        </label>
         <div class="input-group-slick">
             <span class="fa fa-search"></span>
             <input type="text" class="form-control"
+                id="keywordsField"
                 placeholder="Search the GeoPlatform"
                 [(ngModel)]="freeText"
-                (keyup.enter)="onFreeTextChange()">
+                (keyup.enter)="onFreeTextChange()"
+                title="Filter results using keywords"
+                aria-labelledby="keywordsLabel">
             <span class="fa fa-times"
                 *ngIf="freeText && freeText.length"
                 (click)="freeText=null;onFreeTextChange()"></span>

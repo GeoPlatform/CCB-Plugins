@@ -4,7 +4,10 @@
 
   <label for="keywords">Keywords</label>
   <div class="input-group-slick">
-      <input type="text" id="keywords" placeholder="Specify keywords..." [(ngModel)]="value">
+      <label class="sr-only" id="keywordsLabel">Filter using keywords</label>
+      <input type="text" id="keywords" placeholder="Specify keywords..." [(ngModel)]="value"
+        title="Constrain results using keywords"
+        aria-labelledby="keywordsLabel">
       <span class="fa fa-times" (click)="value=null" *ngIf="value&&value.length"></span>
   </div>
   <br><br>

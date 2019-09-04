@@ -20,7 +20,12 @@
 
         <div class="flex-1"></div>
         <div class="c-sort">
-            <select [(ngModel)]="sortField" (change)="onSortChange()">
+            <label class="sr-only" id="sortLabel" for="sortField">
+                Sort results
+            </label>
+            <select [(ngModel)]="sortField" (change)="onSortChange()"
+                id="sortField" aria-labelledby="sortLabel"
+                title="Select how to sort results">
                 <option value="modified,desc">Most recently modified</option>
                 <option value="modified,asc">Least recently modified</option>
                 <option value="label,asc">Name (A-Z)</option>
@@ -39,6 +44,7 @@
         <button type="button" class="btn btn-link" (click)="showLegend=!showLegend"
             title="Toggle the legend">
             <span class="fas fa-th-list"></span>
+            <span class="sr-only">toggle icon legend</span>
         </button>
     </div>
 

@@ -26,7 +26,7 @@
     font-size: 1.125em;
     font-weight: 500;
     cursor: pointer;
-    color: #777;
+    color: #444; /* 508 AAA */
 }
 
 .nav-tabs .nav-link.active,

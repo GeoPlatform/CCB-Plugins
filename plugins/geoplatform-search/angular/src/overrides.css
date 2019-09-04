@@ -21,3 +21,10 @@
 .leaflet-draw-section a.leaflet-draw-draw-circlemarker {
     display: none!important;
 }
+
+
+
+
+.btn.btn-link {
+    color: #1565c5 !important; /* 508 AAA */
+}

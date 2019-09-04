@@ -307,6 +307,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
                   (click)="isCollapsed=!isCollapsed">
                   <span *ngIf="isCollapsed" class="fas fa-chevron-down"></span>
                   <span *ngIf="!isCollapsed" class="fas fa-chevron-up"></span>
+                  <span class="sr-only">Hide/Show {{label}} values</span>
               </button>
           </div>
           <div *ngIf="!isCollapsed">

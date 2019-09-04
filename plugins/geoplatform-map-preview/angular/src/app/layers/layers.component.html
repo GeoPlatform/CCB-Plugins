@@ -48,6 +48,7 @@
                         <button type="button" class="btn btn-sm btn-link"
                             (click)="toggleLayerViz(item)">
                             <span class="fas fa-eye" [ngClass]="{'t-fg--gray-lt':!isVisible(item)}"></span>
+                            <span class="sr-only">Toggle layer visibility</span>
                         </button>
                         <span>{{item.label}}</span>
                     </div>
