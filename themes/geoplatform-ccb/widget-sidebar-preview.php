@@ -34,16 +34,20 @@ class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 		$geopporatl_current_post = get_queried_object();
 
 		$geopportal_side_cont_prev_thumb = get_template_directory_uri() . '/img/img-404.png';
+		$geopportal_side_cont_prev_text = 'There is no image here.';
+
 		if ($geopporatl_current_post){
 			if ( has_post_thumbnail($geopporatl_current_post) )
 				$geopportal_side_cont_prev_thumb = get_the_post_thumbnail_url($geopporatl_current_post);
+			if ( is_singular($geopporatl_current_post) )
+				$geopportal_side_cont_prev_text = get_the_title($geopporatl_current_post);
 		}
 
 		// SIDEBAR CONTENT PREVIEW
 		echo "<article class='m-article'>";
       echo "<div class='m-article__heading'>" . __(sanitize_text_field($geopportal_side_cont_prev_title), 'geoplatform-ccb') . "</div>";
       echo "<div class='m-article__desc' style='max-width:320px'>";
-        echo "<img src='" . $geopportal_side_cont_prev_thumb . "'>";
+        echo "<img src='" . $geopportal_side_cont_prev_thumb . "' title='" . $geopportal_side_cont_prev_text . "'>";
       echo "</div>";
     echo "</article>";
 	}
