@@ -12,7 +12,7 @@
 global $wpdb;
 
 // All necessary variables are established, including pulling the map_id from $_POST.
-$geopmap_ual_url = 'https://ual.geoplatform.gov';
+$geopmap_ual_url = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
 $geopmap_invalid_bool = false;
 $geopmap_ual_map_id = sanitize_key($_POST["map_id"]);
 

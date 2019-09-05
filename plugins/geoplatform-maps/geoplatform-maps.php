@@ -124,8 +124,8 @@ function geopmap_shortcode_creation($geopmap_atts){
 	// sanitation, and creates the ual_url string.
 	$geopmap_error_text = '';
 	$geopmap_map_id_in = sanitize_key($geopmap_shortcode_array['id']);
-	$geopmap_ual_url_in = 'https://ual.geoplatform.gov/api/maps/';
-	$geopmap_maps_url = 'https://maps.geoplatform.gov';
+	$geopmap_ual_url_in = isset($_ENV['ual_url']) ? $_ENV['ual_url'] . '/api/maps/' : 'https://ual.geoplatform.gov/api/maps/';
+	$geopmap_maps_url = isset($_ENV['maps_url']) ? $_ENV['maps_url'] : 'https://maps.geoplatform.gov';
 
 	// Verifies validity of map_id_in and concats it to ual_url_in, forming the
 	// full ual string to the map.
@@ -190,8 +190,8 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	// Random number generation to give this instance of objects unique element IDs.
 	// Also declares GeoPlatform url fields.
 	$geopmap_divrand = rand(0, 99999);
-	$geopmap_ual_url = 'https://ual.geoplatform.gov';
-	$geopmap_maps_url = 'https://maps.geoplatform.gov';
+	$geopmap_ual_url = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+	$geopmap_maps_url = isset($_ENV['maps_url']) ? $_ENV['maps_url'] : 'https://maps.geoplatform.gov';
 	?>
 
 <!-- Main div block that will contain this entry. It has a constant width as
@@ -314,9 +314,9 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 	// Generates the random number used for unique element referencing. Also sets
 	// up the URL fields.
 	$geopmap_divrand = rand(0, 99999);
-	$geopmap_viewer_url = 'https://viewer.geoplatform.gov';
-	$geopmap_oe_url = 'https://oe.geoplatform.gov';
-
+	$geopmap_viewer_url = isset($_ENV['viewer_url']) ? $_ENV['viewer_url'] : 'https://viewer.geoplatform.gov';
+	$geopmap_oe_url = isset($_ENV['oe_url']) ? $_ENV['oe_url'] : 'https://oe.geoplatform.gov';
+	
 	// Variables that vary among themes. They are set to default values for work
 	// in the GeoPlatform themes, then changed if one such theme is absent.
 	$geopmap_info_icon = 'fa fa-info-circle';

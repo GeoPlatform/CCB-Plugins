@@ -27,8 +27,8 @@ $geopmap_table_name = "";
 $geopmap_retrieved_data = "";
 
 // URL variables for resource collection.
-$geopmap_ual_url = 'https://ual.geoplatform.gov';
-$geopmap_viewer_url = 'https://viewer.geoplatform.gov';
+$geopmap_ual_url = isset($_ENV['ual_url']) ? $_ENV['ual_url'] : 'https://ual.geoplatform.gov';
+$geopmap_viewer_url = isset($_ENV['viewer_url']) ? $_ENV['viewer_url'] : 'https://viewer.geoplatform.gov';
 
 // Data validation. $geopmap_ual_map_id must be a 32-digit HEX value, while the
 // height and width inputs must be either numeric or blank. Failure anywhere
