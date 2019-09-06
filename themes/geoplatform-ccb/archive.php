@@ -40,7 +40,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 
 			echo "<div class='m-article m-article--flex'>";
 				echo "<a class='m-article__thumbnail is-16x9' href='" . get_the_permalink($geopccb_post) . "'>";
-					echo "<img alt='Article Heading' src='" . $geopccb_archive_disp_thumb . "'>";
+					echo "<img alt='Thumbnail for " . get_the_title($geopccb_post). "' src='" . $geopccb_archive_disp_thumb . "'>";
 				echo "</a>";
 				echo "<div class='m-article__body'>";
 					echo "<a class='m-article__heading' href='" . get_the_permalink($geopccb_post) . "'>" . get_the_title($geopccb_post). "</a>";
