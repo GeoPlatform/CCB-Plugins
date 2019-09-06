@@ -291,7 +291,7 @@ function geopserve_gen_list_element(geopserve_gen_element){
 
 	// Creates thumbnail image only if asset possesses a thumbnail.
 	if (geopserve_gen_element.thumb_src !== 'undefined')
-		var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: 'Thumbnail', src: geopserve_gen_element.thumb_src, onerror: geopserve_gen_element.thumb_error});
+		var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: geopserve_gen_element.label_text, src: geopserve_gen_element.thumb_src, onerror: geopserve_gen_element.thumb_error});
 
 	// Appends them to each-other in the desired order.
 	icon_div.appendChild(icon_span);
@@ -359,7 +359,7 @@ function geopserve_createEl(geopserve_el_atts){
 		new_el.setAttribute('href', geopserve_el_atts.href);
 	if(geopserve_el_atts.target)
 		new_el.setAttribute('target', geopserve_el_atts.target);
-	if(geopserve_el_atts.span)
+	if(geopserve_el_atts.alt)
 		new_el.setAttribute('alt', geopserve_el_atts.alt);
 	if(geopserve_el_atts.src)
 		new_el.setAttribute('src', geopserve_el_atts.src);
