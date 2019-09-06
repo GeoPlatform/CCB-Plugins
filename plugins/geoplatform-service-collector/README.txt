@@ -58,6 +58,7 @@ Answer to foo bar dilemma.
 
 = 2.1.2 =
 * Updated client-api to version 0.3.0.
+* Made various changes to achieve 508 compliance.
 
 = 2.0.0 =
 * Revamped dashboard interface to permit extensive customization options.

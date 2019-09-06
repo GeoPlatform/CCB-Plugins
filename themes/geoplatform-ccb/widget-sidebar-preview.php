@@ -47,7 +47,7 @@ class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 		echo "<article class='m-article'>";
       echo "<div class='m-article__heading'>" . __(sanitize_text_field($geopportal_side_cont_prev_title), 'geoplatform-ccb') . "</div>";
       echo "<div class='m-article__desc' style='max-width:320px'>";
-        echo "<img src='" . $geopportal_side_cont_prev_thumb . "' title='" . $geopportal_side_cont_prev_text . "'>";
+        echo "<img src='" . $geopportal_side_cont_prev_thumb . "' title='" . $geopportal_side_cont_prev_text . "' alt='" . $geopportal_side_cont_prev_text . "'>";
       echo "</div>";
     echo "</article>";
 	}

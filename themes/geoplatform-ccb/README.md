@@ -119,6 +119,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Fixed bug preventing functionality of custom Breadcrumb output.
 - Fixed bug causing stylistic conflict with built-in sidebar widgets.
 - Retooled Featured Content and Maps widgets to function in Internet Explorer.
+- Made various changes to achieve 508 compliance.
 
 ### 4.0.3 ###
 * Release August 9, 2019

@@ -360,7 +360,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 				// Checks if pagination is enabled and, if so, outputs the left control.
 				if ($geopserve_show_pages)
-					echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button'></button>";
+					echo "<button class='icon fas fa-caret-left geopserve-pagination-button-base geopserve-pagination-prev-button' aria-label='Tab Left'></button>";
 
 				// Loops through the tab info array, grabbing the desired info and to
 				// generates the tabs. The first tab is designed to be the "active" one,
@@ -378,7 +378,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 
 				// Checks if pagination is enabled and, if so, outputs the right control.
 				if ($geopserve_show_pages)
-					echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button'></button>";
+					echo "<button class='icon fas fa-caret-right geopserve-pagination-button-base geopserve-pagination-next-button' aria-label='Tab Right'></button>";
 
 				echo "</div>";
 			}
@@ -473,7 +473,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 											echo "<span class='geopserve-pagination-counter-base geopserve_pagination_tracker u-mg-left--md is-hidden--xs'>Page 1</span>";
 
 										// Continued construction.
-										echo "<a href='" . home_url() . "/geoplatform-search" . $geopserve_search_query_prefix . "' class='u-pd-right--md u-mg-left--md is-hidden--xs geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "'></a>";
+										echo "<a href='" . home_url() . "/geoplatform-search" . $geopserve_search_query_prefix . "' class='u-pd-right--md u-mg-left--md is-hidden--xs geopserve-carousel-browse' target='_blank' id='geopserve_carousel_search_div_" . $i . "' aria-label='Browse All'></a>";
 										echo "<div class='flex-1 d-flex flex-justify-between flex-align-center u-mg-left--md'>";
 											echo "<div class='input-group-slick flex-1'>";
 												echo "<form class='input-group-slick flex-1 geopserve_search_geop_form' grabs-from='geopportal_community_" . $geopserve_tab_array[$i]['name'] . "_search'>";

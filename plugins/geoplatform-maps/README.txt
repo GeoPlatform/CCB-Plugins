@@ -78,6 +78,7 @@ If you were able to successfully add a map to your shortcode collection but not 
 
 = 2.0.5 =
 * Updated Client-API to 0.3.0 and Mapcore to 0.3.0.
+* Made various changes to achieve 508 compliance.
 
 = 2.0.4 =
 * Updated Client-API to 0.2.0 and Mapcore to 0.2.0.
