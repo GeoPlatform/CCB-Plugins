@@ -522,7 +522,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none; border-bottom-color:#ffffff;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank", arialabel: geopmap_layerStates[i].layer.label}})
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none; border-bottom-color:#ffffff;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank", arialabel: geopmap_layerStates[i].layer.label});
 					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
