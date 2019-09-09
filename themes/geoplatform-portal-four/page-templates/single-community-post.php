@@ -43,49 +43,7 @@ get_template_part( 'sub-header-com', get_post_format() );
           <?php echo do_shortcode($post->geopportal_compost_carousel_shortcode); ?>
         </div>
 
- <!-- Find Resources section, which redirects to the search interface. -->
-        <!-- <div class="m-section-group">
-            <article class="m-article">
-                <div class="m-article__heading">Find Resources</div>
-                <div class="m-article__desc">
-                    <p>Find resources associated with <?php //echo the_title() ?> using the controls below.</p>
-                </div>
-                <div class="article__actions">
-                    <div class="flex-1 d-flex flex-justify-between flex-align-center">
-                        <form class="input-group-slick flex-1" id="geop_community_resources_search_form">
-                          <span class="icon fas fa-search"></span>
-                          <input type="text" class="form-control" id="geop_community_resources_search_input" com_id="<?php //echo $post->geopportal_compost_community_id ?>" aria-label="Search for resources" placeholder="Search for resources">
-                        </form>
-                        <button class="btn btn-secondary u-mg-left-/-lg" id="geop_community_resources_search_button">SEARCH</button>
-                    </div>&nbsp;&nbsp;
-                </div>
-            </article>
-        </div> -->
-
     <?php } ?>
-
-
-      <script type="text/javascript">
-        // jQuery(document).ready(function() {
-        //   jQuery("#geop_community_resources_search_button").click(function(e){
-        //     var geopportal_query_string = "/#/?communities=" + jQuery("#geop_community_resources_search_input").attr("com_id") + "&q=" + jQuery("#geop_community_resources_search_input").val();
-        //     window.open(
-  			// 			"<?php //echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
-  			// 			'_blank'
-  			// 		);
-        //   });
-        //
-        //   jQuery("#geop_community_resources_search_form").submit(function(event){
-        //     event.preventDefault();
-        //     var geopportal_query_string = "/#/?communities=" + jQuery("#geop_community_resources_search_input").attr("com_id") + "&q=" + jQuery("#geop_community_resources_search_input").val();
-        //     window.open(
-  			// 			"<?php //echo home_url(get_theme_mod('headlink_search'))?>" + geopportal_query_string,
-  			// 			'_blank'
-  			// 		);
-        //   });
-        // });
-      </script>
-
 
  <!-- Section Heading section, gives information about the community using
       the post content. -->
@@ -109,7 +67,7 @@ get_template_part( 'sub-header-com', get_post_format() );
       if (has_post_thumbnail()){
         echo "<div class='m-article'>";
           echo "<div class='m-article__desc'>";
-            echo "<img src='" . get_the_post_thumbnail_url() . "' width='100%'>";
+            echo "<img src='" . get_the_post_thumbnail_url() . "' width='100%' alt='" . get_the_title() . " Thumbnail'>";
           echo "</div>";
         echo "</div>";
       }
