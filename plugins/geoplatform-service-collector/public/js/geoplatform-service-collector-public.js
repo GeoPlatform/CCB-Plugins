@@ -268,7 +268,7 @@ function geopserve_gen_list_element(geopserve_gen_element){
 	var main_div = geopserve_createEl({type: 'div', class: 'm-results-item__body'});
 	var icon_div = geopserve_createEl({type: 'div', class: 'm-results-item__icon m-results-item__icon--sm'});
 	var icon_span = geopserve_createEl({type: 'span', class: geopserve_gen_element.label_icon});
-	var body_div = geopserve_createEl({type: 'div', class: 'flex-1'});
+	var body_div = geopserve_createEl({type: 'div', class: 'flex-1 lefted'});
 	var head_div = geopserve_createEl({type: 'div', class: 'm-results-item__heading'});
 	var head_href = geopserve_createEl({type: 'a', href: geopserve_gen_element.asset_link, target: '_blank', html: geopserve_gen_element.label_text});
 	var mid_div = geopserve_createEl({type: 'div', class: 'm-results-item__facets'});
