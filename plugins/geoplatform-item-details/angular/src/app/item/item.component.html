@@ -69,8 +69,7 @@
                 </div>
 
                 <!-- Topics -->
-                <div *ngIf="TYPES.TOPIC===item?.type">
-                    <br>
+                <div *ngIf="TYPES.TOPIC===item?.type" class="u-mg-top--md">
                     <div class="m-article__desc" >
                         <div><strong>Parent Topics</strong></div>
                         <div *ngIf="item.subTopicOf && item.subTopicOf.length">
@@ -93,14 +92,14 @@
 
 
                 <!-- Concepts -->
-                <div class="m-article__desc" *ngIf="item?.scheme">
+                <div class="m-article__desc u-mg-top--md" *ngIf="item?.scheme">
                     <div><strong>Concept Scheme</strong></div>
                     <gpid-resource-link [item]="item.scheme"></gpid-resource-link>
                 </div>
 
 
                 <!-- Organization -->
-                <div class="m-article__desc" *ngIf="TYPES.ORGANIZATION===item?.type">
+                <div class="m-article__desc u-mg-top--md" *ngIf="TYPES.ORGANIZATION===item?.type">
                     <div><strong>Parent Organization</strong></div>
                     <gpid-resource-link *ngIf="item?.subOrganizationOf" [item]="item.subOrganizationOf"></gpid-resource-link>
                     <div *ngIf="!item?.subOrganizationOf">Not specified</div>
@@ -113,7 +112,7 @@
 
 
                 <!-- Person -->
-                <div class="m-article__desc" *ngIf="TYPES.PERSON===item?.type">
+                <div class="m-article__desc u-mg-top--md" *ngIf="TYPES.PERSON===item?.type">
                     <div><strong>Name</strong></div>
                     <div>{{item.name||"Not specified"}}</div>
                 </div>
