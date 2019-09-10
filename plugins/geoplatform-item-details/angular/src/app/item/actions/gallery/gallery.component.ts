@@ -123,7 +123,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
                 label: this.item.label,
                 description: this.item.description,
                 assetId: this.item.id,
-                assetType: ItemTypes.MAP,
+                assetType: this.item.type,
                 asset: {
                     id: this.item.id,
                     uri: this.item.uri,
@@ -164,7 +164,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
                 label: this.item.label,
                 description: this.item.description,
                 assetId: this.item.id,
-                assetType: ItemTypes.MAP,
+                assetType: this.item.type,
                 asset: {
                     id: this.item.id,
                     uri: this.item.uri,
