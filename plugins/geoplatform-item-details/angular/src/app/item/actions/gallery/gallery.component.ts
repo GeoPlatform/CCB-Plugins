@@ -1,11 +1,18 @@
 import { Inject, Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Config, ItemTypes, ItemService, Query, QueryParameters } from '@geoplatform/client';
+import * as md5 from "md5";
+import {
+    Config, ItemTypes, ItemService, Query, QueryParameters, URIFactory as URIF
+} from '@geoplatform/client';
+import { NG2HttpClient } from "@geoplatform/client/angular";
 
-import { NG2HttpClient } from "../../../shared/http-client";
+// import { NG2HttpClient } from "../../../shared/http-client";
 import { AuthenticatedComponent } from '../../../shared/authenticated.component';
 import { PluginAuthService } from '../../../shared/auth.service';
 import { ItemHelper } from '../../../shared/item-helper';
+
+
+const URIFactory = URIF(md5);
 
 
 @Component({
@@ -42,13 +49,15 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
         this.keywords = null;
         this.maxSuggested = 5;
         this.totalSuggested = 0;
-        this.query = new Query()
-        .types(ItemTypes.GALLERY)
-        .pageSize(this.maxSuggested);
-        //don't bother with galleries already containing this item
-        this.query.setParameter('facet.items.asset_id.not', this.item.id);
         this.awaitingInput = false;
         this.searching = false;
+
+        this.query = new Query()
+            .types(ItemTypes.GALLERY)
+            .pageSize(this.maxSuggested);
+        //don't bother with galleries already containing this item
+        this.query.setParameter('facet.items.asset_id.not', this.item.id);
+
     }
 
     ngOnDestroy() {
@@ -114,7 +123,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
                 label: this.item.label,
                 description: this.item.description,
                 assetId: this.item.id,
-                assetType: ItemTypes.MAP,
+                assetType: this.item.type,
                 asset: {
                     id: this.item.id,
                     uri: this.item.uri,
@@ -155,7 +164,7 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
                 label: this.item.label,
                 description: this.item.description,
                 assetId: this.item.id,
-                assetType: ItemTypes.MAP,
+                assetType: this.item.type,
                 asset: {
                     id: this.item.id,
                     uri: this.item.uri,
@@ -184,11 +193,9 @@ export class GalleryActionComponent extends AuthenticatedComponent implements On
      */
     ensureUnique(gallery) {
         let regex = /.+\s(\d+)$/;
-        return this.itemService.getUri(gallery)
-        .then( uri => {
-            gallery.uri = uri;
-            return this.itemService.exists([uri]);
-        })
+        let uri = URIFactory(gallery);
+        gallery.uri = uri;
+        return this.itemService.exists([uri])
         .then( response => {
             if(!response.length || !response[0].id) return gallery;
 

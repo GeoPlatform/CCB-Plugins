@@ -45,7 +45,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                     <a class="btn btn-link dropdown-toggle is-hidden--xs" href="<?php echo home_url('resources'); ?>" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
                         Explore
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton" style="z-index:9999;">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="explore-resources-button" style="z-index:9999;">
                         <a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Datasets</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_services')); ?>">Services</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_layers')); ?>">Layers</a>
@@ -212,7 +212,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
 
         </div>
 
-        <button type="button" class="btn btn-link btn-block" onclick="toggleClass('#header-megamenu','is-open')">
+        <button type="button" class="btn btn-link btn-block" aria-label="Close" onclick="toggleClass('#header-megamenu','is-open')">
             <span class="fas fa-caret-up"></span>
         </button>
     </nav>

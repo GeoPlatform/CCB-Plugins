@@ -29,10 +29,7 @@ export class KgComponent implements OnInit {
 
     @Input() classifiers : any;
 
-    public isCollapsed : boolean = true;
-    public isClassifierCollapsed : any = {};
-
-    public activeTab : string = 'purposes';
+    public isCollapsed : boolean = false;
 
     public classifierLabels = {
         'purposes' : 'Purpose',
@@ -50,26 +47,19 @@ export class KgComponent implements OnInit {
     constructor() { }
 
     ngOnInit() {
-        CLASSIFIERS.forEach(key => { this.isClassifierCollapsed[key] = false });
+
     }
 
-    toggleDisplay(key) {
-        if(key) {
-            this.isClassifierCollapsed[key] = !this.isClassifierCollapsed[key];
-        } else {
-            this.isCollapsed = !this.isCollapsed;
-        }
+    toggleDisplay() {
+        this.isCollapsed = !this.isCollapsed;
     }
 
     getKeys() {
         return CLASSIFIERS;
     }
 
-    changeTab(tabName) {
-        this.activeTab = tabName;
-    }
-
     getIcon() : string {
         return ItemHelper.getIcon(ItemTypes.CONCEPT);
     }
+
 }

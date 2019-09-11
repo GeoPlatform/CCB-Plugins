@@ -37,9 +37,9 @@
 function geopserve_gen_list(geopserve_options){
 
 	// Service collection setup.
-	const Query = GeoPlatformClient.Query;
+	const Query = geoplatform.client.Query;
 	// const Classifiers = GeoPlatformClient.KGClassifiers;
-	let itemSvc = new GeoPlatformClient.ItemService(geopserve_options.ual_domain, new GeoPlatformClient.JQueryHttpClient());
+	let itemSvc = new geoplatform.client.ItemService(geopserve_options.ual_domain, new geoplatform.client.XHRHttpClient());
 	var query = new Query();
 	var countQuery = new Query();
 
@@ -268,7 +268,7 @@ function geopserve_gen_list_element(geopserve_gen_element){
 	var main_div = geopserve_createEl({type: 'div', class: 'm-results-item__body'});
 	var icon_div = geopserve_createEl({type: 'div', class: 'm-results-item__icon m-results-item__icon--sm'});
 	var icon_span = geopserve_createEl({type: 'span', class: geopserve_gen_element.label_icon});
-	var body_div = geopserve_createEl({type: 'div', class: 'flex-1'});
+	var body_div = geopserve_createEl({type: 'div', class: 'flex-1 lefted'});
 	var head_div = geopserve_createEl({type: 'div', class: 'm-results-item__heading'});
 	var head_href = geopserve_createEl({type: 'a', href: geopserve_gen_element.asset_link, target: '_blank', html: geopserve_gen_element.label_text});
 	var mid_div = geopserve_createEl({type: 'div', class: 'm-results-item__facets'});
@@ -291,7 +291,7 @@ function geopserve_gen_list_element(geopserve_gen_element){
 
 	// Creates thumbnail image only if asset possesses a thumbnail.
 	if (geopserve_gen_element.thumb_src !== 'undefined')
-		var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: 'Thumbnail', src: geopserve_gen_element.thumb_src, onerror: geopserve_gen_element.thumb_error});
+		var thumb_img = geopserve_createEl({type: 'img', class: 'm-results-item__icon t--large', alt: geopserve_gen_element.label_text, src: geopserve_gen_element.thumb_src, onerror: geopserve_gen_element.thumb_error});
 
 	// Appends them to each-other in the desired order.
 	icon_div.appendChild(icon_span);
@@ -336,7 +336,7 @@ function geopserve_gen_list_element(geopserve_gen_element){
 // Grabs results fromm the Client-API.
 function geopserve_list_retrieve_objects(query, geopserve_ual) {
 	var deferred = Q.defer();
-	var service = new GeoPlatform.ItemService(geopserve_ual, new GeoPlatform.JQueryHttpClient());
+	var service = new GeoPlatform.ItemService(geopserve_ual, new GeoPlatform.XHRHttpClient());
 	service.search(query)
 		.then(function (response) { deferred.resolve(response); })
 		.catch(function (e) { deferred.reject(e); });
@@ -359,7 +359,7 @@ function geopserve_createEl(geopserve_el_atts){
 		new_el.setAttribute('href', geopserve_el_atts.href);
 	if(geopserve_el_atts.target)
 		new_el.setAttribute('target', geopserve_el_atts.target);
-	if(geopserve_el_atts.span)
+	if(geopserve_el_atts.alt)
 		new_el.setAttribute('alt', geopserve_el_atts.alt);
 	if(geopserve_el_atts.src)
 		new_el.setAttribute('src', geopserve_el_atts.src);
@@ -374,7 +374,7 @@ function geopserve_createEl(geopserve_el_atts){
 // query results by.
 function geopserve_typeGrab(geopserve_cat_in){
 
-	const ItemTypes = GeoPlatformClient.ItemTypes;
+	const ItemTypes = geoplatform.client.ItemTypes;
 
 	var geopserve_typeMap = {
 		Datasets: ItemTypes.DATASET,

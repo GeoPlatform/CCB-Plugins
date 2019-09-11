@@ -48,7 +48,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.25em 0.5em 0.25em 0;
-    color: #4A90E2;
+    color: #1565c5; /* 508 AAA */
     background-color: #fff;
     cursor: pointer;
 }

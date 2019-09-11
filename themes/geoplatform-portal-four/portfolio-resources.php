@@ -183,7 +183,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_first_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/data.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_first_title) ?></div>
-		                        <div class="a-summary">
+		                        <div class="a-summary" style="text-align:left">
 															<?php echo do_shortcode($geopportal_port_res_first_content) ?>
 		                        </div>
 		                        <br>
@@ -208,7 +208,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_second_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/service.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_second_title) ?></div>
-		                        <div class="a-summary">
+		                        <div class="a-summary" style="text-align:left">
 															<?php echo do_shortcode($geopportal_port_res_second_content) ?>
 		                        </div>
 		                        <br>
@@ -233,7 +233,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_third_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/map.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_third_title) ?></div>
-		                        <div class="a-summary">
+		                        <div class="a-summary" style="text-align:left">
 															<?php echo do_shortcode($geopportal_port_res_third_content) ?>
 		                        </div>
 		                        <br>
@@ -257,7 +257,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/collect.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_fourth_title) ?></div>
-		                        <div class="a-summary">
+		                        <div class="a-summary" style="text-align:left">
 															<?php echo do_shortcode($geopportal_port_res_fourth_content) ?>
 		                        </div>
 		                        <br>
@@ -281,7 +281,7 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 		                    <img class="thumbnail" alt="<?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?>" src="<?php echo get_stylesheet_directory_uri() . '/img/community2.svg' ?>">
 		                    <div>
 		                        <div class="a-heading"><?php echo sanitize_text_field($geopportal_port_res_fifth_title) ?></div>
-		                        <div class="a-summary">
+		                        <div class="a-summary" style="text-align:left">
 															<?php echo do_shortcode($geopportal_port_res_fifth_content) ?>
 		                        </div>
 		                        <br>

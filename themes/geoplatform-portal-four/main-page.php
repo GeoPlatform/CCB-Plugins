@@ -144,7 +144,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		        <div class="o-featured__secondary">
 		            <div class="m-tile m-tile--16x9">
 		                <div class="m-tile__thumbnail">
-		                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopportal_mainpage_disp_second_thumb; ?>">
+		                    <img alt="<?php echo get_the_title($geopportal_mainpage_disp_second_page); ?>" src="<?php echo $geopportal_mainpage_disp_second_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_second_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_second_page); ?></a>
@@ -165,7 +165,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		            </div>
 		            <div class="m-tile m-tile--16x9">
 		                <div class="m-tile__thumbnail">
-		                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopportal_mainpage_disp_third_thumb; ?>">
+		                    <img alt="<?php echo get_the_title($geopportal_mainpage_disp_third_page); ?>" src="<?php echo $geopportal_mainpage_disp_third_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_third_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_third_page); ?></a>
@@ -186,7 +186,7 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		            </div>
 		            <div class="m-tile m-tile--16x9">
 		                <div class="m-tile__thumbnail">
-		                    <img alt="This is alternative text for the thumbnail" src="<?php echo $geopportal_mainpage_disp_fourth_thumb; ?>">
+		                    <img alt="<?php echo get_the_title($geopportal_mainpage_disp_fourth_page); ?>" src="<?php echo $geopportal_mainpage_disp_fourth_thumb; ?>">
 		                </div>
 		                <div class="m-tile__body">
 		                    <a href="<?php echo $geopportal_mainpage_disp_fourth_url; ?>" class="m-tile__heading"><?php echo get_the_title($geopportal_mainpage_disp_fourth_page); ?></a>

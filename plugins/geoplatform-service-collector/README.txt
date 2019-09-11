@@ -6,11 +6,11 @@ Tags: GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Dataset, data
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 5.2.2
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
-Embed customized lists of curated GeoPlatform assets (Datasets, Services, Layers, Maps, Galleries, Applications, Websites, and Topics) into your Community pages and posts.  
+Embed customized lists of curated GeoPlatform assets (Datasets, Services, Layers, Maps, Galleries, Applications, Websites, and Topics) into your Community pages and posts.
 
 == Description ==
 
@@ -56,8 +56,15 @@ Answer to foo bar dilemma.
 
 == Changelog ==
 
-= 1.0 =
-First release packaged with GeoPlatform Release 16
+= 2.1.2 =
+* Updated client-api to version 0.3.0.
+* Made various changes to achieve 508 compliance.
+
+= 2.0.0 =
+* Revamped dashboard interface to permit extensive customization options.
+
+= 1.0.0 =
+* First release packaged with GeoPlatform Release 16
 
 == Upgrade Notice ==
 
@@ -84,4 +91,3 @@ USA
 
 Technical Support:
 servicedesk@geoplatform.gov
-

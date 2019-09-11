@@ -118,6 +118,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
  - Placed header drop-downs in front of megamenu.
  - If other header drop-downs are opened, megamenu will now close.
  - NGDA theme icon changes.
+ - Made various changes to achieve 508 compliance.
 
 ## 4.1.1
 * Release July 17th, 2019

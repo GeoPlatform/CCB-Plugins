@@ -34,7 +34,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 
 		<div class="m-article m-article--flex">
 			<a class="m-article__thumbnail is-16x9" href="<?php the_permalink(); ?>">
-				<img alt="Article Heading" src="<?php echo $geopccb_archive_disp_thumb ?>">
+				<img alt="Thumbnail for <?php the_title() ?>" src="<?php echo $geopccb_archive_disp_thumb ?>">
 			</a>
 			<div class="m-article__body">
 				<a class="m-article__heading" href="<?php the_permalink(); ?>"><?php the_title() ?></a>

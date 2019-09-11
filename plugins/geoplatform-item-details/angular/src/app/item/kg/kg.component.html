@@ -2,7 +2,7 @@
     <div class="m-article__heading">
         <span class="fas"
             [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
-            (click)="toggleDisplay(null)">
+            (click)="toggleDisplay()">
         </span>
         Knowledge Graph
     </div>
@@ -12,32 +12,11 @@
 
     <div [ngClass]="{'is-hidden':isCollapsed}">
 
-        <div *ngFor="let key of getKeys()" class="m-article__desc">
-            <span class="fas"
-                *ngIf="classifiers && classifiers[key] && classifiers[key].length"
-                [ngClass]="{'fa-caret-down':isClassifierCollapsed[key],'fa-caret-up':!isClassifierCollapsed[key]}"
-                (click)="toggleDisplay(key)">
-            </span>
-            <strong>
-                {{classifierLabels[key]}}
-                <sup *ngIf="classifiers && classifiers[key] && classifiers[key].length">
-                    ({{classifiers[key].length}})
-                </sup>
-            </strong>
+        <gpid-kg-classifier *ngFor="let key of getKeys()"
+            class="u-pd-left--md m-article__desc"
+            [label]="classifierLabels[key]"
+            [values]="classifiers?classifiers[key]:[]">
+        </gpid-kg-classifier>
 
-            <div *ngIf="classifiers && classifiers[key] && classifiers[key].length"
-                [ngClass]="{'is-hidden':!isClassifierCollapsed[key]}" class="t-fg--gray-md">
-                Expand to see values for this classifier
-            </div>
-            <div [ngClass]="{'is-hidden':isClassifierCollapsed[key]}">
-                <div *ngIf="classifiers && classifiers[key]">
-                    <div *ngFor="let val of classifiers[key]">
-                        <gpid-resource-link [item]="val"></gpid-resource-link>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        
     </div>
 </div>

@@ -22,10 +22,12 @@ export class PagingComponent implements OnInit {
     @Input() totalResults: number = 0;
     @Output() onEvent : EventEmitter<PagingEvent> = new EventEmitter<PagingEvent>();
     public pageSize: number = 0;
+    public id : string;
 
     constructor() { }
 
     ngOnInit() {
+        this.id = Math.round(Math.random()*9999) + '';
     }
 
     ngOnChanges(changes : SimpleChanges) {

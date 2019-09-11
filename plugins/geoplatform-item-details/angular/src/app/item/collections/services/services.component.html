@@ -3,9 +3,10 @@
 <div *ngIf="'Layer'===item?.type">
     <strong>Service</strong>
     <div *ngIf="!item?.services && !item?.services?.length"
+        class="t-text--italic"
         [ngClass]="{'t-fg--danger':isServiceRequired()}">
         <span class="fas" [ngClass]="{'fa-exclamation-circle':isServiceRequired()}"></span>
-        Layer does not specify a service
+        Layer is not associated with a service
     </div>
     <div *ngIf="item?.services?.length>0">
         <gpid-resource-link [item]="item.services[0]"></gpid-resource-link>

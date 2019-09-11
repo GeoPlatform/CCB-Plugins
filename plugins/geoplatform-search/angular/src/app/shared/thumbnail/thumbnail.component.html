@@ -1,9 +1,12 @@
 
-<img src="{{fallback}}" *ngIf="!source||(!source.url&&!source.contentData)">
+<img src="{{fallback}}" *ngIf="!source||(!source.url&&!source.contentData)"
+    alt="thumbnail">
 
-<img src="{{source.url}}" *ngIf="source.url" fallback="{{fallback}}">
+<img src="{{source.url}}" *ngIf="source.url" fallback="{{fallback}}"
+    alt="thumbnail">
 
 <img *ngIf="source.contentData"
+    alt="thumbnail"
     [style.background-size]="contain"
     [style.background-repeat]="no-repeat"
     [style.background-image]="getBackgroundImage()">

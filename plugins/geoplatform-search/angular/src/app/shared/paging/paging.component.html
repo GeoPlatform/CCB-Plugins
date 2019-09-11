@@ -1,7 +1,12 @@
 <div class="o-pagination">
     <div class="o-pagination__total">{{totalResults}} results</div>
     <div class="o-pagination__pagesize">
-        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+        <label class="sr-only" id="{{id}}Label" for="{{id}}Field">
+            Filter using keywords
+        </label>
+        <select [(ngModel)]="pageSize" (change)="onPageSizeChange()"
+            title="Select number of results per page"
+            id="{{id}}Field" attr.aria-labelledby="{{id}}Label">
             <option value="5">5 per page</option>
             <option value="10">10 per page</option>
             <option value="20">20 per page</option>
@@ -13,13 +18,16 @@
         <button *ngIf="query.getPage()>1" (click)="goToPage(0)"
             type="button" class="btn btn-link">
             <span class="fas fa-angle-double-left"></span>
+            <span class="sr-only">go to first page of results</span>
         </button>
         <button [class.disabled]="query.getPage()<=0" (click)="previousPage()"
             type="button" class="btn btn-link">
             <span class="fas fa-angle-left"></span>
+            <span class="sr-only">go to previous page of results</span>
         </button>
         <button type="button" class="btn btn-link disabled">
             <span style="color:#000">{{query.getPage()+1}}</span>
+            <span class="sr-only">current page of results</span>
         </button>
         <!-- <div class="o-pagination__current-page">
             {{query.getPage()*query.getPageSize()+1}} -
@@ -28,6 +36,7 @@
         <button *ngIf="hasNextPage()" (click)="nextPage()"
             type="button" class="btn btn-link">
             <span class="fas fa-angle-right"></span>
+            <span class="sr-only">go to next page of results</span>
         </button>
     </div>
 </div>

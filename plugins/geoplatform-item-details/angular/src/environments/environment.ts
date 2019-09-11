@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   env: 'dev',
+  // ualUrl: 'http://localhost:4040',
   ualUrl: 'https://sit-ual.geoplatform.us',
   wpUrl: '',
   editUrl: 'https://sit-oe.geoplatform.us/edit/{id}',

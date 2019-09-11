@@ -358,7 +358,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 						<?php
 						if (esc_attr($geopmap_shortcode_array['use']) != 'featured'){
-							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn--sm'>";
+							echo "<button id='layer_menu_button_" . $geopmap_divrand . "' class='geop-sub-buttons btn btn-light btn--sm' aria-label='View Layers'>";
 								echo "<span class='geop-layer-icon t-fg--selected " . $geopmap_layer_icon . "'></span>";
 							echo "</button>";
 						}
@@ -448,7 +448,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 			var geopmap_leafBase = L.map("container_<?php echo $geopmap_divrand;?>", geopmap_options);
 
 			// Instantiates GeopMapInstance, passing the leaflet map and view constants.
-			var GeopMapInstance = GeoPlatformMapCore.MapFactory.get();
+			var GeopMapInstance = geoplatform.mapcore.MapFactory.get();
 			GeopMapInstance.setMap(geopmap_leafBase);
 			GeopMapInstance.setView(51.505, -0.09, 13);
 
@@ -513,7 +513,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 					var main_table = geopmap_createEl({type: 'table', class: 'geop-layer-box', style: 'width:100%'});
 					var table_row = geopmap_createEl({type: 'tr', class: 'geop-no-border'});
 					var first_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad'});
-					var check_button = geopmap_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $geopmap_divrand; ?>', id: 'layer_button_id_<?php echo $geopmap_divrand; ?>', style: 'width:auto', opac: geopmap_layerStates[i].opacity, text: geopmap_layerStates[i].layer_id});
+					var check_button = geopmap_createEl({type: 'button', class: 'geop-text-button layer_button_class_<?php echo $geopmap_divrand; ?>', id: 'layer_button_id_<?php echo $geopmap_divrand; ?>', style: 'width:auto', opac: geopmap_layerStates[i].opacity, text: geopmap_layerStates[i].layer_id, arialabel: geopmap_layerStates[i].layer.label});
 
 					if (geopmap_layerStates[i].visibility == true)
 						var check_icon = geopmap_createEl({type: 'span', class: 'layer_button_icon_<?php echo $geopmap_divrand; ?> <?php echo $geopmap_base_icon . " " . $geopmap_check_icon ?>', style: 'color:black;'});
@@ -522,7 +522,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 
 					var second_td = geopmap_createEl({type: 'td', class: 'layer_content_class_<?php echo $geopmap_divrand; ?> geop-layer-text-style', id: 'layer_content_id_<?php echo $geopmap_divrand; ?>', style: 'padding-left:16px;', html: geopmap_layerStates[i].layer.label});
 					var third_td = geopmap_createEl({type: 'td', class: 'geop-no-border geop-table-pad geop-layer-right-sixteen-pad'});
-					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none; border-bottom-color:#ffffff;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank"})
+					var info_link = geopmap_createEl({type: 'a', class: 'geop-layer-black-float geop-text-button geop-hidden-link', title: 'View this layer of <?php echo esc_attr($geopmap_shortcode_array['name']); ?> in detail.', style: "color:black; box-shadow:none; border-bottom-color:#ffffff;", href: geopmap_item_details_base + geopmap_layerStates[i].layer_id, target: "_blank", arialabel: geopmap_layerStates[i].layer.label});
 					var info_icon = geopmap_createEl({type: 'span', class: '<?php echo $geopmap_info_icon ?>'});
 
 					// With all elements created, they are appended to each other in the
@@ -594,6 +594,8 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 				new_el.setAttribute('span', geopmap_el_atts.span);
 			if(geopmap_el_atts.opac)
 				new_el.setAttribute('opac', geopmap_el_atts.opac);
+			if(geopmap_el_atts.arialabel)
+				new_el.setAttribute('aria-label', geopmap_el_atts.arialabel);
 			return new_el;
 		}
 
