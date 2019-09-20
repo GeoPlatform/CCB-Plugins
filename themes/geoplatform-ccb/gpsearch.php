@@ -11,7 +11,7 @@
 
 // Visual output.
 echo "<form id='geoplatformsearchform'>";
-  echo "<div class='input-group-slick'>";
+  echo "<div class='input-group-slick geop-header-search-min-geop'>";
     echo "<span class='icon fas fa-search'></span>";
     echo "<input type='text' class='form-control' style='padding-right:5em' id='geoplatformsearchfield' placeholder='" . esc_attr( 'Search GeoPlatform...', 'geoplatform-ccb' ) . "'/>";
     echo "<button type='submit' class='btn btn-default' id='geoplatformsearchbutton'>". __( 'Search', 'geoplatform-ccb') . "</button>";
