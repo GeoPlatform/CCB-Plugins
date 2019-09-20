@@ -118,3 +118,11 @@
       margin-right: 0;
   }
 }
+
+.geop-header-search-min-geop {
+  min-width: 18em;
+}
+
+.geop-header-search-min-site {
+  min-width: 15em;
+}

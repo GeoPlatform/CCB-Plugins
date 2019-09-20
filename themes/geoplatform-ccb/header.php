@@ -89,12 +89,12 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
       // Checks the search bar settings and switches them out as needed.
       if ($geopccb_search_format == 'wp'){
         echo "<a role='menuitem' class='is-hidden--xs is-hidden--sm is-hidden--md'>";
-        get_search_form();
+          get_search_form();
         echo "</a>";
       }
       elseif ($geopccb_search_format == 'gp'){
         echo "<a role='menuitem' class='is-hidden--xs is-hidden--sm is-hidden--md'>";
-        get_template_part( 'gpsearch', get_post_format() );
+          get_template_part( 'gpsearch', get_post_format() );
         echo "</a>";
         echo "<a role='menuitem' class='d-xl-none is-hidden--xs' href='" . home_url('geoplatform-search') . "'>Search</a>";
       }
