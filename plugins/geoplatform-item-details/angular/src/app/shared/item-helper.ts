@@ -21,7 +21,8 @@ export class ItemHelper {
             type === ItemTypes.LAYER   || type === ItemTypes.MAP       ||
             type === ItemTypes.GALLERY || type === ItemTypes.COMMUNITY ||
             type === ItemTypes.APPLICATION || type === ItemTypes.TOPIC ||
-            type === ItemTypes.WEBSITE || type === ItemTypes.ORGANIZATION
+            type === ItemTypes.WEBSITE || type === ItemTypes.ORGANIZATION ||
+            type === ItemTypes.PERSON
         );
     }
 
@@ -57,7 +58,8 @@ export class ItemHelper {
                 return item.label || item.prefLabel || "Un-titled resource";
 
             case ItemTypes.CONTACT :
-                let fn = item.fullName || '';
+                if(item.label) return item.label;
+                let fn = item.fullName || item.fn || '';
                 let pt = item.positionTitle || '';
                 let on = item.orgName || item['organization-name'] || '';
                 let label = fn + (fn.length?' - ':'') + pt + (pt.length?' - ':'') + on;
