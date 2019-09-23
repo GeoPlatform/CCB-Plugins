@@ -854,6 +854,57 @@ if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_sixteen' ) ) {
 }
 
 /**
+ * Widgetizing Explore Resources page seventeen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_seventeen' ) ) {
+	function geop_ccb_explore_resources_widgets_seventeen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-seventeen',
+			'name' => __( 'Resources Posts Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Post Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_seventeen' );
+}
+
+/**
+ * Widgetizing Explore Resources page eighteen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_eighteen' ) ) {
+	function geop_ccb_explore_resources_widgets_eighteen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-eighteen',
+			'name' => __( 'Resources Pages Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Page Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_eighteen' );
+}
+
+/**
+ * Widgetizing Explore Resources page nineteen
+ */
+if ( ! function_exists ( 'geop_ccb_explore_resources_widgets_nineteen' ) ) {
+	function geop_ccb_explore_resources_widgets_nineteen() {
+		register_sidebar(
+		array(
+			'id' => 'geoplatform-resources-template-widgets-nineteen',
+			'name' => __( 'Resources Media Template', 'geoplatform-portal-four' ),
+			'description' => __( 'Widgets that go in the Explore Media Resources page can be added here.', 'geoplatform-ccb' ),
+			'class' => 'widget-class'
+		)
+		);
+	}
+	add_action( 'widgets_init', 'geop_ccb_explore_resources_widgets_nineteen' );
+}
+
+/**
  * Adds gpsearch front-page widget.
  */
 class Geopportal_Graph_Widget extends WP_Widget {
