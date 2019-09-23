@@ -13,5 +13,6 @@
 	</div>
 
 	<!-- the rest of the content -->
+	<div><?php the_tags("Tags:&nbsp", ',&nbsp', '');?></div>
 	<div><?php _e( 'Updated on', 'geoplatform-ccb'); ?> <?php the_modified_date(); ?></div>
 </article><!-- post-the_ID();-->
