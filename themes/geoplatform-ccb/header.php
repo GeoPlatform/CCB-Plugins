@@ -27,7 +27,7 @@ echo "<head>";
   // <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   echo "<meta name='description' content=''>";
   echo "<meta name='author' content=''>";
-  echo "<link rel='shortcut icon' href='" . get_stylesheet_directory_uri() . "/favicon.ico' />";
+  echo "<link rel='shortcut icon' href='" . get_template_directory_uri() . "/favicon.ico' />";
 
   //enabling enhanced comment display
   if ( is_singular() ) wp_enqueue_script( 'comment-reply' );
