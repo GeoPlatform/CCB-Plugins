@@ -78,7 +78,7 @@ echo "<div>";
       // Footer Menu section (not Megamenu)
       echo "<div class='l-flex-container flex-justify-between flex-align-center'>";
         echo "<div class='a-brand u-mg-right--xlg'>";
-          echo "<img alt='GP' src='" . get_stylesheet_directory_uri() . "/img/logo.svg' style='width:1em'>";
+          echo "<img alt='GP' src='" . get_template_directory_uri() . "/img/logo.svg' style='width:1em'>";
             echo "<a href='https://www.geoplatform.gov'>GeoPlatform.gov</a>";
           echo "</div>";
 

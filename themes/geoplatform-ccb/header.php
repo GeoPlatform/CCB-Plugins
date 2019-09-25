@@ -74,7 +74,7 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
         //     long as no blanket styles are defined for H1-H6.
         // -->
     echo "<h1 class='a-brand'>";
-      echo "<img alt='GP' src='" . get_stylesheet_directory_uri() . "/img/logo.svg' style='width:1em'>";
+      echo "<img alt='GP' src='" . get_template_directory_uri() . "/img/logo.svg' style='width:1em'>";
       echo "<a href='https://www.geoplatform.gov' title='Home'>GeoPlatform.gov</a>";
     echo "</h1>";
 
