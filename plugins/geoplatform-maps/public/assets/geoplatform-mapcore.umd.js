@@ -1442,7 +1442,11 @@ This software has been approved for release by the U.S. Department of the Interi
                 newLayer.feature = L.GeoJSON.asFeature(geojson);
                 newLayer.defaultOptions = newLayer.options;
                 newLayer._leaflet_id = this._key + '_' + geojson.id;
-                this.resetStyle(newLayer.feature.id);
+                // this.resetStyle(newLayer.feature.id);
+                /** @type {?} */
+                var style = typeof (this.options.style) === 'function' ?
+                    this.options.style(newLayer.feature) : this.options.style;
+                newLayer.setStyle(style);
                 // cache the layer
                 this._layers[newLayer.feature.id] = newLayer;
                 this._leafletIds[newLayer._leaflet_id] = geojson.id;
@@ -1513,6 +1517,7 @@ This software has been approved for release by the U.S. Department of the Interi
      * @param {?} style
      * @return {?}
      */ function (style) {
+        this.options.style = style;
         this.eachFeature(( /**
          * @param {?} layer
          * @return {?}
@@ -1942,31 +1947,21 @@ This software has been approved for release by the U.S. Department of the Interi
             }
         }
     }, ɵ9$3 = /**
-     * @param {?} style
-     * @return {?}
-     */ function (style) {
-        this.eachFeature(( /**
-         * @param {?} layer
-         * @return {?}
-         */function (layer) {
-            this.setFeatureStyle(layer.feature.id, style);
-        }), this);
-    }, ɵ10$3 = /**
      * @param {?} gpLayerId
      * @return {?}
      */ function (gpLayerId) {
         var _this = this;
         if (this.options.styleLoader) {
-            this.options.styleLoader(gpLayerId)
-                .then(( /**
-         * @param {?} json
-         * @return {?}
-         */function (json) {
+            this.options.styleLoader(gpLayerId).then(( /**
+             * @param {?} json
+             * @return {?}
+             */function (json) {
                 if (!json)
                     return;
                 /** @type {?} */
                 var style = null;
-                if (json && json.styles) {
+                if (json && json.styles) { //old style function, not sure if being used currently
+                    console.log("Layer " + gpLayerId + " using older json.styles definition");
                     /** @type {?} */
                     var featureFn_1 = ( /**
                      * @param {?} feature
@@ -2013,8 +2008,19 @@ This software has been approved for release by the U.S. Department of the Interi
                     return;
                 }
                 else if (json && typeof (json.push) !== 'undefined') {
-                    //multiple styles returned
-                    style = json[0]; //use first for now
+                    // multiple styles returned...
+                    // generate a function which will use those filters to assign styles per feature
+                    /** @type {?} */
+                    var styleFn = _this.styleFunctionFactory(json);
+                    _this.options.style = styleFn;
+                    setTimeout(( /**
+                     * @param {?} layer
+                     * @param {?} style
+                     * @return {?}
+                     */function (layer, style) {
+                        layer.setStyle(style);
+                    }), 1000, _this, styleFn);
+                    return;
                 }
                 else if (json) {
                     style = json;
@@ -2039,8 +2045,8 @@ This software has been approved for release by the U.S. Department of the Interi
          * @param {?} e
          * @return {?}
          */function (e) {
-                console.log("Error fetching feature layer style");
-                console.log(e);
+                console.log("[ERROR] Error fetching FeatureLayer (" + gpLayerId + ") style:");
+                console.log(e.message);
             }));
         }
     };
@@ -2088,8 +2094,71 @@ This software has been approved for release by the U.S. Department of the Interi
          * @param opacity
          */
         setOpacity: (ɵ8$3),
-        setStyle: (ɵ9$3),
-        loadStyle: (ɵ10$3)
+        /**
+         * @param gpLayerId - identifier of GP Layer Asset to load style for
+         */
+        loadStyle: (ɵ9$3),
+        styleFunctionFactory: /**
+         * @param {?} styles
+         * @return {?}
+         */ function (styles) {
+            return ( /**
+             * @param {?} feature
+             * @return {?}
+             */function (feature) {
+                if (!styles.length) {
+                    console.log("[WARN] No styles defined");
+                    return null; //empty styles
+                }
+                //if a default style is defined, remember it just in case
+                /** @type {?} */
+                var defaultStyle = styles[0];
+                //TODO look for 'defaultSymbol'
+                /** @type {?} */
+                var match = styles.find(( /**
+                 * @param {?} style
+                 * @return {?}
+                 */function (style) {
+                    if (!style.filter) {
+                        // console.log("Styles have no filter");
+                        return defaultStyle; //just return default
+                    }
+                    if (!style.filter.property) {
+                        // console.log("No filterable property defined");
+                        return defaultStyle; //just return default
+                    }
+                    /** @type {?} */
+                    var actual = feature.properties[style.filter.property];
+                    if (actual === undefined || actual === null) {
+                        // console.log("No filterable property value present");
+                        return defaultStyle; //just return default
+                    }
+                    /** @type {?} */
+                    var min = isNaN(style.filter.min) ? null : style.filter.min * 1;
+                    /** @type {?} */
+                    var max = isNaN(style.filter.max) ? null : style.filter.max * 1;
+                    /** @type {?} */
+                    var expected = style.filter.value;
+                    // console.log(`Comparing '${actual}' to '${expected}' and '${min}' - '${max}'`);
+                    if (expected !== undefined && expected !== null && actual == expected) {
+                        return style;
+                    }
+                    else if ((min !== null || max !== null) && !isNaN(actual)) {
+                        if (min !== null && max !== null && min <= actual && actual <= max) {
+                            return style;
+                        }
+                        else if (min !== null && min <= actual) {
+                            return style;
+                        }
+                        else if (max !== null && actual <= max) {
+                            return style;
+                        }
+                    }
+                    return null; //don't return default here, just null (inside loop)
+                }));
+                return match || defaultStyle;
+            });
+        }
     });
     /**
      * @param {?} layer - GeoPlatform Layer object
@@ -3173,14 +3242,12 @@ This software has been approved for release by the U.S. Department of the Interi
                 var p2;
                 switch (this.operator) {
                     case 'get':
-                        p1 = this.getArg(0, properties, zoom, geometryType);
-                        return properties[p1];
+                        return this.getArg(0, properties, zoom, geometryType);
                     case 'has':
-                        p1 = this.getArg(0, properties, zoom, geometryType);
-                        return p1 in properties;
+                        return this.getArg(0, properties, zoom, geometryType);
                     case '!has':
                         p1 = this.getArg(0, properties, zoom, geometryType);
-                        return !(p1 in properties);
+                        return !(typeof (p1) !== 'undefined' && p1 in properties);
                     case '==':
                         p1 = this.getArg(0, properties, zoom, geometryType);
                         p2 = this.getArg(1, properties, zoom, geometryType);
@@ -3247,7 +3314,12 @@ This software has been approved for release by the U.S. Department of the Interi
                 /** @type {?} */
                 var value = this.args[index];
                 if (value && typeof (value.evaluate) !== 'undefined') {
+                    //arg is a nested expression...
                     return value.evaluate(properties, zoom, geometryType);
+                }
+                else if (value && typeof (value) === 'string' && properties.hasOwnProperty(value)) {
+                    //arg is a property name instead of a nested expression...
+                    return properties[value];
                 }
                 return value;
             };
@@ -3333,15 +3405,88 @@ This software has been approved for release by the U.S. Department of the Interi
             console.log("Style has no layer definitions");
             return {}; //empty styles
         }
+        //have to group layers with same id but with different filters under the same style function
         /** @type {?} */
-        var result = {};
+        var layers = {};
         style.layers.forEach(( /**
          * @param {?} layer
          * @return {?}
          */function (layer) {
-            result[layer.id] = styleFunctionFactory(layer); //new LayerStyle( layer ).getStyleFunction()
+            //use source-layer key first, fallback to layer id
+            /** @type {?} */
+            var id = (layer['source-layer'] || layer.id).trim();
+            if (layers[id])
+                layers[id].push(layer); //layer already exists
+            else
+                layers[id] = [layer]; //new layer's style
         }));
+        // console.log(JSON.stringify(layers, null, ' '));
+        /** @type {?} */
+        var result = {};
+        Object.keys(layers).forEach(( /**
+         * @param {?} id
+         * @return {?}
+         */function (id) {
+            /** @type {?} */
+            var styles = layers[id];
+            result[id] = styleFunctionFactory(styles);
+        }));
+        // style.layers.forEach( layer => {
+        //     result[ layer.id ] = getLayerStyle(layer); //new LayerStyle( layer ).getStyleFunction()
+        // });
         return result;
+    }
+    /**
+     * @param {?} layerStyles
+     * @return {?}
+     */
+    function styleFunctionFactory(layerStyles) {
+        /** @type {?} */
+        var styles = layerStyles.map(( /**
+         * @param {?} layerStyle
+         * @return {?}
+         */function (layerStyle) { return getLayerStyle(layerStyle); }));
+        return ( /**
+         * @param {?} properties
+         * @param {?} zoom
+         * @param {?} geomType
+         * @return {?}
+         */function (properties, zoom, geomType) {
+            /** @type {?} */
+            var match = styles.find(( /**
+             * @param {?} style
+             * @return {?}
+             */function (style) {
+                if (style.filter && typeof (style.filter.evaluate) !== 'undefined') {
+                    // console.log("Style has a filter... " + style.filter.toString());
+                    /** @type {?} */
+                    var found = style.filter.evaluate(properties, zoom, geomType);
+                    // if(!found) console.log("Filter does not match");
+                    // else console.log("Filter matches");
+                    return found;
+                }
+                return true;
+            }));
+            /** @type {?} */
+            var result = {};
+            if (match) {
+                Object.keys(match.style).forEach(( /**
+                 * @param {?} key
+                 * @return {?}
+                 */function (key) {
+                    /** @type {?} */
+                    var styleVal = match.style[key];
+                    if (styleVal && typeof (styleVal.evaluate) !== 'undefined')
+                        result[key] = styleVal.evaluate(properties, zoom, geomType);
+                    else
+                        result[key] = styleVal;
+                }));
+            }
+            else {
+                console.log("Warning, no style found");
+            }
+            return result;
+        });
     }
     var ɵ0$7 = /**
      * @param {?} layerStyle
@@ -3364,6 +3509,8 @@ This software has been approved for release by the U.S. Department of the Interi
             else
                 return fallback || null;
         });
+        /** @type {?} */
+        var filter = parseValue(layerStyle.filter);
         /** @type {?} */
         var layerPaint = layerStyle.paint;
         /** @type {?} */
@@ -3388,34 +3535,37 @@ This software has been approved for release by the U.S. Department of the Interi
             //fill opacity
             fillColor: fillColor //fill color
         };
-        return ( /**
-         * @param {?} properties
-         * @param {?} zoom
-         * @param {?} geomType
-         * @return {?}
-         */function (properties, zoom, geomType) {
-            /** @type {?} */
-            var result = {};
-            Object.keys(style).forEach(( /**
-             * @param {?} key
-             * @return {?}
-             */function (key) {
-                /** @type {?} */
-                var styleVal = style[key];
-                if (styleVal && typeof (styleVal.evaluate) !== 'undefined')
-                    result[key] = styleVal.evaluate(properties, zoom, geomType);
-                else
-                    result[key] = styleVal;
-            }));
-            return result;
-        });
+        return {
+            filter: filter,
+            style: style
+        };
+        // return function( properties : any, zoom: number, geomType : string ) {
+        //     let result = {};
+        //
+        //     if(filter && typeof(filter.evaluate)) {
+        //         console.log("Style has a filter... " + filter.toString());
+        //         if(!filter.evaluate(properties, zoom, geomType)) {
+        //             console.log("Filter does not match");
+        //             return false;
+        //         }
+        //         console.log("Filter matches");
+        //     }
+        //
+        //     Object.keys(style).forEach( key => {
+        //         let styleVal = style[key];
+        //         if( styleVal && typeof(styleVal.evaluate) !== 'undefined')
+        //             result[key] = styleVal.evaluate(properties, zoom, geomType);
+        //         else result[key] = styleVal;
+        //     });
+        //     return result;
+        // };
     };
     /**
      * \@param layer MapBox Style Spec Layer definition
      * \@return Function accepting feature properties, zoom level, and geometry type and returning a Leaflet style object
      * @type {?}
      */
-    var styleFunctionFactory = ((ɵ0$7));
+    var getLayerStyle = ((ɵ0$7));
 
     /**
      * @fileoverview added by tsickle
@@ -3505,8 +3655,16 @@ This software has been approved for release by the U.S. Department of the Interi
      */function (styleDef) {
             /** @type {?} */
             var layerInst = (( /** @type {?} */(leafletLayer)));
-            layerInst.options.vectorTileLayerStyles = parseMapBoxStyle(styleDef);
-            layerInst.redraw();
+            /** @type {?} */
+            var style = parseMapBoxStyle(styleDef);
+            if (style && typeof (style) !== 'undefined') {
+                layerInst.options.vectorTileLayerStyles = style;
+                layerInst.redraw();
+            }
+            else {
+                console.log("[WARN] Unable to parse MapBox-style Style definitions from: ");
+                console.log(JSON.stringify(styleResource, null, ' '));
+            }
         }))
             .catch(( /**
      * @param {?} e
@@ -3522,22 +3680,34 @@ This software has been approved for release by the U.S. Department of the Interi
      * @return {?} Promise resolving style definition
      */
     function fetchStyleDefinition(layerId, resource) {
-        if (!layerId || !resource || !resource.contentId) {
+        if (!layerId || !resource) {
             /** @type {?} */
             var err = new Error("Unable to fetch style definition, one or more parameters were invalid");
             return Promise.reject(err);
+        }
+        if (!resource.contentId && !resource.href) {
+            /** @type {?} */
+            var err = new Error("Unable to fetch style definition, missing id or url to style");
+            return Promise.reject(err);
+        }
+        /** @type {?} */
+        var url = null;
+        if (resource.contentId) {
+            url = client.Config.ualUrl + '/api/layers/' + layerId + '/styles/' + resource.contentId;
+        }
+        else if (resource.href) {
+            url = resource.href;
         }
         /** @type {?} */
         var client$$1 = new client.XHRHttpClient();
         /** @type {?} */
         var request = client$$1.createRequestOpts({
             method: "GET",
-            url: client.Config.ualUrl + '/api/layers/' + layerId + '/styles/' + resource.contentId,
+            url: url,
             timeout: 5000,
             json: true
         });
         return client$$1.execute(request);
-        // return Promise.resolve(resource.content);   //TODO remove this
     }
 
     /**
@@ -3793,7 +3963,9 @@ This software has been approved for release by the U.S. Department of the Interi
                         });
                     }
                     else if (types.ESRI_TILE_SERVER &&
-                        types.ESRI_TILE_SERVER.uri === typeUri) {
+                        types.ESRI_TILE_SERVER.uri === typeUri &&
+                        !_this.isVectorTile(layer) //don't use Esri library for vector tile layers
+                    ) {
                         checkUrl(url);
                         opts = { url: url, useCors: true };
                         if (client.Config.leafletPane)
@@ -3852,6 +4024,9 @@ This software has been approved for release by the U.S. Department of the Interi
                     }
                     return null;
                 }));
+                /**
+                 * Register factory function for Protobuf Vector Tile layers
+                 */
                 this.register(( /**
                  * @param {?} layer
                  * @return {?}
@@ -3864,28 +4039,20 @@ This software has been approved for release by the U.S. Department of the Interi
                         return null;
                     }
                     return mapBoxVectorTileLayer(layer);
-                    // let href = layer.href;
-                    // if(!href || href.indexOf(".pbf") < 0) {
-                    //     console.log("LayerFactory - Layer does not define an Access URL");
-                    //     return null;  //missing URL
-                    // }
-                    //
-                    // const Leaflet = L as any;
-                    //
-                    // //if Leaflet vector grid plugin is not installed, can't render VT Layers
-                    // if( typeof(Leaflet.vectorGrid) === 'undefined' &&
-                    //     typeof(Leaflet.vectorGrid.protobuf) === 'undefined') {
-                    //     console.log("LayerFactory - Leaflet Vector Tiles plugin not found");
-                    //     return null;
-                    // }
-                    //
-                    // let opts : any = { rendererFactory: ( L.canvas as any ).tile };
-                    // if( (layer as any).styles ) {
-                    //     opts.vectorTileLayerStyles = (layer as any).styles;
-                    // }
-                    // if(Config.leafletPane) opts.pane = Config.leafletPane;
-                    // return Leaflet.vectorGrid.protobuf(href, opts);
                 }));
+            };
+        /**
+         * @param {?} layer
+         * @return {?}
+         */
+        LayerFactory.prototype.isVectorTile = /**
+         * @param {?} layer
+         * @return {?}
+         */
+            function (layer) {
+                /** @type {?} */
+                var resourceTypes = (layer && layer.resourceTypes) || [];
+                return resourceTypes.indexOf(LayerResourceTypes.MapBoxVectorTile) >= 0;
             };
         return LayerFactory;
     }());
@@ -4499,7 +4666,8 @@ This software has been approved for release by the U.S. Department of the Interi
                         layer: {
                             id: state.layer.id,
                             uri: state.layer.uri,
-                            label: state.layer.label
+                            label: state.layer.label,
+                            type: state.layer.type
                         }
                     };
                     return result;
@@ -4508,7 +4676,8 @@ This software has been approved for release by the U.S. Department of the Interi
                 metadata.baseLayer = {
                     id: this._baseLayerDef.id,
                     uri: this._baseLayerDef.uri,
-                    label: this._baseLayerDef.label
+                    label: this._baseLayerDef.label,
+                    type: this._baseLayerDef.type
                 };
                 metadata.annotations = this._featureLayer ?
                     { title: "Map Features", geoJSON: this._featureLayer.toGeoJSON() } : null;

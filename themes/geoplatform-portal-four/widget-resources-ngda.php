@@ -43,7 +43,8 @@ class Geopportal_Resource_NGDA_Widget extends WP_Widget {
 						<span class="u-text--sm">Biodiversity and Ecosystems</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/cadastre/'); ?>" class="u-text--center">
-						<span class="fas fa-3x fa-scroll t-fg--blue-dk"></span><br>
+						<span class="fas fa-3x ngda-cadastre t-fg--blue-dk"></span><br>
+						<!-- <span class="fas fa-3x fa-scroll t-fg--blue-dk"></span><br> -->
 						<span class="u-text--sm">Cadastre</span>
 		      </a>
 		      <a href="<?php echo home_url('ngda/climate/'); ?>" class="u-text--center">

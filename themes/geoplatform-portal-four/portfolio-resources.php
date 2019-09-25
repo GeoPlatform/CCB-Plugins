@@ -114,37 +114,57 @@ class Geopportal_Portfolio_Resources_Widget extends WP_Widget {
 			jQuery(document).ready(function() {
 
 				var geopportal_portfolio_index = 0;
+				var geopportal_portfolio_timeout = true;
 
 				// Button color controls. On click, active classes are removed from all
-				// buttons, then granted to the button that was clicked.
+				// buttons, then granted to the button that was clicked. Also sets the
+				// portfolio index value to prevent odd behavior.
 				jQuery(".geopportal_port_car_trigger").click(function(event){
-					geopportal_portfolio_index = jQuery(this).attr("data-slide-to");
-					var geopportal_port_car_active = "geopportal_port_car_tab_" + geopportal_portfolio_index;
+					if (geopportal_portfolio_timeout){
+						geopportal_portfolio_timeout = false;
 
-					jQuery(".geopportal_port_car_tab_title").removeClass("portfolio-carousel-active-tab");
-					jQuery("#" + geopportal_port_car_active).addClass("portfolio-carousel-active-tab");
+						geopportal_portfolio_index = parseInt(jQuery(this).attr("data-slide-to"), 10);
+						var geopportal_port_car_active = "geopportal_port_car_tab_" + geopportal_portfolio_index;
+
+						jQuery(".geopportal_port_car_tab_title").removeClass("portfolio-carousel-active-tab");
+						jQuery("#" + geopportal_port_car_active).addClass("portfolio-carousel-active-tab");
+
+						setTimeout(function(){geopportal_portfolio_timeout = true;}, 600);
+					}
 				});
 
 				jQuery(".carousel-control-prev").click(function(event){
-					geopportal_portfolio_index = geopportal_portfolio_index - 1;
-					if (geopportal_portfolio_index < 0)
-						geopportal_portfolio_index = 4;
+					if (geopportal_portfolio_timeout){
+						geopportal_portfolio_timeout = false;
 
-					var geopportal_port_car_active = "geopportal_port_car_tab_" + geopportal_portfolio_index;
+						geopportal_portfolio_index = geopportal_portfolio_index - 1;
+						if (geopportal_portfolio_index < 0)
+							geopportal_portfolio_index = 4;
 
-					jQuery(".geopportal_port_car_tab_title").removeClass("portfolio-carousel-active-tab");
-					jQuery("#" + geopportal_port_car_active).addClass("portfolio-carousel-active-tab");
+						var geopportal_port_car_active = "geopportal_port_car_tab_" + geopportal_portfolio_index;
+
+						jQuery(".geopportal_port_car_tab_title").removeClass("portfolio-carousel-active-tab");
+						jQuery("#" + geopportal_port_car_active).addClass("portfolio-carousel-active-tab");
+
+						setTimeout(function(){geopportal_portfolio_timeout = true;}, 600);
+					}
 				});
 
 				jQuery(".carousel-control-next").click(function(event){
-					geopportal_portfolio_index = geopportal_portfolio_index + 1;
-					if (geopportal_portfolio_index > 4)
-						geopportal_portfolio_index = 0;
+					if (geopportal_portfolio_timeout){
+						geopportal_portfolio_timeout = false;
 
-					var geopportal_port_car_active = "geopportal_port_car_tab_" + geopportal_portfolio_index;
+						geopportal_portfolio_index = geopportal_portfolio_index + 1;
+						if (geopportal_portfolio_index > 4)
+							geopportal_portfolio_index = 0;
 
-					jQuery(".geopportal_port_car_tab_title").removeClass("portfolio-carousel-active-tab");
-					jQuery("#" + geopportal_port_car_active).addClass("portfolio-carousel-active-tab");
+						var geopportal_port_car_active = "geopportal_port_car_tab_" + geopportal_portfolio_index;
+
+						jQuery(".geopportal_port_car_tab_title").removeClass("portfolio-carousel-active-tab");
+						jQuery("#" + geopportal_port_car_active).addClass("portfolio-carousel-active-tab");
+
+						setTimeout(function(){geopportal_portfolio_timeout = true;}, 600);
+					}
 				});
 
 
