@@ -109,7 +109,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 ## Changelog
 
 ### 4.0.4 ###
-* Release pending
+* Release September 30, 2019
 
 - Head megamenu only generates now if the header More button is enabled.
 - Changed featured card shading application method to permit custom CSS application.

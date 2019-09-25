@@ -113,7 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 == Changelog ==
 
 ## 4.1.2
-* Release pending
+* Release September 30, 2019
 
  - Placed header drop-downs in front of megamenu.
  - If other header drop-downs are opened, megamenu will now close.
