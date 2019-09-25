@@ -103,7 +103,7 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 			else {
 				echo "<div class='widget-featured-topborder'>";
 					echo "<div class='m-article__heading m-article__heading--front-page' style='margin-bottom:0em;margin-top:1em;' title='Featured Pages'>" . __(sanitize_text_field($geopccb_gallery_text), 'geoplatform-ccb') . "</div>";
-					echo "<div class='p-landing-page__community-menu' style='border-top:0px;'>";
+					echo "<div class='p-landing-page__community-menu featured-flex-parent' style='border-top:0px;'>";
 			}
 
 			foreach($geopccb_result['items'] as $geopccb_map){
