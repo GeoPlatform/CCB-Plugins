@@ -22,9 +22,9 @@
         "@angular/platform-browser": "^8.1.2",
         "@angular/platform-browser-dynamic": "^8.1.2",
         "@angular/router": "^8.1.2",
-        "@geoplatform/client": "git+https://github.com/GeoPlatform/client-api.git#develop",
-        "@geoplatform/oauth-ng": "git+https://github.com/GeoPlatform/ng-gpoauth.git#develop",
-        "@geoplatform/style": "git+https://github.com/GeoPlatform/style.git#develop",
+        "@geoplatform/client": "git+https://github.com/GeoPlatform/client-api.git#0.3.0",
+        "@geoplatform/oauth-ng": "git+https://github.com/GeoPlatform/ng-gpoauth.git#0.2.0",
+        "@geoplatform/style": "git+https://github.com/GeoPlatform/style.git#2.1.0",
         "@ng-bootstrap/ng-bootstrap": "^5.1.0",
         "axios": "^0.18.0",
         "bootstrap": "^4.3.1",
@@ -61,5 +61,4 @@
         "tslint": "~5.9.1",
         "typescript": "~3.4.0"
     }
->>>>>>> develop
 }
