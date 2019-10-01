@@ -106,10 +106,6 @@ class Geop_Maps_Public {
 		wp_enqueue_script( 'geop_framework', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_leaflet_draw', plugin_dir_url( __FILE__ ) . 'assets/leaflet.draw.js', array(), $this->version, false );
 
-		// Deprecated. Will be kept around just in case.
-		// wp_enqueue_script( 'geop_client_api2', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.client.js', array(), $this->version, false );
-		// wp_enqueue_script( 'geop_mapcore2', plugin_dir_url( __FILE__ ) . 'assets/geoplatform.mapcore.js', array(), $this->version, false );
-
 		wp_enqueue_script( 'geop_axios', plugin_dir_url( __FILE__ ) . 'assets/axios.js', array(), $this->version, false );
 		wp_enqueue_script( 'geop_client_api', plugin_dir_url( __FILE__ ) . 'assets/geoplatform-client.umd.min.js', array( 'geop_axios', 'jquery' ), $this->version, false );
 		wp_enqueue_script( 'geop_mapcore', plugin_dir_url( __FILE__ ) . 'assets/geoplatform-mapcore.umd.min.js', array( 'geop_axios' ), $this->version, false );
