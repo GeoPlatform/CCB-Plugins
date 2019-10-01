@@ -73,7 +73,7 @@ class Geoplatform_Service_Collector_Public {
 		 * class.
 		 */
 		wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'font/fontawesome-all_5.0.10.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'font/fontawesome-all.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/geoplatform-service-collector-public.css', array(), $this->version, 'all' );
 	}
 

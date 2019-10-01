@@ -38,7 +38,7 @@ $geopccb_accounts_url = geop_ccb_getEnv('accounts_url',"https://accounts.geoplat
  */
 if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   function geop_ccb_scripts() {
-    wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
+    wp_enqueue_style( 'geop_font_awesome', get_template_directory_uri() . '/font/fontawesome-all.css');
 
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
