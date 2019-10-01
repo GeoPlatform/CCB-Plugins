@@ -16,7 +16,7 @@ function gpp_getEnv($name, $def){
  */
 function geopportal_enqueue_scripts() {
 	$parent_style = 'parent-style';
-	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
+	wp_enqueue_style( 'geop_font_awesome', get_template_directory_uri() . '/font/fontawesome-all.css');
 	wp_enqueue_style( $parent_style, get_template_directory_uri() . '/style.css' );
 	wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
 	wp_enqueue_style( 'geop-portal-style', get_template_directory_uri() . '/css/portal-style.css');
@@ -39,8 +39,8 @@ add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_scripts' );
 // Loads bootstrap resources, but only for pages that aren't Angular with bundled bootstrap.
 function geopportal_enqueue_bootstrap() {
 	if ( !is_page( array('geoplatform-search', 'geoplatform-items', 'register', 'geoplatform-map-preview' ) ) ){
-		wp_enqueue_script( 'geop_bootstrap_js', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js' );
-		wp_enqueue_style( 'geop_bootstrap_css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
+		wp_enqueue_script( 'geop_bootstrap_js', get_stylesheet_directory_uri() . '/scripts/bootstrap.js');
+		wp_enqueue_style( 'geop_bootstrap_css', get_template_directory_uri() . '/css/bootstrap.css');
 	}
 }
 add_action( 'wp_enqueue_scripts', 'geopportal_enqueue_bootstrap' );

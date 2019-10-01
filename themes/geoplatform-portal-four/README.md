@@ -2,9 +2,9 @@
 
 **Contributors:** imagemattersllc, kevins713, lheazel
 **Requires at least:** WordPress 4.6.4   
-**Tested up to:** WordPress 5.2.0
-**Stable tag:** 4.1.2
-**Version:** 4.1.2
+**Tested up to:** WordPress 5.2.3
+**Stable tag:** 4.1.3
+**Version:** 4.1.3
 **License:** Apache 2.0   
 **License URI:** http://www.apache.org/licenses/LICENSE-2.0   
 **Tags:** two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education   
@@ -112,6 +112,11 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 ## Changelog
 
+### 4.1.3
+* Release October 4, 2019
+
+- Localized previously remote Fontawesome and Bootstrap dependencies.
+
 ## 4.1.2
 * Release September 30, 2019
 
@@ -119,6 +124,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
  - If other header drop-downs are opened, megamenu will now close.
  - NGDA theme icon changes.
  - Made various changes to achieve 508 compliance.
+ - Fixed bug that caused breadcrumb control malfunction.
 
 ## 4.1.1
 * Release July 17th, 2019

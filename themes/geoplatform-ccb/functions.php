@@ -38,13 +38,13 @@ $geopccb_accounts_url = geop_ccb_getEnv('accounts_url',"https://accounts.geoplat
  */
 if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
   function geop_ccb_scripts() {
-    wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
+    wp_enqueue_style( 'geop_font_awesome', get_template_directory_uri() . '/font/fontawesome-all.css');
 
   	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
     wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
     wp_enqueue_style( 'geop-portal-style', get_template_directory_uri() . '/css/portal-style.css');
     wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
-    wp_enqueue_style( 'geop_bootstrap_css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
+    wp_enqueue_style( 'geop_bootstrap_css', get_template_directory_uri() . '/css/bootstrap.css');
 
     wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js', array('jquery') );
     wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
