@@ -93,8 +93,8 @@ class Geopportal_Resource_Community_Widget extends WP_Widget {
 
 							// Breadcrumb handle
 							$geopportal_community_disp_title = get_the_title($geopportal_post);
-							if(!empty($geopportal_post->geopportal_breadcrumb_title)){
-							  $geopportal_community_disp_title = $geopportal_post->geopportal_breadcrumb_title;
+							if(!empty($geopportal_post->geopccb_breadcrumb_title)){
+							  $geopportal_community_disp_title = $geopportal_post->geopccb_breadcrumb_title;
 							}
 
 							$geopportal_community_disp_url = get_post_type($geopportal_post) == 'geopccb_catlink' ? esc_url($geopportal_post->geop_ccb_cat_link_url) : get_the_permalink($geopportal_post);

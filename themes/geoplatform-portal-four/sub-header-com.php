@@ -24,13 +24,13 @@ else {
 }
 
 $geop_portal_bread_title = get_the_title($post);
-if(!empty($post->geopportal_breadcrumb_title)){
-  $geop_portal_bread_title = $post->geopportal_breadcrumb_title;
+if(!empty($post->geopccb_breadcrumb_title)){
+  $geop_portal_bread_title = $post->geopccb_breadcrumb_title;
 }
 
 $geop_portal_bread_par_title = get_the_title($geopportal_breadcrumb_parent);
-if(!empty($geopportal_breadcrumb_parent->geopportal_breadcrumb_title)){
-  $geop_portal_bread_par_title = $geopportal_breadcrumb_parent->geopportal_breadcrumb_title;
+if(!empty($geopportal_breadcrumb_parent->geopccb_breadcrumb_title)){
+  $geop_portal_bread_par_title = $geopportal_breadcrumb_parent->geopccb_breadcrumb_title;
 }
 ?>
 
