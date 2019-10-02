@@ -63,7 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.item = item;
             const TYPE = ItemHelper.getTypeLabel(item);
             this.updatePageTitle(`GeoPlatform Resource : ${TYPE}`);
-            // this.rpm.logEvent(TYPE, 'Viewed', item.id);
+            this.rpm.logEvent(TYPE, 'Viewed', item.id);
 
             this.addPageMetadata(item);
         })
