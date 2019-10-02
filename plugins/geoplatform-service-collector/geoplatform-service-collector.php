@@ -634,23 +634,6 @@ function geopserve_shortcodes_init()
 }
 add_action('init', 'geopserve_shortcodes_init');
 
-
-// function geop_ccb_scripts() {
-// 	wp_enqueue_style( 'fontawesome-css', 'https://use.fontawesome.com/releases/v5.7.2/css/all.css');
-//
-// 	wp_enqueue_style( 'custom-style', get_template_directory_uri() . '/style.css' );
-// 	wp_enqueue_style( 'geop-root-css', get_template_directory_uri() . '/css/root-css.css');
-// 	wp_enqueue_style( 'geop-style', get_template_directory_uri() . '/css/geop-style.css');
-// 	wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
-// 	wp_enqueue_style( 'bootstrap-css', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css');
-//
-// 	wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js' );
-// 	wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
-// 	wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
-// }
-// add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
-
-
 // AJAX handling only seems to function properly if both the hooks and PHP
 // functions are placed in this file. Instead of producing clutter, the files
 // that perform the settings interface add and remove map operations are simply
