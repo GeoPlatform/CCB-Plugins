@@ -1,0 +1,33 @@
+.geopsearch-shortcode-form {
+  position: static;
+}
+
+.geopsearch-shortcode-div {
+  position: relative;
+}
+
+.geopsearch-shortcode-icon {
+  position: absolute;
+  height: 1em;
+  width: 1em;
+  top: 0.75em;
+  left: 0.75em;
+}
+
+.geopsearch-shortcode-input {
+  padding-right: 5em !important;
+  padding-left: 2.5em !important;
+  position: static;
+  display: inline-block;
+}
+
+.geopsearch-shortcode-button {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  border-style: none none none none;
+  border-radius: 0 0 0.25em 0.25em 0;
+  background-color: #f2f1f0;
+  color: #4c4c4c;
+}

@@ -158,15 +158,17 @@ add_action( 'template_redirect', 'geopsearch_page_enqueues' );
 function geopsearch_shortcode_creation($atts){
   ob_start();
 
+	wp_enqueue_style( 'search-shortcode-css',     plugin_dir_url( __FILE__ ) . 'public/css/shortcode.css',  array(), false, true );
+
 	// Random number in case of multiple search inputs on one page.
 	$geopsearch_rand = rand(0, 999);
 	// Search bar output
 	echo "<br>";
-	echo "<form id='geoplatformsearchform" . $geopsearch_rand . "'>";
+	echo "<form id='geoplatformsearchform" . $geopsearch_rand . "' class='geopsearch-shortcode-form'>";
 	  echo "<div class='input-group-slick geopsearch-shortcode-div'>";
-	    echo "<span class='icon fas fa-search'></span>";
-	    echo "<input type='text' class='form-control' id='geoplatformsearchfield" . $geopsearch_rand . "' style='padding-right:5em' placeholder='" . esc_attr( 'Search the GeoPlatform', 'geoplatform-ccb' ) . "'/>";
-	    echo "<button type='submit' class='btn btn-default' id='geoplatformsearchbutton" . $geopsearch_rand . "'>". __( 'Search', 'geoplatform-ccb') . "</button>";
+	    echo "<span class='icon fas fa-search geopsearch-shortcode-icon'></span>";
+	    echo "<input type='text' class='form-control geopsearch-shortcode-input' id='geoplatformsearchfield" . $geopsearch_rand . "' placeholder='" . esc_attr( 'Search the GeoPlatform', 'geoplatform-ccb' ) . "'/>";
+	    echo "<button type='submit' class='btn btn-default geopsearch-shortcode-button' id='geoplatformsearchbutton" . $geopsearch_rand . "'>". __( 'Search', 'geoplatform-ccb') . "</button>";
 	  echo "</div>";
 	echo "</form>";
 	echo "<br>";
@@ -196,7 +198,7 @@ function geopsearch_shortcode_creation($atts){
 // Adds the shortcode hook to init.
 function geopsearch_shortcodes_init()
 {
-    add_shortcode('geopsearch', 'geopsearch_shortcode_creation');
+    add_shortcode('geopsearch', 'geopsearch_shortcode_creation', 50);
 }
 add_action('init', 'geopsearch_shortcodes_init');
 
