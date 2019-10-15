@@ -57,8 +57,8 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
   // 2-sub) The breadcrumbs are enabled OR the category-links menu isn't set to
   //        "integrated", so at least one grey bar is below the header bar.
   $geopccb_criteria_one = has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) == 'above';
-  $geopccb_criteria_two_sub = get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_controls']) == 'on' || (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) != 'integrated');
-  $geopccb_criteria_two = get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on' && is_singular() && $geopccb_criteria_two_sub;
+  $geopccb_criteria_two_sub = get_theme_mod('breadcrumb_controls', $geopccb_theme_options['breadcrumb_controls']) != 'off' || (has_nav_menu('community-links') && get_theme_mod('linkmenu_controls', $geopccb_theme_options['linkmenu_controls']) != 'integrated');
+  $geopccb_criteria_two = get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) != 'off' && is_singular() && $geopccb_criteria_two_sub;
 
   // The plugin_page criteria is included in case it is a fully-exempt page.
   if ( ($geopccb_criteria_one || $geopccb_criteria_two) && !$geopccb_plugin_page)
