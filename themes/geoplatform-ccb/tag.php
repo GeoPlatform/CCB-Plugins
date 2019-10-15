@@ -16,7 +16,7 @@ echo "<div class='l-body l-body--two-column'>";
 	echo "<div class='l-body__main-column'>";
 
 		//gets id of current tag
-		$geopccb_tag = $wp_query->get_queried_object();
+		$geopccb_tag = get_queried_object()->slug;
 
 		// Time for posts, pages, and cat links.
 		// Get view perms.
@@ -32,7 +32,7 @@ echo "<div class='l-body l-body--two-column'>";
       'orderby' => 'date',
       'order' => 'DESC',
       'numberposts' => -1,
-      'tag'=> $geopccb_tag->id,
+      'tag'=> $geopccb_tag,
 			'post_status' => $geop_ccb_private_perm
     ));
 
