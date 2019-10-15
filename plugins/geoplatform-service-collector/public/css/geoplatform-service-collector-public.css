@@ -94,6 +94,109 @@
   flex: 1;
 }
 
+/*
+ * CSS and Font files generated using Fontello (http://fontello.com/)
+ */
+
+
+@font-face {
+  font-family: 'geoplatform-icons-font';
+  src: url('../font/geoplatform-icons-font.eot');
+  src: url('../font/geoplatform-icons-font.eot#iefix') format('embedded-opentype'),
+       url('../font/geoplatform-icons-font.woff2') format('woff2'),
+       url('../font/geoplatform-icons-font.woff') format('woff'),
+       url('../font/geoplatform-icons-font.ttf') format('truetype'),
+       url('../font/geoplatform-icons-font.svg#geoplatform-icons-font') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'geoplatform-icons-font';
+    src: url('../font/geoplatform-icons-font.svg?86030939#geoplatform-icons-font') format('svg');
+  }
+}
+*/
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "geoplatform-icons-font";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-website:before { content: '\e800'; } /* '' */
+.icon-community:before { content: '\e801'; } /* '' */
+.icon-concept:before { content: '\e802'; } /* '' */
+.icon-conceptscheme:before { content: '\e803'; } /* '' */
+.icon-dataset:before { content: '\e804'; } /* '' */
+.icon-gallery:before { content: '\e805'; } /* '' */
+.icon-layer:before { content: '\e806'; } /* '' */
+.icon-map:before { content: '\e807'; } /* '' */
+.icon-organization:before { content: '\e808'; } /* '' */
+.icon-page:before { content: '\e809'; } /* '' */
+.icon-post:before { content: '\e80a'; } /* '' */
+.icon-service:before { content: '\e80b'; } /* '' */
+.icon-vcard:before, .icon-contact:before, .icon-person:before { content: '\e80c'; } /* '' */
+.icon-attach:before, .icon-attachment:before, .icon-media:before { content: '\e80d'; } /* '' */
+.icon-application:before { content: '\e80e'; } /* '' */
+.icon-rights:before, .icon-rightsstatement:before { content: '\e80f'; } /* '' */
+.icon-topic:before { content: '\f298'; } /* '' */
+.icon-product:before, .icon-imageproduct:before { content: '\f1c5'; } /* '' */
+
+
+
+
+.icon-dataset.is-themed       { color: darkblue; }
+.icon-service.is-themed       { color: green; }
+.icon-layer.is-themed         { color: lightblue; }
+.icon-map.is-themed           { color: red; }
+.icon-gallery.is-themed       { color: orange; }
+.icon-community.is-themed     { color: #909064; }
+.icon-concept.is-themed       { color: #ddd; }
+.icon-conceptscheme.is-themed { color: #bbb; }
+.icon-organization.is-themed  { color: #bbb; }
+.icon-vcard.is-themed, .icon-contact.is-themed, .icon-person.is-themed  { color: #bbb; }
+.icon-page.is-themed, .icon-post.is-themed        { color: #bbb; }
+.icon-attach.is-themed, .icon-attachment.is-themed, .icon-media.is-themed { color: #bbb; }
+.icon-website.is-themed       { color: #bbb; }
+.icon-application.is-themed   { color: #bbb; }
+.icon-rights.is-themed, .icon-rightsstatement.is-themed { color: #bbb; }
+.icon-topic.is-themed         { color: #bbb; }
+.icon-product.is-themed, .icon-imageproduct.is-themed { color: #bbb; }
+
+
 
 /*! normalize.css v8.0.0 | MIT License | github.com/necolas/normalize.css */
 

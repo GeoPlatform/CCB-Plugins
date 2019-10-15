@@ -31,3 +31,8 @@
   background-color: #f2f1f0;
   color: #4c4c4c;
 }
+
+.geopsearch-shortcode-button:hover {
+  background-color: #ffffff;
+  color: #4c4c4c;
+}
