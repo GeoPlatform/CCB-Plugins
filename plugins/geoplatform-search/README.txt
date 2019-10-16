@@ -85,6 +85,7 @@ In a limited fashion, yes.  Free-text and creator constraints apply to both type
 
 = 1.0.14 =
 * Further CSS modifications for shortcode bar.
+* Added 508 compliance modifications to shortcode bar.
 
 = 1.0.13 =
 * Updated CSS for shortcode bar.

@@ -112,6 +112,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 - Fixed loss of functionality in tags page.
 - Added option with page banners to apply a page's featured image or the global banner image.
+- Applied 508 compliance modifications.
 
  = 4.0.5 =
  * Release October 4, 2019

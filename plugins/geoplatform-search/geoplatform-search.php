@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              http://www.imagemattersllc.com/
- * @since             1.0.12
+ * @since             1.0.14
  * @package           Geop_Search
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Search
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Browse, search, and filter GeoPlatform service objects.
- * Version:           1.0.12
+ * Version:           1.0.14
  * Author:            Image Matters LLC: Patrick Neal, Lee Heazel
  * Author URI:        http://www.imagemattersllc.com/
  * License:           Apache 2.0
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.10 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSEARCH_PLUGIN', '1.0.12' );
+define( 'GEOSEARCH_PLUGIN', '1.0.14' );
 
 /**
  * The code that runs during plugin activation.
@@ -167,7 +167,7 @@ function geopsearch_shortcode_creation($atts){
 	echo "<form id='geoplatformsearchform" . $geopsearch_rand . "' class='geopsearch-shortcode-form'>";
 	  echo "<div class='input-group-slick geopsearch-shortcode-div'>";
 	    echo "<span class='icon fas fa-search geopsearch-shortcode-icon'></span>";
-	    echo "<input type='text' class='form-control geopsearch-shortcode-input' id='geoplatformsearchfield" . $geopsearch_rand . "' placeholder='" . esc_attr( 'Search the GeoPlatform', 'geoplatform-ccb' ) . "'/>";
+	    echo "<input type='text' class='form-control geopsearch-shortcode-input' id='geoplatformsearchfield" . $geopsearch_rand . "' placeholder='" . esc_attr( 'Search the GeoPlatform', 'geoplatform-ccb' ) . "' aria-label='Search the GeoPlatform'/>";
 	    echo "<button type='submit' class='btn btn-default geopsearch-shortcode-button' id='geoplatformsearchbutton" . $geopsearch_rand . "'>". __( 'Search', 'geoplatform-ccb') . "</button>";
 	  echo "</div>";
 	echo "</form>";
