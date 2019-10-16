@@ -309,7 +309,7 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
 
           ?>
           <!-- Another section that cannot be echoed. -->
-          <button type="button" class="btn btn-link btn-block" onclick="toggleClass('#header-megamenu','is-open')">
+          <button type="button" class="btn btn-link btn-block" aria-label="Close" onclick="toggleClass('#header-megamenu','is-open')">
             <span class="fas fa-caret-up"></span>
           </button>
           <?php

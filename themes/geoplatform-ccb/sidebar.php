@@ -75,7 +75,7 @@
     <article class="m-article">
       <div class="m-article__heading">Side Content</div>
       <div class="m-article__desc">
-        <img src="<?php echo get_template_directory_uri() . '/img/img-404.png' ?>" title='An empty image'>
+        <img src="<?php echo get_template_directory_uri() . '/img/img-404.png' ?>" title='An empty image' alt='A blank example of a sidebar image'>
           This is an example of side content featuring a thumbnail and a small-to-moderate
           amount of descriptive text along with it.
       </div>

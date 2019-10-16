@@ -261,7 +261,9 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    echo "<div class='p-landing-page__community-menu featured-flex-parent'>";
 	      for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
 	        echo "<a class='m-tile m-tile--16x9 featured-flex-child' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
-	          echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
+	          echo "<div class='m-tile__thumbnail'>";
+							echo "<img alt='" . esc_attr( __( $geopccb_final_objects_array[$i]['name'], 'geoplatform-ccb' ) ) . " Alternate Text' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'>";
+						echo "</div>";
 	          echo "<div class='m-tile__body " . $geopccb_featured_card_fade . "'>";
 	            echo "<div class='m-tile__heading". $geopccb_featured_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
 	          echo "</div>";
@@ -275,7 +277,9 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 		    echo "<div class='p-landing-page__community-menu featured-flex-parent' style='border-top:0px;'>";
 		      for ($i = 0; $i < count($geopccb_final_objects_array); $i++) {
 		        echo "<a class='m-tile m-tile--16x9 featured-flex-child' href='" . esc_url( $geopccb_final_objects_array[$i]['url'] ) . "' title='" . esc_attr( __( 'More information', 'geoplatform-ccb' ) ) . "'>";
-		          echo "<div class='m-tile__thumbnail'><img alt='" . $geopccb_category_image_default . "' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'></div>";
+		          echo "<div class='m-tile__thumbnail'>";
+								echo "<img alt='" . esc_attr( __( $geopccb_final_objects_array[$i]['name'], 'geoplatform-ccb' ) ) . " Alternate Text' src='" . esc_url($geopccb_final_objects_array[$i]['thumb']) . "'>";
+							echo "</div>";
 		          echo "<div class='m-tile__body " . $geopccb_featured_card_fade . "'>";
 		            echo "<div class='m-tile__heading". $geopccb_featured_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_final_objects_array[$i]['name']), 'geoplatform-ccb' ) ) . "</div>";
 		          echo "</div>";
