@@ -63,7 +63,7 @@ class Geopportal_Partners_Widget extends WP_Widget {
 		$geopportal_partners_thumb_array = array();
 		foreach($geopportal_partners_page_array as $geopportal_partners_page){
 			if (has_post_thumbnail($geopportal_partners_page))
-				array_push($geopportal_partners_thumb_array, get_the_post_thumbnail_url($geopportal_partners_page));
+				array_push($geopportal_partners_thumb_array, get_the_post_thumbnail_url($geopportal_partners_page, 'medium'));
 		}
 
 		// Widget output.

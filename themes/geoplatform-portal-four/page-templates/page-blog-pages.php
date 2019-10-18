@@ -62,7 +62,7 @@ get_template_part( 'sub-header-post', get_post_format() );
  			// Grabs default 404 image as thumb and overwrites if the post has one.
  			$geopportal_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
  			if ( has_post_thumbnail($geopportal_post) )
- 				$geopportal_archive_disp_thumb = get_the_post_thumbnail_url($geopportal_post);
+ 				$geopportal_archive_disp_thumb = get_the_post_thumbnail_url($geopportal_post, 'medium');
 
  			// To prevent entries overlapping their blocks, sets min height to match thumb.
  			// list($width, $height) = getimagesize($geopportal_archive_disp_thumb);
