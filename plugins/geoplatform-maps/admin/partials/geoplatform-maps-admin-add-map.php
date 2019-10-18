@@ -148,8 +148,12 @@ if (!$geopmap_invalid_bool){
     // then sentence, then anything after the 255th character. Going beyond 255
     // characters breaks map addition.
     $geopmap_map_description = (explode("\n", $geopmap_map_description))[0];
-    $geopmap_map_description = (explode(".", $geopmap_map_description))[0] . ".";
-    $geopmap_map_description = substr($geopmap_map_description, 0, 255);
+    if (strlen($geopmap_map_description) > 255){
+      $geopmap_map_description = (explode(".", $geopmap_map_description))[0] . ".";
+      if (strlen($geopmap_map_description) > 255){
+        $geopmap_map_description = substr($geopmap_map_description, 0, 255);
+      }
+    }
 
     // Finally, the variables are added to the table in key/value pairs.
     $wpdb->insert($geopmap_table_name,
