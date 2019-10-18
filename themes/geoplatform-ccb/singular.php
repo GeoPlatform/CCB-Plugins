@@ -15,7 +15,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 $geopccb_theme_options = geop_ccb_get_theme_mods();
 
 
-if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on'){
+if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) != 'off'){
 
   $geopccb_banner_card_style = get_theme_mod('feature_controls', 'fade');
   $geopccb_banner_card_fade = "widget-featured-fade-zero";

@@ -1,4 +1,4 @@
-FROM wordpress:5.2.3
+FROM wordpress:5.2.4
 MAINTAINER ImageMatters admin@imagemattersllc.com
 
 # NOTE:

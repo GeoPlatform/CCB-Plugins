@@ -6,7 +6,7 @@ Tags: GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Dataset, data
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 5.2.2
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -55,6 +55,9 @@ Answer to foo bar dilemma.
 2. https://www.geoplatform.gov/ngda/biodiversity/
 
 == Changelog ==
+
+= 2.1.3 =
+* Added local icon handling.
 
 = 2.1.2 =
 * Updated client-api to version 0.3.0.

@@ -148,12 +148,13 @@ function geopccb_redirect_logic(){
 
 			// The URL bar is checked for extensions and redirect_val is assigned or
 			// passed on as appropriate.
-	    $geopccb_redirect_val = (strpos($url_dump, '.rdf')) ? ".rdf" : $geopccb_redirect_val;
-	    $geopccb_redirect_val = (strpos($url_dump, '.json')) ? ".json" : $geopccb_redirect_val;
-			$geopccb_redirect_val = (strpos($url_dump, '.jsonld')) ? ".jsonld" : $geopccb_redirect_val;
-	    $geopccb_redirect_val = (strpos($url_dump, '.ttl')) ? ".ttl" : $geopccb_redirect_val;
-	    $geopccb_redirect_val = (strpos($url_dump, '.n3')) ? ".n3" : $geopccb_redirect_val;
-	    $geopccb_redirect_val = (strpos($url_dump, '.nt')) ? ".nt" : $geopccb_redirect_val;
+    	    $geopccb_redirect_val = (strpos($url_dump, '.rdf')) ? ".rdf" : $geopccb_redirect_val;
+    	    $geopccb_redirect_val = (strpos($url_dump, '.json')) ? ".json" : $geopccb_redirect_val;
+    		$geopccb_redirect_val = (strpos($url_dump, '.jsonld')) ? ".jsonld" : $geopccb_redirect_val;
+    	    $geopccb_redirect_val = (strpos($url_dump, '.ttl')) ? ".ttl" : $geopccb_redirect_val;
+    	    $geopccb_redirect_val = (strpos($url_dump, '.n3')) ? ".n3" : $geopccb_redirect_val;
+    	    $geopccb_redirect_val = (strpos($url_dump, '.nt')) ? ".nt" : $geopccb_redirect_val;
+            $geopccb_redirect_val = (strpos($url_dump, '.html')) ? ".html" : $geopccb_redirect_val;
 
 			// If no extension was found, the headers are checked.
 			if (!$geopccb_redirect_val){
@@ -174,6 +175,7 @@ function geopccb_redirect_logic(){
 						$geopccb_redirect_val = ($head_element == "text/x-turtle") ? ".ttl" : $geopccb_redirect_val;
 						$geopccb_redirect_val = ($head_element == "text/n3") ? ".n3" : $geopccb_redirect_val;
 						$geopccb_redirect_val = ($head_element == "application/n-triples") ? ".nt" : $geopccb_redirect_val;
+                        //no accepts check for 'text/html' as that should still go to normal IDp
 					}
 				}
 			}

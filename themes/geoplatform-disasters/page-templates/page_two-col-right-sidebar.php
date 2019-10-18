@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Two Column, Left Sidebar
+ * Template Name: Two Column, Right Sidebar
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *
@@ -12,7 +12,7 @@
  get_template_part( 'sub-header-post', get_post_format() );
  $geopccb_theme_options = geop_ccb_get_theme_mods();
 
- if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) != 'off'){
+ if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on'){
 
    $geopccb_banner_card_style = get_theme_mod('feature_controls', 'fade');
    $geopccb_banner_card_fade = "widget-featured-fade-zero";
@@ -36,8 +36,6 @@
  }
 
 echo "<div class='l-body l-body--two-column'>";
-  get_template_part( 'sidebar', get_post_format() );
-
   echo "<div class='l-body__main-column'>";
     if ( have_posts() ) : while ( have_posts() ) : the_post();
 
@@ -49,5 +47,6 @@ echo "<div class='l-body l-body--two-column'>";
          //	endif;
        endwhile; endif;
   echo "</div>";
+  get_template_part( 'sidebar', get_post_format() );
 echo "</div>";
 get_footer();

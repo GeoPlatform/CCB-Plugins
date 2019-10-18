@@ -46,8 +46,8 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
     wp_enqueue_style( 'geop-custom', get_template_directory_uri() . '/css/custom.css');
     wp_enqueue_style( 'geop_bootstrap_css', get_template_directory_uri() . '/css/bootstrap.css');
 
-    wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js', array('jquery') );
-    wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js' );
+    wp_enqueue_script( 'geop-styleguide-js', get_template_directory_uri() . '/js/styleguide.js', array('jquery'), null, true );
+    wp_enqueue_script( 'geop-prism-js', get_template_directory_uri() . '/js/prism.js', array(), null, true );
     wp_enqueue_script( 'geoplatform-ccb-js', get_template_directory_uri() . '/js/geoplatform.style.js', array('jquery'), null, true );
   }
   add_action( 'wp_enqueue_scripts', 'geop_ccb_scripts' );
@@ -63,8 +63,9 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
 if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
 	function geop_ccb_header_image_method() {
       $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
+      $geopccb_theme_options = geop_ccb_get_theme_mods();
 
-      if (is_singular() && get_the_post_thumbnail_url()){
+      if (is_singular() && get_the_post_thumbnail_url() && get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'feat'){
         $geopccb_headerImage = get_the_post_thumbnail_url();
       }
       elseif (get_header_image()){
@@ -480,7 +481,7 @@ if ( ! function_exists ( 'geop_ccb_sanitize_searchbar' ) ) {
  */
 if ( ! function_exists ( 'geop_ccb_sanitize_postbanner' ) ) {
 	function geop_ccb_sanitize_postbanner( $geop_ccb_value ) {
-		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
+		if ( ! in_array( $geop_ccb_value, array( 'feat', 'glob', 'off' ) ) )
 			$geop_ccb_value = 'off';
 		return $geop_ccb_value;
 	}
@@ -1928,9 +1929,10 @@ if ( ! function_exists ( 'geop_ccb_postbanner_register' ) ) {
         'type' => 'radio',
         'label' => 'Page Banner Controls',
         'section' => 'font_section',
-        'description' => "By default, pages use a minimalistic header. However, the user has the option of replacing this with the traditional post banner containing featured image and WYSIWYG text.",
+        'description' => "By default, pages use a minimalistic header. However, the user has the option of replacing this with the traditional post banner with superimposed WYSIWYG text, utilizing the page's individual featured image or the site's global banner image.",
         'choices' => array(
-            'on' => __('Enabled',  'geoplatform-ccb'),
+            'feat' => __('Enabled (featured)',  'geoplatform-ccb'),
+            'glob' => __('Enabled (global)',  'geoplatform-ccb'),
             'off' => __('Disabled',  'geoplatform-ccb'),
           ),
     ));

@@ -12,7 +12,7 @@
 get_header();
 get_template_part( 'sub-header-tag', get_post_format() );
 
-echo "<div class='l-body l-body--two-column'>";
+echo "<div class='l-body l-body--one-column'>";
 	echo "<div class='l-body__main-column'>";
 
 		//gets id of current tag
@@ -94,6 +94,5 @@ echo "<div class='l-body l-body--two-column'>";
  		}
 
   echo "</div>";
-  get_template_part( 'sidebar', get_post_format() );
 echo "</div>";
 get_footer();

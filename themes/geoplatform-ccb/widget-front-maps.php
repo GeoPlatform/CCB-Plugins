@@ -154,7 +154,9 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 					$geopccb_label = $geopccb_map['label'];
 
 					echo "<a class='m-tile m-tile--16x9 featured-flex-child' href='" . esc_url( $geopccb_href ) . "' title='" . esc_attr( __( $geopccb_label, 'geoplatform-ccb' ) ) . "'>";
-	          echo "<div class='m-tile__thumbnail'><img alt='" . get_template_directory_uri() . "/img/img-404.png' src='" . esc_url($geopccb_thumbnail) . "'></div>";
+	          echo "<div class='m-tile__thumbnail'>";
+							echo "<img alt='" . esc_attr( __( $geopccb_label, 'geoplatform-ccb' ) ) . "' src='" . esc_url($geopccb_thumbnail) . "'>";
+						echo "</div>";
 	          echo "<div class='m-tile__body " . $geopccb_map_card_fade . "'>";
 	            echo "<div class='m-tile__heading". $geopccb_map_card_outline . "'>" . esc_attr( __( strtoupper($geopccb_label), 'geoplatform-ccb' ) ) . "</div>";
 	          echo "</div>";
