@@ -155,7 +155,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 					$geopccb_temp_array['name'] = get_the_title($geopccb_post);
 
 	      if (has_post_thumbnail($geopccb_post))
-	        $geopccb_temp_array['thumb'] = get_the_post_thumbnail_url($geopccb_post);
+	        $geopccb_temp_array['thumb'] = get_the_post_thumbnail_url($geopccb_post, 'large');
 	      else
 	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-category-photo.jpeg";
 
@@ -176,7 +176,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	      $geopccb_temp_array['name'] = $geopccb_cat->name;
 
 	      if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
-	        $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'full')[0];
+	        $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'large')[0];
 	      else
 	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-category-photo.jpeg";
 

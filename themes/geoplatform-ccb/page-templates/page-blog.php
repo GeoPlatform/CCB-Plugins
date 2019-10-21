@@ -29,7 +29,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 		// Grabs default 404 image as thumb and overwrites if the post has one.
  		$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
  		if ( has_post_thumbnail() )
- 			$geopccb_archive_disp_thumb = get_the_post_thumbnail_url();
+ 			$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($post->ID, 'medium');
     ?>
 
 		<div class="m-article m-article--flex">

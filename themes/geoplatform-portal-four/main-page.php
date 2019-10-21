@@ -29,15 +29,15 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 
 		// Gets thumbnails
 		if ( has_post_thumbnail($geopportal_mainpage_disp_first_page) )
-			$geopportal_mainpage_disp_first_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_first_page);
+			$geopportal_mainpage_disp_first_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_first_page, 'large');
 		if ( has_post_thumbnail($geopportal_mainpage_disp_second_page) )
-			$geopportal_mainpage_disp_second_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_second_page);
+			$geopportal_mainpage_disp_second_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_second_page, 'medium');
 		if ( has_post_thumbnail($geopportal_mainpage_disp_third_page) )
-			$geopportal_mainpage_disp_third_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_third_page);
+			$geopportal_mainpage_disp_third_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_third_page, 'medium');
 		if ( has_post_thumbnail($geopportal_mainpage_disp_fourth_page) )
-			$geopportal_mainpage_disp_fourth_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_fourth_page);
+			$geopportal_mainpage_disp_fourth_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_fourth_page, 'medium');
 		if ( has_post_thumbnail($geopportal_mainpage_disp_fifth_page) )
-			$geopportal_mainpage_disp_fifth_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_fifth_page);
+			$geopportal_mainpage_disp_fifth_thumb = get_the_post_thumbnail_url($geopportal_mainpage_disp_fifth_page, 'medium');
 
 		// Checks if a post is a catlink or not, grabs appropriate URL.
 		$geopportal_mainpage_disp_first_url = get_post_type($geopportal_mainpage_disp_first_page) == 'geopccb_catlink' ? esc_url($geopportal_mainpage_disp_first_page->geop_ccb_cat_link_url) : get_the_permalink($geopportal_mainpage_disp_first_page);
@@ -231,22 +231,6 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		    </div>
 
 		    <div class="o-featured__side">
-					<!-- <div class="a-heading">More Featured Content</div> -->
-					<!-- <div class="o-featured__tertiary"> -->
-
-						<?php
-						// Outputs posts.
-						// if (count($geopportal_pages_sort) > 0){
-						// 	foreach ($geopportal_pages_sort as $geopccb_post){
-						// 		echo "<div class='m-tile'>";
-			      //       echo "<a class='is-linkless m-tile__heading' href='" . get_the_permalink($geopccb_post) . "'>" . get_the_title($geopccb_post) . "</a>";
-			      //       echo "<span class='m-tile__timestamp'>" . get_the_date("F j, Y", $geopccb_post->ID) . "</span>";
-			      //   	echo "</div>";
-						// 	}
-						// }
-						?>
-					<!-- </div> -->
-
 	      <a class="btn btn-light is-linkless" href="<?php echo esc_url($geopportal_mainpage_browse_url); ?>">Browse All Featured Content</a>
 			</div>
 		</div>
