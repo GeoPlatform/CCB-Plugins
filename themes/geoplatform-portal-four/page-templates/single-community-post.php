@@ -67,7 +67,7 @@ get_template_part( 'sub-header-com', get_post_format() );
       if (has_post_thumbnail()){
         echo "<div class='m-article'>";
           echo "<div class='m-article__desc'>";
-            echo "<img src='" . get_the_post_thumbnail_url() . "' width='100%' alt='" . get_the_title() . " Thumbnail'>";
+            echo "<img src='" . get_the_post_thumbnail_url($post->ID, 'large') . "' width='100%' alt='" . get_the_title() . " Thumbnail'>";
           echo "</div>";
         echo "</div>";
       }

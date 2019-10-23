@@ -14,10 +14,8 @@
 get_header();
 get_template_part( 'sub-header-post', get_post_format() );
 
-?>
-<div class="l-body l-body--two-column">
-	<div class="l-body__main-column">
-	<?php
+echo "<div class='l-body l-body--one-column'>";
+	echo "<div class='l-body__main-column'>";
 
 	$args = array(
 		'posts_per_page' => get_theme_mod('blogcount_controls', 5),
@@ -29,7 +27,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 		// Grabs default 404 image as thumb and overwrites if the post has one.
  		$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
  		if ( has_post_thumbnail() )
- 			$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($post->ID, 'medium');
+ 			$geopccb_archive_disp_thumb = get_the_post_thumbnail_url();
     ?>
 
 		<div class="m-article m-article--flex">
@@ -64,6 +62,5 @@ get_template_part( 'sub-header-post', get_post_format() );
 		wp_reset_postdata(); ?>
 
   </div>
-  <?php get_template_part( 'sidebar', get_post_format() ); ?>
 </div>
 <?php get_footer(); ?>

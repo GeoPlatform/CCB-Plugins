@@ -63,8 +63,9 @@ if ( ! function_exists ( 'geop_ccb_scripts' ) ) {
 if ( ! function_exists ( 'geop_ccb_header_image_method' ) ) {
 	function geop_ccb_header_image_method() {
       $geopccb_headerImage = get_template_directory_uri() . "/img/default-banner.png";
+      $geopccb_theme_options = geop_ccb_get_theme_mods();
 
-      if (is_singular() && get_the_post_thumbnail_url()){
+      if (is_singular() && get_the_post_thumbnail_url() && get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'feat'){
         $geopccb_headerImage = get_the_post_thumbnail_url();
       }
       elseif (get_header_image()){
@@ -480,7 +481,7 @@ if ( ! function_exists ( 'geop_ccb_sanitize_searchbar' ) ) {
  */
 if ( ! function_exists ( 'geop_ccb_sanitize_postbanner' ) ) {
 	function geop_ccb_sanitize_postbanner( $geop_ccb_value ) {
-		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
+		if ( ! in_array( $geop_ccb_value, array( 'feat', 'glob', 'off' ) ) )
 			$geop_ccb_value = 'off';
 		return $geop_ccb_value;
 	}
@@ -1928,9 +1929,10 @@ if ( ! function_exists ( 'geop_ccb_postbanner_register' ) ) {
         'type' => 'radio',
         'label' => 'Page Banner Controls',
         'section' => 'font_section',
-        'description' => "By default, pages use a minimalistic header. However, the user has the option of replacing this with the traditional post banner containing featured image and WYSIWYG text.",
+        'description' => "By default, pages use a minimalistic header. However, the user has the option of replacing this with the traditional post banner with superimposed WYSIWYG text, utilizing the page's individual featured image or the site's global banner image.",
         'choices' => array(
-            'on' => __('Enabled',  'geoplatform-ccb'),
+            'feat' => __('Enabled (featured)',  'geoplatform-ccb'),
+            'glob' => __('Enabled (global)',  'geoplatform-ccb'),
             'off' => __('Disabled',  'geoplatform-ccb'),
           ),
     ));

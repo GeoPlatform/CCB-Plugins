@@ -15,7 +15,7 @@ get_template_part( 'sub-header-post', get_post_format() );
 $geopccb_theme_options = geop_ccb_get_theme_mods();
 
 
-if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) == 'on'){
+if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) != 'off'){
 
   $geopccb_banner_card_style = get_theme_mod('feature_controls', 'fade');
   $geopccb_banner_card_fade = "widget-featured-fade-zero";
@@ -27,12 +27,20 @@ if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_cont
   echo "<div class='widget-banner-main'>";
     echo "<div class='widget-banner-sub ". $geopccb_banner_card_fade . "'>";
       echo "<div class='widget-banner-container container'>";
-        echo "<div class='m-article__heading' style='color:white'>";
-          echo esc_attr(the_title(), 'geoplatform-ccb');
-        echo "</div>";
-        echo "<div style='color:white'>";
-          echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true));
-        echo "</div>";
+
+        if (get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true) != '' ){
+          echo "<div class='m-article__heading geop-banner-wysiwyg-yes'>";
+            echo esc_attr(the_title(), 'geoplatform-ccb');
+          echo "</div>";
+          echo "<div class='geop-banner-wysiwyg-yes'>";
+           echo wp_kses_post(get_post_meta($post->ID, 'geop_ccb_custom_wysiwyg', true));
+          echo "</div>";
+        } else {
+          echo "<div class='m-article__heading geop-banner-wysiwyg-no'>";
+            echo esc_attr(the_title(), 'geoplatform-ccb');
+          echo "</div>";
+        }
+
       echo "</div>";
     echo "</div>";
   echo "</div>";

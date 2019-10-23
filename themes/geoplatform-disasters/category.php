@@ -12,7 +12,7 @@
 get_header();
 get_template_part( 'sub-header-cat', get_post_format() );
 
-echo "<div class='l-body l-body--two-column'>";
+echo "<div class='l-body l-body--one-column'>";
 	echo "<div class='l-body__main-column'>";
 
 		//gets id of current category
@@ -60,7 +60,7 @@ echo "<div class='l-body l-body--two-column'>";
 			// Grabs default 404 image as thumb and overwrites if the post has one.
  			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
  			if (get_term_meta($geopccb_cat_iter->cat_ID, 'category-image-id', true))
- 				$geopccb_archive_disp_thumb = wp_get_attachment_image_src(get_term_meta($geopccb_cat_iter->cat_ID, 'category-image-id', true), 'medium')[0];
+ 				$geopccb_archive_disp_thumb = wp_get_attachment_image_src(get_term_meta($geopccb_cat_iter->cat_ID, 'category-image-id', true), 'full')[0];
 
  			// To prevent entries overlapping their blocks, sets min height to match thumb.
  			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
@@ -167,6 +167,5 @@ echo "<div class='l-body l-body--two-column'>";
  		}
 
   echo "</div>";
-  get_template_part( 'sidebar', get_post_format() );
 echo "</div>";
 get_footer();

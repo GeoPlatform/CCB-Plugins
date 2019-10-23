@@ -92,7 +92,7 @@ class Geopportal_Communities_Widget extends WP_Widget {
 		// Determination loop that populates the support arrays with data from the page array.
 		foreach($geopportal_communities_page_array as $geopportal_communities_page){
 			if (has_post_thumbnail($geopportal_communities_page))
-				array_push($geopportal_communities_thumb_array, get_the_post_thumbnail_url($geopportal_communities_page));
+				array_push($geopportal_communities_thumb_array, get_the_post_thumbnail_url($geopportal_communities_page, 'medium'));
 			else
 				array_push($geopportal_communities_thumb_array, get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png');
 

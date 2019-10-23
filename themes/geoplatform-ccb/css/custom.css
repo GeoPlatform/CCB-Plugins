@@ -126,3 +126,13 @@
 .geop-header-search-min-site {
   min-width: 15em;
 }
+
+.geop-banner-wysiwyg-yes {
+  color: white;
+}
+
+.geop-banner-wysiwyg-no {
+  color: white;
+  text-align: center;
+  font-size: 2.5em;
+}
