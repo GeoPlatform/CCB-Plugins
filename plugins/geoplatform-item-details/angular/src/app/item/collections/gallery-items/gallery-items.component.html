@@ -3,7 +3,7 @@
         [ngClass]="{'fa-caret-down':isCollapsed,'fa-caret-up':!isCollapsed}"
         (click)="toggleCollapsed()">
     </span>
-    <strong>Gallery Items</strong>
+    <strong>Gallery Items ({{items?items.length:0}})</strong>
 </div>
 
 <div [ngClass]="{'is-hidden':!isCollapsed}" class="t-fg--gray-md">
@@ -20,7 +20,7 @@
         <div *ngFor="let item of items" class="o-gallery__item">
             <div *ngIf="item.asset">
                 <gpid-depiction [item]="item.asset"></gpid-depiction>
-                <gpid-resource-link [item]="item.asset"></gpid-resource-link>
+                <gpid-resource-link [item]="item.asset" class="u-text--sm"></gpid-resource-link>
             </div>
         </div>
     </div>

@@ -1,3 +1,4 @@
+import { moveItemInArray }  from '@angular/cdk/drag-drop';
 import { Subject, Subscription } from 'rxjs';
 import {
     Query, ItemService, ItemTypes,
@@ -12,6 +13,7 @@ export const Events = {
     ADD     : Symbol("add"),    //add layer event
     DEL     : Symbol("del"),    //remove layer event
     VIZ     : Symbol("viz"),    //layer visibility event
+    MOVE    : Symbol("move"),   //layer moved (reordered)
     BASE    : Symbol("base"),   //base layer event
     EXTENT  : Symbol("extent")  //map extent change
 }
@@ -39,28 +41,10 @@ export interface LayerState {
 }
 
 
-// export interface Item {
-//     uri         : string;
-//     type        : string;
-//     title       : string;
-//     description : string;
-//     createdBy   : string;
-//     keywords   ?: string[];
-//     themes     ?: any[];
-//     topics     ?: any[];
-//     usedBy     ?: any[];
-//     publishers ?: any[];
-//     classifiers?: {[key:string]:any};
-//     resourceTypes ?: any[];
-//     extent     ?: { minx ?: number; maxx ?: number; miny ?: number; maxy ?: number; };
-// }
-//
-// export interface MapItem extends Item {
-//     layers      : LayerState[];
-//     baseLayer  ?: any;
-// }
-
-
+/**
+ *
+ *
+ */
 export class DataProvider {
 
     //GP service to fetch data items
@@ -179,12 +163,13 @@ export class DataProvider {
             throw new Error("Nothing exists to be processed into renderables");
         }
 
-        let arr = item;
-        if(!Array.isArray(item)) {
-            arr = [item];
-        }
+        let arr = Array.isArray(item) ? item : [item];
 
-        let datasets = [], services = [], layers = [];
+        let datasets = [],
+            services = [],
+            layers   = [],
+            // maps     = [],
+            galleries = [];
 
         arr.forEach( it => {
 
@@ -198,16 +183,19 @@ export class DataProvider {
                 this.setDetails(it as Item);
             }
 
-
-            if(ItemTypes.DATASET === type) datasets.push(it);
+            if(     ItemTypes.DATASET === type) datasets.push(it);
             else if(ItemTypes.SERVICE === type) services.push(it);
-            else if(ItemTypes.LAYER === type) layers.push(it);
+            else if(ItemTypes.LAYER   === type) layers.push(it);
+            // else if(ItemTypes.MAP     === type) maps.push(it);
+            else if(ItemTypes.GALLERY === type) galleries.push(it);
              //else skip it
         });
 
-        if(datasets.length) this.processDatasets(datasets);
-        if(services.length) this.processServices(services);
-        if(layers.length) this.processLayers(layers);
+        if(datasets.length)  this.processDatasets(datasets);
+        if(services.length)  this.processServices(services);
+        if(layers.length)    this.processLayers(layers);
+        // if(maps.length)      this.processMaps(maps);
+        if(galleries.length) this.processGalleries(galleries);
 
     }
 
@@ -220,26 +208,15 @@ export class DataProvider {
         items.map( item => {
             svcIds = svcIds.concat( (item.services || []).map(s=>s.id));
         });
-        let query = new Query()
-            .fields('*')
-            .types(ItemTypes.LAYER)
-            .page(0)
-            .pageSize(100);
-        query.setParameter("service", svcIds.join(','));
-        this.searchItems(query);
+        this.findServiceLayers(svcIds);
     }
 
     /**
      *
      */
     processServices(items : any[]) {
-        let query = new Query()
-            .fields('*')
-            .types(ItemTypes.LAYER)
-            .page(0)
-            .pageSize(100);
-        query.setParameter( "service", items.map(it=>it.id).join(',') );
-        this.searchItems(query);
+        let svcIds = items.map(it=>it.id);
+        this.findServiceLayers(svcIds);
     }
 
     /**
@@ -247,6 +224,116 @@ export class DataProvider {
      */
     processLayers(items : any[]) {
         this.addData(items);
+    }
+
+    /**
+     *
+     */
+    processMaps(maps: any[]) {
+
+        let serviceIds = [], layerIds = [], layers = [],
+            baseLayerId = null, baseLayer = null;
+        maps.forEach(map => {
+
+            //they have a base layer
+            if(map.baseLayer_id) {
+                layerIds.push(map.baseLayer_id);
+                baseLayerId = map.baseLayer_id;
+            } else if(map.baseLayer) {
+                baseLayer = map.baseLayer;
+            }
+
+            //they have one or more overlay layers
+            map.layers.forEach(layerState => {
+                if(layerState.layer) layers.push(layerState.layer);
+                else if(layerState.layer_id) layerIds.push(layerState.layer_id);
+            });
+        });
+
+        //add already resolved base layer
+        if(baseLayer) this.setBaseLayer(baseLayer);
+
+        //add already parsed layers
+        if(layers.length) setTimeout(() => { this.addData(layers); });
+
+        //if layers were just layer ids instead of full objects, resolve them and add
+        if(layerIds.length) {
+            this.itemService.getMultiple(layerIds)
+            .then( (response:any) => {
+                this.addMapLayers(response, baseLayerId);
+            })
+            .catch(e => {
+                logger.error("Error searching for items: " + e.message);
+            });
+        }
+    }
+
+    /**
+     *
+     */
+    processGalleries(galleries: any[]) {
+
+        let serviceIds = [], layerIds = [], layers = [], baseLayerId = null;
+        galleries.forEach(gallery => {
+
+            if(!gallery.items) return;
+
+            gallery.items.forEach(item => {
+
+                if(item.assetType === ItemTypes.SERVICE) {
+                    //they have a service with layers (check below)...
+                    serviceIds.push(item.assetId);
+
+                } else if(item.assetType === ItemTypes.LAYER && item.asset) { //they have a layer...
+                    layers.push(item.asset);
+
+                } else if(item.assetType === ItemTypes.MAP && item.asset) {
+                    //they have a map with a base layer
+                    if(item.asset.baseLayer_id) {
+                        layerIds.push(item.asset.baseLayer_id);
+                        //only remember the first base layer found
+                        baseLayerId = baseLayerId || item.asset.baseLayer_id;
+                    }
+
+                    //they have a map with one or more overlay layers
+                    item.asset.layers.forEach(layerState => {
+                        if(layerState.layer) layers.push(layerState.layer);
+                        else if(layerState.layer_id) layerIds.push(layerState.layer_id);
+                    });
+                }
+            });
+        });
+
+        if(layers.length) setTimeout(() => { this.addData(layers); });
+
+        //find all layers associated with extracted service ids
+        if(serviceIds.length) {
+            this.findServiceLayers(serviceIds);
+        }
+
+        //and resolve all layers referenced via ids
+        if(layerIds.length) {
+            this.itemService.getMultiple(layerIds).then( (response:any) => {
+                this.addMapLayers(response, baseLayerId);
+            }).catch(e => {
+                logger.error("Error searching for items: " + e.message);
+            });
+        }
+    }
+
+    /**
+     * Finds and adds layers to the current data based upon associations with
+     * services having ids in provided list
+     * @param svcIds - array of service identifiers from which to find linked layers
+     */
+    findServiceLayers( svcIds : string[] ) {
+        let query = new Query()
+            .fields('*')
+            .types(ItemTypes.LAYER)
+            .page(0)
+            .pageSize(100);
+        query.setParameter("service", svcIds.join(','));
+        this.searchItems(query);
     }
 
 
@@ -297,39 +384,75 @@ export class DataProvider {
         return this.extent;
     }
 
+
+    /**
+     * @param layers - list of zero or more layers
+     * @param baseLayerId - string id of layer to set as base layer
+     */
+    addMapLayers( layers : any[], baseLayerId ?: string ) {
+        if(!layers || !layers.length) return;
+        setTimeout(() => {
+            if(baseLayerId) {
+                let data = [];
+                layers.forEach( l => {
+                    if(l.id === baseLayerId) this.setBaseLayer(l);
+                    else data.push(l);
+                });
+                this.addData(data);
+                return;
+            }
+            this.addData(layers);
+        });
+    }
+
+
+    /**
+     * @param item Item or Item[] to add to list of data layers
+     */
     addData(item : any | any[], warning ?: string) {
 
-        if(Array.isArray(item)) {
-            this.data = this.data.concat( (item as any[]) );
-        } else {
-            this.data.push( item );
+        let items = Array.isArray(item) ? item : [item];
+
+        if(this.data.length) {
+            //check if already added
+            items = items.filter( it => this.data.findIndex(d=>d.id===it.id)<0 );
         }
 
+        if(!item.length) return;  //no new layers to add
+
+        this.data = this.data.concat( items );
         this.adjustExtent();
 
-        let evt = {
-            type : Events.ADD,
-            data: Array.isArray(item) ? item as any[] : [ item ]
-        } as DataEvent;
+        let evt = { type : Events.ADD, data: items } as DataEvent;
         if(warning) evt.warning = warning;
         this.sub.next(evt);
     }
 
-    removeData(item : any) {
-        let idx = this.data.findIndex( it => it.id === item.id);
-        if(idx > -1) {
-            this.data.splice(idx, 1);
-            let evt = {
-                type : Events.DEL,
-                data: [ item ]
-            } as DataEvent;
+    /**
+     * @param item Item to remove from data layers list
+     */
+    removeData(item : any | any[], trigger ?: boolean) {
 
-            this.adjustExtent();
+        let removed = [];
+        let arr = Array.isArray(item) ? item : [item];
+        arr.forEach( o => {
+            let idx = this.data.findIndex( it => it.id === o.id);
+            if(idx > -1) {
+                this.data.splice(idx, 1);
+                removed.push(o);
+            }
+        });
 
-            this.sub.next(evt);
-        }
+        if( false === trigger ) return;
+
+        let evt = { type : Events.DEL, data: removed } as DataEvent;
+        this.adjustExtent();
+        this.sub.next(evt);
     }
 
+    /**
+     * @return array of layer objects
+     */
     getData( ) : any[] {
         return this.data;
     }
@@ -339,7 +462,7 @@ export class DataProvider {
      * @return array of data objects matching specified state
      */
     getSelected( state : boolean ) : any[] {
-        return this.data.filter( d => !!this.selected[d.id] );
+        return this.data.filter( d => !!this.selected[d.id] ).sort( (a,b)=>a.zIndex>b.zIndex?-1:1 );
     }
 
     /**
@@ -347,10 +470,7 @@ export class DataProvider {
      */
     toggleData( item : any|any[] ) {
 
-        let arr = item;
-        if(!Array.isArray(item)) {
-            arr = [item];
-        }
+        let arr = Array.isArray(item) ? item : [item];
 
         let type = Events.ON;
         arr.forEach( it => {
@@ -367,16 +487,45 @@ export class DataProvider {
         this.sub.next(evt);
     }
 
+    /**
+     *
+     */
+    activateData( item : any|any[] ) {
+
+        let arr = Array.isArray(item) ? item : [item];
+
+        let type = Events.ON;
+        arr.forEach( it => {
+            this.selected[it.id] = true;
+            this.visibility[it.id] = true;
+        });
+
+        let evt : DataEvent = { type : Events.ON, data: arr };
+        this.sub.next(evt);
+    }
+
+
+    /**
+     * @param item - layer object
+     * @return boolean
+     */
     isSelected( item : any ) : boolean {
         let id = this.getId(item);
         return !!this.selected[id];
     }
 
+    /**
+     * @param item - layer object
+     * @return boolean
+     */
     isVisible( item : any ) : boolean {
         let id = this.getId(item);
         return !!this.visibility[id];
     }
 
+    /**
+     * @param item - layer state
+     */
     toggleVisibility( item : any ) {
         if(!item || !item.id) return;
         this.visibility[item.id] = !this.visibility[item.id];
@@ -384,6 +533,35 @@ export class DataProvider {
         this.trigger(evt);
     }
 
+    /**
+     * @param layers - list of layer states
+     */
+    updateOrdering(layers : any[]) {
+        layers.forEach( (state) => {
+            let idx = this.data.findIndex(d => d.id === state.layer.id);
+            this.data[idx].zIndex = state.zIndex;
+        });
+    }
+
+    /**
+     *
+     */
+    moveLayerBefore(fromId : string, toId : string) {
+        let selected   = this.getSelected(true);
+        let currentPos = selected.findIndex(d=>d.id===fromId);
+        let newPos = selected.findIndex(d=>d.id===toId);
+        let from   = this.data.findIndex(d=>d.id===fromId);
+        let to     = this.data.findIndex(d=>d.id===toId);
+        let copy   = this.data.splice(from, 1)[0];
+        this.data.splice(to, 0, copy);
+        let evt : DataEvent = { type: Events.MOVE, data: [currentPos, newPos] }
+        this.trigger(evt);
+    }
+
+    /**
+     * @param item - layer
+     * @return identifier of layer
+     */
     private getId( item : any ) {
         if(!item) return null;
         let id = null;
@@ -393,7 +571,10 @@ export class DataProvider {
     }
 
 
-
+    /**
+     * @param layer - layer object to use as base layer
+     * @param trigger - optional boolean
+     */
     setBaseLayer( layer : any, trigger ?: boolean ) {
         this.details.baseLayer = layer;
         if(typeof(trigger) === 'undefined' || trigger === true) {
@@ -401,6 +582,10 @@ export class DataProvider {
             this.sub.next(evt);
         }
     }
+
+    /**
+     * @return layer object used as base layer
+     */
     getBaseLayer() {
         return this.details.baseLayer;
     }
@@ -429,6 +614,8 @@ export class DataProvider {
     private adjustExtent() {
         let extent : Extent = { minx: 179, maxx: -179, miny: 89, maxy: -89 };
         this.data.forEach( it => {
+
+            if(!it || !it.extent) return;
 
             let itExt : Extent = it.extent as Extent;
             if(!itExt) return;

@@ -31,7 +31,7 @@ interface Thumbnail {
 export class ImageFallbackDirective {
     @Input() src : string;
     @Input() fallback : string = `${environment.assets}/img-404.png`;
-    @HostBinding('class') className
+    @HostBinding('class') className = 'is-image-loading';
     onImgError() { this.src = this.fallback; }
     onImgLoad() { this.className = 'is-image-loaded'; }
 }

@@ -3,7 +3,7 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Adds window.RPMService to global namespace
 import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
@@ -66,8 +66,7 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import {
     LayersComponent,
-    AvailableLayerComponent,
-    SelectedLayerComponent
+    AvailableLayerComponent
 } from './layers/layers.component';
 import {
     DetailsComponent, ArrayPropertyComponent
@@ -84,7 +83,6 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
     FixLabelPipe,
     LayersComponent,
     AvailableLayerComponent,
-    SelectedLayerComponent,
     DetailsComponent,
     ArrayPropertyComponent,
     SidebarComponent,
@@ -96,6 +94,7 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
       FormsModule,
       HttpClientModule,
       HttpClientJsonpModule,
+      DragDropModule,
       GeoPlatformClientModule
   ],
   providers: [

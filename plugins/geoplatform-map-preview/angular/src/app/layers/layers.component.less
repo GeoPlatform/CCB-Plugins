@@ -54,7 +54,7 @@
     &.active {
         color: #fff;
         background-color: #0068d8;
-        
+
         &:hover { color: #fff; }
     }
 }
@@ -75,4 +75,29 @@
             border-color: @color-blue-xlt;
         }
     }
+}
+
+
+/* ------------------------------------------------
+ *  Drag & Drop styles for layers on map
+ *
+ *  note: these styles belong here, even though the
+ *  'preview' element is appended to the body.
+ * ------------------------------------------------ */
+
+.m-layer-item {
+    border: 1px solid #ddd;
+    padding: 0.25em 0;
+    margin-bottom: -1px;
+    cursor: grab;
+}
+.cdk-drop-list-dragging .m-layer-item.cdk-drag.cdk-drag-placeholder {
+    background: rgba(0, 255, 0, 0.25);
+    box-shadow: 0 1px 3px rgba(0, 255, 0, 0.5);
+    border: 1px solid #0f0;
+}
+
+.cdk-drag-preview {
+    background-color: rgba(255,255,255,0.75);
+    border: 1px solid #ddd;
 }

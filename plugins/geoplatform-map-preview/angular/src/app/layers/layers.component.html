@@ -25,6 +25,7 @@
                         Base Layer
                     </a>
                 </li>
+
             </ul>
 
             <div class="o-map-layers__content">
@@ -44,13 +45,15 @@
                     </div>
 
                     <!-- list of selected layers on map -->
-                    <div *ngFor="let item of activeLayers" class="m-layer-item">
-                        <button type="button" class="btn btn-sm btn-link"
-                            (click)="toggleLayerViz(item)">
-                            <span class="fas fa-eye" [ngClass]="{'t-fg--gray-lt':!isVisible(item)}"></span>
-                            <span class="sr-only">Toggle layer visibility</span>
-                        </button>
-                        <span>{{item.label}}</span>
+                    <div cdkDropList (cdkDropListDropped)="onDropEvent($event)">
+                        <div *ngFor="let item of activeLayers" class="m-layer-item" cdkDrag>
+                            <button type="button" class="btn btn-sm btn-link"
+                                (click)="toggleLayerViz(item)">
+                                <span class="fas fa-eye" [ngClass]="{'t-fg--gray-lt':!isVisible(item)}"></span>
+                                <span class="sr-only">Toggle layer visibility</span>
+                            </button>
+                            <span>{{item.label}}</span>
+                        </div>
                     </div>
 
                 </div>
@@ -109,7 +112,6 @@
                         </a> and let us know.
                     </div>
                 </div>
-
 
             </div>
 

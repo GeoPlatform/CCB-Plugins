@@ -6,9 +6,16 @@
 export const environment = {
     production: false,
     env: 'development',
+
+    //url to UAL for this plugin's environment
     ualUrl: 'https://sit-ual.geoplatform.us',
+
+    //url to Portal (which will be diff if this plugin is deployed in a CCB)
+    portalUrl: 'https://sit.geoplatform.us',
+
+    //url to the WP instance hosting this plugin
     wpUrl: '',
-    // helpUrl: 'https://sit.geoplatform.us/help/geoplatform-search-help/',
+
     root: '/',
     assets: 'assets/'
 };

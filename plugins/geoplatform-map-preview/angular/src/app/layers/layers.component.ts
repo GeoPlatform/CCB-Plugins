@@ -3,6 +3,7 @@ import {
     Input, Output, EventEmitter, SimpleChanges, HostBinding
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Subscription } from "rxjs";
 import { Query, LayerService } from "@geoplatform/client";
 
@@ -103,7 +104,7 @@ export class LayersComponent implements OnInit {
 
 
     onDataEvent( event : DataEvent ) {
-        logger.debug("AvailableLayers.onDataEvent(" + event.type.toString() + ")");
+        // logger.debug("AvailableLayers.onDataEvent(" + event.type.toString() + ")");
         switch(event.type) {
 
             case Events.ON :
@@ -120,12 +121,16 @@ export class LayersComponent implements OnInit {
                 //if it's a small set of layers, add them to the map automatically
                 if(this.data.getData().length < 10) {
                     //but only add the root layers
-                    this.data.toggleData(this.available);
+                    this.data.activateData(this.available);
                 }
 
                 break;
 
             case Events.DEL :
+                break;
+
+            case Events.MOVE :
+                this.activeLayers = this.data.getSelected(true);
                 break;
         }
     }
@@ -190,6 +195,15 @@ export class LayersComponent implements OnInit {
     }
 
 
+    /**
+     *
+     */
+    onDropEvent( event: CdkDragDrop<any[]> ) {
+        // console.log(`DropEvent (${event.previousIndex}, ${event.currentIndex})`);
+        let fromId = this.activeLayers[event.previousIndex].id;
+        let toId = this.activeLayers[event.currentIndex].id;
+        this.data.moveLayerBefore(fromId, toId);
+    }
 }
 
 
@@ -261,35 +275,4 @@ export class AvailableLayerComponent implements OnInit {
         return this.isSelected || this.isParentSelected;
     }
 
-}
-
-
-
-
-
-
-@Component({
-  selector: 'gpmp-layer-selected',
-  template: `
-  <div class="m-layer-item">
-      <button type="button" class="btn btn-sm btn-link" (click)="onClick()">
-          <span *ngIf="!item.visibility" class="far fa-eye-slash"></span>
-          <span *ngIf="item.visibility" class="far fa-eye"></span>
-      </button>
-      <span>{{item.label}}</span>
-  </div>
-  `,
-  styleUrls: ['./layer.component.less']
-})
-export class SelectedLayerComponent {
-
-    @Input() item : any;
-    @Input() isVisible : boolean = true;
-    @Output() onActivate : EventEmitter<any> = new EventEmitter<any>();
-
-    constructor() {}
-
-    onClick() {
-        this.onActivate.emit(this.item);
-    }
 }
