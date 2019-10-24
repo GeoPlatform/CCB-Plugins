@@ -120,7 +120,7 @@ function geopmap_shortcode_creation($geopmap_atts){
 	if (file_exists(get_template_directory() . '/css/geop-style.css'))
 		$geopmap_theme = 'T';
 
-	wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'assets/fontawesome-all.css', array(), '2.0.7', 'all' );
+	wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'public/assets/fontawesome-all.css', array(), '2.0.7', 'all' );
 	wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'public/css/bootstrap.css', array(), '2.0.7', 'all' );
 
 	// Creates an empty error text report string, grabs the map_id string after
