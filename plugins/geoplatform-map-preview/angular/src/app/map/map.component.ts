@@ -132,7 +132,7 @@ export class MapComponent implements OnInit, OnChanges {
 
     onMapBoundsChange() {
         let bounds = this.map.getMap().getBounds();
-        logger.debug("Map Extent Changed: ", bounds.toBBoxString());
+        // logger.debug("Map Extent Changed: ", bounds.toBBoxString());
         let extent : Extent = {
             minx: bounds.getWest(), miny: bounds.getSouth(),
             maxx: bounds.getEast(), maxy: bounds.getNorth()
@@ -292,9 +292,13 @@ export class MapComponent implements OnInit, OnChanges {
     }
 
 
+    validateLayersAdded( layers : any[] ) {
+        return layers.filter( layer => !this.map.getLayerState(layer.id) );
+    }
+
 
     onDataEvent( event : DataEvent ) {
-        logger.debug("Map.onDataEvent(" + event.type.toString() + ")");
+        // logger.debug("Map.onDataEvent(" + event.type.toString() + ")");
         switch(event.type) {
 
             case Events.ON :
@@ -311,6 +315,17 @@ export class MapComponent implements OnInit, OnChanges {
                     this.map.setExtent(this.data.getExtent());
                 }, 500);
 
+                let missing = this.validateLayersAdded(event.data);
+                if(missing && missing.length) {
+                    this.data.removeData(missing);
+                }
+
+                //have mapinstance update it's z-index values for all layers
+                this.map.updateZIndices();
+
+                //then update the ordering of them in data provider's selected array
+                this.data.updateOrdering(this.map.getLayers());
+
                 break;
 
             case Events.OFF :
@@ -319,6 +334,11 @@ export class MapComponent implements OnInit, OnChanges {
 
             case Events.VIZ :
                 this.map.toggleLayerVisibility(event.data[0].id);
+                break;
+
+            case Events.MOVE :
+                this.map.moveLayer(event.data[0] as number, event.data[1] as number);
+                this.data.updateOrdering(this.map.getLayers());
                 break;
 
             case Events.BASE :

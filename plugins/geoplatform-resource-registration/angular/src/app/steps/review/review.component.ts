@@ -166,11 +166,14 @@ export class ReviewComponent implements OnInit, OnChanges, OnDestroy, StepCompon
     }
 
     /**
-     *
+     * Open the created resource using Item Details plugin in the environment
+     * Note: this location may be different than the WP instance this RRp instance
+     * is deployed in, such as when RRp is used within a CCB
      */
     viewResource() {
+        let baseHref = Config.portalUrl || Config.wpUrl;
         let type = this.getTypeURLValue(this.data.type);
-        let url = Config.wpUrl + '/resources/' + type + '/' + this.data.id;
+        let url = baseHref + '/resources/' + type + '/' + this.data.id;
         window.location.href = url;
     }
 

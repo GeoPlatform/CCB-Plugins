@@ -1,8 +1,17 @@
 
-
 .o-gallery__items {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
-    grid-gap: 1em / 1em;
+    grid-gap: 1em;
+}
+@media(min-width:768px) {
+    .o-gallery__items {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+@media(min-width:992px) {
+    .o-gallery__items {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
 }
