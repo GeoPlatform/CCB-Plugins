@@ -109,7 +109,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 ## Changelog
 
 ### 4.0.6 ###
-* Release pending
+* Release October 25, 2019
 
 - Fixed loss of functionality in tags page.
 - Added option with page banners to apply a page's featured image or the global banner image.
