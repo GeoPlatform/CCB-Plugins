@@ -65,7 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
             this.updatePageTitle(`GeoPlatform Resource : ${TYPE}`);
             this.rpm.logEvent(TYPE, 'Viewed', item.id);
 
-            this.addPageMetadata(item);
+            // this.addPageMetadata(item);
         })
         .catch( e => {
             //display error message indicating failure to load item

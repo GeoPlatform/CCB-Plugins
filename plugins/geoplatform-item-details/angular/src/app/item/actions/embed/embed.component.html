@@ -1,0 +1,13 @@
+<div class="m-action" *ngIf="isSupported()">
+    <p class="u-text--justify u-text--sm u-mg-bottom--md">
+        View this resource on a map. For Service resources, this includes all
+        layers hosted by the service. For Dataset resources, this includes associated
+        layers as well as layers hosted by associated services.
+    </p>
+    <button type="button" class="btn btn-info btn-block u-mg-top--xlg"
+        (click)="open()">
+        <span *ngIf="isCollapsed">Show </span>
+        <span *ngIf="!isCollapsed">Hide </span>
+        Embed Code
+    </button>
+</div>
