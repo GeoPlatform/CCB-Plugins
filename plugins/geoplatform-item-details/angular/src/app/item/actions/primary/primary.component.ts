@@ -73,16 +73,6 @@ export class PrimaryActionComponent implements OnInit {
         let type = this.item.type;
         switch(type) {
             case ItemTypes.MAP : return 'Open Map';
-            // case ItemTypes.DATASET : return "View Source";
-            // case ItemTypes.SERVICE :
-            // case ItemTypes.LAYER :
-            // case ItemTypes.GALLERY :
-            // case ItemTypes.COMMUNITY :
-            // case ItemTypes.ORGANIZATION :
-            // case ItemTypes.CONTACT :
-            // case ItemTypes.PERSON :
-            // case ItemTypes.CONCEPT :
-            // case ItemTypes.CONCEPT_SCHEME :
             default: return 'View in Object Editor';
         }
     }
@@ -93,19 +83,28 @@ export class PrimaryActionComponent implements OnInit {
         let type = this.item.type;
         switch(type) {
             case ItemTypes.MAP : return 'Open Map';
-            case ItemTypes.DATASET :
-                // return 'View the source metadata for this Dataset';
-            case ItemTypes.SERVICE :
-            case ItemTypes.LAYER :
-            case ItemTypes.GALLERY :
-            case ItemTypes.COMMUNITY :
-            case ItemTypes.ORGANIZATION :
-            case ItemTypes.CONTACT :
-            case ItemTypes.PERSON :
-            case ItemTypes.CONCEPT :
-            case ItemTypes.CONCEPT_SCHEME :
             default: return 'View all of this resource\'s details using GeoPlatform Object Editor';
         }
+    }
+
+    getIconClass() {
+        let value = 'fas fa-external-link-alt';
+        // if(!this.item || !this.item.type) return value;
+        // let type = this.item.type;
+        // switch(type) {
+        //     case ItemTypes.MAP :
+        //     case ItemTypes.DATASET :
+        //     case ItemTypes.SERVICE :
+        //     case ItemTypes.LAYER :
+        //     case ItemTypes.GALLERY :
+        //     case ItemTypes.COMMUNITY :
+        //     case ItemTypes.ORGANIZATION :
+        //     case ItemTypes.CONTACT :
+        //     case ItemTypes.PERSON :
+        //     case ItemTypes.CONCEPT :
+        //     case ItemTypes.CONCEPT_SCHEME :
+        // }
+        return value;
     }
 
 

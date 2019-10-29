@@ -1,11 +1,6 @@
 <div class="m-action" *ngIf="isSupported()">
-    <p class="u-text--justify u-text--sm u-mg-bottom--md">
-        Embed a representation of this item into a webpage using HTML
-    </p>
-    <button type="button" class="btn btn-secondary btn-block u-mg-top--xlg"
+    <button type="button" class="btn btn-link"
         (click)="open()">
-        <span *ngIf="isCollapsed">Show </span>
-        <span *ngIf="!isCollapsed">Hide </span>
-        Embed Code
+        <span class="fas fa-share-square"></span> Embed This Item
     </button>
 </div>

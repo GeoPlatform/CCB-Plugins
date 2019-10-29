@@ -1,12 +1,12 @@
 <div *ngIf="item" class="m-action">
-    <div class="u-text--justify u-mg-bottom--md u-text--sm">
+    <!-- <div class="u-text--justify u-mg-bottom--md u-text--sm">
         Like this GeoPlatform resource
         <span *ngIf="item?.statistics">
             , which has already been liked
             <strong>{{item?.statistics?.numLikes||0}}</strong>
             times by other users
         </span>
-    </div>
+    </div> -->
     <button type="button" class="btn btn-pink btn-block" (click)="doAction()"
         [disabled]="processing">
         <span class="fas fa-heart"></span>

@@ -235,7 +235,7 @@
         </nav>
 
     </header>
-    
+
     <app-root>
         <!--
             This will be removed by angular on load
@@ -412,6 +412,21 @@
         </small>
 
     </footer>
+
+    <script>
+        function toggleClass(selector, className) {
+            let elem = document.getElementById(selector.replace('#', ''));
+            if(elem) {
+                let existing = elem.getAttribute('class');
+                if(!existing || existing.indexOf(className) < 0) {
+                    existing += ' ' + className;
+                } else {
+                    existing = existing.replace(className);
+                }
+                elem.setAttribute('class', existing);
+            }
+        }
+    </script>
 
 </body>
 </html>

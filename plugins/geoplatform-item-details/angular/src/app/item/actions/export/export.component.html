@@ -1,12 +1,10 @@
 <div *ngIf="item" class="dropdown m-action" ngbDropdown>
-    <div class="u-text--justify u-mg-bottom--md u-text--sm">
-        Export this resource to one of the following formats
-    </div>
-    <button class="btn btn-secondary btn-block dropdown-toggle"
+    <button class="btn btn-link dropdown-toggle"
         type="button" id="dropdownMenuButton"
+        title="Export this resource to one of the following formats"
         ngbDropdownToggle aria-haspopup="true" aria-expanded="false"
         [disabled]="!formats||!formats.length">
-        Export as
+        <span class="fas fa-file-export"></span> Export as
     </button>
     <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownMenuButton">
         <button type="button" class="dropdown-item"

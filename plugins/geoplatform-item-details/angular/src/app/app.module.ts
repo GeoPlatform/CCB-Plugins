@@ -102,6 +102,7 @@ import { PreviewActionComponent } from './item/actions/preview/preview.component
 import { CloneActionComponent } from './item/actions/clone/clone.component';
 import { GalleryActionComponent } from './item/actions/gallery/gallery.component';
 import { EmbedActionComponent, EmbedModalContent } from './item/actions/embed/embed.component';
+import { ActionMenuComponent } from './item/actions/menu/menu.component';
 
 
 import { RPMStatsService } from './shared/rpmstats.service';
@@ -194,6 +195,7 @@ export function initializeApp() {
         ProductComponent,
         AssetsComponent,
         GalleryActionComponent,
+        ActionMenuComponent,
         EmbedActionComponent, EmbedModalContent
     ],
     imports: [
