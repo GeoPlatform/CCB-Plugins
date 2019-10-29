@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <!-- for dev purposes -->
+    <!-- for dev purposes
     <header class="o-header" role="banner">
         <div class="o-header__primary">
             <h1 class="a-brand">GeoPlatform.gov</h1>
@@ -19,9 +19,224 @@
             <div class="a-page__title">GeoPlatform Item Details</div>
         </div>
     </header>
+    -->
 
+    <!-- for dev purposes -->
+    <header class="o-header o-header--sticky" role="banner">
+
+        <div class="o-header__primary" data-page-title="Welcome to the GeoPlatform!" >
+
+            <!--
+                REMOVE THIS COMMENT WHEN IMPLEMENTING...
+                Use H1 on .a-brand b/c 508 requires an H1 to appear near the top of
+                a page for screen readers to know where to start. Note that the
+                .a-brand class overrides any styles set by H1-H6, so no worries as
+                long as no blanket styles are defined for H1-H6.
+            -->
+            <h1 class="a-brand"><a href="http://localhost/my-test-site/" title="Home">GeoPlatform.gov</a></h1>
+
+            <nav class="a-nav" role="navigation" aria-label="High-level navigation links">
+                <div class="a-nav__collapsible-menu">
+                    <div class="dropdown" role="menuitem">
+                        <a class="btn btn-link dropdown-toggle is-hidden--xs" href="http://localhost/my-test-site/resources" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                            Explore
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userSignInButton">
+                            <a href="http://localhost/my-test-site">Datasets</a>
+                            <a href="http://localhost/my-test-site">Services</a>
+                            <a href="http://localhost/my-test-site">Layers</a>
+                            <a href="http://localhost/my-test-site">Maps</a>
+                            <a href="http://localhost/my-test-site">Galleries</a>
+                            <a href="http://localhost/my-test-site">Communities</a>
+                        </div>
+                    </div>
+
+                    <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="http://localhost/my-test-site">NGDA Themes</a>
+                    <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="http://localhost/my-test-site">Search</a>
+                </div>
+                <a role="menuitem" class="is-hidden--xs" href="http://localhost/my-test-site">Help</a>
+                <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+                    <span class="is-hidden--xs">More</span>
+                    <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
+                </a>
+            </nav>
+
+            <div class="dropdown" id="geopportal_header_user_dropdown_parent">
+                  <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="fas fa-user"></span>
+                      <span class="is-hidden--xs">admin</span>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-right" id="geopportal_header_user_dropdown_child" aria-labelledby="userSignInButton">
+                      <div class="d-flex">
+                          <div class="col u-text--center">
+                              <span class="fas fa-user fa-5x"></span>
+                              <br>
+                              <div><strong>admin</strong></div>
+                              <div class="u-text--sm"><em>admin</em></div>
+                          </div>
+                          <div class="col">
+                              <a class="dropdown-item" href="https://accounts.geoplatform.gov/profile">Edit Profile</a>
+                              <a class="dropdown-item" href="https://accounts.geoplatform.gov/updatepw">Change Password</a>
+                              <a class="dropdown-item" href="http://localhost/my-test-site/wp-login.php?action=logout&amp;redirect_to=http%3A%2F%2Flocalhost%2Fmy-test-site%2Fresources%2Fregister%2F&amp;_wpnonce=c751d78429">Sign Out</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+        </div>
+
+
+        <div class="o-header__secondary">
+            <div class="a-page__title">Register Your Data with GeoPlatform.gov</div>
+        </div>
+
+        <nav class="m-megamenu" id="header-megamenu">
+            <div class="m-megamenu__content">
+
+                <div class="col">
+
+                  <div class="d-lg-none d-xl-none">
+                      <div class="m-megamenu__heading">Navigation</div>
+                      <ul class="menu" role="menu">
+                          <li role="menuitem" class="d-md-none">
+                              <a href="http://localhost/my-test-site/resources">Explore</a>
+                              <ul class="menu" role="menu">
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Datasets</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Services</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Layers</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Maps</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Galleries</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Communities</a></li>
+                              </ul>
+                          </li>
+                          <li role="menuitem">
+                              <a role="menuitem" href="http://localhost/my-test-site">NGDA Themes</a>
+                          </li>
+                          <li role="menuitem">
+                              <a role="menuitem" href="http://localhost/my-test-site">Search</a>
+                          </li>
+                      </ul>
+                      <br>
+                  </div>
+
+                  <div class="m-megamenu__heading">Featured</div>
+                  <div class="menu">
+                      <ul>
+                        <li class="page_item page-item-5 page_item_has_children current_page_ancestor current_page_parent"><a href="http://localhost/my-test-site/resources/">Resources</a>
+                        <ul class="children">
+                        	<li class="page_item page-item-6 current_page_item"><a href="http://localhost/my-test-site/resources/register/">Register Your Data with GeoPlatform.gov</a></li>
+                        </ul>
+                        </li>
+                        <li class="page_item page-item-2"><a href="http://localhost/my-test-site/sample-page/">Sample Page</a></li>
+                    </ul>
+                  </div>
+                  <br>
+                  <div class="m-megamenu__heading">Get Involved</div>
+                  <div class="menu">
+                      <ul>
+                        <li class="page_item page-item-5 page_item_has_children current_page_ancestor current_page_parent"><a href="http://localhost/my-test-site/resources/">Resources</a>
+                        <ul class="children">
+                        	<li class="page_item page-item-6 current_page_item"><a href="http://localhost/my-test-site/resources/register/">Register Your Data with GeoPlatform.gov</a></li>
+                        </ul>
+                        </li>
+                        <li class="page_item page-item-2"><a href="http://localhost/my-test-site/sample-page/">Sample Page</a></li>
+                    </ul>
+                  </div>
+                </div>
+
+
+                <div class="col">
+                    <div class="m-megamenu__heading">Explore Data</div>
+                    <ul class="menu" role="menu">
+                        <li role="menuitem">
+                            <a href="https://oe.geoplatform.gov" target="_blank">
+                                Object Editor
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://geoplatform.maps.arcgis.com/home/" target="_blank">
+                              GeoPlatform ArcGIS Organization
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://data.geoplatform.gov/" target="_blank">
+                              Search Data.gov
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://marketplace.geoplatform.gov/" target="_blank">
+                              Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="http://localhost/my-test-site/resources" target="_blank">
+                              Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                    </ul>
+                    <br>
+                    <a class="m-megamenu__heading" href="http://localhost/my-test-site">Apps &amp; Services</a>
+                    <ul class="menu" role="menu">
+                        <li role="menuitem">
+                            <a href="https://viewer.geoplatform.gov" target="_blank">
+                                Map Viewer
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="https://maps.geoplatform.gov" target="_blank">
+                                Map Manager
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="https://marketplace.geoplatform.gov" target="_blank">
+                                Marketplace Preview
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="https://dashboard.geoplatform.gov/" target="_blank">
+                                Performance Dashboard
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="http://statuschecker.fgdc.gov" target="_blank">
+                                FGDC Service Status Checker
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                         </li>
+                    </ul>
+                </div>
+
+
+                <div class="col">
+                    <div class="m-megamenu__heading">About</div>
+                    <div class="menu">
+                        <ul>
+                            <li class="page_item page-item-5 page_item_has_children current_page_ancestor current_page_parent"><a href="http://localhost/my-test-site/resources/">Resources</a>
+                            <ul class="children">
+                            	<li class="page_item page-item-6 current_page_item"><a href="http://localhost/my-test-site/resources/register/">Register Your Data with GeoPlatform.gov</a></li>
+                            </ul>
+                            </li>
+                            <li class="page_item page-item-2"><a href="http://localhost/my-test-site/sample-page/">Sample Page</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="button" class="btn btn-link btn-block" onclick="toggleClass('#header-megamenu','is-open')">
+                <span class="fas fa-caret-up"></span>
+            </button>
+        </nav>
+
+    </header>
+    
     <app-root>
-
         <!--
             This will be removed by angular on load
             We include this so the user sees something other than a white screen
@@ -30,6 +245,173 @@
         <div class="m-message--warning">Fetching item details, please wait...</div>
 
     </app-root>
+
+
+    <footer class="o-footer">
+
+        <a class="u-float--right" href="#"><span class="fas fa-arrow-up"></span>to top</a>
+
+        <div>
+            <a onclick="toggleClass('#footer-megamenu','is-collapsed')">
+                <span class="fas fa-angle-down"></span> Menu
+            </a>
+            <hr>
+        </div>
+
+        <nav class="m-megamenu is-collapsed" id="footer-megamenu">
+            <div class="m-megamenu__content">
+                <div class="col">
+
+                  <div class="d-lg-none d-xl-none">
+                      <div class="m-megamenu__heading">Navigation</div>
+                      <ul class="menu" role="menu">
+                          <li role="menuitem" class="d-md-none">
+                              <a href="http://localhost/my-test-site/resources">Explore</a>
+                              <ul class="menu" role="menu">
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Datasets</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Services</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Layers</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Maps</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Galleries</a></li>
+                                  <li role="menuitem"><a href="http://localhost/my-test-site" class="u-pd-left--xlg">Communities</a></li>
+                              </ul>
+                          </li>
+                          <li role="menuitem">
+                              <a role="menuitem" href="http://localhost/my-test-site">NGDA Themes</a>
+                          </li>
+                          <li role="menuitem">
+                              <a role="menuitem" href="http://localhost/my-test-site">Search</a>
+                          </li>
+                      </ul>
+                      <br>
+                  </div>
+
+                  <div class="m-megamenu__heading">Featured</div>
+                  <div class="menu">
+                      <ul>
+                          <li class="page_item page-item-5 page_item_has_children current_page_ancestor current_page_parent"><a href="http://localhost/my-test-site/resources/">Resources</a>
+                          <ul class="children">
+                          	<li class="page_item page-item-6 current_page_item"><a href="http://localhost/my-test-site/resources/register/">Register Your Data with GeoPlatform.gov</a></li>
+                          </ul>
+                          </li>
+                          <li class="page_item page-item-2"><a href="http://localhost/my-test-site/sample-page/">Sample Page</a></li>
+                      </ul>
+                  </div>
+                  <br>
+                  <div class="m-megamenu__heading">Get Involved</div>
+                  <div class="menu">
+                      <ul>
+                          <li class="page_item page-item-5 page_item_has_children current_page_ancestor current_page_parent"><a href="http://localhost/my-test-site/resources/">Resources</a>
+                          <ul class="children">
+                          	<li class="page_item page-item-6 current_page_item"><a href="http://localhost/my-test-site/resources/register/">Register Your Data with GeoPlatform.gov</a></li>
+                          </ul>
+                          </li>
+                          <li class="page_item page-item-2"><a href="http://localhost/my-test-site/sample-page/">Sample Page</a></li>
+                      </ul>
+                  </div>
+                </div>
+                <div class="col">
+                    <div class="m-megamenu__heading">Explore Data</div>
+                    <ul class="menu" role="menu">
+                        <li role="menuitem">
+                            <a href="https://oe.geoplatform.gov" target="_blank">
+                                Object Editor
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://geoplatform.maps.arcgis.com/home/" target="_blank">
+                              GeoPlatform ArcGIS Organization
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://data.geoplatform.gov/" target="_blank">
+                              Search Data.gov
+                              <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="https://marketplace.geoplatform.gov/" target="_blank">
+                              Search Marketplace <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                      <li role="menuitem">
+                          <a href="http://localhost/my-test-site/resources" target="_blank">
+                              Resources <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                          </a>
+                      </li>
+                    </ul>
+                    <br>
+                    <a class="m-megamenu__heading" href="http://localhost/my-test-site">Apps &amp; Services</a>
+                    <ul class="menu" role="menu">
+                        <li role="menuitem">
+                            <a href="https://viewer.geoplatform.gov" target="_blank">
+                                Map Viewer
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="https://maps.geoplatform.gov" target="_blank">
+                                Map Manager
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="https://marketplace.geoplatform.gov" target="_blank">
+                                Marketplace Preview
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="https://dashboard.geoplatform.gov/" target="_blank">
+                                Performance Dashboard
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                        </li>
+                        <li role="menuitem">
+                            <a href="http://statuschecker.fgdc.gov" target="_blank">
+                                FGDC Service Status Checker
+                                <sup><span class="glyphicon glyphicon-new-window"></span></sup>
+                            </a>
+                         </li>
+                    </ul>
+                </div>
+                <div class="col">
+                    <div class="m-megamenu__heading">About</div>
+                    <div class="menu">
+                        <ul>
+                          <li class="page_item page-item-5 page_item_has_children current_page_ancestor current_page_parent"><a href="http://localhost/my-test-site/resources/">Resources</a>
+                          <ul class="children">
+                          	<li class="page_item page-item-6 current_page_item"><a href="http://localhost/my-test-site/resources/register/">Register Your Data with GeoPlatform.gov</a></li>
+                          </ul>
+                          </li>
+                          <li class="page_item page-item-2"><a href="http://localhost/my-test-site/sample-page/">Sample Page</a></li>
+                      </ul>
+                  </div>
+                </div>
+            </div>
+            <hr>
+        </nav>
+
+        <div class="d-flex flex-justify-between flex-align-center">
+            <div class="a-brand u-mg-right--xlg">
+                <img alt="GP" src="/assets/favicon.png" style="width:1em">
+                <a href="http://localhost:4200">GeoPlatform.gov</a>
+            </div>
+        </div>
+        <br>
+
+        <small>
+            The GeoPlatform was developed by the member agencies of the
+            Federal Geographic Data Committee (FGDC) through collaboration
+            with partners and stakeholders. The target audience for the
+            GeoPlatform includes Federal agencies, State, local, and
+            Tribal governments, private sector, academia, and the general
+            public.
+        </small>
+
+    </footer>
 
 </body>
 </html>
