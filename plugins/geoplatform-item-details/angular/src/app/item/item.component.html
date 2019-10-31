@@ -159,25 +159,19 @@
             [layerId]="TYPES.LAYER===item?.type?item.id:null">
         </gpid-coverage-map>
 
-        <!-- ACTIONS -->
+        <gpid-action-menu [item]="item" [service]="itemService"></gpid-action-menu>
+        <!-- ACTIONS
         <div class="m-article p-item__actions">
-
             <gpid-primary-action [item]="item"></gpid-primary-action>
-
             <gpid-preview-action [item]="item" *ngIf="isAsset()"></gpid-preview-action>
-            <gpid-like-action [item]="item" [service]="itemService" *ngIf="isAsset()"></gpid-like-action>
             <gpid-download-action [item]="item" *ngIf="isAsset()"></gpid-download-action>
             <gpid-export-action [item]="item" [service]="itemService" *ngIf="isAsset()"></gpid-export-action>
-
             <gpid-edit-action [item]="item"></gpid-edit-action>
-            <!-- <gpid-delete-action [item]="item"></gpid-delete-action> -->
-
             <gpid-clone-action [item]="item" *ngIf="isAsset()"></gpid-clone-action>
-
             <gpid-gallery-action [item]="item"></gpid-gallery-action>
             <gpid-embed-action [item]="item"></gpid-embed-action>
-
         </div>
+        -->
 
         <!-- ABOUT -->
         <gpid-about [item]="item" class="m-article"></gpid-about>

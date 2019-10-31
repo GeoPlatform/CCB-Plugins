@@ -1,11 +1,7 @@
 <div class="m-action" *ngIf="canDoAction()">
-    <p class="u-text--sm">
-        Create a copy of this resource as your own, allowing you to edit as needed.
-    </p>
-
     <button type="button"
-        class="btn btn-secondary btn-block u-mg-top--xlg"
-        title="Clone this Item"
+        class="btn btn-link"
+        title="Create a copy of this resource as your own, allowing you to edit as needed."
         [disabled]="awaitingInput"
         (click)="promptForInput()">
         <span class="fas fa-clone"></span>

@@ -12,14 +12,18 @@ import { ItemHelper } from '../../../shared/item-helper';
 export class PreviewActionComponent implements OnInit {
 
     @Input() item : any;
+    public description : string = "View this resource on a map. For Service resources, " +
+        "this includes all layers hosted by the service. For Dataset resources, this " +
+        "includes associated layers as well as layers hosted by associated services.";
     private previewable : boolean = false;
+
 
     constructor( private client : NG2HttpClient ) { }
 
     ngOnInit() {
         let opts = {
             method: "GET",
-            url: Config.ualUrl + '/api/items/' + this.item.id + '/preview' 
+            url: Config.ualUrl + '/api/items/' + this.item.id + '/preview'
         };
         let request : HttpRequest<any> = this.client.createRequestOpts(opts);
         this.client.execute(request).then( (response:any) => {
