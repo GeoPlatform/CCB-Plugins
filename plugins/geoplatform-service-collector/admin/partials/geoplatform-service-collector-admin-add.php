@@ -107,10 +107,10 @@ if ($geopserve_type_class_bool == 'true' && (empty($geopserve_type_class_text) |
 }
 
 // Item tab check, to ensure that at least one is selected.
-if ($geopserve_cat_dat  == 'false' && $geopserve_cat_ser  == 'false' && $geopserve_cat_lay == 'false' && $geopserve_cat_map == 'false' && $geopserve_cat_gal == 'false' && $geopserve_cat_com == 'false' && $geopserve_cat_app == 'false' && $geopserve_cat_top == 'false' && $geopserve_cat_web == 'false'){
-  $geopserve_valid_bool = false;
-  echo "Addition failed. At least one item type must be selected for output.\n";
-}
+// if ($geopserve_cat_dat  == 'false' && $geopserve_cat_ser  == 'false' && $geopserve_cat_lay == 'false' && $geopserve_cat_map == 'false' && $geopserve_cat_gal == 'false' && $geopserve_cat_com == 'false' && $geopserve_cat_app == 'false' && $geopserve_cat_top == 'false' && $geopserve_cat_web == 'false'){
+//   $geopserve_valid_bool = false;
+//   echo "Addition failed. At least one item type must be selected for output.\n";
+// }
 
 // Count validation, which must be at least one.
 if ($geopserve_count <= 0){

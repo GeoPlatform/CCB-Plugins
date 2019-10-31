@@ -274,7 +274,7 @@
         </table>
       </p>
       <hr>
-      <p>Select the items to include in the output. Conservative use of tabs is suggested to avoid unnecessary visual clutter.
+      <p>Select the types of items to include in the output. Conservative use of tabs is suggested to avoid unnecessary visual clutter.
         <table>
           <tr>
             <th>
@@ -370,6 +370,8 @@
           (substr(($geopserve_entry->serve_cat), 6, 1) == 'T') ? array_push($geopserve_cat_array, 'Applications') : '';
           (substr(($geopserve_entry->serve_cat), 7, 1) == 'T') ? array_push($geopserve_cat_array, 'Topics') : '';
           (substr(($geopserve_entry->serve_cat), 8, 1) == 'T') ? array_push($geopserve_cat_array, 'Websites') : '';
+          (substr(($geopserve_entry->serve_cat), 8, 1) == 'T') ? array_push($geopserve_cat_array, 'Websites') : '';
+          (sizeof($geopserve_cat_array) <= 0) ? array_push($geopserve_cat_array, 'All Types') : '';
           $geopserve_cat_out = implode(", ", $geopserve_cat_array);
 
           // Search bar format translator.
