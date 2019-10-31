@@ -400,7 +400,6 @@
           // Begin output.
           echo "<tr>";
           	echo "<td>" . esc_attr($geopserve_entry->serve_title) . "</td>";
-            // echo "<td>" . esc_attr(ucfirst($geopserve_entry->serve_format)) . "</td>";
             echo "<td>" . esc_attr($geopserve_crit_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_cat_out) . "</td>";
             echo "<td>" . esc_attr($geopserve_search_out) . "</td>";
