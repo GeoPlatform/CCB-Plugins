@@ -115,8 +115,7 @@ function geopserve_shortcode_generation($geopserve_atts){
 		'keyword' => '',
 		'topic' => '',
 		'usedby' => '',
-		'class' => '',
-		'kg' => ''
+		'class' => ''
 	), $geopserve_atts);
 	ob_start();
 
@@ -227,7 +226,6 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				topic_id: "<?php echo $geopserve_shortcode_array['topic'] ?>",
 				usedby_id: "<?php echo $geopserve_shortcode_array['usedby'] ?>",
 				class_id: "<?php echo $geopserve_shortcode_array['class'] ?>",
-				kg_id: "<?php echo $geopserve_shortcode_array['kg'] ?>",
 				current_tab: parseInt('<?php echo $geopserve_current_tab ?>', 10),
 				current_page: parseInt('<?php echo $geopserve_current_page ?>', 10),
 				current_suffix: "<?php echo $geopserve_current_suffix ?>",
@@ -457,10 +455,9 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 								if (!empty($geopserve_shortcode_array['keyword']))
 									$geopserve_search_query_prefix .= "keywords=" . $geopserve_shortcode_array['keyword'] . "&";
 								if (!empty($geopserve_shortcode_array['topic']))
-									$geopserve_search_query_prefix .= "topics=" . $geopserve_shortcode_array['theme'] . "&";
-
-								// KG.Classifier aspects are not planned for the Search plugin at
-								// the moment, so they'll be overlooked here.
+									$geopserve_search_query_prefix .= "topics=" . $geopserve_shortcode_array['topic'] . "&";
+								if (!empty($geopserve_shortcode_array['class']))
+									$geopserve_search_query_prefix .= "concepts=" . $geopserve_shortcode_array['class'] . "&";
 
 								// Adds the last part of the string, which is the "q" that the
 								// search bar input will concat to. Adds 'label' to this if it

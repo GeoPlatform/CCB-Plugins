@@ -94,8 +94,8 @@ function geopserve_gen_list(geopserve_options){
 
 	// Cleans, explodes, and applies classifier criteria.
 	if (geopserve_options.class_id){
-		var geopserve_class_array = geopserve_options.class_id.replace(/ /g, "-").replace(/,/g, "-").split("-");
-		query.classifier(geopserve_options.kg_id, geopserve_class_array);
+		var geopserve_class_array = geopserve_options.class_id.replace(/ /g, "[]").replace(/,/g, "[]").split("[]");
+		query.setParameter('concepts', geopserve_class_array);
 	}
 
 	// Adds thumbnails and clone-of to the query return.

@@ -52,7 +52,7 @@ $geopserve_type_usedby_bool = sanitize_key($_POST["serve_type_usedby_bool"]);
 $geopserve_type_usedby_text = sanitize_key($_POST["serve_type_usedby_text"]);
 $geopserve_type_class_bool = sanitize_key($_POST["serve_type_class_bool"]);
 $geopserve_type_class_text = sanitize_key($_POST["serve_type_class_text"]);
-$geopserve_type_class_type = sanitize_text_field($_POST["serve_type_class_type"]);
+// $geopserve_type_class_type = sanitize_text_field($_POST["serve_type_class_type"]);
 
 $geopserve_cat_dat = sanitize_key($_POST["serve_cat_dat"]);
 $geopserve_cat_ser = sanitize_key($_POST["serve_cat_ser"]);
@@ -198,7 +198,7 @@ if ($geopserve_valid_bool == 'true'){
   if ($geopserve_type_usedby_bool == 'true')
     $geopserve_shortcode_final .= " usedby='" . $geopserve_type_usedby_text . "'";
   if ($geopserve_type_class_bool == 'true')
-    $geopserve_shortcode_final .= " class='" . $geopserve_type_class_text . "' kg='" . $geopserve_type_class_type . "'";
+    $geopserve_shortcode_final .= " class='" . $geopserve_type_class_text . "'";
 
   // Closing out the string.
   $geopserve_shortcode_final .= "]";

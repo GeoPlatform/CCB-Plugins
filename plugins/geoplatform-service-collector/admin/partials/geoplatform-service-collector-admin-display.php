@@ -247,28 +247,14 @@
           <tr>
             <th>
               <input type="checkbox" class="regular-text" id="serve_type_class_bool" value="serve_type_class_bool">
-              Classifier&nbsp&nbsp&nbsp&nbsp&nbsp
+              Concept&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
             </th>
             <th>
               <input type="text" class="regular-text geopserve-norm-weight" id="serve_type_class_text" value=""/>
             </th>
             <th>
-              <select class="geopserve-norm-weight" id="serve_type_class_type">
-                <option value='purpose'>Purpose</option>
-                <option value='function'>Function</option>
-                <option value='primaryTopic'>Primary Topic</option>
-                <option value='secondaryTopic'>Secondary Topic</option>
-                <option value='primarySubject'>Primary Subject</option>
-                <option value='secondarySubject'>Secondary Subject</option>
-                <option value='community'>Community</option>
-                <option value='audience'>Audience</option>
-                <option value='place'>Place</option>
-                <option value='category'>Category</option>
-              </select>
-            </th>
-            <th>
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-              <span class="regular-text geopserve-norm-weight">This input requires a valid, 32-digit classifier ID, as well as a selection of classifier parameter.</span>
+              <span class="regular-text geopserve-norm-weight">This input requires a valid semantic concept.</span>
             </th>
           </tr>
         </table>

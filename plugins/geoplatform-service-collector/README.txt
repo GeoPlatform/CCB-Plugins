@@ -58,6 +58,7 @@ Answer to foo bar dilemma.
 
 = 2.1.5 =
 * Added support to display all asset types regardless of filtering criteria.
+* Exchanged Classifier filtering for Concepts.
 
 = 2.1.4 =
 * Changed resource loading order to improve performance.
