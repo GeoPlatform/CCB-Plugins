@@ -196,13 +196,18 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	$geopserve_redirect_url = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : "https://www.geoplatform.gov";
 	if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
 		$geopserve_redirect_url = home_url();
-	$geopserve_redirect_url = $geopserve_redirect_url . "/resources/" . strtolower($geopserve_tab_array[$geopserve_current_page]['name']) . "/";
+	$geopserve_redirect_url = $geopserve_redirect_url . "/resources/";
 
 	// Basically the same as above but for Search plugin.
 	$geopserve_search_url = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : "https://www.geoplatform.gov";
 	if ( is_plugin_active('geoplatform-search/geoplatform-search.php') )
 		$geopserve_search_url = home_url();
 	$geopserve_search_url = $geopserve_search_url . "/geoplatform-search/#/?createdBy=";
+
+	// Name of current tab to send to generation method.
+	$geopserve_current_tab_name = "Assets";
+	if (!empty($geopserve_tab_array))
+		$geopserve_current_tab_name = $geopserve_tab_array[$geopserve_current_page]['name'];
 
 	// Javascript block for full-carousel controls.
 	?>
@@ -227,7 +232,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				current_page: parseInt('<?php echo $geopserve_current_page ?>', 10),
 				current_suffix: "<?php echo $geopserve_current_suffix ?>",
 				sort_style: "<?php echo $geopserve_sort_string ?>",
-				cat_name: "<?php echo $geopserve_tab_array[$geopserve_current_page]['name'] ?>",
+				cat_name: "<?php echo $geopserve_current_tab_name ?>",
 				per_page: "<?php echo $geopserve_shortcode_array['count'] ?>",
 				ual_domain: "<?php echo $geopserve_ual_domain ?>",
 				redirect_url: "<?php echo $geopserve_redirect_url ?>",
@@ -620,6 +625,14 @@ function geopserve_tab_interpretation($geopserve_string_in){
 		array_push( $geopserve_generation_array, array(
 				'name' => 'Websites',
 				'query' => 'types=WebSite&',
+				'icon' => 'icon-website',
+			)
+		);
+	}
+	if ( empty($geopserve_generation_array) ){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Assets',
+				'query' => '',
 				'icon' => 'icon-website',
 			)
 		);
