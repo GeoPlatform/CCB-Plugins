@@ -33,7 +33,7 @@ class Geopportal_Side_Content_Preview_Widget extends WP_Widget {
 
 		$geopporatl_current_post = get_queried_object();
 
-		$geopportal_side_cont_prev_thumb = get_template_directory_uri() . '/img/img-404.png';
+		$geopportal_side_cont_prev_thumb = get_template_directory_uri() . '/img/default-category-photo.jpeg';
 		$geopportal_side_cont_prev_text = 'There is no image here.';
 
 		if ($geopporatl_current_post){

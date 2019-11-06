@@ -114,8 +114,14 @@ echo "<div class='l-body l-body--two-column'>";
 
 	      if (has_post_thumbnail($geopccb_post))
 	        $geopccb_temp_array['thumb'] = get_the_post_thumbnail_url($geopccb_post, 'medium');
-	      else
-	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/img-404.png";
+	      elseif (get_post_type($geopccb_post) == 'post')
+	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-post.jpg";
+				elseif (get_post_type($geopccb_post) == 'page')
+		      $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-page.jpg";
+				elseif (get_post_type($geopccb_post) == 'geopccb_catlink')
+	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-catlink.jpg";
+				else
+	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-other.jpg";
 
 	      if (get_post_type($geopccb_post) == 'geopccb_catlink')
 	        $geopccb_temp_array['url'] = $geopccb_post->geop_ccb_cat_link_url;
@@ -138,7 +144,7 @@ echo "<div class='l-body l-body--two-column'>";
 	      if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
 	        $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'medium')[0];
 	      else
-	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/img-404.png";
+	        $geopccb_temp_array['thumb'] = get_template_directory_uri() . "/img/default-category.jpg";
 
 	      $geopccb_temp_array['url'] = get_category_link( $geopccb_cat->term_id );
 
@@ -147,8 +153,6 @@ echo "<div class='l-body l-body--two-column'>";
 	      return $geopccb_temp_array;
 	    }
 		}
-
-
 
 		// If date is set, all remaining categories, then pages, are feed in order
 		// through the info-parsing functions.
@@ -201,7 +205,6 @@ echo "<div class='l-body l-body--two-column'>";
 				echo "</div>";
 			echo "</div>";
 		}
-
 
   echo "</div>";
   get_template_part( 'sidebar', get_post_format() );
