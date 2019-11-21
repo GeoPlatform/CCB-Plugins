@@ -133,7 +133,7 @@ class Geopccb_Front_Page_Maps_Widget extends WP_Widget {
 
 					//for AGOL Maps
 					//use isset() to get rid of php notices
-					$geopccb_thumbnail = get_template_directory_uri() . '/img/img-404.png';
+					$geopccb_thumbnail = get_template_directory_uri() . '/img/default-category-photo.jpeg';
 					if (isset($geopccb_single_result['thumbnail']['url'])){
 						$geopccb_thumbnail = $geopccb_single_result['thumbnail']['url'];
 					}

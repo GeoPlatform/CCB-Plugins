@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             2.1.4
+ * @since             2.1.5
  * @package           Geoplatform_Service_Collector
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform Asset Carousel
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Display your data from the GeoPlatform portfolio in a carousel format.
- * Version:           2.1.4
+ * Version:           2.1.5
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           GPL-2.0+
@@ -51,7 +51,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOSERVE_PLUGIN', '2.1.4' );
+define( 'GEOSERVE_PLUGIN', '2.1.5' );
 
 /**
  * The code that runs during plugin activation.
@@ -115,16 +115,15 @@ function geopserve_shortcode_generation($geopserve_atts){
 		'keyword' => '',
 		'topic' => '',
 		'usedby' => '',
-		'class' => '',
-		'kg' => ''
+		'class' => ''
 	), $geopserve_atts);
 	ob_start();
 
 	// Adding GeoPlatform styling. Placing it here ensures it doesn't get
 	// overridden by the theme.
 	wp_enqueue_style( 'geop-style', plugin_dir_url( __FILE__ ) . 'public/css/geop-style.css', array());
-	wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'public/css/bootstrap.css', array(), '2.1.4', 'all' );
-	wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'public/font/fontawesome-all.css', array(), '2.1.4', 'all' );
+	wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'public/css/bootstrap.css', array(), '2.1.5', 'all' );
+	wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'public/font/fontawesome-all.css', array(), '2.1.5', 'all' );
 
 	// The original intention was to handle the shortcode output differently based
 	// upon compact or standard form. Currently, compact form is not planned to be
@@ -196,13 +195,18 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	$geopserve_redirect_url = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : "https://www.geoplatform.gov";
 	if ( is_plugin_active('geoplatform-item-details/geoplatform-item-details.php') )
 		$geopserve_redirect_url = home_url();
-	$geopserve_redirect_url = $geopserve_redirect_url . "/resources/" . strtolower($geopserve_tab_array[$geopserve_current_page]['name']) . "/";
+	$geopserve_redirect_url = $geopserve_redirect_url . "/resources/";
 
 	// Basically the same as above but for Search plugin.
 	$geopserve_search_url = isset($_ENV['wpp_url']) ? $_ENV['wpp_url'] : "https://www.geoplatform.gov";
 	if ( is_plugin_active('geoplatform-search/geoplatform-search.php') )
 		$geopserve_search_url = home_url();
 	$geopserve_search_url = $geopserve_search_url . "/geoplatform-search/#/?createdBy=";
+
+	// Name of current tab to send to generation method.
+	$geopserve_current_tab_name = "Assets";
+	if (!empty($geopserve_tab_array))
+		$geopserve_current_tab_name = $geopserve_tab_array[$geopserve_current_page]['name'];
 
 	// Javascript block for full-carousel controls.
 	?>
@@ -222,12 +226,11 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				topic_id: "<?php echo $geopserve_shortcode_array['topic'] ?>",
 				usedby_id: "<?php echo $geopserve_shortcode_array['usedby'] ?>",
 				class_id: "<?php echo $geopserve_shortcode_array['class'] ?>",
-				kg_id: "<?php echo $geopserve_shortcode_array['kg'] ?>",
 				current_tab: parseInt('<?php echo $geopserve_current_tab ?>', 10),
 				current_page: parseInt('<?php echo $geopserve_current_page ?>', 10),
 				current_suffix: "<?php echo $geopserve_current_suffix ?>",
 				sort_style: "<?php echo $geopserve_sort_string ?>",
-				cat_name: "<?php echo $geopserve_tab_array[$geopserve_current_page]['name'] ?>",
+				cat_name: "<?php echo $geopserve_current_tab_name ?>",
 				per_page: "<?php echo $geopserve_shortcode_array['count'] ?>",
 				ual_domain: "<?php echo $geopserve_ual_domain ?>",
 				redirect_url: "<?php echo $geopserve_redirect_url ?>",
@@ -452,10 +455,9 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 								if (!empty($geopserve_shortcode_array['keyword']))
 									$geopserve_search_query_prefix .= "keywords=" . $geopserve_shortcode_array['keyword'] . "&";
 								if (!empty($geopserve_shortcode_array['topic']))
-									$geopserve_search_query_prefix .= "topics=" . $geopserve_shortcode_array['theme'] . "&";
-
-								// KG.Classifier aspects are not planned for the Search plugin at
-								// the moment, so they'll be overlooked here.
+									$geopserve_search_query_prefix .= "topics=" . $geopserve_shortcode_array['topic'] . "&";
+								if (!empty($geopserve_shortcode_array['class']))
+									$geopserve_search_query_prefix .= "concepts=" . $geopserve_shortcode_array['class'] . "&";
 
 								// Adds the last part of the string, which is the "q" that the
 								// search bar input will concat to. Adds 'label' to this if it
@@ -620,6 +622,14 @@ function geopserve_tab_interpretation($geopserve_string_in){
 		array_push( $geopserve_generation_array, array(
 				'name' => 'Websites',
 				'query' => 'types=WebSite&',
+				'icon' => 'icon-website',
+			)
+		);
+	}
+	if ( empty($geopserve_generation_array) ){
+		array_push( $geopserve_generation_array, array(
+				'name' => 'Assets',
+				'query' => '',
 				'icon' => 'icon-website',
 			)
 		);

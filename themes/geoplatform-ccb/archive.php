@@ -29,9 +29,16 @@ get_template_part( 'sub-header-post', get_post_format() );
 		foreach($geopccb_posts as $geopccb_post){
 
 			// Grabs default 404 image as thumb and overwrites if the post has one.
-			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
 			if ( has_post_thumbnail($geopccb_post) )
 				$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($geopccb_post, 'medium');
+			elseif (get_post_type($geopccb_post) == 'post')
+        $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-post.jpg";
+			elseif (get_post_type($geopccb_post) == 'page')
+	      $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-page.jpg";
+			elseif (get_post_type($geopccb_post) == 'geopccb_catlink')
+        $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-catlink.jpg";
+			else
+        $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-other.jpg";
 
 			// To prevent entries overlapping their blocks, sets min height to match thumb.
 			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
