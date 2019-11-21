@@ -14,10 +14,15 @@ export class ActionMenuComponent implements OnInit {
     @Input() service : ItemService;
 
     public isCollapsed : boolean = true;
+    public oeHref : string;
 
     constructor() {}
 
-    ngOnInit() {}
+    ngOnInit() {
+        if(this.item) {
+            this.oeHref = Config.ualUrl.replace('ual','oe') + '/view/' + this.item.id;
+        }
+    }
 
     isAsset() : boolean {
         return ItemHelper.isAsset(this.item);

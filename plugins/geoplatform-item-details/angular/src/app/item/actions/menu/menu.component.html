@@ -10,24 +10,25 @@
 
         <gpid-primary-action [item]="item"></gpid-primary-action>
 
-        <gpid-preview-action *ngIf="isAsset()"
-             [item]="item">
-         </gpid-preview-action>
+        <gpid-preview-action *ngIf="isAsset()" [item]="item"></gpid-preview-action>
 
-        <gpid-download-action *ngIf="isAsset()"
-            [item]="item">
-        </gpid-download-action>
+        <gpid-download-action *ngIf="isAsset()" [item]="item"> </gpid-download-action>
 
         <gpid-export-action *ngIf="isAsset()"
             [item]="item"
             [service]="itemService">
         </gpid-export-action>
 
+        <div class="m-action dropdown">
+            <a class="btn btn-link no-decoration" href="{{oeHref}}" target="_blank">
+                <span class="fas fa-external-link-alt"></span>
+                Open in Object Editor
+            </a>
+        </div>
+
         <gpid-edit-action [item]="item"></gpid-edit-action>
 
-        <gpid-clone-action *ngIf="isAsset()"
-            [item]="item">
-        </gpid-clone-action>
+        <gpid-clone-action *ngIf="isAsset()" [item]="item"> </gpid-clone-action>
 
         <gpid-gallery-action [item]="item"></gpid-gallery-action>
 

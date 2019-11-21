@@ -1,10 +1,9 @@
-<div *ngIf="item" class="m-action">
+<div *ngIf="item && canDoAction()" class="m-action">
     <!-- <div class="u-text--justify u-mg-bottom--md">
         <span class="u-text--sm">{{getDescription()}}</span>
     </div> -->
     <button type="button" class="btn btn-link"
         title="{{getDescription()}}"
-        [disabled]="!canDoAction()"
         (click)="doAction()">
         <span class="{{getIconClass()}}"></span>
         {{getLabel()}}
