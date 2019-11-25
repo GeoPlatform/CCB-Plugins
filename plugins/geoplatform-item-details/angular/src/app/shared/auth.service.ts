@@ -46,18 +46,19 @@ export class PluginAuthService {
         });
 
 
-        //force check to make sure user is actually logged in and token hasn't expired/been revoked
-        this.authService.checkWithClient(null)
-        //then fetch user info
-        .then( (jwt) => {
-            if(!jwt) return null;   //if no jwt, no use getting user info
-            return this.authService.getUser();
-        })
-        .then( user => { this.onUserChange(user); })
-        .catch(e => {
-            // console.log("AuthService.init() - Error retrieving user: " + e.message);
-            this.onUserChange(null);
-        });
+        this.authService.getUser().then( user => { this.onUserChange(user); });
+        // //force check to make sure user is actually logged in and token hasn't expired/been revoked
+        // this.authService.checkWithClient(null)
+        // //then fetch user info
+        // .then( (jwt) => {
+        //     if(!jwt) return null;   //if no jwt, no use getting user info
+        //     return this.authService.getUser();
+        // })
+        // .then( user => { this.onUserChange(user); })
+        // .catch(e => {
+        //     // console.log("AuthService.init() - Error retrieving user: " + e.message);
+        //     this.onUserChange(null);
+        // });
     }
 
     onUserChange(user : GeoPlatformUser) {
@@ -89,7 +90,7 @@ export class PluginAuthService {
      */
     check() : Promise<GeoPlatformUser> {
         if(!this.authService) return Promise.resolve(null);
-        return this.authService.checkWithClient(null)
+        return this.authService.checkWithClient()
         .then( token => this.authService.getUser() )
         .then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
