@@ -14,10 +14,7 @@
 
         <gpid-download-action *ngIf="isAsset()" [item]="item"> </gpid-download-action>
 
-        <gpid-export-action *ngIf="isAsset()"
-            [item]="item"
-            [service]="itemService">
-        </gpid-export-action>
+        <gpid-export-action [item]="item" [service]="service"></gpid-export-action>
 
         <div class="m-action dropdown">
             <a class="btn btn-link no-decoration" href="{{oeHref}}" target="_blank">

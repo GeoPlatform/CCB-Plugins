@@ -22,6 +22,7 @@ export class ActionMenuComponent implements OnInit {
         if(this.item) {
             this.oeHref = Config.ualUrl.replace('ual','oe') + '/view/' + this.item.id;
         }
+        console.log("ActionMenu configured with item (" + (!!this.item) + ") and service (" + (!!this.service) + ")");
     }
 
     isAsset() : boolean {
