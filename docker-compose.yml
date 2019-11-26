@@ -51,6 +51,7 @@ services:
       rpm_token: 47d10365bff7ac8d86a96bd4537b2891
       sd_url: servicedesk@geoplatform.gov
       ga_code: UA-42040723-1
+      rep_org: My Test Site
       # Datebase
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DB_USER: root

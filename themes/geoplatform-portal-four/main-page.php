@@ -21,11 +21,11 @@ class Geopportal_MainPage_Widget extends WP_Widget {
 		$geopportal_mainpage_disp_fifth_page = get_page_by_path(get_theme_mod('featured_secondary_four'), OBJECT, array('post', 'page', 'geopccb_catlink', 'community-post', 'ngda-post'));
 
 		// Sets up default thumbnails and overwrites if post has one.
-		$geopportal_mainpage_disp_first_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
-		$geopportal_mainpage_disp_second_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
-		$geopportal_mainpage_disp_third_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
-		$geopportal_mainpage_disp_fourth_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
-		$geopportal_mainpage_disp_fifth_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png';
+		$geopportal_mainpage_disp_first_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/default-featured.jpg';
+		$geopportal_mainpage_disp_second_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/default-featured.jpg';
+		$geopportal_mainpage_disp_third_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/default-featured.jpg';
+		$geopportal_mainpage_disp_fourth_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/default-featured.jpg';
+		$geopportal_mainpage_disp_fifth_thumb = get_theme_root_uri() . '/geoplatform-ccb/img/default-featured.jpg';
 
 		// Gets thumbnails
 		if ( has_post_thumbnail($geopportal_mainpage_disp_first_page) )

@@ -34,14 +34,8 @@ echo "<div class='l-body l-body--two-column'>";
 			 */
  			if ( has_post_thumbnail() )
  				$geopccb_search_disp_thumb = get_the_post_thumbnail_url();
-			elseif (get_post_type() == 'post')
-	      $geopccb_search_disp_thumb = get_template_directory_uri() . "/img/default-post.jpg";
-			elseif (get_post_type() == 'page')
-	      $geopccb_search_disp_thumb = get_template_directory_uri() . "/img/default-page.jpg";
-			elseif (get_post_type() == 'geopccb_catlink')
-	      $geopccb_search_disp_thumb = get_template_directory_uri() . "/img/default-catlink.jpg";
 			else
-	      $geopccb_search_disp_thumb = get_template_directory_uri() . "/img/default-other.jpg";
+	      $geopccb_search_disp_thumb = get_template_directory_uri() . "/img/default-featured.jpg";
 
 
 			echo "<div class='m-article m-article--flex'>";

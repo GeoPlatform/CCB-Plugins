@@ -94,7 +94,7 @@ class Geopportal_Communities_Widget extends WP_Widget {
 			if (has_post_thumbnail($geopportal_communities_page))
 				array_push($geopportal_communities_thumb_array, get_the_post_thumbnail_url($geopportal_communities_page, 'medium'));
 			else
-				array_push($geopportal_communities_thumb_array, get_theme_root_uri() . '/geoplatform-ccb/img/img-404.png');
+				array_push($geopportal_communities_thumb_array, get_theme_root_uri() . '/geoplatform-ccb/img/default-featured.jpg');
 
 		  if (get_post_type($geopportal_communities_page) == 'geopccb_catlink')
 				array_push($geopportal_communities_link_array, esc_url($geopportal_communities_page->geop_ccb_cat_link_url));
