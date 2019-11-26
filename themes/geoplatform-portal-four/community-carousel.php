@@ -1,5 +1,5 @@
 <?php
-$geopportal_community_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
+$geopportal_community_disp_thumb = get_template_directory_uri() . '/img/default-featured.jpg';
 ?>
 
 <div class="m-article">

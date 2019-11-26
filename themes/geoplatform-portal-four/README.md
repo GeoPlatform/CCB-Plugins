@@ -116,6 +116,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release Pending
 
 - Added controls to make all menu headers in megamenu's clickable.
+- Replaced the default image for unset Featured Image outputs.
 
 ### 4.1.4
 * Release October 25, 2019

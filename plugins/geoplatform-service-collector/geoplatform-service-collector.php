@@ -236,7 +236,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 				redirect_url: "<?php echo $geopserve_redirect_url ?>",
 				search_url: "<?php echo $geopserve_search_url ?>",
 				home: "<?php echo home_url() ?>",
-				failsafe: "<?php echo plugin_dir_url(__FILE__) . 'public/assets/img-404.png' ?>",
+				failsafe: "<?php echo plugin_dir_url(__FILE__) . 'public/assets/default-featured.jpg' ?>",
 				search_state: "<?php echo $geopserve_search_state ?>",
 				query_var: "",
 			}

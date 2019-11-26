@@ -69,14 +69,8 @@ echo "<div class='l-body l-body--two-column'>";
  			// Grabs default 404 image as thumb and overwrites if the post has one.
  			if ( has_post_thumbnail($geopccb_post) )
  				$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($geopccb_post, 'medium');
-			elseif (get_post_type($geopccb_post) == 'post')
-	      $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-post.jpg";
-			elseif (get_post_type($geopccb_post) == 'page')
-	      $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-page.jpg";
-			elseif (get_post_type($geopccb_post) == 'geopccb_catlink')
-	      $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-catlink.jpg";
 			else
-	      $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-other.jpg";
+	      $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-featured.jpg";
 
  			// To prevent entries overlapping their blocks, sets min height to match thumb.
  			list($width, $height) = getimagesize($geopccb_archive_disp_thumb);
