@@ -37,6 +37,7 @@ export class PrimaryActionComponent implements OnInit {
             case ItemTypes.WEBSITE :
             case ItemTypes.TOPIC :
             case ItemTypes.GALLERY :
+            case ItemTypes.CONTACT :
                 return !!(this.item.href || this.item.landingPage);
             case ItemTypes.MAP:
                 if(!this.getMapUrl()) {
@@ -64,6 +65,7 @@ export class PrimaryActionComponent implements OnInit {
             case ItemTypes.APPLICATION  :
             case ItemTypes.WEBSITE      :
             case ItemTypes.TOPIC        :
+            case ItemTypes.CONTACT      : 
             case ItemTypes.GALLERY      : this.goToItemSite(); break;
 
             // NO PRIMARY ACTION FOR THESE TYPES AT THIS TIME
