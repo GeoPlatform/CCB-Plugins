@@ -254,7 +254,7 @@
             </th>
             <th>
               &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-              <span class="regular-text geopserve-norm-weight">This input requires a valid semantic concept.</span>
+              <span class="regular-text geopserve-norm-weight">This input requires a valid semantic concept URI, not an ID.</span>
             </th>
           </tr>
         </table>

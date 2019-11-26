@@ -51,7 +51,7 @@ $geopserve_type_topic_text = sanitize_key($_POST["serve_type_topic_text"]);
 $geopserve_type_usedby_bool = sanitize_key($_POST["serve_type_usedby_bool"]);
 $geopserve_type_usedby_text = sanitize_key($_POST["serve_type_usedby_text"]);
 $geopserve_type_class_bool = sanitize_key($_POST["serve_type_class_bool"]);
-$geopserve_type_class_text = sanitize_key($_POST["serve_type_class_text"]);
+$geopserve_type_class_text = esc_url_raw($_POST["serve_type_class_text"]);
 // $geopserve_type_class_type = sanitize_text_field($_POST["serve_type_class_type"]);
 
 $geopserve_cat_dat = sanitize_key($_POST["serve_cat_dat"]);
@@ -101,7 +101,7 @@ if ($geopserve_type_usedby_bool == 'true' && (empty($geopserve_type_usedby_text)
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for 'used by' criteria.\n";
 }
-if ($geopserve_type_class_bool == 'true' && (empty($geopserve_type_class_text) || !ctype_xdigit($geopserve_type_class_text) || strlen($geopserve_type_class_text) != 32)){
+if ($geopserve_type_class_bool == 'true' && empty($geopserve_type_class_text)){
   $geopserve_valid_bool = false;
   echo "Addition failed. Empty input for classifier criteria.\n";
 }
