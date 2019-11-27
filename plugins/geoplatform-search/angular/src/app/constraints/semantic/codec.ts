@@ -44,11 +44,25 @@ export class SemanticCodec implements Codec {
         if(params && params[this.param]) {
             let uris = params[this.param].split(',');
             if(uris && uris.length) {
+
+                let temps = uris.map( uri => { return {label:"Resolving...", uri: uri} });
+                constraint = new MultiValueConstraint(this.param, temps, "Concepts");
+                if(constraints && constraint) {
+                    constraints.set(constraint);
+                }
+
                 //have to get theme objects for uris provided
                 this.resolveItems(uris).then( concepts => {
                     constraint = new MultiValueConstraint(this.param, concepts, "Concepts");
                     if(constraints && constraint) {
-                        constraints.set(constraint);
+
+                        if(!concepts || !concepts.length) {
+                            //if no concepts came back as being resolved, remove
+                            // this constraint altogether
+                            constraints.unset(constraint);
+                        } else {
+                            constraints.set(constraint);
+                        }
                     }
                 });
             }

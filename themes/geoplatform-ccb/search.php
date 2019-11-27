@@ -32,10 +32,11 @@ echo "<div class='l-body l-body--two-column'>";
 			 * If you want to overload this in a child theme then include a file
 			 * called content-search.php and that will be used instead.
 			 */
-
-			$geopccb_search_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
  			if ( has_post_thumbnail() )
  				$geopccb_search_disp_thumb = get_the_post_thumbnail_url();
+			else
+	      $geopccb_search_disp_thumb = get_template_directory_uri() . "/img/default-featured.jpg";
+
 
 			echo "<div class='m-article m-article--flex'>";
 				echo "<a class='m-article__thumbnail is-16x9' href='" . esc_url(get_permalink()) . "'>";

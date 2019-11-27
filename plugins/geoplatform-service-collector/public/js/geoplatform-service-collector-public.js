@@ -94,8 +94,8 @@ function geopserve_gen_list(geopserve_options){
 
 	// Cleans, explodes, and applies classifier criteria.
 	if (geopserve_options.class_id){
-		var geopserve_class_array = geopserve_options.class_id.replace(/ /g, "-").replace(/,/g, "-").split("-");
-		query.classifier(geopserve_options.kg_id, geopserve_class_array);
+		var geopserve_class_array = geopserve_options.class_id.replace(/ /g, "[]").replace(/,/g, "[]").split("[]");
+		query.setParameter('concepts', geopserve_class_array);
 	}
 
 	// Adds thumbnails and clone-of to the query return.
@@ -111,10 +111,6 @@ function geopserve_gen_list(geopserve_options){
 			// Determines the object ID to which the generated text will apply.
 			var geopserve_browseall_div = 'geopserve_carousel_search_div_' + geopserve_options.current_tab;
 
-			var geopserve_cat_single = geopserve_options.cat_name;
-			geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
-			geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
-
 			// "browse all number asset type" text attachement, only fires in geop
 			// search mode.
 			if (geopserve_options.search_state == 'geop'){
@@ -122,9 +118,9 @@ function geopserve_gen_list(geopserve_options){
 				// Determines singular, plural, or empty results text.
 				var geopserve_search_text = 'Browse all ' + response.totalResults + " " + geopserve_options.cat_name;
 				if (response.totalResults == 1){
-					// var geopserve_cat_single = geopserve_options.cat_name;
-					// geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
-					// geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
+					var geopserve_cat_single = geopserve_options.cat_name;
+					geopserve_cat_single = geopserve_cat_single.replace("ies", "ys");
+					geopserve_cat_single = geopserve_cat_single.substring(0, geopserve_cat_single.length-1);
 					geopserve_search_text = 'Browse ' + response.totalResults + " " + geopserve_cat_single;
 				}
 				if (response.totalResults <= 0)
@@ -145,9 +141,6 @@ function geopserve_gen_list(geopserve_options){
 			// Pane generation loop.
 			for (var i = 0; i < geopserve_max_panes; i++){
 
-				// Grabs the id and uses it to construct an item details href.
-				var geopserve_asset_link = geopserve_options.redirect_url + geopserve_results[i].id;
-
 				// Sets the title of the asset.
 				var geopserve_label_text = geopserve_results[i].label;
 
@@ -160,10 +153,28 @@ function geopserve_gen_list(geopserve_options){
 					}
 				}
 
-				// Determines singular version of the asset type and icon.
-				var geopserve_typeGen_results = geopserve_typeGen(geopserve_options.cat_name);
+				// Declares icon and label variables. Does a few string replacements to
+				// make the info that comes back not conflict with Javascript.
+				var geopserve_result_type = geopserve_results[i].type;
+				switch(geopserve_result_type){
+					case "dcat:Dataset":
+						geopserve_result_type = "Dataset";
+						break;
+					case "regp:Service":
+						geopserve_result_type = "Service";
+						break;
+					case "Map":
+						geopserve_result_type = "Maps";
+						break;
+					default:
+						break;
+				}
+
+				// Assigns type-specific values for the output: type, icon, href.
+				var geopserve_typeGen_results = geopserve_typeGen(geopserve_result_type);
 				var geopserve_under_label_type = geopserve_typeGen_results.type;
 				var geopserve_under_label_icon = geopserve_typeGen_results.icon;
+				var geopserve_asset_link = geopserve_options.redirect_url + geopserve_typeGen_results.href + geopserve_results[i].id;
 
 				// Determines the author's name.
 				var geopserve_under_label_name = "Unknown User";
@@ -385,7 +396,8 @@ function geopserve_typeGrab(geopserve_cat_in){
 		Communities: ItemTypes.COMMUNITY,
 		Applications: ItemTypes.APPLICATION,
 		Topics: ItemTypes.TOPIC,
-		Websites: ItemTypes.WEBSITE
+		Websites: ItemTypes.WEBSITE,
+		Assets: [ItemTypes.DATASET, ItemTypes.SERVICE, ItemTypes.LAYER, ItemTypes.MAP, ItemTypes.GALLERY, ItemTypes.COMMUNITY, ItemTypes.APPLICATION, ItemTypes.TOPIC, ItemTypes.WEBSITE]
 	}
 
 	return geopserve_typeMap[geopserve_cat_in];
@@ -395,47 +407,64 @@ function geopserve_typeGrab(geopserve_cat_in){
 function geopserve_typeGen(geopserve_cat_in){
 
 	var geopserve_typeMap = {
-		Datasets: {
+		Dataset: {
 			type: "<strong>Dataset</strong>",
 			icon: "icon-dataset is-themed u-text--huge",
+			href: "datasets/",
 		},
-		Services: {
+		Service: {
 			type: "<strong>Service</strong>",
 			icon: "icon-service is-themed u-text--huge",
+			href: "services/",
 		},
-		Layers: {
+		Layer: {
 			type: "<strong>Layer</strong>",
 			icon: "icon-layer is-themed u-text--huge",
+			href: "layers/",
 		},
 		Maps: {
 			type: "<strong>Map</strong>",
 			icon: "icon-map is-themed u-text--huge",
+			href: "maps/",
 		},
-		Galleries: {
+		Gallery: {
 			type: "<strong>Gallery</strong>",
 			icon: "icon-gallery is-themed u-text--huge",
+			href: "galleries/",
 		},
-		Communities: {
-			type: "<strong>Communities</strong>",
+		Community: {
+			type: "<strong>Community</strong>",
 			icon: "icon-community is-themed u-text--huge",
+			href: "communities/",
 		},
-		Applications: {
-			type: "<strong>Applications</strong>",
+		Application: {
+			type: "<strong>Application</strong>",
 			icon: "icon-application is-themed u-text--huge",
+			href: "applications/",
 		},
-		Topics: {
-			type: "<strong>Topics</strong>",
+		Topic: {
+			type: "<strong>Topic</strong>",
 			icon: "icon-topic is-themed u-text--huge",
+			href: "topics/",
 		},
-		Websites: {
-			type: "<strong>Websites</strong>",
+		Website: {
+			type: "<strong>Website</strong>",
 			icon: "icon-website is-themed u-text--huge",
+			href: "websites/",
+		},
+		Asset: {
+			type: "<strong>Asset</strong>",
+			icon: "icon-dataset is-themed u-text--huge",
+			href: "datasets/",
 		},
 		Default: {
 			type: "<strong>Unknown</strong>",
 			icon: "icon-dataset is-themed u-text--huge",
+			href: "datasets/",
 		}
 	}
+
+	console.log(geopserve_typeMap[geopserve_cat_in]);
 
 	return geopserve_typeMap[geopserve_cat_in];
 }

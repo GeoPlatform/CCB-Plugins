@@ -190,15 +190,15 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                   <br>
               </div>
 
-              <div class="m-megamenu__heading">Featured</div>
+              <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_feat')); ?>">Featured</a>
               <?php wp_nav_menu( array( 'theme_location' => 'headfoot-featured' ) ); ?>
               <br>
-              <div class="m-megamenu__heading">Get Involved</div>
+              <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_involved')); ?>">Get Involved</a>
               <?php wp_nav_menu( array( 'theme_location' => 'headfoot-getInvolved' ) ); ?>
             </div>
 
             <div class="col">
-              <div class="m-megamenu__heading">Explore Data</div>
+              <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_explore')); ?>">Explore Data</a>
               <?php wp_nav_menu( array( 'theme_location' => 'headfoot-exploreData' ) ); ?>
               <br>
               <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_apps')); ?>">Apps &amp; Services</a>
@@ -206,7 +206,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
             </div>
 
             <div class="col">
-                <div class="m-megamenu__heading">About</div>
+                <a class="m-megamenu__heading" href="<?php echo home_url(get_theme_mod('headlink_about')); ?>">About</a>
                 <?php wp_nav_menu( array( 'theme_location' => 'headfoot-about' ) ); ?>
             </div>
 

@@ -303,6 +303,12 @@ export class AppComponent extends AuthenticatedComponent implements OnInit {
             // type: 'dcat:Dataset',
             // title: 'test2',
             // ----------------------------------
+            extent  : {     //DT-2900 default extent to world to prevent
+                minx: -179, //maps being created with blank thumbnails
+                maxx:  179, //
+                miny:  -89, //
+                maxy:   89  //
+            }
         };
         if('development' === environment.env) {
            this.item.createdBy = 'tester';

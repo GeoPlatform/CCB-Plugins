@@ -84,5 +84,13 @@ export class ExportActionComponent implements OnInit {
         this.rpm.logEvent(TYPE, 'Exported', this.item.id);
     }
 
+    isSupported() {
+        let type = this.item && this.item.type;
+        if(!type) return false;
+        return  ItemTypes.DATASET === type  || ItemTypes.SERVICE === type ||
+                ItemTypes.LAYER   === type  || ItemTypes.MAP     === type ||
+                ItemTypes.GALLERY === type;
+    }
+
 
 }

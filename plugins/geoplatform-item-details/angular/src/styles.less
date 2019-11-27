@@ -4,7 +4,7 @@
 @import "~@geoplatform/style/src/icons/geoplatform-icons-font.css";
 
 
-a[target="_blank"]:after {
+a[target="_blank"]:not(.no-decoration):after {
     font-family: 'Font Awesome 5 Free';
     font-weight: 900;
     -webkit-font-smoothing: antialiased;
@@ -44,10 +44,17 @@ span.fas.fa-caret-up {
 
 
 
+/* ASSET ACTION MENU ITEM */
 .m-action {
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-}
-.p-item__actions > *:last-child .m-action {
-    border-bottom: none;
+    padding: 0.5em;
+    border-top: 1px solid #ddd;
+
+    &:hover {
+        background-color: #eee;
+    }
+
+    & > .btn.btn-link {
+        width: 100%;
+        text-align: left;
+    }
 }

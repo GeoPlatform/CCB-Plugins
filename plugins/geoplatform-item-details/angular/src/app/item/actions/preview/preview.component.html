@@ -1,10 +1,14 @@
 <div class="m-action" *ngIf="isSupported()">
-    <p class="u-text--justify u-text--sm u-mg-bottom--md">
-        View this resource on a map. For Service resources, this includes all
-        layers hosted by the service. For Dataset resources, this includes associated
-        layers as well as layers hosted by associated services.
-    </p>
-    <a href="{{getHref()}}" class="btn btn-info btn-block u-mg-top--xlg">
+
+    <button type="button" class="btn btn-link d-flex flex-justify-between flex-align-center"
+        *ngIf="!previewable" title="{{message}}">
+        <span class="far fa-map t-fg--gray-md"></span>
+        <span class="flex-1 t-fg--gray-md">Preview on Map</span>
+        <span *ngIf="message" class="t-fg--warning fas fa-exclamation-triangle">
+        </span>
+    </button>
+
+    <a href="{{getHref()}}" class="btn btn-link" title="{{description}}" *ngIf="previewable">
         <span class="far fa-map"></span> Preview on Map
     </a>
 </div>

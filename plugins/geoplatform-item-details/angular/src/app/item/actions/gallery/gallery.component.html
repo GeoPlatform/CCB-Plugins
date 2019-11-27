@@ -1,6 +1,6 @@
 <div class="m-action" *ngIf="isSupported()">
     <button type="button"
-        class="btn btn-secondary btn-block"
+        class="btn btn-link"
         title="Add this Resource to a Gallery"
         [disabled]="awaitingInput"
         (click)="promptForInput()">
@@ -10,29 +10,26 @@
     <div *ngIf="awaitingInput" class="m-action-prompt">
         <br>
 
-        <div class="u-mg-bottom--sm d-flex flex-justify-between flex-align-center"
-            ng-if="totalSuggested > maxSuggested">
-            <span class="u-text--sm">{{totalSuggested}} Galleries available</span>
-            <div class="flex-1">
-                <button type="button" class="btn btn-sm btn-link"
-                    [disabled]="query.getPage()===0"
-                    (click)="firstPage()">
-                    <span class="fas fa-fast-backward"></span>
-                </button>
-                <button type="button" class="btn btn-sm btn-link"
-                    [disabled]="query.getPage()===0"
-                    (click)="prevPage()">
-                    <span class="fas fa-backward"></span>
-                </button>
-                <button type="button" class="btn btn-sm btn-link disabled">
-                    {{getPagingInfo()}}
-                </button>
-                <button type="button" class="btn btn-sm btn-link"
-                    [disabled]="!hasNextPage()"
-                    (click)="nextPage()">
-                    <span class="fas fa-forward"></span>
-                </button>
-            </div>
+        <div class="u-mg-bottom--sm" ng-if="totalSuggested > maxSuggested">
+            <div class="u-text--sm">{{totalSuggested}} galleries</div>
+            <button type="button" class="btn btn-sm btn-link"
+                [disabled]="query.getPage()===0"
+                (click)="firstPage()">
+                <span class="fas fa-fast-backward"></span>
+            </button>
+            <button type="button" class="btn btn-sm btn-link"
+                [disabled]="query.getPage()===0"
+                (click)="prevPage()">
+                <span class="fas fa-backward"></span>
+            </button>
+            <button type="button" class="btn btn-sm btn-link disabled">
+                {{getPagingInfo()}}
+            </button>
+            <button type="button" class="btn btn-sm btn-link"
+                [disabled]="!hasNextPage()"
+                (click)="nextPage()">
+                <span class="fas fa-forward"></span>
+            </button>
         </div>
 
 

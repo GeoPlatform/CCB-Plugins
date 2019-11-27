@@ -37,7 +37,7 @@
 </div>
 
 <div class="m-article__desc">
-    <gpid-use-constraints [rights]="item?.rights"></gpid-use-constraints>
+    <gpid-use-constraints [rights]="(item?.accessRights||[]).concat(item?.rights||[])"></gpid-use-constraints>
 </div>
 
 <div class="m-article__desc">

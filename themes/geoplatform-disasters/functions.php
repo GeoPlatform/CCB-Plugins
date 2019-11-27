@@ -13,6 +13,10 @@ add_action( 'wp_enqueue_scripts', 'geop_disasters_enqueue_scripts' );
 
 
 // Manually including widgets that CCB 4 excludes from child themes.
+get_template_part( 'widget-disasters-one', get_post_format() );
+get_template_part( 'widget-disasters-two', get_post_format() );
+get_template_part( 'widget-disasters-three', get_post_format() );
+
 get_template_part( 'widget-front-featured', get_post_format() );
 get_template_part( 'widget-front-banner', get_post_format() );
 get_template_part( 'widget-front-maps', get_post_format() );

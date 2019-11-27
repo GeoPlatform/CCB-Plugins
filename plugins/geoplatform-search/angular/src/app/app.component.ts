@@ -78,7 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }
 
     parseQueryParameters(params: Params) {
-        // console.log(params);
+        console.log("Parsing Query Parameters: " + JSON.stringify(params));
 
         this.codecFactory.list().forEach( (codec : Codec) => {
             codec.parseParams(params, this.constraints);
@@ -103,6 +103,8 @@ export class AppComponent implements OnInit, OnDestroy {
         this.codecFactory.list().forEach( (codec : Codec) => {
             codec.setParam(params, this.constraints);
         });
+
+        console.log("Updating query parameters: " + JSON.stringify(params));
         //Note: this will not refresh the page, but will insert a new entry
         // into history and update URL bar
         this.router.navigate(['.'], { queryParams: params });

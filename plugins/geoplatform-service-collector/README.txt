@@ -6,7 +6,7 @@ Tags: GeoPlatform, Geoplatform, geoplatform, Shortcode, shortcode, Dataset, data
 Requires at least: 4.6.4
 Requires PHP: 7.2.0
 Tested up to: 5.2.2
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 License: Apache 2.0
 License URI:  http://www.apache.org/licenses/LICENSE-2.0
 
@@ -55,6 +55,11 @@ Answer to foo bar dilemma.
 2. https://www.geoplatform.gov/ngda/biodiversity/
 
 == Changelog ==
+
+= 2.1.5 =
+* Added support to display all asset types regardless of filtering criteria.
+* Exchanged Classifier filtering for Concepts.
+* Replaced 404 Not Found with a more desirable default image.
 
 = 2.1.4 =
 * Changed resource loading order to improve performance.

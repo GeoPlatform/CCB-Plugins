@@ -5,9 +5,11 @@ import {
     ngGpoauthFactory, AuthService, GeoPlatformUser
 } from '@geoplatform/oauth-ng/angular';
 
+import { RPMService } from '@geoplatform/rpm/src/iRPMService'
+import { Config } from '@geoplatform/client';
+
 import { environment } from '../../environments/environment';
 import { authServiceFactory } from './auth.factory';
-import { RPMService } from '@geoplatform/rpm/src/iRPMService'
 
 
 @Injectable()
@@ -46,18 +48,40 @@ export class PluginAuthService {
         });
 
 
-        //force check to make sure user is actually logged in and token hasn't expired/been revoked
-        this.authService.checkWithClient(null)
-        //then fetch user info
-        .then( (jwt) => {
-            if(!jwt) return null;   //if no jwt, no use getting user info
-            return this.authService.getUser();
-        })
-        .then( user => { this.onUserChange(user); })
-        .catch(e => {
-            // console.log("AuthService.init() - Error retrieving user: " + e.message);
-            this.onUserChange(null);
-        });
+        this.authService.getUser().then( user => { this.onUserChange(user); });
+
+        if('dev' === Config.env) {
+            console.log("[WARN] WARNING!!! - Using 'test' user because environment is configured as 'dev'");
+            let user = new GeoPlatformUser({
+                username: "tester",
+                sub      : 'test',
+                name    : "Test User",
+                email   : "test@geoplatform.us",
+                orgs     : [{_id: "test", name:"GeoPlatform"}],
+                roles   : "gp_editor",
+                groups  : [{_id: "test", name: "gp_editor"}],
+                exp     : new Date().getTime() + (1000*60*60),
+                scope   : null,
+                iss     : null,
+                aud     :null,
+                nonce   : null,
+                iat     : null
+            });
+            this.onUserChange(user);
+        }
+
+        // //force check to make sure user is actually logged in and token hasn't expired/been revoked
+        // this.authService.checkWithClient(null)
+        // //then fetch user info
+        // .then( (jwt) => {
+        //     if(!jwt) return null;   //if no jwt, no use getting user info
+        //     return this.authService.getUser();
+        // })
+        // .then( user => { this.onUserChange(user); })
+        // .catch(e => {
+        //     // console.log("AuthService.init() - Error retrieving user: " + e.message);
+        //     this.onUserChange(null);
+        // });
     }
 
     onUserChange(user : GeoPlatformUser) {
@@ -89,7 +113,7 @@ export class PluginAuthService {
      */
     check() : Promise<GeoPlatformUser> {
         if(!this.authService) return Promise.resolve(null);
-        return this.authService.checkWithClient(null)
+        return this.authService.checkWithClient()
         .then( token => this.authService.getUser() )
         .then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
@@ -101,6 +125,9 @@ export class PluginAuthService {
      *
      */
     subscribe( callback : Observer<GeoPlatformUser> ) : Subscription {
+        if(this.user) {
+            setTimeout( () => { callback.next(this.user); },100);
+        }
         return this.user$.subscribe( callback );
     }
 

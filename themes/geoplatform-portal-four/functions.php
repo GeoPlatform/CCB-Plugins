@@ -194,7 +194,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 
 	$wp_customize->add_control('headlink_communities',array(
 		'type' => 'text',
-		'label' => 'Communities',
+		'label' => 'Communities (Explore Resources Menu)',
 		'section' => 'headlink_format',
 		'priority' => 40,
 	));
@@ -218,7 +218,7 @@ function geop_ccb_header_link_register( $wp_customize ){
 
 	$wp_customize->add_control('headlink_search',array(
 		'type' => 'text',
-		'label' => 'Search (GeoPlatform Search Plugin Page)',
+		'label' => 'Search (Search Plugin Page)',
 		'section' => 'headlink_format',
 		'priority' => 50,
 		'default' => 'geoplatform-search'
@@ -262,6 +262,42 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'priority' => 65,
 	));
 
+	$wp_customize->add_setting('headlink_feat',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_feat',array(
+		'type' => 'text',
+		'label' => "Featured (Mega Menu)",
+		'section' => 'headlink_format',
+		'priority' => 70,
+	));
+
+	$wp_customize->add_setting('headlink_involved',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_involved',array(
+		'type' => 'text',
+		'label' => "Get Involved (Mega Menu)",
+		'section' => 'headlink_format',
+		'priority' => 75,
+	));
+
+	$wp_customize->add_setting('headlink_explore',array(
+		'default' => '',
+		'sanitize_callback' => 'sanitize_text_field'
+	));
+
+	$wp_customize->add_control('headlink_explore',array(
+		'type' => 'text',
+		'label' => "Explore Data (Mega Menu)",
+		'section' => 'headlink_format',
+		'priority' => 80,
+	));
+
 	$wp_customize->add_setting('headlink_apps',array(
 		'default' => '',
 		'sanitize_callback' => 'sanitize_text_field'
@@ -271,8 +307,21 @@ function geop_ccb_header_link_register( $wp_customize ){
 		'type' => 'text',
 		'label' => "Apps & Services (Mega Menu)",
 		'section' => 'headlink_format',
-		'priority' => 70,
+		'priority' => 85,
 	));
+
+		$wp_customize->add_setting('headlink_about',array(
+			'default' => '',
+			'sanitize_callback' => 'sanitize_text_field'
+		));
+
+		$wp_customize->add_control('headlink_about',array(
+			'type' => 'text',
+			'label' => "About (Mega Menu)",
+			'section' => 'headlink_format',
+			'priority' => 90,
+		));
+
 }
 add_action( 'customize_register', 'geop_ccb_header_link_register');
 
