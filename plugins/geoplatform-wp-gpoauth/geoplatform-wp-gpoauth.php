@@ -72,7 +72,26 @@ function geopoauth_register_authorize(){
 		if ($post->post_name == 'checktoken'){
 			$header = "Authorization: Bearer";
 			if (is_user_logged_in()){
+				/**
+				 * We need to instead set a top level domain cookie with the token.
+				 *
+				 * Example:
+				 * domain: .geoplatform.us / .geoplatform.gov
+				 * value: <base 64 encoded version of the token (not the raw token)>
+				 *
+				 * We no longer need to set any headers. We now only need to set the cookie.
+				 * This is a new cookie. It is not the same as the OPEN-ID-CONNECT plugin.
+				 *
+				 * COOKIE MUST BE: 'gpoauth-a'
+				 *
+				 * Things to remember:
+				 * - make miniaml change to prevent regressions this late in the Beta period
+				 *
+				 */
+				// Warning: sudo code
+				// setcookie('gpoauth-a', <base64 encoded token>, <expire in 1 day 3600 * 24>)
 				$header = "Authorization: Bearer " . get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
+
 				if (isset($_COOKIE['geop_auth_cookie'])){
 					$header = "Authorization: Bearer " . base64_decode($_COOKIE['geop_auth_cookie']);
 				}
