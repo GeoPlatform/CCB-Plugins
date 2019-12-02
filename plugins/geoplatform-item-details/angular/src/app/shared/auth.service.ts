@@ -47,11 +47,13 @@ export class PluginAuthService {
             }
         });
 
+        // this.authService.getUser().then( user => { this.onUserChange(user); })
+        // .catch(e => {
+        //     console.log(e);
+        // });
 
-        this.authService.getUser().then( user => { this.onUserChange(user); });
-
-        if('dev' === Config.env) {
-            console.log("[WARN] WARNING!!! - Using 'test' user because environment is configured as 'dev'");
+        if( Config.env.indexOf('dev') === 0 ) {
+            console.log("[WARN] WARNING!!! - Using 'test' user because environment is configured as dev*");
             let user = new GeoPlatformUser({
                 username: "tester",
                 sub      : 'test',
@@ -68,20 +70,21 @@ export class PluginAuthService {
                 iat     : null
             });
             this.onUserChange(user);
-        }
 
-        // //force check to make sure user is actually logged in and token hasn't expired/been revoked
-        // this.authService.checkWithClient(null)
-        // //then fetch user info
-        // .then( (jwt) => {
-        //     if(!jwt) return null;   //if no jwt, no use getting user info
-        //     return this.authService.getUser();
-        // })
-        // .then( user => { this.onUserChange(user); })
-        // .catch(e => {
-        //     // console.log("AuthService.init() - Error retrieving user: " + e.message);
-        //     this.onUserChange(null);
-        // });
+        } else {
+
+            this.verifyToken(null)
+            //then fetch user info
+            .then( (jwt) => {
+                if(!jwt) return null;   //if no jwt, no use getting user info
+                return this.authService.getUser();
+            })
+            .then( user => { this.onUserChange(user); })
+            .catch(e => {
+                // console.log("AuthService.init() - Error retrieving user: " + e.message);
+                this.onUserChange(null);
+            });
+        }
     }
 
     onUserChange(user : GeoPlatformUser) {
@@ -112,12 +115,30 @@ export class PluginAuthService {
      * @return GeoPlatformUser or null
      */
     check() : Promise<GeoPlatformUser> {
-        if(!this.authService) return Promise.resolve(null);
-        return this.authService.checkWithClient()
-        .then( token => this.authService.getUser() )
-        .then( user => {
+        if(!this.authService) {
+            console.log("[WARN] No auth service to check token with...");
+            return Promise.resolve(null);
+        }
+        // console.log("[DEBUG] Checking with auth service for token");
+        let promise = this.authService.check().then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
             return user;
+        });
+        if(promise) {
+            promise.catch(e => { console.log(e) })
+        }
+        return promise;
+    }
+
+    /**
+     *
+     */
+    verifyToken( token : string ) : Promise<string> {
+        if('development' === environment.env || !this.authService) {
+            return Promise.resolve(token);
+        }
+        return this.authService.checkWithClient().catch(e => {
+            console.log(e);
         });
     }
 
@@ -130,12 +151,6 @@ export class PluginAuthService {
         }
         return this.user$.subscribe( callback );
     }
-
-    // unsubscribe( id : string ) {
-    //     if(id && this.observers)
-    //         this.observers[id] = null;
-    // }
-
 
 
     dispose() {
