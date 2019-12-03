@@ -2,8 +2,10 @@
 
     <button type="button" class="btn btn-link d-flex flex-justify-between flex-align-center"
         *ngIf="!previewable" title="{{message}}">
-        <span class="far fa-map t-fg--gray-md"></span>
-        <span class="flex-1 t-fg--gray-md">Preview on Map</span>
+        <span class="flex-1 t-fg--gray-md">
+            <span class="far fa-map t-fg--gray-md"></span>
+             Preview on Map
+         </span>
         <span *ngIf="message" class="t-fg--warning fas fa-exclamation-triangle">
         </span>
     </button>
