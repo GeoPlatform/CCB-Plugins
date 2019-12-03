@@ -94,11 +94,10 @@ function geopoauth_register_authorize(){
 
 				// $header = "Authorization: Bearer " . get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
 				if (isset($_COOKIE['geop_auth_cookie'])){
-					setcookie('gpoauth-a', $_COOKIE['geop_auth_cookie'], current_time( 'timestamp' , TRUE ) + 86400, '/', '', TRUE, TRUE);
-					// $header = "Authorization: Bearer " . base64_decode($_COOKIE['geop_auth_cookie']);
+					$geopoauth_domain = isset($_ENV['wpp_url']) ? ltrim(strstr($_ENV['wpp_url'], '.'), '.') : 'geoplatform.gov';
+					setcookie('gpoauth-a', $_COOKIE['geop_auth_cookie'], current_time( 'timestamp' , TRUE ) + 86400, '/', $geopoauth_domain, TRUE, TRUE);
 				}
 			}
-			// header($header);
 		}
 	}
 }
