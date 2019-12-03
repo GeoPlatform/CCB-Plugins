@@ -9,14 +9,14 @@
  * that starts the plugin.
  *
  * @link              https://www.imagemattersllc.com
- * @since             1.0.3
+ * @since             1.0.4
  * @package           Geoplatform_Wp_Gpoauth
  *
  * @wordpress-plugin
  * Plugin Name:       GeoPlatform WP GPOAuth
  * Plugin URI:        https://www.geoplatform.gov
  * Description:       Provides a variety of support functions for the GeoPlatform Portal experience.
- * Version:           1.0.3
+ * Version:           1.0.4
  * Author:            Image Matters LLC
  * Author URI:        https://www.imagemattersllc.com
  * License:           Apache 2.0
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.1 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'GEOWPOAUTH_PLUGIN', '1.0.3' ); // <-- Is this a typo?
+define( 'GEOWPOAUTH_PLUGIN', '1.0.4' );
 
 
 // Sets the parameters of and then creates the token page. It deletes any old
@@ -72,30 +72,10 @@ function geopoauth_register_authorize(){
 		if ($post->post_name == 'checktoken'){
 			$header = "Authorization: Bearer";
 			if (is_user_logged_in()){
-
-                              /**
-                               * We need to instead set a top level domain cookie with the token.
-                               *
-                               * Example:
-                               * domain: .geoplatform.us / .geoplatform.gov
-                               * value: <base 64 encoded version of the token (not the raw token)>
-                               *
-                               * We no longer need to set any headers. We now only need to set the cookie.
-                               * This is a new cookie. It is not the same as the OPEN-ID-CONNECT plugin.
-                               *
-                               * COOKIE MUST BE: 'gpoauth-a'
-                               *
-                               * Things to remember:
-                               * - make miniaml change to prevent regressions this late in the Beta period
-                               *
-                               */
-                              // Warning: sudo code
-                              // setcookie('gpoauth-a', <base64 encoded token>, <expire in 1 day 3600 * 24>)
-
-				// $header = "Authorization: Bearer " . get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'];
+				$geopoauth_domain = isset($_ENV['wpp_url']) ? ltrim(strstr($_ENV['wpp_url'], '.'), '.') : 'geoplatform.gov';
+				setrawcookie('gpoauth-a', get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'], current_time( 'timestamp' , TRUE ) + 86400, '/', $geopoauth_domain, TRUE, TRUE);
 				if (isset($_COOKIE['geop_auth_cookie'])){
-					$geopoauth_domain = isset($_ENV['wpp_url']) ? ltrim(strstr($_ENV['wpp_url'], '.'), '.') : 'geoplatform.gov';
-					setcookie('gpoauth-a', $_COOKIE['geop_auth_cookie'], current_time( 'timestamp' , TRUE ) + 86400, '/', $geopoauth_domain, TRUE, TRUE);
+					setrawcookie('gpoauth-a', $_COOKIE['geop_auth_cookie'], current_time( 'timestamp' , TRUE ) + 86400, '/', $geopoauth_domain, TRUE, TRUE);
 				}
 			}
 		}
