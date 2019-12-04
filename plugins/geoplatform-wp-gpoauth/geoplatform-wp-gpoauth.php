@@ -67,9 +67,9 @@ function geopoauth_register_authorize(){
 		global $post;
 		$geopoauth_domain = isset($_ENV['wpp_url']) ? ltrim(strstr($_ENV['wpp_url'], '.'), '.') : 'geoplatform.gov';
 		if (!is_user_logged_in()){
-			$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
-			setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, FALSE);
-			setcookie('gpoauth-a', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/', $geopoauth_domain, TRUE, FALSE);
+			// $compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
+			// setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, FALSE);
+			setrawcookie('gpoauth-a', '', time() - 3600);
 		}
 		else {
 			setrawcookie('gpoauth-a', get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'], current_time( 'timestamp' , TRUE ) + 86400, '/', $geopoauth_domain, TRUE, FALSE);
