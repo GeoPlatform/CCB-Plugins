@@ -63,24 +63,34 @@ add_action('template_redirect', 'geopoauth_register_authorize');
 // Checks the current page, ensuring that it is the "checktoken" page. If it is,
 // the Authorize => Bearer token response header is applied to that page.
 function geopoauth_register_authorize(){
-	if (is_page()){
-		global $post;
-		if (!is_user_logged_in()){
-			$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
-			setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, FALSE);
-		}
-		if ($post->post_name == 'checktoken'){
-			$header = "Authorization: Bearer";
-			if (is_user_logged_in()){
-				$geopoauth_domain = isset($_ENV['wpp_url']) ? ltrim(strstr($_ENV['wpp_url'], '.'), '.') : 'geoplatform.gov';
-				setrawcookie('gpoauth-a', get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token'], current_time( 'timestamp' , TRUE ) + 86400, '/', $geopoauth_domain, TRUE, TRUE);
-				if (isset($_COOKIE['geop_auth_cookie'])){
-					setrawcookie('gpoauth-a', $_COOKIE['geop_auth_cookie'], current_time( 'timestamp' , TRUE ) + 86400, '/', $geopoauth_domain, TRUE, FALSE);
-				}
-			}
+	global $post;
+	$geopoauth_domain = isset($_ENV['wpp_url']) ? ltrim(strstr($_ENV['wpp_url'], '.'), '.') : 'geoplatform.gov';
+	// $geopoauth_domain = "localhost";
+	if (is_user_logged_in()){
+		setrawcookie('gpoauth-a', base64_encode(get_user_meta(get_current_user_id(), 'openid-connect-generic-last-token-response', true)['access_token']), current_time( 'timestamp' , TRUE ) + 86400, "/", $geopoauth_domain, TRUE, FALSE);
+		if (isset($_COOKIE['geop_auth_cookie'])){
+			setrawcookie('gpoauth-a', $_COOKIE['geop_auth_cookie'], current_time( 'timestamp' , TRUE ) + 86400, "/", $geopoauth_domain, TRUE, FALSE);
 		}
 	}
+	else {
+		$compath = isset($_ENV['sitename']) ? "/" . $_ENV['sitename'] : "";
+		unset($_COOKIE['geop_auth_cookie']);
+		setrawcookie('geop_auth_cookie', '', 1, '/', $geopoauth_domain, TRUE, FALSE);
+		unset($_COOKIE['gpoauth-a']);
+		setrawcookie('gpoauth-a', '', 1, '/', $geopoauth_domain, TRUE, FALSE);
+		// setcookie('geop_auth_cookie', '', current_time( 'timestamp' , TRUE ) - 3600, $compath . '/checktoken/', '', TRUE, FALSE);
+	}
 }
+
+
+
+
+
+
+
+
+
+
 
 // Establishes the global GeoPlatform class if it hasn't been set yet.
 function geopoauth_establish_globals() {
