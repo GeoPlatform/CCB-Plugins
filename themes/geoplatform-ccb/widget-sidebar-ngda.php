@@ -58,7 +58,7 @@ class Geopccb_Side_Content_NGDA_Widget extends WP_Widget {
 				echo "<br>";
 				echo "<p><strong>Community Type: </strong>" . esc_attr($geopccb_ngda_type, 'geoplatform-ccb') . "</p>";
 				echo "<p><strong>Sponsor: </strong>" . esc_attr($geopccb_ngda_sponsor, 'geoplatform-ccb') . "</p>";
-				echo "<p><strong>Sponsor Email: </strong><a href='mailto:" . esc_html($geopccb_ngda_email, 'geoplatform-ccb') . "'>" . esc_attr($geopccb_ngda_email, 'geoplatform-ccb') . "</a></p>";
+				echo "<p><strong>Sponsor Email: </strong><a href='" . esc_url('mailto:' . $geopccb_ngda_email) . "'>" . esc_attr($geopccb_ngda_email, 'geoplatform-ccb') . "</a></p>";
 				echo "<p><strong>Theme Lead Agency: </strong>" . esc_attr($geopccb_ngda_agency, 'geoplatform-ccb') . "</p>";
 				echo "<p><strong>Theme Lead: </strong>" . esc_attr($geopccb_ngda_lead, 'geoplatform-ccb') . "</p>";
       echo "</div>";

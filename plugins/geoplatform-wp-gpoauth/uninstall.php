@@ -20,7 +20,7 @@
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
  * @link       https://www.imagemattersllc.com
- * @since      1.0.3
+ * @since      1.0.4
  *
  * @package    Geoplatform_Wp_Gpoauth
  */

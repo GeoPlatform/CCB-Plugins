@@ -63,3 +63,19 @@ export class FixLabelPipe implements PipeTransform {
         return result.charAt(0).toUpperCase() + result.slice(1);
     }
 }
+
+
+
+
+import { DomSanitizer } from "@angular/platform-browser";
+
+@Pipe({ name: 'safeUrl' })
+
+export class SafeUrlPipe implements PipeTransform {
+
+    constructor(private sanitizer: DomSanitizer) { }
+
+    transform(url) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+}

@@ -15,7 +15,7 @@ is causing max call stack exceeded errors when running in latest angular (8.1.2)
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
+import { LimitToPipe, FriendlyTypePipe, FixLabelPipe, SafeUrlPipe } from './shared/pipes';
 import { ChartsModule } from 'ng2-charts';
 
 // Adds window.RPMService to global namespace
@@ -158,6 +158,7 @@ export function initializeApp() {
         LimitToPipe,
         FriendlyTypePipe,
         FixLabelPipe,
+        SafeUrlPipe,
         KeywordsComponent,
         ServiceLayersComponent,
         ServiceLayerComponent,

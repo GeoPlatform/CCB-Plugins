@@ -54,7 +54,9 @@ export class ExportActionComponent implements OnInit {
     public formats : any[];
     private rpm: RPMService
 
-    constructor( @Inject(RPMService) rpm : RPMService ) {
+    constructor(
+        @Inject(RPMService) rpm : RPMService
+    ) {
         this.rpm = rpm;
     }
 
@@ -77,7 +79,10 @@ export class ExportActionComponent implements OnInit {
             console.log("Warning: ExportAction has no item or service");
             return;
         }
-        window.open(Config.ualUrl + '/api/items/' + this.item.id + '/export?format=' + format, '_blank');
+
+        // window.open(Config.ualUrl + '/api/items/' + this.item.id + '/export?format=' + format, '_blank');
+        let url = (Config.ualUrl.replace('ual','oe')) + '/api/items/' + this.item.id + '/export?format=' + format;
+        window.open(url, '_blank');
 
         // RPM : Asset Exported
         const TYPE = this.item.type.replace(/.+:/,'')

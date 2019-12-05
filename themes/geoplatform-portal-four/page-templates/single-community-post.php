@@ -93,7 +93,7 @@ get_template_part( 'sub-header-com', get_post_format() );
                 if (isset($post->geopportal_compost_sponsor_name) && !empty($post->geopportal_compost_sponsor_name)){
                   echo "<div><strong>Sponsor:</strong> " . esc_attr($post->geopportal_compost_sponsor_name);
                   if (isset($post->geopportal_compost_sponsor_email) && !empty($post->geopportal_compost_sponsor_email)){
-                    echo " (<a href='mailto:" . esc_url($post->geopportal_compost_sponsor_email) . "'>email</a>)";
+                    echo " (<a href='" . esc_url( 'mailto:' . $post->geopportal_compost_sponsor_email) . "'>email</a>)";
                   }
                   echo "</div>";
                 }
