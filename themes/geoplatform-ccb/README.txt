@@ -108,7 +108,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 == Changelog ==
 
  = 4.0.7 =
-* Release pending
+* Release December 9, 2019
 
 - Sub-categories and pages properly intermingle in category listings when Featured Sorting is set to custom.
 - If no featured image is set, a default is applied in listings.
