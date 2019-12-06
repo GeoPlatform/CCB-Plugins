@@ -1546,6 +1546,7 @@ function geop_ccb_bootstrap_register(){};
 function geop_ccb_feature_card_register(){};
 function geop_ccb_breadcrumb_register(){};
 function geop_ccb_postbanner_register(){};
+function geop_ccb_sidebar_register(){};
 
 // Killing all CCB menu creation due to this theme's use of its own system.
 function geop_ccb_register_header_menus(){};
