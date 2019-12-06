@@ -2,7 +2,7 @@
 Theme Name: Geoplatform Portal 4.0
 Author: Image Matters LLC, Kevin Schmidt, Lee Heazel, Patrick Neal
 Description: Geoplatform Portal 4.0 theme. The GeoPlatform CCB theme is required.
-Version: 4.1.5
+Version: 4.1.6
 Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, education
 Text Domain: geoplatform-portal-four
 Template: geoplatform-ccb
@@ -47,6 +47,12 @@ form { margin: 0; }
 
 .geopportal_port_car_tab_title{
   padding: 0.25em 1em;
+}
+
+.geopportal_explore_button{
+  border-right: 1px solid #ddd !important;
+  padding: 0rem .75rem !important;
+  border-radius: 0 !important;
 }
 
 

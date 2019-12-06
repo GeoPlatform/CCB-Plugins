@@ -170,7 +170,7 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
 
         // <!-- User section continued, HTML area -->
       echo "<div class='dropdown' id='geopccb_header_user_dropdown_parent'>";
-        echo "<button class='btn btn-link dropdown-toggle' type='button' id='userSignInButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+        echo "<button class='btn btn-link dropdown-toggle' type='button' id='userSignInButton' aria-haspopup='true' aria-expanded='false'>";
           echo "<span class='fas fa-user'></span>";
           echo "<span class='is-hidden--xs'>&nbsp". $geopccb_front_username_text . "</span>";
         echo "</button>";
@@ -212,7 +212,6 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
           var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
           jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
 					jQuery("#geopccb_header_user_dropdown_child").toggleClass("show");
-          jQuery("#geopccb_header_user_dropdown_parent").toggleClass("show");
 				});
 
 		  });

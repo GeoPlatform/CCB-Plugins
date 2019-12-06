@@ -2,9 +2,9 @@
 
 -Contributors: imagemattersllc, kevins713, lheazel
 -Requires at least: WordPress 5.0.0
--Tested up to: WordPress 5.2.3
--Stable tag: 4.0.7
--Version: 4.0.7
+-Tested up to: WordPress 5.3
+-Stable tag: 4.0.8
+-Version: 4.0.8
 -License: Apache 2.0
 -License URI: http://www.apache.org/licenses/LICENSE-2.0
 -Tags: two-columns, left-sidebar, right-sidebar, grid-layout, custom-background, custom-colors, custom-header, custom-menu, featured-images, full-width-template, theme-options, custom-logo, editor-style, translation-ready, education
@@ -106,6 +106,11 @@ Bootstrap (3.3.7). Copyright 2018 Twitter.
 Source: (https://getbootstrap.com/docs/3.3/)
 
 == Changelog ==
+
+ = 4.0.8 =
+* Release pending
+
+- Fixed bootstrap disabling user info drop-down in header.
 
  = 4.0.7 =
 * Release December 9, 2019

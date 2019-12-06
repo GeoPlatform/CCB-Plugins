@@ -42,10 +42,10 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
             <div class="a-nav__collapsible-menu">
                 <div class="dropdown" role="menuitem">
-                    <a class="btn btn-link dropdown-toggle is-hidden--xs" href="<?php echo home_url('resources'); ?>" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                    <button class="btn btn-link dropdown-toggle geopportal_explore_button is-hidden--xs" href="<?php echo home_url('resources'); ?>" id="explore-resources-button" aria-haspopup="true" aria-expanded="false" role="menu">
                         Explore
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="explore-resources-button" style="z-index:9999;">
+                    </button>
+                    <div id="geopportal_header_explore_dropdown_child" class="dropdown-menu dropdown-menu-right" aria-labelledby="explore-resources-button" style="z-index:9999;">
                         <a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Datasets</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_services')); ?>">Services</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_layers')); ?>">Layers</a>
@@ -103,7 +103,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           ?>
 
           <div class="dropdown" id="geopportal_header_user_dropdown_parent">
-              <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" aria-haspopup="true" aria-expanded="false">
                   <span class="fas fa-user"></span>
                   <span class="is-hidden--xs"><?php echo $geopportal_front_username_text ?></span>
               </button>
@@ -221,12 +221,21 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <script type="text/javascript">
     jQuery(document).ready(function() {
       jQuery("#explore-resources-button").click(function(event){
+        var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
+        jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
+        jQuery("#geopportal_header_explore_dropdown_child").toggleClass("show");
+
         if (jQuery('#header-megamenu').hasClass("is-open")){
           jQuery('#header-megamenu').toggleClass("is-open");
         }
       });
 
+
       jQuery("#userSignInButton").click(function(event){
+        var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+        jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+        jQuery("#geopportal_header_user_dropdown_child").toggleClass("show");
+
         if (jQuery('#header-megamenu').hasClass("is-open")){
           jQuery('#header-megamenu').toggleClass("is-open");
         }
