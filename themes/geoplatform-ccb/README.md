@@ -112,6 +112,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Fixed bootstrap disabling user info drop-down in header.
+- User info drop-down and mega-menu will now close when the other is opened.
 
 ### 4.0.7 ###
 * Release December 9, 2019

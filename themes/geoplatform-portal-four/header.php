@@ -231,6 +231,8 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           jQuery('#header-megamenu').toggleClass("is-open");
         }
         if (jQuery('#geopportal_header_user_dropdown_child').hasClass("show")){
+          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
           jQuery('#geopportal_header_user_dropdown_child').toggleClass("show");
         }
       });
@@ -245,6 +247,8 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           jQuery('#header-megamenu').toggleClass("is-open");
         }
         if (jQuery('#geopportal_header_explore_dropdown_child').hasClass("show")){
+          var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
           jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
         }
       });
@@ -252,9 +256,13 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
       // Megamenu button, here only hiding other drop-downs if visible.
       jQuery("#megamenu-button").click(function(event){
         if (jQuery('#geopportal_header_explore_dropdown_child').hasClass("show")){
+          var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
           jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
         }
         if (jQuery('#geopportal_header_user_dropdown_child').hasClass("show")){
+          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
           jQuery('#geopportal_header_user_dropdown_child').toggleClass("show");
         }
       });
