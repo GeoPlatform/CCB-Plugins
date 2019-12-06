@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Sidebar NGDA
+ * Widget Name: Widget Sidebar NGDA
  *
  * Widget for the sidebar, displays an NGDA info card.
  *

@@ -117,6 +117,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 
 - Removed bootstrap dependency for header drop-downs.
 - More mega-menu will now close other header drop-downs when opened.
+- Modified a few files to not appear as page templates.
 
 ### 4.1.5
 * Release December 9, 2019

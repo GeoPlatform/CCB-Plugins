@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Front Maps
+ * Widget Name: Widget Front Maps
  *
  * Widget for the front page, displays a list of maps in tile format using a gallery ID input.
  *

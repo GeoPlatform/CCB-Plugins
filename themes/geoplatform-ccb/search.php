@@ -6,7 +6,7 @@
  *
  * @package GeoPlatform CCB
  *
- * Template Name: Search
+ * Name: Search
  *
  * @since 3.0.0
  */

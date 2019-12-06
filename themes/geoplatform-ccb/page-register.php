@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: GeoPlatform Registration Template
+ * Name: GeoPlatform Registration Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

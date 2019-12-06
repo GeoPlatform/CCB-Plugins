@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: GeoPlatform Map Preview Template
+ * Name: GeoPlatform Map Preview Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

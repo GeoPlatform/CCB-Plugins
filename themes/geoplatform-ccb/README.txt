@@ -113,6 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Added GeoPlatform control to toggle sidebar visibility site-wide.
 - Fixed bootstrap disabling user info drop-down in header.
 - User info drop-down and mega-menu will now close when the other is opened.
+- Fixed a number of files that erroneously appeared as page templates.
 
  = 4.0.7 =
 * Release December 9, 2019

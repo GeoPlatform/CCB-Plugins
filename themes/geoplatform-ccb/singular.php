@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Singular
+ * Name: Singular
  *
  * Used as default for posts and pages.
  *
@@ -54,7 +54,7 @@ else
 	echo "<div class='l-body l-body--one-column'>";
 
 	echo "<div class='l-body__main-column'>";
-  
+
     if ( have_posts() ) : while ( have_posts() ) : the_post();
 
       get_template_part( 'post-single', get_post_format() );
