@@ -39,7 +39,7 @@ export class PluginAuthService {
 
         const sub = this.authService.getMessenger().raw();
         this.gpAuthSubscription = sub.subscribe(msg => {
-            // console.log("Received Auth Message: " + msg.name);
+            console.log("Received Auth Message: " + msg.name);
             switch(msg.name){
                 case 'userAuthenticated': this.onUserChange(msg.user); break;
                 case 'userSignOut': this.onUserChange(null); break;
@@ -48,17 +48,18 @@ export class PluginAuthService {
 
 
         //force check to make sure user is actually logged in and token hasn't expired/been revoked
-        this.verifyToken(null)
-        //then fetch user info
-        .then( (jwt) => {
-            if(!jwt) return null;   //if no jwt, no use getting user info
-            return this.authService.getUser();
-        })
-        .then( user => { this.onUserChange(user); })
-        .catch(e => {
-            // console.log("AuthService.init() - Error retrieving user: " + e.message);
-            this.onUserChange(null);
-        });
+        // this.verifyToken(null)
+        // //then fetch user info
+        // .then( (jwt) => {
+        //     if(!jwt) return null;   //if no jwt, no use getting user info
+        //     return this.authService.getUser();
+        // })
+        // .then( user => { this.onUserChange(user); })
+        // .catch(e => {
+        //     // console.log("AuthService.init() - Error retrieving user: " + e.message);
+        //     this.onUserChange(null);
+        // });
+        this.check();
     }
 
     onUserChange(user : GeoPlatformUser) {

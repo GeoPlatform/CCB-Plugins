@@ -18,4 +18,5 @@ export const environment = {
 
     root: '/',
     assets: 'assets/'
+
 };
