@@ -54,8 +54,8 @@ export function initializeApp() {
           Config.configure(gpGlobal.config);
       }
 
-      // console.log("Configured App using:");
-      // console.log(Config);
+      console.log("Configured App using:");
+      console.log(Config);
 
   }
 }
