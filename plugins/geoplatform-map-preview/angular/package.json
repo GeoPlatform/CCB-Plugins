@@ -25,7 +25,7 @@
         "@fortawesome/fontawesome-free": "^5.6.3",
         "@geoplatform/client": "git+http://github.com/GeoPlatform/client-api.git#0.4.0",
         "@geoplatform/mapcore": "git+http://github.com/GeoPlatform/map-core.git#0.4.0",
-        "@geoplatform/oauth-ng": "git+https://github.com/GeoPlatform/ng-gpoauth.git#0.4.0",
+        "@geoplatform/oauth-ng": "git+https://github.com/GeoPlatform/ng-gpoauth.git#0.3.0",
         "@geoplatform/rpm": "git+https://github.com/GeoPlatform/rpm-js#0.4.0",
         "@geoplatform/style": "git+http://github.com/GeoPlatform/style.git#2.2.0",
         "axios": "^0.19.0",
