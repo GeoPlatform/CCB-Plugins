@@ -62,8 +62,8 @@ export function authServiceFactory() {
         });
     }
 
-    // console.log("Configuring OAuth using: ");
-    // console.log(authSettings);
+    console.log("Configuring OAuth using: ");
+    console.log(authSettings);
 
     authService = ngGpoauthFactory(authSettings);
     return authService;

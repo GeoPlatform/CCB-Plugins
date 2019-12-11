@@ -46,24 +46,11 @@ export class PluginAuthService {
             }
         });
 
-
-        //force check to make sure user is actually logged in and token hasn't expired/been revoked
-        // this.verifyToken(null)
-        // //then fetch user info
-        // .then( (jwt) => {
-        //     if(!jwt) return null;   //if no jwt, no use getting user info
-        //     return this.authService.getUser();
-        // })
-        // .then( user => { this.onUserChange(user); })
-        // .catch(e => {
-        //     // console.log("AuthService.init() - Error retrieving user: " + e.message);
-        //     this.onUserChange(null);
-        // });
-        this.check();
+        this.authService.getUser().then( user => { this.onUserChange(user); });
     }
 
     onUserChange(user : GeoPlatformUser) {
-        console.log("User: " + (user ? user.username : 'N/A'));
+        console.log("User Changed: " + (user ? user.username : 'N/A'));
         // console.log('AuthService.onUserChange() returned ' +
         //     JSON.stringify(user, null, ' '));
         this.user = user;
@@ -94,8 +81,9 @@ export class PluginAuthService {
             console.log("[WARN] No auth service to check token with...");
             return Promise.resolve(null);
         }
-        // console.log("[DEBUG] Checking with auth service for token");
-        return this.authService.check().then( user => {
+        return this.authService.checkWithClient()
+        .then( token => this.authService.getUser() )
+        .then( user => {
             setTimeout( () => { this.onUserChange(user); },100 );
             return user;
         });
@@ -108,12 +96,12 @@ export class PluginAuthService {
         return this.user$.subscribe( callback );
     }
 
-    verifyToken( token : string ) : Promise<string> {
-        if('development' === environment.env || !this.authService) {
-            return Promise.resolve(token);
-        }
-        return this.authService.checkWithClient(token);
-    }
+    // verifyToken( token : string ) : Promise<string> {
+    //     if('development' === environment.env || !this.authService) {
+    //         return Promise.resolve(token);
+    //     }
+    //     return this.authService.checkWithClient(token);
+    // }
 
 
 

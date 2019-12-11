@@ -47,44 +47,28 @@ export class PluginAuthService {
             }
         });
 
-        // this.authService.getUser().then( user => { this.onUserChange(user); })
-        // .catch(e => {
-        //     console.log(e);
-        // });
+        // if( Config.env.indexOf('dev') === 0 ) {
+        //     console.log("[WARN] WARNING!!! - Using 'test' user because environment is configured as dev*");
+        //     let user = new GeoPlatformUser({
+        //         username: "tester",
+        //         sub      : 'test',
+        //         name    : "Test User",
+        //         email   : "test@geoplatform.us",
+        //         orgs     : [{_id: "test", name:"GeoPlatform"}],
+        //         roles   : "gp_editor",
+        //         groups  : [{_id: "test", name: "gp_editor"}],
+        //         exp     : new Date().getTime() + (1000*60*60),
+        //         scope   : null,
+        //         iss     : null,
+        //         aud     :null,
+        //         nonce   : null,
+        //         iat     : null
+        //     });
+        //     this.onUserChange(user);
+        //
+        // }
 
-        if( Config.env.indexOf('dev') === 0 ) {
-            console.log("[WARN] WARNING!!! - Using 'test' user because environment is configured as dev*");
-            let user = new GeoPlatformUser({
-                username: "tester",
-                sub      : 'test',
-                name    : "Test User",
-                email   : "test@geoplatform.us",
-                orgs     : [{_id: "test", name:"GeoPlatform"}],
-                roles   : "gp_editor",
-                groups  : [{_id: "test", name: "gp_editor"}],
-                exp     : new Date().getTime() + (1000*60*60),
-                scope   : null,
-                iss     : null,
-                aud     :null,
-                nonce   : null,
-                iat     : null
-            });
-            this.onUserChange(user);
-
-        } else {
-
-            this.verifyToken(null)
-            //then fetch user info
-            .then( (jwt) => {
-                if(!jwt) return null;   //if no jwt, no use getting user info
-                return this.authService.getUser();
-            })
-            .then( user => { this.onUserChange(user); })
-            .catch(e => {
-                // console.log("AuthService.init() - Error retrieving user: " + e.message);
-                this.onUserChange(null);
-            });
-        }
+        this.authService.getUser().then( user => { this.onUserChange(user); });
     }
 
     onUserChange(user : GeoPlatformUser) {
@@ -114,33 +98,30 @@ export class PluginAuthService {
      * current JWT token (if one exists) is not expired or revoked.
      * @return GeoPlatformUser or null
      */
-    check() : Promise<GeoPlatformUser> {
-        if(!this.authService) {
-            console.log("[WARN] No auth service to check token with...");
-            return Promise.resolve(null);
-        }
-        // console.log("[DEBUG] Checking with auth service for token");
-        let promise = this.authService.check().then( user => {
-            setTimeout( () => { this.onUserChange(user); },100 );
-            return user;
-        });
-        if(promise) {
-            promise.catch(e => { console.log(e) })
-        }
-        return promise;
-    }
+     check() : Promise<GeoPlatformUser> {
+         if(!this.authService) {
+             console.log("[WARN] No auth service to check token with...");
+             return Promise.resolve(null);
+         }
+         return this.authService.checkWithClient()
+         .then( token => this.authService.getUser() )
+         .then( user => {
+             setTimeout( () => { this.onUserChange(user); },100 );
+             return user;
+         });
+     }
 
-    /**
-     *
-     */
-    verifyToken( token : string ) : Promise<string> {
-        if('development' === environment.env || !this.authService) {
-            return Promise.resolve(token);
-        }
-        return this.authService.checkWithClient().catch(e => {
-            console.log(e);
-        });
-    }
+    // /**
+    //  *
+    //  */
+    // verifyToken( token : string ) : Promise<string> {
+    //     if('development' === environment.env || !this.authService) {
+    //         return Promise.resolve(token);
+    //     }
+    //     return this.authService.checkWithClient().catch(e => {
+    //         console.log(e);
+    //     });
+    // }
 
     /**
      *
