@@ -38,6 +38,23 @@
             ]
           },
           "configurations": {
+              "local": {
+                "optimization": true,
+                "outputHashing": "all",
+                "sourceMap": false,
+                "extractCss": true,
+                "namedChunks": false,
+                "aot": true,
+                "extractLicenses": true,
+                "vendorChunk": false,
+                "buildOptimizer": true,
+                "fileReplacements": [
+                  {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.local.ts"
+                  }
+                ]
+              },
             "sit": {
               "optimization": true,
               "outputHashing": "all",
@@ -114,6 +131,9 @@
             "browserTarget": "geoplatform.resource-registration:build"
           },
           "configurations": {
+              "local": {
+                "browserTarget": "geoplatform.resource-registration:build:local"
+              },
             "sit": {
               "browserTarget": "geoplatform.resource-registration:build:sit"
             },
