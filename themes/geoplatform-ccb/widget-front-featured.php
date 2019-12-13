@@ -173,7 +173,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    function geopccb_add_featured_category($geopccb_cat){
 	      $geopccb_temp_array = array();
 
-	      $geopccb_temp_array['name'] = $geopccb_cat->name;
+	      $geopccb_temp_array['name'] = htmlspecialchars_decode($geopccb_cat->name);
 
 	      if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
 	        $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'large')[0];

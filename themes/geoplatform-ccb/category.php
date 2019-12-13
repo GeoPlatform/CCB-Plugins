@@ -139,7 +139,7 @@ else
 	    function geopccb_add_featured_category($geopccb_cat){
 	      $geopccb_temp_array = array();
 
-	      $geopccb_temp_array['name'] = $geopccb_cat->name;
+	      $geopccb_temp_array['name'] = htmlspecialchars_decode($geopccb_cat->name);
 
 	      if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
 	        $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'medium')[0];
@@ -210,6 +210,6 @@ else
 
 	if ($geopportal_sidebar_vis == 'on')
   	get_template_part( 'sidebar', get_post_format() );
-		
+
 echo "</div>";
 get_footer();
