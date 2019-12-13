@@ -52,7 +52,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 		$geopccb_categories = get_categories( array(
 				'parent'     => $geopccb_category,
 				'orderby'   => 'date',
-				'order'     => 'DESC',
+				'order'     => 'ASC',
 				'hide_empty'=> 0,
 		) );
 
@@ -97,7 +97,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     $geopccb_pages = get_posts(array(
       'post_type' => $geop_ccb_post_types,
       'orderby' => 'date',
-      'order' => 'DESC',
+      'order' => 'ASC',
       'numberposts' => -1,
       'cat'=> $geopccb_category,
       'post_status' => $geop_ccb_private_perm
