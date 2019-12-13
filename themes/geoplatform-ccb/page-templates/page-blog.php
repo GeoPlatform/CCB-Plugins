@@ -14,10 +14,14 @@
 get_header();
 get_template_part( 'sub-header-post', get_post_format() );
 
-?>
-<div class="l-body l-body--two-column">
-	<div class="l-body__main-column">
-	<?php
+$geopportal_sidebar_vis = get_theme_mod('sidebar_controls', 'on');
+
+if ($geopportal_sidebar_vis == 'on')
+	echo "<div class='l-body l-body--two-column'>";
+else
+	echo "<div class='l-body l-body--one-column'>";
+
+	echo "<div class='l-body__main-column'>";
 
 	$args = array(
 		'posts_per_page' => get_theme_mod('blogcount_controls', 5),
@@ -31,40 +35,41 @@ get_template_part( 'sub-header-post', get_post_format() );
  			$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($post->ID, 'medium');
 		else
       $geopccb_archive_disp_thumb = get_template_directory_uri() . "/img/default-featured.jpg";
-    ?>
 
-		<div class="m-article m-article--flex">
-			<a class="m-article__thumbnail is-16x9" href="<?php the_permalink(); ?>">
-				<img alt="Thumbnail for <?php the_title() ?>" src="<?php echo $geopccb_archive_disp_thumb ?>">
-			</a>
-			<div class="m-article__body">
-				<a class="m-article__heading" href="<?php the_permalink(); ?>"><?php the_title() ?></a>
-				<div class="m-article__desc"><?php echo get_the_date("F j, Y") ?></div>
-				<div class="m-article__desc"><?php echo esc_attr(wp_strip_all_tags(get_the_excerpt())) ?></div>
-			</div>
-		</div>
+		echo "<div class='m-article m-article--flex'>";
+			echo "<a class='m-article__thumbnail is-16x9' href='" . get_the_permalink() . "'>";
+				echo "<img alt='Thumbnail for " .  get_the_title() . "' src='" . $geopccb_archive_disp_thumb . "'>";
+			echo "</a>";
+			echo "<div class='m-article__body'>";
+				echo "<a class='m-article__heading' href='" . get_the_permalink() . "'>" . get_the_title() . "</a>";
+				echo "<div class='m-article__desc'>" . get_the_date("F j, Y") . "</div>";
+				echo "<div class='m-article__desc'>" . esc_attr(wp_strip_all_tags(get_the_excerpt())) . "</div>";
+			echo "</div>";
+		echo "</div>";
 
-	<?php
 	endwhile;
-	if ($paged > 1) { ?>
+	if ($paged > 1) {
 
-		<nav id="nav-posts">
-			<br />
-			<div class="prev"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
-			<div class="next"><?php previous_posts_link('Newer Posts &raquo;'); ?></div>
-		</nav>
+		echo "<nav id='nav-posts'>";
+			echo "<br />";
+			echo "<div class='prev'>" . next_posts_link('&laquo; Previous Posts') . "</div>";
+			echo "<div class='next'>" . previous_posts_link('Newer Posts &raquo;') . "</div>";
+		echo "</nav>";
 
-		<?php } else { ?>
+		} else {
 
-		<nav id="nav-posts">
-			<br />
-			<div class="prev"><?php next_posts_link('&laquo; Previous Posts'); ?></div>
-		</nav>
+		echo "<nav id='nav-posts'>";
+			echo "<br />";
+			echo "<div class='prev'>" . next_posts_link('&laquo; Previous Posts') . "</div>";
+		echo "</nav>";
 
-		<?php }
-		wp_reset_postdata(); ?>
+		}
+		wp_reset_postdata();
 
-  </div>
-  <?php get_template_part( 'sidebar', get_post_format() ); ?>
-</div>
-<?php get_footer(); ?>
+	echo "</div>";
+
+	if ($geopportal_sidebar_vis == 'on')
+  	get_template_part( 'sidebar', get_post_format() );
+
+echo "</div>";
+get_footer(); ?>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Singular
+ * Name: Singular
  *
  * Used as default for posts and pages.
  *
@@ -46,9 +46,15 @@ if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_cont
   echo "</div>";
 }
 
-echo "<div class='l-body l-body--two-column'>";
+$geopportal_sidebar_vis = get_theme_mod('sidebar_controls', 'on');
 
-  echo "<div class='l-body__main-column'>";
+if ($geopportal_sidebar_vis == 'on')
+	echo "<div class='l-body l-body--two-column'>";
+else
+	echo "<div class='l-body l-body--one-column'>";
+
+	echo "<div class='l-body__main-column'>";
+
     if ( have_posts() ) : while ( have_posts() ) : the_post();
 
       get_template_part( 'post-single', get_post_format() );
@@ -59,6 +65,9 @@ echo "<div class='l-body l-body--two-column'>";
         //	endif;
     endwhile; endif;
   echo "</div>";
-  get_template_part( 'sidebar', get_post_format() );
+
+  if ($geopportal_sidebar_vis == 'on')
+  	get_template_part( 'sidebar', get_post_format() );
+
 echo "</div>";
 get_footer();

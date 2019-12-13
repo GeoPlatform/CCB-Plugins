@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: GeoPlatform Search Template
+ * Name: GeoPlatform Search Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *

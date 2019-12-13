@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: GeoPlatform Registration Template
+ * Name: GeoPlatform Registration Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *
@@ -13,10 +13,10 @@ get_template_part( 'sub-header-post', get_post_format() );
 ?>
 
 
-<script> 
-    window.GeoPlatformPluginEnv = { 
-        wpUrl: "<?php bloginfo('wpurl') ?>" 
-    }; 
+<script>
+    window.GeoPlatformPluginEnv = {
+        wpUrl: "<?php bloginfo('wpurl') ?>"
+    };
 </script>
 <app-root></app-root>
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Front Featured
+ * Widget Name: Widget Front Featured
  *
  * Widget for the front page, displays featured images in a tile format using a category.
  *

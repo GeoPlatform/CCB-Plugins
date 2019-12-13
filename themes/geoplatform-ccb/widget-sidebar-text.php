@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Sidebar Text
+ * Widget Name: Widget Sidebar Text
  *
  * Widget for the sidebar, displays a title and WYSIWYG text.
  *

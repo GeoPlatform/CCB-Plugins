@@ -6,7 +6,7 @@
  *
  * @package GeoPlatform CCB
  *
- * Template Name: Search
+ * Name: Search
  *
  * @since 3.0.0
  */
@@ -14,7 +14,13 @@
 get_header();
 get_template_part( 'sub-header-search', get_post_format() );
 
-echo "<div class='l-body l-body--two-column'>";
+$geopportal_sidebar_vis = get_theme_mod('sidebar_controls', 'on');
+
+if ($geopportal_sidebar_vis == 'on')
+	echo "<div class='l-body l-body--two-column'>";
+else
+	echo "<div class='l-body l-body--one-column'>";
+
 	echo "<div class='l-body__main-column'>";
 
 	if ( have_posts() ) :
@@ -69,6 +75,9 @@ echo "<div class='l-body l-body--two-column'>";
 	endif;
 
   echo "</div>";
-  get_template_part( 'sidebar', get_post_format() );
+
+	if ($geopportal_sidebar_vis == 'on')
+  	get_template_part( 'sidebar', get_post_format() );
+
 echo "</div>";
 get_footer();

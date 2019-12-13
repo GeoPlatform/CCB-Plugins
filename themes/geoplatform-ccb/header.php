@@ -122,10 +122,10 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
       if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head'){
         ?>
         <!-- Megamenu opener/closer, can't be PHP echoed. -->
-        <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+        <button id="megamenu-button" role="menuitem" class="btn btn-link is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
           <span class="is-hidden--xs">More</span>
           <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
-        </a>
+        </button>
         <?php
       }
 
@@ -170,12 +170,12 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
 
         // <!-- User section continued, HTML area -->
       echo "<div class='dropdown' id='geopccb_header_user_dropdown_parent'>";
-        echo "<button class='btn btn-link dropdown-toggle' type='button' id='userSignInButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>";
+        echo "<button class='btn btn-link dropdown-toggle' type='button' id='userSignInButton' aria-haspopup='true' aria-expanded='false'>";
           echo "<span class='fas fa-user'></span>";
           echo "<span class='is-hidden--xs'>&nbsp". $geopccb_front_username_text . "</span>";
         echo "</button>";
 
-        echo "<div class='dropdown-menu dropdown-menu-right' id='geopccb_header_user_dropdown_child' aria-labelledby='userSignInButton'>";
+        echo "<div class='dropdown-menu dropdown-menu-right' id='geopccb_header_user_dropdown_child' aria-labelledby='userSignInButton' style='z-index:9999;'>";
           echo "<div class='d-flex'>";
             echo "<div class='col u-text--center'>";
               echo "<span class='fas fa-user fa-5x'></span>";
@@ -201,24 +201,6 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
           echo "</div>";
         echo "</div>";
       echo "</div>";
-
-    ?>
-    <script type="text/javascript">
-
-      // Toggles user info visibility.
-			jQuery(document).ready(function() {
-
-				jQuery("#geopccb_header_user_dropdown_parent").click(function(event){
-          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
-          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
-					jQuery("#geopccb_header_user_dropdown_child").toggleClass("show");
-          jQuery("#geopccb_header_user_dropdown_parent").toggleClass("show");
-				});
-
-		  });
-		</script>
-
-    <?php
     } else {
 
       // What's output if the user is not logged in.
@@ -268,7 +250,7 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
 
     // New Megamenu area. Hides if the the More button is disabled.
     if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head'){
-      echo "<nav class='m-megamenu' id='header-megamenu'>";
+      echo "<nav class='m-megamenu' id='header-megamenu' style='z-index:9998;'>";
         echo "<div class='m-megamenu__content'>";
           echo "<div class='col'>";
             echo "<div class='d-lg-none d-xl-none'>";
@@ -316,4 +298,33 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
 
       echo "</nav>";
     }
+  ?>
+  <script type="text/javascript">
+
+    // Toggles user info and megamenu visibility.
+		jQuery(document).ready(function() {
+
+			jQuery("#geopccb_header_user_dropdown_parent").click(function(event){
+        var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+        jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+				jQuery("#geopccb_header_user_dropdown_child").toggleClass("show");
+
+        if (jQuery('#header-megamenu').hasClass("is-open")){
+          jQuery('#header-megamenu').toggleClass("is-open");
+        }
+			});
+
+      jQuery("#megamenu-button").click(function(event){
+        if (jQuery('#geopccb_header_user_dropdown_child').hasClass("show")){
+          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+          jQuery('#geopccb_header_user_dropdown_child').toggleClass("show");
+        }
+      });
+
+	  });
+	</script>
+
+  <?php
+
 echo "</header>";

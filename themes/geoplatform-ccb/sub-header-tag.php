@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Sub-Header-Tag
+ * Name: Sub-Header-Tag
  *
  * Secondary header for use with tag output pages.
  *

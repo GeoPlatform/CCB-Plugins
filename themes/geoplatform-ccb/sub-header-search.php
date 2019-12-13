@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Sub-Header-Search
+ * Name: Sub-Header-Search
  *
  * Secondary header for use with search result pages.
  *

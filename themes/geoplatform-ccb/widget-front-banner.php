@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Front Banner
+ * Widget Name: Widget Front Banner
  *
  * Widget for the front page, displays the site's banner image with super-imposed text.
  *
