@@ -125,6 +125,9 @@ if ( ! function_exists ( 'geopccb_add_googleanalytics' ) ) {
   add_action('wp_head','geopccb_add_googleanalytics');
 }
 
+// Allows shortcode in the Custom HTML widget.
+add_filter( 'widget_text', 'do_shortcode' );
+
 /**
  * Setup Theme and add supports
  *
