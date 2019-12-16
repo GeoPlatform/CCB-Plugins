@@ -16,7 +16,7 @@ if (!empty($geopccb_id_array)){
 
   if ($geopccb_id_grab){
     $geopccb_ual_root = geop_ccb_getEnv('ual_url',"https://ual.geoplatform.gov");
-    $geopccb_fetch_url = $geopccb_ual_root . "/api/items/" . $geopccb_id_grab . ".jsonld?embedded=true";
+    $geopccb_fetch_url = $geopccb_ual_root . "/api/items/" . $geopccb_id_grab . ".jsonld?embedded=true&profile=sdo";
 
     try {
       $geopccb_json = @file_get_contents($geopccb_fetch_url);
