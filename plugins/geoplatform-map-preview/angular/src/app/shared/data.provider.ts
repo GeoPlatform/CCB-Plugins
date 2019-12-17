@@ -13,11 +13,11 @@ const IGNORED_PROPERTIES = [
     'uri',              //
     'type',             //
     'createdBy',        //
-    'lastModifiedBy',   //
+    'lastModifiedBy'    //
 
     //https://geoplatform.atlassian.net/browse/DT-2945?focusedCommentId=38006
-    'themes',
-    'usedBy'
+    // 'themes',
+    // 'usedBy'
 ]
 
 export const Events = {
