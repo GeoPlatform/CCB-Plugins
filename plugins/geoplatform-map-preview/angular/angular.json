@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular": {
+    "geoplatform.map-preview": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -90,21 +90,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular:build"
+            "browserTarget": "geoplatform.map-preview:build"
           },
           "configurations": {
             "local": {
-                "browserTarget": "geoplatform.resource-registration:build:local"
+                "browserTarget": "geoplatform.map-preview:build:local"
             },
             "production": {
-              "browserTarget": "angular:build:production"
+              "browserTarget": "geoplatform.map-preview:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular:build"
+            "browserTarget": "geoplatform.map-preview:build"
           }
         },
         "test": {
@@ -163,7 +163,7 @@
         }
       }
     },
-    "angular-e2e": {
+    "geoplatform.map-preview-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -172,7 +172,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "angular:serve"
+            "devServerTarget": "geoplatform.map-preview:serve"
           }
         },
         "lint": {
@@ -189,7 +189,7 @@
       }
     }
   },
-  "defaultProject": "angular",
+  "defaultProject": "geoplatform.map-preview",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "gpmp",

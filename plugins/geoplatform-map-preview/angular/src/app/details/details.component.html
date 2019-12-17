@@ -25,21 +25,16 @@
                 <div class="u-text--sm t-fg--gray-md">Provide a description of the map</div>
             </div>
 
-            <div class="m-article__desc">
-                <div class="a-heading">
-                    <span class="fas fa-tag"></span>
-                    Keywords ({{mapItem.keywords?.length||0}})
-                    <button type="button" class="btn btn-sm btn-link"
-                        (click)="isKeywordsCollapsed=!isKeywordsCollapsed">
-                        <span *ngIf="isKeywordsCollapsed" class="fas fa-chevron-down"></span>
-                        <span *ngIf="!isKeywordsCollapsed" class="fas fa-chevron-up"></span>
-                        <span class="sr-only">Hide/Show keywords</span>
-                    </button>
-                </div>
-                <div *ngIf="!isKeywordsCollapsed">
-                    <span *ngFor="let key of mapItem.keywords" class="a-keyword">
-                        {{key}}
-                    </span>
+            <br>
+            
+            <gpmp-array-property
+                [enableAdd]="false"
+                [field]="'keywords'"
+                [label]="'Keywords (' + (mapItem.keywords.length||0) + ')'"
+                [iconClass]="'fas fa-tag'">
+                <div contents>
+                    <span *ngIf="!mapItem.keywords || !mapItem.keywords.length">None specified</span>
+                    <span *ngFor="let key of mapItem.keywords" class="a-keyword">{{key}}</span>
                     <div class="input-group-slick">
                         <input type="text" class="form-control"
                             [(ngModel)]="keyword" (keyup.enter)="addKeyword($event)"
@@ -51,7 +46,7 @@
                     </div>
                     <div class="u-text--sm t-fg--gray-md">Provide keywords for the map</div>
                 </div>
-            </div>
+            </gpmp-array-property>
 
             <!-- <div class="m-article__desc">
                 <div class="a-heading">Geographic Extent</div>
@@ -68,37 +63,65 @@
 
 
             <gpmp-array-property
+                [enableAdd]="isAuthenticated()"
                 [field]="'themes'"
-                [label]="'Themes'"
+                [label]="'Themes (' + (mapItem.themes.length||0) + ')'"
                 [iconClass]="'icon-concept'"
-                [value]="mapItem?.themes">
+                (onEvent)="openDialog($event)">
+                <div contents>
+                    <div *ngIf="!mapItem.themes || !mapItem.themes.length">None specified</div>
+                    <div *ngFor="let val of mapItem.themes">
+                        <gp-resource-link [item]="val"></gp-resource-link>
+                    </div>
+                </div>
             </gpmp-array-property>
             <br>
 
 
             <gpmp-array-property
+                [enableAdd]="isAuthenticated()"
                 [field]="'topics'"
-                [label]="'Topics'"
+                [label]="'Topics (' + (mapItem.topics.length||0) + ')'"
                 [iconClass]="'icon-topic'"
-                [value]="mapItem?.topics">
+                (onEvent)="openDialog($event)">
+                <div contents>
+                    <div *ngIf="!mapItem.topics || !mapItem.topics.length">None specified</div>
+                    <div *ngFor="let val of mapItem.topics">
+                        <gp-resource-link [item]="val"></gp-resource-link>
+                    </div>
+                </div>
             </gpmp-array-property>
             <br>
 
 
             <gpmp-array-property
+                [enableAdd]="isAuthenticated()"
                 [field]="'publishers'"
-                [label]="'Publishers'"
+                [label]="'Publishers (' + (mapItem.publishers.length||0) + ')'"
                 [iconClass]="'icon-organization'"
-                [value]="mapItem?.publishers">
+                (onEvent)="openDialog($event)">
+                <div contents>
+                    <div *ngIf="!mapItem.publishers || !mapItem.publishers.length">None specified</div>
+                    <div *ngFor="let val of mapItem.publishers">
+                        <gp-resource-link [item]="val"></gp-resource-link>
+                    </div>
+                </div>
             </gpmp-array-property>
             <br>
 
 
             <gpmp-array-property
+                [enableAdd]="isAuthenticated()"
                 [field]="'usedBy'"
                 [label]="'Communities'"
                 [iconClass]="'icon-community'"
-                [value]="mapItem?.usedBy">
+                (onEvent)="openDialog($event)">
+                <div contents>
+                    <div *ngIf="!mapItem.usedBy || !mapItem.usedBy.length">None specified</div>
+                    <div *ngFor="let val of mapItem.usedBy">
+                        <gp-resource-link [item]="val"></gp-resource-link>
+                    </div>
+                </div>
             </gpmp-array-property>
 
 
@@ -126,7 +149,7 @@
             </div>
         </div>
 
-        <div class="m-article__desc" *ngIf="getUser()">
+        <div class="m-article__desc" *ngIf="isAuthenticated()">
             <button type="button" class="btn btn-block btn-primary"
                 (click)="createMap()" [disabled]="isSaving">
                 <span *ngIf="!isSaving">Create</span>

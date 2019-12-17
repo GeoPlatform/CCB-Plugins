@@ -9,7 +9,7 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "dev": "ng serve --configuration=local --proxy-config proxy.conf.json"
+        "dev": "ng serve --proxy-config proxy.conf.json"
     },
     "private": true,
     "dependencies": {
@@ -19,6 +19,7 @@
         "@angular/compiler": "^8.1.2",
         "@angular/core": "^8.1.2",
         "@angular/forms": "^8.1.2",
+        "@angular/material": "^8.1.2",
         "@angular/platform-browser": "^8.1.2",
         "@angular/platform-browser-dynamic": "^8.1.2",
         "@angular/router": "^8.1.2",

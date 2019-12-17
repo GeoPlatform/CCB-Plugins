@@ -1,0 +1,72 @@
+<h5 mat-dialog-title>Find Items to Select</h5>
+<div mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>
+            <mat-icon><span class="fas fa-search"></span></mat-icon>
+            Search
+        </mat-label>
+        <input matInput
+            [(ngModel)]="termQuery" (ngModelChange)="onTermChange($event)"
+            placeholder="Enter keywords to find recommended values">
+        <span matSuffix *ngIf="termQuery?.length" (click)="onTermChange(null, true)"
+            class="fas fa-times t-fg--gray-md">
+        </span>
+    </mat-form-field>
+
+    <div class="d-flex flex-justify-between flex-align-stretch">
+
+        <div style="flex: 1 0 49%; margin-right: 1%;">
+            <div class="a-heading">
+                Recommendations ({{totalSuggested||0}})
+                <span *ngIf="isLoading" class="fas fa-spinner fa-spin"></span>
+            </div>
+            <div class="m-list-section">
+                <div class="list-group">
+                    <em *ngIf="!suggested?.length">Enter keywords above to receive suggested values to use.</em>
+                    <div *ngFor="let item of suggested" class="list-group-item"
+                        (click)="addValue(item)" [ngClass]="{'active':isSelected(item)}">
+                        <a>
+                            <span gpIcon [item]="item"></span>
+                            {{item.label||item.title||item.prefLabel}}
+                        </a>
+                        <div *ngIf="data.subHeading" class="u-text--sm t-fg--gray-md">
+                            {{getSubHeading(item)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="u-text--sm  u-mg-top--md" *ngIf="totalSuggested>0">
+                <mat-paginator
+                    itemsPerPageLabel="Items"
+                    [length]="totalSuggested"
+                    [pageSize]="5"
+                    [pageSizeOptions]="[5, 10]"
+                    (page)="onPagingEvent($event)">
+                </mat-paginator>
+            </div>
+        </div>
+        <div style="flex: 1 0 50%">
+            <div class="a-heading">Selected ({{data?.selected?.length||0}})</div>
+            <div class="m-list-section">
+                <div class="list-group">
+                    <em *ngIf="!data.selected?.length">No values selected.</em>
+                    <div *ngFor="let item of data?.selected" class="list-group-item">
+                        <span class="fas fa-times t-fg--danger" (click)="removeValue(item)"></span>&nbsp;
+                        <a>
+                            <span gpIcon [item]="item"></span>
+                            {{item.label||item.title||item.prefLabel||"Untitled Item"}}
+                        </a>
+                        <div *ngIf="data.subHeading" class="u-text--sm t-fg--gray-md">
+                            {{getSubHeading(item)}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div mat-dialog-actions class="d-flex flex-justify-end flex-align-center">
+    <button type="button" mat-flat-button (click)="onNoClick()">Cancel</button>
+    <button type="button" mat-flat-button color="primary" [mat-dialog-close]="data.selected">Ok</button>
+</div>
