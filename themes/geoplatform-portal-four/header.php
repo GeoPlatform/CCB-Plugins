@@ -89,7 +89,11 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           $geopportal_front_loginname_text = "";
           $geopportal_front_user_redirect = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
-          if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+          if (isset($_COOKIE["gpoauth-a"])){
+            $geopportal_cookie_object = json_decode(base64_decode(explode(".", base64_decode($_COOKIE["gpoauth-a"]))[1]));
+            $geopportal_front_username_text = $geopportal_cookie_object->name;
+          }
+          elseif (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
             $geopportal_front_username_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;
           elseif (!empty($geopportal_current_user->user_firstname) && empty($geopportal_current_user->user_lastname))
             $geopportal_front_username_text = $geopportal_current_user->user_firstname;

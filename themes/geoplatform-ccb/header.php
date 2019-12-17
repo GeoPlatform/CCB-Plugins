@@ -156,7 +156,11 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
       $geopccb_front_loginname_text = "";
       $geopccb_front_user_redirect = geop_ccb_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
-      if (!empty($geopccb_current_user->user_firstname) && !empty($geopccb_current_user->user_lastname))
+      if (isset($_COOKIE["gpoauth-a"])){
+        $geopccb_cookie_object = json_decode(base64_decode(explode(".", base64_decode($_COOKIE["gpoauth-a"]))[1]));
+        $geopccb_front_username_text = $geopccb_cookie_object->name;
+      }
+      elseif (!empty($geopccb_current_user->user_firstname) && !empty($geopccb_current_user->user_lastname))
         $geopccb_front_username_text = $geopccb_current_user->user_firstname . " " . $geopccb_current_user->user_lastname;
       elseif (!empty($geopccb_current_user->user_firstname) && empty($geopccb_current_user->user_lastname))
         $geopccb_front_username_text = $geopccb_current_user->user_firstname;
