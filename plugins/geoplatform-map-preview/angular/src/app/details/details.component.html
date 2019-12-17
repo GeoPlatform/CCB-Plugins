@@ -33,8 +33,11 @@
                 [label]="'Keywords (' + (mapItem.keywords.length||0) + ')'"
                 [iconClass]="'fas fa-tag'">
                 <div contents>
-                    <span *ngIf="!mapItem.keywords || !mapItem.keywords.length">None specified</span>
-                    <span *ngFor="let key of mapItem.keywords" class="a-keyword">{{key}}</span>
+                    <span *ngIf="!mapItem.keywords || !mapItem.keywords.length" class="u-text--sm t-fg--gray-md"><em>None specified</em></span>
+                    <span *ngFor="let key of mapItem.keywords; let $index = index;" class="a-keyword">
+                        {{key}}&nbsp;
+                        <span class="fas fa-times-circle t-fg--danger" (click)="remove('usedBy', $index)"></span>
+                    </span>
                     <div class="input-group-slick">
                         <input type="text" class="form-control"
                             [(ngModel)]="keyword" (keyup.enter)="addKeyword($event)"
@@ -69,8 +72,12 @@
                 [iconClass]="'icon-concept'"
                 (onEvent)="openDialog($event)">
                 <div contents>
-                    <div *ngIf="!mapItem.themes || !mapItem.themes.length">None specified</div>
-                    <div *ngFor="let val of mapItem.themes">
+                    <div *ngIf="!mapItem.themes || !mapItem.themes.length" class="u-text--sm t-fg--gray-md"><em>None specified</em></div>
+                    <div *ngFor="let val of mapItem.themes; let $index = index;" class="d-flex flex-align-center">
+                        <button type="button" class="btn btn-sm btn-link"
+                            (click)="remove('themes', $index)">
+                            <span class="fas fa-times-circle t-fg--danger"></span>
+                        </button>
                         <gp-resource-link [item]="val"></gp-resource-link>
                     </div>
                 </div>
@@ -85,8 +92,12 @@
                 [iconClass]="'icon-topic'"
                 (onEvent)="openDialog($event)">
                 <div contents>
-                    <div *ngIf="!mapItem.topics || !mapItem.topics.length">None specified</div>
-                    <div *ngFor="let val of mapItem.topics">
+                    <div *ngIf="!mapItem.topics || !mapItem.topics.length" class="u-text--sm t-fg--gray-md"><em>None specified</em></div>
+                    <div *ngFor="let val of mapItem.topics; let $index = index;" class="d-flex flex-align-center">
+                        <button type="button" class="btn btn-sm btn-link"
+                            (click)="remove('topics', $index)">
+                            <span class="fas fa-times-circle t-fg--danger"></span>
+                        </button>
                         <gp-resource-link [item]="val"></gp-resource-link>
                     </div>
                 </div>
@@ -101,8 +112,12 @@
                 [iconClass]="'icon-organization'"
                 (onEvent)="openDialog($event)">
                 <div contents>
-                    <div *ngIf="!mapItem.publishers || !mapItem.publishers.length">None specified</div>
-                    <div *ngFor="let val of mapItem.publishers">
+                    <div *ngIf="!mapItem.publishers || !mapItem.publishers.length" class="u-text--sm t-fg--gray-md"><em>None specified</em></div>
+                    <div *ngFor="let val of mapItem.publishers; let $index = index;" class="d-flex flex-align-center">
+                        <button type="button" class="btn btn-sm btn-link"
+                            (click)="remove('publishers', $index)">
+                            <span class="fas fa-times-circle t-fg--danger"></span>
+                        </button>
                         <gp-resource-link [item]="val"></gp-resource-link>
                     </div>
                 </div>
@@ -117,8 +132,12 @@
                 [iconClass]="'icon-community'"
                 (onEvent)="openDialog($event)">
                 <div contents>
-                    <div *ngIf="!mapItem.usedBy || !mapItem.usedBy.length">None specified</div>
-                    <div *ngFor="let val of mapItem.usedBy">
+                    <div *ngIf="!mapItem.usedBy || !mapItem.usedBy.length" class="u-text--sm t-fg--gray-md"><em>None specified</em></div>
+                    <div *ngFor="let val of mapItem.usedBy; let $index = index;" class="d-flex flex-align-center">
+                        <button type="button" class="btn btn-sm btn-link"
+                            (click)="remove('usedBy', $index)">
+                            <span class="fas fa-times-circle t-fg--danger"></span>
+                        </button>
                         <gp-resource-link [item]="val"></gp-resource-link>
                     </div>
                 </div>

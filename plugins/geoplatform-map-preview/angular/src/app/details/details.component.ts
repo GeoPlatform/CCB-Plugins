@@ -194,20 +194,6 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
 
     /**
-     *
-     */
-    addKeyword( $event ?: any ) {
-        let keyword = $event ? $event.target.value : this.keyword;
-        if(keyword && keyword.length &&
-            this.mapItem.keywords.indexOf(keyword)<0 ) {
-            this.mapItem.keywords.push(keyword);
-
-            if($event) $event.target.value = "";
-            this.keyword = "";
-        }
-    }
-
-    /**
      * @param event - DataEvent
      */
     onDataEvent( event : DataEvent ) {
@@ -298,6 +284,32 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     // }
 
 
+
+    /**
+     *
+     */
+    addKeyword( $event ?: any ) {
+        let keyword = $event ? $event.target.value : this.keyword;
+        if(keyword && keyword.length &&
+            this.mapItem.keywords.indexOf(keyword)<0 ) {
+            this.mapItem.keywords.push(keyword);
+
+            if($event) $event.target.value = "";
+            this.keyword = "";
+        }
+    }
+
+    /**
+     *
+     */
+    remove( property : string, index : number) {
+        if(!property || isNaN(index) || index < 0) return;
+        let values = this.mapItem[property];
+        values.splice(index, 1);
+        this.mapItem[property] = values;
+    }
+
+
     openDialog( property : string ): void {
         console.log(JSON.stringify(property));
         let key : string;
@@ -366,7 +378,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
                 </button>
             </span>
 
-            <button type="button" class="btn btn-sm btn-outline-secondary"
+            <button type="button" class="btn btn-xs btn-outline-info"
                 *ngIf="enableAdd && !isCollapsed" (click)="doAdd()">
                 ADD
                 <span class="sr-only">Click to add values </span>
