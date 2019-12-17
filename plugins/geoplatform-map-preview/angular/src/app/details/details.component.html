@@ -26,7 +26,7 @@
             </div>
 
             <br>
-            
+
             <gpmp-array-property
                 [enableAdd]="false"
                 [field]="'keywords'"
@@ -113,7 +113,7 @@
             <gpmp-array-property
                 [enableAdd]="isAuthenticated()"
                 [field]="'usedBy'"
-                [label]="'Communities'"
+                [label]="'Communities (' + (mapItem.usedBy.length||0) + ')'"
                 [iconClass]="'icon-community'"
                 (onEvent)="openDialog($event)">
                 <div contents>

@@ -12,5 +12,6 @@ export const environment = {
     root: '/',
     assets: '/assets',
     rpmUrl: 'https://sit-rpm.geoplatform.us',
-    rpmToken: 'f822e078fcb182110b5de9deeba85e7e'
+    rpmToken: 'f822e078fcb182110b5de9deeba85e7e',
+    logLevel: 'debug'
 };
