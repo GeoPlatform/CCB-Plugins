@@ -115,6 +115,10 @@ Source: (https://getbootstrap.com/docs/3.3/)
 - Fixed bootstrap conflicts disabling user info drop-down in header.
 - User info drop-down and mega-menu will now close when the other is opened.
 - Fixed a number of files that erroneously appeared as page templates.
+- Date sorting in the featured widget is now correctly ordered.
+- Enabled shortcode execution in HTML widgets.
+- HTML entities in category pages and the featured widget now display properly.
+- User info in header bar now gets name from GeoPlatform cookie if present.
 
 ### 4.0.7 ###
 * Release December 9, 2019
