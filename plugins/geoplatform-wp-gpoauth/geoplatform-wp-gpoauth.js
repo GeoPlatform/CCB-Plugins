@@ -9,7 +9,6 @@
 
   jQuery(document).ready(function() {
 
-
     var geopoauth_login_bool = ""
     var intervalID = window.setInterval(geopoauth_continuous_cookie_check, 5000);
 
@@ -17,7 +16,7 @@
     {
 			var grab_val = geopoauth_cookie_parse();
 			var decoded = "nill";
-			var timeone = parseInt(Date.now().toString().substring(0, 10), 10) + 100;
+			var timeone = parseInt(Date.now().toString().substring(0, 10), 10);
 			var timetwo = parseInt(Date.now().toString().substring(0, 10), 10);
 			if (grab_val){
 				decoded = JSON.parse(window.atob(((window.atob(grab_val)).split("."))[1]));
@@ -42,7 +41,7 @@
 
 
     function geopoauth_cookie_parse(){
-      var name = "gpoauth-c=";
+      var name = "gpoauth-b=";
       var decodedCookie = decodeURIComponent(document.cookie);
       var cookieArray = decodedCookie.split(";");
       for(var i = 0; i <cookieArray.length; i++) {
