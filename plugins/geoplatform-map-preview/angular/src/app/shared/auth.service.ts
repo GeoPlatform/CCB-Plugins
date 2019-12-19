@@ -51,9 +51,7 @@ export class PluginAuthService {
     }
 
     onUserChange(user : GeoPlatformUser) {
-        logger.debug("User: " + (user ? user.username : 'N/A'));
-        // logger.debug('AuthService.onUserChange() returned ' +
-        //     JSON.stringify(user, null, ' '));
+        // logger.debug("PluginAuthService.onUserChange() - " + (user ? user.username : 'N/A'));
         this.user = user;
         this.rpm.setUserId( user ? user.id : null);
         this.user$.next(user);

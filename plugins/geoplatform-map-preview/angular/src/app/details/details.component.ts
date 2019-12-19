@@ -101,7 +101,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     }
 
     onUserChange(user) {
-        logger.debug("User has changed: " + (user?user.username:'N/A'));
+        logger.warn("MapDetails.onUserChange() - " + (user?user.username:'N/A') );
         let token = null;
         this.mapItem.createdBy = user ? user.username : null;
     }
@@ -114,8 +114,14 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         this.isSaving = true;
 
         if(!this.mapItem.createdBy) {
-            logger.warn("User not authenticated, aborting create...");
-            return;
+            let user = this.getUser();
+            if(!user) {
+                logger.warn("User not authenticated, aborting create...");
+                this.error = new Error("Map cannot be created due to a problem involving authentication");
+                this.isSaving = false;
+                return;
+            }
+            this.mapItem.createdBy = user.username;
         }
 
         Promise.resolve(this.getUser())
