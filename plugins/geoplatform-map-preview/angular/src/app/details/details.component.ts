@@ -1,11 +1,12 @@
 import {
     Inject, Component, OnInit, OnDestroy, OnChanges, SimpleChanges,
-    Input, HostBinding
+    Input, Output, EventEmitter, HostBinding
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from "rxjs";
 import * as md5 from "md5";
-import { ItemService, ItemTypes, Map, URIFactory } from '@geoplatform/client';
+import { Query, QueryParameters, Item, ItemService, ItemTypes, Map, URIFactory } from '@geoplatform/client';
 
 const URIF = URIFactory(md5);
 
@@ -16,6 +17,7 @@ import {
 } from '../shared/data.provider';
 import { AuthenticatedComponent } from '../shared/authenticated.component';
 import { PluginAuthService } from '../shared/auth.service';
+import { ListSelectDialog } from '../shared/dialogs';
 import { environment } from '../../environments/environment';
 import { logger } from "../shared/logger";
 
@@ -35,6 +37,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     @Input() isCollapsed : boolean = false;
     @HostBinding('class.isCollapsed') hostCollapsed: boolean = false;
 
+    public Params : any = QueryParameters;
     public isKeywordsCollapsed : boolean = true;
     public error : Error;
     public isSaving : boolean;
@@ -60,14 +63,14 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     public keyword : string;
 
     private dataSubscription : Subscription;
-    private itemService : ItemService;
+
 
     constructor(
-        @Inject(ItemService) itemService : ItemService,
-        authService : PluginAuthService
+        @Inject(ItemService) private itemService : ItemService,
+        authService : PluginAuthService,
+        private dialog ?: MatDialog
     ) {
         super(authService);
-        this.itemService = itemService;
     }
 
     ngOnInit() {
@@ -98,7 +101,7 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     }
 
     onUserChange(user) {
-        logger.debug("User has changed: " + (user?user.username:'N/A'));
+        logger.warn("MapDetails.onUserChange() - " + (user?user.username:'N/A') );
         let token = null;
         this.mapItem.createdBy = user ? user.username : null;
     }
@@ -111,16 +114,22 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         this.isSaving = true;
 
         if(!this.mapItem.createdBy) {
-            logger.warn("User not authenticated, aborting create...");
-            return;
+            let user = this.getUser();
+            if(!user) {
+                logger.warn("User not authenticated, aborting create...");
+                this.error = new Error("Map cannot be created due to a problem involving authentication");
+                this.isSaving = false;
+                return;
+            }
+            this.mapItem.createdBy = user.username;
         }
 
         Promise.resolve(this.getUser())
         .then( user => {
-            if(IS_DEV) {
-                this.onUserChange(user);
-                return Promise.resolve(null);
-            }
+            // if(IS_DEV) {
+            //     this.onUserChange(user);
+            //     return Promise.resolve(null);
+            // }
             // ensure token isn't in weird expired/revoked state
             return this.checkAuth().then( user => {
                 this.onUserChange(user);
@@ -189,20 +198,6 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
         });
     }
 
-
-    /**
-     *
-     */
-    addKeyword( $event ?: any ) {
-        let keyword = $event ? $event.target.value : this.keyword;
-        if(keyword && keyword.length &&
-            this.mapItem.keywords.indexOf(keyword)<0 ) {
-            this.mapItem.keywords.push(keyword);
-
-            if($event) $event.target.value = "";
-            this.keyword = "";
-        }
-    }
 
     /**
      * @param event - DataEvent
@@ -287,11 +282,81 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
     }
 
 
-    getUser() {
-        if('development' === environment.env) {
-            return { username: 'tester' } as GeoPlatformUser;
+    // getUser() {
+    //     if('development' === environment.env) {
+    //         return { username: 'tester' } as GeoPlatformUser;
+    //     }
+    //     return super.getUser();
+    // }
+
+
+
+    /**
+     *
+     */
+    addKeyword( $event ?: any ) {
+        let keyword = $event ? $event.target.value : this.keyword;
+        if(keyword && keyword.length &&
+            this.mapItem.keywords.indexOf(keyword)<0 ) {
+            this.mapItem.keywords.push(keyword);
+
+            if($event) $event.target.value = "";
+            this.keyword = "";
         }
-        return super.getUser();
+    }
+
+    /**
+     *
+     */
+    remove( property : string, index : number) {
+        if(!property || isNaN(index) || index < 0) return;
+        let values = this.mapItem[property];
+        values.splice(index, 1);
+        this.mapItem[property] = values;
+    }
+
+
+    openDialog( property : string ): void {
+        console.log(JSON.stringify(property));
+        let key : string;
+        let query = new Query();
+        switch(property) {
+            case 'publishers':
+            key = QueryParameters.PUBLISHERS_ID;
+            query.types(ItemTypes.ORGANIZATION);
+            break;
+
+            case 'themes':
+            key = QueryParameters.THEMES_ID;
+            query.types(ItemTypes.CONCEPT);
+            break;
+
+            case 'topics':
+            key = QueryParameters.TOPICS_ID;
+            query.types(ItemTypes.TOPIC);
+            break;
+
+            case 'usedBy':
+            key = QueryParameters.USED_BY_ID;
+            query.types(ItemTypes.COMMUNITY);
+            break;
+        };
+
+        let opts : any = {
+            width: '50%',
+            data: {
+                service : this.itemService,
+                query   : query,
+                selected: []
+            }
+        };
+        const dialogRef = this.dialog.open(ListSelectDialog, opts);
+        dialogRef.afterClosed().subscribe( ( results : Item[] ) => {
+            if(results && results.length) {
+
+                this.mapItem[property] = (this.mapItem[property] || []).concat(results);
+            }
+        });
     }
 
 }
@@ -305,35 +370,47 @@ export class DetailsComponent extends AuthenticatedComponent implements OnInit, 
 
 
 @Component({
-  selector: 'gpmp-array-property',
-  template: `
-      <div class="m-article__desc">
-          <div class="a-heading">
-              <span *ngIf="iconClass" class="{{iconClass}}"></span>
-              {{label}} ({{value?.length||0}})
-              <button type="button" class="btn btn-sm btn-link"
-                  (click)="isCollapsed=!isCollapsed">
-                  <span *ngIf="isCollapsed" class="fas fa-chevron-down"></span>
-                  <span *ngIf="!isCollapsed" class="fas fa-chevron-up"></span>
-                  <span class="sr-only">Hide/Show {{label}} values</span>
-              </button>
-          </div>
-          <div *ngIf="!isCollapsed">
-              <span *ngFor="let val of value" class="a-keyword">{{val.label||"Untitled Resource"}}</span>
-          </div>
-      </div>
-  `
+    selector: 'gpmp-array-property',
+    template: `
+    <div class="m-article__desc">
+        <div class="a-heading d-flex flex-justify-between flex-align-center">
+
+            <span class="flex-1" (click)="isCollapsed=!isCollapsed">
+                {{label}}
+                <button type="button" class="btn btn-sm btn-link">
+                    <span *ngIf="isCollapsed" class="fas fa-caret-down"></span>
+                    <span *ngIf="!isCollapsed" class="fas fa-caret-up"></span>
+                    <span class="sr-only">Hide/Show {{label}} values</span>
+                </button>
+            </span>
+
+            <button type="button" class="btn btn-xs btn-outline-info"
+                *ngIf="enableAdd && !isCollapsed" (click)="doAdd()">
+                ADD
+                <span class="sr-only">Click to add values </span>
+            </button>
+        </div>
+        <div *ngIf="!isCollapsed">
+            <ng-content select="[contents]"></ng-content>
+        </div>
+    </div>
+    `
 })
 export class ArrayPropertyComponent {
 
     @Input() field : string;
     @Input() label : string;
-    @Input() value : any[];
     @Input() iconClass : string;
+    @Input() enableAdd : boolean = true
+    @Output() onEvent : EventEmitter<string> = new EventEmitter<string>();
 
     public isCollapsed : boolean = true;
 
     constructor() {
 
+    }
+
+    doAdd() {
+        this.onEvent.emit(this.field);
     }
 }

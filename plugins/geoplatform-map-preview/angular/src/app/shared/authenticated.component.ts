@@ -42,6 +42,8 @@ export abstract class AuthenticatedComponent {
 
         this.gpAuthSubscription = this.authService.subscribe( obs );
 
+        //in case the component is initialized after a user event has happened
+        this.user = this.authService.getUser();
     }
 
     /**

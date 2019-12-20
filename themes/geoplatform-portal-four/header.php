@@ -42,10 +42,10 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         <nav class="a-nav" role="navigation" aria-label="High-level navigation links" role="menu">
             <div class="a-nav__collapsible-menu">
                 <div class="dropdown" role="menuitem">
-                    <a class="btn btn-link dropdown-toggle is-hidden--xs" href="<?php echo home_url('resources'); ?>" id="explore-resources-button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                    <button class="btn btn-link dropdown-toggle geopportal_explore_button is-hidden--xs" href="<?php echo home_url('resources'); ?>" id="explore-resources-button" aria-haspopup="true" aria-expanded="false" role="menu">
                         Explore
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="explore-resources-button" style="z-index:9999;">
+                    </button>
+                    <div id="geopportal_header_explore_dropdown_child" class="dropdown-menu dropdown-menu-right" aria-labelledby="explore-resources-button" style="z-index:9999;">
                         <a href="<?php echo home_url(get_theme_mod('headlink_data')); ?>">Datasets</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_services')); ?>">Services</a>
                         <a href="<?php echo home_url(get_theme_mod('headlink_layers')); ?>">Layers</a>
@@ -59,10 +59,10 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                 <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_search')); ?>">Search</a>
             </div>
             <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url(get_theme_mod('headlink_help')); ?>">Help</a>
-            <a role="menuitem" class="is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+            <button id="megamenu-button" role="menuitem" class="btn btn-link is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
                 <span class="is-hidden--xs">More</span>
                 <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
-            </a>
+            </button>
         </nav>
 
         <?php
@@ -89,7 +89,11 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           $geopportal_front_loginname_text = "";
           $geopportal_front_user_redirect = gpp_getEnv('accounts_url',"https://accounts.geoplatform.gov");
 
-          if (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
+          if (isset($_COOKIE["gpoauth-a"])){
+            $geopportal_cookie_object = json_decode(base64_decode(explode(".", base64_decode($_COOKIE["gpoauth-a"]))[1]));
+            $geopportal_front_username_text = $geopportal_cookie_object->name;
+          }
+          elseif (!empty($geopportal_current_user->user_firstname) && !empty($geopportal_current_user->user_lastname))
             $geopportal_front_username_text = $geopportal_current_user->user_firstname . " " . $geopportal_current_user->user_lastname;
           elseif (!empty($geopportal_current_user->user_firstname) && empty($geopportal_current_user->user_lastname))
             $geopportal_front_username_text = $geopportal_current_user->user_firstname;
@@ -103,7 +107,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
           ?>
 
           <div class="dropdown" id="geopportal_header_user_dropdown_parent">
-              <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn btn-link dropdown-toggle" type="button" id="userSignInButton" aria-haspopup="true" aria-expanded="false">
                   <span class="fas fa-user"></span>
                   <span class="is-hidden--xs"><?php echo $geopportal_front_username_text ?></span>
               </button>
@@ -217,18 +221,53 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
         </button>
     </nav>
 
-<!-- If the megamenu is open when either other header menu buttons are pressed, this will close it. -->
+<!-- Header drop-down handling -->
   <script type="text/javascript">
     jQuery(document).ready(function() {
+
+      // Explore resources button
       jQuery("#explore-resources-button").click(function(event){
+        var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
+        jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
+        jQuery("#geopportal_header_explore_dropdown_child").toggleClass("show");
+
         if (jQuery('#header-megamenu').hasClass("is-open")){
           jQuery('#header-megamenu').toggleClass("is-open");
         }
+        if (jQuery('#geopportal_header_user_dropdown_child').hasClass("show")){
+          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+          jQuery('#geopportal_header_user_dropdown_child').toggleClass("show");
+        }
       });
 
+      // User info button
       jQuery("#userSignInButton").click(function(event){
+        var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+        jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+        jQuery("#geopportal_header_user_dropdown_child").toggleClass("show");
+
         if (jQuery('#header-megamenu').hasClass("is-open")){
           jQuery('#header-megamenu').toggleClass("is-open");
+        }
+        if (jQuery('#geopportal_header_explore_dropdown_child').hasClass("show")){
+          var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
+          jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
+        }
+      });
+
+      // Megamenu button, here only hiding other drop-downs if visible.
+      jQuery("#megamenu-button").click(function(event){
+        if (jQuery('#geopportal_header_explore_dropdown_child').hasClass("show")){
+          var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
+          jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
+        }
+        if (jQuery('#geopportal_header_user_dropdown_child').hasClass("show")){
+          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+          jQuery('#geopportal_header_user_dropdown_child').toggleClass("show");
         }
       });
     });

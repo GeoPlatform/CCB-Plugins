@@ -11,6 +11,7 @@
  get_header();
  get_template_part( 'sub-header-post', get_post_format() );
  $geopccb_theme_options = geop_ccb_get_theme_mods();
+ $geopportal_sidebar_vis = get_theme_mod('sidebar_controls', 'on');
 
  if (get_theme_mod('postbanner_controls', $geopccb_theme_options['postbanner_controls']) != 'off'){
 
@@ -35,10 +36,17 @@
    echo "</div>";
  }
 
-echo "<div class='l-body l-body--two-column'>";
-  get_template_part( 'sidebar', get_post_format() );
+ if ($geopportal_sidebar_vis == 'on'){
+   echo "<div class='l-body l-body--two-column'>";
+     get_template_part( 'sidebar', get_post_format() );
+ }
+ else {
+   echo "<div class='l-body l-body--one-column'>";
+ }
 
   echo "<div class='l-body__main-column'>";
+
+
     if ( have_posts() ) : while ( have_posts() ) : the_post();
 
          get_template_part( 'post-single', get_post_format() );

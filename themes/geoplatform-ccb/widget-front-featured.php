@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Front Featured
+ * Widget Name: Widget Front Featured
  *
  * Widget for the front page, displays featured images in a tile format using a category.
  *
@@ -52,7 +52,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 		$geopccb_categories = get_categories( array(
 				'parent'     => $geopccb_category,
 				'orderby'   => 'date',
-				'order'     => 'DESC',
+				'order'     => 'ASC',
 				'hide_empty'=> 0,
 		) );
 
@@ -97,7 +97,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     $geopccb_pages = get_posts(array(
       'post_type' => $geop_ccb_post_types,
       'orderby' => 'date',
-      'order' => 'DESC',
+      'order' => 'ASC',
       'numberposts' => -1,
       'cat'=> $geopccb_category,
       'post_status' => $geop_ccb_private_perm
@@ -173,7 +173,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 	    function geopccb_add_featured_category($geopccb_cat){
 	      $geopccb_temp_array = array();
 
-	      $geopccb_temp_array['name'] = $geopccb_cat->name;
+	      $geopccb_temp_array['name'] = htmlspecialchars_decode($geopccb_cat->name);
 
 	      if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
 	        $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'large')[0];

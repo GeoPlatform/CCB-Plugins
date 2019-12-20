@@ -38,6 +38,26 @@ if ( ! defined( 'WPINC' ) ) {
 define( 'GEOWPOAUTH_PLUGIN', '1.0.4' );
 
 
+// Enqueues the JS portion of this plugin.
+function geopoauth_enqueue_scripts() {
+	wp_enqueue_script( 'geopoauth_js', plugin_dir_url( __FILE__ ) . 'geoplatform-wp-gpoauth.js');
+
+	wp_localize_script( 'geopoauth_js', 'MyAjax', array(
+    'ajaxurl' => admin_url( 'admin-ajax.php' ),
+    'security' => wp_create_nonce( 'nonce-string' )
+  ));
+}
+// add_action( 'wp_enqueue_scripts', 'geopoauth_enqueue_scripts' );
+
+
+
+
+
+
+
+
+
+
 // Sets the parameters of and then creates the token page. It deletes any old
 // version of that page before each generation.
 function geopoauth_add_interface_page() {
@@ -88,6 +108,41 @@ function geopoauth_register_authorize(){
 
 
 
+function temp_cookie(){
+	$cookie_string = "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lJMVlUa3dNbVZpTnpReU5qZGtaakF3TVdJM1kyVXlPRGtpTENKcGMzTWlPaUpvZEhSd2N6b3ZMMnh2WTJGc2FHOXpkQzVzYjJOaGJDSXNJbVY0Y0NJNk1UVTNOalk1TkRnME1pd2lZWFZrSWpvaU5XRTNZMkprTldJeU16RTJORFV3TURGaU5Ua3daamMwSWl3aWMyTnZjR1VpT2xzaWNtVmhaQ0pkTENKdVlXMWxJam9pVEdWbElFaGxZWHBsYkNJc0ltVnRZV2xzSWpvaWJHVmxhRUJwYldGblpXMWhkSFJsY25Oc2JHTXVZMjl0SWl3aWRYTmxjbTVoYldVaU9pSnNhR1ZoZW1Wc0lpd2ljbTlzWlhNaU9pSmhaRzFwYmlJc0ltOXlaM01pT2x0N0lsOXBaQ0k2SWpWaE5UZzFOMlZtTVdVNE9UY3dNREF4WWpkbU56SmlaQ0lzSW01aGJXVWlPaUpKYldGblpTQk5ZWFIwWlhKeklFeE1ReUo5WFN3aVozSnZkWEJ6SWpwYmV5SmZhV1FpT2lJMVlUWmhNamt3TVdZME5qRTFOVEF3TVdKbU5EY3laREFpTENKdVlXMWxJam9pWjNCZlpXUnBkRzl5SW4xZExDSnBZWFFpT2pFMU56WTJPVFExTkRKOS5RMzMtRXBhRTB4UkozT0FuOFlwc2VRV1NTb2NDaGtReVB0eF9zcHNNUXRZ";
+
+	setrawcookie('gpoauth-b', $cookie_string, current_time( 'timestamp' , TRUE ) + 86400, '/', "localhost");
+}
+// add_action('template_redirect', 'temp_cookie');
+
+
+
+function geopoauth_ajax_function(){
+	check_ajax_referer( 'nonce-string', 'security' );
+	$total = $_POST['timeone'] - $_POST['timetwo'];
+
+	// If the result of total is negative, it indicates an expired gpoauth cookie.
+	// This means that the user should be logged out.
+	if ($total < 0 && is_user_logged_in()){
+		wp_clear_auth_cookie();
+		echo "die";
+		die();
+	}
+
+	echo $total;
+	die();
+}
+// add_action( 'wp_ajax_geopoauth_ajax_function', 'geopoauth_ajax_function' );
+// add_action( 'wp_ajax_nopriv_geopoauth_ajax_function', 'geopoauth_ajax_function' );
+
+
+
+
+
+
+
+
+
 
 
 
@@ -129,6 +184,7 @@ _GEOPLATFORMVAR;
 add_action('wp_head', 'geopoauth_establish_globals');
 
 
+// Injects RPM reporting code into each page's head.
 function geopoauth_establish_rpm() {
 	$cache_buster = time();
 

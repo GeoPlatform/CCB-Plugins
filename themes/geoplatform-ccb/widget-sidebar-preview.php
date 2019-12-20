@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Sidebar Preview
+ * Widget Name: Widget Sidebar Preview
  *
  * Widget for the sidebar, displays the featured image of the current post.
  *

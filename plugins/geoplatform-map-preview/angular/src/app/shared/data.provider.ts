@@ -7,6 +7,19 @@ import {
 import { logger } from './logger';
 
 
+
+const IGNORED_PROPERTIES = [
+    'id',               //don't bother inheriting these properties
+    'uri',              //
+    'type',             //
+    'createdBy',        //
+    'lastModifiedBy'    //
+
+    //https://geoplatform.atlassian.net/browse/DT-2945?focusedCommentId=38006
+    // 'themes',
+    // 'usedBy'
+]
+
 export const Events = {
     ON      : Symbol('on'),
     OFF     : Symbol('off'),
@@ -88,69 +101,84 @@ export class DataProvider {
         this.itemService = itemService;
     }
 
-
-    getDetails() : {[key:string]:any} {
+    /**
+     *
+     */
+    getDetails() : MapItem {
         return this.details;
     }
 
     /**
-     *
+     * @param item - GeoPlatform resource from which the map is being created as a preview of
      */
     setDetails( item : Item ) {
 
-        Object.keys( this.details ).forEach( property => {
+        Object.keys( this.details ).forEach( (property) => {
 
-            //don't bother trying to carry over non-map specializations
+            if( IGNORED_PROPERTIES.indexOf(property) >= 0 ) {
+                logger.debug(`DataProvider.setDetails() - Ignoring '${property}'`);
+                return;
+            }
             if('resourceTypes' === property && item.type !== ItemTypes.MAP) {
+                //don't bother trying to carry over non-map specializations
                 return;
             }
 
-            let value = item[property] || null;
+            this.setDetailsProperty(property, item[property] || null);
+        });
+    }
 
-            // console.log("Setting Property '" + property + "' : " + JSON.stringify(value, null, ' '));
+    /**
+     * @param property - string name of field being set
+     * @param value - value to set for specified field
+     */
+    setDetailsProperty( property : string, value : any ) {
 
-            if(!this.details[property]) {
-                this.details[property] = value;
+        logger.debug(`DataProvider.setDetailsProperty('${property}') - `, JSON.stringify(value, null, ' '));
 
-            } else {    //existing value, merge
+        if( !this.details[property] ) {     //initialize value if not set already
+            this.details[property] = value;
+            return;
+        }
 
-                if(Array.isArray(value)) {
+        if(Array.isArray(value)) {      //merging arrayed values
 
-                    let isObj = 'keywords' !== property;
-                    let arr = (this.details[property]||[]).concat(value);
+            let isObj = 'keywords' !== property;
+            let arr = ( this.details[property] || [] ).concat(value);
 
-                    if(isObj) {
-                        let distinct = [];
-                        const map = new Map();
-                        for (const item of arr) {
-                            if(!map.has(item.id)){
-                                map.set(item.id, true);    // set any value to Map
-                                distinct.push(item);
-                            }
-                        }
-                        this.details[property] = distinct;
-                    } else {
-                        this.details[property] = [ ... Array.from(new Set(arr)) ];
+            if(isObj) {                 //merging non-literals
+                let distinct = [];
+                const map = new Map();
+                for ( const item of arr ) {
+                    if( !map.has(item.id) ){
+                        map.set(item.id, true);    // set any value to Map
+                        distinct.push(item);
                     }
-
-                } else if( 'extent' === property ) {
-
-                    if(!this.details.extent) this.details.extent = value;
-                    else {
-                        if(!this.details.extent.minx)
-                            this.details.extent.minx = value.minx||-120;
-                        if(!this.details.extent.miny)
-                            this.details.extent.miny = value.miny||20;
-                        if(!this.details.extent.maxx)
-                            this.details.extent.maxx = value.maxx||-76;
-                        if(!this.details.extent.maxy)
-                            this.details.extent.maxy = value.maxy||50;
-                    }
-
                 }
+                this.details[property] = distinct;
+                return;
+
             }
 
-        });
+            //merging literal values
+            this.details[property] = [ ... Array.from(new Set(arr)) ];
+            return;
+        }
+
+        if( 'extent' === property && value && typeof(value.minx) !== 'undefined' ) {
+
+            if( !this.details.extent ) {        //no existing value
+                this.details.extent = value;
+                return;
+            }
+
+            //merging/overwriting if parts not already set
+            this.details.extent.minx = this.details.extent.minx || value.minx || -120;
+            this.details.extent.miny = this.details.extent.miny || value.miny ||   20;
+            this.details.extent.maxx = this.details.extent.maxx || value.maxx ||  -60;
+            this.details.extent.maxy = this.details.extent.maxy || value.maxy ||   50;
+        }
+
     }
 
 
@@ -160,7 +188,7 @@ export class DataProvider {
     processItem(item : any | any[]) {
 
         if(!item) {
-            throw new Error("Nothing exists to be processed into renderables");
+            throw new Error("DataProvider.processItem() - Nothing exists to be processed into renderables");
         }
 
         let arr = Array.isArray(item) ? item : [item];
@@ -175,7 +203,7 @@ export class DataProvider {
 
             let type = it.type;
             if(!type) {
-                logger.warn("Item (" + it.id + ") has no type and therefore cannot be previewed");
+                logger.warn("DataProvider.processItem() - Item (" + it.id + ") has no type and therefore cannot be previewed");
                 return;
             }
 
@@ -263,7 +291,7 @@ export class DataProvider {
                 this.addMapLayers(response, baseLayerId);
             })
             .catch(e => {
-                logger.error("Error searching for items: " + e.message);
+                logger.error("DataProvider.processMaps() - Error searching for renderables: " + e.message);
             });
         }
     }
@@ -316,7 +344,7 @@ export class DataProvider {
             this.itemService.getMultiple(layerIds).then( (response:any) => {
                 this.addMapLayers(response, baseLayerId);
             }).catch(e => {
-                logger.error("Error searching for items: " + e.message);
+                logger.error("DataProvider.processGalleries() - Error searching for renderables: " + e.message);
             });
         }
     }
@@ -369,7 +397,7 @@ export class DataProvider {
             }
         })
         .catch(e => {
-            logger.error("Error searching for items: " + e.message);
+            logger.error("DataProvider.searchItems() - Error : " + e.message);
         });
     }
 

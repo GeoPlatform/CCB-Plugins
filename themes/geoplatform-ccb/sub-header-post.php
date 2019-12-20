@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Sub-Header-Post
+ * Name: Sub-Header-Post
  *
  * Secondary header for use with singulars (posts, pages, other post types).
  *

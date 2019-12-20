@@ -1,9 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule }   from '@angular/forms';
 import { HttpClientModule, HttpClientJsonpModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import {
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule, MatSelectModule, MatSliderModule,
+    MatChipsModule, MatAutocompleteModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatListModule, MatMenuModule, MatTabsModule, MatPaginatorModule
+} from '@angular/material';
 
 // Adds window.RPMService to global namespace
 import { RPMServiceFactory } from '@geoplatform/rpm/dist/js/geoplatform.rpm.browser.js';
@@ -27,9 +37,11 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'marker-shadow.png',
 });
 
-
+import { ResourceLinkComponent } from './shared/link';
+import { GeoPlatformIconDirective } from './shared/icon';
 import { LimitToPipe, FriendlyTypePipe, FixLabelPipe } from './shared/pipes';
 import { PluginAuthService } from './shared/auth.service';
+import { ListSelectDialog } from './shared/dialogs';
 
 // import {
 //     itemServiceProvider,
@@ -87,15 +99,26 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
     ArrayPropertyComponent,
     SidebarComponent,
     ThumbnailComponent,
-    ImageFallbackDirective
+    ImageFallbackDirective,
+    ListSelectDialog,
+    GeoPlatformIconDirective,
+    ResourceLinkComponent
   ],
   imports: [
       BrowserModule,
+      BrowserAnimationsModule,
       FormsModule,
       HttpClientModule,
       HttpClientJsonpModule,
       DragDropModule,
-      GeoPlatformClientModule
+      GeoPlatformClientModule,
+      MatButtonModule,
+      MatIconModule,
+      MatInputModule, MatSelectModule, MatSliderModule,
+      MatChipsModule, MatAutocompleteModule,
+      MatDialogModule,
+      MatProgressBarModule,
+      MatListModule, MatMenuModule, MatTabsModule, MatPaginatorModule
   ],
   providers: [
       {
@@ -113,6 +136,9 @@ import { ThumbnailComponent, ImageFallbackDirective } from './thumbnail/thumbnai
           provide: RPMService,
           useValue: RPMServiceFactory()
       }
+  ],
+  entryComponents: [
+        ListSelectDialog
   ],
   bootstrap: [AppComponent]
 })

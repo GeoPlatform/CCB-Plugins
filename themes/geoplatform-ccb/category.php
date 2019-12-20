@@ -12,7 +12,13 @@
 get_header();
 get_template_part( 'sub-header-cat', get_post_format() );
 
-echo "<div class='l-body l-body--two-column'>";
+$geopportal_sidebar_vis = get_theme_mod('sidebar_controls', 'on');
+
+if ($geopportal_sidebar_vis == 'on')
+	echo "<div class='l-body l-body--two-column'>";
+else
+	echo "<div class='l-body l-body--one-column'>";
+
 	echo "<div class='l-body__main-column'>";
 
 		//gets id of current category
@@ -133,7 +139,7 @@ echo "<div class='l-body l-body--two-column'>";
 	    function geopccb_add_featured_category($geopccb_cat){
 	      $geopccb_temp_array = array();
 
-	      $geopccb_temp_array['name'] = $geopccb_cat->name;
+	      $geopccb_temp_array['name'] = htmlspecialchars_decode($geopccb_cat->name);
 
 	      if (get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true))
 	        $geopccb_temp_array['thumb'] = wp_get_attachment_image_src(get_term_meta($geopccb_cat->cat_ID, 'category-image-id', true), 'medium')[0];
@@ -201,6 +207,9 @@ echo "<div class='l-body l-body--two-column'>";
 		}
 
   echo "</div>";
-  get_template_part( 'sidebar', get_post_format() );
+
+	if ($geopportal_sidebar_vis == 'on')
+  	get_template_part( 'sidebar', get_post_format() );
+
 echo "</div>";
 get_footer();

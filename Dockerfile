@@ -1,4 +1,4 @@
-FROM wordpress:5.3.0
+FROM wordpress:5.3.1
 MAINTAINER ImageMatters admin@imagemattersllc.com
 
 # NOTE:
@@ -22,7 +22,7 @@ RUN rm -rf /usr/src/wordpress/wp-content/themes/*
 ########### Install common dependencies ################
 # tinymce-advanced:
 RUN curl -L -o /usr/src/tinymce-advanced.zip \
-					https://downloads.wordpress.org/plugin/tinymce-advanced.5.2.1.zip; \
+					https://downloads.wordpress.org/plugin/tinymce-advanced.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/tinymce-advanced.zip; \
 		rm /usr/src/tinymce-advanced.zip

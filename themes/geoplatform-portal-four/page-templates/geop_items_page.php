@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: GeoPlatform Items Template
+ * Name: GeoPlatform Items Template
  *
  * @link https://developer.wordpress.org/themes/template-files-section/page-templates/
  *
@@ -15,10 +15,10 @@ global $wp_query;
 global $wp;
 ?>
 
-<script> 
-    window.GeoPlatformPluginEnv = { 
-        wpUrl: "<?php bloginfo('wpurl') ?>" 
-    }; 
+<script>
+    window.GeoPlatformPluginEnv = {
+        wpUrl: "<?php bloginfo('wpurl') ?>"
+    };
 </script>
 <app-root></app-root>
 

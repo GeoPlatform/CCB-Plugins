@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Sub-Header-Cat
+ * Name: Sub-Header-Cat
  *
  * Secondary header for use with category pages.
  *

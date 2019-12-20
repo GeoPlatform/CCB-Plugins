@@ -125,6 +125,9 @@ if ( ! function_exists ( 'geopccb_add_googleanalytics' ) ) {
   add_action('wp_head','geopccb_add_googleanalytics');
 }
 
+// Allows shortcode in the Custom HTML widget.
+add_filter( 'widget_text', 'do_shortcode' );
+
 /**
  * Setup Theme and add supports
  *
@@ -483,6 +486,21 @@ if ( ! function_exists ( 'geop_ccb_sanitize_postbanner' ) ) {
 	function geop_ccb_sanitize_postbanner( $geop_ccb_value ) {
 		if ( ! in_array( $geop_ccb_value, array( 'feat', 'glob', 'off' ) ) )
 			$geop_ccb_value = 'off';
+		return $geop_ccb_value;
+	}
+}
+
+/**
+ * Sanitization callback functions for customizer sidebar
+ *
+ * @link https://themeshaper.com/2013/04/29/validation-sanitization-in-customizer/
+ * @param [type] $geop_ccb_value
+ * @return void
+ */
+if ( ! function_exists ( 'geop_ccb_sanitize_sidebar' ) ) {
+	function geop_ccb_sanitize_sidebar( $geop_ccb_value ) {
+		if ( ! in_array( $geop_ccb_value, array( 'on', 'off' ) ) )
+			$geop_ccb_value = 'on';
 		return $geop_ccb_value;
 	}
 }
@@ -1939,6 +1957,31 @@ if ( ! function_exists ( 'geop_ccb_postbanner_register' ) ) {
   }
   add_action( 'customize_register', 'geop_ccb_postbanner_register');
 }
+
+// Adds sidebar toggling to Customize => GeoPlatform Controls.
+if ( ! function_exists ( 'geop_ccb_sidebar_register' ) ) {
+  function geop_ccb_sidebar_register($wp_customize){
+
+    $wp_customize->add_setting('sidebar_controls',array(
+        'default' => 'on',
+        'sanitize_callback' => 'geop_ccb_sanitize_sidebar',
+    ));
+
+    $wp_customize->add_control('sidebar_controls',array(
+        'type' => 'radio',
+        'label' => 'Sidebar Controls',
+        'section' => 'font_section',
+        'description' => "The sidebar is a widget area to the right of almost all community pages. It's appearance can be enabled or disabled here.",
+        'choices' => array(
+            'on' => __('Enabled', 'geoplatform-ccb'),
+            'off' => __('Disabled',  'geoplatform-ccb'),
+          ),
+    ));
+  }
+  add_action( 'customize_register', 'geop_ccb_sidebar_register');
+}
+
+
 
 // Adds blog page output count controls to Customize => GeoPlatform Controls.
 if ( ! function_exists ( 'geop_ccb_blogcount_register' ) ) {

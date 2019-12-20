@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Widget Sidebar Links
+ * Widget Name: Widget Sidebar Links
  *
  * Widget for the sidebar, displays a title and list of links from a category.
  *
