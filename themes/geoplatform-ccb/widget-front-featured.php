@@ -189,13 +189,15 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 		// Date-based array construction.
     if ($geopccb_featured_sort_format == 'date'){
 
+			// Categories added.
+      foreach ($geopccb_categories_trimmed as $geopccb_cat)
+        array_push($geopccb_final_objects_array, geopccb_add_featured_category($geopccb_cat));
+
       // Pages added.
       foreach ($geopccb_pages_trimmed as $geopccb_post)
         array_push($geopccb_final_objects_array, geopccb_add_featured_post($geopccb_post));
 
-      // Categories added.
-      foreach ($geopccb_categories_trimmed as $geopccb_cat)
-        array_push($geopccb_final_objects_array, geopccb_add_featured_category($geopccb_cat));
+
     }
     else {
 
