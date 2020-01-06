@@ -108,7 +108,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 == Changelog ==
 
  = 4.0.8 =
-* Release pending
+ * Release January 6, 2020
 
 - Added GeoPlatform control to toggle sidebar visibility site-wide.
 - Fixed bootstrap disabling user info drop-down in header.

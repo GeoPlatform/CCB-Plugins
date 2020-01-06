@@ -113,7 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 ## Changelog
 
 ### 4.1.6
-* Release pending
+* Release January 6, 2020
 
 - Removed bootstrap dependency for header drop-downs.
 - More mega-menu will now close other header drop-downs when opened.
