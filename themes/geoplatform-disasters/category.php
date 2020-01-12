@@ -12,7 +12,13 @@
 get_header();
 get_template_part( 'sub-header-cat', get_post_format() );
 
-echo "<div class='l-body l-body--one-column'>";
+$geopportal_sidebar_vis = get_theme_mod('sidebar_controls', 'on');
+
+if ($geopportal_sidebar_vis == 'on')
+	echo "<div class='l-body l-body--two-column'>";
+else
+	echo "<div class='l-body l-body--one-column'>";
+
 	echo "<div class='l-body__main-column'>";
 
 		//gets id of current category
@@ -58,7 +64,7 @@ echo "<div class='l-body l-body--one-column'>";
 		foreach ($geopccb_categories_trimmed as $geopccb_cat_iter){
 
 			// Grabs default 404 image as thumb and overwrites if the post has one.
- 			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
+ 			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/default-featured.jpg';
  			if (get_term_meta($geopccb_cat_iter->cat_ID, 'category-image-id', true))
 				$geopccb_archive_disp_thumb = wp_get_attachment_image_src(get_term_meta($geopccb_cat_iter->cat_ID, 'category-image-id', true), 'medium')[0];
 
@@ -138,7 +144,7 @@ echo "<div class='l-body l-body--one-column'>";
 			// if (get_the_category($geopccb_post->ID)[0]->term_id == $geopccb_category){
 
 	 			// Grabs default 404 image as thumb and overwrites if the post has one.
-	 			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/img-404.png';
+	 			$geopccb_archive_disp_thumb = get_template_directory_uri() . '/img/default-featured.jpg';
 	 			if ( has_post_thumbnail($geopccb_post) )
 	 				$geopccb_archive_disp_thumb = get_the_post_thumbnail_url($geopccb_post);
 
@@ -167,5 +173,9 @@ echo "<div class='l-body l-body--one-column'>";
  		}
 
   echo "</div>";
+
+	if ($geopportal_sidebar_vis == 'on')
+  	get_template_part( 'sidebar', get_post_format() );
+
 echo "</div>";
 get_footer();
