@@ -59,7 +59,7 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
                 <a role="menuitem" class="is-hidden--xs is-hidden--sm" href="<?php echo home_url(get_theme_mod('headlink_search')); ?>">Search</a>
             </div>
             <a role="menuitem" class="is-hidden--xs" href="<?php echo home_url(get_theme_mod('headlink_help')); ?>">Help</a>
-            <button id="megamenu-button" role="menuitem" class="btn btn-link is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+            <button id="megamenu-button" role="menuitem" class="btn btn-link is-linkless">
                 <span class="is-hidden--xs">More</span>
                 <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
             </button>
@@ -225,46 +225,42 @@ $geopccb_theme_options = geop_ccb_get_theme_mods();
   <script type="text/javascript">
     jQuery(document).ready(function() {
 
-      // Explore resources button
-      jQuery("#explore-resources-button").click(function(event){
-        var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
-        jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
-        jQuery("#geopportal_header_explore_dropdown_child").toggleClass("show");
+      jQuery(document).click(function(event){
+        var geopportal_click_target = jQuery(event.target);
 
-        if (jQuery('#header-megamenu').hasClass("is-open")){
+
+        // Closes explore resources if it is open and NOT clicked.
+        if (!geopportal_click_target.closest('#explore-resources-button').length && jQuery('#geopportal_header_explore_dropdown_child').hasClass("show")){
+          jQuery("#explore-resources-button").attr("aria-expanded", 'false');
+          jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
+        }
+
+        // Closes megamenu if it is open and NOT clicked.
+        if (!geopportal_click_target.closest('#megamenu-button').length && jQuery('#header-megamenu').hasClass("is-open")){
           jQuery('#header-megamenu').toggleClass("is-open");
         }
-        if (jQuery('#geopportal_header_user_dropdown_child').hasClass("show")){
-          var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
-          jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
+
+        // Closes user info if it is open and NOT clicked.
+        if (!geopportal_click_target.closest('#userSignInButton').length && jQuery('#geopportal_header_user_dropdown_child').hasClass("show")){
+          jQuery("#userSignInButton").attr("aria-expanded", 'false');
           jQuery('#geopportal_header_user_dropdown_child').toggleClass("show");
         }
-      });
 
-      // User info button
-      jQuery("#userSignInButton").click(function(event){
-        var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
-        jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
-        jQuery("#geopportal_header_user_dropdown_child").toggleClass("show");
 
-        if (jQuery('#header-megamenu').hasClass("is-open")){
+        // Toggles explore resources if IS clicked.
+        if (geopportal_click_target.closest('#explore-resources-button').length){
+          var geopccb_user_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
+          jQuery("#explore-resources-button").attr("aria-expanded", geopccb_user_var);
+          jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
+        }
+
+        // Toggles megamenu if IS clicked.
+        if (geopportal_click_target.closest('#megamenu-button').length){
           jQuery('#header-megamenu').toggleClass("is-open");
         }
-        if (jQuery('#geopportal_header_explore_dropdown_child').hasClass("show")){
-          var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
-          jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
-          jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
-        }
-      });
 
-      // Megamenu button, here only hiding other drop-downs if visible.
-      jQuery("#megamenu-button").click(function(event){
-        if (jQuery('#geopportal_header_explore_dropdown_child').hasClass("show")){
-          var geopccb_resource_var = (jQuery("#explore-resources-button").attr("aria-expanded") == 'false') ? 'true' : 'false';
-          jQuery("#explore-resources-button").attr("aria-expanded", geopccb_resource_var);
-          jQuery('#geopportal_header_explore_dropdown_child').toggleClass("show");
-        }
-        if (jQuery('#geopportal_header_user_dropdown_child').hasClass("show")){
+        // Toggles user info if IS clicked.
+        if (geopportal_click_target.closest('#userSignInButton').length){
           var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
           jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
           jQuery('#geopportal_header_user_dropdown_child').toggleClass("show");

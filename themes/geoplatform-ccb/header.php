@@ -122,7 +122,7 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
       if (get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'both' || get_theme_mod('megamenu_controls', $geopccb_theme_options['megamenu_controls']) == 'head'){
         ?>
         <!-- Megamenu opener/closer, can't be PHP echoed. -->
-        <button id="megamenu-button" role="menuitem" class="btn btn-link is-linkless" onclick="toggleClass('#header-megamenu','is-open')">
+        <button id="megamenu-button" role="menuitem" class="btn btn-link is-linkless">
           <span class="is-hidden--xs">More</span>
           <span class="fas fa-bars is-hidden--sm is-hidden--md is-hidden--lg"></span>
         </button>
@@ -308,24 +308,32 @@ echo "<header class='o-header o-header--sticky' role='banner'>";
     // Toggles user info and megamenu visibility.
 		jQuery(document).ready(function() {
 
-			jQuery("#geopccb_header_user_dropdown_parent").click(function(event){
-        var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
-        jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
-				jQuery("#geopccb_header_user_dropdown_child").toggleClass("show");
+      jQuery(document).click(function(event){
+        var geopccb_click_target = jQuery(event.target);
 
-        if (jQuery('#header-megamenu').hasClass("is-open")){
+        // Closes megamenu if it is open and NOT clicked.
+        if (!geopccb_click_target.closest('#megamenu-button').length && jQuery('#header-megamenu').hasClass("is-open")){
           jQuery('#header-megamenu').toggleClass("is-open");
         }
-			});
 
-      jQuery("#megamenu-button").click(function(event){
-        if (jQuery('#geopccb_header_user_dropdown_child').hasClass("show")){
+        // Closes user info if it is open and NOT clicked.
+        if (!geopccb_click_target.closest('#geopccb_header_user_dropdown_parent').length && jQuery('#geopccb_header_user_dropdown_child').hasClass("show")){
+          jQuery("#userSignInButton").attr("aria-expanded", 'false');
+          jQuery('#geopccb_header_user_dropdown_child').toggleClass("show");
+        }
+
+        // Toggles megamenu if IS clicked.
+        if (geopccb_click_target.closest('#megamenu-button').length){
+          jQuery('#header-megamenu').toggleClass("is-open");
+        }
+
+        // Toggles user info if IS clicked.
+        if (geopccb_click_target.closest('#geopccb_header_user_dropdown_parent').length){
           var geopccb_user_var = (jQuery("#userSignInButton").attr("aria-expanded") == 'false') ? 'true' : 'false';
           jQuery("#userSignInButton").attr("aria-expanded", geopccb_user_var);
           jQuery('#geopccb_header_user_dropdown_child').toggleClass("show");
         }
       });
-
 	  });
 	</script>
 
