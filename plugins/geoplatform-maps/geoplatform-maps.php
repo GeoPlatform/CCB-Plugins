@@ -120,9 +120,6 @@ function geopmap_shortcode_creation($geopmap_atts){
 	if (file_exists(get_template_directory() . '/css/geop-style.css'))
 		$geopmap_theme = 'T';
 
-	wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'public/assets/fontawesome-all.css', array(), '2.0.7', 'all' );
-	wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'public/css/bootstrap.css', array(), '2.0.7', 'all' );
-
 	// Creates an empty error text report string, grabs the map_id string after
 	// sanitation, and creates the ual_url string.
 	$geopmap_error_text = '';
@@ -200,7 +197,7 @@ function geopmap_agol_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
 	 	 variable. -->
-	<div id="master_<?php echo $geopmap_divrand; ?>" style="clear:both;">
+	<div id="master_<?php echo $geopmap_divrand; ?>" style="clear:both;" class="bootstrap-iso">
 		<script>
 			var widthGrab = jQuery('#master_<?php echo $geopmap_divrand ?>').width();
 		</script>
@@ -336,7 +333,7 @@ function geopmap_geop_gen($geopmap_shortcode_array, $geopmap_error_text, $geopma
 <!-- Main div block that will contain this entry. It has a constant width as
  	   determined by the page layout on load, so its width is set to the widthGrab
 	 	 variable. -->
-	<div id="master_<?php echo $geopmap_divrand; ?>" style="clear:both;">
+	<div id="master_<?php echo $geopmap_divrand; ?>" style="clear:both;" class="bootstrap-iso">
 		<script>
 			var widthGrab = jQuery('#master_<?php echo $geopmap_divrand ?>').width();
 		</script>
