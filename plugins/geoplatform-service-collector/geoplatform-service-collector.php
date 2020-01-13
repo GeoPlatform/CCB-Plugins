@@ -122,8 +122,8 @@ function geopserve_shortcode_generation($geopserve_atts){
 	// Adding GeoPlatform styling. Placing it here ensures it doesn't get
 	// overridden by the theme.
 	wp_enqueue_style( 'geop-style', plugin_dir_url( __FILE__ ) . 'public/css/geop-style.css', array());
-	wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'public/css/bootstrap.css', array(), '2.1.5', 'all' );
-	wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'public/font/fontawesome-all.css', array(), '2.1.5', 'all' );
+	// wp_enqueue_style( 'geop_bootstrap_css', plugin_dir_url( __FILE__ ) . 'public/css/bootstrap-iso.css', array(), '2.1.5', 'all' );
+	// wp_enqueue_style( 'geop_font_awesome', plugin_dir_url( __FILE__ ) . 'public/font/fontawesome-all.css', array(), '2.1.5', 'all' );
 
 	// The original intention was to handle the shortcode output differently based
 	// upon compact or standard form. Currently, compact form is not planned to be
@@ -349,7 +349,7 @@ function geopserve_shortcode_generation_standard($geopserve_shortcode_array){
 	// Everywhere that 'hide' is checked is indicitive of an option that strips out
 	// the titles of the carousel and each entry, as well as the search bar. This
 	// Cuts it down to just the panel outputs and buttons.
-	echo "<div class='m-article'>";
+	echo "<div class='m-article bootstrap-iso'>";
 
 		// Checks if the title is empty or disabled. If neither are true, it is shown.
 		if (!empty($geopserve_shortcode_array['title']) && $geopserve_show_main_title)
