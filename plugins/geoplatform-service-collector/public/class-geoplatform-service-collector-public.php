@@ -71,6 +71,9 @@ class Geoplatform_Service_Collector_Public {
 		 * The Geoplatform_Service_Collector_Loader will then create the relationship
 		 * between the defined hooks and the functions defined in this
 		 * class.
+		 *
+		 * Font Awesome and Bootstrap CSS are MODIFIED to be isolated.
+		 * This is done via https://formden.com/blog/isolate-bootstrap
 		 */
 		wp_enqueue_style( 'geop_plugin_bootstrap_css', plugin_dir_url( __FILE__ ) . 'css/bootstrap-iso.css', array(), $this->version, 'all' );
 		wp_enqueue_style( 'geop_plugin_font_awesome', plugin_dir_url( __FILE__ ) . 'font/fontawesome-iso.css', array(), $this->version, 'all' );
