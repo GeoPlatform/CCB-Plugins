@@ -464,7 +464,5 @@ function geopserve_typeGen(geopserve_cat_in){
 		}
 	}
 
-	console.log(geopserve_typeMap[geopserve_cat_in]);
-
 	return geopserve_typeMap[geopserve_cat_in];
 }
