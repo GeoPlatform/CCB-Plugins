@@ -36,14 +36,14 @@ RUN curl -L -o /usr/src/easy-wp-smtp.zip \
 
 # email-subscribers:
 RUN curl -L -o /usr/src/email-subscribers.zip \
-					https://downloads.wordpress.org/plugin/email-subscribers.4.1.3.zip; \
+					https://downloads.wordpress.org/plugin/email-subscribers.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/email-subscribers.zip; \
 		rm /usr/src/email-subscribers.zip
 
 # custom-sidebars:
 RUN curl -L -o /usr/src/custom-sidebars.zip \
-					https://downloads.wordpress.org/plugin/custom-sidebars.3.1.6.zip; \
+					https://downloads.wordpress.org/plugin/custom-sidebars.zip; \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/custom-sidebars.zip; \
 		rm /usr/src/custom-sidebars.zip
@@ -54,13 +54,6 @@ RUN curl -L -o /usr/src/download-manager.zip \
 	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
 					/usr/src/download-manager.zip; \
 		rm /usr/src/download-manager.zip
-
-# classic-editor:
-# RUN curl -L -o /usr/src/classic-editor.zip \
-#					https://downloads.wordpress.org/plugin/classic-editor.1.4.zip; \
-#	  unzip -d /usr/src/wordpress/wp-content/plugins/ \
-#					/usr/src/classic-editor.zip; \
-#		rm /usr/src/classic-editor.zip
 
 ########### Install Developer Dependencies #############
 # theme check:

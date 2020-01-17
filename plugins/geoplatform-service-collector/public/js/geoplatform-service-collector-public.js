@@ -172,6 +172,7 @@ function geopserve_gen_list(geopserve_options){
 
 				// Assigns type-specific values for the output: type, icon, href.
 				var geopserve_typeGen_results = geopserve_typeGen(geopserve_result_type);
+
 				var geopserve_under_label_type = geopserve_typeGen_results.type;
 				var geopserve_under_label_icon = geopserve_typeGen_results.icon;
 				var geopserve_asset_link = geopserve_options.redirect_url + geopserve_typeGen_results.href + geopserve_results[i].id;
@@ -447,7 +448,7 @@ function geopserve_typeGen(geopserve_cat_in){
 			icon: "icon-topic is-themed u-text--huge",
 			href: "topics/",
 		},
-		Website: {
+		WebSite: {
 			type: "<strong>Website</strong>",
 			icon: "icon-website is-themed u-text--huge",
 			href: "websites/",
