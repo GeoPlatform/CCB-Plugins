@@ -1364,7 +1364,8 @@ if ( ! function_exists ( 'geop_ccb_sorting_register' ) ) {
         To appear on the front page, posts, pages, and category links must be part of the Front Page category. Categories need only have a positive priority value and no parent category.',
 			'choices' => array(
 			  'custom' => __('Custom', 'geoplatform-ccb'),
-				'date' => __('Date',  'geoplatform-ccb')
+				'date' => __('Date (new to old)',  'geoplatform-ccb'),
+        'dateAsc' => __('Date (old to new)',  'geoplatform-ccb')
 			),
 		));
   }
@@ -1379,7 +1380,7 @@ add_action( 'customize_register', 'geop_ccb_sorting_register');
  * @return void
  */
 function geop_ccb_sanitize_feature_sort_format( $geop_ccb_value ) {
-	if ( ! in_array( $geop_ccb_value, array( 'custom', 'date' ) ) )
+	if ( ! in_array( $geop_ccb_value, array( 'custom', 'date', 'dateAsc' ) ) )
   	$geop_ccb_value = 'date';
 	return $geop_ccb_value;
 }

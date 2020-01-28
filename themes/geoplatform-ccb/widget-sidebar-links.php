@@ -37,12 +37,17 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 
     //Grabs the featured_appearance value and declares the trimmed post array.
     $geopportal_side_cont_link_sort_format = get_theme_mod('featured_appearance', 'date');
+
+		$geopccb_featured_sort_order = "DESC";
+		if ($geopportal_side_cont_link_sort_format == 'dateAsc')
+			$geopccb_featured_sort_order = "ASC";
+
     $geopportal_pages_final = array();
 		$geopportal_pages_sort = array();
 
 		$geopportal_pages = get_posts(array(
 			'orderby' => 'date',
-			'order' => 'DSC',
+			'order' => $geopccb_featured_sort_order,
 			'numberposts' => -1,
 			'post_status' => 'publish'
 		) );
@@ -55,7 +60,7 @@ class Geopportal_Side_Content_Links_Widget extends WP_Widget {
 		}
 
     // Mimics the old way of populating, but functional.
-    if ($geopportal_side_cont_link_sort_format == 'date'){
+    if ($geopportal_side_cont_link_sort_format != 'custom'){
 			$geopportal_pages_final = $geopportal_pages_sort;
     }
     else {

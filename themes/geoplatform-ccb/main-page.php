@@ -114,7 +114,7 @@
               $geopccb_pages_trimmed = array();
               $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
 
-              if ($geopccb_featured_sort_format == 'date'){
+              if ($geopccb_featured_sort_format != 'custom'){
 
                 // If set to date, the key arrays are populated with data from
                 // the page array first, then category array.

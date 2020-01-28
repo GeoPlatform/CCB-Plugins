@@ -9,7 +9,7 @@
  *
  * @package GeoPlatform CCB
  *
- * @since 1.0.0
+ * @since 1.0.1
  */
 
 // Getting theme mods for search bar and mega-menu hiding checks.
