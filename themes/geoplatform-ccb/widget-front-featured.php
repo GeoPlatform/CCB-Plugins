@@ -40,6 +40,11 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 
     //Grabs the featured_appearance value and declares the trimmed post array.
     $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
+
+		$geopccb_featured_sort_order = "DESC";
+		if ($geopccb_featured_sort_format == 'dateAsc')
+			$geopccb_featured_sort_order = "ASC";
+
     $geopccb_categories_trimmed = array();
     $geopccb_pages_trimmed = array();
     $geopccb_final_objects_array = array();
@@ -51,13 +56,13 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     // Grabs all child categories of the parent one.
 		$geopccb_categories = get_categories( array(
 				'parent'     => $geopccb_category,
-				'orderby'   => 'date',
+				'orderby'   => 'name',
 				'order'     => 'ASC',
 				'hide_empty'=> 0,
 		) );
 
     // Checks the theme sorting setting and switches be default date or the custom method.
-		if ($geopccb_featured_sort_format == 'date'){
+		if ($geopccb_featured_sort_format != 'custom'){
 			$geopccb_categories_trimmed = $geopccb_categories;
 		}
 		else {
@@ -97,7 +102,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
     $geopccb_pages = get_posts(array(
       'post_type' => $geop_ccb_post_types,
       'orderby' => 'date',
-      'order' => 'ASC',
+      'order' => $geopccb_featured_sort_order,
       'numberposts' => -1,
       'cat'=> $geopccb_category,
       'post_status' => $geop_ccb_private_perm
@@ -116,7 +121,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 		}
 
     // Mimics the old way of populating, but functional.
-    if ($geopccb_featured_sort_format == 'date'){
+    if ($geopccb_featured_sort_format != 'custom'){
 			$geopccb_pages_trimmed = $geopccb_pages_cated;
     }
     else {
@@ -187,7 +192,7 @@ class Geopccb_Front_Page_Featured_Widget extends WP_Widget {
 		}
 
 		// Date-based array construction.
-    if ($geopccb_featured_sort_format == 'date'){
+    if ($geopccb_featured_sort_format != 'custom'){
 
 			// Categories added.
       foreach ($geopccb_categories_trimmed as $geopccb_cat)

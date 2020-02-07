@@ -20,12 +20,17 @@ get_template_part( 'sub-header-post', get_post_format() );
 	<?php
 
     $geopportal_featured_sort_format = get_theme_mod('featured_appearance', 'date');
+
+		$geopccb_featured_sort_order = "DESC";
+		if ($geopportal_featured_sort_format == 'dateAsc')
+			$geopccb_featured_sort_order = "ASC";
+
     $geopportal_pages_final = array();
 
     $geopportal_pages = get_posts(array(
       'post_type' => array('post','page'),
       'orderby' => 'date',
-      'order' => 'DESC',
+      'order' => $geopccb_featured_sort_order,
       'numberposts' => -1,
     ));
 

@@ -112,6 +112,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 * Release pending
 
 - Menus in the header will now closed if clicked outside of.
+- Added reverse-ordered by-date sorting option for post/page listings.
 
 ### 4.0.8 ###
 * Release January 6, 2020

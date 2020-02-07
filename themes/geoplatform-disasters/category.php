@@ -35,7 +35,12 @@ else
 		// Checks the theme sorting setting and switches be default date or the custom method.
 		$geopccb_categories_trimmed = array();
 		$geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
-		if ($geopccb_featured_sort_format == 'date'){
+
+		$geopccb_featured_sort_order = "DESC";
+		if ($geopccb_featured_sort_format == 'dateAsc')
+			$geopccb_featured_sort_order = "ASC";
+
+		if ($geopccb_featured_sort_format != 'custom'){
 			$geopccb_categories_trimmed = $geopccb_categories;
 		}
 		else {
@@ -90,20 +95,19 @@ else
 		if (current_user_can('read_private_pages'))
 			$geop_ccb_private_perm = array('publish', 'private');
 
-    $geopccb_featured_sort_format = get_theme_mod('featured_appearance', 'date');
     $geopccb_pages_final = array();
 
     $geopccb_pages = get_posts(array(
       'post_type' => array('post','page','geopccb_catlink', 'community-post', 'ngda-post'),
       'orderby' => 'date',
-      'order' => 'DESC',
+      'order' => $geopccb_featured_sort_order,
       'numberposts' => -1,
 			'cat'=> $geopccb_category,
 			'post_status' => $geop_ccb_private_perm
     ));
 
     // Mimics the old way of populating, but functional. Grabs all pages.
-    if ($geopccb_featured_sort_format == 'date'){
+    if ($geopccb_featured_sort_format != 'custom'){
       $geopccb_pages_final = $geopccb_pages;
     }
     else {
