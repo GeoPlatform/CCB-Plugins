@@ -36,7 +36,7 @@
                     <span *ngIf="!mapItem.keywords || !mapItem.keywords.length" class="u-text--sm t-fg--gray-md"><em>None specified</em></span>
                     <span *ngFor="let key of mapItem.keywords; let $index = index;" class="a-keyword">
                         {{key}}&nbsp;
-                        <span class="fas fa-times-circle t-fg--danger" (click)="remove('usedBy', $index)"></span>
+                        <span class="fas fa-times-circle t-fg--danger" (click)="remove('keywords', $index)"></span>
                     </span>
                     <div class="input-group-slick">
                         <input type="text" class="form-control"
