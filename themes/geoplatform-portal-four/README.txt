@@ -113,7 +113,7 @@ Source: (https://getbootstrap.com/docs/3.3/)
 == Changelog ==
 
 ### 4.1.7
-* Release pending
+* Release February 10, 2020 
 
  - Menus in the header will now closed if clicked outside of.
 
