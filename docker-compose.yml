@@ -85,7 +85,7 @@ services:
   ########## Oauth Stack ##########
 
   # gpoauth:
-  #   image: 046725759240.dkr.ecr.us-east-1.amazonaws.com/gpoauth:latest
+  #   image: 998343784597.dkr.ecr.us-east-1.amazonaws.com/sit-gpoauth:latest
   #   ports:
   #     - "8889:8889"
   #   depends_on:
@@ -101,7 +101,7 @@ services:
   #   restart: always
 
   # gpidm:
-  #   image: 046725759240.dkr.ecr.us-east-1.amazonaws.com/oauthidm:latest
+  #   image: 998343784597.dkr.ecr.us-east-1.amazonaws.com/sit-gpidm:latest
   #   ports:
   #     - "8443:80"
   #   depends_on:
